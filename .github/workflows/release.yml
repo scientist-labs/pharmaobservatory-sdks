@@ -1,0 +1,136 @@
+name: Release
+
+# Publishes each package whose current version is not yet published:
+#   - rubygems.org: pharmaobservatory and the pharma-observatory alias (trusted publishing)
+#   - crates.io:    pharmaobservatory (trusted publishing)
+#   - Go:           pushes the tag go/vX.Y.Z (the module lives in go/, so the tag is prefixed)
+# Triggered by a push to main that touches a package, or by hand (workflow_dispatch), which is also
+# how the first release is run after the owner steps below. "Not yet published" is checked against
+# the registries themselves, so re-running is safe and a merge made while the gate was off is
+# picked up by the next run.
+#
+# GATE (short-lived). Every publish job is skipped unless the repository variable PUBLISH_ENABLED is
+# exactly 'true'; a skipped job is green and never asks for the `release` environment. DELETE the gate
+# (the `vars.PUBLISH_ENABLED` condition on each publish job, and this paragraph) after the first
+# successful release.
+#
+# OWNER STEPS BEFORE THE FIRST RELEASE
+#  1. Create the GitHub environment named `release` (Settings, Environments). Optional protection
+#     rules (required reviewers, deployment branch main) apply to every publish job.
+#  2. rubygems.org, for EACH of pharmaobservatory and pharma-observatory: the gems do not exist yet,
+#     so use a PENDING trusted publisher (rubygems.org, Profile, Pending trusted publishers, GitHub
+#     Actions): owner scientist-labs, repository pharmaobservatory-sdks, workflow filename
+#     release.yml, environment release. The first successful push creates the gem.
+#  3. crates.io: trusted publishing can only be configured for a crate that ALREADY EXISTS (crates.io
+#     docs/trusted-publishing, "Prerequisites": the initial publish requires an API token; there is
+#     no pending-publisher equivalent as of 2026-10-15). So publish 0.1.0 once by hand:
+#       crates.io, Account Settings, API Tokens, new token with scopes publish-new and publish-update
+#       cd rust && cargo publish --token <token>
+#     then revoke that token, and in the crate's Settings, Trusted Publishing, add a GitHub
+#     configuration: owner scientist-labs, repository pharmaobservatory-sdks, workflow release.yml,
+#     environment release. Every later version publishes through this workflow with no stored token.
+#     The `crates` job skips a version that is already published, so the manual 0.1.0 does not
+#     collide with the first run.
+#  4. Set the repository variable PUBLISH_ENABLED=true (Settings, Secrets and variables, Actions,
+#     Variables), then run this workflow by hand (Actions, Release, Run workflow) on main.
+on:
+  push:
+    branches: [main]
+    paths: ["ruby/**", "ruby-alias/**", "go/**", "rust/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      ruby: ${{ steps.d.outputs.ruby }}
+      alias: ${{ steps.d.outputs.alias }}
+      go: ${{ steps.d.outputs.go }}
+      rust: ${{ steps.d.outputs.rust }}
+      ruby_version: ${{ steps.d.outputs.ruby_version }}
+      go_version: ${{ steps.d.outputs.go_version }}
+      rust_version: ${{ steps.d.outputs.rust_version }}
+      any: ${{ steps.d.outputs.any }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - id: d
+        run: |
+          ver() { sed -nE "s/.*\"$2\": \"([0-9.]+)\".*/\1/p" "$1/config/openapi-config.json"; }
+          rv="$(ver ruby gemVersion)"; gv="$(ver go packageVersion)"; cv="$(ver rust packageVersion)"
+          published_gem() { curl -s -o /dev/null -w '%{http_code}' "https://rubygems.org/api/v2/rubygems/$1/versions/$2.json"; }
+          [ "$(published_gem pharmaobservatory "$rv")" = 200 ] && ruby=false || ruby=true
+          [ "$(published_gem pharma-observatory "$rv")" = 200 ] && alias=false || alias=true
+          [ "$(curl -s -o /dev/null -w '%{http_code}' -A 'pharmaobservatory-sdks release (support@scientist.com)' "https://crates.io/api/v1/crates/pharmaobservatory/$cv")" = 200 ] && rust=false || rust=true
+          git ls-remote --exit-code --tags origin "refs/tags/go/v$gv" >/dev/null 2>&1 && go=false || go=true
+          any=false
+          for v in "$ruby" "$alias" "$go" "$rust"; do [ "$v" = true ] && any=true; done
+          { echo "ruby=$ruby"; echo "alias=$alias"; echo "go=$go"; echo "rust=$rust"; echo "any=$any"
+            echo "ruby_version=$rv"; echo "go_version=$gv"; echo "rust_version=$cv"; } >> "$GITHUB_OUTPUT"
+          cat "$GITHUB_OUTPUT"
+
+  # The full CI on the commit about to be published, before anything is.
+  verify:
+    needs: detect
+    if: needs.detect.outputs.any == 'true' && vars.PUBLISH_ENABLED == 'true'
+    uses: ./.github/workflows/ci.yml
+
+  rubygems:
+    needs: [detect, verify]
+    if: vars.PUBLISH_ENABLED == 'true' && (needs.detect.outputs.ruby == 'true' || needs.detect.outputs.alias == 'true')
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ruby/setup-ruby@651ff0d62c5c79bed6d53ec518387aae20e72c1a # v1.329.0
+        with:
+          ruby-version: "3.3"
+      - name: Build both gems
+        run: |
+          (cd ruby && gem build pharmaobservatory.gemspec)
+          (cd ruby-alias && gem build pharma-observatory.gemspec)
+      # Uses the job's OIDC token to act as the registered trusted publisher.
+      - uses: rubygems/configure-rubygems-credentials@dc5a8d8553e6ee01fc26761a49e99e733d17954a # v2.1.0
+      # The real gem first, so the alias never resolves to a version that is not on the index.
+      - if: needs.detect.outputs.ruby == 'true'
+        run: gem push ruby/pharmaobservatory-*.gem
+      - if: needs.detect.outputs.alias == 'true'
+        run: gem push ruby-alias/pharma-observatory-*.gem
+
+  crates:
+    needs: [detect, verify]
+    if: vars.PUBLISH_ENABLED == 'true' && needs.detect.outputs.rust == 'true'
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - run: rustup toolchain install stable --profile minimal && rustup default stable
+      - uses: rust-lang/crates-io-auth-action@c6f97d42243bad5fab37ca0427f495c86d5b1a18 # v1.0.5
+        id: auth
+      - run: cargo publish
+        working-directory: rust
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ steps.auth.outputs.token }}
+
+  go-tag:
+    needs: [detect, verify]
+    if: vars.PUBLISH_ENABLED == 'true' && needs.detect.outputs.go == 'true'
+    runs-on: ubuntu-latest
+    environment: release
+    # Pushing a tag needs contents: write and no OIDC token.
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Tag go/v${{ needs.detect.outputs.go_version }}
+        run: |
+          git tag "go/v${{ needs.detect.outputs.go_version }}"
+          git push origin "go/v${{ needs.detect.outputs.go_version }}"

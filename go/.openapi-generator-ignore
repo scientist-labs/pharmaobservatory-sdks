@@ -1,0 +1,7 @@
+# Files the generator must never overwrite. See CUSTOMIZATION.md.
+README_HEADER.md
+.travis.yml
+git_push.sh
+# The generated test stubs (all skipped) import github.com/stretchr/testify, which the generated
+# go.mod does not require, so `go vet ./...` fails on them. They test nothing; do not generate them.
+test/*

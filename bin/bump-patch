@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# bin/bump-patch <ruby|go|rust>: bump the patch version in that language's generator config.
+# The next `bin/generate <lang>` writes the version into the generated files. The ruby-alias gem
+# reads its version from the ruby gem, so it follows automatically.
+set -euo pipefail
+lang="${1:?usage: bin/bump-patch <ruby|go|rust>}"
+cfg="$(cd "$(dirname "$0")/.." && pwd)/$lang/config/openapi-config.json"
+key=packageVersion; [ "$lang" = ruby ] && key=gemVersion
+cur="$(sed -nE "s/.*\"$key\": \"([0-9]+\.[0-9]+\.[0-9]+)\".*/\1/p" "$cfg")"
+[ -n "$cur" ] || { echo "no $key in $cfg" >&2; exit 1; }
+IFS=. read -r a b c <<<"$cur"
+new="$a.$b.$((c + 1))"
+sed -i.bak -E "s/(\"$key\": \")$cur\"/\1$new\"/" "$cfg" && rm -f "$cfg.bak"
+echo "$lang $cur -> $new"

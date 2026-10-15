@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+# Regenerates one or more SDKs from the public OpenAPI document.
+#
+#   bin/generate [ruby|go|rust ...]     (no arguments: all three)
+#
+# Environment:
+#   SPEC                     path to the OpenAPI document; default: fetched from the public URL
+#   OPENAPI_GENERATOR_JAR    path to openapi-generator-cli-<version>.jar (java must be on PATH);
+#                            when unset, a temurin docker image runs a jar cached in
+#                            $HOME/.cache/pharmaobs-sdks (downloaded and sha256-checked on first use)
+#
+# The generator version is pinned HERE and nowhere else. Bump it deliberately, in its own PR.
+set -euo pipefail
+
+OPENAPI_GENERATOR_VERSION=7.13.0
+OPENAPI_GENERATOR_SHA256=d06da46809b62fde9ca7a8ac9bd399bfba2651661b17e24caa530342d0681fe2
+# eclipse-temurin:17-jre, pinned by multi-arch index digest.
+JAVA_IMAGE=eclipse-temurin@sha256:a9b54b51aaa867507be76277a98c6b11b99515cac6330891b534d070f607214c
+SPEC_URL=https://pharmaobservatory.com/api/v1/openapi.yaml
+
+root="$(cd "$(dirname "$0")/.." && pwd)"
+langs=("$@")
+[ ${#langs[@]} -gt 0 ] || langs=(ruby go rust)
+
+cache="${HOME}/.cache/pharmaobs-sdks"
+jar="${OPENAPI_GENERATOR_JAR:-}"
+if [ -z "$jar" ]; then
+  mkdir -p "$cache"
+  jar="$cache/openapi-generator-cli-${OPENAPI_GENERATOR_VERSION}.jar"
+  use_docker=1
+else
+  use_docker=0
+fi
+if [ ! -f "$jar" ]; then
+  curl -fsSL -o "$jar" "https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/${OPENAPI_GENERATOR_VERSION}/openapi-generator-cli-${OPENAPI_GENERATOR_VERSION}.jar"
+fi
+echo "${OPENAPI_GENERATOR_SHA256}  ${jar}" | shasum -a 256 -c - >/dev/null \
+  || { echo "openapi-generator jar checksum mismatch: ${jar}" >&2; exit 1; }
+
+# Always work on a copy under the cache dir: docker desktop does not share the macOS temp dir, and
+# the copy is patched below.
+mkdir -p "$cache"
+specdir_tmp="$(mktemp -d "$cache/spec.XXXXXX")"
+trap 'rm -rf "$specdir_tmp"' EXIT
+spec="$specdir_tmp/openapi.yaml"
+if [ -n "${SPEC:-}" ]; then cp "$SPEC" "$spec"; else curl -fsSL -o "$spec" "$SPEC_URL"; fi
+# The published document declares `servers: []`, so every generated client would default to
+# http://localhost. Give the generator the real base URL instead. If the document ever declares
+# servers itself this substitution simply does not match and the document's own servers win.
+sed -i.bak 's|^servers: \[\]$|servers:\n- url: https://pharmaobservatory.com|' "$spec" && rm -f "$spec.bak"
+
+gen() { # gen <generator args...>; paths must be relative to $root or absolute inside it
+  if [ "$use_docker" = 1 ]; then
+    local specdir; specdir="$(cd "$(dirname "$spec")" && pwd)"
+    docker run --rm -u "$(id -u):$(id -g)" -v "$root:/work" -v "$specdir:/spec:ro" -v "$cache:/cache:ro" -w /work \
+      "$JAVA_IMAGE" java -jar "/cache/$(basename "$jar")" "$@" -i "/spec/$(basename "$spec")"
+  else
+    (cd "$root" && java -jar "$jar" "$@" -i "$spec")
+  fi
+}
+
+for lang in "${langs[@]}"; do
+  case "$lang" in ruby|go|rust) ;; *) echo "unknown language: $lang" >&2; exit 2 ;; esac
+  dir="$root/$lang"
+  # Remove what the generator wrote last time (its own bookkeeping), so a removed operation or
+  # model does not leave a stale file behind. The generator lists ignored files in FILES too, so
+  # literal ignore entries are skipped below.
+  if [ -f "$dir/.openapi-generator/FILES" ]; then
+    (cd "$dir" && while IFS= read -r f; do
+      # FILES also lists files the ignore file protects; those are hand-maintained, keep them.
+      grep -qxF -- "$f" .openapi-generator-ignore || rm -f -- "$f"
+    done < .openapi-generator/FILES)
+  fi
+  gen generate -c "$lang/config/openapi-config.json" -g "$lang" -o "$lang"
+  # The generated README header is templated from the spec's info.description (empty), so prepend
+  # the hand-written install and authenticated-call section.
+  cat "$dir/README_HEADER.md" "$dir/README.md" > "$dir/README.md.tmp" && mv "$dir/README.md.tmp" "$dir/README.md"
+done
+
+if printf '%s\n' "${langs[@]}" | grep -qx ruby; then
+  cd "$root/ruby"
+  # No openapi-generator option exists for gemspec metadata or the packaged file list (checked with
+  # `config-help -g ruby`), so two small deterministic substitutions. `gem build` refuses tar
+  # entries whose base name exceeds 100 characters and the generated spec/ files add `_spec` to
+  # long names, so ship only lib, docs and the README.
+  sed -i.bak 's/s\.metadata    = {}/s.metadata    = { "allowed_push_host" => "https:\/\/rubygems.org", "homepage_uri" => "https:\/\/pharmaobservatory.com", "documentation_uri" => "https:\/\/pharmaobservatory.com\/api-reference", "rubygems_mfa_required" => "true" }/' pharmaobservatory.gemspec
+  sed -i.bak "s/s\.files         = .*/s.files         = Dir['lib\/**\/*.rb', 'docs\/**\/*.md', 'README.md'].sort/; /s\.test_files/d" pharmaobservatory.gemspec
+  rm -f pharmaobservatory.gemspec.bak
+fi
+
+if printf '%s\n' "${langs[@]}" | grep -qx rust; then
+  cd "$root/rust"
+  # The crate metadata comes from the spec's info block, which has no license or contact, so the
+  # generator writes a placeholder author, a placeholder description and the Unlicense. There is no
+  # config option for these (`config-help -g rust`), so fix them after generation. The generated
+  # reqwest dependency also turns default features off and enables no TLS backend, so every https
+  # call (the API is https only) fails with "error sending request"; enable rustls-tls. crates.io needs
+  # description and license, and shows repository and homepage.
+  sed -i.bak \
+    -e 's|^authors = .*|authors = ["Scientist.com <support@scientist.com>"]|' \
+    -e 's|^description = .*|description = "Rust client for the Pharma Observatory public REST API (https://pharmaobservatory.com/api-reference)"|' \
+    -e 's|^license = .*|license = "MIT"|' \
+    -e '/^# Override this license/d' \
+    -e 's|^\(reqwest = .*features = \[\)"json", "multipart"\]|\1"json", "multipart", "rustls-tls"]|' \
+    -e 's|^edition = .*|&\nhomepage = "https://pharmaobservatory.com"\nrepository = "https://github.com/scientist-labs/pharmaobservatory-sdks"\nreadme = "README.md"|' \
+    Cargo.toml
+  rm -f Cargo.toml.bak
+fi

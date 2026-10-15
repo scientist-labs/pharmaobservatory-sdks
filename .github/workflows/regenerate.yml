@@ -1,0 +1,96 @@
+name: Regenerate
+
+# Pulls the public OpenAPI document daily, regenerates all three SDKs with the pinned generator
+# (bin/generate), and opens or updates ONE pull request when anything changed, with a patch version
+# bump for each package that changed.
+#
+# HOW THE PR'S CI BECOMES VISIBLE. A pull request opened with the default GITHUB_TOKEN does not
+# trigger pull_request workflows, so ci.yml would never run on it. Chosen: the `ci` job below calls
+# ci.yml (workflow_call) on the PR's head SHA, and the `report` job posts the outcome on that SHA as
+# the commit status "ci / regenerated" (shown in the PR's checks list and merge box). Not chosen: a
+# GitHub App token or a PAT, which would make GitHub fire the normal pull_request run but adds an
+# app or a long-lived credential for the owner to create, scope and rotate. Cost of this choice: the
+# check is a status, not a required-check-capable workflow run, and it is re-posted on every
+# regeneration run, not on pushes made by hand to the PR branch (a human pushing to the branch
+# triggers the normal CI themselves).
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: regenerate
+  cancel-in-progress: false
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      operation: ${{ steps.pr.outputs.pull-request-operation }}
+      head-sha: ${{ steps.pr.outputs.pull-request-head-sha }}
+      number: ${{ steps.pr.outputs.pull-request-number }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Regenerate from the live spec
+        run: bin/generate
+      - name: Bump the patch version of each package that changed
+        id: bump
+        run: |
+          changed=""
+          for lang in ruby go rust; do
+            if [ -n "$(git status --porcelain -- "$lang")" ]; then
+              bin/bump-patch "$lang"
+              bin/generate "$lang"
+              changed="$changed $lang"
+            fi
+          done
+          echo "changed=${changed# }" >> "$GITHUB_OUTPUT"
+      - name: Open or update the pull request
+        id: pr
+        if: steps.bump.outputs.changed != ''
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        with:
+          branch: automation/regenerate
+          delete-branch: true
+          commit-message: "Regenerate SDKs (${{ steps.bump.outputs.changed }})"
+          title: "Regenerate SDKs: ${{ steps.bump.outputs.changed }}"
+          body: |
+            Automated regeneration from https://pharmaobservatory.com/api/v1/openapi.yaml with the
+            generator version pinned in `bin/generate`. Packages changed: ${{ steps.bump.outputs.changed }}
+            (patch version bumped for each).
+
+            This PR is opened with the default token, so GitHub does not start CI on it. The
+            `regenerate` workflow runs ci.yml on this branch and posts the result as the commit
+            status `ci / regenerated`.
+
+  ci:
+    needs: regenerate
+    if: needs.regenerate.outputs.operation == 'created' || needs.regenerate.outputs.operation == 'updated'
+    uses: ./.github/workflows/ci.yml
+    with:
+      ref: ${{ needs.regenerate.outputs.head-sha }}
+
+  report:
+    needs: [regenerate, ci]
+    if: always() && (needs.regenerate.outputs.operation == 'created' || needs.regenerate.outputs.operation == 'updated')
+    runs-on: ubuntu-latest
+    permissions:
+      statuses: write
+    steps:
+      - name: Post the CI result on the PR head commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ needs.regenerate.outputs.head-sha }}
+          RESULT: ${{ needs.ci.result }}
+        run: |
+          state=failure; [ "$RESULT" = success ] && state=success
+          gh api "repos/$GITHUB_REPOSITORY/statuses/$SHA" \
+            -f state="$state" -f context="ci / regenerated" \
+            -f description="ci.yml on the regenerated branch: $RESULT" \
+            -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"

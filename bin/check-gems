@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Builds both gems, installs them into a throwaway GEM_HOME and requires the alias.
+# Used by CI and runnable locally: bin/check-gems
+set -euo pipefail
+root="$(cd "$(dirname "$0")/.." && pwd)"
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+(cd "$root/ruby" && gem build pharmaobservatory.gemspec --output "$tmp/pharmaobservatory.gem")
+(cd "$root/ruby-alias" && gem build pharma-observatory.gemspec --output "$tmp/pharma-observatory.gem")
+export GEM_HOME="$tmp/gems" GEM_PATH="$tmp/gems"
+gem install --no-document "$tmp/pharmaobservatory.gem" "$tmp/pharma-observatory.gem" >/dev/null
+version="$(ruby -e 'require "pharma-observatory"; print PharmaObservatory::VERSION')"
+gem list --local 2>/dev/null | grep -E '^pharma(-)?observatory ' 
+echo "alias required OK, PharmaObservatory::VERSION=${version}"
+# Both gems must carry the same version.
+alias_version="$(gem list --local '^pharma-observatory$' | sed -E 's/.*\(([^)]*)\).*/\1/')"
+[ "$alias_version" = "$version" ] || { echo "alias version $alias_version != $version" >&2; exit 1; }
