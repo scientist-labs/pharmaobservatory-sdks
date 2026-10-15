@@ -1,9 +1,12 @@
 openapi: 3.0.3
 info:
+  description: "Read-only REST API over the Pharma Observatory biomedical data platform.\
+    \ Reference: https://pharmaobservatory.com/api-reference"
   title: Pharma Observatory Public REST API
   version: 1.0.0
 servers:
-- url: https://pharmaobservatory.com
+- description: Production
+  url: https://pharmaobservatory.com
 paths:
   /api/v1/biomarker_assay_screen:
     get:

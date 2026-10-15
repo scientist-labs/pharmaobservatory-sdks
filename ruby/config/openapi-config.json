@@ -6,7 +6,7 @@
   "classPrefix": "PharmaObservatory",
   "parameterNaming": "camelCase",
   "generateAliasAsModel": false,
-  "gemVersion": "0.1.0",
+  "gemVersion": "0.1.1",
   "gemAuthor": "Scientist.com",
   "gemAuthorEmail": "support@scientist.com",
   "gemHomepage": "https://pharmaobservatory.com",
