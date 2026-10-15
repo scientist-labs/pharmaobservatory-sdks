@@ -1,13 +1,15 @@
 name: Release
 
-# Publishes each package whose current version is not yet published:
+# Publishes each package whose current version is NEWER than the latest published version on its
+# registry (absent and greater, so a reverted older version never publishes):
 #   - rubygems.org: pharmaobservatory and the pharma-observatory alias (trusted publishing)
 #   - crates.io:    pharmaobservatory (trusted publishing)
 #   - Go:           pushes the tag go/vX.Y.Z (the module lives in go/, so the tag is prefixed)
 # Triggered by a push to main that touches a package, or by hand (workflow_dispatch), which is also
-# how the first release is run after the owner steps below. "Not yet published" is checked against
-# the registries themselves, so re-running is safe and a merge made while the gate was off is
-# picked up by the next run.
+# how the first release is run after the owner steps below. "Newer" is checked against the
+# registries themselves, so re-running is safe and a merge made while the gate was off is picked up
+# by the next run. Every publish job also requires github.ref == refs/heads/main, so a dispatch from
+# another branch publishes nothing.
 #
 # GATE (short-lived). Every publish job is skipped unless the repository variable PUBLISH_ENABLED is
 # exactly 'true'; a skipped job is green and never asks for the `release` environment. DELETE the gate
@@ -15,8 +17,9 @@ name: Release
 # successful release.
 #
 # OWNER STEPS BEFORE THE FIRST RELEASE
-#  1. Create the GitHub environment named `release` (Settings, Environments). Optional protection
-#     rules (required reviewers, deployment branch main) apply to every publish job.
+#  1. Create the GitHub environment named `release` (Settings, Environments) with a deployment
+#     branch rule limiting it to `main` (recommended; the jobs also check the ref themselves).
+#     Optional required reviewers apply to every publish job.
 #  2. rubygems.org, for EACH of pharmaobservatory and pharma-observatory: the gems do not exist yet,
 #     so use a PENDING trusted publisher (rubygems.org, Profile, Pending trusted publishers, GitHub
 #     Actions): owner scientist-labs, repository pharmaobservatory-sdks, workflow filename
@@ -29,8 +32,8 @@ name: Release
 #     then revoke that token, and in the crate's Settings, Trusted Publishing, add a GitHub
 #     configuration: owner scientist-labs, repository pharmaobservatory-sdks, workflow release.yml,
 #     environment release. Every later version publishes through this workflow with no stored token.
-#     The `crates` job skips a version that is already published, so the manual 0.1.0 does not
-#     collide with the first run.
+#     The `crates` job skips a version that is not newer than the published one, so the manual 0.1.0
+#     does not collide with the first run.
 #  4. Set the repository variable PUBLISH_ENABLED=true (Settings, Secrets and variables, Actions,
 #     Variables), then run this workflow by hand (Actions, Release, Run workflow) on main.
 on:
@@ -60,11 +63,19 @@ jobs:
         run: |
           ver() { sed -nE "s/.*\"$2\": \"([0-9.]+)\".*/\1/p" "$1/config/openapi-config.json"; }
           rv="$(ver ruby gemVersion)"; gv="$(ver go packageVersion)"; cv="$(ver rust packageVersion)"
-          published_gem() { curl -s -o /dev/null -w '%{http_code}' "https://rubygems.org/api/v2/rubygems/$1/versions/$2.json"; }
-          [ "$(published_gem pharmaobservatory "$rv")" = 200 ] && ruby=false || ruby=true
-          [ "$(published_gem pharma-observatory "$rv")" = 200 ] && alias=false || alias=true
-          [ "$(curl -s -o /dev/null -w '%{http_code}' -A 'pharmaobservatory-sdks release (support@scientist.com)' "https://crates.io/api/v1/crates/pharmaobservatory/$cv")" = 200 ] && rust=false || rust=true
-          git ls-remote --exit-code --tags origin "refs/tags/go/v$gv" >/dev/null 2>&1 && go=false || go=true
+          UA='pharmaobservatory-sdks release (support@scientist.com)'
+          # newer CUR LATEST: true when LATEST is empty (never published) or CUR sorts strictly after it.
+          # A reverted, older, unpublished version must NOT publish, so equal or lower is false.
+          newer() { [ -z "$2" ] && return 0; [ "$1" != "$2" ] && [ "$(printf '%s\n%s\n' "$1" "$2" | sort -V | tail -n1)" = "$1" ]; }
+          gem_latest() { curl -fsS "https://rubygems.org/api/v1/versions/$1/latest.json" 2>/dev/null | jq -r '(.version // "") | select(. != "unknown")' 2>/dev/null || true; }
+          crate_latest() { curl -fsS -A "$UA" "https://crates.io/api/v1/crates/pharmaobservatory" 2>/dev/null | jq -r '.crate.max_version // empty' 2>/dev/null || true; }
+          go_latest() { git ls-remote --tags origin 'refs/tags/go/v*' | sed -E 's|.*refs/tags/go/v||; /\^\{\}$/d' | sort -V | tail -n1; }
+          lr="$(gem_latest pharmaobservatory)"; la="$(gem_latest pharma-observatory)"; lc="$(crate_latest)"; lg="$(go_latest)"
+          echo "latest published: ruby=[$lr] alias=[$la] rust=[$lc] go=[$lg]; current: ruby=$rv go=$gv rust=$cv"
+          newer "$rv" "$lr" && ruby=true || ruby=false
+          newer "$rv" "$la" && alias=true || alias=false
+          newer "$cv" "$lc" && rust=true || rust=false
+          newer "$gv" "$lg" && go=true || go=false
           any=false
           for v in "$ruby" "$alias" "$go" "$rust"; do [ "$v" = true ] && any=true; done
           { echo "ruby=$ruby"; echo "alias=$alias"; echo "go=$go"; echo "rust=$rust"; echo "any=$any"
@@ -79,7 +90,7 @@ jobs:
 
   rubygems:
     needs: [detect, verify]
-    if: vars.PUBLISH_ENABLED == 'true' && (needs.detect.outputs.ruby == 'true' || needs.detect.outputs.alias == 'true')
+    if: github.ref == 'refs/heads/main' && vars.PUBLISH_ENABLED == 'true' && (needs.detect.outputs.ruby == 'true' || needs.detect.outputs.alias == 'true')
     runs-on: ubuntu-latest
     environment: release
     permissions:
@@ -104,7 +115,7 @@ jobs:
 
   crates:
     needs: [detect, verify]
-    if: vars.PUBLISH_ENABLED == 'true' && needs.detect.outputs.rust == 'true'
+    if: github.ref == 'refs/heads/main' && vars.PUBLISH_ENABLED == 'true' && needs.detect.outputs.rust == 'true'
     runs-on: ubuntu-latest
     environment: release
     permissions:
@@ -122,7 +133,7 @@ jobs:
 
   go-tag:
     needs: [detect, verify]
-    if: vars.PUBLISH_ENABLED == 'true' && needs.detect.outputs.go == 'true'
+    if: github.ref == 'refs/heads/main' && vars.PUBLISH_ENABLED == 'true' && needs.detect.outputs.go == 'true'
     runs-on: ubuntu-latest
     environment: release
     # Pushing a tag needs contents: write and no OIDC token.

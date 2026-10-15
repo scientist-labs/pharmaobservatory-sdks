@@ -13,6 +13,10 @@ name: Regenerate
 # check is a status, not a required-check-capable workflow run, and it is re-posted on every
 # regeneration run, not on pushes made by hand to the PR branch (a human pushing to the branch
 # triggers the normal CI themselves).
+# OWNER STEP: "Allow GitHub Actions to create and approve pull requests" must be ON, first at the
+# scientist-labs organization level (Settings, Actions, General; the repository setting is rejected
+# with 409 while the org setting is off) and then for this repository (same page). Until then the
+# job pushes automation/regenerate and fails with a message naming the setting.
 on:
   schedule:
     - cron: "17 6 * * *"
@@ -54,6 +58,10 @@ jobs:
       - name: Open or update the pull request
         id: pr
         if: steps.bump.outputs.changed != ''
+        # The action pushes the branch before it creates the PR. If PR creation is refused (see the
+        # OWNER STEP in the header), keep the pushed branch and fail in the next step with a clear
+        # message instead of the action's opaque API error.
+        continue-on-error: true
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
           branch: automation/regenerate
@@ -68,6 +76,12 @@ jobs:
             This PR is opened with the default token, so GitHub does not start CI on it. The
             `regenerate` workflow runs ci.yml on this branch and posts the result as the commit
             status `ci / regenerated`.
+
+      - name: Fail clearly if the pull request could not be created
+        if: steps.pr.outcome == 'failure'
+        run: |
+          echo "::error title=Could not create the pull request::The branch automation/regenerate was pushed, but creating the PR failed. Most likely the setting 'Allow GitHub Actions to create and approve pull requests' is off: enable it for the scientist-labs organization (Settings, Actions, General) and then for this repository, then re-run. Or open the PR from automation/regenerate by hand."
+          exit 1
 
   ci:
     needs: regenerate

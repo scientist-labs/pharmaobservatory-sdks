@@ -24,6 +24,10 @@ SPEC=path/to/openapi.yaml bin/generate go
 
 Needs docker (the generator runs in a pinned Java image) or `OPENAPI_GENERATOR_JAR` pointing at the pinned jar with `java` on the path. Commit the regenerated output together with the change that caused it.
 
+## Owner setup for the regeneration PR
+
+The daily workflow opens its pull request with the default token, which needs "Allow GitHub Actions to create and approve pull requests" turned on: first for the `scientist-labs` organization (Settings, Actions, General), then for this repository (the repository setting is refused while the organization one is off). Until then the job pushes the branch `automation/regenerate` and fails with a message naming the setting; the PR can be opened from that branch by hand.
+
 ## Checks (what CI runs)
 
 - Ruby: `cd ruby && bundle exec rspec`, then `bin/check-gems` (builds both gems, installs them into a throwaway `GEM_HOME`, requires the alias).
@@ -37,4 +41,4 @@ Each package carries its own version in its generator config (`gemVersion` for R
 
 ## Releases
 
-Merging to `main` publishes any package whose version is not yet on its registry, once the owner has enabled publishing. See `.github/workflows/release.yml`.
+Merging to `main` publishes any package whose version is newer than the latest on its registry, once the owner has enabled publishing. See `.github/workflows/release.yml`.
