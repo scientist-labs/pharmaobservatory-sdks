@@ -83,7 +83,7 @@ if printf '%s\n' "${langs[@]}" | grep -qx ruby; then
   # `config-help -g ruby`), so two small deterministic substitutions. `gem build` refuses tar
   # entries whose base name exceeds 100 characters and the generated spec/ files add `_spec` to
   # long names, so ship only lib, docs and the README.
-  sed -i.bak 's/s\.metadata    = {}/s.metadata    = { "allowed_push_host" => "https:\/\/rubygems.org", "homepage_uri" => "https:\/\/pharmaobservatory.com", "documentation_uri" => "https:\/\/pharmaobservatory.com\/api-reference", "rubygems_mfa_required" => "true" }/' pharmaobservatory.gemspec
+  sed -i.bak 's/s\.metadata    = {}/s.metadata    = { "allowed_push_host" => "https:\/\/rubygems.org", "homepage_uri" => "https:\/\/pharmaobservatory.com", "documentation_uri" => "https:\/\/pharmaobservatory.com\/api-reference" }/' pharmaobservatory.gemspec
   sed -i.bak "s/s\.files         = .*/s.files         = Dir['lib\/**\/*.rb', 'docs\/**\/*.md', 'README.md'].sort/; /s\.test_files/d" pharmaobservatory.gemspec
   rm -f pharmaobservatory.gemspec.bak
 fi

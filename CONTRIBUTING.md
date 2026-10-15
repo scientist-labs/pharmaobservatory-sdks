@@ -24,9 +24,11 @@ SPEC=path/to/openapi.yaml bin/generate go
 
 Needs docker (the generator runs in a pinned Java image) or `OPENAPI_GENERATOR_JAR` pointing at the pinned jar with `java` on the path. Commit the regenerated output together with the change that caused it.
 
-## Owner setup for the regeneration PR
+## Owner setup
 
-The daily workflow opens its pull request with the default token, which needs "Allow GitHub Actions to create and approve pull requests" turned on: first for the `scientist-labs` organization (Settings, Actions, General), then for this repository (the repository setting is refused while the organization one is off). Until then the job pushes the branch `automation/regenerate` and fails with a message naming the setting; the PR can be opened from that branch by hand.
+- **Regeneration PR.** The daily workflow opens its pull request with the default token, which needs "Allow GitHub Actions to create and approve pull requests" turned on: first for the `scientist-labs` organization (Settings, Actions, General), then for this repository (the repository setting is refused while the organization one is off). Until then the job pushes the branch `automation/regenerate` and fails with a message naming the setting; the PR can be opened from that branch by hand. When the in-run CI passes the workflow squash-merges the PR itself, deletes the branch and dispatches the Release workflow; if CI fails the PR stays open.
+- **Publishing gates.** Set the repository variables `PUBLISH_RUBYGEMS`, `PUBLISH_GO` and `PUBLISH_CRATES` to `true` (Settings, Secrets and variables, Actions, Variables) to enable each registry separately. Gems are pushed with the org secret `RUBYGEMS_API_KEY`; Go publishes by tag.
+- **crates.io first publish.** Trusted publishing only works for an existing crate, so publish 0.1.0 once with a short-lived token (`cd rust && cargo publish --token <token>`, scopes publish-new and publish-update), revoke it, add the trusted publisher (owner `scientist-labs`, repository `pharmaobservatory-sdks`, workflow `release.yml`, environment `release`), then set `PUBLISH_CRATES=true`.
 
 ## Checks (what CI runs)
 
@@ -41,4 +43,4 @@ Each package carries its own version in its generator config (`gemVersion` for R
 
 ## Releases
 
-Merging to `main` publishes any package whose version is newer than the latest on its registry, once the owner has enabled publishing. See `.github/workflows/release.yml`.
+Merging to `main` publishes any package whose version is newer than the latest on its registry, for each registry whose `PUBLISH_*` variable is `true`. See `.github/workflows/release.yml`.

@@ -18,8 +18,7 @@ Gem::Specification.new do |s|
   s.metadata    = {
     "allowed_push_host" => "https://rubygems.org",
     "homepage_uri" => "https://pharmaobservatory.com",
-    "documentation_uri" => "https://pharmaobservatory.com/api-reference",
-    "rubygems_mfa_required" => "true"
+    "documentation_uri" => "https://pharmaobservatory.com/api-reference"
   }
 
   s.add_runtime_dependency "pharmaobservatory", "= #{PharmaObservatory::VERSION}"
