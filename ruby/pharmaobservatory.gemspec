@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.description = "Ruby client for the Pharma Observatory public REST API (https://pharmaobservatory.com/api-reference). Generated from the published OpenAPI document."
   s.license     = "MIT"
   s.required_ruby_version = ">= 3.2"
-  s.metadata    = { "allowed_push_host" => "https://rubygems.org", "homepage_uri" => "https://pharmaobservatory.com", "documentation_uri" => "https://pharmaobservatory.com/api-reference", "rubygems_mfa_required" => "true" }
+  s.metadata    = { "allowed_push_host" => "https://rubygems.org", "homepage_uri" => "https://pharmaobservatory.com", "documentation_uri" => "https://pharmaobservatory.com/api-reference" }
 
   s.add_runtime_dependency 'faraday', '>= 1.0.1', '< 3.0'
   s.add_runtime_dependency 'faraday-multipart'

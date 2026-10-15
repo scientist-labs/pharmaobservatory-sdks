@@ -122,7 +122,7 @@ jobs:
           push() {
             out="$(gem push "$1" 2>&1)" && { echo "$out"; return 0; }
             echo "$out"
-            echo "::error title=gem push failed for $1::If the message above says the key is not authorized for this gem, RUBYGEMS_API_KEY is scoped to existing gems and cannot create a new gem name. Push the first version by hand or use an unscoped key."
+            echo "::error title=gem push failed for $1::Two likely causes. If the message above says the key is not authorized for this gem, RUBYGEMS_API_KEY is scoped to existing gems and cannot create a new gem name: push the first version by hand or use an unscoped key. If it asks for an OTP or mentions MFA, the gemspec sets rubygems_mfa_required, which refuses an unattended API-key push: remove that metadata key."
             return 1
           }
           # The real gem first, so the alias never resolves to a version that is not on the index.
