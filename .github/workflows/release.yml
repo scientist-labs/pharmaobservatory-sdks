@@ -2,40 +2,43 @@ name: Release
 
 # Publishes each package whose current version is NEWER than the latest published version on its
 # registry (absent and greater, so a reverted older version never publishes):
-#   - rubygems.org: pharmaobservatory and the pharma-observatory alias (trusted publishing)
-#   - crates.io:    pharmaobservatory (trusted publishing)
+#   - rubygems.org: pharmaobservatory and the pharma-observatory alias, pushed with the org Actions
+#                   secret RUBYGEMS_API_KEY (the same secret the other scientist-labs gem repos use)
+#   - crates.io:    pharmaobservatory (trusted publishing, after a one-time manual first publish)
 #   - Go:           pushes the tag go/vX.Y.Z (the module lives in go/, so the tag is prefixed)
-# Triggered by a push to main that touches a package, or by hand (workflow_dispatch), which is also
-# how the first release is run after the owner steps below. "Newer" is checked against the
-# registries themselves, so re-running is safe and a merge made while the gate was off is picked up
-# by the next run. Every publish job also requires github.ref == refs/heads/main, so a dispatch from
-# another branch publishes nothing.
+# Triggered by a push to main that touches a package, by hand (workflow_dispatch), or by the
+# Regenerate workflow, which dispatches it after merging its own PR (a merge made with GITHUB_TOKEN
+# starts no push-triggered run). "Newer" is checked against the registries themselves, so re-running
+# is safe and a merge made while a gate was off is picked up by the next run. Every publish job also
+# requires github.ref == refs/heads/main, so a dispatch from another branch publishes nothing.
 #
-# GATE (short-lived). Every publish job is skipped unless the repository variable PUBLISH_ENABLED is
-# exactly 'true'; a skipped job is green and never asks for the `release` environment. DELETE the gate
-# (the `vars.PUBLISH_ENABLED` condition on each publish job, and this paragraph) after the first
-# successful release.
+# GATES (short-lived, one per registry). Each publish job is skipped unless its repository variable
+# is exactly 'true': PUBLISH_RUBYGEMS, PUBLISH_GO, PUBLISH_CRATES. A skipped job is green and never
+# asks for the `release` environment. The `verify` (CI) job runs when any gate is on. DELETE a gate
+# (its `vars.` condition and this paragraph's mention) after that registry's first successful release.
 #
-# OWNER STEPS BEFORE THE FIRST RELEASE
-#  1. Create the GitHub environment named `release` (Settings, Environments) with a deployment
-#     branch rule limiting it to `main` (recommended; the jobs also check the ref themselves).
-#     Optional required reviewers apply to every publish job.
-#  2. rubygems.org, for EACH of pharmaobservatory and pharma-observatory: the gems do not exist yet,
-#     so use a PENDING trusted publisher (rubygems.org, Profile, Pending trusted publishers, GitHub
-#     Actions): owner scientist-labs, repository pharmaobservatory-sdks, workflow filename
-#     release.yml, environment release. The first successful push creates the gem.
-#  3. crates.io: trusted publishing can only be configured for a crate that ALREADY EXISTS (crates.io
-#     docs/trusted-publishing, "Prerequisites": the initial publish requires an API token; there is
-#     no pending-publisher equivalent as of 2026-10-15). So publish 0.1.0 once by hand:
+# OWNER STEPS
+#  1. Optional: create the GitHub environment named `release` (Settings, Environments) with a
+#     deployment branch rule limiting it to `main`, plus optional required reviewers. The rubygems,
+#     crates and go-tag jobs reference it; GitHub creates it unprotected on first use if absent. It
+#     adds a branch restriction and an approval point for the shared RUBYGEMS_API_KEY secret, and
+#     crates.io trusted publishing is configured against the environment name.
+#  2. rubygems.org: nothing to register. The org secret RUBYGEMS_API_KEY (visibility all) is used.
+#     If that key is scoped to existing gems it cannot create a NEW gem name, and the push step fails
+#     with a message saying so; then push the first version of each gem by hand or widen the key.
+#  3. Set the repository variables PUBLISH_RUBYGEMS=true and PUBLISH_GO=true (Settings, Secrets and
+#     variables, Actions, Variables), then run this workflow by hand (Actions, Release, Run workflow)
+#     on main. The crates job stays skipped while PUBLISH_CRATES is unset.
+#  4. crates.io (when ready): trusted publishing can only be configured for a crate that ALREADY
+#     EXISTS (crates.io docs/trusted-publishing, "Prerequisites": the initial publish requires an
+#     API token; there is no pending-publisher equivalent as of 2026-10-15). So publish 0.1.0 once:
 #       crates.io, Account Settings, API Tokens, new token with scopes publish-new and publish-update
 #       cd rust && cargo publish --token <token>
 #     then revoke that token, and in the crate's Settings, Trusted Publishing, add a GitHub
 #     configuration: owner scientist-labs, repository pharmaobservatory-sdks, workflow release.yml,
-#     environment release. Every later version publishes through this workflow with no stored token.
-#     The `crates` job skips a version that is not newer than the published one, so the manual 0.1.0
-#     does not collide with the first run.
-#  4. Set the repository variable PUBLISH_ENABLED=true (Settings, Secrets and variables, Actions,
-#     Variables), then run this workflow by hand (Actions, Release, Run workflow) on main.
+#     environment release. Then set PUBLISH_CRATES=true. Every later version publishes through this
+#     workflow with no stored token; the job skips a version not newer than the published one, so the
+#     manual 0.1.0 does not collide.
 on:
   push:
     branches: [main]
@@ -85,17 +88,16 @@ jobs:
   # The full CI on the commit about to be published, before anything is.
   verify:
     needs: detect
-    if: needs.detect.outputs.any == 'true' && vars.PUBLISH_ENABLED == 'true'
+    if: needs.detect.outputs.any == 'true' && (vars.PUBLISH_RUBYGEMS == 'true' || vars.PUBLISH_GO == 'true' || vars.PUBLISH_CRATES == 'true')
     uses: ./.github/workflows/ci.yml
 
   rubygems:
     needs: [detect, verify]
-    if: github.ref == 'refs/heads/main' && vars.PUBLISH_ENABLED == 'true' && (needs.detect.outputs.ruby == 'true' || needs.detect.outputs.alias == 'true')
+    if: github.ref == 'refs/heads/main' && vars.PUBLISH_RUBYGEMS == 'true' && (needs.detect.outputs.ruby == 'true' || needs.detect.outputs.alias == 'true')
     runs-on: ubuntu-latest
     environment: release
     permissions:
       contents: read
-      id-token: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: ruby/setup-ruby@651ff0d62c5c79bed6d53ec518387aae20e72c1a # v1.329.0
@@ -105,17 +107,32 @@ jobs:
         run: |
           (cd ruby && gem build pharmaobservatory.gemspec)
           (cd ruby-alias && gem build pharma-observatory.gemspec)
-      # Uses the job's OIDC token to act as the registered trusted publisher.
-      - uses: rubygems/configure-rubygems-credentials@dc5a8d8553e6ee01fc26761a49e99e733d17954a # v2.1.0
-      # The real gem first, so the alias never resolves to a version that is not on the index.
-      - if: needs.detect.outputs.ruby == 'true'
-        run: gem push ruby/pharmaobservatory-*.gem
-      - if: needs.detect.outputs.alias == 'true'
-        run: gem push ruby-alias/pharma-observatory-*.gem
+      # `gem push` reads the key from GEM_HOST_API_KEY. A key that cannot create a new gem name is
+      # reported as such, because the first release creates both gems.
+      - name: Push the gems
+        env:
+          GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+          PUSH_RUBY: ${{ needs.detect.outputs.ruby }}
+          PUSH_ALIAS: ${{ needs.detect.outputs.alias }}
+        run: |
+          if [ -z "$GEM_HOST_API_KEY" ]; then
+            echo "::error title=RUBYGEMS_API_KEY is empty::The org Actions secret RUBYGEMS_API_KEY is not available to this repository."
+            exit 1
+          fi
+          push() {
+            out="$(gem push "$1" 2>&1)" && { echo "$out"; return 0; }
+            echo "$out"
+            echo "::error title=gem push failed for $1::If the message above says the key is not authorized for this gem, RUBYGEMS_API_KEY is scoped to existing gems and cannot create a new gem name. Push the first version by hand or use an unscoped key."
+            return 1
+          }
+          # The real gem first, so the alias never resolves to a version that is not on the index.
+          [ "$PUSH_RUBY" = true ] && { push ruby/pharmaobservatory-*.gem || exit 1; }
+          [ "$PUSH_ALIAS" = true ] && { push ruby-alias/pharma-observatory-*.gem || exit 1; }
+          exit 0
 
   crates:
     needs: [detect, verify]
-    if: github.ref == 'refs/heads/main' && vars.PUBLISH_ENABLED == 'true' && needs.detect.outputs.rust == 'true'
+    if: github.ref == 'refs/heads/main' && vars.PUBLISH_CRATES == 'true' && needs.detect.outputs.rust == 'true'
     runs-on: ubuntu-latest
     environment: release
     permissions:
@@ -133,7 +150,7 @@ jobs:
 
   go-tag:
     needs: [detect, verify]
-    if: github.ref == 'refs/heads/main' && vars.PUBLISH_ENABLED == 'true' && needs.detect.outputs.go == 'true'
+    if: github.ref == 'refs/heads/main' && vars.PUBLISH_GO == 'true' && needs.detect.outputs.go == 'true'
     runs-on: ubuntu-latest
     environment: release
     # Pushing a tag needs contents: write and no OIDC token.

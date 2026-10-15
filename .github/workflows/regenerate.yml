@@ -13,6 +13,13 @@ name: Regenerate
 # check is a status, not a required-check-capable workflow run, and it is re-posted on every
 # regeneration run, not on pushes made by hand to the PR branch (a human pushing to the branch
 # triggers the normal CI themselves).
+#
+# MERGE AND RELEASE. When the in-run CI passes on the PR head, the `merge` job squash-merges the PR
+# (pinned to that head SHA, so a commit pushed meanwhile is never merged unreviewed) with
+# GITHUB_TOKEN and deletes the branch. A merge made with GITHUB_TOKEN starts no push-triggered
+# workflow, so release.yml would never run; the job therefore dispatches it explicitly on main
+# (workflow_dispatch made with GITHUB_TOKEN does start a run). If CI fails, the PR stays open and the
+# run fails.
 # OWNER STEP: "Allow GitHub Actions to create and approve pull requests" must be ON, first at the
 # scientist-labs organization level (Settings, Actions, General; the repository setting is rejected
 # with 409 while the org setting is off) and then for this repository (same page). Until then the
@@ -74,8 +81,9 @@ jobs:
             (patch version bumped for each).
 
             This PR is opened with the default token, so GitHub does not start CI on it. The
-            `regenerate` workflow runs ci.yml on this branch and posts the result as the commit
-            status `ci / regenerated`.
+            `regenerate` workflow runs ci.yml on this branch, posts the result as the commit
+            status `ci / regenerated`, and squash-merges this PR itself when CI passes, then
+            dispatches the Release workflow. If CI fails the PR stays open.
 
       - name: Fail clearly if the pull request could not be created
         if: steps.pr.outcome == 'failure'
@@ -108,3 +116,25 @@ jobs:
             -f state="$state" -f context="ci / regenerated" \
             -f description="ci.yml on the regenerated branch: $RESULT" \
             -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+
+  merge:
+    needs: [regenerate, ci, report]
+    if: needs.ci.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      # --match-head-commit refuses the merge if the branch moved after CI ran.
+      - name: Squash-merge the pull request and delete its branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ needs.regenerate.outputs.number }}
+          SHA: ${{ needs.regenerate.outputs.head-sha }}
+        run: gh pr merge "$NUMBER" --repo "$GITHUB_REPOSITORY" --squash --delete-branch --match-head-commit "$SHA"
+      # The merge above was made with GITHUB_TOKEN, so it started no push-triggered Release run.
+      - name: Dispatch the Release workflow on main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run release.yml --repo "$GITHUB_REPOSITORY" --ref main
