@@ -1,0 +1,28 @@
+{
+  "gemName": "pharmaobservatory",
+  "moduleName": "PharmaObservatory",
+  "apiPackage": "pharmaobservatory/api",
+  "modelPackage": "pharmaobservatory/models",
+  "classPrefix": "PharmaObservatory",
+  "parameterNaming": "camelCase",
+  "generateAliasAsModel": false,
+  "gemVersion": "0.1.0",
+  "gemAuthor": "Scientist.com",
+  "gemAuthorEmail": "support@scientist.com",
+  "gemHomepage": "https://pharmaobservatory.com",
+  "gemSummary": "Ruby client for the Pharma Observatory public REST API",
+  "gemDescription": "Ruby client for the Pharma Observatory public REST API (https://pharmaobservatory.com/api-reference). Generated from the published OpenAPI document.",
+  "gemLicense": "MIT",
+  "gemRequiredRubyVersion": ">= 3.2",
+  "library": "faraday",
+  "gemDevDependencies": {
+    "rspec": "~> 3.6"
+  },
+  "inlineSchemaNameMappings": {
+    "_api_v1_conditions__condition_id__sponsor_landscape_get_200_response_recruitment_rollup_predicted_at_horizon_cap": "ApiV1SponsorLandscapeRecruitmentRollupPredictedAtHorizonCap",
+    "_api_v1_conditions__condition_id__sponsor_landscape_get_200_response_recruitment_rollup_status_counts_inner": "ApiV1SponsorLandscapeRecruitmentRollupStatusCountsInner",
+    "_api_v1_org_financing_and_ownership_get_200_response_ownership_positions_institutional_13f_holders_inner": "ApiV1OrgFinancingAndOwnershipOwnershipPositionsInstitutional13fHoldersInner",
+    "_api_v1_trials_history_and_prediction_get_200_response_record_history_observations_inner_overall_status": "ApiV1TrialsHistoryRecordHistoryObservationsInnerOverallStatus",
+    "_api_v1_trials_history_and_prediction_get_200_response_predictions_inner_registered_primary_completion": "ApiV1TrialsHistoryPredictionsInnerRegisteredPrimaryCompletion"
+  }
+}

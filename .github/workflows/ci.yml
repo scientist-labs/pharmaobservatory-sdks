@@ -1,0 +1,82 @@
+name: CI
+
+# Runs on every PR and push to main, and is also called by regenerate.yml (workflow_call) to test
+# the branch of an automated regeneration PR: a PR opened with the default GITHUB_TOKEN does not
+# trigger pull_request workflows, so regenerate.yml runs this workflow itself and reports the
+# result on the PR as a commit status.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_call:
+    inputs:
+      ref:
+        description: Git ref or SHA to test. Empty means the triggering commit.
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  no-codename:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.ref }}
+      - run: bin/check-no-codename
+
+  ruby:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.ref }}
+      - uses: ruby/setup-ruby@651ff0d62c5c79bed6d53ec518387aae20e72c1a # v1.329.0
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+          working-directory: ruby
+      - name: Generated specs
+        working-directory: ruby
+        run: bundle exec rspec
+      - name: Build both gems, install them, require the alias
+        run: bin/check-gems
+
+  go:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: go
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.ref }}
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: stable
+          cache-dependency-path: go/go.sum
+      - run: go build ./...
+      - run: go vet ./...
+      - run: go test ./...
+
+  rust:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rust
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.ref }}
+      - name: Toolchain
+        run: rustup toolchain install stable --profile minimal --component clippy && rustup default stable
+      - run: cargo build
+      - run: cargo test
+      # Not `-D warnings`: the generator's output trips style lints it does not control (needless
+      # `return`, non-snake-case module names, large `Err` variants), so every release would
+      # fail. Clippy still fails the job on any error-level lint.
+      - run: cargo clippy
+      - name: The crate packages
+        run: cargo package --list > /dev/null

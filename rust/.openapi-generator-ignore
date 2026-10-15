@@ -1,0 +1,4 @@
+# Files the generator must never overwrite. See CUSTOMIZATION.md.
+README_HEADER.md
+.travis.yml
+git_push.sh

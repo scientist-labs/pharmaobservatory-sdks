@@ -1,0 +1,12 @@
+source 'https://rubygems.org'
+
+gemspec
+
+group :development, :test do
+  # Hand-maintained (protected in .openapi-generator-ignore). The generated Gemfile pins
+  # rake ~> 13.0.1, which requires `ostruct` and breaks on Ruby 3.5+, where ostruct is no longer a
+  # default gem. Fixed in rake 13.3.0; there is no generator option for this pin.
+  gem 'rake', '~> 13.0'
+  gem 'pry-byebug'
+  gem 'rubocop', '~> 0.66.0'
+end
