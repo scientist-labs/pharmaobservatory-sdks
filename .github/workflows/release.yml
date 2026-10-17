@@ -4,7 +4,7 @@ name: Release
 # registry (absent and greater, so a reverted older version never publishes):
 #   - rubygems.org: pharmaobservatory and the pharma-observatory alias, pushed with the org Actions
 #                   secret RUBYGEMS_API_KEY (the same secret the other scientist-labs gem repos use)
-#   - crates.io:    pharmaobservatory (trusted publishing, after a one-time manual first publish)
+#   - crates.io:    pharmaobservatory (org secret CARGO_REGISTRY_TOKEN)
 #   - Go:           pushes the tag go/vX.Y.Z (the module lives in go/, so the tag is prefixed)
 # Triggered by a push to main that touches a package, by hand (workflow_dispatch), or by the
 # Regenerate workflow, which dispatches it after merging its own PR (a merge made with GITHUB_TOKEN
@@ -21,24 +21,17 @@ name: Release
 #  1. Optional: create the GitHub environment named `release` (Settings, Environments) with a
 #     deployment branch rule limiting it to `main`, plus optional required reviewers. The rubygems,
 #     crates and go-tag jobs reference it; GitHub creates it unprotected on first use if absent. It
-#     adds a branch restriction and an approval point for the shared RUBYGEMS_API_KEY secret, and
-#     crates.io trusted publishing is configured against the environment name.
+#     adds a branch restriction and an approval point for the shared RUBYGEMS_API_KEY and
+#     CARGO_REGISTRY_TOKEN secrets.
 #  2. rubygems.org: nothing to register. The org secret RUBYGEMS_API_KEY (visibility all) is used.
 #     If that key is scoped to existing gems it cannot create a NEW gem name, and the push step fails
 #     with a message saying so; then push the first version of each gem by hand or widen the key.
 #  3. Set the repository variables PUBLISH_RUBYGEMS=true and PUBLISH_GO=true (Settings, Secrets and
 #     variables, Actions, Variables), then run this workflow by hand (Actions, Release, Run workflow)
 #     on main. The crates job stays skipped while PUBLISH_CRATES is unset.
-#  4. crates.io (when ready): trusted publishing can only be configured for a crate that ALREADY
-#     EXISTS (crates.io docs/trusted-publishing, "Prerequisites": the initial publish requires an
-#     API token; there is no pending-publisher equivalent as of 2026-10-15). So publish 0.1.0 once:
-#       crates.io, Account Settings, API Tokens, new token with scopes publish-new and publish-update
-#       cd rust && cargo publish --token <token>
-#     then revoke that token, and in the crate's Settings, Trusted Publishing, add a GitHub
-#     configuration: owner scientist-labs, repository pharmaobservatory-sdks, workflow release.yml,
-#     environment release. Then set PUBLISH_CRATES=true. Every later version publishes through this
-#     workflow with no stored token; the job skips a version not newer than the published one, so the
-#     manual 0.1.0 does not collide.
+#  4. crates.io: the crates job publishes with the org Actions secret CARGO_REGISTRY_TOKEN (visibility
+#     all), the same pattern as RUBYGEMS_API_KEY above, so the first version needs no manual step.
+#     Set PUBLISH_CRATES=true to enable it; the job skips a version not newer than the published one.
 on:
   push:
     branches: [main]
@@ -137,16 +130,19 @@ jobs:
     environment: release
     permissions:
       contents: read
-      id-token: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - run: rustup toolchain install stable --profile minimal && rustup default stable
-      - uses: rust-lang/crates-io-auth-action@c6f97d42243bad5fab37ca0427f495c86d5b1a18 # v1.0.5
-        id: auth
-      - run: cargo publish
+      - name: Publish to crates.io with the org CARGO_REGISTRY_TOKEN
         working-directory: rust
         env:
-          CARGO_REGISTRY_TOKEN: ${{ steps.auth.outputs.token }}
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: |
+          if [ -z "$CARGO_REGISTRY_TOKEN" ]; then
+            echo "::error::CARGO_REGISTRY_TOKEN is not available to this repository (org Actions secret)."
+            exit 1
+          fi
+          cargo publish
 
   go-tag:
     needs: [detect, verify]
