@@ -12,7 +12,6 @@ package pharmaobservatory
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -22,9 +21,20 @@ var _ MappedNullable = &NotEntitledError{}
 // NotEntitledError struct for NotEntitledError
 type NotEntitledError struct {
 	Error string `json:"error"`
+	Visible *bool `json:"visible,omitempty"`
+	Reason *string `json:"reason,omitempty"`
 	Tier string `json:"tier"`
-	License string `json:"license"`
 	Attribution string `json:"attribution"`
+	Page *string `json:"page,omitempty"`
+	Id *string `json:"id,omitempty"`
+	Section *string `json:"section,omitempty"`
+	Heading *string `json:"heading,omitempty"`
+	Lens NullableString `json:"lens,omitempty"`
+	WebUrl *string `json:"web_url,omitempty"`
+	BuildState *BiomarkersList200ResponseBuildState `json:"build_state,omitempty"`
+	License *string `json:"license,omitempty"`
+	Restriction *OrgsBenzingaCatalysts200ResponseRestriction `json:"restriction,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _NotEntitledError NotEntitledError
@@ -33,11 +43,10 @@ type _NotEntitledError NotEntitledError
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewNotEntitledError(error_ string, tier string, license string, attribution string) *NotEntitledError {
+func NewNotEntitledError(error_ string, tier string, attribution string) *NotEntitledError {
 	this := NotEntitledError{}
 	this.Error = error_
 	this.Tier = tier
-	this.License = license
 	this.Attribution = attribution
 	return &this
 }
@@ -74,6 +83,70 @@ func (o *NotEntitledError) SetError(v string) {
 	o.Error = v
 }
 
+// GetVisible returns the Visible field value if set, zero value otherwise.
+func (o *NotEntitledError) GetVisible() bool {
+	if o == nil || IsNil(o.Visible) {
+		var ret bool
+		return ret
+	}
+	return *o.Visible
+}
+
+// GetVisibleOk returns a tuple with the Visible field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NotEntitledError) GetVisibleOk() (*bool, bool) {
+	if o == nil || IsNil(o.Visible) {
+		return nil, false
+	}
+	return o.Visible, true
+}
+
+// HasVisible returns a boolean if a field has been set.
+func (o *NotEntitledError) HasVisible() bool {
+	if o != nil && !IsNil(o.Visible) {
+		return true
+	}
+
+	return false
+}
+
+// SetVisible gets a reference to the given bool and assigns it to the Visible field.
+func (o *NotEntitledError) SetVisible(v bool) {
+	o.Visible = &v
+}
+
+// GetReason returns the Reason field value if set, zero value otherwise.
+func (o *NotEntitledError) GetReason() string {
+	if o == nil || IsNil(o.Reason) {
+		var ret string
+		return ret
+	}
+	return *o.Reason
+}
+
+// GetReasonOk returns a tuple with the Reason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NotEntitledError) GetReasonOk() (*string, bool) {
+	if o == nil || IsNil(o.Reason) {
+		return nil, false
+	}
+	return o.Reason, true
+}
+
+// HasReason returns a boolean if a field has been set.
+func (o *NotEntitledError) HasReason() bool {
+	if o != nil && !IsNil(o.Reason) {
+		return true
+	}
+
+	return false
+}
+
+// SetReason gets a reference to the given string and assigns it to the Reason field.
+func (o *NotEntitledError) SetReason(v string) {
+	o.Reason = &v
+}
+
 // GetTier returns the Tier field value
 func (o *NotEntitledError) GetTier() string {
 	if o == nil {
@@ -96,30 +169,6 @@ func (o *NotEntitledError) GetTierOk() (*string, bool) {
 // SetTier sets field value
 func (o *NotEntitledError) SetTier(v string) {
 	o.Tier = v
-}
-
-// GetLicense returns the License field value
-func (o *NotEntitledError) GetLicense() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.License
-}
-
-// GetLicenseOk returns a tuple with the License field value
-// and a boolean to check if the value has been set.
-func (o *NotEntitledError) GetLicenseOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.License, true
-}
-
-// SetLicense sets field value
-func (o *NotEntitledError) SetLicense(v string) {
-	o.License = v
 }
 
 // GetAttribution returns the Attribution field value
@@ -146,6 +195,304 @@ func (o *NotEntitledError) SetAttribution(v string) {
 	o.Attribution = v
 }
 
+// GetPage returns the Page field value if set, zero value otherwise.
+func (o *NotEntitledError) GetPage() string {
+	if o == nil || IsNil(o.Page) {
+		var ret string
+		return ret
+	}
+	return *o.Page
+}
+
+// GetPageOk returns a tuple with the Page field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NotEntitledError) GetPageOk() (*string, bool) {
+	if o == nil || IsNil(o.Page) {
+		return nil, false
+	}
+	return o.Page, true
+}
+
+// HasPage returns a boolean if a field has been set.
+func (o *NotEntitledError) HasPage() bool {
+	if o != nil && !IsNil(o.Page) {
+		return true
+	}
+
+	return false
+}
+
+// SetPage gets a reference to the given string and assigns it to the Page field.
+func (o *NotEntitledError) SetPage(v string) {
+	o.Page = &v
+}
+
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *NotEntitledError) GetId() string {
+	if o == nil || IsNil(o.Id) {
+		var ret string
+		return ret
+	}
+	return *o.Id
+}
+
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NotEntitledError) GetIdOk() (*string, bool) {
+	if o == nil || IsNil(o.Id) {
+		return nil, false
+	}
+	return o.Id, true
+}
+
+// HasId returns a boolean if a field has been set.
+func (o *NotEntitledError) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *NotEntitledError) SetId(v string) {
+	o.Id = &v
+}
+
+// GetSection returns the Section field value if set, zero value otherwise.
+func (o *NotEntitledError) GetSection() string {
+	if o == nil || IsNil(o.Section) {
+		var ret string
+		return ret
+	}
+	return *o.Section
+}
+
+// GetSectionOk returns a tuple with the Section field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NotEntitledError) GetSectionOk() (*string, bool) {
+	if o == nil || IsNil(o.Section) {
+		return nil, false
+	}
+	return o.Section, true
+}
+
+// HasSection returns a boolean if a field has been set.
+func (o *NotEntitledError) HasSection() bool {
+	if o != nil && !IsNil(o.Section) {
+		return true
+	}
+
+	return false
+}
+
+// SetSection gets a reference to the given string and assigns it to the Section field.
+func (o *NotEntitledError) SetSection(v string) {
+	o.Section = &v
+}
+
+// GetHeading returns the Heading field value if set, zero value otherwise.
+func (o *NotEntitledError) GetHeading() string {
+	if o == nil || IsNil(o.Heading) {
+		var ret string
+		return ret
+	}
+	return *o.Heading
+}
+
+// GetHeadingOk returns a tuple with the Heading field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NotEntitledError) GetHeadingOk() (*string, bool) {
+	if o == nil || IsNil(o.Heading) {
+		return nil, false
+	}
+	return o.Heading, true
+}
+
+// HasHeading returns a boolean if a field has been set.
+func (o *NotEntitledError) HasHeading() bool {
+	if o != nil && !IsNil(o.Heading) {
+		return true
+	}
+
+	return false
+}
+
+// SetHeading gets a reference to the given string and assigns it to the Heading field.
+func (o *NotEntitledError) SetHeading(v string) {
+	o.Heading = &v
+}
+
+// GetLens returns the Lens field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *NotEntitledError) GetLens() string {
+	if o == nil || IsNil(o.Lens.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Lens.Get()
+}
+
+// GetLensOk returns a tuple with the Lens field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *NotEntitledError) GetLensOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Lens.Get(), o.Lens.IsSet()
+}
+
+// HasLens returns a boolean if a field has been set.
+func (o *NotEntitledError) HasLens() bool {
+	if o != nil && o.Lens.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetLens gets a reference to the given NullableString and assigns it to the Lens field.
+func (o *NotEntitledError) SetLens(v string) {
+	o.Lens.Set(&v)
+}
+// SetLensNil sets the value for Lens to be an explicit nil
+func (o *NotEntitledError) SetLensNil() {
+	o.Lens.Set(nil)
+}
+
+// UnsetLens ensures that no value is present for Lens, not even an explicit nil
+func (o *NotEntitledError) UnsetLens() {
+	o.Lens.Unset()
+}
+
+// GetWebUrl returns the WebUrl field value if set, zero value otherwise.
+func (o *NotEntitledError) GetWebUrl() string {
+	if o == nil || IsNil(o.WebUrl) {
+		var ret string
+		return ret
+	}
+	return *o.WebUrl
+}
+
+// GetWebUrlOk returns a tuple with the WebUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NotEntitledError) GetWebUrlOk() (*string, bool) {
+	if o == nil || IsNil(o.WebUrl) {
+		return nil, false
+	}
+	return o.WebUrl, true
+}
+
+// HasWebUrl returns a boolean if a field has been set.
+func (o *NotEntitledError) HasWebUrl() bool {
+	if o != nil && !IsNil(o.WebUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetWebUrl gets a reference to the given string and assigns it to the WebUrl field.
+func (o *NotEntitledError) SetWebUrl(v string) {
+	o.WebUrl = &v
+}
+
+// GetBuildState returns the BuildState field value if set, zero value otherwise.
+func (o *NotEntitledError) GetBuildState() BiomarkersList200ResponseBuildState {
+	if o == nil || IsNil(o.BuildState) {
+		var ret BiomarkersList200ResponseBuildState
+		return ret
+	}
+	return *o.BuildState
+}
+
+// GetBuildStateOk returns a tuple with the BuildState field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NotEntitledError) GetBuildStateOk() (*BiomarkersList200ResponseBuildState, bool) {
+	if o == nil || IsNil(o.BuildState) {
+		return nil, false
+	}
+	return o.BuildState, true
+}
+
+// HasBuildState returns a boolean if a field has been set.
+func (o *NotEntitledError) HasBuildState() bool {
+	if o != nil && !IsNil(o.BuildState) {
+		return true
+	}
+
+	return false
+}
+
+// SetBuildState gets a reference to the given BiomarkersList200ResponseBuildState and assigns it to the BuildState field.
+func (o *NotEntitledError) SetBuildState(v BiomarkersList200ResponseBuildState) {
+	o.BuildState = &v
+}
+
+// GetLicense returns the License field value if set, zero value otherwise.
+func (o *NotEntitledError) GetLicense() string {
+	if o == nil || IsNil(o.License) {
+		var ret string
+		return ret
+	}
+	return *o.License
+}
+
+// GetLicenseOk returns a tuple with the License field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NotEntitledError) GetLicenseOk() (*string, bool) {
+	if o == nil || IsNil(o.License) {
+		return nil, false
+	}
+	return o.License, true
+}
+
+// HasLicense returns a boolean if a field has been set.
+func (o *NotEntitledError) HasLicense() bool {
+	if o != nil && !IsNil(o.License) {
+		return true
+	}
+
+	return false
+}
+
+// SetLicense gets a reference to the given string and assigns it to the License field.
+func (o *NotEntitledError) SetLicense(v string) {
+	o.License = &v
+}
+
+// GetRestriction returns the Restriction field value if set, zero value otherwise.
+func (o *NotEntitledError) GetRestriction() OrgsBenzingaCatalysts200ResponseRestriction {
+	if o == nil || IsNil(o.Restriction) {
+		var ret OrgsBenzingaCatalysts200ResponseRestriction
+		return ret
+	}
+	return *o.Restriction
+}
+
+// GetRestrictionOk returns a tuple with the Restriction field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NotEntitledError) GetRestrictionOk() (*OrgsBenzingaCatalysts200ResponseRestriction, bool) {
+	if o == nil || IsNil(o.Restriction) {
+		return nil, false
+	}
+	return o.Restriction, true
+}
+
+// HasRestriction returns a boolean if a field has been set.
+func (o *NotEntitledError) HasRestriction() bool {
+	if o != nil && !IsNil(o.Restriction) {
+		return true
+	}
+
+	return false
+}
+
+// SetRestriction gets a reference to the given OrgsBenzingaCatalysts200ResponseRestriction and assigns it to the Restriction field.
+func (o *NotEntitledError) SetRestriction(v OrgsBenzingaCatalysts200ResponseRestriction) {
+	o.Restriction = &v
+}
+
 func (o NotEntitledError) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -157,9 +504,46 @@ func (o NotEntitledError) MarshalJSON() ([]byte, error) {
 func (o NotEntitledError) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["error"] = o.Error
+	if !IsNil(o.Visible) {
+		toSerialize["visible"] = o.Visible
+	}
+	if !IsNil(o.Reason) {
+		toSerialize["reason"] = o.Reason
+	}
 	toSerialize["tier"] = o.Tier
-	toSerialize["license"] = o.License
 	toSerialize["attribution"] = o.Attribution
+	if !IsNil(o.Page) {
+		toSerialize["page"] = o.Page
+	}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Section) {
+		toSerialize["section"] = o.Section
+	}
+	if !IsNil(o.Heading) {
+		toSerialize["heading"] = o.Heading
+	}
+	if o.Lens.IsSet() {
+		toSerialize["lens"] = o.Lens.Get()
+	}
+	if !IsNil(o.WebUrl) {
+		toSerialize["web_url"] = o.WebUrl
+	}
+	if !IsNil(o.BuildState) {
+		toSerialize["build_state"] = o.BuildState
+	}
+	if !IsNil(o.License) {
+		toSerialize["license"] = o.License
+	}
+	if !IsNil(o.Restriction) {
+		toSerialize["restriction"] = o.Restriction
+	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -170,7 +554,6 @@ func (o *NotEntitledError) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"error",
 		"tier",
-		"license",
 		"attribution",
 	}
 
@@ -190,15 +573,33 @@ func (o *NotEntitledError) UnmarshalJSON(data []byte) (err error) {
 
 	varNotEntitledError := _NotEntitledError{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varNotEntitledError)
+	err = json.Unmarshal(data, &varNotEntitledError)
 
 	if err != nil {
 		return err
 	}
 
 	*o = NotEntitledError(varNotEntitledError)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "error")
+		delete(additionalProperties, "visible")
+		delete(additionalProperties, "reason")
+		delete(additionalProperties, "tier")
+		delete(additionalProperties, "attribution")
+		delete(additionalProperties, "page")
+		delete(additionalProperties, "id")
+		delete(additionalProperties, "section")
+		delete(additionalProperties, "heading")
+		delete(additionalProperties, "lens")
+		delete(additionalProperties, "web_url")
+		delete(additionalProperties, "build_state")
+		delete(additionalProperties, "license")
+		delete(additionalProperties, "restriction")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

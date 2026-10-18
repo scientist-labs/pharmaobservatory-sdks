@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+# Rust-only spec rewrite, run by bin/generate on a COPY of the OpenAPI document.
+#
+#   bin/rust-spec-patch <in.yaml> <out.yaml>
+#
+# openapi-generator's Rust enum generator names every array variant of a oneOf `Array`, so a union
+# with two array members (the section row `value`: string[] and any[]) emits two variants called
+# `Array` and the crate does not compile. There is no generator option or Rust template switch for
+# naming oneOf variants (checked with `config-help -g rust`), so every oneOf that has more than one
+# array member is rewritten to an untyped schema (any JSON value, `serde_json::Value` in Rust),
+# keeping `nullable`. The rewrite is a no-op for any union the generator can already name, so a
+# spec that stops producing the collision is left untouched. Go and Ruby never see this copy.
+require "yaml"
+
+input, output = ARGV
+abort "usage: rust-spec-patch <in.yaml> <out.yaml>" unless input && output
+
+rewritten = 0
+walk = lambda do |node|
+  case node
+  when Hash
+    one_of = node["oneOf"]
+    if one_of.is_a?(Array) && one_of.count { |m| m.is_a?(Hash) && m["type"] == "array" } > 1
+      node.delete("oneOf")
+      rewritten += 1
+    end
+    node.each_value(&walk)
+  when Array
+    node.each(&walk)
+  end
+end
+
+doc = YAML.safe_load_file(input, aliases: true)
+walk.call(doc)
+File.write(output, YAML.dump(doc))
+warn "rust-spec-patch: rewrote #{rewritten} oneOf with more than one array member to an untyped schema"

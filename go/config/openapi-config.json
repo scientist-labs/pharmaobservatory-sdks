@@ -1,9 +1,10 @@
 {
   "packageName": "pharmaobservatory",
-  "packageVersion": "0.1.1",
+  "packageVersion": "0.1.2",
   "gitHost": "github.com",
   "gitUserId": "scientist-labs",
   "gitRepoId": "pharmaobservatory-sdks/go",
+  "disallowAdditionalPropertiesIfNotPresent": false,
   "inlineSchemaNameMappings": {
     "_api_v1_conditions__condition_id__sponsor_landscape_get_200_response_recruitment_rollup_predicted_at_horizon_cap": "ApiV1SponsorLandscapeRecruitmentRollupPredictedAtHorizonCap",
     "_api_v1_conditions__condition_id__sponsor_landscape_get_200_response_recruitment_rollup_status_counts_inner": "ApiV1SponsorLandscapeRecruitmentRollupStatusCountsInner",
