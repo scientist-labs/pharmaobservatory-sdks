@@ -15,21 +15,51 @@ use serde::{Deserialize, Serialize};
 pub struct NotEntitledError {
     #[serde(rename = "error")]
     pub error: String,
+    #[serde(rename = "visible", skip_serializing_if = "Option::is_none")]
+    pub visible: Option<bool>,
+    #[serde(rename = "reason", skip_serializing_if = "Option::is_none")]
+    pub reason: Option<String>,
     #[serde(rename = "tier")]
     pub tier: String,
-    #[serde(rename = "license")]
-    pub license: String,
     #[serde(rename = "attribution")]
     pub attribution: String,
+    #[serde(rename = "page", skip_serializing_if = "Option::is_none")]
+    pub page: Option<String>,
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
+    pub id: Option<String>,
+    #[serde(rename = "section", skip_serializing_if = "Option::is_none")]
+    pub section: Option<String>,
+    #[serde(rename = "heading", skip_serializing_if = "Option::is_none")]
+    pub heading: Option<String>,
+    #[serde(rename = "lens", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub lens: Option<Option<String>>,
+    #[serde(rename = "web_url", skip_serializing_if = "Option::is_none")]
+    pub web_url: Option<String>,
+    #[serde(rename = "build_state", skip_serializing_if = "Option::is_none")]
+    pub build_state: Option<Box<models::BiomarkersList200ResponseBuildState>>,
+    #[serde(rename = "license", skip_serializing_if = "Option::is_none")]
+    pub license: Option<String>,
+    #[serde(rename = "restriction", skip_serializing_if = "Option::is_none")]
+    pub restriction: Option<Box<models::OrgsBenzingaCatalysts200ResponseRestriction>>,
 }
 
 impl NotEntitledError {
-    pub fn new(error: String, tier: String, license: String, attribution: String) -> NotEntitledError {
+    pub fn new(error: String, tier: String, attribution: String) -> NotEntitledError {
         NotEntitledError {
             error,
+            visible: None,
+            reason: None,
             tier,
-            license,
             attribution,
+            page: None,
+            id: None,
+            section: None,
+            heading: None,
+            lens: None,
+            web_url: None,
+            build_state: None,
+            license: None,
+            restriction: None,
         }
     }
 }

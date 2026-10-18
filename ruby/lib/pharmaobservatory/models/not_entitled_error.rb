@@ -17,19 +17,49 @@ module PharmaObservatory
   class NotEntitledError
     attr_accessor :error
 
+    attr_accessor :visible
+
+    attr_accessor :reason
+
     attr_accessor :tier
+
+    attr_accessor :attribution
+
+    attr_accessor :page
+
+    attr_accessor :id
+
+    attr_accessor :section
+
+    attr_accessor :heading
+
+    attr_accessor :lens
+
+    attr_accessor :web_url
+
+    attr_accessor :build_state
 
     attr_accessor :license
 
-    attr_accessor :attribution
+    attr_accessor :restriction
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'error' => :'error',
+        :'visible' => :'visible',
+        :'reason' => :'reason',
         :'tier' => :'tier',
+        :'attribution' => :'attribution',
+        :'page' => :'page',
+        :'id' => :'id',
+        :'section' => :'section',
+        :'heading' => :'heading',
+        :'lens' => :'lens',
+        :'web_url' => :'web_url',
+        :'build_state' => :'build_state',
         :'license' => :'license',
-        :'attribution' => :'attribution'
+        :'restriction' => :'restriction'
       }
     end
 
@@ -47,15 +77,26 @@ module PharmaObservatory
     def self.openapi_types
       {
         :'error' => :'String',
+        :'visible' => :'Boolean',
+        :'reason' => :'String',
         :'tier' => :'String',
+        :'attribution' => :'String',
+        :'page' => :'String',
+        :'id' => :'String',
+        :'section' => :'String',
+        :'heading' => :'String',
+        :'lens' => :'String',
+        :'web_url' => :'String',
+        :'build_state' => :'BiomarkersList200ResponseBuildState',
         :'license' => :'String',
-        :'attribution' => :'String'
+        :'restriction' => :'OrgsBenzingaCatalysts200ResponseRestriction'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'lens',
       ])
     end
 
@@ -81,22 +122,60 @@ module PharmaObservatory
         self.error = nil
       end
 
+      if attributes.key?(:'visible')
+        self.visible = attributes[:'visible']
+      end
+
+      if attributes.key?(:'reason')
+        self.reason = attributes[:'reason']
+      end
+
       if attributes.key?(:'tier')
         self.tier = attributes[:'tier']
       else
         self.tier = nil
       end
 
-      if attributes.key?(:'license')
-        self.license = attributes[:'license']
-      else
-        self.license = nil
-      end
-
       if attributes.key?(:'attribution')
         self.attribution = attributes[:'attribution']
       else
         self.attribution = nil
+      end
+
+      if attributes.key?(:'page')
+        self.page = attributes[:'page']
+      end
+
+      if attributes.key?(:'id')
+        self.id = attributes[:'id']
+      end
+
+      if attributes.key?(:'section')
+        self.section = attributes[:'section']
+      end
+
+      if attributes.key?(:'heading')
+        self.heading = attributes[:'heading']
+      end
+
+      if attributes.key?(:'lens')
+        self.lens = attributes[:'lens']
+      end
+
+      if attributes.key?(:'web_url')
+        self.web_url = attributes[:'web_url']
+      end
+
+      if attributes.key?(:'build_state')
+        self.build_state = attributes[:'build_state']
+      end
+
+      if attributes.key?(:'license')
+        self.license = attributes[:'license']
+      end
+
+      if attributes.key?(:'restriction')
+        self.restriction = attributes[:'restriction']
       end
     end
 
@@ -113,10 +192,6 @@ module PharmaObservatory
         invalid_properties.push('invalid value for "tier", tier cannot be nil.')
       end
 
-      if @license.nil?
-        invalid_properties.push('invalid value for "license", license cannot be nil.')
-      end
-
       if @attribution.nil?
         invalid_properties.push('invalid value for "attribution", attribution cannot be nil.')
       end
@@ -130,7 +205,6 @@ module PharmaObservatory
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @error.nil?
       return false if @tier.nil?
-      return false if @license.nil?
       return false if @attribution.nil?
       true
     end
@@ -156,16 +230,6 @@ module PharmaObservatory
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] license Value to be assigned
-    def license=(license)
-      if license.nil?
-        fail ArgumentError, 'license cannot be nil'
-      end
-
-      @license = license
-    end
-
-    # Custom attribute writer method with validation
     # @param [Object] attribution Value to be assigned
     def attribution=(attribution)
       if attribution.nil?
@@ -181,9 +245,19 @@ module PharmaObservatory
       return true if self.equal?(o)
       self.class == o.class &&
           error == o.error &&
+          visible == o.visible &&
+          reason == o.reason &&
           tier == o.tier &&
+          attribution == o.attribution &&
+          page == o.page &&
+          id == o.id &&
+          section == o.section &&
+          heading == o.heading &&
+          lens == o.lens &&
+          web_url == o.web_url &&
+          build_state == o.build_state &&
           license == o.license &&
-          attribution == o.attribution
+          restriction == o.restriction
     end
 
     # @see the `==` method
@@ -195,7 +269,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [error, tier, license, attribution].hash
+      [error, visible, reason, tier, attribution, page, id, section, heading, lens, web_url, build_state, license, restriction].hash
     end
 
     # Builds the object from hash
