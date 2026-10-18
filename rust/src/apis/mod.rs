@@ -112,16 +112,8 @@ impl From<&str> for ContentType {
 }
 
 pub mod api_v1_base_api;
-pub mod api_v1_biomarker_assay_screen_api;
-pub mod api_v1_biomarker_assay_whitespace_api;
-pub mod api_v1_candidate_site_api;
-pub mod api_v1_condition_api;
-pub mod api_v1_enrollment_benchmark_api;
-pub mod api_v1_ownership_api;
-pub mod api_v1_program_catalyst_api;
-pub mod api_v1_resolve_entity_api;
-pub mod api_v1_rwd_api;
-pub mod api_v1_site_record_api;
-pub mod api_v1_trial_api;
+pub mod biomarkers_api;
+pub mod cell_lines_api;
+pub mod orgs_api;
 
 pub mod configuration;

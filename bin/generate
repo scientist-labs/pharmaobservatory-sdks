@@ -49,13 +49,14 @@ if [ -n "${SPEC:-}" ]; then cp "$SPEC" "$spec"; else curl -fsSL -o "$spec" "$SPE
 # servers itself this substitution simply does not match and the document's own servers win.
 sed -i.bak 's|^servers: \[\]$|servers:\n- url: https://pharmaobservatory.com|' "$spec" && rm -f "$spec.bak"
 
+gen_spec="$spec"
 gen() { # gen <generator args...>; paths must be relative to $root or absolute inside it
   if [ "$use_docker" = 1 ]; then
-    local specdir; specdir="$(cd "$(dirname "$spec")" && pwd)"
+    local specdir; specdir="$(cd "$(dirname "$gen_spec")" && pwd)"
     docker run --rm -u "$(id -u):$(id -g)" -v "$root:/work" -v "$specdir:/spec:ro" -v "$cache:/cache:ro" -w /work \
-      "$JAVA_IMAGE" java -jar "/cache/$(basename "$jar")" "$@" -i "/spec/$(basename "$spec")"
+      "$JAVA_IMAGE" java -jar "/cache/$(basename "$jar")" "$@" -i "/spec/$(basename "$gen_spec")"
   else
-    (cd "$root" && java -jar "$jar" "$@" -i "$spec")
+    (cd "$root" && java -jar "$jar" "$@" -i "$gen_spec")
   fi
 }
 
@@ -70,6 +71,12 @@ for lang in "${langs[@]}"; do
       # FILES also lists files the ignore file protects; those are hand-maintained, keep them.
       grep -qxF -- "$f" .openapi-generator-ignore || rm -f -- "$f"
     done < .openapi-generator/FILES)
+  fi
+  gen_spec="$spec"
+  if [ "$lang" = rust ]; then
+    # See bin/rust-spec-patch: Rust cannot compile the generated enum for a oneOf with two arrays.
+    gen_spec="$specdir_tmp/openapi-rust.yaml"
+    "$root/bin/rust-spec-patch" "$spec" "$gen_spec"
   fi
   gen generate -c "$lang/config/openapi-config.json" -g "$lang" -o "$lang"
   # The generated README header is templated from the spec's info.description (empty), so prepend

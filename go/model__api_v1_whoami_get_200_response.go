@@ -12,7 +12,6 @@ package pharmaobservatory
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
 )
 
@@ -24,6 +23,7 @@ type ApiV1WhoamiGet200Response struct {
 	Ok bool `json:"ok"`
 	Sub string `json:"sub"`
 	Roles []string `json:"roles"`
+	AdditionalProperties map[string]interface{}
 }
 
 type _ApiV1WhoamiGet200Response ApiV1WhoamiGet200Response
@@ -133,6 +133,11 @@ func (o ApiV1WhoamiGet200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize["ok"] = o.Ok
 	toSerialize["sub"] = o.Sub
 	toSerialize["roles"] = o.Roles
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 
@@ -162,15 +167,22 @@ func (o *ApiV1WhoamiGet200Response) UnmarshalJSON(data []byte) (err error) {
 
 	varApiV1WhoamiGet200Response := _ApiV1WhoamiGet200Response{}
 
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varApiV1WhoamiGet200Response)
+	err = json.Unmarshal(data, &varApiV1WhoamiGet200Response)
 
 	if err != nil {
 		return err
 	}
 
 	*o = ApiV1WhoamiGet200Response(varApiV1WhoamiGet200Response)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "ok")
+		delete(additionalProperties, "sub")
+		delete(additionalProperties, "roles")
+		o.AdditionalProperties = additionalProperties
+	}
 
 	return err
 }

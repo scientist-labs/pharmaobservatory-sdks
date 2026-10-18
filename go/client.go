@@ -51,27 +51,11 @@ type APIClient struct {
 
 	ApiV1BaseAPI *ApiV1BaseAPIService
 
-	ApiV1BiomarkerAssayScreenAPI *ApiV1BiomarkerAssayScreenAPIService
+	BiomarkersAPI *BiomarkersAPIService
 
-	ApiV1BiomarkerAssayWhitespaceAPI *ApiV1BiomarkerAssayWhitespaceAPIService
+	CellLinesAPI *CellLinesAPIService
 
-	ApiV1CandidateSiteAPI *ApiV1CandidateSiteAPIService
-
-	ApiV1ConditionAPI *ApiV1ConditionAPIService
-
-	ApiV1EnrollmentBenchmarkAPI *ApiV1EnrollmentBenchmarkAPIService
-
-	ApiV1OwnershipAPI *ApiV1OwnershipAPIService
-
-	ApiV1ProgramCatalystAPI *ApiV1ProgramCatalystAPIService
-
-	ApiV1ResolveEntityAPI *ApiV1ResolveEntityAPIService
-
-	ApiV1RwdAPI *ApiV1RwdAPIService
-
-	ApiV1SiteRecordAPI *ApiV1SiteRecordAPIService
-
-	ApiV1TrialAPI *ApiV1TrialAPIService
+	OrgsAPI *OrgsAPIService
 }
 
 type service struct {
@@ -91,17 +75,9 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.ApiV1BaseAPI = (*ApiV1BaseAPIService)(&c.common)
-	c.ApiV1BiomarkerAssayScreenAPI = (*ApiV1BiomarkerAssayScreenAPIService)(&c.common)
-	c.ApiV1BiomarkerAssayWhitespaceAPI = (*ApiV1BiomarkerAssayWhitespaceAPIService)(&c.common)
-	c.ApiV1CandidateSiteAPI = (*ApiV1CandidateSiteAPIService)(&c.common)
-	c.ApiV1ConditionAPI = (*ApiV1ConditionAPIService)(&c.common)
-	c.ApiV1EnrollmentBenchmarkAPI = (*ApiV1EnrollmentBenchmarkAPIService)(&c.common)
-	c.ApiV1OwnershipAPI = (*ApiV1OwnershipAPIService)(&c.common)
-	c.ApiV1ProgramCatalystAPI = (*ApiV1ProgramCatalystAPIService)(&c.common)
-	c.ApiV1ResolveEntityAPI = (*ApiV1ResolveEntityAPIService)(&c.common)
-	c.ApiV1RwdAPI = (*ApiV1RwdAPIService)(&c.common)
-	c.ApiV1SiteRecordAPI = (*ApiV1SiteRecordAPIService)(&c.common)
-	c.ApiV1TrialAPI = (*ApiV1TrialAPIService)(&c.common)
+	c.BiomarkersAPI = (*BiomarkersAPIService)(&c.common)
+	c.CellLinesAPI = (*CellLinesAPIService)(&c.common)
+	c.OrgsAPI = (*OrgsAPIService)(&c.common)
 
 	return c
 }
