@@ -1,0 +1,32 @@
+{
+  "dataset": "biomarkers",
+  "grain": "one row per biomarker",
+  "object_type": null,
+  "id": null,
+  "scope": null,
+  "columns": [{"name": "display_name", "type": "string", "unit": null, "description": "The biomarker's display name.", "entity": null, "level": null, "tier": null}],
+  "rows": [{
+    "biomarker_id": "bm_1",
+    "route_key": "braf-v600e",
+    "biomarker_kind": "protein_variant",
+    "identity_status": "resolved",
+    "display_name": "BRAF V600E",
+    "gene_symbol": "BRAF",
+    "amino_acid_change": "V600E",
+    "unrecorded_column": "kept-by-the-client"
+  }],
+  "total": 1,
+  "next_cursor": null,
+  "sort": ["display_name"],
+  "filters": [],
+  "group_by": [],
+  "measures": [],
+  "attribution": [{"name": "OpenFDA", "license": null, "href": "https://open.fda.gov", "license_href": null, "note": null}],
+  "source_credit": "Source: OpenFDA",
+  "withheld_tiers": [],
+  "withheld_columns": [],
+  "freshness": {"source": null, "last_loaded": null},
+  "build": {"generation": "g1", "fingerprint": null},
+  "build_state": {"built": true, "generation": "g1", "last_loaded": null},
+  "restriction": null
+}
