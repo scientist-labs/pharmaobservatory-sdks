@@ -62,6 +62,8 @@ type APIClient struct {
 	LegalEntitiesAPI *LegalEntitiesAPIService
 
 	QueryAPI *QueryAPIService
+
+	SitesAPI *SitesAPIService
 }
 
 type service struct {
@@ -87,6 +89,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.DatasetsAPI = (*DatasetsAPIService)(&c.common)
 	c.LegalEntitiesAPI = (*LegalEntitiesAPIService)(&c.common)
 	c.QueryAPI = (*QueryAPIService)(&c.common)
+	c.SitesAPI = (*SitesAPIService)(&c.common)
 
 	return c
 }

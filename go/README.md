@@ -165,6 +165,15 @@ Class | Method | HTTP request | Description
 *LegalEntitiesAPI* | [**LegalEntitiesSponsorTrials**](docs/LegalEntitiesAPI.md#legalentitiessponsortrials) | **Get** /api/v1/legal_entities/{id}/sponsor_trials | Sponsor trials
 *QueryAPI* | [**QueryResult**](docs/QueryAPI.md#queryresult) | **Get** /api/v1/results/{result_id} | Page a stored result
 *QueryAPI* | [**QueryRun**](docs/QueryAPI.md#queryrun) | **Post** /api/v1/query | Run a SQL query
+*SitesAPI* | [**SitesGet**](docs/SitesAPI.md#sitesget) | **Get** /api/v1/sites/{id} | One site
+*SitesAPI* | [**SitesList**](docs/SitesAPI.md#siteslist) | **Get** /api/v1/sites | List sites
+*SitesAPI* | [**SitesSiteBedsYearly**](docs/SitesAPI.md#sitessitebedsyearly) | **Get** /api/v1/sites/{id}/site_beds_yearly | Site beds by year
+*SitesAPI* | [**SitesSiteCroTrials**](docs/SitesAPI.md#sitessitecrotrials) | **Get** /api/v1/sites/{id}/site_cro_trials | Site CRO trials
+*SitesAPI* | [**SitesSiteHospitals**](docs/SitesAPI.md#sitessitehospitals) | **Get** /api/v1/sites/{id}/site_hospitals | Site hospitals
+*SitesAPI* | [**SitesSiteInvestigators**](docs/SitesAPI.md#sitessiteinvestigators) | **Get** /api/v1/sites/{id}/site_investigators | Site investigators
+*SitesAPI* | [**SitesSiteTrialConditions**](docs/SitesAPI.md#sitessitetrialconditions) | **Get** /api/v1/sites/{id}/site_trial_conditions | Site trial conditions
+*SitesAPI* | [**SitesSiteTrialDrugs**](docs/SitesAPI.md#sitessitetrialdrugs) | **Get** /api/v1/sites/{id}/site_trial_drugs | Site trial drugs
+*SitesAPI* | [**SitesSiteTrials**](docs/SitesAPI.md#sitessitetrials) | **Get** /api/v1/sites/{id}/site_trials | Site trials
 
 
 ## Documentation For Models
@@ -222,6 +231,24 @@ Class | Method | HTTP request | Description
  - [QueryResponseColumnsInner](docs/QueryResponseColumnsInner.md)
  - [QueryRunRequest](docs/QueryRunRequest.md)
  - [ResultPage](docs/ResultPage.md)
+ - [SiteBedsYearlyResponse](docs/SiteBedsYearlyResponse.md)
+ - [SiteBedsYearlyRow](docs/SiteBedsYearlyRow.md)
+ - [SiteCroTrialsResponse](docs/SiteCroTrialsResponse.md)
+ - [SiteCroTrialsRow](docs/SiteCroTrialsRow.md)
+ - [SiteHospitalsResponse](docs/SiteHospitalsResponse.md)
+ - [SiteHospitalsRow](docs/SiteHospitalsRow.md)
+ - [SiteInvestigatorsResponse](docs/SiteInvestigatorsResponse.md)
+ - [SiteInvestigatorsRow](docs/SiteInvestigatorsRow.md)
+ - [SiteTrialConditionsResponse](docs/SiteTrialConditionsResponse.md)
+ - [SiteTrialConditionsRow](docs/SiteTrialConditionsRow.md)
+ - [SiteTrialDrugsResponse](docs/SiteTrialDrugsResponse.md)
+ - [SiteTrialDrugsRow](docs/SiteTrialDrugsRow.md)
+ - [SiteTrialsResponse](docs/SiteTrialsResponse.md)
+ - [SiteTrialsRow](docs/SiteTrialsRow.md)
+ - [SitesRecord](docs/SitesRecord.md)
+ - [SitesRecordAttributes](docs/SitesRecordAttributes.md)
+ - [SitesResponse](docs/SitesResponse.md)
+ - [SitesRow](docs/SitesRow.md)
  - [SponsorRecruitmentByPhaseResponse](docs/SponsorRecruitmentByPhaseResponse.md)
  - [SponsorRecruitmentByPhaseRow](docs/SponsorRecruitmentByPhaseRow.md)
  - [SponsorRecruitmentDurationResponse](docs/SponsorRecruitmentDurationResponse.md)

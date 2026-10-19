@@ -4059,6 +4059,932 @@ paths:
       summary: Page a stored result
       tags:
       - query
+  /api/v1/sites:
+    get:
+      operationId: sites.list
+      parameters:
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SitesResponse'
+          description: "The sites dataset, filtered, sorted and paged. Filters: {column}=v\
+            \ (repeat a key for IN), {column}.gt, .gte, .lt, .lte, .ne, .contains\
+            \ (text), .null=true|false. sort=a,-b. group_by=dimension (a date takes\
+            \ :year, :quarter or :month). measure=count, sum(col), avg(col), min(col),\
+            \ max(col), median(col), count_distinct(col). cursor=next_cursor of the\
+            \ previous page. limit up to 500, default 50. On company routes scope=company|group.\
+            \ The columns, dimensions and measures of a dataset are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: List sites
+      tags:
+      - sites
+  /api/v1/sites/{id}:
+    get:
+      operationId: sites.get
+      parameters:
+      - example: 23c3485b8d2a74c67877558364ce64c9
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SitesRecord'
+          description: The record with its attribute rows folded in and the datasets
+            reachable for it. counts=true also counts the rows each listed dataset
+            holds for the record.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+      security:
+      - ApiBearerJwt: []
+      summary: One site
+      tags:
+      - sites
+  /api/v1/sites/{id}/site_beds_yearly:
+    get:
+      operationId: sites.site_beds_yearly
+      parameters:
+      - example: 23c3485b8d2a74c67877558364ce64c9
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteBedsYearlyResponse'
+          description: "Site beds by year: one row per site and registry year. Filters:\
+            \ {column}=v (repeat a key for IN), {column}.gt, .gte, .lt, .lte, .ne,\
+            \ .contains (text), .null=true|false. sort=a,-b. group_by=dimension (a\
+            \ date takes :year, :quarter or :month). measure=count, sum(col), avg(col),\
+            \ min(col), max(col), median(col), count_distinct(col). cursor=next_cursor\
+            \ of the previous page. limit up to 500, default 50. On company routes\
+            \ scope=company|group. The columns, dimensions and measures of a dataset\
+            \ are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: Site beds by year
+      tags:
+      - sites
+  /api/v1/sites/{id}/site_cro_trials:
+    get:
+      operationId: sites.site_cro_trials
+      parameters:
+      - example: 23c3485b8d2a74c67877558364ce64c9
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteCroTrialsResponse'
+          description: "Site CRO trials: one row per site, trial, CRO and attribution\
+            \ method. Filters: {column}=v (repeat a key for IN), {column}.gt, .gte,\
+            \ .lt, .lte, .ne, .contains (text), .null=true|false. sort=a,-b. group_by=dimension\
+            \ (a date takes :year, :quarter or :month). measure=count, sum(col), avg(col),\
+            \ min(col), max(col), median(col), count_distinct(col). cursor=next_cursor\
+            \ of the previous page. limit up to 500, default 50. On company routes\
+            \ scope=company|group. The columns, dimensions and measures of a dataset\
+            \ are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: Site CRO trials
+      tags:
+      - sites
+  /api/v1/sites/{id}/site_hospitals:
+    get:
+      operationId: sites.site_hospitals
+      parameters:
+      - example: 23c3485b8d2a74c67877558364ce64c9
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteHospitalsResponse'
+          description: "Site hospitals: one row per site matched to a CMS hospital.\
+            \ Filters: {column}=v (repeat a key for IN), {column}.gt, .gte, .lt, .lte,\
+            \ .ne, .contains (text), .null=true|false. sort=a,-b. group_by=dimension\
+            \ (a date takes :year, :quarter or :month). measure=count, sum(col), avg(col),\
+            \ min(col), max(col), median(col), count_distinct(col). cursor=next_cursor\
+            \ of the previous page. limit up to 500, default 50. On company routes\
+            \ scope=company|group. The columns, dimensions and measures of a dataset\
+            \ are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: Site hospitals
+      tags:
+      - sites
+  /api/v1/sites/{id}/site_investigators:
+    get:
+      operationId: sites.site_investigators
+      parameters:
+      - example: 23c3485b8d2a74c67877558364ce64c9
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteInvestigatorsResponse'
+          description: "Site investigators: one row per site and investigator. Filters:\
+            \ {column}=v (repeat a key for IN), {column}.gt, .gte, .lt, .lte, .ne,\
+            \ .contains (text), .null=true|false. sort=a,-b. group_by=dimension (a\
+            \ date takes :year, :quarter or :month). measure=count, sum(col), avg(col),\
+            \ min(col), max(col), median(col), count_distinct(col). cursor=next_cursor\
+            \ of the previous page. limit up to 500, default 50. On company routes\
+            \ scope=company|group. The columns, dimensions and measures of a dataset\
+            \ are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: Site investigators
+      tags:
+      - sites
+  /api/v1/sites/{id}/site_trial_conditions:
+    get:
+      operationId: sites.site_trial_conditions
+      parameters:
+      - example: 23c3485b8d2a74c67877558364ce64c9
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteTrialConditionsResponse'
+          description: "Site trial conditions: one row per site, trial and condition.\
+            \ Filters: {column}=v (repeat a key for IN), {column}.gt, .gte, .lt, .lte,\
+            \ .ne, .contains (text), .null=true|false. sort=a,-b. group_by=dimension\
+            \ (a date takes :year, :quarter or :month). measure=count, sum(col), avg(col),\
+            \ min(col), max(col), median(col), count_distinct(col). cursor=next_cursor\
+            \ of the previous page. limit up to 500, default 50. On company routes\
+            \ scope=company|group. The columns, dimensions and measures of a dataset\
+            \ are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: Site trial conditions
+      tags:
+      - sites
+  /api/v1/sites/{id}/site_trial_drugs:
+    get:
+      operationId: sites.site_trial_drugs
+      parameters:
+      - example: 23c3485b8d2a74c67877558364ce64c9
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteTrialDrugsResponse'
+          description: "Site trial drugs: one row per site, trial and drug. Filters:\
+            \ {column}=v (repeat a key for IN), {column}.gt, .gte, .lt, .lte, .ne,\
+            \ .contains (text), .null=true|false. sort=a,-b. group_by=dimension (a\
+            \ date takes :year, :quarter or :month). measure=count, sum(col), avg(col),\
+            \ min(col), max(col), median(col), count_distinct(col). cursor=next_cursor\
+            \ of the previous page. limit up to 500, default 50. On company routes\
+            \ scope=company|group. The columns, dimensions and measures of a dataset\
+            \ are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: Site trial drugs
+      tags:
+      - sites
+  /api/v1/sites/{id}/site_trials:
+    get:
+      operationId: sites.site_trials
+      parameters:
+      - example: 23c3485b8d2a74c67877558364ce64c9
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteTrialsResponse'
+          description: "Site trials: one row per site and trial. Filters: {column}=v\
+            \ (repeat a key for IN), {column}.gt, .gte, .lt, .lte, .ne, .contains\
+            \ (text), .null=true|false. sort=a,-b. group_by=dimension (a date takes\
+            \ :year, :quarter or :month). measure=count, sum(col), avg(col), min(col),\
+            \ max(col), median(col), count_distinct(col). cursor=next_cursor of the\
+            \ previous page. limit up to 500, default 50. On company routes scope=company|group.\
+            \ The columns, dimensions and measures of a dataset are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: Site trials
+      tags:
+      - sites
   /api/v1/whoami:
     get:
       responses:
@@ -11084,6 +12010,1974 @@ components:
       - dataset
       - rows
       type: object
+    SiteBedsYearlyRow:
+      additionalProperties: true
+      description: "One row of the site_beds_yearly dataset: one row per site and\
+        \ registry year. A grouped request returns the group columns and the measures\
+        \ instead, as additional properties."
+      example:
+        year: 0
+        site_id: site_id
+        as_of: 2000-01-23
+        is_teaching: true
+        bed_count: 6
+        ccn: ccn
+        pos_vintage: pos_vintage
+      properties:
+        site_id:
+          description: "The site key: one facility spelling from the registry."
+          nullable: true
+          type: string
+        year:
+          description: The registry year.
+          format: int32
+          nullable: true
+          type: integer
+        ccn:
+          description: CMS Certification Number of the matched hospital.
+          nullable: true
+          type: string
+        bed_count:
+          description: Certified bed count that year.
+          format: int32
+          nullable: true
+          type: integer
+        is_teaching:
+          description: Whether the hospital was a teaching hospital that year.
+          nullable: true
+          type: boolean
+        pos_vintage:
+          description: The Provider of Services file vintage the row comes from.
+          nullable: true
+          type: string
+        as_of:
+          description: The as-of date of that file.
+          format: date
+          nullable: true
+          type: string
+      type: object
+    SiteBedsYearlyResponse:
+      example:
+        next_cursor: next_cursor
+        source_credit: source_credit
+        build_state:
+          generation: generation
+          last_loaded: last_loaded
+          built: true
+        object_type: object_type
+        columns:
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        sort:
+        - sort
+        - sort
+        filters:
+        - key: ""
+        - key: ""
+        rows:
+        - year: 0
+          site_id: site_id
+          as_of: 2000-01-23
+          is_teaching: true
+          bed_count: 6
+          ccn: ccn
+          pos_vintage: pos_vintage
+        - year: 0
+          site_id: site_id
+          as_of: 2000-01-23
+          is_teaching: true
+          bed_count: 6
+          ccn: ccn
+          pos_vintage: pos_vintage
+        freshness:
+          last_loaded: last_loaded
+          source: source
+        total: 1
+        measures:
+        - measures
+        - measures
+        build:
+          generation: generation
+          fingerprint: fingerprint
+        scope:
+          group_id: group_id
+          group_name: group_name
+          kind: company
+        withheld_columns:
+        - withheld_columns
+        - withheld_columns
+        attribution:
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        restriction:
+          key: ""
+        group_by:
+        - group_by
+        - group_by
+        grain: grain
+        id: id
+        dataset: dataset
+        withheld_tiers:
+        - withheld_tiers
+        - withheld_tiers
+      properties:
+        dataset:
+          type: string
+        grain:
+          type: string
+        object_type:
+          nullable: true
+          type: string
+        id:
+          nullable: true
+          type: string
+        scope:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_scope'
+        columns:
+          items:
+            $ref: '#/components/schemas/DatasetColumn'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/SiteBedsYearlyRow'
+          type: array
+        total:
+          description: "The exact count of the filtered rows on an ungrouped read,\
+            \ carried by the cursor; null when grouped."
+          nullable: true
+          type: integer
+        next_cursor:
+          nullable: true
+          type: string
+        sort:
+          items:
+            type: string
+          type: array
+        filters:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        group_by:
+          items:
+            type: string
+          type: array
+        measures:
+          items:
+            type: string
+          type: array
+        attribution:
+          items:
+            $ref: '#/components/schemas/DatasetAttribution'
+          type: array
+        source_credit:
+          type: string
+        withheld_tiers:
+          items:
+            type: string
+          type: array
+        withheld_columns:
+          items:
+            type: string
+          type: array
+        freshness:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_freshness'
+        build:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_build'
+        build_state:
+          $ref: '#/components/schemas/DatasetBuildState'
+        restriction:
+          additionalProperties: true
+          nullable: true
+          type: object
+      required:
+      - columns
+      - dataset
+      - rows
+      type: object
+    SiteCroTrialsRow:
+      additionalProperties: true
+      description: "One row of the site_cro_trials dataset: one row per site, trial,\
+        \ CRO and attribution method. A grouped request returns the group columns\
+        \ and the measures instead, as additional properties."
+      example:
+        cro_company_id: cro_company_id
+        trial_id: trial_id
+        cro_org_id: cro_org_id
+        start_year: 6
+        site_id: site_id
+        cro_name: cro_name
+        overall_status: overall_status
+        cro_confidence: 0.8008281904610115
+        cro_group_name: cro_group_name
+        cro_group_id: cro_group_id
+        cro_attribution_method: cro_attribution_method
+        cro_company_name: cro_company_name
+      properties:
+        site_id:
+          description: "The site key: one facility spelling from the registry."
+          nullable: true
+          type: string
+        trial_id:
+          description: The trial's registry id (NCT number).
+          nullable: true
+          type: string
+        cro_org_id:
+          description: "Legal-entity level: the CRO's organization record."
+          nullable: true
+          type: string
+        cro_name:
+          description: The CRO organization's name.
+          nullable: true
+          type: string
+        cro_company_id:
+          description: "Company level: the company the CRO belongs to (null when unresolved)."
+          nullable: true
+          type: string
+        cro_company_name:
+          description: Display name of the CRO's company.
+          nullable: true
+          type: string
+        cro_group_id:
+          description: "Group level: the CRO's current ultimate parent company; a\
+            \ root company's group is itself."
+          nullable: true
+          type: string
+        cro_group_name:
+          description: Display name of the CRO's group.
+          nullable: true
+          type: string
+        cro_attribution_method:
+          description: "How the CRO was inferred (sponsor_match, collaborator_match\
+            \ or llm_extraction)."
+          nullable: true
+          type: string
+        cro_confidence:
+          description: "Confidence of the inference, from 0 to 1."
+          nullable: true
+          type: number
+        overall_status:
+          description: The registry's overall status of the trial.
+          nullable: true
+          type: string
+        start_year:
+          description: Year of the trial start.
+          format: int32
+          nullable: true
+          type: integer
+      type: object
+    SiteCroTrialsResponse:
+      example:
+        next_cursor: next_cursor
+        source_credit: source_credit
+        build_state:
+          generation: generation
+          last_loaded: last_loaded
+          built: true
+        object_type: object_type
+        columns:
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        sort:
+        - sort
+        - sort
+        filters:
+        - key: ""
+        - key: ""
+        rows:
+        - cro_company_id: cro_company_id
+          trial_id: trial_id
+          cro_org_id: cro_org_id
+          start_year: 6
+          site_id: site_id
+          cro_name: cro_name
+          overall_status: overall_status
+          cro_confidence: 0.8008281904610115
+          cro_group_name: cro_group_name
+          cro_group_id: cro_group_id
+          cro_attribution_method: cro_attribution_method
+          cro_company_name: cro_company_name
+        - cro_company_id: cro_company_id
+          trial_id: trial_id
+          cro_org_id: cro_org_id
+          start_year: 6
+          site_id: site_id
+          cro_name: cro_name
+          overall_status: overall_status
+          cro_confidence: 0.8008281904610115
+          cro_group_name: cro_group_name
+          cro_group_id: cro_group_id
+          cro_attribution_method: cro_attribution_method
+          cro_company_name: cro_company_name
+        freshness:
+          last_loaded: last_loaded
+          source: source
+        total: 1
+        measures:
+        - measures
+        - measures
+        build:
+          generation: generation
+          fingerprint: fingerprint
+        scope:
+          group_id: group_id
+          group_name: group_name
+          kind: company
+        withheld_columns:
+        - withheld_columns
+        - withheld_columns
+        attribution:
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        restriction:
+          key: ""
+        group_by:
+        - group_by
+        - group_by
+        grain: grain
+        id: id
+        dataset: dataset
+        withheld_tiers:
+        - withheld_tiers
+        - withheld_tiers
+      properties:
+        dataset:
+          type: string
+        grain:
+          type: string
+        object_type:
+          nullable: true
+          type: string
+        id:
+          nullable: true
+          type: string
+        scope:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_scope'
+        columns:
+          items:
+            $ref: '#/components/schemas/DatasetColumn'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/SiteCroTrialsRow'
+          type: array
+        total:
+          description: "The exact count of the filtered rows on an ungrouped read,\
+            \ carried by the cursor; null when grouped."
+          nullable: true
+          type: integer
+        next_cursor:
+          nullable: true
+          type: string
+        sort:
+          items:
+            type: string
+          type: array
+        filters:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        group_by:
+          items:
+            type: string
+          type: array
+        measures:
+          items:
+            type: string
+          type: array
+        attribution:
+          items:
+            $ref: '#/components/schemas/DatasetAttribution'
+          type: array
+        source_credit:
+          type: string
+        withheld_tiers:
+          items:
+            type: string
+          type: array
+        withheld_columns:
+          items:
+            type: string
+          type: array
+        freshness:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_freshness'
+        build:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_build'
+        build_state:
+          $ref: '#/components/schemas/DatasetBuildState'
+        restriction:
+          additionalProperties: true
+          nullable: true
+          type: object
+      required:
+      - columns
+      - dataset
+      - rows
+      type: object
+    SiteHospitalsRow:
+      additionalProperties: true
+      description: "One row of the site_hospitals dataset: one row per site matched\
+        \ to a CMS hospital. A grouped request returns the group columns and the measures\
+        \ instead, as additional properties."
+      example:
+        ccn_n_site_variants: 5
+        geocode_method: geocode_method
+        hospital_longitude: 1.4658129805029452
+        is_primary_site: true
+        hospital_type: hospital_type
+        bed_count: 0
+        ccn_n_trials: 5
+        ccn: ccn
+        ownership: ownership
+        site_id: site_id
+        is_teaching: true
+        hospital_latitude: 6.027456183070403
+        hospital_name: hospital_name
+      properties:
+        site_id:
+          description: "The site key: one facility spelling from the registry."
+          nullable: true
+          type: string
+        ccn:
+          description: CMS Certification Number of the matched hospital.
+          nullable: true
+          type: string
+        hospital_name:
+          description: The hospital's name in the CMS registry.
+          nullable: true
+          type: string
+        hospital_type:
+          description: The CMS hospital type.
+          nullable: true
+          type: string
+        ownership:
+          description: The CMS ownership category.
+          nullable: true
+          type: string
+        bed_count:
+          description: Certified bed count in the latest registry file.
+          format: int32
+          nullable: true
+          type: integer
+        is_teaching:
+          description: Whether the hospital is a teaching hospital.
+          nullable: true
+          type: boolean
+        hospital_latitude:
+          description: Latitude of the hospital.
+          nullable: true
+          type: number
+        hospital_longitude:
+          description: Longitude of the hospital.
+          nullable: true
+          type: number
+        geocode_method:
+          description: How the hospital's coordinate was placed.
+          nullable: true
+          type: string
+        ccn_n_trials:
+          description: Registered trials across the hospital's matched site records.
+          format: int64
+          nullable: true
+          type: integer
+        ccn_n_site_variants:
+          description: Site records matched to the same hospital.
+          format: int64
+          nullable: true
+          type: integer
+        is_primary_site:
+          description: True for the matched site record with the most trials for this
+            hospital.
+          nullable: true
+          type: boolean
+      type: object
+    SiteHospitalsResponse:
+      example:
+        next_cursor: next_cursor
+        source_credit: source_credit
+        build_state:
+          generation: generation
+          last_loaded: last_loaded
+          built: true
+        object_type: object_type
+        columns:
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        sort:
+        - sort
+        - sort
+        filters:
+        - key: ""
+        - key: ""
+        rows:
+        - ccn_n_site_variants: 5
+          geocode_method: geocode_method
+          hospital_longitude: 1.4658129805029452
+          is_primary_site: true
+          hospital_type: hospital_type
+          bed_count: 0
+          ccn_n_trials: 5
+          ccn: ccn
+          ownership: ownership
+          site_id: site_id
+          is_teaching: true
+          hospital_latitude: 6.027456183070403
+          hospital_name: hospital_name
+        - ccn_n_site_variants: 5
+          geocode_method: geocode_method
+          hospital_longitude: 1.4658129805029452
+          is_primary_site: true
+          hospital_type: hospital_type
+          bed_count: 0
+          ccn_n_trials: 5
+          ccn: ccn
+          ownership: ownership
+          site_id: site_id
+          is_teaching: true
+          hospital_latitude: 6.027456183070403
+          hospital_name: hospital_name
+        freshness:
+          last_loaded: last_loaded
+          source: source
+        total: 0
+        measures:
+        - measures
+        - measures
+        build:
+          generation: generation
+          fingerprint: fingerprint
+        scope:
+          group_id: group_id
+          group_name: group_name
+          kind: company
+        withheld_columns:
+        - withheld_columns
+        - withheld_columns
+        attribution:
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        restriction:
+          key: ""
+        group_by:
+        - group_by
+        - group_by
+        grain: grain
+        id: id
+        dataset: dataset
+        withheld_tiers:
+        - withheld_tiers
+        - withheld_tiers
+      properties:
+        dataset:
+          type: string
+        grain:
+          type: string
+        object_type:
+          nullable: true
+          type: string
+        id:
+          nullable: true
+          type: string
+        scope:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_scope'
+        columns:
+          items:
+            $ref: '#/components/schemas/DatasetColumn'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/SiteHospitalsRow'
+          type: array
+        total:
+          description: "The exact count of the filtered rows on an ungrouped read,\
+            \ carried by the cursor; null when grouped."
+          nullable: true
+          type: integer
+        next_cursor:
+          nullable: true
+          type: string
+        sort:
+          items:
+            type: string
+          type: array
+        filters:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        group_by:
+          items:
+            type: string
+          type: array
+        measures:
+          items:
+            type: string
+          type: array
+        attribution:
+          items:
+            $ref: '#/components/schemas/DatasetAttribution'
+          type: array
+        source_credit:
+          type: string
+        withheld_tiers:
+          items:
+            type: string
+          type: array
+        withheld_columns:
+          items:
+            type: string
+          type: array
+        freshness:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_freshness'
+        build:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_build'
+        build_state:
+          $ref: '#/components/schemas/DatasetBuildState'
+        restriction:
+          additionalProperties: true
+          nullable: true
+          type: object
+      required:
+      - columns
+      - dataset
+      - rows
+      type: object
+    SiteInvestigatorsRow:
+      additionalProperties: true
+      description: "One row of the site_investigators dataset: one row per site and\
+        \ investigator. A grouped request returns the group columns and the measures\
+        \ instead, as additional properties."
+      example:
+        site_rank: 6
+        n_trials: 0
+        investigator_affiliation: investigator_affiliation
+        site_id: site_id
+        is_principal_investigator: true
+        investigator_person_name: investigator_person_name
+        investigator_person_id: investigator_person_id
+      properties:
+        site_id:
+          description: "The site key: one facility spelling from the registry."
+          nullable: true
+          type: string
+        investigator_person_name:
+          description: The investigator's name as filed.
+          nullable: true
+          type: string
+        investigator_person_id:
+          description: The investigator's person key.
+          nullable: true
+          type: string
+        investigator_affiliation:
+          description: The affiliation as filed.
+          nullable: true
+          type: string
+        n_trials:
+          description: Trials at the site that name the investigator.
+          format: int64
+          nullable: true
+          type: integer
+        is_principal_investigator:
+          description: True when the investigator is named principal investigator
+            on a trial at the site.
+          nullable: true
+          type: boolean
+        site_rank:
+          description: "Rank within the site: principal investigators first, then\
+            \ trial count."
+          format: int64
+          nullable: true
+          type: integer
+      type: object
+    SiteInvestigatorsResponse:
+      example:
+        next_cursor: next_cursor
+        source_credit: source_credit
+        build_state:
+          generation: generation
+          last_loaded: last_loaded
+          built: true
+        object_type: object_type
+        columns:
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        sort:
+        - sort
+        - sort
+        filters:
+        - key: ""
+        - key: ""
+        rows:
+        - site_rank: 6
+          n_trials: 0
+          investigator_affiliation: investigator_affiliation
+          site_id: site_id
+          is_principal_investigator: true
+          investigator_person_name: investigator_person_name
+          investigator_person_id: investigator_person_id
+        - site_rank: 6
+          n_trials: 0
+          investigator_affiliation: investigator_affiliation
+          site_id: site_id
+          is_principal_investigator: true
+          investigator_person_name: investigator_person_name
+          investigator_person_id: investigator_person_id
+        freshness:
+          last_loaded: last_loaded
+          source: source
+        total: 1
+        measures:
+        - measures
+        - measures
+        build:
+          generation: generation
+          fingerprint: fingerprint
+        scope:
+          group_id: group_id
+          group_name: group_name
+          kind: company
+        withheld_columns:
+        - withheld_columns
+        - withheld_columns
+        attribution:
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        restriction:
+          key: ""
+        group_by:
+        - group_by
+        - group_by
+        grain: grain
+        id: id
+        dataset: dataset
+        withheld_tiers:
+        - withheld_tiers
+        - withheld_tiers
+      properties:
+        dataset:
+          type: string
+        grain:
+          type: string
+        object_type:
+          nullable: true
+          type: string
+        id:
+          nullable: true
+          type: string
+        scope:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_scope'
+        columns:
+          items:
+            $ref: '#/components/schemas/DatasetColumn'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/SiteInvestigatorsRow'
+          type: array
+        total:
+          description: "The exact count of the filtered rows on an ungrouped read,\
+            \ carried by the cursor; null when grouped."
+          nullable: true
+          type: integer
+        next_cursor:
+          nullable: true
+          type: string
+        sort:
+          items:
+            type: string
+          type: array
+        filters:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        group_by:
+          items:
+            type: string
+          type: array
+        measures:
+          items:
+            type: string
+          type: array
+        attribution:
+          items:
+            $ref: '#/components/schemas/DatasetAttribution'
+          type: array
+        source_credit:
+          type: string
+        withheld_tiers:
+          items:
+            type: string
+          type: array
+        withheld_columns:
+          items:
+            type: string
+          type: array
+        freshness:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_freshness'
+        build:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_build'
+        build_state:
+          $ref: '#/components/schemas/DatasetBuildState'
+        restriction:
+          additionalProperties: true
+          nullable: true
+          type: object
+      required:
+      - columns
+      - dataset
+      - rows
+      type: object
+    SiteTrialConditionsRow:
+      additionalProperties: true
+      description: "One row of the site_trial_conditions dataset: one row per site,\
+        \ trial and condition. A grouped request returns the group columns and the\
+        \ measures instead, as additional properties."
+      example:
+        trial_id: trial_id
+        start_year: 0
+        site_id: site_id
+        overall_status: overall_status
+        condition_name: condition_name
+        condition_id: condition_id
+      properties:
+        site_id:
+          description: "The site key: one facility spelling from the registry."
+          nullable: true
+          type: string
+        trial_id:
+          description: The trial's registry id (NCT number).
+          nullable: true
+          type: string
+        condition_id:
+          description: "The condition key (a MeSH, Medical Subject Headings, descriptor\
+            \ id)."
+          nullable: true
+          type: string
+        condition_name:
+          description: The condition's name.
+          nullable: true
+          type: string
+        overall_status:
+          description: The registry's overall status of the trial.
+          nullable: true
+          type: string
+        start_year:
+          description: Year of the trial start.
+          format: int32
+          nullable: true
+          type: integer
+      type: object
+    SiteTrialConditionsResponse:
+      example:
+        next_cursor: next_cursor
+        source_credit: source_credit
+        build_state:
+          generation: generation
+          last_loaded: last_loaded
+          built: true
+        object_type: object_type
+        columns:
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        sort:
+        - sort
+        - sort
+        filters:
+        - key: ""
+        - key: ""
+        rows:
+        - trial_id: trial_id
+          start_year: 0
+          site_id: site_id
+          overall_status: overall_status
+          condition_name: condition_name
+          condition_id: condition_id
+        - trial_id: trial_id
+          start_year: 0
+          site_id: site_id
+          overall_status: overall_status
+          condition_name: condition_name
+          condition_id: condition_id
+        freshness:
+          last_loaded: last_loaded
+          source: source
+        total: 6
+        measures:
+        - measures
+        - measures
+        build:
+          generation: generation
+          fingerprint: fingerprint
+        scope:
+          group_id: group_id
+          group_name: group_name
+          kind: company
+        withheld_columns:
+        - withheld_columns
+        - withheld_columns
+        attribution:
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        restriction:
+          key: ""
+        group_by:
+        - group_by
+        - group_by
+        grain: grain
+        id: id
+        dataset: dataset
+        withheld_tiers:
+        - withheld_tiers
+        - withheld_tiers
+      properties:
+        dataset:
+          type: string
+        grain:
+          type: string
+        object_type:
+          nullable: true
+          type: string
+        id:
+          nullable: true
+          type: string
+        scope:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_scope'
+        columns:
+          items:
+            $ref: '#/components/schemas/DatasetColumn'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/SiteTrialConditionsRow'
+          type: array
+        total:
+          description: "The exact count of the filtered rows on an ungrouped read,\
+            \ carried by the cursor; null when grouped."
+          nullable: true
+          type: integer
+        next_cursor:
+          nullable: true
+          type: string
+        sort:
+          items:
+            type: string
+          type: array
+        filters:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        group_by:
+          items:
+            type: string
+          type: array
+        measures:
+          items:
+            type: string
+          type: array
+        attribution:
+          items:
+            $ref: '#/components/schemas/DatasetAttribution'
+          type: array
+        source_credit:
+          type: string
+        withheld_tiers:
+          items:
+            type: string
+          type: array
+        withheld_columns:
+          items:
+            type: string
+          type: array
+        freshness:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_freshness'
+        build:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_build'
+        build_state:
+          $ref: '#/components/schemas/DatasetBuildState'
+        restriction:
+          additionalProperties: true
+          nullable: true
+          type: object
+      required:
+      - columns
+      - dataset
+      - rows
+      type: object
+    SiteTrialDrugsRow:
+      additionalProperties: true
+      description: "One row of the site_trial_drugs dataset: one row per site, trial\
+        \ and drug. A grouped request returns the group columns and the measures instead,\
+        \ as additional properties."
+      example:
+        trial_id: trial_id
+        drug_name: drug_name
+        drug_id: drug_id
+        start_year: 0
+        site_id: site_id
+        overall_status: overall_status
+      properties:
+        site_id:
+          description: "The site key: one facility spelling from the registry."
+          nullable: true
+          type: string
+        trial_id:
+          description: The trial's registry id (NCT number).
+          nullable: true
+          type: string
+        drug_id:
+          description: The drug key.
+          nullable: true
+          type: string
+        drug_name:
+          description: The drug's name.
+          nullable: true
+          type: string
+        overall_status:
+          description: The registry's overall status of the trial.
+          nullable: true
+          type: string
+        start_year:
+          description: Year of the trial start.
+          format: int32
+          nullable: true
+          type: integer
+      type: object
+    SiteTrialDrugsResponse:
+      example:
+        next_cursor: next_cursor
+        source_credit: source_credit
+        build_state:
+          generation: generation
+          last_loaded: last_loaded
+          built: true
+        object_type: object_type
+        columns:
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        sort:
+        - sort
+        - sort
+        filters:
+        - key: ""
+        - key: ""
+        rows:
+        - trial_id: trial_id
+          drug_name: drug_name
+          drug_id: drug_id
+          start_year: 0
+          site_id: site_id
+          overall_status: overall_status
+        - trial_id: trial_id
+          drug_name: drug_name
+          drug_id: drug_id
+          start_year: 0
+          site_id: site_id
+          overall_status: overall_status
+        freshness:
+          last_loaded: last_loaded
+          source: source
+        total: 6
+        measures:
+        - measures
+        - measures
+        build:
+          generation: generation
+          fingerprint: fingerprint
+        scope:
+          group_id: group_id
+          group_name: group_name
+          kind: company
+        withheld_columns:
+        - withheld_columns
+        - withheld_columns
+        attribution:
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        restriction:
+          key: ""
+        group_by:
+        - group_by
+        - group_by
+        grain: grain
+        id: id
+        dataset: dataset
+        withheld_tiers:
+        - withheld_tiers
+        - withheld_tiers
+      properties:
+        dataset:
+          type: string
+        grain:
+          type: string
+        object_type:
+          nullable: true
+          type: string
+        id:
+          nullable: true
+          type: string
+        scope:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_scope'
+        columns:
+          items:
+            $ref: '#/components/schemas/DatasetColumn'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/SiteTrialDrugsRow'
+          type: array
+        total:
+          description: "The exact count of the filtered rows on an ungrouped read,\
+            \ carried by the cursor; null when grouped."
+          nullable: true
+          type: integer
+        next_cursor:
+          nullable: true
+          type: string
+        sort:
+          items:
+            type: string
+          type: array
+        filters:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        group_by:
+          items:
+            type: string
+          type: array
+        measures:
+          items:
+            type: string
+          type: array
+        attribution:
+          items:
+            $ref: '#/components/schemas/DatasetAttribution'
+          type: array
+        source_credit:
+          type: string
+        withheld_tiers:
+          items:
+            type: string
+          type: array
+        withheld_columns:
+          items:
+            type: string
+          type: array
+        freshness:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_freshness'
+        build:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_build'
+        build_state:
+          $ref: '#/components/schemas/DatasetBuildState'
+        restriction:
+          additionalProperties: true
+          nullable: true
+          type: object
+      required:
+      - columns
+      - dataset
+      - rows
+      type: object
+    SiteTrialsRow:
+      additionalProperties: true
+      description: "One row of the site_trials dataset: one row per site and trial.\
+        \ A grouped request returns the group columns and the measures instead, as\
+        \ additional properties."
+      example:
+        phase: phase
+        trial_id: trial_id
+        lead_sponsor_group_name: lead_sponsor_group_name
+        trial_title: trial_title
+        start_year: 0
+        overall_status: overall_status
+        lead_sponsor_org_id: lead_sponsor_org_id
+        enrollment: 6
+        lead_sponsor_group_id: lead_sponsor_group_id
+        study_type: study_type
+        site_id: site_id
+        lead_sponsor_company_name: lead_sponsor_company_name
+        lead_sponsor_name: lead_sponsor_name
+        lead_sponsor_company_id: lead_sponsor_company_id
+        start_date: 2000-01-23
+      properties:
+        site_id:
+          description: "The site key: one facility spelling from the registry."
+          nullable: true
+          type: string
+        trial_id:
+          description: The trial's registry id (NCT number).
+          nullable: true
+          type: string
+        trial_title:
+          description: The trial's brief title.
+          nullable: true
+          type: string
+        study_type:
+          description: INTERVENTIONAL or OBSERVATIONAL.
+          nullable: true
+          type: string
+        phase:
+          description: The trial phase label.
+          nullable: true
+          type: string
+        overall_status:
+          description: The registry's overall status.
+          nullable: true
+          type: string
+        start_date:
+          description: Trial start date.
+          format: date
+          nullable: true
+          type: string
+        start_year:
+          description: Year of the trial start.
+          format: int32
+          nullable: true
+          type: integer
+        enrollment:
+          description: Enrollment as registered for the whole trial.
+          format: int32
+          nullable: true
+          type: integer
+        lead_sponsor_name:
+          description: The lead sponsor's name as filed.
+          nullable: true
+          type: string
+        lead_sponsor_org_id:
+          description: "Legal-entity level: the organization record the lead sponsor\
+            \ resolved to (null when unresolved)."
+          nullable: true
+          type: string
+        lead_sponsor_company_id:
+          description: "Company level: the company the lead sponsor belongs to (null\
+            \ when unresolved)."
+          nullable: true
+          type: string
+        lead_sponsor_company_name:
+          description: Display name of the lead sponsor's company.
+          nullable: true
+          type: string
+        lead_sponsor_group_id:
+          description: "Group level: the lead sponsor's current ultimate parent company;\
+            \ a root company's group is itself."
+          nullable: true
+          type: string
+        lead_sponsor_group_name:
+          description: Display name of the lead sponsor's group.
+          nullable: true
+          type: string
+      type: object
+    SiteTrialsResponse:
+      example:
+        next_cursor: next_cursor
+        source_credit: source_credit
+        build_state:
+          generation: generation
+          last_loaded: last_loaded
+          built: true
+        object_type: object_type
+        columns:
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        sort:
+        - sort
+        - sort
+        filters:
+        - key: ""
+        - key: ""
+        rows:
+        - phase: phase
+          trial_id: trial_id
+          lead_sponsor_group_name: lead_sponsor_group_name
+          trial_title: trial_title
+          start_year: 0
+          overall_status: overall_status
+          lead_sponsor_org_id: lead_sponsor_org_id
+          enrollment: 6
+          lead_sponsor_group_id: lead_sponsor_group_id
+          study_type: study_type
+          site_id: site_id
+          lead_sponsor_company_name: lead_sponsor_company_name
+          lead_sponsor_name: lead_sponsor_name
+          lead_sponsor_company_id: lead_sponsor_company_id
+          start_date: 2000-01-23
+        - phase: phase
+          trial_id: trial_id
+          lead_sponsor_group_name: lead_sponsor_group_name
+          trial_title: trial_title
+          start_year: 0
+          overall_status: overall_status
+          lead_sponsor_org_id: lead_sponsor_org_id
+          enrollment: 6
+          lead_sponsor_group_id: lead_sponsor_group_id
+          study_type: study_type
+          site_id: site_id
+          lead_sponsor_company_name: lead_sponsor_company_name
+          lead_sponsor_name: lead_sponsor_name
+          lead_sponsor_company_id: lead_sponsor_company_id
+          start_date: 2000-01-23
+        freshness:
+          last_loaded: last_loaded
+          source: source
+        total: 1
+        measures:
+        - measures
+        - measures
+        build:
+          generation: generation
+          fingerprint: fingerprint
+        scope:
+          group_id: group_id
+          group_name: group_name
+          kind: company
+        withheld_columns:
+        - withheld_columns
+        - withheld_columns
+        attribution:
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        restriction:
+          key: ""
+        group_by:
+        - group_by
+        - group_by
+        grain: grain
+        id: id
+        dataset: dataset
+        withheld_tiers:
+        - withheld_tiers
+        - withheld_tiers
+      properties:
+        dataset:
+          type: string
+        grain:
+          type: string
+        object_type:
+          nullable: true
+          type: string
+        id:
+          nullable: true
+          type: string
+        scope:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_scope'
+        columns:
+          items:
+            $ref: '#/components/schemas/DatasetColumn'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/SiteTrialsRow'
+          type: array
+        total:
+          description: "The exact count of the filtered rows on an ungrouped read,\
+            \ carried by the cursor; null when grouped."
+          nullable: true
+          type: integer
+        next_cursor:
+          nullable: true
+          type: string
+        sort:
+          items:
+            type: string
+          type: array
+        filters:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        group_by:
+          items:
+            type: string
+          type: array
+        measures:
+          items:
+            type: string
+          type: array
+        attribution:
+          items:
+            $ref: '#/components/schemas/DatasetAttribution'
+          type: array
+        source_credit:
+          type: string
+        withheld_tiers:
+          items:
+            type: string
+          type: array
+        withheld_columns:
+          items:
+            type: string
+          type: array
+        freshness:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_freshness'
+        build:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_build'
+        build_state:
+          $ref: '#/components/schemas/DatasetBuildState'
+        restriction:
+          additionalProperties: true
+          nullable: true
+          type: object
+      required:
+      - columns
+      - dataset
+      - rows
+      type: object
+    SitesRow:
+      additionalProperties: true
+      description: "One row of the sites dataset: one row per site record (a facility\
+        \ as registered, not a physical building). A grouped request returns the group\
+        \ columns and the measures instead, as additional properties."
+      example:
+        site_company_id: site_company_id
+        first_year: 5
+        country: country
+        geo_precision: geo_precision
+        last_year: 2
+        city: city
+        coord_source: coord_source
+        latitude: 0.8008281904610115
+        site_group_name: site_group_name
+        site_org_id: site_org_id
+        site_company_name: site_company_name
+        is_location_source_asserted_only: true
+        site_name: site_name
+        site_group_id: site_group_id
+        n_trials: 1
+        n_active: 5
+        site_id: site_id
+        state: state
+        longitude: 6.027456183070403
+      properties:
+        site_id:
+          description: "The site key: one facility spelling from the registry; the\
+            \ id the site page address carries."
+          nullable: true
+          type: string
+        site_name:
+          description: The facility name as filed in the registry.
+          nullable: true
+          type: string
+        city:
+          description: City as filed.
+          nullable: true
+          type: string
+        state:
+          description: State or province as filed.
+          nullable: true
+          type: string
+        country:
+          description: Country name as filed.
+          nullable: true
+          type: string
+        latitude:
+          description: Latitude of the finest coordinate the record has.
+          nullable: true
+          type: number
+        longitude:
+          description: Longitude of the finest coordinate the record has.
+          nullable: true
+          type: number
+        geo_precision:
+          description: "How finely the coordinate places the site (city, postal and\
+            \ so on)."
+          nullable: true
+          type: string
+        coord_source:
+          description: "The source of the coordinate: aact (the registry's own), geonames\
+            \ (GeoNames) or als (Amazon Location Service)."
+          nullable: true
+          type: string
+        is_location_source_asserted_only:
+          description: True when the city the registry gave is a location that only
+            the registry asserts for the institution.
+          nullable: true
+          type: boolean
+        site_org_id:
+          description: "Legal-entity level: the organization record the site's institution\
+            \ resolved to (null when unresolved)."
+          nullable: true
+          type: string
+        site_company_id:
+          description: "Company level: the company the site's institution belongs\
+            \ to (null when unresolved)."
+          nullable: true
+          type: string
+        site_company_name:
+          description: Display name of the site's institution's company.
+          nullable: true
+          type: string
+        site_group_id:
+          description: "Group level: the site's institution's current ultimate parent\
+            \ company; a root company's group is itself."
+          nullable: true
+          type: string
+        site_group_name:
+          description: Display name of the site's institution's group.
+          nullable: true
+          type: string
+        n_trials:
+          description: Registered trials that list the site.
+          format: int64
+          nullable: true
+          type: integer
+        n_active:
+          description: Those trials whose status is ongoing.
+          format: int64
+          nullable: true
+          type: integer
+        first_year:
+          description: Year of the earliest trial start at the site.
+          format: int32
+          nullable: true
+          type: integer
+        last_year:
+          description: Year of the latest trial start at the site.
+          format: int32
+          nullable: true
+          type: integer
+      type: object
+    SitesResponse:
+      example:
+        next_cursor: next_cursor
+        source_credit: source_credit
+        build_state:
+          generation: generation
+          last_loaded: last_loaded
+          built: true
+        object_type: object_type
+        columns:
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        sort:
+        - sort
+        - sort
+        filters:
+        - key: ""
+        - key: ""
+        rows:
+        - site_company_id: site_company_id
+          first_year: 5
+          country: country
+          geo_precision: geo_precision
+          last_year: 2
+          city: city
+          coord_source: coord_source
+          latitude: 0.8008281904610115
+          site_group_name: site_group_name
+          site_org_id: site_org_id
+          site_company_name: site_company_name
+          is_location_source_asserted_only: true
+          site_name: site_name
+          site_group_id: site_group_id
+          n_trials: 1
+          n_active: 5
+          site_id: site_id
+          state: state
+          longitude: 6.027456183070403
+        - site_company_id: site_company_id
+          first_year: 5
+          country: country
+          geo_precision: geo_precision
+          last_year: 2
+          city: city
+          coord_source: coord_source
+          latitude: 0.8008281904610115
+          site_group_name: site_group_name
+          site_org_id: site_org_id
+          site_company_name: site_company_name
+          is_location_source_asserted_only: true
+          site_name: site_name
+          site_group_id: site_group_id
+          n_trials: 1
+          n_active: 5
+          site_id: site_id
+          state: state
+          longitude: 6.027456183070403
+        freshness:
+          last_loaded: last_loaded
+          source: source
+        total: 7
+        measures:
+        - measures
+        - measures
+        build:
+          generation: generation
+          fingerprint: fingerprint
+        scope:
+          group_id: group_id
+          group_name: group_name
+          kind: company
+        withheld_columns:
+        - withheld_columns
+        - withheld_columns
+        attribution:
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        restriction:
+          key: ""
+        group_by:
+        - group_by
+        - group_by
+        grain: grain
+        id: id
+        dataset: dataset
+        withheld_tiers:
+        - withheld_tiers
+        - withheld_tiers
+      properties:
+        dataset:
+          type: string
+        grain:
+          type: string
+        object_type:
+          nullable: true
+          type: string
+        id:
+          nullable: true
+          type: string
+        scope:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_scope'
+        columns:
+          items:
+            $ref: '#/components/schemas/DatasetColumn'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/SitesRow'
+          type: array
+        total:
+          description: "The exact count of the filtered rows on an ungrouped read,\
+            \ carried by the cursor; null when grouped."
+          nullable: true
+          type: integer
+        next_cursor:
+          nullable: true
+          type: string
+        sort:
+          items:
+            type: string
+          type: array
+        filters:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        group_by:
+          items:
+            type: string
+          type: array
+        measures:
+          items:
+            type: string
+          type: array
+        attribution:
+          items:
+            $ref: '#/components/schemas/DatasetAttribution'
+          type: array
+        source_credit:
+          type: string
+        withheld_tiers:
+          items:
+            type: string
+          type: array
+        withheld_columns:
+          items:
+            type: string
+          type: array
+        freshness:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_freshness'
+        build:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_build'
+        build_state:
+          $ref: '#/components/schemas/DatasetBuildState'
+        restriction:
+          additionalProperties: true
+          nullable: true
+          type: object
+      required:
+      - columns
+      - dataset
+      - rows
+      type: object
+    SitesRecord:
+      example:
+        source_credit: source_credit
+        build_state:
+          generation: generation
+          last_loaded: last_loaded
+          built: true
+        object_type: object_type
+        build:
+          generation: generation
+          fingerprint: fingerprint
+        record:
+          site_company_id: site_company_id
+          first_year: 5
+          country: country
+          geo_precision: geo_precision
+          last_year: 2
+          city: city
+          coord_source: coord_source
+          latitude: 0.8008281904610115
+          site_group_name: site_group_name
+          site_org_id: site_org_id
+          site_company_name: site_company_name
+          is_location_source_asserted_only: true
+          site_name: site_name
+          site_group_id: site_group_id
+          n_trials: 1
+          n_active: 5
+          site_id: site_id
+          state: state
+          longitude: 6.027456183070403
+        attribution:
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        restriction:
+          key: ""
+        attributes:
+          site_hospitals:
+            ccn_n_site_variants: 5
+            geocode_method: geocode_method
+            hospital_longitude: 1.4658129805029452
+            is_primary_site: true
+            hospital_type: hospital_type
+            bed_count: 0
+            ccn_n_trials: 5
+            ccn: ccn
+            ownership: ownership
+            site_id: site_id
+            is_teaching: true
+            hospital_latitude: 6.027456183070403
+            hospital_name: hospital_name
+        id: id
+        datasets:
+        - entitled: true
+          tier: tier
+          name: name
+          description: description
+          grain: grain
+          href: href
+          title: title
+          row_count: 0
+        - entitled: true
+          tier: tier
+          name: name
+          description: description
+          grain: grain
+          href: href
+          title: title
+          row_count: 0
+        freshness:
+          last_loaded: last_loaded
+          source: source
+      properties:
+        object_type:
+          type: string
+        id:
+          type: string
+        record:
+          $ref: '#/components/schemas/SitesRow'
+        attributes:
+          $ref: '#/components/schemas/SitesRecord_attributes'
+        datasets:
+          items:
+            $ref: '#/components/schemas/DatasetListing'
+          type: array
+        attribution:
+          items:
+            $ref: '#/components/schemas/DatasetAttribution'
+          type: array
+        source_credit:
+          type: string
+        freshness:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_freshness'
+        build:
+          $ref: '#/components/schemas/BiomarkerCdxAssertionsResponse_build'
+        build_state:
+          $ref: '#/components/schemas/DatasetBuildState'
+        restriction:
+          additionalProperties: true
+          nullable: true
+          type: object
+      required:
+      - datasets
+      - id
+      - object_type
+      - record
+      type: object
     query_run_request:
       properties:
         sql:
@@ -11243,6 +14137,26 @@ components:
       properties:
         sponsor_recruitment_duration:
           $ref: '#/components/schemas/SponsorRecruitmentDurationRow'
+      type: object
+    SitesRecord_attributes:
+      example:
+        site_hospitals:
+          ccn_n_site_variants: 5
+          geocode_method: geocode_method
+          hospital_longitude: 1.4658129805029452
+          is_primary_site: true
+          hospital_type: hospital_type
+          bed_count: 0
+          ccn_n_trials: 5
+          ccn: ccn
+          ownership: ownership
+          site_id: site_id
+          is_teaching: true
+          hospital_latitude: 6.027456183070403
+          hospital_name: hospital_name
+      properties:
+        site_hospitals:
+          $ref: '#/components/schemas/SiteHospitalsRow'
       type: object
   securitySchemes:
     ApiBearerJwt:

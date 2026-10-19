@@ -158,6 +158,15 @@ Class | Method | HTTP request | Description
 *PharmaObservatory::LegalEntitiesApi* | [**legal_entities_sponsor_trials**](docs/LegalEntitiesApi.md#legal_entities_sponsor_trials) | **GET** /api/v1/legal_entities/{id}/sponsor_trials | Sponsor trials
 *PharmaObservatory::QueryApi* | [**query_result**](docs/QueryApi.md#query_result) | **GET** /api/v1/results/{result_id} | Page a stored result
 *PharmaObservatory::QueryApi* | [**query_run**](docs/QueryApi.md#query_run) | **POST** /api/v1/query | Run a SQL query
+*PharmaObservatory::SitesApi* | [**sites_get**](docs/SitesApi.md#sites_get) | **GET** /api/v1/sites/{id} | One site
+*PharmaObservatory::SitesApi* | [**sites_list**](docs/SitesApi.md#sites_list) | **GET** /api/v1/sites | List sites
+*PharmaObservatory::SitesApi* | [**sites_site_beds_yearly**](docs/SitesApi.md#sites_site_beds_yearly) | **GET** /api/v1/sites/{id}/site_beds_yearly | Site beds by year
+*PharmaObservatory::SitesApi* | [**sites_site_cro_trials**](docs/SitesApi.md#sites_site_cro_trials) | **GET** /api/v1/sites/{id}/site_cro_trials | Site CRO trials
+*PharmaObservatory::SitesApi* | [**sites_site_hospitals**](docs/SitesApi.md#sites_site_hospitals) | **GET** /api/v1/sites/{id}/site_hospitals | Site hospitals
+*PharmaObservatory::SitesApi* | [**sites_site_investigators**](docs/SitesApi.md#sites_site_investigators) | **GET** /api/v1/sites/{id}/site_investigators | Site investigators
+*PharmaObservatory::SitesApi* | [**sites_site_trial_conditions**](docs/SitesApi.md#sites_site_trial_conditions) | **GET** /api/v1/sites/{id}/site_trial_conditions | Site trial conditions
+*PharmaObservatory::SitesApi* | [**sites_site_trial_drugs**](docs/SitesApi.md#sites_site_trial_drugs) | **GET** /api/v1/sites/{id}/site_trial_drugs | Site trial drugs
+*PharmaObservatory::SitesApi* | [**sites_site_trials**](docs/SitesApi.md#sites_site_trials) | **GET** /api/v1/sites/{id}/site_trials | Site trials
 
 
 ## Documentation for Models
@@ -215,6 +224,24 @@ Class | Method | HTTP request | Description
  - [PharmaObservatory::QueryResponseColumnsInner](docs/QueryResponseColumnsInner.md)
  - [PharmaObservatory::QueryRunRequest](docs/QueryRunRequest.md)
  - [PharmaObservatory::ResultPage](docs/ResultPage.md)
+ - [PharmaObservatory::SiteBedsYearlyResponse](docs/SiteBedsYearlyResponse.md)
+ - [PharmaObservatory::SiteBedsYearlyRow](docs/SiteBedsYearlyRow.md)
+ - [PharmaObservatory::SiteCroTrialsResponse](docs/SiteCroTrialsResponse.md)
+ - [PharmaObservatory::SiteCroTrialsRow](docs/SiteCroTrialsRow.md)
+ - [PharmaObservatory::SiteHospitalsResponse](docs/SiteHospitalsResponse.md)
+ - [PharmaObservatory::SiteHospitalsRow](docs/SiteHospitalsRow.md)
+ - [PharmaObservatory::SiteInvestigatorsResponse](docs/SiteInvestigatorsResponse.md)
+ - [PharmaObservatory::SiteInvestigatorsRow](docs/SiteInvestigatorsRow.md)
+ - [PharmaObservatory::SiteTrialConditionsResponse](docs/SiteTrialConditionsResponse.md)
+ - [PharmaObservatory::SiteTrialConditionsRow](docs/SiteTrialConditionsRow.md)
+ - [PharmaObservatory::SiteTrialDrugsResponse](docs/SiteTrialDrugsResponse.md)
+ - [PharmaObservatory::SiteTrialDrugsRow](docs/SiteTrialDrugsRow.md)
+ - [PharmaObservatory::SiteTrialsResponse](docs/SiteTrialsResponse.md)
+ - [PharmaObservatory::SiteTrialsRow](docs/SiteTrialsRow.md)
+ - [PharmaObservatory::SitesRecord](docs/SitesRecord.md)
+ - [PharmaObservatory::SitesRecordAttributes](docs/SitesRecordAttributes.md)
+ - [PharmaObservatory::SitesResponse](docs/SitesResponse.md)
+ - [PharmaObservatory::SitesRow](docs/SitesRow.md)
  - [PharmaObservatory::SponsorRecruitmentByPhaseResponse](docs/SponsorRecruitmentByPhaseResponse.md)
  - [PharmaObservatory::SponsorRecruitmentByPhaseRow](docs/SponsorRecruitmentByPhaseRow.md)
  - [PharmaObservatory::SponsorRecruitmentDurationResponse](docs/SponsorRecruitmentDurationResponse.md)

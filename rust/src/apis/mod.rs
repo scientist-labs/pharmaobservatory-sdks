@@ -118,5 +118,6 @@ pub mod companies_api;
 pub mod datasets_api;
 pub mod legal_entities_api;
 pub mod query_api;
+pub mod sites_api;
 
 pub mod configuration;
