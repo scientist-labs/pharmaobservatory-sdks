@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TrialId** | Pointer to **NullableString** | The trial&#39;s registry id (NCT number). | [optional] 
+**TrialId** | Pointer to **NullableString** | The trial&#39;s ClinicalTrials.gov registry id (NCT, National Clinical Trial, number). | [optional] 
 **SponsorRole** | Pointer to **NullableString** | lead or collaborator. | [optional] 
 **SponsorName** | Pointer to **NullableString** | The sponsor name as filed. | [optional] 
 **SponsorOrgId** | Pointer to **NullableString** | Legal-entity level: the organization record the sponsor resolved to (null when unresolved). | [optional] 
@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **SponsorCompanyName** | Pointer to **NullableString** | Display name of the sponsor&#39;s company. | [optional] 
 **SponsorGroupId** | Pointer to **NullableString** | Group level: the sponsor&#39;s current ultimate parent company; a root company&#39;s group is itself. | [optional] 
 **SponsorGroupName** | Pointer to **NullableString** | Display name of the sponsor&#39;s group. | [optional] 
-**SponsorAgencyClass** | Pointer to **NullableString** | The registry&#39;s agency class for the sponsor (INDUSTRY, NIH, OTHER ...). | [optional] 
+**SponsorAgencyClass** | Pointer to **NullableString** | The registry&#39;s agency class for the sponsor (INDUSTRY, NIH for the US National Institutes of Health, OTHER ...). | [optional] 
 **SponsorResolutionMethod** | Pointer to **NullableString** | How the sponsor name was resolved to an organization record. | [optional] 
 **TrialTitle** | Pointer to **NullableString** | The trial&#39;s brief title. | [optional] 
 **StudyType** | Pointer to **NullableString** | INTERVENTIONAL or OBSERVATIONAL. | [optional] 

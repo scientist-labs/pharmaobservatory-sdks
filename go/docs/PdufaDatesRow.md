@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **PdufaDateId** | Pointer to **NullableString** | The calendar entry id. | [optional] 
 **Source** | Pointer to **NullableString** | Which lane the row came from: benzinga, sec_extraction or both. | [optional] 
-**RestrictionTier** | Pointer to **NullableString** | none for a row from SEC filings; licensable for a row from the Benzinga calendar. | [optional] 
-**DecisionDate** | Pointer to **NullableString** | The FDA decision date (PDUFA is the date under the Prescription Drug User Fee Act). | [optional] 
+**RestrictionTier** | Pointer to **NullableString** | none for a row from SEC filings; licensable for a row from the Benzinga calendar (the filings are those made to the US Securities and Exchange Commission). | [optional] 
+**DecisionDate** | Pointer to **NullableString** | The decision date of the US Food and Drug Administration (FDA); a PDUFA date is the goal date under the Prescription Drug User Fee Act. | [optional] 
 **DateStart** | Pointer to **NullableString** | Start of the date interval the source states. | [optional] 
 **DateEnd** | Pointer to **NullableString** | End of the date interval the source states. | [optional] 
 **DatePrecision** | Pointer to **NullableString** | Precision of the date (day, month, quarter). | [optional] 

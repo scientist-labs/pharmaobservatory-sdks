@@ -65,7 +65,7 @@ pub struct SponsorRecruitmentDurationRow {
     /// Evaluated trials with prediction_status predicted, superseded or not.
     #[serde(rename = "n_predicted", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_predicted: Option<Option<i32>>,
-    /// Predicted trials whose CURRENT record shows the outcome (COMPLETED, TERMINATED, WITHDRAWN or an ACTUAL primary completion); kept out of every predicted figure, as the trial page withholds them.
+    /// Predicted trials whose CURRENT record shows the outcome (COMPLETED, TERMINATED, WITHDRAWN or an ACTUAL primary completion); kept out of every predicted figure.
     #[serde(rename = "n_predicted_superseded", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_predicted_superseded: Option<Option<i32>>,
     /// n_predicted - n_predicted_superseded; the denominator of every predicted figure.

@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **OrgOrigin** | Pointer to **NullableString** | How the organization record was minted. | [optional] 
 **Country** | Pointer to **NullableString** | Country as the source states it. | [optional] 
 **OrgType** | Pointer to **NullableString** | Organization type. | [optional] 
-**EdgarCik** | Pointer to **NullableString** | SEC EDGAR central index key, when it files. | [optional] 
+**EdgarCik** | Pointer to **NullableString** | Central index key (CIK) in EDGAR, the US Securities and Exchange Commission (SEC) filing system, when it files. | [optional] 
 **EdgarTicker** | Pointer to **NullableString** | Exchange ticker, when listed. | [optional] 
 **RorId** | Pointer to **NullableString** | Research Organization Registry id, when it has one. | [optional] 
 **Lei** | Pointer to **NullableString** | Legal Entity Identifier, when it has one. | [optional] 

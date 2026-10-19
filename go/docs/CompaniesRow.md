@@ -10,9 +10,9 @@ Name | Type | Description | Notes
 **Country** | Pointer to **NullableString** | Country of the company&#39;s own legal entity, as the source states it. | [optional] 
 **OrgType** | Pointer to **NullableString** | The organization type of the company&#39;s representative record. | [optional] 
 **OrgKinds** | Pointer to **[]string** | The roles the company&#39;s organizations play (Manufacturer, Sponsor and so on). | [optional] 
-**EdgarCik** | Pointer to **NullableString** | SEC EDGAR central index key of the representative record, when it files. | [optional] 
+**EdgarCik** | Pointer to **NullableString** | Central index key (CIK) in EDGAR, the US Securities and Exchange Commission (SEC) filing system, of the representative record, when it files. | [optional] 
 **EdgarTicker** | Pointer to **NullableString** | Exchange ticker of the representative record, when listed. | [optional] 
-**RepresentativeOrgId** | Pointer to **NullableString** | Legal-entity level: the organization record the company page shows. | [optional] 
+**RepresentativeOrgId** | Pointer to **NullableString** | Legal-entity level: the organization record the company&#39;s page shows. | [optional] 
 **ParentCompanyId** | Pointer to **NullableString** | The direct owner company (part_of), null for a root. | [optional] 
 **ParentCompanyName** | Pointer to **NullableString** | Display name of the direct owner company. | [optional] 
 **PartOfSince** | Pointer to **NullableString** | Date the ownership link began, when every hop is dated. | [optional] 
@@ -28,6 +28,8 @@ Name | Type | Description | Notes
 **TotalLeadEnrollment** | Pointer to **NullableInt64** | Planned enrollment across led trials. | [optional] 
 **NumRecentLeadTrials** | Pointer to **NullableInt64** | Led trials started in the recent window. | [optional] 
 **ActivityScore** | Pointer to **NullableFloat32** | Trial activity score (interventional lead trials and enrollment, weighted toward recent). | [optional] 
+**IsAdmitted** | Pointer to **NullableBool** | True when the company is admitted to the company roster (lead-trial activity, more than one legal entity or a recorded manufacturer role); false rows carry null firmographic, trial-count and activity columns. | [optional] 
+**HasPublicPage** | Pointer to **NullableBool** | True when the company has a public organization page. | [optional] 
 
 ## Methods
 
@@ -888,6 +890,76 @@ HasActivityScore returns a boolean if a field has been set.
 `func (o *CompaniesRow) UnsetActivityScore()`
 
 UnsetActivityScore ensures that no value is present for ActivityScore, not even an explicit nil
+### GetIsAdmitted
+
+`func (o *CompaniesRow) GetIsAdmitted() bool`
+
+GetIsAdmitted returns the IsAdmitted field if non-nil, zero value otherwise.
+
+### GetIsAdmittedOk
+
+`func (o *CompaniesRow) GetIsAdmittedOk() (*bool, bool)`
+
+GetIsAdmittedOk returns a tuple with the IsAdmitted field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsAdmitted
+
+`func (o *CompaniesRow) SetIsAdmitted(v bool)`
+
+SetIsAdmitted sets IsAdmitted field to given value.
+
+### HasIsAdmitted
+
+`func (o *CompaniesRow) HasIsAdmitted() bool`
+
+HasIsAdmitted returns a boolean if a field has been set.
+
+### SetIsAdmittedNil
+
+`func (o *CompaniesRow) SetIsAdmittedNil(b bool)`
+
+ SetIsAdmittedNil sets the value for IsAdmitted to be an explicit nil
+
+### UnsetIsAdmitted
+`func (o *CompaniesRow) UnsetIsAdmitted()`
+
+UnsetIsAdmitted ensures that no value is present for IsAdmitted, not even an explicit nil
+### GetHasPublicPage
+
+`func (o *CompaniesRow) GetHasPublicPage() bool`
+
+GetHasPublicPage returns the HasPublicPage field if non-nil, zero value otherwise.
+
+### GetHasPublicPageOk
+
+`func (o *CompaniesRow) GetHasPublicPageOk() (*bool, bool)`
+
+GetHasPublicPageOk returns a tuple with the HasPublicPage field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHasPublicPage
+
+`func (o *CompaniesRow) SetHasPublicPage(v bool)`
+
+SetHasPublicPage sets HasPublicPage field to given value.
+
+### HasHasPublicPage
+
+`func (o *CompaniesRow) HasHasPublicPage() bool`
+
+HasHasPublicPage returns a boolean if a field has been set.
+
+### SetHasPublicPageNil
+
+`func (o *CompaniesRow) SetHasPublicPageNil(b bool)`
+
+ SetHasPublicPageNil sets the value for HasPublicPage to be an explicit nil
+
+### UnsetHasPublicPage
+`func (o *CompaniesRow) UnsetHasPublicPage()`
+
+UnsetHasPublicPage ensures that no value is present for HasPublicPage, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

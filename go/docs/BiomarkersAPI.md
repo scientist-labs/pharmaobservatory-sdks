@@ -9,6 +9,10 @@ Method | HTTP request | Description
 [**BiomarkersBiomarkerEvidence**](BiomarkersAPI.md#BiomarkersBiomarkerEvidence) | **Get** /api/v1/biomarkers/{id}/biomarker_evidence | Biomarker evidence
 [**BiomarkersBiomarkerLiterature**](BiomarkersAPI.md#BiomarkersBiomarkerLiterature) | **Get** /api/v1/biomarkers/{id}/biomarker_literature | Trial-cited literature mentions
 [**BiomarkersBiomarkerPublishingCompanies**](BiomarkersAPI.md#BiomarkersBiomarkerPublishingCompanies) | **Get** /api/v1/biomarkers/{id}/biomarker_publishing_companies | Companies publishing on a biomarker
+[**BiomarkersBiomarkerRelations**](BiomarkersAPI.md#BiomarkersBiomarkerRelations) | **Get** /api/v1/biomarkers/{id}/biomarker_relations | Literature-extracted relations
+[**BiomarkersBiomarkerSampleCoverage**](BiomarkersAPI.md#BiomarkersBiomarkerSampleCoverage) | **Get** /api/v1/biomarkers/{id}/biomarker_sample_coverage | Human sample screening coverage (GDC)
+[**BiomarkersBiomarkerSamplePrevalence**](BiomarkersAPI.md#BiomarkersBiomarkerSamplePrevalence) | **Get** /api/v1/biomarkers/{id}/biomarker_sample_prevalence | Human sample screening reference (GDC cohorts)
+[**BiomarkersBiomarkerValidation**](BiomarkersAPI.md#BiomarkersBiomarkerValidation) | **Get** /api/v1/biomarkers/{id}/biomarker_validation | Biomarker validation ladder
 [**BiomarkersBiomarkerVariantMentions**](BiomarkersAPI.md#BiomarkersBiomarkerVariantMentions) | **Get** /api/v1/biomarkers/{id}/biomarker_variant_mentions | Protein variant mentions
 [**BiomarkersGet**](BiomarkersAPI.md#BiomarkersGet) | **Get** /api/v1/biomarkers/{id} | One biomarker
 [**BiomarkersList**](BiomarkersAPI.md#BiomarkersList) | **Get** /api/v1/biomarkers | List biomarkers
@@ -390,6 +394,318 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**BiomarkerPublishingCompaniesResponse**](BiomarkerPublishingCompaniesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## BiomarkersBiomarkerRelations
+
+> BiomarkerRelationsResponse BiomarkersBiomarkerRelations(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+
+Literature-extracted relations
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "ESR1" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.BiomarkersAPI.BiomarkersBiomarkerRelations(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `BiomarkersAPI.BiomarkersBiomarkerRelations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `BiomarkersBiomarkerRelations`: BiomarkerRelationsResponse
+	fmt.Fprintf(os.Stdout, "Response from `BiomarkersAPI.BiomarkersBiomarkerRelations`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiBiomarkersBiomarkerRelationsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+
+### Return type
+
+[**BiomarkerRelationsResponse**](BiomarkerRelationsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## BiomarkersBiomarkerSampleCoverage
+
+> BiomarkerSampleCoverageResponse BiomarkersBiomarkerSampleCoverage(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+
+Human sample screening coverage (GDC)
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "ESR1" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.BiomarkersAPI.BiomarkersBiomarkerSampleCoverage(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `BiomarkersAPI.BiomarkersBiomarkerSampleCoverage``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `BiomarkersBiomarkerSampleCoverage`: BiomarkerSampleCoverageResponse
+	fmt.Fprintf(os.Stdout, "Response from `BiomarkersAPI.BiomarkersBiomarkerSampleCoverage`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiBiomarkersBiomarkerSampleCoverageRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+
+### Return type
+
+[**BiomarkerSampleCoverageResponse**](BiomarkerSampleCoverageResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## BiomarkersBiomarkerSamplePrevalence
+
+> BiomarkerSamplePrevalenceResponse BiomarkersBiomarkerSamplePrevalence(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+
+Human sample screening reference (GDC cohorts)
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "ESR1" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.BiomarkersAPI.BiomarkersBiomarkerSamplePrevalence(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `BiomarkersAPI.BiomarkersBiomarkerSamplePrevalence``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `BiomarkersBiomarkerSamplePrevalence`: BiomarkerSamplePrevalenceResponse
+	fmt.Fprintf(os.Stdout, "Response from `BiomarkersAPI.BiomarkersBiomarkerSamplePrevalence`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiBiomarkersBiomarkerSamplePrevalenceRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+
+### Return type
+
+[**BiomarkerSamplePrevalenceResponse**](BiomarkerSamplePrevalenceResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## BiomarkersBiomarkerValidation
+
+> BiomarkerValidationResponse BiomarkersBiomarkerValidation(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+
+Biomarker validation ladder
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "ESR1" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.BiomarkersAPI.BiomarkersBiomarkerValidation(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `BiomarkersAPI.BiomarkersBiomarkerValidation``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `BiomarkersBiomarkerValidation`: BiomarkerValidationResponse
+	fmt.Fprintf(os.Stdout, "Response from `BiomarkersAPI.BiomarkersBiomarkerValidation`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiBiomarkersBiomarkerValidationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+
+### Return type
+
+[**BiomarkerValidationResponse**](BiomarkerValidationResponse.md)
 
 ### Authorization
 

@@ -7,7 +7,7 @@
 | **source_assertion_id** | **String** | The assertion id. | [optional] |
 | **route_key** | **String** | The biomarker&#39;s route key, the entry key for the biomarkers object type. | [optional] |
 | **biomarker_id** | **String** | The biomarker key. | [optional] |
-| **ddt_number** | **String** | The FDA drug development tool number of the project. | [optional] |
+| **ddt_number** | **String** | The drug development tool number the US Food and Drug Administration (FDA) assigns the project. | [optional] |
 | **ddt_project_id** | **String** | The FDA project id. | [optional] |
 | **project_name** | **String** | The project&#39;s name. | [optional] |
 | **bqp_signal** | **String** | The source status of the project. Only qualified means FDA-qualified; every other value is a project status. | [optional] |

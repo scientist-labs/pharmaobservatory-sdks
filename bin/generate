@@ -78,6 +78,11 @@ for lang in "${langs[@]}"; do
     gen_spec="$specdir_tmp/openapi-rust.yaml"
     "$root/bin/rust-spec-patch" "$spec" "$gen_spec"
   fi
+  if [ "$lang" = go ]; then
+    # See bin/go-spec-patch: a has_x property beside x collides with the generated HasX() method.
+    gen_spec="$specdir_tmp/openapi-go.yaml"
+    "$root/bin/go-spec-patch" "$spec" "$gen_spec"
+  fi
   gen generate -c "$lang/config/openapi-config.json" -g "$lang" -o "$lang"
   # The generated README header is templated from the spec's info.description (empty), so prepend
   # the hand-written install and authenticated-call section.

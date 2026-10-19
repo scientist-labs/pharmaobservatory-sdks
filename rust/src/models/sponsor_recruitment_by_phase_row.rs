@@ -59,10 +59,10 @@ pub struct SponsorRecruitmentByPhaseRow {
     /// Backtest mean absolute error in months for this phase bucket; NULL on an unmeasured bucket or one with no open predicted trial.
     #[serde(rename = "error_phase_mae_months", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub error_phase_mae_months: Option<Option<f64>>,
-    /// The model MAE over the baseline MAE in this phase bucket.
+    /// The model's mean absolute error (MAE) over the baseline's MAE in this phase bucket.
     #[serde(rename = "error_phase_relmae_vs_baseline", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub error_phase_relmae_vs_baseline: Option<Option<f64>>,
-    /// The baseline MAE in months in this phase bucket.
+    /// The baseline's mean absolute error (MAE) in months in this phase bucket.
     #[serde(rename = "error_phase_baseline_mae_months", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub error_phase_baseline_mae_months: Option<Option<f64>>,
     /// Backtest trials behind the phase figure.

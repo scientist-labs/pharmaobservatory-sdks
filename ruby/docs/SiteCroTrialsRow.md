@@ -5,7 +5,7 @@
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **site_id** | **String** | The site key: one facility spelling from the registry. | [optional] |
-| **trial_id** | **String** | The trial&#39;s registry id (NCT number). | [optional] |
+| **trial_id** | **String** | The trial&#39;s ClinicalTrials.gov registry id (NCT, National Clinical Trial, number). | [optional] |
 | **cro_org_id** | **String** | Legal-entity level: the CRO&#39;s organization record. | [optional] |
 | **cro_name** | **String** | The CRO organization&#39;s name. | [optional] |
 | **cro_company_id** | **String** | Company level: the company the CRO belongs to (null when unresolved). | [optional] |

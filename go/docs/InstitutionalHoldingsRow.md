@@ -11,8 +11,9 @@ Name | Type | Description | Notes
 **IssuerCompanyName** | Pointer to **NullableString** | Display name of the issuer&#39;s company. | [optional] 
 **IssuerGroupId** | Pointer to **NullableString** | Group level: the issuer&#39;s current ultimate parent; a root&#39;s group is itself. | [optional] 
 **IssuerGroupName** | Pointer to **NullableString** | Display name of the issuer&#39;s group. | [optional] 
-**SecurityRef** | Pointer to **NullableString** | The security&#39;s CUSIP reference. | [optional] 
+**SecurityRef** | Pointer to **NullableString** | The security&#39;s CUSIP (Committee on Uniform Securities Identification Procedures) identifier. | [optional] 
 **HolderName** | Pointer to **NullableString** | The institutional manager&#39;s name. | [optional] 
+**HolderIdentityKey** | Pointer to **NullableString** | The institutional manager&#39;s stable identity (an SEC registration number), the key that groups all of one manager&#39;s holdings. | [optional] 
 **HolderKind** | Pointer to **NullableString** | Manager kind. | [optional] 
 **HolderOrgId** | Pointer to **NullableString** | Legal-entity level: the manager&#39;s organization record (null when unresolved). | [optional] 
 **HolderCompanyId** | Pointer to **NullableString** | Company level: the manager&#39;s company (null when unresolved). | [optional] 
@@ -363,6 +364,41 @@ HasHolderName returns a boolean if a field has been set.
 `func (o *InstitutionalHoldingsRow) UnsetHolderName()`
 
 UnsetHolderName ensures that no value is present for HolderName, not even an explicit nil
+### GetHolderIdentityKey
+
+`func (o *InstitutionalHoldingsRow) GetHolderIdentityKey() string`
+
+GetHolderIdentityKey returns the HolderIdentityKey field if non-nil, zero value otherwise.
+
+### GetHolderIdentityKeyOk
+
+`func (o *InstitutionalHoldingsRow) GetHolderIdentityKeyOk() (*string, bool)`
+
+GetHolderIdentityKeyOk returns a tuple with the HolderIdentityKey field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHolderIdentityKey
+
+`func (o *InstitutionalHoldingsRow) SetHolderIdentityKey(v string)`
+
+SetHolderIdentityKey sets HolderIdentityKey field to given value.
+
+### HasHolderIdentityKey
+
+`func (o *InstitutionalHoldingsRow) HasHolderIdentityKey() bool`
+
+HasHolderIdentityKey returns a boolean if a field has been set.
+
+### SetHolderIdentityKeyNil
+
+`func (o *InstitutionalHoldingsRow) SetHolderIdentityKeyNil(b bool)`
+
+ SetHolderIdentityKeyNil sets the value for HolderIdentityKey to be an explicit nil
+
+### UnsetHolderIdentityKey
+`func (o *InstitutionalHoldingsRow) UnsetHolderIdentityKey()`
+
+UnsetHolderIdentityKey ensures that no value is present for HolderIdentityKey, not even an explicit nil
 ### GetHolderKind
 
 `func (o *InstitutionalHoldingsRow) GetHolderKind() string`

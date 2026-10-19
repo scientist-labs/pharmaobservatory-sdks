@@ -67,7 +67,7 @@ module PharmaObservatory
     # The Cellosaurus comment, for a problematic line.
     attr_accessor :problematic_comment
 
-    # ICLAC registration ids.
+    # International Cell Line Authentication Committee (ICLAC) registration ids.
     attr_accessor :iclac_registration_ids
 
     # The Cellosaurus release the check ran against.

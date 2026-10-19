@@ -7,7 +7,7 @@
 | **object_type** | **String** |  |  |
 | **id** | **String** |  |  |
 | **record** | [**CompaniesRow**](CompaniesRow.md) |  |  |
-| **attributes** | **Object** |  | [optional] |
+| **attributes** | [**CompaniesRecordAttributes**](CompaniesRecordAttributes.md) |  | [optional] |
 | **datasets** | [**Array&lt;DatasetListing&gt;**](DatasetListing.md) |  |  |
 | **attribution** | [**Array&lt;DatasetAttribution&gt;**](DatasetAttribution.md) |  | [optional] |
 | **source_credit** | **String** |  | [optional] |

@@ -21,7 +21,7 @@ var _ MappedNullable = &SiteTrialsRow{}
 type SiteTrialsRow struct {
 	// The site key: one facility spelling from the registry.
 	SiteId NullableString `json:"site_id,omitempty"`
-	// The trial's registry id (NCT number).
+	// The trial's ClinicalTrials.gov registry id (NCT, National Clinical Trial, number).
 	TrialId NullableString `json:"trial_id,omitempty"`
 	// The trial's brief title.
 	TrialTitle NullableString `json:"trial_title,omitempty"`

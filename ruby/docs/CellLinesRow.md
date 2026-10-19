@@ -21,7 +21,7 @@
 | **cellosaurus_url** | **String** | Link to the Cellosaurus entry. | [optional] |
 | **problem_category** | **String** | The problem category, for a problematic line. | [optional] |
 | **problematic_comment** | **String** | The Cellosaurus comment, for a problematic line. | [optional] |
-| **iclac_registration_ids** | **Array&lt;String&gt;** | ICLAC registration ids. | [optional] |
+| **iclac_registration_ids** | **Array&lt;String&gt;** | International Cell Line Authentication Committee (ICLAC) registration ids. | [optional] |
 | **release_version** | **String** | The Cellosaurus release the check ran against. | [optional] |
 
 ## Example

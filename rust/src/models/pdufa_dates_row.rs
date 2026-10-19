@@ -20,10 +20,10 @@ pub struct PdufaDatesRow {
     /// Which lane the row came from: benzinga, sec_extraction or both.
     #[serde(rename = "source", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub source: Option<Option<String>>,
-    /// none for a row from SEC filings; licensable for a row from the Benzinga calendar.
+    /// none for a row from SEC filings; licensable for a row from the Benzinga calendar (the filings are those made to the US Securities and Exchange Commission).
     #[serde(rename = "restriction_tier", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub restriction_tier: Option<Option<String>>,
-    /// The FDA decision date (PDUFA is the date under the Prescription Drug User Fee Act).
+    /// The decision date of the US Food and Drug Administration (FDA); a PDUFA date is the goal date under the Prescription Drug User Fee Act.
     #[serde(rename = "decision_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub decision_date: Option<Option<String>>,
     /// Start of the date interval the source states.

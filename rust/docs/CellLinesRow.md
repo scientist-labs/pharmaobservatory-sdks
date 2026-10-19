@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 **cellosaurus_url** | Option<**String**> | Link to the Cellosaurus entry. | [optional]
 **problem_category** | Option<**String**> | The problem category, for a problematic line. | [optional]
 **problematic_comment** | Option<**String**> | The Cellosaurus comment, for a problematic line. | [optional]
-**iclac_registration_ids** | Option<**Vec<String>**> | ICLAC registration ids. | [optional]
+**iclac_registration_ids** | Option<**Vec<String>**> | International Cell Line Authentication Committee (ICLAC) registration ids. | [optional]
 **release_version** | Option<**String**> | The Cellosaurus release the check ran against. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

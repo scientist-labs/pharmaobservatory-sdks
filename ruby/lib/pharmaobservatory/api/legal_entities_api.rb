@@ -19,6 +19,90 @@ module PharmaObservatory
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
+    # Company assets (approved and marketed drugs)
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @return [CompanyAssetsResponse]
+    def legal_entities_company_assets(id, opts = {})
+      data, _status_code, _headers = legal_entities_company_assets_with_http_info(id, opts)
+      data
+    end
+
+    # Company assets (approved and marketed drugs)
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @return [Array<(CompanyAssetsResponse, Integer, Hash)>] CompanyAssetsResponse data, response status code and response headers
+    def legal_entities_company_assets_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: LegalEntitiesApi.legal_entities_company_assets ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling LegalEntitiesApi.legal_entities_company_assets"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_company_assets, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_company_assets, must be greater than or equal to 1.'
+      end
+
+      # resource path
+      local_var_path = '/api/v1/legal_entities/{id}/company_assets'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CompanyAssetsResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"LegalEntitiesApi.legal_entities_company_assets",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: LegalEntitiesApi#legal_entities_company_assets\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Company programs
     # @param id [String] 
     # @param [Hash] opts the optional parameters
@@ -406,6 +490,90 @@ module PharmaObservatory
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: LegalEntitiesApi#legal_entities_list\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Ownership and control positions
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @return [OwnershipPositionsResponse]
+    def legal_entities_ownership_positions(id, opts = {})
+      data, _status_code, _headers = legal_entities_ownership_positions_with_http_info(id, opts)
+      data
+    end
+
+    # Ownership and control positions
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @return [Array<(OwnershipPositionsResponse, Integer, Hash)>] OwnershipPositionsResponse data, response status code and response headers
+    def legal_entities_ownership_positions_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: LegalEntitiesApi.legal_entities_ownership_positions ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling LegalEntitiesApi.legal_entities_ownership_positions"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_ownership_positions, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_ownership_positions, must be greater than or equal to 1.'
+      end
+
+      # resource path
+      local_var_path = '/api/v1/legal_entities/{id}/ownership_positions'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'OwnershipPositionsResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"LegalEntitiesApi.legal_entities_ownership_positions",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: LegalEntitiesApi#legal_entities_ownership_positions\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end

@@ -53,7 +53,7 @@ pub struct BiomarkerEvidenceRow {
     /// The drug key.
     #[serde(rename = "drug_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub drug_id: Option<Option<String>>,
-    /// The molecule key. Null today: the evidence mart carries no molecule column.
+    /// The molecule key. Null on every row: no evidence row carries a molecule.
     #[serde(rename = "molecule_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub molecule_id: Option<Option<String>>,
     /// The reported response (for example Responsive, Resistant).

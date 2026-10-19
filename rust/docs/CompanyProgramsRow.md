@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **sponsor_group_name** | Option<**String**> | Display name of the sponsor's group. | [optional]
 **drug_id** | Option<**String**> | The drug key. | [optional]
 **drug_name** | Option<**String**> | The drug's name. | [optional]
-**condition_id** | Option<**String**> | The condition key (UMLS CUI). | [optional]
+**condition_id** | Option<**String**> | The condition key, a MeSH (Medical Subject Headings) descriptor id (D followed by six to nine digits). | [optional]
 **condition_name** | Option<**String**> | The condition's name. | [optional]
 **max_phase** | Option<**i32**> | Highest phase reached: 0 early phase 1 through 6 for phase 4 (marketed); -1 when unstated. | [optional]
 **n_trials** | Option<**i64**> | Lead-sponsored trials in the program. | [optional]
@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 **last_year** | Option<**i32**> | Latest trial start year. | [optional]
 **withdrawn** | Option<**bool**> | True when the drug has been withdrawn. | [optional]
 **lifecycle** | Option<**String**> | approved, active or abandoned. | [optional]
-**dalys_millions** | Option<**f64**> | Disability-adjusted life years (millions) of the condition's global burden, IHME GBD 2021. Null for a caller without the licence for this column; see withheld_columns. | [optional]
+**dalys_millions** | Option<**f64**> | Disability-adjusted life years (DALYs, millions) of the condition's global burden, from the Global Burden of Disease (GBD) 2021 study of the Institute for Health Metrics and Evaluation (IHME). Null for a caller without the licence for this column; see withheld_columns. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

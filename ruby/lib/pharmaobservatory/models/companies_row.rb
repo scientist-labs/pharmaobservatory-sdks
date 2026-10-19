@@ -34,13 +34,13 @@ module PharmaObservatory
     # The roles the company's organizations play (Manufacturer, Sponsor and so on).
     attr_accessor :org_kinds
 
-    # SEC EDGAR central index key of the representative record, when it files.
+    # Central index key (CIK) in EDGAR, the US Securities and Exchange Commission (SEC) filing system, of the representative record, when it files.
     attr_accessor :edgar_cik
 
     # Exchange ticker of the representative record, when listed.
     attr_accessor :edgar_ticker
 
-    # Legal-entity level: the organization record the company page shows.
+    # Legal-entity level: the organization record the company's page shows.
     attr_accessor :representative_org_id
 
     # The direct owner company (part_of), null for a root.
@@ -88,6 +88,12 @@ module PharmaObservatory
     # Trial activity score (interventional lead trials and enrollment, weighted toward recent).
     attr_accessor :activity_score
 
+    # True when the company is admitted to the company roster (lead-trial activity, more than one legal entity or a recorded manufacturer role); false rows carry null firmographic, trial-count and activity columns.
+    attr_accessor :is_admitted
+
+    # True when the company has a public organization page.
+    attr_accessor :has_public_page
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -114,7 +120,9 @@ module PharmaObservatory
         :'num_trials' => :'num_trials',
         :'total_lead_enrollment' => :'total_lead_enrollment',
         :'num_recent_lead_trials' => :'num_recent_lead_trials',
-        :'activity_score' => :'activity_score'
+        :'activity_score' => :'activity_score',
+        :'is_admitted' => :'is_admitted',
+        :'has_public_page' => :'has_public_page'
       }
     end
 
@@ -154,7 +162,9 @@ module PharmaObservatory
         :'num_trials' => :'Integer',
         :'total_lead_enrollment' => :'Integer',
         :'num_recent_lead_trials' => :'Integer',
-        :'activity_score' => :'Float'
+        :'activity_score' => :'Float',
+        :'is_admitted' => :'Boolean',
+        :'has_public_page' => :'Boolean'
       }
     end
 
@@ -184,7 +194,9 @@ module PharmaObservatory
         :'num_trials',
         :'total_lead_enrollment',
         :'num_recent_lead_trials',
-        :'activity_score'
+        :'activity_score',
+        :'is_admitted',
+        :'has_public_page'
       ])
     end
 
@@ -301,6 +313,14 @@ module PharmaObservatory
       if attributes.key?(:'activity_score')
         self.activity_score = attributes[:'activity_score']
       end
+
+      if attributes.key?(:'is_admitted')
+        self.is_admitted = attributes[:'is_admitted']
+      end
+
+      if attributes.key?(:'has_public_page')
+        self.has_public_page = attributes[:'has_public_page']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -346,7 +366,9 @@ module PharmaObservatory
           num_trials == o.num_trials &&
           total_lead_enrollment == o.total_lead_enrollment &&
           num_recent_lead_trials == o.num_recent_lead_trials &&
-          activity_score == o.activity_score
+          activity_score == o.activity_score &&
+          is_admitted == o.is_admitted &&
+          has_public_page == o.has_public_page
     end
 
     # @see the `==` method
@@ -358,7 +380,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [company_id, company_name, name_basis, country, org_type, org_kinds, edgar_cik, edgar_ticker, representative_org_id, parent_company_id, parent_company_name, part_of_since, part_of_since_precision, group_id, group_name, rollup_depth, n_legal_entities, n_member_companies, num_lead_trials, num_collaborator_trials, num_trials, total_lead_enrollment, num_recent_lead_trials, activity_score].hash
+      [company_id, company_name, name_basis, country, org_type, org_kinds, edgar_cik, edgar_ticker, representative_org_id, parent_company_id, parent_company_name, part_of_since, part_of_since_precision, group_id, group_name, rollup_depth, n_legal_entities, n_member_companies, num_lead_trials, num_collaborator_trials, num_trials, total_lead_enrollment, num_recent_lead_trials, activity_score, is_admitted, has_public_page].hash
     end
 
     # Builds the object from hash

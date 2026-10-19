@@ -67,7 +67,7 @@ module PharmaObservatory
     # Evaluated trials with prediction_status predicted, superseded or not.
     attr_accessor :n_predicted
 
-    # Predicted trials whose CURRENT record shows the outcome (COMPLETED, TERMINATED, WITHDRAWN or an ACTUAL primary completion); kept out of every predicted figure, as the trial page withholds them.
+    # Predicted trials whose CURRENT record shows the outcome (COMPLETED, TERMINATED, WITHDRAWN or an ACTUAL primary completion); kept out of every predicted figure.
     attr_accessor :n_predicted_superseded
 
     # n_predicted - n_predicted_superseded; the denominator of every predicted figure.

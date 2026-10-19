@@ -31,7 +31,7 @@ module PharmaObservatory
     # The paper's title.
     attr_accessor :title
 
-    # The journal's NLM id.
+    # The journal's National Library of Medicine (NLM) id.
     attr_accessor :journal_nlm_id
 
     # The journal's title.

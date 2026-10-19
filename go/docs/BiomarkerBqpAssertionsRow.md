@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **SourceAssertionId** | Pointer to **NullableString** | The assertion id. | [optional] 
 **RouteKey** | Pointer to **NullableString** | The biomarker&#39;s route key, the entry key for the biomarkers object type. | [optional] 
 **BiomarkerId** | Pointer to **NullableString** | The biomarker key. | [optional] 
-**DdtNumber** | Pointer to **NullableString** | The FDA drug development tool number of the project. | [optional] 
+**DdtNumber** | Pointer to **NullableString** | The drug development tool number the US Food and Drug Administration (FDA) assigns the project. | [optional] 
 **DdtProjectId** | Pointer to **NullableString** | The FDA project id. | [optional] 
 **ProjectName** | Pointer to **NullableString** | The project&#39;s name. | [optional] 
 **BqpSignal** | Pointer to **NullableString** | The source status of the project. Only qualified means FDA-qualified; every other value is a project status. | [optional] 

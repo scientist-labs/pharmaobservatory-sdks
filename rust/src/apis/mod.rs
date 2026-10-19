@@ -115,9 +115,11 @@ pub mod api_v1_base_api;
 pub mod biomarkers_api;
 pub mod cell_lines_api;
 pub mod companies_api;
+pub mod conditions_api;
 pub mod datasets_api;
 pub mod legal_entities_api;
 pub mod query_api;
 pub mod sites_api;
+pub mod trials_api;
 
 pub mod configuration;

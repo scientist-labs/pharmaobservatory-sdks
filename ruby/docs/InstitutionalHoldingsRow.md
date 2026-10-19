@@ -11,8 +11,9 @@
 | **issuer_company_name** | **String** | Display name of the issuer&#39;s company. | [optional] |
 | **issuer_group_id** | **String** | Group level: the issuer&#39;s current ultimate parent; a root&#39;s group is itself. | [optional] |
 | **issuer_group_name** | **String** | Display name of the issuer&#39;s group. | [optional] |
-| **security_ref** | **String** | The security&#39;s CUSIP reference. | [optional] |
+| **security_ref** | **String** | The security&#39;s CUSIP (Committee on Uniform Securities Identification Procedures) identifier. | [optional] |
 | **holder_name** | **String** | The institutional manager&#39;s name. | [optional] |
+| **holder_identity_key** | **String** | The institutional manager&#39;s stable identity (an SEC registration number), the key that groups all of one manager&#39;s holdings. | [optional] |
 | **holder_kind** | **String** | Manager kind. | [optional] |
 | **holder_org_id** | **String** | Legal-entity level: the manager&#39;s organization record (null when unresolved). | [optional] |
 | **holder_company_id** | **String** | Company level: the manager&#39;s company (null when unresolved). | [optional] |
@@ -44,6 +45,7 @@ instance = PharmaObservatory::InstitutionalHoldingsRow.new(
   issuer_group_name: null,
   security_ref: null,
   holder_name: null,
+  holder_identity_key: null,
   holder_kind: null,
   holder_org_id: null,
   holder_company_id: null,

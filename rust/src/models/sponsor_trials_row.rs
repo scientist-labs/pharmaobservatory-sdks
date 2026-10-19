@@ -14,7 +14,7 @@ use serde::{Deserialize, Serialize};
 /// SponsorTrialsRow : One row of the sponsor_trials dataset: one row per trial and sponsor as filed (lead sponsor or collaborator). A grouped request returns the group columns and the measures instead, as additional properties.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct SponsorTrialsRow {
-    /// The trial's registry id (NCT number).
+    /// The trial's ClinicalTrials.gov registry id (NCT, National Clinical Trial, number).
     #[serde(rename = "trial_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub trial_id: Option<Option<String>>,
     /// lead or collaborator.
@@ -38,7 +38,7 @@ pub struct SponsorTrialsRow {
     /// Display name of the sponsor's group.
     #[serde(rename = "sponsor_group_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub sponsor_group_name: Option<Option<String>>,
-    /// The registry's agency class for the sponsor (INDUSTRY, NIH, OTHER ...).
+    /// The registry's agency class for the sponsor (INDUSTRY, NIH for the US National Institutes of Health, OTHER ...).
     #[serde(rename = "sponsor_agency_class", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub sponsor_agency_class: Option<Option<String>>,
     /// How the sponsor name was resolved to an organization record.

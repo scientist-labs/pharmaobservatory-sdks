@@ -33,10 +33,12 @@ type InstitutionalHoldingsRow struct {
 	IssuerGroupId NullableString `json:"issuer_group_id,omitempty"`
 	// Display name of the issuer's group.
 	IssuerGroupName NullableString `json:"issuer_group_name,omitempty"`
-	// The security's CUSIP reference.
+	// The security's CUSIP (Committee on Uniform Securities Identification Procedures) identifier.
 	SecurityRef NullableString `json:"security_ref,omitempty"`
 	// The institutional manager's name.
 	HolderName NullableString `json:"holder_name,omitempty"`
+	// The institutional manager's stable identity (an SEC registration number), the key that groups all of one manager's holdings.
+	HolderIdentityKey NullableString `json:"holder_identity_key,omitempty"`
 	// Manager kind.
 	HolderKind NullableString `json:"holder_kind,omitempty"`
 	// Legal-entity level: the manager's organization record (null when unresolved).
@@ -465,6 +467,48 @@ func (o *InstitutionalHoldingsRow) SetHolderNameNil() {
 // UnsetHolderName ensures that no value is present for HolderName, not even an explicit nil
 func (o *InstitutionalHoldingsRow) UnsetHolderName() {
 	o.HolderName.Unset()
+}
+
+// GetHolderIdentityKey returns the HolderIdentityKey field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InstitutionalHoldingsRow) GetHolderIdentityKey() string {
+	if o == nil || IsNil(o.HolderIdentityKey.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.HolderIdentityKey.Get()
+}
+
+// GetHolderIdentityKeyOk returns a tuple with the HolderIdentityKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InstitutionalHoldingsRow) GetHolderIdentityKeyOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HolderIdentityKey.Get(), o.HolderIdentityKey.IsSet()
+}
+
+// HasHolderIdentityKey returns a boolean if a field has been set.
+func (o *InstitutionalHoldingsRow) HasHolderIdentityKey() bool {
+	if o != nil && o.HolderIdentityKey.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHolderIdentityKey gets a reference to the given NullableString and assigns it to the HolderIdentityKey field.
+func (o *InstitutionalHoldingsRow) SetHolderIdentityKey(v string) {
+	o.HolderIdentityKey.Set(&v)
+}
+// SetHolderIdentityKeyNil sets the value for HolderIdentityKey to be an explicit nil
+func (o *InstitutionalHoldingsRow) SetHolderIdentityKeyNil() {
+	o.HolderIdentityKey.Set(nil)
+}
+
+// UnsetHolderIdentityKey ensures that no value is present for HolderIdentityKey, not even an explicit nil
+func (o *InstitutionalHoldingsRow) UnsetHolderIdentityKey() {
+	o.HolderIdentityKey.Unset()
 }
 
 // GetHolderKind returns the HolderKind field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1134,6 +1178,9 @@ func (o InstitutionalHoldingsRow) ToMap() (map[string]interface{}, error) {
 	if o.HolderName.IsSet() {
 		toSerialize["holder_name"] = o.HolderName.Get()
 	}
+	if o.HolderIdentityKey.IsSet() {
+		toSerialize["holder_identity_key"] = o.HolderIdentityKey.Get()
+	}
 	if o.HolderKind.IsSet() {
 		toSerialize["holder_kind"] = o.HolderKind.Get()
 	}
@@ -1210,6 +1257,7 @@ func (o *InstitutionalHoldingsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "issuer_group_name")
 		delete(additionalProperties, "security_ref")
 		delete(additionalProperties, "holder_name")
+		delete(additionalProperties, "holder_identity_key")
 		delete(additionalProperties, "holder_kind")
 		delete(additionalProperties, "holder_org_id")
 		delete(additionalProperties, "holder_company_id")

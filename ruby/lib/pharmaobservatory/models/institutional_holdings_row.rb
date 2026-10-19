@@ -37,11 +37,14 @@ module PharmaObservatory
     # Display name of the issuer's group.
     attr_accessor :issuer_group_name
 
-    # The security's CUSIP reference.
+    # The security's CUSIP (Committee on Uniform Securities Identification Procedures) identifier.
     attr_accessor :security_ref
 
     # The institutional manager's name.
     attr_accessor :holder_name
+
+    # The institutional manager's stable identity (an SEC registration number), the key that groups all of one manager's holdings.
+    attr_accessor :holder_identity_key
 
     # Manager kind.
     attr_accessor :holder_kind
@@ -100,6 +103,7 @@ module PharmaObservatory
         :'issuer_group_name' => :'issuer_group_name',
         :'security_ref' => :'security_ref',
         :'holder_name' => :'holder_name',
+        :'holder_identity_key' => :'holder_identity_key',
         :'holder_kind' => :'holder_kind',
         :'holder_org_id' => :'holder_org_id',
         :'holder_company_id' => :'holder_company_id',
@@ -140,6 +144,7 @@ module PharmaObservatory
         :'issuer_group_name' => :'String',
         :'security_ref' => :'String',
         :'holder_name' => :'String',
+        :'holder_identity_key' => :'String',
         :'holder_kind' => :'String',
         :'holder_org_id' => :'String',
         :'holder_company_id' => :'String',
@@ -170,6 +175,7 @@ module PharmaObservatory
         :'issuer_group_name',
         :'security_ref',
         :'holder_name',
+        :'holder_identity_key',
         :'holder_kind',
         :'holder_org_id',
         :'holder_company_id',
@@ -238,6 +244,10 @@ module PharmaObservatory
 
       if attributes.key?(:'holder_name')
         self.holder_name = attributes[:'holder_name']
+      end
+
+      if attributes.key?(:'holder_identity_key')
+        self.holder_identity_key = attributes[:'holder_identity_key']
       end
 
       if attributes.key?(:'holder_kind')
@@ -330,6 +340,7 @@ module PharmaObservatory
           issuer_group_name == o.issuer_group_name &&
           security_ref == o.security_ref &&
           holder_name == o.holder_name &&
+          holder_identity_key == o.holder_identity_key &&
           holder_kind == o.holder_kind &&
           holder_org_id == o.holder_org_id &&
           holder_company_id == o.holder_company_id &&
@@ -356,7 +367,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [holding_id, issuer_name, issuer_org_id, issuer_company_id, issuer_company_name, issuer_group_id, issuer_group_name, security_ref, holder_name, holder_kind, holder_org_id, holder_company_id, holder_company_name, holder_group_id, holder_group_name, reported_value_amount, reported_value_currency, shares, percent_basis, reported_percent, edge_state, first_observed_date, last_filing_date, contains_personal_data].hash
+      [holding_id, issuer_name, issuer_org_id, issuer_company_id, issuer_company_name, issuer_group_id, issuer_group_name, security_ref, holder_name, holder_identity_key, holder_kind, holder_org_id, holder_company_id, holder_company_name, holder_group_id, holder_group_name, reported_value_amount, reported_value_currency, shares, percent_basis, reported_percent, edge_state, first_observed_date, last_filing_date, contains_personal_data].hash
     end
 
     # Builds the object from hash

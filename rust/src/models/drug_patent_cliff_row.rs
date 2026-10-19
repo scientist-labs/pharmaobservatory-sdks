@@ -23,7 +23,7 @@ pub struct DrugPatentCliffRow {
     /// The drug's pharmacologic class.
     #[serde(rename = "pharm_class", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub pharm_class: Option<Option<String>>,
-    /// The drug's ATC class.
+    /// The drug's Anatomical Therapeutic Chemical (ATC) class.
     #[serde(rename = "atc_class", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub atc_class: Option<Option<String>>,
     /// The brand name.

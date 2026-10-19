@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **therapeutic_area** | Option<**String**> | The therapeutic area. | [optional]
 **drug_name** | Option<**String**> | The drug as filed. | [optional]
 **drug_id** | Option<**String**> | The drug key. | [optional]
-**molecule_id** | Option<**String**> | The molecule key. Null today: the evidence mart carries no molecule column. | [optional]
+**molecule_id** | Option<**String**> | The molecule key. Null on every row: no evidence row carries a molecule. | [optional]
 **response** | Option<**String**> | The reported response (for example Responsive, Resistant). | [optional]
 **score** | Option<**f64**> | The association score, for an Open Targets row. | [optional]
 **variant_count** | Option<**i32**> | Variants the assertion covers. | [optional]

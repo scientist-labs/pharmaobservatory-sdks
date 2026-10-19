@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SiteId** | Pointer to **NullableString** | The site key: one facility spelling from the registry. | [optional] 
-**TrialId** | Pointer to **NullableString** | The trial&#39;s registry id (NCT number). | [optional] 
+**TrialId** | Pointer to **NullableString** | The trial&#39;s ClinicalTrials.gov registry id (NCT, National Clinical Trial, number). | [optional] 
 **TrialTitle** | Pointer to **NullableString** | The trial&#39;s brief title. | [optional] 
 **StudyType** | Pointer to **NullableString** | INTERVENTIONAL or OBSERVATIONAL. | [optional] 
 **Phase** | Pointer to **NullableString** | The trial phase label. | [optional] 

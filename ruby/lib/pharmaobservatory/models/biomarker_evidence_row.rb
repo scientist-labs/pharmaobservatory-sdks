@@ -55,7 +55,7 @@ module PharmaObservatory
     # The drug key.
     attr_accessor :drug_id
 
-    # The molecule key. Null today: the evidence mart carries no molecule column.
+    # The molecule key. Null on every row: no evidence row carries a molecule.
     attr_accessor :molecule_id
 
     # The reported response (for example Responsive, Resistant).

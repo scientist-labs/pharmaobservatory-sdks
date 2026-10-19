@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **DrugId** | Pointer to **NullableString** | The drug key. | [optional] 
 **DrugName** | Pointer to **NullableString** | The drug&#39;s name. | [optional] 
 **PharmClass** | Pointer to **NullableString** | The drug&#39;s pharmacologic class. | [optional] 
-**AtcClass** | Pointer to **NullableString** | The drug&#39;s ATC class. | [optional] 
+**AtcClass** | Pointer to **NullableString** | The drug&#39;s Anatomical Therapeutic Chemical (ATC) class. | [optional] 
 **Brand** | Pointer to **NullableString** | The brand name. | [optional] 
 **CandidateBrands** | Pointer to **NullableString** | Other candidate brand names, comma separated. | [optional] 
 **CliffDate** | Pointer to **NullableString** | The date exclusivity is expected to end (loss of exclusivity); always in the future when the dataset is built. | [optional] 

@@ -22,10 +22,10 @@ module PharmaObservatory
     # Which lane the row came from: benzinga, sec_extraction or both.
     attr_accessor :source
 
-    # none for a row from SEC filings; licensable for a row from the Benzinga calendar.
+    # none for a row from SEC filings; licensable for a row from the Benzinga calendar (the filings are those made to the US Securities and Exchange Commission).
     attr_accessor :restriction_tier
 
-    # The FDA decision date (PDUFA is the date under the Prescription Drug User Fee Act).
+    # The decision date of the US Food and Drug Administration (FDA); a PDUFA date is the goal date under the Prescription Drug User Fee Act.
     attr_accessor :decision_date
 
     # Start of the date interval the source states.

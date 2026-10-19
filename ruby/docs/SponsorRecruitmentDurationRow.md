@@ -21,7 +21,7 @@
 | **n_start_not_actual** | **Integer** | Evaluated trials with prediction_status start_not_actual. | [optional] |
 | **n_fit_failed** | **Integer** | Evaluated trials with prediction_status fit_failed. | [optional] |
 | **n_predicted** | **Integer** | Evaluated trials with prediction_status predicted, superseded or not. | [optional] |
-| **n_predicted_superseded** | **Integer** | Predicted trials whose CURRENT record shows the outcome (COMPLETED, TERMINATED, WITHDRAWN or an ACTUAL primary completion); kept out of every predicted figure, as the trial page withholds them. | [optional] |
+| **n_predicted_superseded** | **Integer** | Predicted trials whose CURRENT record shows the outcome (COMPLETED, TERMINATED, WITHDRAWN or an ACTUAL primary completion); kept out of every predicted figure. | [optional] |
 | **n_predicted_open** | **Integer** | n_predicted - n_predicted_superseded; the denominator of every predicted figure. | [optional] |
 | **n_predicted_at_cap** | **Integer** | Open predicted trials whose figure sits at the horizon cap (an at-cap row contributes the cap to the median). | [optional] |
 | **n_predicted_overdue** | **Integer** | Open predicted trials running past their predicted end at the cutoff. | [optional] |

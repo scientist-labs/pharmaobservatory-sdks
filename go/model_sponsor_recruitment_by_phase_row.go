@@ -49,9 +49,9 @@ type SponsorRecruitmentByPhaseRow struct {
 	RealizedMonthsMedian NullableFloat32 `json:"realized_months_median,omitempty"`
 	// Backtest mean absolute error in months for this phase bucket; NULL on an unmeasured bucket or one with no open predicted trial.
 	ErrorPhaseMaeMonths NullableFloat32 `json:"error_phase_mae_months,omitempty"`
-	// The model MAE over the baseline MAE in this phase bucket.
+	// The model's mean absolute error (MAE) over the baseline's MAE in this phase bucket.
 	ErrorPhaseRelmaeVsBaseline NullableFloat32 `json:"error_phase_relmae_vs_baseline,omitempty"`
-	// The baseline MAE in months in this phase bucket.
+	// The baseline's mean absolute error (MAE) in months in this phase bucket.
 	ErrorPhaseBaselineMaeMonths NullableFloat32 `json:"error_phase_baseline_mae_months,omitempty"`
 	// Backtest trials behind the phase figure.
 	ErrorPhaseNTrials NullableInt32 `json:"error_phase_n_trials,omitempty"`

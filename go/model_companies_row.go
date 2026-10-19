@@ -31,11 +31,11 @@ type CompaniesRow struct {
 	OrgType NullableString `json:"org_type,omitempty"`
 	// The roles the company's organizations play (Manufacturer, Sponsor and so on).
 	OrgKinds []string `json:"org_kinds,omitempty"`
-	// SEC EDGAR central index key of the representative record, when it files.
+	// Central index key (CIK) in EDGAR, the US Securities and Exchange Commission (SEC) filing system, of the representative record, when it files.
 	EdgarCik NullableString `json:"edgar_cik,omitempty"`
 	// Exchange ticker of the representative record, when listed.
 	EdgarTicker NullableString `json:"edgar_ticker,omitempty"`
-	// Legal-entity level: the organization record the company page shows.
+	// Legal-entity level: the organization record the company's page shows.
 	RepresentativeOrgId NullableString `json:"representative_org_id,omitempty"`
 	// The direct owner company (part_of), null for a root.
 	ParentCompanyId NullableString `json:"parent_company_id,omitempty"`
@@ -67,6 +67,10 @@ type CompaniesRow struct {
 	NumRecentLeadTrials NullableInt64 `json:"num_recent_lead_trials,omitempty"`
 	// Trial activity score (interventional lead trials and enrollment, weighted toward recent).
 	ActivityScore NullableFloat32 `json:"activity_score,omitempty"`
+	// True when the company is admitted to the company roster (lead-trial activity, more than one legal entity or a recorded manufacturer role); false rows carry null firmographic, trial-count and activity columns.
+	IsAdmitted NullableBool `json:"is_admitted,omitempty"`
+	// True when the company has a public organization page.
+	HasPublicPage NullableBool `json:"has_public_page,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -1088,6 +1092,90 @@ func (o *CompaniesRow) UnsetActivityScore() {
 	o.ActivityScore.Unset()
 }
 
+// GetIsAdmitted returns the IsAdmitted field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompaniesRow) GetIsAdmitted() bool {
+	if o == nil || IsNil(o.IsAdmitted.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.IsAdmitted.Get()
+}
+
+// GetIsAdmittedOk returns a tuple with the IsAdmitted field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompaniesRow) GetIsAdmittedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IsAdmitted.Get(), o.IsAdmitted.IsSet()
+}
+
+// HasIsAdmitted returns a boolean if a field has been set.
+func (o *CompaniesRow) HasIsAdmitted() bool {
+	if o != nil && o.IsAdmitted.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetIsAdmitted gets a reference to the given NullableBool and assigns it to the IsAdmitted field.
+func (o *CompaniesRow) SetIsAdmitted(v bool) {
+	o.IsAdmitted.Set(&v)
+}
+// SetIsAdmittedNil sets the value for IsAdmitted to be an explicit nil
+func (o *CompaniesRow) SetIsAdmittedNil() {
+	o.IsAdmitted.Set(nil)
+}
+
+// UnsetIsAdmitted ensures that no value is present for IsAdmitted, not even an explicit nil
+func (o *CompaniesRow) UnsetIsAdmitted() {
+	o.IsAdmitted.Unset()
+}
+
+// GetHasPublicPage returns the HasPublicPage field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompaniesRow) GetHasPublicPage() bool {
+	if o == nil || IsNil(o.HasPublicPage.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.HasPublicPage.Get()
+}
+
+// GetHasPublicPageOk returns a tuple with the HasPublicPage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompaniesRow) GetHasPublicPageOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HasPublicPage.Get(), o.HasPublicPage.IsSet()
+}
+
+// HasHasPublicPage returns a boolean if a field has been set.
+func (o *CompaniesRow) HasHasPublicPage() bool {
+	if o != nil && o.HasPublicPage.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHasPublicPage gets a reference to the given NullableBool and assigns it to the HasPublicPage field.
+func (o *CompaniesRow) SetHasPublicPage(v bool) {
+	o.HasPublicPage.Set(&v)
+}
+// SetHasPublicPageNil sets the value for HasPublicPage to be an explicit nil
+func (o *CompaniesRow) SetHasPublicPageNil() {
+	o.HasPublicPage.Set(nil)
+}
+
+// UnsetHasPublicPage ensures that no value is present for HasPublicPage, not even an explicit nil
+func (o *CompaniesRow) UnsetHasPublicPage() {
+	o.HasPublicPage.Unset()
+}
+
 func (o CompaniesRow) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1170,6 +1258,12 @@ func (o CompaniesRow) ToMap() (map[string]interface{}, error) {
 	if o.ActivityScore.IsSet() {
 		toSerialize["activity_score"] = o.ActivityScore.Get()
 	}
+	if o.IsAdmitted.IsSet() {
+		toSerialize["is_admitted"] = o.IsAdmitted.Get()
+	}
+	if o.HasPublicPage.IsSet() {
+		toSerialize["has_public_page"] = o.HasPublicPage.Get()
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -1216,6 +1310,8 @@ func (o *CompaniesRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "total_lead_enrollment")
 		delete(additionalProperties, "num_recent_lead_trials")
 		delete(additionalProperties, "activity_score")
+		delete(additionalProperties, "is_admitted")
+		delete(additionalProperties, "has_public_page")
 		o.AdditionalProperties = additionalProperties
 	}
 

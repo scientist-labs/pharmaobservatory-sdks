@@ -53,7 +53,7 @@ type CellLinesRow struct {
 	ProblemCategory NullableString `json:"problem_category,omitempty"`
 	// The Cellosaurus comment, for a problematic line.
 	ProblematicComment NullableString `json:"problematic_comment,omitempty"`
-	// ICLAC registration ids.
+	// International Cell Line Authentication Committee (ICLAC) registration ids.
 	IclacRegistrationIds []string `json:"iclac_registration_ids,omitempty"`
 	// The Cellosaurus release the check ran against.
 	ReleaseVersion NullableString `json:"release_version,omitempty"`

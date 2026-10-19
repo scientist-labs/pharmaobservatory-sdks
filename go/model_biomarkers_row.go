@@ -37,7 +37,7 @@ type BiomarkersRow struct {
 	AminoAcidChange NullableString `json:"amino_acid_change,omitempty"`
 	// The target's Ensembl gene id.
 	TargetId NullableString `json:"target_id,omitempty"`
-	// The HGNC gene id.
+	// The HUGO Gene Nomenclature Committee (HGNC) gene id.
 	HgncId NullableString `json:"hgnc_id,omitempty"`
 	// The UniProt accession.
 	UniprotAccession NullableString `json:"uniprot_accession,omitempty"`
@@ -45,7 +45,7 @@ type BiomarkersRow struct {
 	FeatureCode NullableString `json:"feature_code,omitempty"`
 	// Feature type for a non-gene feature.
 	FeatureType NullableString `json:"feature_type,omitempty"`
-	// Strongest evidence tier: 1 FDA companion diagnostic through 6 no evidence.
+	// Strongest evidence tier: 1 companion diagnostic of the US Food and Drug Administration (FDA) through 6 no evidence.
 	EvidenceTier NullableInt32 `json:"evidence_tier,omitempty"`
 	// The tier's name.
 	EvidenceTierLabel NullableString `json:"evidence_tier_label,omitempty"`

@@ -43,7 +43,7 @@ module PharmaObservatory
     # The target's Ensembl gene id.
     attr_accessor :target_id
 
-    # The HGNC gene id.
+    # The HUGO Gene Nomenclature Committee (HGNC) gene id.
     attr_accessor :hgnc_id
 
     # The UniProt accession.
@@ -55,7 +55,7 @@ module PharmaObservatory
     # Feature type for a non-gene feature.
     attr_accessor :feature_type
 
-    # Strongest evidence tier: 1 FDA companion diagnostic through 6 no evidence.
+    # Strongest evidence tier: 1 companion diagnostic of the US Food and Drug Administration (FDA) through 6 no evidence.
     attr_accessor :evidence_tier
 
     # The tier's name.
