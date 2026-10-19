@@ -21,15 +21,7 @@ use super::{Error, configuration, ContentType};
 pub enum CellLinesPeriodGetError {
     Status401(models::AuthError),
     Status403(models::AuthError),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`cell_lines_period_identity`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum CellLinesPeriodIdentityError {
-    Status401(models::AuthError),
-    Status403(models::AuthError),
+    Status404(models::QueryError),
     UnknownValue(serde_json::Value),
 }
 
@@ -37,35 +29,20 @@ pub enum CellLinesPeriodIdentityError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CellLinesPeriodListError {
+    Status400(models::QueryError),
     Status401(models::AuthError),
     Status403(models::AuthError),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`cell_lines_period_safety_resolution`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum CellLinesPeriodSafetyResolutionError {
-    Status401(models::AuthError),
-    Status403(models::AuthError),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`cell_lines_period_status_counts`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum CellLinesPeriodStatusCountsError {
-    Status401(models::AuthError),
-    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
     UnknownValue(serde_json::Value),
 }
 
 
-pub async fn cell_lines_period_get(configuration: &configuration::Configuration, id: &str) -> Result<models::CellLinesGet200Response, Error<CellLinesPeriodGetError>> {
+pub async fn cell_lines_period_get(configuration: &configuration::Configuration, id: &str) -> Result<models::CellLinesRecord, Error<CellLinesPeriodGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
 
-    let uri_str = format!("{}/api/v1/cell-lines/{id}", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let uri_str = format!("{}/api/v1/cell_lines/{id}", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
@@ -90,8 +67,8 @@ pub async fn cell_lines_period_get(configuration: &configuration::Configuration,
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CellLinesGet200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CellLinesGet200Response`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CellLinesRecord`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CellLinesRecord`")))),
         }
     } else {
         let content = resp.text().await?;
@@ -100,66 +77,19 @@ pub async fn cell_lines_period_get(configuration: &configuration::Configuration,
     }
 }
 
-pub async fn cell_lines_period_identity(configuration: &configuration::Configuration, id: &str) -> Result<models::CellLinesIdentity200Response, Error<CellLinesPeriodIdentityError>> {
+pub async fn cell_lines_period_list(configuration: &configuration::Configuration, limit: Option<i32>, sort: Option<&str>) -> Result<models::CellLinesResponse, Error<CellLinesPeriodListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_id = id;
-
-    let uri_str = format!("{}/api/v1/cell-lines/{id}/identity", configuration.base_path, id=crate::apis::urlencode(p_id));
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref token) = configuration.bearer_access_token {
-        req_builder = req_builder.bearer_auth(token.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CellLinesIdentity200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CellLinesIdentity200Response`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<CellLinesPeriodIdentityError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-pub async fn cell_lines_period_list(configuration: &configuration::Configuration, cursor: Option<&str>, facets: Option<bool>, limit: Option<i32>, safety_status: Option<&str>) -> Result<models::CellLinesList200Response, Error<CellLinesPeriodListError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_cursor = cursor;
-    let p_facets = facets;
     let p_limit = limit;
-    let p_safety_status = safety_status;
+    let p_sort = sort;
 
-    let uri_str = format!("{}/api/v1/cell-lines", configuration.base_path);
+    let uri_str = format!("{}/api/v1/cell_lines", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_cursor {
-        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_facets {
-        req_builder = req_builder.query(&[("facets", &param_value.to_string())]);
-    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_safety_status {
-        req_builder = req_builder.query(&[("safety_status", &param_value.to_string())]);
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -183,93 +113,12 @@ pub async fn cell_lines_period_list(configuration: &configuration::Configuration
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CellLinesList200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CellLinesList200Response`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CellLinesResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CellLinesResponse`")))),
         }
     } else {
         let content = resp.text().await?;
         let entity: Option<CellLinesPeriodListError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-pub async fn cell_lines_period_safety_resolution(configuration: &configuration::Configuration, id: &str) -> Result<models::CellLinesSafetyResolution200Response, Error<CellLinesPeriodSafetyResolutionError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_id = id;
-
-    let uri_str = format!("{}/api/v1/cell-lines/{id}/safety_resolution", configuration.base_path, id=crate::apis::urlencode(p_id));
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref token) = configuration.bearer_access_token {
-        req_builder = req_builder.bearer_auth(token.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CellLinesSafetyResolution200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CellLinesSafetyResolution200Response`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<CellLinesPeriodSafetyResolutionError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-pub async fn cell_lines_period_status_counts(configuration: &configuration::Configuration, species: Option<&str>) -> Result<models::CellLinesStatusCounts200Response, Error<CellLinesPeriodStatusCountsError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_species = species;
-
-    let uri_str = format!("{}/api/v1/cell-lines/status_counts", configuration.base_path);
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref param_value) = p_species {
-        req_builder = req_builder.query(&[("species", &param_value.to_string())]);
-    }
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref token) = configuration.bearer_access_token {
-        req_builder = req_builder.bearer_auth(token.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CellLinesStatusCounts200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CellLinesStatusCounts200Response`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<CellLinesPeriodStatusCountsError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }

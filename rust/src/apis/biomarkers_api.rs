@@ -15,57 +15,75 @@ use crate::{apis::ResponseContent, models};
 use super::{Error, configuration, ContentType};
 
 
-/// struct for typed errors of method [`biomarkers_period_assay_provider_ledger`]
+/// struct for typed errors of method [`biomarkers_period_biomarker_bqp_assertions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum BiomarkersPeriodAssayProviderLedgerError {
+pub enum BiomarkersPeriodBiomarkerBqpAssertionsError {
+    Status400(models::QueryError),
     Status401(models::AuthError),
     Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`biomarkers_period_cgi`]
+/// struct for typed errors of method [`biomarkers_period_biomarker_cdx_assertions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum BiomarkersPeriodCgiError {
+pub enum BiomarkersPeriodBiomarkerCdxAssertionsError {
+    Status400(models::QueryError),
     Status401(models::AuthError),
     Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`biomarkers_period_coverage_by_traversal`]
+/// struct for typed errors of method [`biomarkers_period_biomarker_evidence`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum BiomarkersPeriodCoverageByTraversalError {
+pub enum BiomarkersPeriodBiomarkerEvidenceError {
+    Status400(models::QueryError),
     Status401(models::AuthError),
     Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`biomarkers_period_evidence_over_time`]
+/// struct for typed errors of method [`biomarkers_period_biomarker_literature`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum BiomarkersPeriodEvidenceOverTimeError {
+pub enum BiomarkersPeriodBiomarkerLiteratureError {
+    Status400(models::QueryError),
     Status401(models::AuthError),
     Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`biomarkers_period_fda_bqp`]
+/// struct for typed errors of method [`biomarkers_period_biomarker_publishing_companies`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum BiomarkersPeriodFdaBqpError {
+pub enum BiomarkersPeriodBiomarkerPublishingCompaniesError {
+    Status400(models::QueryError),
     Status401(models::AuthError),
     Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
     UnknownValue(serde_json::Value),
 }
 
-/// struct for typed errors of method [`biomarkers_period_fda_cdx`]
+/// struct for typed errors of method [`biomarkers_period_biomarker_variant_mentions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum BiomarkersPeriodFdaCdxError {
+pub enum BiomarkersPeriodBiomarkerVariantMentionsError {
+    Status400(models::QueryError),
     Status401(models::AuthError),
     Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
     UnknownValue(serde_json::Value),
 }
 
@@ -75,24 +93,7 @@ pub enum BiomarkersPeriodFdaCdxError {
 pub enum BiomarkersPeriodGetError {
     Status401(models::AuthError),
     Status403(models::AuthError),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`biomarkers_period_hub_tier_tables`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum BiomarkersPeriodHubTierTablesError {
-    Status401(models::AuthError),
-    Status403(models::AuthError),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`biomarkers_period_identity`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum BiomarkersPeriodIdentityError {
-    Status401(models::AuthError),
-    Status403(models::AuthError),
+    Status404(models::QueryError),
     UnknownValue(serde_json::Value),
 }
 
@@ -100,137 +101,30 @@ pub enum BiomarkersPeriodIdentityError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum BiomarkersPeriodListError {
+    Status400(models::QueryError),
     Status401(models::AuthError),
     Status403(models::AuthError),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`biomarkers_period_literature`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum BiomarkersPeriodLiteratureError {
-    Status401(models::AuthError),
-    Status403(models::AuthError),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`biomarkers_period_ot_association`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum BiomarkersPeriodOtAssociationError {
-    Status401(models::AuthError),
-    Status403(models::AuthError),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`biomarkers_period_population_allele_frequency`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum BiomarkersPeriodPopulationAlleleFrequencyError {
-    Status401(models::AuthError),
-    Status403(models::AuthError),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`biomarkers_period_publishing_org`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum BiomarkersPeriodPublishingOrgError {
-    Status401(models::AuthError),
-    Status403(models::AuthError),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`biomarkers_period_related_biomarkers`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum BiomarkersPeriodRelatedBiomarkersError {
-    Status401(models::AuthError),
-    Status403(models::AuthError),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`biomarkers_period_related_conditions`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum BiomarkersPeriodRelatedConditionsError {
-    Status401(models::AuthError),
-    Status403(models::AuthError),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`biomarkers_period_related_organizations`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum BiomarkersPeriodRelatedOrganizationsError {
-    Status401(models::AuthError),
-    Status403(models::AuthError),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`biomarkers_period_relations`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum BiomarkersPeriodRelationsError {
-    Status400(models::BiomarkersRelations400Response),
-    Status401(models::AuthError),
-    Status403(models::AuthError),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`biomarkers_period_sample_screening`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum BiomarkersPeriodSampleScreeningError {
-    Status401(models::AuthError),
-    Status403(models::AuthError),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`biomarkers_period_trial_mention`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum BiomarkersPeriodTrialMentionError {
-    Status401(models::AuthError),
-    Status403(models::AuthError),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`biomarkers_period_variant_mentions`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum BiomarkersPeriodVariantMentionsError {
-    Status401(models::AuthError),
-    Status403(models::AuthError),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`biomarkers_period_vendor_sourcing`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum BiomarkersPeriodVendorSourcingError {
-    Status401(models::AuthError),
-    Status403(models::AuthError),
-    UnknownValue(serde_json::Value),
-}
-
-/// struct for typed errors of method [`biomarkers_period_where_it_appears`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum BiomarkersPeriodWhereItAppearsError {
-    Status401(models::AuthError),
-    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
     UnknownValue(serde_json::Value),
 }
 
 
-pub async fn biomarkers_period_assay_provider_ledger(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersAssayProviderLedger200Response, Error<BiomarkersPeriodAssayProviderLedgerError>> {
+pub async fn biomarkers_period_biomarker_bqp_assertions(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, sort: Option<&str>) -> Result<models::BiomarkerBqpAssertionsResponse, Error<BiomarkersPeriodBiomarkerBqpAssertionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_limit = limit;
+    let p_sort = sort;
 
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/assay_provider_ledger", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let uri_str = format!("{}/api/v1/biomarkers/{id}/biomarker_bqp_assertions", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
@@ -253,23 +147,31 @@ pub async fn biomarkers_period_assay_provider_ledger(configuration: &configurati
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersAssayProviderLedger200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersAssayProviderLedger200Response`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkerBqpAssertionsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkerBqpAssertionsResponse`")))),
         }
     } else {
         let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodAssayProviderLedgerError> = serde_json::from_str(&content).ok();
+        let entity: Option<BiomarkersPeriodBiomarkerBqpAssertionsError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
 
-pub async fn biomarkers_period_cgi(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersCgi200Response, Error<BiomarkersPeriodCgiError>> {
+pub async fn biomarkers_period_biomarker_cdx_assertions(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, sort: Option<&str>) -> Result<models::BiomarkerCdxAssertionsResponse, Error<BiomarkersPeriodBiomarkerCdxAssertionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_limit = limit;
+    let p_sort = sort;
 
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/cgi", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let uri_str = format!("{}/api/v1/biomarkers/{id}/biomarker_cdx_assertions", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
@@ -292,23 +194,31 @@ pub async fn biomarkers_period_cgi(configuration: &configuration::Configuration,
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersCgi200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersCgi200Response`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkerCdxAssertionsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkerCdxAssertionsResponse`")))),
         }
     } else {
         let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodCgiError> = serde_json::from_str(&content).ok();
+        let entity: Option<BiomarkersPeriodBiomarkerCdxAssertionsError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
 
-pub async fn biomarkers_period_coverage_by_traversal(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersCoverageByTraversal200Response, Error<BiomarkersPeriodCoverageByTraversalError>> {
+pub async fn biomarkers_period_biomarker_evidence(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, sort: Option<&str>) -> Result<models::BiomarkerEvidenceResponse, Error<BiomarkersPeriodBiomarkerEvidenceError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_limit = limit;
+    let p_sort = sort;
 
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/coverage_by_traversal", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let uri_str = format!("{}/api/v1/biomarkers/{id}/biomarker_evidence", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
@@ -331,23 +241,31 @@ pub async fn biomarkers_period_coverage_by_traversal(configuration: &configurati
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersCoverageByTraversal200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersCoverageByTraversal200Response`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkerEvidenceResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkerEvidenceResponse`")))),
         }
     } else {
         let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodCoverageByTraversalError> = serde_json::from_str(&content).ok();
+        let entity: Option<BiomarkersPeriodBiomarkerEvidenceError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
 
-pub async fn biomarkers_period_evidence_over_time(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersEvidenceOverTime200Response, Error<BiomarkersPeriodEvidenceOverTimeError>> {
+pub async fn biomarkers_period_biomarker_literature(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, sort: Option<&str>) -> Result<models::BiomarkerLiteratureResponse, Error<BiomarkersPeriodBiomarkerLiteratureError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_limit = limit;
+    let p_sort = sort;
 
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/evidence_over_time", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let uri_str = format!("{}/api/v1/biomarkers/{id}/biomarker_literature", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
@@ -370,23 +288,31 @@ pub async fn biomarkers_period_evidence_over_time(configuration: &configuration:
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersEvidenceOverTime200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersEvidenceOverTime200Response`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkerLiteratureResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkerLiteratureResponse`")))),
         }
     } else {
         let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodEvidenceOverTimeError> = serde_json::from_str(&content).ok();
+        let entity: Option<BiomarkersPeriodBiomarkerLiteratureError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
 
-pub async fn biomarkers_period_fda_bqp(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersFdaBqp200Response, Error<BiomarkersPeriodFdaBqpError>> {
+pub async fn biomarkers_period_biomarker_publishing_companies(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, sort: Option<&str>) -> Result<models::BiomarkerPublishingCompaniesResponse, Error<BiomarkersPeriodBiomarkerPublishingCompaniesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_limit = limit;
+    let p_sort = sort;
 
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/fda_bqp", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let uri_str = format!("{}/api/v1/biomarkers/{id}/biomarker_publishing_companies", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
@@ -409,23 +335,31 @@ pub async fn biomarkers_period_fda_bqp(configuration: &configuration::Configurat
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersFdaBqp200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersFdaBqp200Response`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkerPublishingCompaniesResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkerPublishingCompaniesResponse`")))),
         }
     } else {
         let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodFdaBqpError> = serde_json::from_str(&content).ok();
+        let entity: Option<BiomarkersPeriodBiomarkerPublishingCompaniesError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
 
-pub async fn biomarkers_period_fda_cdx(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersFdaCdx200Response, Error<BiomarkersPeriodFdaCdxError>> {
+pub async fn biomarkers_period_biomarker_variant_mentions(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, sort: Option<&str>) -> Result<models::BiomarkerVariantMentionsResponse, Error<BiomarkersPeriodBiomarkerVariantMentionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_limit = limit;
+    let p_sort = sort;
 
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/fda_cdx", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let uri_str = format!("{}/api/v1/biomarkers/{id}/biomarker_variant_mentions", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
@@ -448,17 +382,17 @@ pub async fn biomarkers_period_fda_cdx(configuration: &configuration::Configurat
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersFdaCdx200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersFdaCdx200Response`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkerVariantMentionsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkerVariantMentionsResponse`")))),
         }
     } else {
         let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodFdaCdxError> = serde_json::from_str(&content).ok();
+        let entity: Option<BiomarkersPeriodBiomarkerVariantMentionsError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
 
-pub async fn biomarkers_period_get(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersGet200Response, Error<BiomarkersPeriodGetError>> {
+pub async fn biomarkers_period_get(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersRecord, Error<BiomarkersPeriodGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
 
@@ -487,8 +421,8 @@ pub async fn biomarkers_period_get(configuration: &configuration::Configuration,
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersGet200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersGet200Response`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersRecord`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersRecord`")))),
         }
     } else {
         let content = resp.text().await?;
@@ -497,128 +431,20 @@ pub async fn biomarkers_period_get(configuration: &configuration::Configuration,
     }
 }
 
-pub async fn biomarkers_period_hub_tier_tables(configuration: &configuration::Configuration, ) -> Result<models::BiomarkersHubTierTables200Response, Error<BiomarkersPeriodHubTierTablesError>> {
-
-    let uri_str = format!("{}/api/v1/biomarkers/hub_tier_tables", configuration.base_path);
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref token) = configuration.bearer_access_token {
-        req_builder = req_builder.bearer_auth(token.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersHubTierTables200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersHubTierTables200Response`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodHubTierTablesError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-pub async fn biomarkers_period_identity(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersIdentity200Response, Error<BiomarkersPeriodIdentityError>> {
+pub async fn biomarkers_period_list(configuration: &configuration::Configuration, limit: Option<i32>, sort: Option<&str>) -> Result<models::BiomarkersResponse, Error<BiomarkersPeriodListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_id = id;
-
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/identity", configuration.base_path, id=crate::apis::urlencode(p_id));
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref token) = configuration.bearer_access_token {
-        req_builder = req_builder.bearer_auth(token.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersIdentity200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersIdentity200Response`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodIdentityError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-pub async fn biomarkers_period_list(configuration: &configuration::Configuration, cursor: Option<&str>, dir: Option<&str>, evidence: Option<i32>, facets: Option<bool>, identity: Option<&str>, kind: Option<&str>, limit: Option<i32>, q: Option<&str>, sort: Option<&str>, validated: Option<i32>) -> Result<models::BiomarkersList200Response, Error<BiomarkersPeriodListError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_cursor = cursor;
-    let p_dir = dir;
-    let p_evidence = evidence;
-    let p_facets = facets;
-    let p_identity = identity;
-    let p_kind = kind;
     let p_limit = limit;
-    let p_q = q;
     let p_sort = sort;
-    let p_validated = validated;
 
     let uri_str = format!("{}/api/v1/biomarkers", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref param_value) = p_cursor {
-        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_dir {
-        req_builder = req_builder.query(&[("dir", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_evidence {
-        req_builder = req_builder.query(&[("evidence", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_facets {
-        req_builder = req_builder.query(&[("facets", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_identity {
-        req_builder = req_builder.query(&[("identity", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_kind {
-        req_builder = req_builder.query(&[("kind", &param_value.to_string())]);
-    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
-    }
-    if let Some(ref param_value) = p_q {
-        req_builder = req_builder.query(&[("q", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_validated {
-        req_builder = req_builder.query(&[("validated", &param_value.to_string())]);
-    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
@@ -641,527 +467,12 @@ pub async fn biomarkers_period_list(configuration: &configuration::Configuration
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersList200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersList200Response`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersResponse`")))),
         }
     } else {
         let content = resp.text().await?;
         let entity: Option<BiomarkersPeriodListError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-pub async fn biomarkers_period_literature(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersLiterature200Response, Error<BiomarkersPeriodLiteratureError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_id = id;
-
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/literature", configuration.base_path, id=crate::apis::urlencode(p_id));
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref token) = configuration.bearer_access_token {
-        req_builder = req_builder.bearer_auth(token.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersLiterature200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersLiterature200Response`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodLiteratureError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-pub async fn biomarkers_period_ot_association(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersOtAssociation200Response, Error<BiomarkersPeriodOtAssociationError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_id = id;
-
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/ot_association", configuration.base_path, id=crate::apis::urlencode(p_id));
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref token) = configuration.bearer_access_token {
-        req_builder = req_builder.bearer_auth(token.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersOtAssociation200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersOtAssociation200Response`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodOtAssociationError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-pub async fn biomarkers_period_population_allele_frequency(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersPopulationAlleleFrequency200Response, Error<BiomarkersPeriodPopulationAlleleFrequencyError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_id = id;
-
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/population_allele_frequency", configuration.base_path, id=crate::apis::urlencode(p_id));
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref token) = configuration.bearer_access_token {
-        req_builder = req_builder.bearer_auth(token.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersPopulationAlleleFrequency200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersPopulationAlleleFrequency200Response`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodPopulationAlleleFrequencyError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-pub async fn biomarkers_period_publishing_org(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersPublishingOrg200Response, Error<BiomarkersPeriodPublishingOrgError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_id = id;
-
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/publishing_org", configuration.base_path, id=crate::apis::urlencode(p_id));
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref token) = configuration.bearer_access_token {
-        req_builder = req_builder.bearer_auth(token.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersPublishingOrg200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersPublishingOrg200Response`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodPublishingOrgError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-pub async fn biomarkers_period_related_biomarkers(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersRelatedBiomarkers200Response, Error<BiomarkersPeriodRelatedBiomarkersError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_id = id;
-
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/related_biomarkers", configuration.base_path, id=crate::apis::urlencode(p_id));
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref token) = configuration.bearer_access_token {
-        req_builder = req_builder.bearer_auth(token.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersRelatedBiomarkers200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersRelatedBiomarkers200Response`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodRelatedBiomarkersError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-pub async fn biomarkers_period_related_conditions(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersRelatedConditions200Response, Error<BiomarkersPeriodRelatedConditionsError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_id = id;
-
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/related_conditions", configuration.base_path, id=crate::apis::urlencode(p_id));
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref token) = configuration.bearer_access_token {
-        req_builder = req_builder.bearer_auth(token.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersRelatedConditions200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersRelatedConditions200Response`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodRelatedConditionsError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-pub async fn biomarkers_period_related_organizations(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersRelatedOrganizations200Response, Error<BiomarkersPeriodRelatedOrganizationsError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_id = id;
-
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/related_organizations", configuration.base_path, id=crate::apis::urlencode(p_id));
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref token) = configuration.bearer_access_token {
-        req_builder = req_builder.bearer_auth(token.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersRelatedOrganizations200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersRelatedOrganizations200Response`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodRelatedOrganizationsError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-pub async fn biomarkers_period_relations(configuration: &configuration::Configuration, id: &str, chemicals: Option<&str>) -> Result<models::BiomarkersRelations200Response, Error<BiomarkersPeriodRelationsError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_id = id;
-    let p_chemicals = chemicals;
-
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/relations", configuration.base_path, id=crate::apis::urlencode(p_id));
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref param_value) = p_chemicals {
-        req_builder = req_builder.query(&[("chemicals", &param_value.to_string())]);
-    }
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref token) = configuration.bearer_access_token {
-        req_builder = req_builder.bearer_auth(token.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersRelations200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersRelations200Response`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodRelationsError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-pub async fn biomarkers_period_sample_screening(configuration: &configuration::Configuration, id: &str, positive_samples: Option<i32>) -> Result<models::BiomarkersSampleScreening200Response, Error<BiomarkersPeriodSampleScreeningError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_id = id;
-    let p_positive_samples = positive_samples;
-
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/sample_screening", configuration.base_path, id=crate::apis::urlencode(p_id));
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref param_value) = p_positive_samples {
-        req_builder = req_builder.query(&[("positive_samples", &param_value.to_string())]);
-    }
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref token) = configuration.bearer_access_token {
-        req_builder = req_builder.bearer_auth(token.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersSampleScreening200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersSampleScreening200Response`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodSampleScreeningError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-pub async fn biomarkers_period_trial_mention(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersTrialMention200Response, Error<BiomarkersPeriodTrialMentionError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_id = id;
-
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/trial_mention", configuration.base_path, id=crate::apis::urlencode(p_id));
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref token) = configuration.bearer_access_token {
-        req_builder = req_builder.bearer_auth(token.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersTrialMention200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersTrialMention200Response`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodTrialMentionError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-pub async fn biomarkers_period_variant_mentions(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersVariantMentions200Response, Error<BiomarkersPeriodVariantMentionsError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_id = id;
-
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/variant_mentions", configuration.base_path, id=crate::apis::urlencode(p_id));
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref token) = configuration.bearer_access_token {
-        req_builder = req_builder.bearer_auth(token.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersVariantMentions200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersVariantMentions200Response`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodVariantMentionsError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-pub async fn biomarkers_period_vendor_sourcing(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersVendorSourcing200Response, Error<BiomarkersPeriodVendorSourcingError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_id = id;
-
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/vendor_sourcing", configuration.base_path, id=crate::apis::urlencode(p_id));
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref token) = configuration.bearer_access_token {
-        req_builder = req_builder.bearer_auth(token.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersVendorSourcing200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersVendorSourcing200Response`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodVendorSourcingError> = serde_json::from_str(&content).ok();
-        Err(Error::ResponseError(ResponseContent { status, content, entity }))
-    }
-}
-
-pub async fn biomarkers_period_where_it_appears(configuration: &configuration::Configuration, id: &str) -> Result<models::BiomarkersWhereItAppears200Response, Error<BiomarkersPeriodWhereItAppearsError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_id = id;
-
-    let uri_str = format!("{}/api/v1/biomarkers/{id}/where_it_appears", configuration.base_path, id=crate::apis::urlencode(p_id));
-    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
-
-    if let Some(ref user_agent) = configuration.user_agent {
-        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
-    }
-    if let Some(ref token) = configuration.bearer_access_token {
-        req_builder = req_builder.bearer_auth(token.to_owned());
-    };
-
-    let req = req_builder.build()?;
-    let resp = configuration.client.execute(req).await?;
-
-    let status = resp.status();
-    let content_type = resp
-        .headers()
-        .get("content-type")
-        .and_then(|v| v.to_str().ok())
-        .unwrap_or("application/octet-stream");
-    let content_type = super::ContentType::from(content_type);
-
-    if !status.is_client_error() && !status.is_server_error() {
-        let content = resp.text().await?;
-        match content_type {
-            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkersWhereItAppears200Response`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkersWhereItAppears200Response`")))),
-        }
-    } else {
-        let content = resp.text().await?;
-        let entity: Option<BiomarkersPeriodWhereItAppearsError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }

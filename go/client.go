@@ -55,7 +55,13 @@ type APIClient struct {
 
 	CellLinesAPI *CellLinesAPIService
 
-	OrgsAPI *OrgsAPIService
+	CompaniesAPI *CompaniesAPIService
+
+	DatasetsAPI *DatasetsAPIService
+
+	LegalEntitiesAPI *LegalEntitiesAPIService
+
+	QueryAPI *QueryAPIService
 }
 
 type service struct {
@@ -77,7 +83,10 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.ApiV1BaseAPI = (*ApiV1BaseAPIService)(&c.common)
 	c.BiomarkersAPI = (*BiomarkersAPIService)(&c.common)
 	c.CellLinesAPI = (*CellLinesAPIService)(&c.common)
-	c.OrgsAPI = (*OrgsAPIService)(&c.common)
+	c.CompaniesAPI = (*CompaniesAPIService)(&c.common)
+	c.DatasetsAPI = (*DatasetsAPIService)(&c.common)
+	c.LegalEntitiesAPI = (*LegalEntitiesAPIService)(&c.common)
+	c.QueryAPI = (*QueryAPIService)(&c.common)
 
 	return c
 }

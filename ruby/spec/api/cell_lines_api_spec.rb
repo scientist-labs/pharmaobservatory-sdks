@@ -33,58 +33,23 @@ describe 'CellLinesApi' do
   end
 
   # unit tests for cell_lines_get
-  # One cell-lines record
+  # One cell line
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @return [CellLinesGet200Response]
+  # @return [CellLinesRecord]
   describe 'cell_lines_get test' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end
   end
 
-  # unit tests for cell_lines_identity
-  # Identity and availability
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @return [CellLinesIdentity200Response]
-  describe 'cell_lines_identity test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
   # unit tests for cell_lines_list
-  # Cell line identity safety
+  # List cell lines
   # @param [Hash] opts the optional parameters
-  # @option opts [String] :cursor 
-  # @option opts [Boolean] :facets 
   # @option opts [Integer] :limit 
-  # @option opts [String] :safety_status 
-  # @return [CellLinesList200Response]
+  # @option opts [String] :sort 
+  # @return [CellLinesResponse]
   describe 'cell_lines_list test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for cell_lines_safety_resolution
-  # Safety resolution
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @return [CellLinesSafetyResolution200Response]
-  describe 'cell_lines_safety_resolution test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for cell_lines_status_counts
-  # Cell line safety summary
-  # @param [Hash] opts the optional parameters
-  # @option opts [String] :species 
-  # @return [CellLinesStatusCounts200Response]
-  describe 'cell_lines_status_counts test' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end

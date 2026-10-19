@@ -23,25 +23,37 @@ import (
 // BiomarkersAPIService BiomarkersAPI service
 type BiomarkersAPIService service
 
-type ApiBiomarkersAssayProviderLedgerRequest struct {
+type ApiBiomarkersBiomarkerBqpAssertionsRequest struct {
 	ctx context.Context
 	ApiService *BiomarkersAPIService
 	id string
+	limit *int32
+	sort *string
 }
 
-func (r ApiBiomarkersAssayProviderLedgerRequest) Execute() (*BiomarkersAssayProviderLedger200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersAssayProviderLedgerExecute(r)
+func (r ApiBiomarkersBiomarkerBqpAssertionsRequest) Limit(limit int32) ApiBiomarkersBiomarkerBqpAssertionsRequest {
+	r.limit = &limit
+	return r
+}
+
+func (r ApiBiomarkersBiomarkerBqpAssertionsRequest) Sort(sort string) ApiBiomarkersBiomarkerBqpAssertionsRequest {
+	r.sort = &sort
+	return r
+}
+
+func (r ApiBiomarkersBiomarkerBqpAssertionsRequest) Execute() (*BiomarkerBqpAssertionsResponse, *http.Response, error) {
+	return r.ApiService.BiomarkersBiomarkerBqpAssertionsExecute(r)
 }
 
 /*
-BiomarkersAssayProviderLedger Assay-provider ledger
+BiomarkersBiomarkerBqpAssertions FDA biomarker qualification projects
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
- @return ApiBiomarkersAssayProviderLedgerRequest
+ @return ApiBiomarkersBiomarkerBqpAssertionsRequest
 */
-func (a *BiomarkersAPIService) BiomarkersAssayProviderLedger(ctx context.Context, id string) ApiBiomarkersAssayProviderLedgerRequest {
-	return ApiBiomarkersAssayProviderLedgerRequest{
+func (a *BiomarkersAPIService) BiomarkersBiomarkerBqpAssertions(ctx context.Context, id string) ApiBiomarkersBiomarkerBqpAssertionsRequest {
+	return ApiBiomarkersBiomarkerBqpAssertionsRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
@@ -49,27 +61,33 @@ func (a *BiomarkersAPIService) BiomarkersAssayProviderLedger(ctx context.Context
 }
 
 // Execute executes the request
-//  @return BiomarkersAssayProviderLedger200Response
-func (a *BiomarkersAPIService) BiomarkersAssayProviderLedgerExecute(r ApiBiomarkersAssayProviderLedgerRequest) (*BiomarkersAssayProviderLedger200Response, *http.Response, error) {
+//  @return BiomarkerBqpAssertionsResponse
+func (a *BiomarkersAPIService) BiomarkersBiomarkerBqpAssertionsExecute(r ApiBiomarkersBiomarkerBqpAssertionsRequest) (*BiomarkerBqpAssertionsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *BiomarkersAssayProviderLedger200Response
+		localVarReturnValue  *BiomarkerBqpAssertionsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersAssayProviderLedger")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersBiomarkerBqpAssertions")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/assay_provider_ledger"
+	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/biomarker_bqp_assertions"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -109,6 +127,17 @@ func (a *BiomarkersAPIService) BiomarkersAssayProviderLedgerExecute(r ApiBiomark
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 401 {
 			var v AuthError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -122,6 +151,28 @@ func (a *BiomarkersAPIService) BiomarkersAssayProviderLedgerExecute(r ApiBiomark
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
 			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v QueryError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -145,25 +196,37 @@ func (a *BiomarkersAPIService) BiomarkersAssayProviderLedgerExecute(r ApiBiomark
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiBiomarkersCgiRequest struct {
+type ApiBiomarkersBiomarkerCdxAssertionsRequest struct {
 	ctx context.Context
 	ApiService *BiomarkersAPIService
 	id string
+	limit *int32
+	sort *string
 }
 
-func (r ApiBiomarkersCgiRequest) Execute() (*BiomarkersCgi200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersCgiExecute(r)
+func (r ApiBiomarkersBiomarkerCdxAssertionsRequest) Limit(limit int32) ApiBiomarkersBiomarkerCdxAssertionsRequest {
+	r.limit = &limit
+	return r
+}
+
+func (r ApiBiomarkersBiomarkerCdxAssertionsRequest) Sort(sort string) ApiBiomarkersBiomarkerCdxAssertionsRequest {
+	r.sort = &sort
+	return r
+}
+
+func (r ApiBiomarkersBiomarkerCdxAssertionsRequest) Execute() (*BiomarkerCdxAssertionsResponse, *http.Response, error) {
+	return r.ApiService.BiomarkersBiomarkerCdxAssertionsExecute(r)
 }
 
 /*
-BiomarkersCgi Actionable biomarkers
+BiomarkersBiomarkerCdxAssertions FDA companion diagnostic assertions
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
- @return ApiBiomarkersCgiRequest
+ @return ApiBiomarkersBiomarkerCdxAssertionsRequest
 */
-func (a *BiomarkersAPIService) BiomarkersCgi(ctx context.Context, id string) ApiBiomarkersCgiRequest {
-	return ApiBiomarkersCgiRequest{
+func (a *BiomarkersAPIService) BiomarkersBiomarkerCdxAssertions(ctx context.Context, id string) ApiBiomarkersBiomarkerCdxAssertionsRequest {
+	return ApiBiomarkersBiomarkerCdxAssertionsRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
@@ -171,27 +234,33 @@ func (a *BiomarkersAPIService) BiomarkersCgi(ctx context.Context, id string) Api
 }
 
 // Execute executes the request
-//  @return BiomarkersCgi200Response
-func (a *BiomarkersAPIService) BiomarkersCgiExecute(r ApiBiomarkersCgiRequest) (*BiomarkersCgi200Response, *http.Response, error) {
+//  @return BiomarkerCdxAssertionsResponse
+func (a *BiomarkersAPIService) BiomarkersBiomarkerCdxAssertionsExecute(r ApiBiomarkersBiomarkerCdxAssertionsRequest) (*BiomarkerCdxAssertionsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *BiomarkersCgi200Response
+		localVarReturnValue  *BiomarkerCdxAssertionsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersCgi")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersBiomarkerCdxAssertions")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/cgi"
+	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/biomarker_cdx_assertions"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -231,6 +300,17 @@ func (a *BiomarkersAPIService) BiomarkersCgiExecute(r ApiBiomarkersCgiRequest) (
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 401 {
 			var v AuthError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -244,6 +324,28 @@ func (a *BiomarkersAPIService) BiomarkersCgiExecute(r ApiBiomarkersCgiRequest) (
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
 			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v QueryError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -267,25 +369,37 @@ func (a *BiomarkersAPIService) BiomarkersCgiExecute(r ApiBiomarkersCgiRequest) (
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiBiomarkersCoverageByTraversalRequest struct {
+type ApiBiomarkersBiomarkerEvidenceRequest struct {
 	ctx context.Context
 	ApiService *BiomarkersAPIService
 	id string
+	limit *int32
+	sort *string
 }
 
-func (r ApiBiomarkersCoverageByTraversalRequest) Execute() (*BiomarkersCoverageByTraversal200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersCoverageByTraversalExecute(r)
+func (r ApiBiomarkersBiomarkerEvidenceRequest) Limit(limit int32) ApiBiomarkersBiomarkerEvidenceRequest {
+	r.limit = &limit
+	return r
+}
+
+func (r ApiBiomarkersBiomarkerEvidenceRequest) Sort(sort string) ApiBiomarkersBiomarkerEvidenceRequest {
+	r.sort = &sort
+	return r
+}
+
+func (r ApiBiomarkersBiomarkerEvidenceRequest) Execute() (*BiomarkerEvidenceResponse, *http.Response, error) {
+	return r.ApiService.BiomarkersBiomarkerEvidenceExecute(r)
 }
 
 /*
-BiomarkersCoverageByTraversal Coverage by traversal
+BiomarkersBiomarkerEvidence Biomarker evidence
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
- @return ApiBiomarkersCoverageByTraversalRequest
+ @return ApiBiomarkersBiomarkerEvidenceRequest
 */
-func (a *BiomarkersAPIService) BiomarkersCoverageByTraversal(ctx context.Context, id string) ApiBiomarkersCoverageByTraversalRequest {
-	return ApiBiomarkersCoverageByTraversalRequest{
+func (a *BiomarkersAPIService) BiomarkersBiomarkerEvidence(ctx context.Context, id string) ApiBiomarkersBiomarkerEvidenceRequest {
+	return ApiBiomarkersBiomarkerEvidenceRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
@@ -293,27 +407,33 @@ func (a *BiomarkersAPIService) BiomarkersCoverageByTraversal(ctx context.Context
 }
 
 // Execute executes the request
-//  @return BiomarkersCoverageByTraversal200Response
-func (a *BiomarkersAPIService) BiomarkersCoverageByTraversalExecute(r ApiBiomarkersCoverageByTraversalRequest) (*BiomarkersCoverageByTraversal200Response, *http.Response, error) {
+//  @return BiomarkerEvidenceResponse
+func (a *BiomarkersAPIService) BiomarkersBiomarkerEvidenceExecute(r ApiBiomarkersBiomarkerEvidenceRequest) (*BiomarkerEvidenceResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *BiomarkersCoverageByTraversal200Response
+		localVarReturnValue  *BiomarkerEvidenceResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersCoverageByTraversal")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersBiomarkerEvidence")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/coverage_by_traversal"
+	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/biomarker_evidence"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -353,6 +473,17 @@ func (a *BiomarkersAPIService) BiomarkersCoverageByTraversalExecute(r ApiBiomark
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 401 {
 			var v AuthError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -366,6 +497,28 @@ func (a *BiomarkersAPIService) BiomarkersCoverageByTraversalExecute(r ApiBiomark
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
 			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v QueryError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -389,25 +542,37 @@ func (a *BiomarkersAPIService) BiomarkersCoverageByTraversalExecute(r ApiBiomark
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiBiomarkersEvidenceOverTimeRequest struct {
+type ApiBiomarkersBiomarkerLiteratureRequest struct {
 	ctx context.Context
 	ApiService *BiomarkersAPIService
 	id string
+	limit *int32
+	sort *string
 }
 
-func (r ApiBiomarkersEvidenceOverTimeRequest) Execute() (*BiomarkersEvidenceOverTime200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersEvidenceOverTimeExecute(r)
+func (r ApiBiomarkersBiomarkerLiteratureRequest) Limit(limit int32) ApiBiomarkersBiomarkerLiteratureRequest {
+	r.limit = &limit
+	return r
+}
+
+func (r ApiBiomarkersBiomarkerLiteratureRequest) Sort(sort string) ApiBiomarkersBiomarkerLiteratureRequest {
+	r.sort = &sort
+	return r
+}
+
+func (r ApiBiomarkersBiomarkerLiteratureRequest) Execute() (*BiomarkerLiteratureResponse, *http.Response, error) {
+	return r.ApiService.BiomarkersBiomarkerLiteratureExecute(r)
 }
 
 /*
-BiomarkersEvidenceOverTime Evidence over time
+BiomarkersBiomarkerLiterature Trial-cited literature mentions
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
- @return ApiBiomarkersEvidenceOverTimeRequest
+ @return ApiBiomarkersBiomarkerLiteratureRequest
 */
-func (a *BiomarkersAPIService) BiomarkersEvidenceOverTime(ctx context.Context, id string) ApiBiomarkersEvidenceOverTimeRequest {
-	return ApiBiomarkersEvidenceOverTimeRequest{
+func (a *BiomarkersAPIService) BiomarkersBiomarkerLiterature(ctx context.Context, id string) ApiBiomarkersBiomarkerLiteratureRequest {
+	return ApiBiomarkersBiomarkerLiteratureRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
@@ -415,27 +580,33 @@ func (a *BiomarkersAPIService) BiomarkersEvidenceOverTime(ctx context.Context, i
 }
 
 // Execute executes the request
-//  @return BiomarkersEvidenceOverTime200Response
-func (a *BiomarkersAPIService) BiomarkersEvidenceOverTimeExecute(r ApiBiomarkersEvidenceOverTimeRequest) (*BiomarkersEvidenceOverTime200Response, *http.Response, error) {
+//  @return BiomarkerLiteratureResponse
+func (a *BiomarkersAPIService) BiomarkersBiomarkerLiteratureExecute(r ApiBiomarkersBiomarkerLiteratureRequest) (*BiomarkerLiteratureResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *BiomarkersEvidenceOverTime200Response
+		localVarReturnValue  *BiomarkerLiteratureResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersEvidenceOverTime")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersBiomarkerLiterature")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/evidence_over_time"
+	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/biomarker_literature"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -475,6 +646,17 @@ func (a *BiomarkersAPIService) BiomarkersEvidenceOverTimeExecute(r ApiBiomarkers
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 401 {
 			var v AuthError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -488,6 +670,28 @@ func (a *BiomarkersAPIService) BiomarkersEvidenceOverTimeExecute(r ApiBiomarkers
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
 			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v QueryError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -511,25 +715,37 @@ func (a *BiomarkersAPIService) BiomarkersEvidenceOverTimeExecute(r ApiBiomarkers
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiBiomarkersFdaBqpRequest struct {
+type ApiBiomarkersBiomarkerPublishingCompaniesRequest struct {
 	ctx context.Context
 	ApiService *BiomarkersAPIService
 	id string
+	limit *int32
+	sort *string
 }
 
-func (r ApiBiomarkersFdaBqpRequest) Execute() (*BiomarkersFdaBqp200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersFdaBqpExecute(r)
+func (r ApiBiomarkersBiomarkerPublishingCompaniesRequest) Limit(limit int32) ApiBiomarkersBiomarkerPublishingCompaniesRequest {
+	r.limit = &limit
+	return r
+}
+
+func (r ApiBiomarkersBiomarkerPublishingCompaniesRequest) Sort(sort string) ApiBiomarkersBiomarkerPublishingCompaniesRequest {
+	r.sort = &sort
+	return r
+}
+
+func (r ApiBiomarkersBiomarkerPublishingCompaniesRequest) Execute() (*BiomarkerPublishingCompaniesResponse, *http.Response, error) {
+	return r.ApiService.BiomarkersBiomarkerPublishingCompaniesExecute(r)
 }
 
 /*
-BiomarkersFdaBqp FDA biomarker qualification projects
+BiomarkersBiomarkerPublishingCompanies Companies publishing on a biomarker
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
- @return ApiBiomarkersFdaBqpRequest
+ @return ApiBiomarkersBiomarkerPublishingCompaniesRequest
 */
-func (a *BiomarkersAPIService) BiomarkersFdaBqp(ctx context.Context, id string) ApiBiomarkersFdaBqpRequest {
-	return ApiBiomarkersFdaBqpRequest{
+func (a *BiomarkersAPIService) BiomarkersBiomarkerPublishingCompanies(ctx context.Context, id string) ApiBiomarkersBiomarkerPublishingCompaniesRequest {
+	return ApiBiomarkersBiomarkerPublishingCompaniesRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
@@ -537,27 +753,33 @@ func (a *BiomarkersAPIService) BiomarkersFdaBqp(ctx context.Context, id string) 
 }
 
 // Execute executes the request
-//  @return BiomarkersFdaBqp200Response
-func (a *BiomarkersAPIService) BiomarkersFdaBqpExecute(r ApiBiomarkersFdaBqpRequest) (*BiomarkersFdaBqp200Response, *http.Response, error) {
+//  @return BiomarkerPublishingCompaniesResponse
+func (a *BiomarkersAPIService) BiomarkersBiomarkerPublishingCompaniesExecute(r ApiBiomarkersBiomarkerPublishingCompaniesRequest) (*BiomarkerPublishingCompaniesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *BiomarkersFdaBqp200Response
+		localVarReturnValue  *BiomarkerPublishingCompaniesResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersFdaBqp")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersBiomarkerPublishingCompanies")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/fda_bqp"
+	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/biomarker_publishing_companies"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -597,6 +819,17 @@ func (a *BiomarkersAPIService) BiomarkersFdaBqpExecute(r ApiBiomarkersFdaBqpRequ
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 401 {
 			var v AuthError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -610,6 +843,28 @@ func (a *BiomarkersAPIService) BiomarkersFdaBqpExecute(r ApiBiomarkersFdaBqpRequ
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
 			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v QueryError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -633,25 +888,37 @@ func (a *BiomarkersAPIService) BiomarkersFdaBqpExecute(r ApiBiomarkersFdaBqpRequ
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiBiomarkersFdaCdxRequest struct {
+type ApiBiomarkersBiomarkerVariantMentionsRequest struct {
 	ctx context.Context
 	ApiService *BiomarkersAPIService
 	id string
+	limit *int32
+	sort *string
 }
 
-func (r ApiBiomarkersFdaCdxRequest) Execute() (*BiomarkersFdaCdx200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersFdaCdxExecute(r)
+func (r ApiBiomarkersBiomarkerVariantMentionsRequest) Limit(limit int32) ApiBiomarkersBiomarkerVariantMentionsRequest {
+	r.limit = &limit
+	return r
+}
+
+func (r ApiBiomarkersBiomarkerVariantMentionsRequest) Sort(sort string) ApiBiomarkersBiomarkerVariantMentionsRequest {
+	r.sort = &sort
+	return r
+}
+
+func (r ApiBiomarkersBiomarkerVariantMentionsRequest) Execute() (*BiomarkerVariantMentionsResponse, *http.Response, error) {
+	return r.ApiService.BiomarkersBiomarkerVariantMentionsExecute(r)
 }
 
 /*
-BiomarkersFdaCdx FDA companion diagnostic assertions
+BiomarkersBiomarkerVariantMentions Protein variant mentions
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
- @return ApiBiomarkersFdaCdxRequest
+ @return ApiBiomarkersBiomarkerVariantMentionsRequest
 */
-func (a *BiomarkersAPIService) BiomarkersFdaCdx(ctx context.Context, id string) ApiBiomarkersFdaCdxRequest {
-	return ApiBiomarkersFdaCdxRequest{
+func (a *BiomarkersAPIService) BiomarkersBiomarkerVariantMentions(ctx context.Context, id string) ApiBiomarkersBiomarkerVariantMentionsRequest {
+	return ApiBiomarkersBiomarkerVariantMentionsRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
@@ -659,27 +926,33 @@ func (a *BiomarkersAPIService) BiomarkersFdaCdx(ctx context.Context, id string) 
 }
 
 // Execute executes the request
-//  @return BiomarkersFdaCdx200Response
-func (a *BiomarkersAPIService) BiomarkersFdaCdxExecute(r ApiBiomarkersFdaCdxRequest) (*BiomarkersFdaCdx200Response, *http.Response, error) {
+//  @return BiomarkerVariantMentionsResponse
+func (a *BiomarkersAPIService) BiomarkersBiomarkerVariantMentionsExecute(r ApiBiomarkersBiomarkerVariantMentionsRequest) (*BiomarkerVariantMentionsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *BiomarkersFdaCdx200Response
+		localVarReturnValue  *BiomarkerVariantMentionsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersFdaCdx")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersBiomarkerVariantMentions")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/fda_cdx"
+	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/biomarker_variant_mentions"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -719,6 +992,17 @@ func (a *BiomarkersAPIService) BiomarkersFdaCdxExecute(r ApiBiomarkersFdaCdxRequ
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 401 {
 			var v AuthError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -732,6 +1016,28 @@ func (a *BiomarkersAPIService) BiomarkersFdaCdxExecute(r ApiBiomarkersFdaCdxRequ
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
 			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v QueryError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -761,12 +1067,12 @@ type ApiBiomarkersGetRequest struct {
 	id string
 }
 
-func (r ApiBiomarkersGetRequest) Execute() (*BiomarkersGet200Response, *http.Response, error) {
+func (r ApiBiomarkersGetRequest) Execute() (*BiomarkersRecord, *http.Response, error) {
 	return r.ApiService.BiomarkersGetExecute(r)
 }
 
 /*
-BiomarkersGet One biomarkers record
+BiomarkersGet One biomarker
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -781,13 +1087,13 @@ func (a *BiomarkersAPIService) BiomarkersGet(ctx context.Context, id string) Api
 }
 
 // Execute executes the request
-//  @return BiomarkersGet200Response
-func (a *BiomarkersAPIService) BiomarkersGetExecute(r ApiBiomarkersGetRequest) (*BiomarkersGet200Response, *http.Response, error) {
+//  @return BiomarkersRecord
+func (a *BiomarkersAPIService) BiomarkersGetExecute(r ApiBiomarkersGetRequest) (*BiomarkersRecord, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *BiomarkersGet200Response
+		localVarReturnValue  *BiomarkersRecord
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersGet")
@@ -861,239 +1167,10 @@ func (a *BiomarkersAPIService) BiomarkersGetExecute(r ApiBiomarkersGetRequest) (
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiBiomarkersHubTierTablesRequest struct {
-	ctx context.Context
-	ApiService *BiomarkersAPIService
-}
-
-func (r ApiBiomarkersHubTierTablesRequest) Execute() (*BiomarkersHubTierTables200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersHubTierTablesExecute(r)
-}
-
-/*
-BiomarkersHubTierTables Biomarker evidence, labeled by type
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiBiomarkersHubTierTablesRequest
-*/
-func (a *BiomarkersAPIService) BiomarkersHubTierTables(ctx context.Context) ApiBiomarkersHubTierTablesRequest {
-	return ApiBiomarkersHubTierTablesRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return BiomarkersHubTierTables200Response
-func (a *BiomarkersAPIService) BiomarkersHubTierTablesExecute(r ApiBiomarkersHubTierTablesRequest) (*BiomarkersHubTierTables200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *BiomarkersHubTierTables200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersHubTierTables")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/biomarkers/hub_tier_tables"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiBiomarkersIdentityRequest struct {
-	ctx context.Context
-	ApiService *BiomarkersAPIService
-	id string
-}
-
-func (r ApiBiomarkersIdentityRequest) Execute() (*BiomarkersIdentity200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersIdentityExecute(r)
-}
-
-/*
-BiomarkersIdentity Biomarker identity
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiBiomarkersIdentityRequest
-*/
-func (a *BiomarkersAPIService) BiomarkersIdentity(ctx context.Context, id string) ApiBiomarkersIdentityRequest {
-	return ApiBiomarkersIdentityRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return BiomarkersIdentity200Response
-func (a *BiomarkersAPIService) BiomarkersIdentityExecute(r ApiBiomarkersIdentityRequest) (*BiomarkersIdentity200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *BiomarkersIdentity200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersIdentity")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/identity"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v AuthError
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v QueryError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1120,55 +1197,12 @@ func (a *BiomarkersAPIService) BiomarkersIdentityExecute(r ApiBiomarkersIdentity
 type ApiBiomarkersListRequest struct {
 	ctx context.Context
 	ApiService *BiomarkersAPIService
-	cursor *string
-	dir *string
-	evidence *int32
-	facets *bool
-	identity *string
-	kind *string
 	limit *int32
-	q *string
 	sort *string
-	validated *int32
-}
-
-func (r ApiBiomarkersListRequest) Cursor(cursor string) ApiBiomarkersListRequest {
-	r.cursor = &cursor
-	return r
-}
-
-func (r ApiBiomarkersListRequest) Dir(dir string) ApiBiomarkersListRequest {
-	r.dir = &dir
-	return r
-}
-
-func (r ApiBiomarkersListRequest) Evidence(evidence int32) ApiBiomarkersListRequest {
-	r.evidence = &evidence
-	return r
-}
-
-func (r ApiBiomarkersListRequest) Facets(facets bool) ApiBiomarkersListRequest {
-	r.facets = &facets
-	return r
-}
-
-func (r ApiBiomarkersListRequest) Identity(identity string) ApiBiomarkersListRequest {
-	r.identity = &identity
-	return r
-}
-
-func (r ApiBiomarkersListRequest) Kind(kind string) ApiBiomarkersListRequest {
-	r.kind = &kind
-	return r
 }
 
 func (r ApiBiomarkersListRequest) Limit(limit int32) ApiBiomarkersListRequest {
 	r.limit = &limit
-	return r
-}
-
-func (r ApiBiomarkersListRequest) Q(q string) ApiBiomarkersListRequest {
-	r.q = &q
 	return r
 }
 
@@ -1177,17 +1211,12 @@ func (r ApiBiomarkersListRequest) Sort(sort string) ApiBiomarkersListRequest {
 	return r
 }
 
-func (r ApiBiomarkersListRequest) Validated(validated int32) ApiBiomarkersListRequest {
-	r.validated = &validated
-	return r
-}
-
-func (r ApiBiomarkersListRequest) Execute() (*BiomarkersList200Response, *http.Response, error) {
+func (r ApiBiomarkersListRequest) Execute() (*BiomarkersResponse, *http.Response, error) {
 	return r.ApiService.BiomarkersListExecute(r)
 }
 
 /*
-BiomarkersList Biomarkers
+BiomarkersList List biomarkers
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiBiomarkersListRequest
@@ -1200,13 +1229,13 @@ func (a *BiomarkersAPIService) BiomarkersList(ctx context.Context) ApiBiomarkers
 }
 
 // Execute executes the request
-//  @return BiomarkersList200Response
-func (a *BiomarkersAPIService) BiomarkersListExecute(r ApiBiomarkersListRequest) (*BiomarkersList200Response, *http.Response, error) {
+//  @return BiomarkersResponse
+func (a *BiomarkersAPIService) BiomarkersListExecute(r ApiBiomarkersListRequest) (*BiomarkersResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *BiomarkersList200Response
+		localVarReturnValue  *BiomarkersResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersList")
@@ -1220,1020 +1249,11 @@ func (a *BiomarkersAPIService) BiomarkersListExecute(r ApiBiomarkersListRequest)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
-	}
-	if r.dir != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "dir", r.dir, "form", "")
-	}
-	if r.evidence != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "evidence", r.evidence, "form", "")
-	}
-	if r.facets != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "facets", r.facets, "form", "")
-	}
-	if r.identity != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "identity", r.identity, "form", "")
-	}
-	if r.kind != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "kind", r.kind, "form", "")
-	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
-	if r.q != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "q", r.q, "form", "")
-	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
-	}
-	if r.validated != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "validated", r.validated, "form", "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiBiomarkersLiteratureRequest struct {
-	ctx context.Context
-	ApiService *BiomarkersAPIService
-	id string
-}
-
-func (r ApiBiomarkersLiteratureRequest) Execute() (*BiomarkersLiterature200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersLiteratureExecute(r)
-}
-
-/*
-BiomarkersLiterature Trial-cited literature mentions
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiBiomarkersLiteratureRequest
-*/
-func (a *BiomarkersAPIService) BiomarkersLiterature(ctx context.Context, id string) ApiBiomarkersLiteratureRequest {
-	return ApiBiomarkersLiteratureRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return BiomarkersLiterature200Response
-func (a *BiomarkersAPIService) BiomarkersLiteratureExecute(r ApiBiomarkersLiteratureRequest) (*BiomarkersLiterature200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *BiomarkersLiterature200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersLiterature")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/literature"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiBiomarkersOtAssociationRequest struct {
-	ctx context.Context
-	ApiService *BiomarkersAPIService
-	id string
-}
-
-func (r ApiBiomarkersOtAssociationRequest) Execute() (*BiomarkersOtAssociation200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersOtAssociationExecute(r)
-}
-
-/*
-BiomarkersOtAssociation Target-disease associations
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiBiomarkersOtAssociationRequest
-*/
-func (a *BiomarkersAPIService) BiomarkersOtAssociation(ctx context.Context, id string) ApiBiomarkersOtAssociationRequest {
-	return ApiBiomarkersOtAssociationRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return BiomarkersOtAssociation200Response
-func (a *BiomarkersAPIService) BiomarkersOtAssociationExecute(r ApiBiomarkersOtAssociationRequest) (*BiomarkersOtAssociation200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *BiomarkersOtAssociation200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersOtAssociation")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/ot_association"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiBiomarkersPopulationAlleleFrequencyRequest struct {
-	ctx context.Context
-	ApiService *BiomarkersAPIService
-	id string
-}
-
-func (r ApiBiomarkersPopulationAlleleFrequencyRequest) Execute() (*BiomarkersPopulationAlleleFrequency200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersPopulationAlleleFrequencyExecute(r)
-}
-
-/*
-BiomarkersPopulationAlleleFrequency Population allele frequency
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiBiomarkersPopulationAlleleFrequencyRequest
-*/
-func (a *BiomarkersAPIService) BiomarkersPopulationAlleleFrequency(ctx context.Context, id string) ApiBiomarkersPopulationAlleleFrequencyRequest {
-	return ApiBiomarkersPopulationAlleleFrequencyRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return BiomarkersPopulationAlleleFrequency200Response
-func (a *BiomarkersAPIService) BiomarkersPopulationAlleleFrequencyExecute(r ApiBiomarkersPopulationAlleleFrequencyRequest) (*BiomarkersPopulationAlleleFrequency200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *BiomarkersPopulationAlleleFrequency200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersPopulationAlleleFrequency")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/population_allele_frequency"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiBiomarkersPublishingOrgRequest struct {
-	ctx context.Context
-	ApiService *BiomarkersAPIService
-	id string
-}
-
-func (r ApiBiomarkersPublishingOrgRequest) Execute() (*BiomarkersPublishingOrg200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersPublishingOrgExecute(r)
-}
-
-/*
-BiomarkersPublishingOrg Organizations publishing
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiBiomarkersPublishingOrgRequest
-*/
-func (a *BiomarkersAPIService) BiomarkersPublishingOrg(ctx context.Context, id string) ApiBiomarkersPublishingOrgRequest {
-	return ApiBiomarkersPublishingOrgRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return BiomarkersPublishingOrg200Response
-func (a *BiomarkersAPIService) BiomarkersPublishingOrgExecute(r ApiBiomarkersPublishingOrgRequest) (*BiomarkersPublishingOrg200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *BiomarkersPublishingOrg200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersPublishingOrg")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/publishing_org"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiBiomarkersRelatedBiomarkersRequest struct {
-	ctx context.Context
-	ApiService *BiomarkersAPIService
-	id string
-}
-
-func (r ApiBiomarkersRelatedBiomarkersRequest) Execute() (*BiomarkersRelatedBiomarkers200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersRelatedBiomarkersExecute(r)
-}
-
-/*
-BiomarkersRelatedBiomarkers Related biomarkers
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiBiomarkersRelatedBiomarkersRequest
-*/
-func (a *BiomarkersAPIService) BiomarkersRelatedBiomarkers(ctx context.Context, id string) ApiBiomarkersRelatedBiomarkersRequest {
-	return ApiBiomarkersRelatedBiomarkersRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return BiomarkersRelatedBiomarkers200Response
-func (a *BiomarkersAPIService) BiomarkersRelatedBiomarkersExecute(r ApiBiomarkersRelatedBiomarkersRequest) (*BiomarkersRelatedBiomarkers200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *BiomarkersRelatedBiomarkers200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersRelatedBiomarkers")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/related_biomarkers"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiBiomarkersRelatedConditionsRequest struct {
-	ctx context.Context
-	ApiService *BiomarkersAPIService
-	id string
-}
-
-func (r ApiBiomarkersRelatedConditionsRequest) Execute() (*BiomarkersRelatedConditions200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersRelatedConditionsExecute(r)
-}
-
-/*
-BiomarkersRelatedConditions Related conditions
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiBiomarkersRelatedConditionsRequest
-*/
-func (a *BiomarkersAPIService) BiomarkersRelatedConditions(ctx context.Context, id string) ApiBiomarkersRelatedConditionsRequest {
-	return ApiBiomarkersRelatedConditionsRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return BiomarkersRelatedConditions200Response
-func (a *BiomarkersAPIService) BiomarkersRelatedConditionsExecute(r ApiBiomarkersRelatedConditionsRequest) (*BiomarkersRelatedConditions200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *BiomarkersRelatedConditions200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersRelatedConditions")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/related_conditions"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiBiomarkersRelatedOrganizationsRequest struct {
-	ctx context.Context
-	ApiService *BiomarkersAPIService
-	id string
-}
-
-func (r ApiBiomarkersRelatedOrganizationsRequest) Execute() (*BiomarkersRelatedOrganizations200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersRelatedOrganizationsExecute(r)
-}
-
-/*
-BiomarkersRelatedOrganizations Related organisations
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiBiomarkersRelatedOrganizationsRequest
-*/
-func (a *BiomarkersAPIService) BiomarkersRelatedOrganizations(ctx context.Context, id string) ApiBiomarkersRelatedOrganizationsRequest {
-	return ApiBiomarkersRelatedOrganizationsRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return BiomarkersRelatedOrganizations200Response
-func (a *BiomarkersAPIService) BiomarkersRelatedOrganizationsExecute(r ApiBiomarkersRelatedOrganizationsRequest) (*BiomarkersRelatedOrganizations200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *BiomarkersRelatedOrganizations200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersRelatedOrganizations")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/related_organizations"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiBiomarkersRelationsRequest struct {
-	ctx context.Context
-	ApiService *BiomarkersAPIService
-	id string
-	chemicals *string
-}
-
-func (r ApiBiomarkersRelationsRequest) Chemicals(chemicals string) ApiBiomarkersRelationsRequest {
-	r.chemicals = &chemicals
-	return r
-}
-
-func (r ApiBiomarkersRelationsRequest) Execute() (*BiomarkersRelations200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersRelationsExecute(r)
-}
-
-/*
-BiomarkersRelations Literature-extracted relations
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiBiomarkersRelationsRequest
-*/
-func (a *BiomarkersAPIService) BiomarkersRelations(ctx context.Context, id string) ApiBiomarkersRelationsRequest {
-	return ApiBiomarkersRelationsRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return BiomarkersRelations200Response
-func (a *BiomarkersAPIService) BiomarkersRelationsExecute(r ApiBiomarkersRelationsRequest) (*BiomarkersRelations200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *BiomarkersRelations200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersRelations")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/relations"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.chemicals != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "chemicals", r.chemicals, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2275,7 +1295,7 @@ func (a *BiomarkersAPIService) BiomarkersRelationsExecute(r ApiBiomarkersRelatio
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v BiomarkersRelations400Response
+			var v QueryError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2305,119 +1325,10 @@ func (a *BiomarkersAPIService) BiomarkersRelationsExecute(r ApiBiomarkersRelatio
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiBiomarkersSampleScreeningRequest struct {
-	ctx context.Context
-	ApiService *BiomarkersAPIService
-	id string
-	positiveSamples *int32
-}
-
-func (r ApiBiomarkersSampleScreeningRequest) PositiveSamples(positiveSamples int32) ApiBiomarkersSampleScreeningRequest {
-	r.positiveSamples = &positiveSamples
-	return r
-}
-
-func (r ApiBiomarkersSampleScreeningRequest) Execute() (*BiomarkersSampleScreening200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersSampleScreeningExecute(r)
-}
-
-/*
-BiomarkersSampleScreening Human sample screening reference
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiBiomarkersSampleScreeningRequest
-*/
-func (a *BiomarkersAPIService) BiomarkersSampleScreening(ctx context.Context, id string) ApiBiomarkersSampleScreeningRequest {
-	return ApiBiomarkersSampleScreeningRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return BiomarkersSampleScreening200Response
-func (a *BiomarkersAPIService) BiomarkersSampleScreeningExecute(r ApiBiomarkersSampleScreeningRequest) (*BiomarkersSampleScreening200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *BiomarkersSampleScreening200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersSampleScreening")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/sample_screening"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.positiveSamples != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "positive_samples", r.positiveSamples, "form", "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v AuthError
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v QueryError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2427,496 +1338,8 @@ func (a *BiomarkersAPIService) BiomarkersSampleScreeningExecute(r ApiBiomarkersS
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiBiomarkersTrialMentionRequest struct {
-	ctx context.Context
-	ApiService *BiomarkersAPIService
-	id string
-}
-
-func (r ApiBiomarkersTrialMentionRequest) Execute() (*BiomarkersTrialMention200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersTrialMentionExecute(r)
-}
-
-/*
-BiomarkersTrialMention Trial mentions
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiBiomarkersTrialMentionRequest
-*/
-func (a *BiomarkersAPIService) BiomarkersTrialMention(ctx context.Context, id string) ApiBiomarkersTrialMentionRequest {
-	return ApiBiomarkersTrialMentionRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return BiomarkersTrialMention200Response
-func (a *BiomarkersAPIService) BiomarkersTrialMentionExecute(r ApiBiomarkersTrialMentionRequest) (*BiomarkersTrialMention200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *BiomarkersTrialMention200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersTrialMention")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/trial_mention"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiBiomarkersVariantMentionsRequest struct {
-	ctx context.Context
-	ApiService *BiomarkersAPIService
-	id string
-}
-
-func (r ApiBiomarkersVariantMentionsRequest) Execute() (*BiomarkersVariantMentions200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersVariantMentionsExecute(r)
-}
-
-/*
-BiomarkersVariantMentions Protein variant mentions
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiBiomarkersVariantMentionsRequest
-*/
-func (a *BiomarkersAPIService) BiomarkersVariantMentions(ctx context.Context, id string) ApiBiomarkersVariantMentionsRequest {
-	return ApiBiomarkersVariantMentionsRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return BiomarkersVariantMentions200Response
-func (a *BiomarkersAPIService) BiomarkersVariantMentionsExecute(r ApiBiomarkersVariantMentionsRequest) (*BiomarkersVariantMentions200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *BiomarkersVariantMentions200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersVariantMentions")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/variant_mentions"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiBiomarkersVendorSourcingRequest struct {
-	ctx context.Context
-	ApiService *BiomarkersAPIService
-	id string
-}
-
-func (r ApiBiomarkersVendorSourcingRequest) Execute() (*BiomarkersVendorSourcing200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersVendorSourcingExecute(r)
-}
-
-/*
-BiomarkersVendorSourcing Vendor sourcing
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiBiomarkersVendorSourcingRequest
-*/
-func (a *BiomarkersAPIService) BiomarkersVendorSourcing(ctx context.Context, id string) ApiBiomarkersVendorSourcingRequest {
-	return ApiBiomarkersVendorSourcingRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return BiomarkersVendorSourcing200Response
-func (a *BiomarkersAPIService) BiomarkersVendorSourcingExecute(r ApiBiomarkersVendorSourcingRequest) (*BiomarkersVendorSourcing200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *BiomarkersVendorSourcing200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersVendorSourcing")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/vendor_sourcing"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiBiomarkersWhereItAppearsRequest struct {
-	ctx context.Context
-	ApiService *BiomarkersAPIService
-	id string
-}
-
-func (r ApiBiomarkersWhereItAppearsRequest) Execute() (*BiomarkersWhereItAppears200Response, *http.Response, error) {
-	return r.ApiService.BiomarkersWhereItAppearsExecute(r)
-}
-
-/*
-BiomarkersWhereItAppears Where it appears
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiBiomarkersWhereItAppearsRequest
-*/
-func (a *BiomarkersAPIService) BiomarkersWhereItAppears(ctx context.Context, id string) ApiBiomarkersWhereItAppearsRequest {
-	return ApiBiomarkersWhereItAppearsRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return BiomarkersWhereItAppears200Response
-func (a *BiomarkersAPIService) BiomarkersWhereItAppearsExecute(r ApiBiomarkersWhereItAppearsRequest) (*BiomarkersWhereItAppears200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *BiomarkersWhereItAppears200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BiomarkersAPIService.BiomarkersWhereItAppears")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/biomarkers/{id}/where_it_appears"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v AuthError
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v QueryError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

@@ -19,19 +19,19 @@ module PharmaObservatory
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # One cell-lines record
+    # One cell line
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [CellLinesGet200Response]
+    # @return [CellLinesRecord]
     def cell_lines_get(id, opts = {})
       data, _status_code, _headers = cell_lines_get_with_http_info(id, opts)
       data
     end
 
-    # One cell-lines record
+    # One cell line
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(CellLinesGet200Response, Integer, Hash)>] CellLinesGet200Response data, response status code and response headers
+    # @return [Array<(CellLinesRecord, Integer, Hash)>] CellLinesRecord data, response status code and response headers
     def cell_lines_get_with_http_info(id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: CellLinesApi.cell_lines_get ...'
@@ -41,7 +41,7 @@ module PharmaObservatory
         fail ArgumentError, "Missing the required parameter 'id' when calling CellLinesApi.cell_lines_get"
       end
       # resource path
-      local_var_path = '/api/v1/cell-lines/{id}'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+      local_var_path = '/api/v1/cell_lines/{id}'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
@@ -58,7 +58,7 @@ module PharmaObservatory
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'CellLinesGet200Response'
+      return_type = opts[:debug_return_type] || 'CellLinesRecord'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
@@ -80,99 +80,32 @@ module PharmaObservatory
       return data, status_code, headers
     end
 
-    # Identity and availability
-    # @param id [String] 
+    # List cell lines
     # @param [Hash] opts the optional parameters
-    # @return [CellLinesIdentity200Response]
-    def cell_lines_identity(id, opts = {})
-      data, _status_code, _headers = cell_lines_identity_with_http_info(id, opts)
-      data
-    end
-
-    # Identity and availability
-    # @param id [String] 
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(CellLinesIdentity200Response, Integer, Hash)>] CellLinesIdentity200Response data, response status code and response headers
-    def cell_lines_identity_with_http_info(id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: CellLinesApi.cell_lines_identity ...'
-      end
-      # verify the required parameter 'id' is set
-      if @api_client.config.client_side_validation && id.nil?
-        fail ArgumentError, "Missing the required parameter 'id' when calling CellLinesApi.cell_lines_identity"
-      end
-      # resource path
-      local_var_path = '/api/v1/cell-lines/{id}/identity'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
-
-      # query parameters
-      query_params = opts[:query_params] || {}
-
-      # header parameters
-      header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
-
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
-      post_body = opts[:debug_body]
-
-      # return_type
-      return_type = opts[:debug_return_type] || 'CellLinesIdentity200Response'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
-
-      new_options = opts.merge(
-        :operation => :"CellLinesApi.cell_lines_identity",
-        :header_params => header_params,
-        :query_params => query_params,
-        :form_params => form_params,
-        :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
-      )
-
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: CellLinesApi#cell_lines_identity\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
-    end
-
-    # Cell line identity safety
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :cursor 
-    # @option opts [Boolean] :facets 
     # @option opts [Integer] :limit 
-    # @option opts [String] :safety_status 
-    # @return [CellLinesList200Response]
+    # @option opts [String] :sort 
+    # @return [CellLinesResponse]
     def cell_lines_list(opts = {})
       data, _status_code, _headers = cell_lines_list_with_http_info(opts)
       data
     end
 
-    # Cell line identity safety
+    # List cell lines
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :cursor 
-    # @option opts [Boolean] :facets 
     # @option opts [Integer] :limit 
-    # @option opts [String] :safety_status 
-    # @return [Array<(CellLinesList200Response, Integer, Hash)>] CellLinesList200Response data, response status code and response headers
+    # @option opts [String] :sort 
+    # @return [Array<(CellLinesResponse, Integer, Hash)>] CellLinesResponse data, response status code and response headers
     def cell_lines_list_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: CellLinesApi.cell_lines_list ...'
       end
       # resource path
-      local_var_path = '/api/v1/cell-lines'
+      local_var_path = '/api/v1/cell_lines'
 
       # query parameters
       query_params = opts[:query_params] || {}
-      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
-      query_params[:'facets'] = opts[:'facets'] if !opts[:'facets'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'safety_status'] = opts[:'safety_status'] if !opts[:'safety_status'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -186,7 +119,7 @@ module PharmaObservatory
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'CellLinesList200Response'
+      return_type = opts[:debug_return_type] || 'CellLinesResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
@@ -204,125 +137,6 @@ module PharmaObservatory
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: CellLinesApi#cell_lines_list\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
-    end
-
-    # Safety resolution
-    # @param id [String] 
-    # @param [Hash] opts the optional parameters
-    # @return [CellLinesSafetyResolution200Response]
-    def cell_lines_safety_resolution(id, opts = {})
-      data, _status_code, _headers = cell_lines_safety_resolution_with_http_info(id, opts)
-      data
-    end
-
-    # Safety resolution
-    # @param id [String] 
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(CellLinesSafetyResolution200Response, Integer, Hash)>] CellLinesSafetyResolution200Response data, response status code and response headers
-    def cell_lines_safety_resolution_with_http_info(id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: CellLinesApi.cell_lines_safety_resolution ...'
-      end
-      # verify the required parameter 'id' is set
-      if @api_client.config.client_side_validation && id.nil?
-        fail ArgumentError, "Missing the required parameter 'id' when calling CellLinesApi.cell_lines_safety_resolution"
-      end
-      # resource path
-      local_var_path = '/api/v1/cell-lines/{id}/safety_resolution'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
-
-      # query parameters
-      query_params = opts[:query_params] || {}
-
-      # header parameters
-      header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
-
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
-      post_body = opts[:debug_body]
-
-      # return_type
-      return_type = opts[:debug_return_type] || 'CellLinesSafetyResolution200Response'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
-
-      new_options = opts.merge(
-        :operation => :"CellLinesApi.cell_lines_safety_resolution",
-        :header_params => header_params,
-        :query_params => query_params,
-        :form_params => form_params,
-        :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
-      )
-
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: CellLinesApi#cell_lines_safety_resolution\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
-    end
-
-    # Cell line safety summary
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :species 
-    # @return [CellLinesStatusCounts200Response]
-    def cell_lines_status_counts(opts = {})
-      data, _status_code, _headers = cell_lines_status_counts_with_http_info(opts)
-      data
-    end
-
-    # Cell line safety summary
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :species 
-    # @return [Array<(CellLinesStatusCounts200Response, Integer, Hash)>] CellLinesStatusCounts200Response data, response status code and response headers
-    def cell_lines_status_counts_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: CellLinesApi.cell_lines_status_counts ...'
-      end
-      # resource path
-      local_var_path = '/api/v1/cell-lines/status_counts'
-
-      # query parameters
-      query_params = opts[:query_params] || {}
-      query_params[:'species'] = opts[:'species'] if !opts[:'species'].nil?
-
-      # header parameters
-      header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
-
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
-      post_body = opts[:debug_body]
-
-      # return_type
-      return_type = opts[:debug_return_type] || 'CellLinesStatusCounts200Response'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
-
-      new_options = opts.merge(
-        :operation => :"CellLinesApi.cell_lines_status_counts",
-        :header_params => header_params,
-        :query_params => query_params,
-        :form_params => form_params,
-        :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
-      )
-
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: CellLinesApi#cell_lines_status_counts\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end

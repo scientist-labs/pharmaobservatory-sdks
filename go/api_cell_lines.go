@@ -29,12 +29,12 @@ type ApiCellLinesGetRequest struct {
 	id string
 }
 
-func (r ApiCellLinesGetRequest) Execute() (*CellLinesGet200Response, *http.Response, error) {
+func (r ApiCellLinesGetRequest) Execute() (*CellLinesRecord, *http.Response, error) {
 	return r.ApiService.CellLinesGetExecute(r)
 }
 
 /*
-CellLinesGet One cell-lines record
+CellLinesGet One cell line
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -49,13 +49,13 @@ func (a *CellLinesAPIService) CellLinesGet(ctx context.Context, id string) ApiCe
 }
 
 // Execute executes the request
-//  @return CellLinesGet200Response
-func (a *CellLinesAPIService) CellLinesGetExecute(r ApiCellLinesGetRequest) (*CellLinesGet200Response, *http.Response, error) {
+//  @return CellLinesRecord
+func (a *CellLinesAPIService) CellLinesGetExecute(r ApiCellLinesGetRequest) (*CellLinesRecord, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *CellLinesGet200Response
+		localVarReturnValue  *CellLinesRecord
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CellLinesAPIService.CellLinesGet")
@@ -63,7 +63,7 @@ func (a *CellLinesAPIService) CellLinesGetExecute(r ApiCellLinesGetRequest) (*Ce
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/cell-lines/{id}"
+	localVarPath := localBasePath + "/api/v1/cell_lines/{id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -129,121 +129,10 @@ func (a *CellLinesAPIService) CellLinesGetExecute(r ApiCellLinesGetRequest) (*Ce
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiCellLinesIdentityRequest struct {
-	ctx context.Context
-	ApiService *CellLinesAPIService
-	id string
-}
-
-func (r ApiCellLinesIdentityRequest) Execute() (*CellLinesIdentity200Response, *http.Response, error) {
-	return r.ApiService.CellLinesIdentityExecute(r)
-}
-
-/*
-CellLinesIdentity Identity and availability
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiCellLinesIdentityRequest
-*/
-func (a *CellLinesAPIService) CellLinesIdentity(ctx context.Context, id string) ApiCellLinesIdentityRequest {
-	return ApiCellLinesIdentityRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return CellLinesIdentity200Response
-func (a *CellLinesAPIService) CellLinesIdentityExecute(r ApiCellLinesIdentityRequest) (*CellLinesIdentity200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *CellLinesIdentity200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CellLinesAPIService.CellLinesIdentity")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/cell-lines/{id}/identity"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v AuthError
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v QueryError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -270,20 +159,8 @@ func (a *CellLinesAPIService) CellLinesIdentityExecute(r ApiCellLinesIdentityReq
 type ApiCellLinesListRequest struct {
 	ctx context.Context
 	ApiService *CellLinesAPIService
-	cursor *string
-	facets *bool
 	limit *int32
-	safetyStatus *string
-}
-
-func (r ApiCellLinesListRequest) Cursor(cursor string) ApiCellLinesListRequest {
-	r.cursor = &cursor
-	return r
-}
-
-func (r ApiCellLinesListRequest) Facets(facets bool) ApiCellLinesListRequest {
-	r.facets = &facets
-	return r
+	sort *string
 }
 
 func (r ApiCellLinesListRequest) Limit(limit int32) ApiCellLinesListRequest {
@@ -291,17 +168,17 @@ func (r ApiCellLinesListRequest) Limit(limit int32) ApiCellLinesListRequest {
 	return r
 }
 
-func (r ApiCellLinesListRequest) SafetyStatus(safetyStatus string) ApiCellLinesListRequest {
-	r.safetyStatus = &safetyStatus
+func (r ApiCellLinesListRequest) Sort(sort string) ApiCellLinesListRequest {
+	r.sort = &sort
 	return r
 }
 
-func (r ApiCellLinesListRequest) Execute() (*CellLinesList200Response, *http.Response, error) {
+func (r ApiCellLinesListRequest) Execute() (*CellLinesResponse, *http.Response, error) {
 	return r.ApiService.CellLinesListExecute(r)
 }
 
 /*
-CellLinesList Cell line identity safety
+CellLinesList List cell lines
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCellLinesListRequest
@@ -314,13 +191,13 @@ func (a *CellLinesAPIService) CellLinesList(ctx context.Context) ApiCellLinesLis
 }
 
 // Execute executes the request
-//  @return CellLinesList200Response
-func (a *CellLinesAPIService) CellLinesListExecute(r ApiCellLinesListRequest) (*CellLinesList200Response, *http.Response, error) {
+//  @return CellLinesResponse
+func (a *CellLinesAPIService) CellLinesListExecute(r ApiCellLinesListRequest) (*CellLinesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *CellLinesList200Response
+		localVarReturnValue  *CellLinesResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CellLinesAPIService.CellLinesList")
@@ -328,23 +205,17 @@ func (a *CellLinesAPIService) CellLinesListExecute(r ApiCellLinesListRequest) (*
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/cell-lines"
+	localVarPath := localBasePath + "/api/v1/cell_lines"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if r.cursor != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
-	}
-	if r.facets != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "facets", r.facets, "form", "")
-	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
-	if r.safetyStatus != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "safety_status", r.safetyStatus, "form", "")
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -385,8 +256,8 @@ func (a *CellLinesAPIService) CellLinesListExecute(r ApiCellLinesListRequest) (*
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v AuthError
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v QueryError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -395,117 +266,6 @@ func (a *CellLinesAPIService) CellLinesListExecute(r ApiCellLinesListRequest) (*
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v AuthError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiCellLinesSafetyResolutionRequest struct {
-	ctx context.Context
-	ApiService *CellLinesAPIService
-	id string
-}
-
-func (r ApiCellLinesSafetyResolutionRequest) Execute() (*CellLinesSafetyResolution200Response, *http.Response, error) {
-	return r.ApiService.CellLinesSafetyResolutionExecute(r)
-}
-
-/*
-CellLinesSafetyResolution Safety resolution
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id
- @return ApiCellLinesSafetyResolutionRequest
-*/
-func (a *CellLinesAPIService) CellLinesSafetyResolution(ctx context.Context, id string) ApiCellLinesSafetyResolutionRequest {
-	return ApiCellLinesSafetyResolutionRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return CellLinesSafetyResolution200Response
-func (a *CellLinesAPIService) CellLinesSafetyResolutionExecute(r ApiCellLinesSafetyResolutionRequest) (*CellLinesSafetyResolution200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *CellLinesSafetyResolution200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CellLinesAPIService.CellLinesSafetyResolution")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/cell-lines/{id}/safety_resolution"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
 			var v AuthError
@@ -527,115 +287,10 @@ func (a *CellLinesAPIService) CellLinesSafetyResolutionExecute(r ApiCellLinesSaf
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiCellLinesStatusCountsRequest struct {
-	ctx context.Context
-	ApiService *CellLinesAPIService
-	species *string
-}
-
-func (r ApiCellLinesStatusCountsRequest) Species(species string) ApiCellLinesStatusCountsRequest {
-	r.species = &species
-	return r
-}
-
-func (r ApiCellLinesStatusCountsRequest) Execute() (*CellLinesStatusCounts200Response, *http.Response, error) {
-	return r.ApiService.CellLinesStatusCountsExecute(r)
-}
-
-/*
-CellLinesStatusCounts Cell line safety summary
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiCellLinesStatusCountsRequest
-*/
-func (a *CellLinesAPIService) CellLinesStatusCounts(ctx context.Context) ApiCellLinesStatusCountsRequest {
-	return ApiCellLinesStatusCountsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return CellLinesStatusCounts200Response
-func (a *CellLinesAPIService) CellLinesStatusCountsExecute(r ApiCellLinesStatusCountsRequest) (*CellLinesStatusCounts200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *CellLinesStatusCounts200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CellLinesAPIService.CellLinesStatusCounts")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/api/v1/cell-lines/status_counts"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if r.species != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "species", r.species, "form", "")
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v AuthError
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v QueryError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -645,8 +300,8 @@ func (a *CellLinesAPIService) CellLinesStatusCountsExecute(r ApiCellLinesStatusC
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v AuthError
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v QueryError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

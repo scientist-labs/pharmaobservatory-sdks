@@ -11,5 +11,5 @@ Generator version: 7.13.0
 =end
 
 module PharmaObservatory
-  VERSION = '0.1.2'
+  VERSION = '0.1.3'
 end

@@ -32,264 +32,102 @@ describe 'BiomarkersApi' do
     end
   end
 
-  # unit tests for biomarkers_assay_provider_ledger
-  # Assay-provider ledger
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @return [BiomarkersAssayProviderLedger200Response]
-  describe 'biomarkers_assay_provider_ledger test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for biomarkers_cgi
-  # Actionable biomarkers
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @return [BiomarkersCgi200Response]
-  describe 'biomarkers_cgi test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for biomarkers_coverage_by_traversal
-  # Coverage by traversal
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @return [BiomarkersCoverageByTraversal200Response]
-  describe 'biomarkers_coverage_by_traversal test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for biomarkers_evidence_over_time
-  # Evidence over time
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @return [BiomarkersEvidenceOverTime200Response]
-  describe 'biomarkers_evidence_over_time test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for biomarkers_fda_bqp
+  # unit tests for biomarkers_biomarker_bqp_assertions
   # FDA biomarker qualification projects
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @return [BiomarkersFdaBqp200Response]
-  describe 'biomarkers_fda_bqp test' do
+  # @option opts [Integer] :limit 
+  # @option opts [String] :sort 
+  # @return [BiomarkerBqpAssertionsResponse]
+  describe 'biomarkers_biomarker_bqp_assertions test' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end
   end
 
-  # unit tests for biomarkers_fda_cdx
+  # unit tests for biomarkers_biomarker_cdx_assertions
   # FDA companion diagnostic assertions
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @return [BiomarkersFdaCdx200Response]
-  describe 'biomarkers_fda_cdx test' do
+  # @option opts [Integer] :limit 
+  # @option opts [String] :sort 
+  # @return [BiomarkerCdxAssertionsResponse]
+  describe 'biomarkers_biomarker_cdx_assertions test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for biomarkers_biomarker_evidence
+  # Biomarker evidence
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [Integer] :limit 
+  # @option opts [String] :sort 
+  # @return [BiomarkerEvidenceResponse]
+  describe 'biomarkers_biomarker_evidence test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for biomarkers_biomarker_literature
+  # Trial-cited literature mentions
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [Integer] :limit 
+  # @option opts [String] :sort 
+  # @return [BiomarkerLiteratureResponse]
+  describe 'biomarkers_biomarker_literature test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for biomarkers_biomarker_publishing_companies
+  # Companies publishing on a biomarker
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [Integer] :limit 
+  # @option opts [String] :sort 
+  # @return [BiomarkerPublishingCompaniesResponse]
+  describe 'biomarkers_biomarker_publishing_companies test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for biomarkers_biomarker_variant_mentions
+  # Protein variant mentions
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [Integer] :limit 
+  # @option opts [String] :sort 
+  # @return [BiomarkerVariantMentionsResponse]
+  describe 'biomarkers_biomarker_variant_mentions test' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end
   end
 
   # unit tests for biomarkers_get
-  # One biomarkers record
+  # One biomarker
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @return [BiomarkersGet200Response]
+  # @return [BiomarkersRecord]
   describe 'biomarkers_get test' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end
   end
 
-  # unit tests for biomarkers_hub_tier_tables
-  # Biomarker evidence, labeled by type
-  # @param [Hash] opts the optional parameters
-  # @return [BiomarkersHubTierTables200Response]
-  describe 'biomarkers_hub_tier_tables test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for biomarkers_identity
-  # Biomarker identity
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @return [BiomarkersIdentity200Response]
-  describe 'biomarkers_identity test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
   # unit tests for biomarkers_list
-  # Biomarkers
+  # List biomarkers
   # @param [Hash] opts the optional parameters
-  # @option opts [String] :cursor 
-  # @option opts [String] :dir 
-  # @option opts [Integer] :evidence 
-  # @option opts [Boolean] :facets 
-  # @option opts [String] :identity 
-  # @option opts [String] :kind 
   # @option opts [Integer] :limit 
-  # @option opts [String] :q 
   # @option opts [String] :sort 
-  # @option opts [Integer] :validated 
-  # @return [BiomarkersList200Response]
+  # @return [BiomarkersResponse]
   describe 'biomarkers_list test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for biomarkers_literature
-  # Trial-cited literature mentions
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @return [BiomarkersLiterature200Response]
-  describe 'biomarkers_literature test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for biomarkers_ot_association
-  # Target-disease associations
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @return [BiomarkersOtAssociation200Response]
-  describe 'biomarkers_ot_association test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for biomarkers_population_allele_frequency
-  # Population allele frequency
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @return [BiomarkersPopulationAlleleFrequency200Response]
-  describe 'biomarkers_population_allele_frequency test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for biomarkers_publishing_org
-  # Organizations publishing
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @return [BiomarkersPublishingOrg200Response]
-  describe 'biomarkers_publishing_org test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for biomarkers_related_biomarkers
-  # Related biomarkers
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @return [BiomarkersRelatedBiomarkers200Response]
-  describe 'biomarkers_related_biomarkers test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for biomarkers_related_conditions
-  # Related conditions
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @return [BiomarkersRelatedConditions200Response]
-  describe 'biomarkers_related_conditions test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for biomarkers_related_organizations
-  # Related organisations
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @return [BiomarkersRelatedOrganizations200Response]
-  describe 'biomarkers_related_organizations test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for biomarkers_relations
-  # Literature-extracted relations
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @option opts [String] :chemicals 
-  # @return [BiomarkersRelations200Response]
-  describe 'biomarkers_relations test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for biomarkers_sample_screening
-  # Human sample screening reference
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :positive_samples 
-  # @return [BiomarkersSampleScreening200Response]
-  describe 'biomarkers_sample_screening test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for biomarkers_trial_mention
-  # Trial mentions
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @return [BiomarkersTrialMention200Response]
-  describe 'biomarkers_trial_mention test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for biomarkers_variant_mentions
-  # Protein variant mentions
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @return [BiomarkersVariantMentions200Response]
-  describe 'biomarkers_variant_mentions test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for biomarkers_vendor_sourcing
-  # Vendor sourcing
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @return [BiomarkersVendorSourcing200Response]
-  describe 'biomarkers_vendor_sourcing test' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
-  # unit tests for biomarkers_where_it_appears
-  # Where it appears
-  # @param id 
-  # @param [Hash] opts the optional parameters
-  # @return [BiomarkersWhereItAppears200Response]
-  describe 'biomarkers_where_it_appears test' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end
