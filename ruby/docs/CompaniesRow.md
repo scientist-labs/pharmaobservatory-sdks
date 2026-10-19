@@ -10,9 +10,9 @@
 | **country** | **String** | Country of the company&#39;s own legal entity, as the source states it. | [optional] |
 | **org_type** | **String** | The organization type of the company&#39;s representative record. | [optional] |
 | **org_kinds** | **Array&lt;String&gt;** | The roles the company&#39;s organizations play (Manufacturer, Sponsor and so on). | [optional] |
-| **edgar_cik** | **String** | SEC EDGAR central index key of the representative record, when it files. | [optional] |
+| **edgar_cik** | **String** | Central index key (CIK) in EDGAR, the US Securities and Exchange Commission (SEC) filing system, of the representative record, when it files. | [optional] |
 | **edgar_ticker** | **String** | Exchange ticker of the representative record, when listed. | [optional] |
-| **representative_org_id** | **String** | Legal-entity level: the organization record the company page shows. | [optional] |
+| **representative_org_id** | **String** | Legal-entity level: the organization record the company&#39;s page shows. | [optional] |
 | **parent_company_id** | **String** | The direct owner company (part_of), null for a root. | [optional] |
 | **parent_company_name** | **String** | Display name of the direct owner company. | [optional] |
 | **part_of_since** | **Date** | Date the ownership link began, when every hop is dated. | [optional] |
@@ -28,6 +28,8 @@
 | **total_lead_enrollment** | **Integer** | Planned enrollment across led trials. | [optional] |
 | **num_recent_lead_trials** | **Integer** | Led trials started in the recent window. | [optional] |
 | **activity_score** | **Float** | Trial activity score (interventional lead trials and enrollment, weighted toward recent). | [optional] |
+| **is_admitted** | **Boolean** | True when the company is admitted to the company roster (lead-trial activity, more than one legal entity or a recorded manufacturer role); false rows carry null firmographic, trial-count and activity columns. | [optional] |
+| **has_public_page** | **Boolean** | True when the company has a public organization page. | [optional] |
 
 ## Example
 
@@ -58,7 +60,9 @@ instance = PharmaObservatory::CompaniesRow.new(
   num_trials: null,
   total_lead_enrollment: null,
   num_recent_lead_trials: null,
-  activity_score: null
+  activity_score: null,
+  is_admitted: null,
+  has_public_page: null
 )
 ```
 

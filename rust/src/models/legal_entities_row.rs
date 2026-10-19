@@ -32,7 +32,7 @@ pub struct LegalEntitiesRow {
     /// Organization type.
     #[serde(rename = "org_type", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub org_type: Option<Option<String>>,
-    /// SEC EDGAR central index key, when it files.
+    /// Central index key (CIK) in EDGAR, the US Securities and Exchange Commission (SEC) filing system, when it files.
     #[serde(rename = "edgar_cik", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub edgar_cik: Option<Option<String>>,
     /// Exchange ticker, when listed.

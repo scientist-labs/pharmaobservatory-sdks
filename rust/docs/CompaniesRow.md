@@ -10,9 +10,9 @@ Name | Type | Description | Notes
 **country** | Option<**String**> | Country of the company's own legal entity, as the source states it. | [optional]
 **org_type** | Option<**String**> | The organization type of the company's representative record. | [optional]
 **org_kinds** | Option<**Vec<String>**> | The roles the company's organizations play (Manufacturer, Sponsor and so on). | [optional]
-**edgar_cik** | Option<**String**> | SEC EDGAR central index key of the representative record, when it files. | [optional]
+**edgar_cik** | Option<**String**> | Central index key (CIK) in EDGAR, the US Securities and Exchange Commission (SEC) filing system, of the representative record, when it files. | [optional]
 **edgar_ticker** | Option<**String**> | Exchange ticker of the representative record, when listed. | [optional]
-**representative_org_id** | Option<**String**> | Legal-entity level: the organization record the company page shows. | [optional]
+**representative_org_id** | Option<**String**> | Legal-entity level: the organization record the company's page shows. | [optional]
 **parent_company_id** | Option<**String**> | The direct owner company (part_of), null for a root. | [optional]
 **parent_company_name** | Option<**String**> | Display name of the direct owner company. | [optional]
 **part_of_since** | Option<[**String**](string.md)> | Date the ownership link began, when every hop is dated. | [optional]
@@ -28,6 +28,8 @@ Name | Type | Description | Notes
 **total_lead_enrollment** | Option<**i64**> | Planned enrollment across led trials. | [optional]
 **num_recent_lead_trials** | Option<**i64**> | Led trials started in the recent window. | [optional]
 **activity_score** | Option<**f64**> | Trial activity score (interventional lead trials and enrollment, weighted toward recent). | [optional]
+**is_admitted** | Option<**bool**> | True when the company is admitted to the company roster (lead-trial activity, more than one legal entity or a recorded manufacturer role); false rows carry null firmographic, trial-count and activity columns. | [optional]
+**has_public_page** | Option<**bool**> | True when the company has a public organization page. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

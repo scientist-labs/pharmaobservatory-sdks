@@ -35,7 +35,7 @@ type CompanyProgramsRow struct {
 	DrugId NullableString `json:"drug_id,omitempty"`
 	// The drug's name.
 	DrugName NullableString `json:"drug_name,omitempty"`
-	// The condition key (UMLS CUI).
+	// The condition key, a MeSH (Medical Subject Headings) descriptor id (D followed by six to nine digits).
 	ConditionId NullableString `json:"condition_id,omitempty"`
 	// The condition's name.
 	ConditionName NullableString `json:"condition_name,omitempty"`
@@ -51,7 +51,7 @@ type CompanyProgramsRow struct {
 	Withdrawn NullableBool `json:"withdrawn,omitempty"`
 	// approved, active or abandoned.
 	Lifecycle NullableString `json:"lifecycle,omitempty"`
-	// Disability-adjusted life years (millions) of the condition's global burden, IHME GBD 2021. Null for a caller without the licence for this column; see withheld_columns.
+	// Disability-adjusted life years (DALYs, millions) of the condition's global burden, from the Global Burden of Disease (GBD) 2021 study of the Institute for Health Metrics and Evaluation (IHME). Null for a caller without the licence for this column; see withheld_columns.
 	DalysMillions NullableFloat64 `json:"dalys_millions,omitempty"`
 	AdditionalProperties map[string]interface{}
 }

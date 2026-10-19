@@ -25,7 +25,7 @@ module PharmaObservatory
     # The biomarker key.
     attr_accessor :biomarker_id
 
-    # The FDA drug development tool number of the project.
+    # The drug development tool number the US Food and Drug Administration (FDA) assigns the project.
     attr_accessor :ddt_number
 
     # The FDA project id.

@@ -40,7 +40,7 @@ module PharmaObservatory
     # The drug's name.
     attr_accessor :drug_name
 
-    # The condition key (UMLS CUI).
+    # The condition key, a MeSH (Medical Subject Headings) descriptor id (D followed by six to nine digits).
     attr_accessor :condition_id
 
     # The condition's name.
@@ -64,7 +64,7 @@ module PharmaObservatory
     # approved, active or abandoned.
     attr_accessor :lifecycle
 
-    # Disability-adjusted life years (millions) of the condition's global burden, IHME GBD 2021. Null for a caller without the licence for this column; see withheld_columns.
+    # Disability-adjusted life years (DALYs, millions) of the condition's global burden, from the Global Burden of Disease (GBD) 2021 study of the Institute for Health Metrics and Evaluation (IHME). Null for a caller without the licence for this column; see withheld_columns.
     attr_accessor :dalys_millions
 
     # Attribute mapping from ruby-style variable name to JSON key.

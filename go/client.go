@@ -57,6 +57,8 @@ type APIClient struct {
 
 	CompaniesAPI *CompaniesAPIService
 
+	ConditionsAPI *ConditionsAPIService
+
 	DatasetsAPI *DatasetsAPIService
 
 	LegalEntitiesAPI *LegalEntitiesAPIService
@@ -64,6 +66,8 @@ type APIClient struct {
 	QueryAPI *QueryAPIService
 
 	SitesAPI *SitesAPIService
+
+	TrialsAPI *TrialsAPIService
 }
 
 type service struct {
@@ -86,10 +90,12 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.BiomarkersAPI = (*BiomarkersAPIService)(&c.common)
 	c.CellLinesAPI = (*CellLinesAPIService)(&c.common)
 	c.CompaniesAPI = (*CompaniesAPIService)(&c.common)
+	c.ConditionsAPI = (*ConditionsAPIService)(&c.common)
 	c.DatasetsAPI = (*DatasetsAPIService)(&c.common)
 	c.LegalEntitiesAPI = (*LegalEntitiesAPIService)(&c.common)
 	c.QueryAPI = (*QueryAPIService)(&c.common)
 	c.SitesAPI = (*SitesAPIService)(&c.common)
+	c.TrialsAPI = (*TrialsAPIService)(&c.common)
 
 	return c
 }

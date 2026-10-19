@@ -25,7 +25,7 @@ type BiomarkerBqpAssertionsRow struct {
 	RouteKey NullableString `json:"route_key,omitempty"`
 	// The biomarker key.
 	BiomarkerId NullableString `json:"biomarker_id,omitempty"`
-	// The FDA drug development tool number of the project.
+	// The drug development tool number the US Food and Drug Administration (FDA) assigns the project.
 	DdtNumber NullableString `json:"ddt_number,omitempty"`
 	// The FDA project id.
 	DdtProjectId NullableString `json:"ddt_project_id,omitempty"`

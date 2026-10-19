@@ -32,13 +32,13 @@ pub struct CompaniesRow {
     /// The roles the company's organizations play (Manufacturer, Sponsor and so on).
     #[serde(rename = "org_kinds", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub org_kinds: Option<Option<Vec<String>>>,
-    /// SEC EDGAR central index key of the representative record, when it files.
+    /// Central index key (CIK) in EDGAR, the US Securities and Exchange Commission (SEC) filing system, of the representative record, when it files.
     #[serde(rename = "edgar_cik", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub edgar_cik: Option<Option<String>>,
     /// Exchange ticker of the representative record, when listed.
     #[serde(rename = "edgar_ticker", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub edgar_ticker: Option<Option<String>>,
-    /// Legal-entity level: the organization record the company page shows.
+    /// Legal-entity level: the organization record the company's page shows.
     #[serde(rename = "representative_org_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub representative_org_id: Option<Option<String>>,
     /// The direct owner company (part_of), null for a root.
@@ -86,6 +86,12 @@ pub struct CompaniesRow {
     /// Trial activity score (interventional lead trials and enrollment, weighted toward recent).
     #[serde(rename = "activity_score", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub activity_score: Option<Option<f64>>,
+    /// True when the company is admitted to the company roster (lead-trial activity, more than one legal entity or a recorded manufacturer role); false rows carry null firmographic, trial-count and activity columns.
+    #[serde(rename = "is_admitted", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub is_admitted: Option<Option<bool>>,
+    /// True when the company has a public organization page.
+    #[serde(rename = "has_public_page", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub has_public_page: Option<Option<bool>>,
 }
 
 impl CompaniesRow {
@@ -116,6 +122,8 @@ impl CompaniesRow {
             total_lead_enrollment: None,
             num_recent_lead_trials: None,
             activity_score: None,
+            is_admitted: None,
+            has_public_page: None,
         }
     }
 }

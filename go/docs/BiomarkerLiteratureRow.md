@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **Pmid** | Pointer to **NullableString** | The PubMed id. | [optional] 
 **EvidenceType** | Pointer to **NullableString** | The evidence type (a publication mention). | [optional] 
 **Title** | Pointer to **NullableString** | The paper&#39;s title. | [optional] 
-**JournalNlmId** | Pointer to **NullableString** | The journal&#39;s NLM id. | [optional] 
+**JournalNlmId** | Pointer to **NullableString** | The journal&#39;s National Library of Medicine (NLM) id. | [optional] 
 **JournalTitle** | Pointer to **NullableString** | The journal&#39;s title. | [optional] 
 **PubYear** | Pointer to **NullableInt32** | The publication year. | [optional] 
 **CitationCount** | Pointer to **NullableInt32** | Citations, where iCite carries them (null is not measured, never zero). | [optional] 

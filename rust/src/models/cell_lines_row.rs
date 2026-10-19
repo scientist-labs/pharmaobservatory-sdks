@@ -65,7 +65,7 @@ pub struct CellLinesRow {
     /// The Cellosaurus comment, for a problematic line.
     #[serde(rename = "problematic_comment", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub problematic_comment: Option<Option<String>>,
-    /// ICLAC registration ids.
+    /// International Cell Line Authentication Committee (ICLAC) registration ids.
     #[serde(rename = "iclac_registration_ids", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub iclac_registration_ids: Option<Option<Vec<String>>>,
     /// The Cellosaurus release the check ran against.

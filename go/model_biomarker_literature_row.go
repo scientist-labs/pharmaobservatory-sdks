@@ -29,7 +29,7 @@ type BiomarkerLiteratureRow struct {
 	EvidenceType NullableString `json:"evidence_type,omitempty"`
 	// The paper's title.
 	Title NullableString `json:"title,omitempty"`
-	// The journal's NLM id.
+	// The journal's National Library of Medicine (NLM) id.
 	JournalNlmId NullableString `json:"journal_nlm_id,omitempty"`
 	// The journal's title.
 	JournalTitle NullableString `json:"journal_title,omitempty"`

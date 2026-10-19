@@ -17,7 +17,7 @@ pub struct SiteTrialConditionsRow {
     /// The site key: one facility spelling from the registry.
     #[serde(rename = "site_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub site_id: Option<Option<String>>,
-    /// The trial's registry id (NCT number).
+    /// The trial's ClinicalTrials.gov registry id (NCT, National Clinical Trial, number).
     #[serde(rename = "trial_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub trial_id: Option<Option<String>>,
     /// The condition key (a MeSH, Medical Subject Headings, descriptor id).

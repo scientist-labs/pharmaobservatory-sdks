@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **org_origin** | Option<**String**> | How the organization record was minted. | [optional]
 **country** | Option<**String**> | Country as the source states it. | [optional]
 **org_type** | Option<**String**> | Organization type. | [optional]
-**edgar_cik** | Option<**String**> | SEC EDGAR central index key, when it files. | [optional]
+**edgar_cik** | Option<**String**> | Central index key (CIK) in EDGAR, the US Securities and Exchange Commission (SEC) filing system, when it files. | [optional]
 **edgar_ticker** | Option<**String**> | Exchange ticker, when listed. | [optional]
 **ror_id** | Option<**String**> | Research Organization Registry id, when it has one. | [optional]
 **lei** | Option<**String**> | Legal Entity Identifier, when it has one. | [optional]

@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 **CellosaurusUrl** | Pointer to **NullableString** | Link to the Cellosaurus entry. | [optional] 
 **ProblemCategory** | Pointer to **NullableString** | The problem category, for a problematic line. | [optional] 
 **ProblematicComment** | Pointer to **NullableString** | The Cellosaurus comment, for a problematic line. | [optional] 
-**IclacRegistrationIds** | Pointer to **[]string** | ICLAC registration ids. | [optional] 
+**IclacRegistrationIds** | Pointer to **[]string** | International Cell Line Authentication Committee (ICLAC) registration ids. | [optional] 
 **ReleaseVersion** | Pointer to **NullableString** | The Cellosaurus release the check ran against. | [optional] 
 
 ## Methods

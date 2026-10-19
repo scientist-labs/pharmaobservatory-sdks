@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **site_id** | Option<**String**> | The site key: one facility spelling from the registry. | [optional]
-**trial_id** | Option<**String**> | The trial's registry id (NCT number). | [optional]
+**trial_id** | Option<**String**> | The trial's ClinicalTrials.gov registry id (NCT, National Clinical Trial, number). | [optional]
 **condition_id** | Option<**String**> | The condition key (a MeSH, Medical Subject Headings, descriptor id). | [optional]
 **condition_name** | Option<**String**> | The condition's name. | [optional]
 **overall_status** | Option<**String**> | The registry's overall status of the trial. | [optional]

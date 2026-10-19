@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **ObjectType** | **string** |  | 
 **Id** | **string** |  | 
 **Record** | [**CompaniesRow**](CompaniesRow.md) |  | 
-**Attributes** | Pointer to **map[string]interface{}** |  | [optional] 
+**Attributes** | Pointer to [**CompaniesRecordAttributes**](CompaniesRecordAttributes.md) |  | [optional] 
 **Datasets** | [**[]DatasetListing**](DatasetListing.md) |  | 
 **Attribution** | Pointer to [**[]DatasetAttribution**](DatasetAttribution.md) |  | [optional] 
 **SourceCredit** | Pointer to **string** |  | [optional] 
@@ -97,20 +97,20 @@ SetRecord sets Record field to given value.
 
 ### GetAttributes
 
-`func (o *CompaniesRecord) GetAttributes() map[string]interface{}`
+`func (o *CompaniesRecord) GetAttributes() CompaniesRecordAttributes`
 
 GetAttributes returns the Attributes field if non-nil, zero value otherwise.
 
 ### GetAttributesOk
 
-`func (o *CompaniesRecord) GetAttributesOk() (*map[string]interface{}, bool)`
+`func (o *CompaniesRecord) GetAttributesOk() (*CompaniesRecordAttributes, bool)`
 
 GetAttributesOk returns a tuple with the Attributes field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAttributes
 
-`func (o *CompaniesRecord) SetAttributes(v map[string]interface{})`
+`func (o *CompaniesRecord) SetAttributes(v CompaniesRecordAttributes)`
 
 SetAttributes sets Attributes field to given value.
 

@@ -19,8 +19,8 @@
 | **n_realized** | **Integer** | Per phase bucket, the same count as the series column of that name. | [optional] |
 | **realized_months_median** | **Float** | Median over the bucket&#39;s rows; NULL under min_n. | [optional] |
 | **error_phase_mae_months** | **Float** | Backtest mean absolute error in months for this phase bucket; NULL on an unmeasured bucket or one with no open predicted trial. | [optional] |
-| **error_phase_relmae_vs_baseline** | **Float** | The model MAE over the baseline MAE in this phase bucket. | [optional] |
-| **error_phase_baseline_mae_months** | **Float** | The baseline MAE in months in this phase bucket. | [optional] |
+| **error_phase_relmae_vs_baseline** | **Float** | The model&#39;s mean absolute error (MAE) over the baseline&#39;s MAE in this phase bucket. | [optional] |
+| **error_phase_baseline_mae_months** | **Float** | The baseline&#39;s mean absolute error (MAE) in months in this phase bucket. | [optional] |
 | **error_phase_n_trials** | **Integer** | Backtest trials behind the phase figure. | [optional] |
 | **error_phase_n_years** | **Integer** | Backtest years behind the phase figure. | [optional] |
 | **min_n** | **Integer** | The floor applied: a median is withheld below this many trials, carried so a reader sees the floor used. | [optional] |

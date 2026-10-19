@@ -16,7 +16,7 @@ require 'time'
 module PharmaObservatory
   # One row of the sponsor_trials dataset: one row per trial and sponsor as filed (lead sponsor or collaborator). A grouped request returns the group columns and the measures instead, as additional properties.
   class SponsorTrialsRow
-    # The trial's registry id (NCT number).
+    # The trial's ClinicalTrials.gov registry id (NCT, National Clinical Trial, number).
     attr_accessor :trial_id
 
     # lead or collaborator.
@@ -40,7 +40,7 @@ module PharmaObservatory
     # Display name of the sponsor's group.
     attr_accessor :sponsor_group_name
 
-    # The registry's agency class for the sponsor (INDUSTRY, NIH, OTHER ...).
+    # The registry's agency class for the sponsor (INDUSTRY, NIH for the US National Institutes of Health, OTHER ...).
     attr_accessor :sponsor_agency_class
 
     # How the sponsor name was resolved to an organization record.

@@ -70,7 +70,7 @@ module PharmaObservatory
         :'object_type' => :'String',
         :'id' => :'String',
         :'record' => :'CompaniesRow',
-        :'attributes' => :'Object',
+        :'attributes' => :'CompaniesRecordAttributes',
         :'datasets' => :'Array<DatasetListing>',
         :'attribution' => :'Array<DatasetAttribution>',
         :'source_credit' => :'String',

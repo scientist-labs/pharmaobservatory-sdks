@@ -20,7 +20,7 @@ pub struct CompaniesRecord {
     #[serde(rename = "record")]
     pub record: models::CompaniesRow,
     #[serde(rename = "attributes", skip_serializing_if = "Option::is_none")]
-    pub attributes: Option<serde_json::Value>,
+    pub attributes: Option<Box<models::CompaniesRecordAttributes>>,
     #[serde(rename = "datasets")]
     pub datasets: Vec<models::DatasetListing>,
     #[serde(rename = "attribution", skip_serializing_if = "Option::is_none")]

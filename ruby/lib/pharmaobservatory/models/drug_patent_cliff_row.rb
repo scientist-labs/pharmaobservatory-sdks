@@ -25,7 +25,7 @@ module PharmaObservatory
     # The drug's pharmacologic class.
     attr_accessor :pharm_class
 
-    # The drug's ATC class.
+    # The drug's Anatomical Therapeutic Chemical (ATC) class.
     attr_accessor :atc_class
 
     # The brand name.

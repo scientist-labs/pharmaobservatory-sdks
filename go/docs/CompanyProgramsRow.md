@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **SponsorGroupName** | Pointer to **NullableString** | Display name of the sponsor&#39;s group. | [optional] 
 **DrugId** | Pointer to **NullableString** | The drug key. | [optional] 
 **DrugName** | Pointer to **NullableString** | The drug&#39;s name. | [optional] 
-**ConditionId** | Pointer to **NullableString** | The condition key (UMLS CUI). | [optional] 
+**ConditionId** | Pointer to **NullableString** | The condition key, a MeSH (Medical Subject Headings) descriptor id (D followed by six to nine digits). | [optional] 
 **ConditionName** | Pointer to **NullableString** | The condition&#39;s name. | [optional] 
 **MaxPhase** | Pointer to **NullableInt32** | Highest phase reached: 0 early phase 1 through 6 for phase 4 (marketed); -1 when unstated. | [optional] 
 **NTrials** | Pointer to **NullableInt64** | Lead-sponsored trials in the program. | [optional] 
@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 **LastYear** | Pointer to **NullableInt32** | Latest trial start year. | [optional] 
 **Withdrawn** | Pointer to **NullableBool** | True when the drug has been withdrawn. | [optional] 
 **Lifecycle** | Pointer to **NullableString** | approved, active or abandoned. | [optional] 
-**DalysMillions** | Pointer to **NullableFloat64** | Disability-adjusted life years (millions) of the condition&#39;s global burden, IHME GBD 2021. Null for a caller without the licence for this column; see withheld_columns. | [optional] 
+**DalysMillions** | Pointer to **NullableFloat64** | Disability-adjusted life years (DALYs, millions) of the condition&#39;s global burden, from the Global Burden of Disease (GBD) 2021 study of the Institute for Health Metrics and Evaluation (IHME). Null for a caller without the licence for this column; see withheld_columns. | [optional] 
 
 ## Methods
 

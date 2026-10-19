@@ -83,6 +83,74 @@ describe 'CompaniesApi' do
     end
   end
 
+  # unit tests for companies_biomarker_validation
+  # Biomarker validation ladder
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
+  # @return [BiomarkerValidationResponse]
+  describe 'companies_biomarker_validation test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for companies_company_assets
+  # Company assets (approved and marketed drugs)
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
+  # @return [CompanyAssetsResponse]
+  describe 'companies_company_assets test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for companies_company_funding_events
+  # Company funding events
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
+  # @return [CompanyFundingEventsResponse]
+  describe 'companies_company_funding_events test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for companies_company_funding_summary
+  # Company funding summary
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
+  # @return [CompanyFundingSummaryResponse]
+  describe 'companies_company_funding_summary test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   # unit tests for companies_company_members
   # Company members
   # @param id 
@@ -206,6 +274,23 @@ describe 'CompaniesApi' do
   # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
   # @return [CompaniesResponse]
   describe 'companies_list test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for companies_ownership_positions
+  # Ownership and control positions
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
+  # @return [OwnershipPositionsResponse]
+  describe 'companies_ownership_positions test' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end

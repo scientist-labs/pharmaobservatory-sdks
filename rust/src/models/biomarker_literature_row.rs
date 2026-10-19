@@ -29,7 +29,7 @@ pub struct BiomarkerLiteratureRow {
     /// The paper's title.
     #[serde(rename = "title", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub title: Option<Option<String>>,
-    /// The journal's NLM id.
+    /// The journal's National Library of Medicine (NLM) id.
     #[serde(rename = "journal_nlm_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub journal_nlm_id: Option<Option<String>>,
     /// The journal's title.

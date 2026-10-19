@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 **NStartNotActual** | Pointer to **NullableInt32** | Evaluated trials with prediction_status start_not_actual. | [optional] 
 **NFitFailed** | Pointer to **NullableInt32** | Evaluated trials with prediction_status fit_failed. | [optional] 
 **NPredicted** | Pointer to **NullableInt32** | Evaluated trials with prediction_status predicted, superseded or not. | [optional] 
-**NPredictedSuperseded** | Pointer to **NullableInt32** | Predicted trials whose CURRENT record shows the outcome (COMPLETED, TERMINATED, WITHDRAWN or an ACTUAL primary completion); kept out of every predicted figure, as the trial page withholds them. | [optional] 
+**NPredictedSuperseded** | Pointer to **NullableInt32** | Predicted trials whose CURRENT record shows the outcome (COMPLETED, TERMINATED, WITHDRAWN or an ACTUAL primary completion); kept out of every predicted figure. | [optional] 
 **NPredictedOpen** | Pointer to **NullableInt32** | n_predicted - n_predicted_superseded; the denominator of every predicted figure. | [optional] 
 **NPredictedAtCap** | Pointer to **NullableInt32** | Open predicted trials whose figure sits at the horizon cap (an at-cap row contributes the cap to the median). | [optional] 
 **NPredictedOverdue** | Pointer to **NullableInt32** | Open predicted trials running past their predicted end at the cutoff. | [optional] 

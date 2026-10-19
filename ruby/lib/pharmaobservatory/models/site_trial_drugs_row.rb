@@ -19,7 +19,7 @@ module PharmaObservatory
     # The site key: one facility spelling from the registry.
     attr_accessor :site_id
 
-    # The trial's registry id (NCT number).
+    # The trial's ClinicalTrials.gov registry id (NCT, National Clinical Trial, number).
     attr_accessor :trial_id
 
     # The drug key.

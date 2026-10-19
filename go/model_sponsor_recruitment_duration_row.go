@@ -53,7 +53,7 @@ type SponsorRecruitmentDurationRow struct {
 	NFitFailed NullableInt32 `json:"n_fit_failed,omitempty"`
 	// Evaluated trials with prediction_status predicted, superseded or not.
 	NPredicted NullableInt32 `json:"n_predicted,omitempty"`
-	// Predicted trials whose CURRENT record shows the outcome (COMPLETED, TERMINATED, WITHDRAWN or an ACTUAL primary completion); kept out of every predicted figure, as the trial page withholds them.
+	// Predicted trials whose CURRENT record shows the outcome (COMPLETED, TERMINATED, WITHDRAWN or an ACTUAL primary completion); kept out of every predicted figure.
 	NPredictedSuperseded NullableInt32 `json:"n_predicted_superseded,omitempty"`
 	// n_predicted - n_predicted_superseded; the denominator of every predicted figure.
 	NPredictedOpen NullableInt32 `json:"n_predicted_open,omitempty"`

@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **drug_id** | Option<**String**> | The drug key. | [optional]
 **drug_name** | Option<**String**> | The drug's name. | [optional]
 **pharm_class** | Option<**String**> | The drug's pharmacologic class. | [optional]
-**atc_class** | Option<**String**> | The drug's ATC class. | [optional]
+**atc_class** | Option<**String**> | The drug's Anatomical Therapeutic Chemical (ATC) class. | [optional]
 **brand** | Option<**String**> | The brand name. | [optional]
 **candidate_brands** | Option<**String**> | Other candidate brand names, comma separated. | [optional]
 **cliff_date** | Option<[**String**](string.md)> | The date exclusivity is expected to end (loss of exclusivity); always in the future when the dataset is built. | [optional]

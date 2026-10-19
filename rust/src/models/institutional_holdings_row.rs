@@ -35,12 +35,15 @@ pub struct InstitutionalHoldingsRow {
     /// Display name of the issuer's group.
     #[serde(rename = "issuer_group_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub issuer_group_name: Option<Option<String>>,
-    /// The security's CUSIP reference.
+    /// The security's CUSIP (Committee on Uniform Securities Identification Procedures) identifier.
     #[serde(rename = "security_ref", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub security_ref: Option<Option<String>>,
     /// The institutional manager's name.
     #[serde(rename = "holder_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub holder_name: Option<Option<String>>,
+    /// The institutional manager's stable identity (an SEC registration number), the key that groups all of one manager's holdings.
+    #[serde(rename = "holder_identity_key", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub holder_identity_key: Option<Option<String>>,
     /// Manager kind.
     #[serde(rename = "holder_kind", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub holder_kind: Option<Option<String>>,
@@ -101,6 +104,7 @@ impl InstitutionalHoldingsRow {
             issuer_group_name: None,
             security_ref: None,
             holder_name: None,
+            holder_identity_key: None,
             holder_kind: None,
             holder_org_id: None,
             holder_company_id: None,

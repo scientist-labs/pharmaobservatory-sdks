@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 **n_start_not_actual** | Option<**i32**> | Evaluated trials with prediction_status start_not_actual. | [optional]
 **n_fit_failed** | Option<**i32**> | Evaluated trials with prediction_status fit_failed. | [optional]
 **n_predicted** | Option<**i32**> | Evaluated trials with prediction_status predicted, superseded or not. | [optional]
-**n_predicted_superseded** | Option<**i32**> | Predicted trials whose CURRENT record shows the outcome (COMPLETED, TERMINATED, WITHDRAWN or an ACTUAL primary completion); kept out of every predicted figure, as the trial page withholds them. | [optional]
+**n_predicted_superseded** | Option<**i32**> | Predicted trials whose CURRENT record shows the outcome (COMPLETED, TERMINATED, WITHDRAWN or an ACTUAL primary completion); kept out of every predicted figure. | [optional]
 **n_predicted_open** | Option<**i32**> | n_predicted - n_predicted_superseded; the denominator of every predicted figure. | [optional]
 **n_predicted_at_cap** | Option<**i32**> | Open predicted trials whose figure sits at the horizon cap (an at-cap row contributes the cap to the median). | [optional]
 **n_predicted_overdue** | Option<**i32**> | Open predicted trials running past their predicted end at the cutoff. | [optional]

@@ -34,7 +34,7 @@ module PharmaObservatory
     # Organization type.
     attr_accessor :org_type
 
-    # SEC EDGAR central index key, when it files.
+    # Central index key (CIK) in EDGAR, the US Securities and Exchange Commission (SEC) filing system, when it files.
     attr_accessor :edgar_cik
 
     # Exchange ticker, when listed.

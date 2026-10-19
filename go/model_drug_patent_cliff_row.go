@@ -25,7 +25,7 @@ type DrugPatentCliffRow struct {
 	DrugName NullableString `json:"drug_name,omitempty"`
 	// The drug's pharmacologic class.
 	PharmClass NullableString `json:"pharm_class,omitempty"`
-	// The drug's ATC class.
+	// The drug's Anatomical Therapeutic Chemical (ATC) class.
 	AtcClass NullableString `json:"atc_class,omitempty"`
 	// The brand name.
 	Brand NullableString `json:"brand,omitempty"`

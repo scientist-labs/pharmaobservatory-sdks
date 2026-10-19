@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **TherapeuticArea** | Pointer to **NullableString** | The therapeutic area. | [optional] 
 **DrugName** | Pointer to **NullableString** | The drug as filed. | [optional] 
 **DrugId** | Pointer to **NullableString** | The drug key. | [optional] 
-**MoleculeId** | Pointer to **NullableString** | The molecule key. Null today: the evidence mart carries no molecule column. | [optional] 
+**MoleculeId** | Pointer to **NullableString** | The molecule key. Null on every row: no evidence row carries a molecule. | [optional] 
 **Response** | Pointer to **NullableString** | The reported response (for example Responsive, Resistant). | [optional] 
 **Score** | Pointer to **NullableFloat64** | The association score, for an Open Targets row. | [optional] 
 **VariantCount** | Pointer to **NullableInt32** | Variants the assertion covers. | [optional] 

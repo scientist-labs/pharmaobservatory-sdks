@@ -4,16 +4,97 @@ All URIs are relative to *https://pharmaobservatory.com*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
+| [**legal_entities_company_assets**](LegalEntitiesApi.md#legal_entities_company_assets) | **GET** /api/v1/legal_entities/{id}/company_assets | Company assets (approved and marketed drugs) |
 | [**legal_entities_company_programs**](LegalEntitiesApi.md#legal_entities_company_programs) | **GET** /api/v1/legal_entities/{id}/company_programs | Company programs |
 | [**legal_entities_drug_patent_cliff**](LegalEntitiesApi.md#legal_entities_drug_patent_cliff) | **GET** /api/v1/legal_entities/{id}/drug_patent_cliff | Patent-cliff exposure |
 | [**legal_entities_get**](LegalEntitiesApi.md#legal_entities_get) | **GET** /api/v1/legal_entities/{id} | One legal entity |
 | [**legal_entities_institutional_holdings**](LegalEntitiesApi.md#legal_entities_institutional_holdings) | **GET** /api/v1/legal_entities/{id}/institutional_holdings | Institutional holdings (SEC Form 13F) |
 | [**legal_entities_list**](LegalEntitiesApi.md#legal_entities_list) | **GET** /api/v1/legal_entities | List legal entities |
+| [**legal_entities_ownership_positions**](LegalEntitiesApi.md#legal_entities_ownership_positions) | **GET** /api/v1/legal_entities/{id}/ownership_positions | Ownership and control positions |
 | [**legal_entities_pdufa_dates**](LegalEntitiesApi.md#legal_entities_pdufa_dates) | **GET** /api/v1/legal_entities/{id}/pdufa_dates | FDA decision dates (PDUFA) and catalysts |
 | [**legal_entities_sponsor_recruitment_by_phase**](LegalEntitiesApi.md#legal_entities_sponsor_recruitment_by_phase) | **GET** /api/v1/legal_entities/{id}/sponsor_recruitment_by_phase | Trial recruitment duration by sponsor and phase |
 | [**legal_entities_sponsor_recruitment_duration**](LegalEntitiesApi.md#legal_entities_sponsor_recruitment_duration) | **GET** /api/v1/legal_entities/{id}/sponsor_recruitment_duration | Trial recruitment duration by sponsor |
 | [**legal_entities_sponsor_trial_start_forecast**](LegalEntitiesApi.md#legal_entities_sponsor_trial_start_forecast) | **GET** /api/v1/legal_entities/{id}/sponsor_trial_start_forecast | Trial-start forecast by sponsor |
 | [**legal_entities_sponsor_trials**](LegalEntitiesApi.md#legal_entities_sponsor_trials) | **GET** /api/v1/legal_entities/{id}/sponsor_trials | Sponsor trials |
+
+
+## legal_entities_company_assets
+
+> <CompanyAssetsResponse> legal_entities_company_assets(id, opts)
+
+Company assets (approved and marketed drugs)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::LegalEntitiesApi.new
+id = 'edgar:0001114448' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Company assets (approved and marketed drugs)
+  result = api_instance.legal_entities_company_assets(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_company_assets: #{e}"
+end
+```
+
+#### Using the legal_entities_company_assets_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<CompanyAssetsResponse>, Integer, Hash)> legal_entities_company_assets_with_http_info(id, opts)
+
+```ruby
+begin
+  # Company assets (approved and marketed drugs)
+  data, status_code, headers = api_instance.legal_entities_company_assets_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <CompanyAssetsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_company_assets_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**CompanyAssetsResponse**](CompanyAssetsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 
 ## legal_entities_company_programs
@@ -386,6 +467,85 @@ end
 ### Return type
 
 [**LegalEntitiesResponse**](LegalEntitiesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## legal_entities_ownership_positions
+
+> <OwnershipPositionsResponse> legal_entities_ownership_positions(id, opts)
+
+Ownership and control positions
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::LegalEntitiesApi.new
+id = 'edgar:0001114448' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Ownership and control positions
+  result = api_instance.legal_entities_ownership_positions(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_ownership_positions: #{e}"
+end
+```
+
+#### Using the legal_entities_ownership_positions_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<OwnershipPositionsResponse>, Integer, Hash)> legal_entities_ownership_positions_with_http_info(id, opts)
+
+```ruby
+begin
+  # Ownership and control positions
+  data, status_code, headers = api_instance.legal_entities_ownership_positions_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <OwnershipPositionsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_ownership_positions_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**OwnershipPositionsResponse**](OwnershipPositionsResponse.md)
 
 ### Authorization
 

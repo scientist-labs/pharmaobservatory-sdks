@@ -9,7 +9,7 @@
 | **pmid** | **String** | The PubMed id. | [optional] |
 | **evidence_type** | **String** | The evidence type (a publication mention). | [optional] |
 | **title** | **String** | The paper&#39;s title. | [optional] |
-| **journal_nlm_id** | **String** | The journal&#39;s NLM id. | [optional] |
+| **journal_nlm_id** | **String** | The journal&#39;s National Library of Medicine (NLM) id. | [optional] |
 | **journal_title** | **String** | The journal&#39;s title. | [optional] |
 | **pub_year** | **Integer** | The publication year. | [optional] |
 | **citation_count** | **Integer** | Citations, where iCite carries them (null is not measured, never zero). | [optional] |

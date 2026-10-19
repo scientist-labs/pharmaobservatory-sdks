@@ -19,7 +19,7 @@ var _ MappedNullable = &SponsorTrialsRow{}
 
 // SponsorTrialsRow One row of the sponsor_trials dataset: one row per trial and sponsor as filed (lead sponsor or collaborator). A grouped request returns the group columns and the measures instead, as additional properties.
 type SponsorTrialsRow struct {
-	// The trial's registry id (NCT number).
+	// The trial's ClinicalTrials.gov registry id (NCT, National Clinical Trial, number).
 	TrialId NullableString `json:"trial_id,omitempty"`
 	// lead or collaborator.
 	SponsorRole NullableString `json:"sponsor_role,omitempty"`
@@ -35,7 +35,7 @@ type SponsorTrialsRow struct {
 	SponsorGroupId NullableString `json:"sponsor_group_id,omitempty"`
 	// Display name of the sponsor's group.
 	SponsorGroupName NullableString `json:"sponsor_group_name,omitempty"`
-	// The registry's agency class for the sponsor (INDUSTRY, NIH, OTHER ...).
+	// The registry's agency class for the sponsor (INDUSTRY, NIH for the US National Institutes of Health, OTHER ...).
 	SponsorAgencyClass NullableString `json:"sponsor_agency_class,omitempty"`
 	// How the sponsor name was resolved to an organization record.
 	SponsorResolutionMethod NullableString `json:"sponsor_resolution_method,omitempty"`

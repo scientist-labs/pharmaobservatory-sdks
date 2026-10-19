@@ -7,6 +7,10 @@ Method | HTTP request | Description
 [**CompaniesBiomarkerBqpAssertions**](CompaniesAPI.md#CompaniesBiomarkerBqpAssertions) | **Get** /api/v1/companies/{id}/biomarker_bqp_assertions | FDA biomarker qualification projects
 [**CompaniesBiomarkerCdxAssertions**](CompaniesAPI.md#CompaniesBiomarkerCdxAssertions) | **Get** /api/v1/companies/{id}/biomarker_cdx_assertions | FDA companion diagnostic assertions
 [**CompaniesBiomarkerPublishingCompanies**](CompaniesAPI.md#CompaniesBiomarkerPublishingCompanies) | **Get** /api/v1/companies/{id}/biomarker_publishing_companies | Companies publishing on a biomarker
+[**CompaniesBiomarkerValidation**](CompaniesAPI.md#CompaniesBiomarkerValidation) | **Get** /api/v1/companies/{id}/biomarker_validation | Biomarker validation ladder
+[**CompaniesCompanyAssets**](CompaniesAPI.md#CompaniesCompanyAssets) | **Get** /api/v1/companies/{id}/company_assets | Company assets (approved and marketed drugs)
+[**CompaniesCompanyFundingEvents**](CompaniesAPI.md#CompaniesCompanyFundingEvents) | **Get** /api/v1/companies/{id}/company_funding_events | Company funding events
+[**CompaniesCompanyFundingSummary**](CompaniesAPI.md#CompaniesCompanyFundingSummary) | **Get** /api/v1/companies/{id}/company_funding_summary | Company funding summary
 [**CompaniesCompanyMembers**](CompaniesAPI.md#CompaniesCompanyMembers) | **Get** /api/v1/companies/{id}/company_members | Company members
 [**CompaniesCompanyPrograms**](CompaniesAPI.md#CompaniesCompanyPrograms) | **Get** /api/v1/companies/{id}/company_programs | Company programs
 [**CompaniesCompanyTargets**](CompaniesAPI.md#CompaniesCompanyTargets) | **Get** /api/v1/companies/{id}/company_targets | Targets a company pursues
@@ -15,6 +19,7 @@ Method | HTTP request | Description
 [**CompaniesInstitutionalHoldings**](CompaniesAPI.md#CompaniesInstitutionalHoldings) | **Get** /api/v1/companies/{id}/institutional_holdings | Institutional holdings (SEC Form 13F)
 [**CompaniesLegalEntities**](CompaniesAPI.md#CompaniesLegalEntities) | **Get** /api/v1/companies/{id}/legal_entities | Legal entities
 [**CompaniesList**](CompaniesAPI.md#CompaniesList) | **Get** /api/v1/companies | List companies
+[**CompaniesOwnershipPositions**](CompaniesAPI.md#CompaniesOwnershipPositions) | **Get** /api/v1/companies/{id}/ownership_positions | Ownership and control positions
 [**CompaniesPdufaDates**](CompaniesAPI.md#CompaniesPdufaDates) | **Get** /api/v1/companies/{id}/pdufa_dates | FDA decision dates (PDUFA) and catalysts
 [**CompaniesSponsorRecruitmentByPhase**](CompaniesAPI.md#CompaniesSponsorRecruitmentByPhase) | **Get** /api/v1/companies/{id}/sponsor_recruitment_by_phase | Trial recruitment duration by sponsor and phase
 [**CompaniesSponsorRecruitmentDuration**](CompaniesAPI.md#CompaniesSponsorRecruitmentDuration) | **Get** /api/v1/companies/{id}/sponsor_recruitment_duration | Trial recruitment duration by sponsor
@@ -248,6 +253,326 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**BiomarkerPublishingCompaniesResponse**](BiomarkerPublishingCompaniesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CompaniesBiomarkerValidation
+
+> BiomarkerValidationResponse CompaniesBiomarkerValidation(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
+
+Biomarker validation ladder
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.CompaniesAPI.CompaniesBiomarkerValidation(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesBiomarkerValidation``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CompaniesBiomarkerValidation`: BiomarkerValidationResponse
+	fmt.Fprintf(os.Stdout, "Response from `CompaniesAPI.CompaniesBiomarkerValidation`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCompaniesBiomarkerValidationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
+
+### Return type
+
+[**BiomarkerValidationResponse**](BiomarkerValidationResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CompaniesCompanyAssets
+
+> CompanyAssetsResponse CompaniesCompanyAssets(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
+
+Company assets (approved and marketed drugs)
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.CompaniesAPI.CompaniesCompanyAssets(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesCompanyAssets``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CompaniesCompanyAssets`: CompanyAssetsResponse
+	fmt.Fprintf(os.Stdout, "Response from `CompaniesAPI.CompaniesCompanyAssets`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCompaniesCompanyAssetsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
+
+### Return type
+
+[**CompanyAssetsResponse**](CompanyAssetsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CompaniesCompanyFundingEvents
+
+> CompanyFundingEventsResponse CompaniesCompanyFundingEvents(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
+
+Company funding events
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.CompaniesAPI.CompaniesCompanyFundingEvents(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesCompanyFundingEvents``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CompaniesCompanyFundingEvents`: CompanyFundingEventsResponse
+	fmt.Fprintf(os.Stdout, "Response from `CompaniesAPI.CompaniesCompanyFundingEvents`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCompaniesCompanyFundingEventsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
+
+### Return type
+
+[**CompanyFundingEventsResponse**](CompanyFundingEventsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CompaniesCompanyFundingSummary
+
+> CompanyFundingSummaryResponse CompaniesCompanyFundingSummary(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
+
+Company funding summary
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.CompaniesAPI.CompaniesCompanyFundingSummary(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesCompanyFundingSummary``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CompaniesCompanyFundingSummary`: CompanyFundingSummaryResponse
+	fmt.Fprintf(os.Stdout, "Response from `CompaniesAPI.CompaniesCompanyFundingSummary`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCompaniesCompanyFundingSummaryRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
+
+### Return type
+
+[**CompanyFundingSummaryResponse**](CompanyFundingSummaryResponse.md)
 
 ### Authorization
 
@@ -868,6 +1193,86 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**CompaniesResponse**](CompaniesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CompaniesOwnershipPositions
+
+> OwnershipPositionsResponse CompaniesOwnershipPositions(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
+
+Ownership and control positions
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.CompaniesAPI.CompaniesOwnershipPositions(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesOwnershipPositions``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CompaniesOwnershipPositions`: OwnershipPositionsResponse
+	fmt.Fprintf(os.Stdout, "Response from `CompaniesAPI.CompaniesOwnershipPositions`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCompaniesOwnershipPositionsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
+
+### Return type
+
+[**OwnershipPositionsResponse**](OwnershipPositionsResponse.md)
 
 ### Authorization
 

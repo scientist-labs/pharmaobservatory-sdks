@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SiteId** | Pointer to **NullableString** | The site key: one facility spelling from the registry. | [optional] 
-**TrialId** | Pointer to **NullableString** | The trial&#39;s registry id (NCT number). | [optional] 
+**TrialId** | Pointer to **NullableString** | The trial&#39;s ClinicalTrials.gov registry id (NCT, National Clinical Trial, number). | [optional] 
 **CroOrgId** | Pointer to **NullableString** | Legal-entity level: the CRO&#39;s organization record. | [optional] 
 **CroName** | Pointer to **NullableString** | The CRO organization&#39;s name. | [optional] 
 **CroCompanyId** | Pointer to **NullableString** | Company level: the company the CRO belongs to (null when unresolved). | [optional] 

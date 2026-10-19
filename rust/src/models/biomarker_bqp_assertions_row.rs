@@ -23,7 +23,7 @@ pub struct BiomarkerBqpAssertionsRow {
     /// The biomarker key.
     #[serde(rename = "biomarker_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub biomarker_id: Option<Option<String>>,
-    /// The FDA drug development tool number of the project.
+    /// The drug development tool number the US Food and Drug Administration (FDA) assigns the project.
     #[serde(rename = "ddt_number", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub ddt_number: Option<Option<String>>,
     /// The FDA project id.

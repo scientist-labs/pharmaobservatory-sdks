@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+# Go-only spec rewrite, run by bin/generate on a COPY of the OpenAPI document.
+#
+#   bin/go-spec-patch <in.yaml> <out.yaml>
+#
+# openapi-generator's Go models give every optional property X a presence method HasX(). A schema
+# that also declares a property named has_x (TrialDeliveryRow: has_enrollment_delta beside
+# enrollment_delta) therefore gets a struct field and a method both called HasX, and the package
+# does not compile. There is no generator option to rename either (checked with `config-help -g go`),
+# so the has_x property is dropped from that schema's declared properties on the Go copy. The column
+# is not lost: the Go models keep undeclared columns in AdditionalProperties
+# (disallowAdditionalPropertiesIfNotPresent=false), so row.AdditionalProperties["has_x"] carries it.
+# A spec without the collision is left untouched. Ruby and Rust never see this copy.
+require "date"
+require "yaml"
+
+input, output = ARGV
+abort "usage: go-spec-patch <in.yaml> <out.yaml>" unless input && output
+
+doc = YAML.safe_load_file(input, aliases: true, permitted_classes: [Date, Time])
+dropped = []
+(doc.dig("components", "schemas") || {}).each do |name, schema|
+  props = schema.is_a?(Hash) && schema["properties"]
+  next unless props.is_a?(Hash)
+
+  props.keys.grep(/\Ahas_/).each do |key|
+    next unless props.key?(key.delete_prefix("has_"))
+
+    props.delete(key)
+    schema["required"]&.delete(key)
+    dropped << "#{name}.#{key}"
+  end
+end
+File.write(output, YAML.dump(doc))
+warn "go-spec-patch: #{dropped.size} has_* property(ies) left to additional properties, colliding with a HasX() method#{dropped.empty? ? '' : ": #{dropped.join(', ')}"}"

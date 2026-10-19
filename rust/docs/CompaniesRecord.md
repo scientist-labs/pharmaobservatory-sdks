@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **object_type** | **String** |  | 
 **id** | **String** |  | 
 **record** | [**models::CompaniesRow**](CompaniesRow.md) |  | 
-**attributes** | Option<[**serde_json::Value**](.md)> |  | [optional]
+**attributes** | Option<[**models::CompaniesRecordAttributes**](CompaniesRecord_attributes.md)> |  | [optional]
 **datasets** | [**Vec<models::DatasetListing>**](DatasetListing.md) |  | 
 **attribution** | Option<[**Vec<models::DatasetAttribution>**](DatasetAttribution.md)> |  | [optional]
 **source_credit** | Option<**String**> |  | [optional]

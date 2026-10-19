@@ -41,7 +41,7 @@ pub struct BiomarkersRow {
     /// The target's Ensembl gene id.
     #[serde(rename = "target_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub target_id: Option<Option<String>>,
-    /// The HGNC gene id.
+    /// The HUGO Gene Nomenclature Committee (HGNC) gene id.
     #[serde(rename = "hgnc_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub hgnc_id: Option<Option<String>>,
     /// The UniProt accession.
@@ -53,7 +53,7 @@ pub struct BiomarkersRow {
     /// Feature type for a non-gene feature.
     #[serde(rename = "feature_type", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub feature_type: Option<Option<String>>,
-    /// Strongest evidence tier: 1 FDA companion diagnostic through 6 no evidence.
+    /// Strongest evidence tier: 1 companion diagnostic of the US Food and Drug Administration (FDA) through 6 no evidence.
     #[serde(rename = "evidence_tier", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub evidence_tier: Option<Option<i32>>,
     /// The tier's name.

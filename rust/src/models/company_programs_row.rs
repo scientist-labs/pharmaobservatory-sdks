@@ -38,7 +38,7 @@ pub struct CompanyProgramsRow {
     /// The drug's name.
     #[serde(rename = "drug_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub drug_name: Option<Option<String>>,
-    /// The condition key (UMLS CUI).
+    /// The condition key, a MeSH (Medical Subject Headings) descriptor id (D followed by six to nine digits).
     #[serde(rename = "condition_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub condition_id: Option<Option<String>>,
     /// The condition's name.
@@ -62,7 +62,7 @@ pub struct CompanyProgramsRow {
     /// approved, active or abandoned.
     #[serde(rename = "lifecycle", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub lifecycle: Option<Option<String>>,
-    /// Disability-adjusted life years (millions) of the condition's global burden, IHME GBD 2021. Null for a caller without the licence for this column; see withheld_columns.
+    /// Disability-adjusted life years (DALYs, millions) of the condition's global burden, from the Global Burden of Disease (GBD) 2021 study of the Institute for Health Metrics and Evaluation (IHME). Null for a caller without the licence for this column; see withheld_columns.
     #[serde(rename = "dalys_millions", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub dalys_millions: Option<Option<f64>>,
 }

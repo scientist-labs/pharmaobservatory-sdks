@@ -31,7 +31,7 @@ type LegalEntitiesRow struct {
 	Country NullableString `json:"country,omitempty"`
 	// Organization type.
 	OrgType NullableString `json:"org_type,omitempty"`
-	// SEC EDGAR central index key, when it files.
+	// Central index key (CIK) in EDGAR, the US Securities and Exchange Commission (SEC) filing system, when it files.
 	EdgarCik NullableString `json:"edgar_cik,omitempty"`
 	// Exchange ticker, when listed.
 	EdgarTicker NullableString `json:"edgar_ticker,omitempty"`

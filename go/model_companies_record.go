@@ -23,7 +23,7 @@ type CompaniesRecord struct {
 	ObjectType string `json:"object_type"`
 	Id string `json:"id"`
 	Record CompaniesRow `json:"record"`
-	Attributes map[string]interface{} `json:"attributes,omitempty"`
+	Attributes *CompaniesRecordAttributes `json:"attributes,omitempty"`
 	Datasets []DatasetListing `json:"datasets"`
 	Attribution []DatasetAttribution `json:"attribution,omitempty"`
 	SourceCredit *string `json:"source_credit,omitempty"`
@@ -130,19 +130,19 @@ func (o *CompaniesRecord) SetRecord(v CompaniesRow) {
 }
 
 // GetAttributes returns the Attributes field value if set, zero value otherwise.
-func (o *CompaniesRecord) GetAttributes() map[string]interface{} {
+func (o *CompaniesRecord) GetAttributes() CompaniesRecordAttributes {
 	if o == nil || IsNil(o.Attributes) {
-		var ret map[string]interface{}
+		var ret CompaniesRecordAttributes
 		return ret
 	}
-	return o.Attributes
+	return *o.Attributes
 }
 
 // GetAttributesOk returns a tuple with the Attributes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CompaniesRecord) GetAttributesOk() (map[string]interface{}, bool) {
+func (o *CompaniesRecord) GetAttributesOk() (*CompaniesRecordAttributes, bool) {
 	if o == nil || IsNil(o.Attributes) {
-		return map[string]interface{}{}, false
+		return nil, false
 	}
 	return o.Attributes, true
 }
@@ -156,9 +156,9 @@ func (o *CompaniesRecord) HasAttributes() bool {
 	return false
 }
 
-// SetAttributes gets a reference to the given map[string]interface{} and assigns it to the Attributes field.
-func (o *CompaniesRecord) SetAttributes(v map[string]interface{}) {
-	o.Attributes = v
+// SetAttributes gets a reference to the given CompaniesRecordAttributes and assigns it to the Attributes field.
+func (o *CompaniesRecord) SetAttributes(v CompaniesRecordAttributes) {
+	o.Attributes = &v
 }
 
 // GetDatasets returns the Datasets field value

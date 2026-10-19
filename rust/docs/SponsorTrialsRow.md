@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**trial_id** | Option<**String**> | The trial's registry id (NCT number). | [optional]
+**trial_id** | Option<**String**> | The trial's ClinicalTrials.gov registry id (NCT, National Clinical Trial, number). | [optional]
 **sponsor_role** | Option<**String**> | lead or collaborator. | [optional]
 **sponsor_name** | Option<**String**> | The sponsor name as filed. | [optional]
 **sponsor_org_id** | Option<**String**> | Legal-entity level: the organization record the sponsor resolved to (null when unresolved). | [optional]
@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **sponsor_company_name** | Option<**String**> | Display name of the sponsor's company. | [optional]
 **sponsor_group_id** | Option<**String**> | Group level: the sponsor's current ultimate parent company; a root company's group is itself. | [optional]
 **sponsor_group_name** | Option<**String**> | Display name of the sponsor's group. | [optional]
-**sponsor_agency_class** | Option<**String**> | The registry's agency class for the sponsor (INDUSTRY, NIH, OTHER ...). | [optional]
+**sponsor_agency_class** | Option<**String**> | The registry's agency class for the sponsor (INDUSTRY, NIH for the US National Institutes of Health, OTHER ...). | [optional]
 **sponsor_resolution_method** | Option<**String**> | How the sponsor name was resolved to an organization record. | [optional]
 **trial_title** | Option<**String**> | The trial's brief title. | [optional]
 **study_type** | Option<**String**> | INTERVENTIONAL or OBSERVATIONAL. | [optional]

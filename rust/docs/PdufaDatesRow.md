@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **pdufa_date_id** | Option<**String**> | The calendar entry id. | [optional]
 **source** | Option<**String**> | Which lane the row came from: benzinga, sec_extraction or both. | [optional]
-**restriction_tier** | Option<**String**> | none for a row from SEC filings; licensable for a row from the Benzinga calendar. | [optional]
-**decision_date** | Option<[**String**](string.md)> | The FDA decision date (PDUFA is the date under the Prescription Drug User Fee Act). | [optional]
+**restriction_tier** | Option<**String**> | none for a row from SEC filings; licensable for a row from the Benzinga calendar (the filings are those made to the US Securities and Exchange Commission). | [optional]
+**decision_date** | Option<[**String**](string.md)> | The decision date of the US Food and Drug Administration (FDA); a PDUFA date is the goal date under the Prescription Drug User Fee Act. | [optional]
 **date_start** | Option<[**String**](string.md)> | Start of the date interval the source states. | [optional]
 **date_end** | Option<[**String**](string.md)> | End of the date interval the source states. | [optional]
 **date_precision** | Option<**String**> | Precision of the date (day, month, quarter). | [optional]
