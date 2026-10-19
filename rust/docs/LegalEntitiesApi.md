@@ -19,7 +19,7 @@ Method | HTTP request | Description
 
 ## legal_entities_period_company_programs
 
-> models::CompanyProgramsResponse legal_entities_period_company_programs(id, limit, sort)
+> models::CompanyProgramsResponse legal_entities_period_company_programs(id, cursor, limit, sort, group_by, measure)
 Company programs
 
 ### Parameters
@@ -28,8 +28,11 @@ Company programs
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
 
 ### Return type
 
@@ -49,7 +52,7 @@ Name | Type | Description  | Required | Notes
 
 ## legal_entities_period_drug_patent_cliff
 
-> models::DrugPatentCliffResponse legal_entities_period_drug_patent_cliff(id, limit, sort)
+> models::DrugPatentCliffResponse legal_entities_period_drug_patent_cliff(id, cursor, limit, sort, group_by, measure)
 Patent-cliff exposure
 
 ### Parameters
@@ -58,8 +61,11 @@ Patent-cliff exposure
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
 
 ### Return type
 
@@ -107,7 +113,7 @@ Name | Type | Description  | Required | Notes
 
 ## legal_entities_period_institutional_holdings
 
-> models::InstitutionalHoldingsResponse legal_entities_period_institutional_holdings(id, limit, sort)
+> models::InstitutionalHoldingsResponse legal_entities_period_institutional_holdings(id, cursor, limit, sort, group_by, measure)
 Institutional holdings (SEC Form 13F)
 
 ### Parameters
@@ -116,8 +122,11 @@ Institutional holdings (SEC Form 13F)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
 
 ### Return type
 
@@ -137,7 +146,7 @@ Name | Type | Description  | Required | Notes
 
 ## legal_entities_period_list
 
-> models::LegalEntitiesResponse legal_entities_period_list(limit, sort)
+> models::LegalEntitiesResponse legal_entities_period_list(cursor, limit, sort, group_by, measure)
 List legal entities
 
 ### Parameters
@@ -145,8 +154,11 @@ List legal entities
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**limit** | Option<**i32**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
 
 ### Return type
 
@@ -166,7 +178,7 @@ Name | Type | Description  | Required | Notes
 
 ## legal_entities_period_pdufa_dates
 
-> models::PdufaDatesResponse legal_entities_period_pdufa_dates(id, limit, sort)
+> models::PdufaDatesResponse legal_entities_period_pdufa_dates(id, cursor, limit, sort, group_by, measure)
 FDA decision dates (PDUFA) and catalysts
 
 ### Parameters
@@ -175,8 +187,11 @@ FDA decision dates (PDUFA) and catalysts
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
 
 ### Return type
 
@@ -196,7 +211,7 @@ Name | Type | Description  | Required | Notes
 
 ## legal_entities_period_sponsor_recruitment_by_phase
 
-> models::SponsorRecruitmentByPhaseResponse legal_entities_period_sponsor_recruitment_by_phase(id, limit, sort)
+> models::SponsorRecruitmentByPhaseResponse legal_entities_period_sponsor_recruitment_by_phase(id, cursor, limit, sort, group_by, measure)
 Trial recruitment duration by sponsor and phase
 
 ### Parameters
@@ -205,8 +220,11 @@ Trial recruitment duration by sponsor and phase
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
 
 ### Return type
 
@@ -226,7 +244,7 @@ Name | Type | Description  | Required | Notes
 
 ## legal_entities_period_sponsor_recruitment_duration
 
-> models::SponsorRecruitmentDurationResponse legal_entities_period_sponsor_recruitment_duration(id, limit, sort)
+> models::SponsorRecruitmentDurationResponse legal_entities_period_sponsor_recruitment_duration(id, cursor, limit, sort, group_by, measure)
 Trial recruitment duration by sponsor
 
 ### Parameters
@@ -235,8 +253,11 @@ Trial recruitment duration by sponsor
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
 
 ### Return type
 
@@ -256,7 +277,7 @@ Name | Type | Description  | Required | Notes
 
 ## legal_entities_period_sponsor_trial_start_forecast
 
-> models::SponsorTrialStartForecastResponse legal_entities_period_sponsor_trial_start_forecast(id, limit, sort)
+> models::SponsorTrialStartForecastResponse legal_entities_period_sponsor_trial_start_forecast(id, cursor, limit, sort, group_by, measure)
 Trial-start forecast by sponsor
 
 ### Parameters
@@ -265,8 +286,11 @@ Trial-start forecast by sponsor
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
 
 ### Return type
 
@@ -286,7 +310,7 @@ Name | Type | Description  | Required | Notes
 
 ## legal_entities_period_sponsor_trials
 
-> models::SponsorTrialsResponse legal_entities_period_sponsor_trials(id, limit, sort)
+> models::SponsorTrialsResponse legal_entities_period_sponsor_trials(id, cursor, limit, sort, group_by, measure)
 Sponsor trials
 
 ### Parameters
@@ -295,8 +319,11 @@ Sponsor trials
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
 
 ### Return type
 

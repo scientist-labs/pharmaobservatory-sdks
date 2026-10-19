@@ -19,7 +19,7 @@ Method | HTTP request | Description
 
 ## LegalEntitiesCompanyPrograms
 
-> CompanyProgramsResponse LegalEntitiesCompanyPrograms(ctx, id).Limit(limit).Sort(sort).Execute()
+> CompanyProgramsResponse LegalEntitiesCompanyPrograms(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 
 Company programs
 
@@ -37,12 +37,15 @@ import (
 
 func main() {
 	id := "edgar:0001114448" // string | 
-	limit := int32(2) // int32 |  (optional)
-	sort := "max_phase" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesCompanyPrograms(context.Background(), id).Limit(limit).Sort(sort).Execute()
+	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesCompanyPrograms(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `LegalEntitiesAPI.LegalEntitiesCompanyPrograms``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -68,8 +71,11 @@ Other parameters are passed through a pointer to a apiLegalEntitiesCompanyProgra
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
 
 ### Return type
 
@@ -91,7 +97,7 @@ Name | Type | Description  | Notes
 
 ## LegalEntitiesDrugPatentCliff
 
-> DrugPatentCliffResponse LegalEntitiesDrugPatentCliff(ctx, id).Limit(limit).Sort(sort).Execute()
+> DrugPatentCliffResponse LegalEntitiesDrugPatentCliff(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 
 Patent-cliff exposure
 
@@ -109,12 +115,15 @@ import (
 
 func main() {
 	id := "edgar:0001114448" // string | 
-	limit := int32(2) // int32 |  (optional)
-	sort := "cliff_date" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesDrugPatentCliff(context.Background(), id).Limit(limit).Sort(sort).Execute()
+	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesDrugPatentCliff(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `LegalEntitiesAPI.LegalEntitiesDrugPatentCliff``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -140,8 +149,11 @@ Other parameters are passed through a pointer to a apiLegalEntitiesDrugPatentCli
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
 
 ### Return type
 
@@ -231,7 +243,7 @@ Name | Type | Description  | Notes
 
 ## LegalEntitiesInstitutionalHoldings
 
-> InstitutionalHoldingsResponse LegalEntitiesInstitutionalHoldings(ctx, id).Limit(limit).Sort(sort).Execute()
+> InstitutionalHoldingsResponse LegalEntitiesInstitutionalHoldings(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 
 Institutional holdings (SEC Form 13F)
 
@@ -249,12 +261,15 @@ import (
 
 func main() {
 	id := "edgar:0001114448" // string | 
-	limit := int32(2) // int32 |  (optional)
-	sort := "reported_value_amount" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesInstitutionalHoldings(context.Background(), id).Limit(limit).Sort(sort).Execute()
+	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesInstitutionalHoldings(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `LegalEntitiesAPI.LegalEntitiesInstitutionalHoldings``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -280,8 +295,11 @@ Other parameters are passed through a pointer to a apiLegalEntitiesInstitutional
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
 
 ### Return type
 
@@ -303,7 +321,7 @@ Name | Type | Description  | Notes
 
 ## LegalEntitiesList
 
-> LegalEntitiesResponse LegalEntitiesList(ctx).Limit(limit).Sort(sort).Execute()
+> LegalEntitiesResponse LegalEntitiesList(ctx).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 
 List legal entities
 
@@ -320,12 +338,15 @@ import (
 )
 
 func main() {
-	limit := int32(2) // int32 |  (optional)
-	sort := "activity_score" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesList(context.Background()).Limit(limit).Sort(sort).Execute()
+	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesList(context.Background()).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `LegalEntitiesAPI.LegalEntitiesList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -346,8 +367,11 @@ Other parameters are passed through a pointer to a apiLegalEntitiesListRequest s
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int32** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
 
 ### Return type
 
@@ -369,7 +393,7 @@ Name | Type | Description  | Notes
 
 ## LegalEntitiesPdufaDates
 
-> PdufaDatesResponse LegalEntitiesPdufaDates(ctx, id).Limit(limit).Sort(sort).Execute()
+> PdufaDatesResponse LegalEntitiesPdufaDates(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 
 FDA decision dates (PDUFA) and catalysts
 
@@ -387,12 +411,15 @@ import (
 
 func main() {
 	id := "edgar:0001114448" // string | 
-	limit := int32(2) // int32 |  (optional)
-	sort := "decision_date" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesPdufaDates(context.Background(), id).Limit(limit).Sort(sort).Execute()
+	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesPdufaDates(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `LegalEntitiesAPI.LegalEntitiesPdufaDates``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -418,8 +445,11 @@ Other parameters are passed through a pointer to a apiLegalEntitiesPdufaDatesReq
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
 
 ### Return type
 
@@ -441,7 +471,7 @@ Name | Type | Description  | Notes
 
 ## LegalEntitiesSponsorRecruitmentByPhase
 
-> SponsorRecruitmentByPhaseResponse LegalEntitiesSponsorRecruitmentByPhase(ctx, id).Limit(limit).Sort(sort).Execute()
+> SponsorRecruitmentByPhaseResponse LegalEntitiesSponsorRecruitmentByPhase(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 
 Trial recruitment duration by sponsor and phase
 
@@ -459,12 +489,15 @@ import (
 
 func main() {
 	id := "edgar:0001114448" // string | 
-	limit := int32(2) // int32 |  (optional)
-	sort := "sponsor_org_id" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesSponsorRecruitmentByPhase(context.Background(), id).Limit(limit).Sort(sort).Execute()
+	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesSponsorRecruitmentByPhase(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `LegalEntitiesAPI.LegalEntitiesSponsorRecruitmentByPhase``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -490,8 +523,11 @@ Other parameters are passed through a pointer to a apiLegalEntitiesSponsorRecrui
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
 
 ### Return type
 
@@ -513,7 +549,7 @@ Name | Type | Description  | Notes
 
 ## LegalEntitiesSponsorRecruitmentDuration
 
-> SponsorRecruitmentDurationResponse LegalEntitiesSponsorRecruitmentDuration(ctx, id).Limit(limit).Sort(sort).Execute()
+> SponsorRecruitmentDurationResponse LegalEntitiesSponsorRecruitmentDuration(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 
 Trial recruitment duration by sponsor
 
@@ -531,12 +567,15 @@ import (
 
 func main() {
 	id := "edgar:0001114448" // string | 
-	limit := int32(2) // int32 |  (optional)
-	sort := "sponsor_org_id" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesSponsorRecruitmentDuration(context.Background(), id).Limit(limit).Sort(sort).Execute()
+	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesSponsorRecruitmentDuration(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `LegalEntitiesAPI.LegalEntitiesSponsorRecruitmentDuration``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -562,8 +601,11 @@ Other parameters are passed through a pointer to a apiLegalEntitiesSponsorRecrui
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
 
 ### Return type
 
@@ -585,7 +627,7 @@ Name | Type | Description  | Notes
 
 ## LegalEntitiesSponsorTrialStartForecast
 
-> SponsorTrialStartForecastResponse LegalEntitiesSponsorTrialStartForecast(ctx, id).Limit(limit).Sort(sort).Execute()
+> SponsorTrialStartForecastResponse LegalEntitiesSponsorTrialStartForecast(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 
 Trial-start forecast by sponsor
 
@@ -603,12 +645,15 @@ import (
 
 func main() {
 	id := "edgar:0001114448" // string | 
-	limit := int32(2) // int32 |  (optional)
-	sort := "sponsor_org_id" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesSponsorTrialStartForecast(context.Background(), id).Limit(limit).Sort(sort).Execute()
+	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesSponsorTrialStartForecast(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `LegalEntitiesAPI.LegalEntitiesSponsorTrialStartForecast``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -634,8 +679,11 @@ Other parameters are passed through a pointer to a apiLegalEntitiesSponsorTrialS
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
 
 ### Return type
 
@@ -657,7 +705,7 @@ Name | Type | Description  | Notes
 
 ## LegalEntitiesSponsorTrials
 
-> SponsorTrialsResponse LegalEntitiesSponsorTrials(ctx, id).Limit(limit).Sort(sort).Execute()
+> SponsorTrialsResponse LegalEntitiesSponsorTrials(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 
 Sponsor trials
 
@@ -675,12 +723,15 @@ import (
 
 func main() {
 	id := "edgar:0001114448" // string | 
-	limit := int32(2) // int32 |  (optional)
-	sort := "start_date" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesSponsorTrials(context.Background(), id).Limit(limit).Sort(sort).Execute()
+	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesSponsorTrials(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `LegalEntitiesAPI.LegalEntitiesSponsorTrials``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -706,8 +757,11 @@ Other parameters are passed through a pointer to a apiLegalEntitiesSponsorTrials
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
 
 ### Return type
 

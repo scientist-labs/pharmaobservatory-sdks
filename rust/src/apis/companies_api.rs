@@ -206,24 +206,36 @@ pub enum CompaniesPeriodSponsorTrialsError {
 }
 
 
-pub async fn companies_period_biomarker_bqp_assertions(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, scope: Option<&str>, sort: Option<&str>) -> Result<models::BiomarkerBqpAssertionsResponse, Error<CompaniesPeriodBiomarkerBqpAssertionsError>> {
+pub async fn companies_period_biomarker_bqp_assertions(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>, scope: Option<&str>) -> Result<models::BiomarkerBqpAssertionsResponse, Error<CompaniesPeriodBiomarkerBqpAssertionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
-    let p_scope = scope;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+    let p_scope = scope;
 
     let uri_str = format!("{}/api/v1/companies/{id}/biomarker_bqp_assertions", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_scope {
-        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
-    }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_scope {
+        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -257,24 +269,36 @@ pub async fn companies_period_biomarker_bqp_assertions(configuration: &configura
     }
 }
 
-pub async fn companies_period_biomarker_cdx_assertions(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, scope: Option<&str>, sort: Option<&str>) -> Result<models::BiomarkerCdxAssertionsResponse, Error<CompaniesPeriodBiomarkerCdxAssertionsError>> {
+pub async fn companies_period_biomarker_cdx_assertions(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>, scope: Option<&str>) -> Result<models::BiomarkerCdxAssertionsResponse, Error<CompaniesPeriodBiomarkerCdxAssertionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
-    let p_scope = scope;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+    let p_scope = scope;
 
     let uri_str = format!("{}/api/v1/companies/{id}/biomarker_cdx_assertions", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_scope {
-        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
-    }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_scope {
+        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -308,24 +332,36 @@ pub async fn companies_period_biomarker_cdx_assertions(configuration: &configura
     }
 }
 
-pub async fn companies_period_biomarker_publishing_companies(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, scope: Option<&str>, sort: Option<&str>) -> Result<models::BiomarkerPublishingCompaniesResponse, Error<CompaniesPeriodBiomarkerPublishingCompaniesError>> {
+pub async fn companies_period_biomarker_publishing_companies(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>, scope: Option<&str>) -> Result<models::BiomarkerPublishingCompaniesResponse, Error<CompaniesPeriodBiomarkerPublishingCompaniesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
-    let p_scope = scope;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+    let p_scope = scope;
 
     let uri_str = format!("{}/api/v1/companies/{id}/biomarker_publishing_companies", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_scope {
-        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
-    }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_scope {
+        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -359,24 +395,36 @@ pub async fn companies_period_biomarker_publishing_companies(configuration: &con
     }
 }
 
-pub async fn companies_period_company_members(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, scope: Option<&str>, sort: Option<&str>) -> Result<models::CompanyMembersResponse, Error<CompaniesPeriodCompanyMembersError>> {
+pub async fn companies_period_company_members(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>, scope: Option<&str>) -> Result<models::CompanyMembersResponse, Error<CompaniesPeriodCompanyMembersError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
-    let p_scope = scope;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+    let p_scope = scope;
 
     let uri_str = format!("{}/api/v1/companies/{id}/company_members", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_scope {
-        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
-    }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_scope {
+        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -410,24 +458,36 @@ pub async fn companies_period_company_members(configuration: &configuration::Con
     }
 }
 
-pub async fn companies_period_company_programs(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, scope: Option<&str>, sort: Option<&str>) -> Result<models::CompanyProgramsResponse, Error<CompaniesPeriodCompanyProgramsError>> {
+pub async fn companies_period_company_programs(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>, scope: Option<&str>) -> Result<models::CompanyProgramsResponse, Error<CompaniesPeriodCompanyProgramsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
-    let p_scope = scope;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+    let p_scope = scope;
 
     let uri_str = format!("{}/api/v1/companies/{id}/company_programs", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_scope {
-        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
-    }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_scope {
+        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -461,24 +521,36 @@ pub async fn companies_period_company_programs(configuration: &configuration::Co
     }
 }
 
-pub async fn companies_period_company_targets(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, scope: Option<&str>, sort: Option<&str>) -> Result<models::CompanyTargetsResponse, Error<CompaniesPeriodCompanyTargetsError>> {
+pub async fn companies_period_company_targets(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>, scope: Option<&str>) -> Result<models::CompanyTargetsResponse, Error<CompaniesPeriodCompanyTargetsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
-    let p_scope = scope;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+    let p_scope = scope;
 
     let uri_str = format!("{}/api/v1/companies/{id}/company_targets", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_scope {
-        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
-    }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_scope {
+        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -512,24 +584,36 @@ pub async fn companies_period_company_targets(configuration: &configuration::Con
     }
 }
 
-pub async fn companies_period_drug_patent_cliff(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, scope: Option<&str>, sort: Option<&str>) -> Result<models::DrugPatentCliffResponse, Error<CompaniesPeriodDrugPatentCliffError>> {
+pub async fn companies_period_drug_patent_cliff(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>, scope: Option<&str>) -> Result<models::DrugPatentCliffResponse, Error<CompaniesPeriodDrugPatentCliffError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
-    let p_scope = scope;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+    let p_scope = scope;
 
     let uri_str = format!("{}/api/v1/companies/{id}/drug_patent_cliff", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_scope {
-        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
-    }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_scope {
+        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -602,24 +686,36 @@ pub async fn companies_period_get(configuration: &configuration::Configuration, 
     }
 }
 
-pub async fn companies_period_institutional_holdings(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, scope: Option<&str>, sort: Option<&str>) -> Result<models::InstitutionalHoldingsResponse, Error<CompaniesPeriodInstitutionalHoldingsError>> {
+pub async fn companies_period_institutional_holdings(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>, scope: Option<&str>) -> Result<models::InstitutionalHoldingsResponse, Error<CompaniesPeriodInstitutionalHoldingsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
-    let p_scope = scope;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+    let p_scope = scope;
 
     let uri_str = format!("{}/api/v1/companies/{id}/institutional_holdings", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_scope {
-        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
-    }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_scope {
+        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -653,24 +749,36 @@ pub async fn companies_period_institutional_holdings(configuration: &configurati
     }
 }
 
-pub async fn companies_period_legal_entities(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, scope: Option<&str>, sort: Option<&str>) -> Result<models::LegalEntitiesResponse, Error<CompaniesPeriodLegalEntitiesError>> {
+pub async fn companies_period_legal_entities(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>, scope: Option<&str>) -> Result<models::LegalEntitiesResponse, Error<CompaniesPeriodLegalEntitiesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
-    let p_scope = scope;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+    let p_scope = scope;
 
     let uri_str = format!("{}/api/v1/companies/{id}/legal_entities", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_scope {
-        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
-    }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_scope {
+        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -704,19 +812,31 @@ pub async fn companies_period_legal_entities(configuration: &configuration::Conf
     }
 }
 
-pub async fn companies_period_list(configuration: &configuration::Configuration, limit: Option<i32>, sort: Option<&str>) -> Result<models::CompaniesResponse, Error<CompaniesPeriodListError>> {
+pub async fn companies_period_list(configuration: &configuration::Configuration, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::CompaniesResponse, Error<CompaniesPeriodListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
+    let p_cursor = cursor;
     let p_limit = limit;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
 
     let uri_str = format!("{}/api/v1/companies", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -750,24 +870,36 @@ pub async fn companies_period_list(configuration: &configuration::Configuration,
     }
 }
 
-pub async fn companies_period_pdufa_dates(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, scope: Option<&str>, sort: Option<&str>) -> Result<models::PdufaDatesResponse, Error<CompaniesPeriodPdufaDatesError>> {
+pub async fn companies_period_pdufa_dates(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>, scope: Option<&str>) -> Result<models::PdufaDatesResponse, Error<CompaniesPeriodPdufaDatesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
-    let p_scope = scope;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+    let p_scope = scope;
 
     let uri_str = format!("{}/api/v1/companies/{id}/pdufa_dates", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_scope {
-        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
-    }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_scope {
+        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -801,24 +933,36 @@ pub async fn companies_period_pdufa_dates(configuration: &configuration::Configu
     }
 }
 
-pub async fn companies_period_sponsor_recruitment_by_phase(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, scope: Option<&str>, sort: Option<&str>) -> Result<models::SponsorRecruitmentByPhaseResponse, Error<CompaniesPeriodSponsorRecruitmentByPhaseError>> {
+pub async fn companies_period_sponsor_recruitment_by_phase(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>, scope: Option<&str>) -> Result<models::SponsorRecruitmentByPhaseResponse, Error<CompaniesPeriodSponsorRecruitmentByPhaseError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
-    let p_scope = scope;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+    let p_scope = scope;
 
     let uri_str = format!("{}/api/v1/companies/{id}/sponsor_recruitment_by_phase", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_scope {
-        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
-    }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_scope {
+        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -852,24 +996,36 @@ pub async fn companies_period_sponsor_recruitment_by_phase(configuration: &confi
     }
 }
 
-pub async fn companies_period_sponsor_recruitment_duration(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, scope: Option<&str>, sort: Option<&str>) -> Result<models::SponsorRecruitmentDurationResponse, Error<CompaniesPeriodSponsorRecruitmentDurationError>> {
+pub async fn companies_period_sponsor_recruitment_duration(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>, scope: Option<&str>) -> Result<models::SponsorRecruitmentDurationResponse, Error<CompaniesPeriodSponsorRecruitmentDurationError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
-    let p_scope = scope;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+    let p_scope = scope;
 
     let uri_str = format!("{}/api/v1/companies/{id}/sponsor_recruitment_duration", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_scope {
-        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
-    }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_scope {
+        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -903,24 +1059,36 @@ pub async fn companies_period_sponsor_recruitment_duration(configuration: &confi
     }
 }
 
-pub async fn companies_period_sponsor_trial_start_forecast(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, scope: Option<&str>, sort: Option<&str>) -> Result<models::SponsorTrialStartForecastResponse, Error<CompaniesPeriodSponsorTrialStartForecastError>> {
+pub async fn companies_period_sponsor_trial_start_forecast(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>, scope: Option<&str>) -> Result<models::SponsorTrialStartForecastResponse, Error<CompaniesPeriodSponsorTrialStartForecastError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
-    let p_scope = scope;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+    let p_scope = scope;
 
     let uri_str = format!("{}/api/v1/companies/{id}/sponsor_trial_start_forecast", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_scope {
-        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
-    }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_scope {
+        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -954,24 +1122,36 @@ pub async fn companies_period_sponsor_trial_start_forecast(configuration: &confi
     }
 }
 
-pub async fn companies_period_sponsor_trials(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, scope: Option<&str>, sort: Option<&str>) -> Result<models::SponsorTrialsResponse, Error<CompaniesPeriodSponsorTrialsError>> {
+pub async fn companies_period_sponsor_trials(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>, scope: Option<&str>) -> Result<models::SponsorTrialsResponse, Error<CompaniesPeriodSponsorTrialsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
-    let p_scope = scope;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+    let p_scope = scope;
 
     let uri_str = format!("{}/api/v1/companies/{id}/sponsor_trials", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = p_scope {
-        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
-    }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_scope {
+        req_builder = req_builder.query(&[("scope", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());

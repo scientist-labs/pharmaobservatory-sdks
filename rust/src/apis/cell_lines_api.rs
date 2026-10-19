@@ -77,19 +77,31 @@ pub async fn cell_lines_period_get(configuration: &configuration::Configuration,
     }
 }
 
-pub async fn cell_lines_period_list(configuration: &configuration::Configuration, limit: Option<i32>, sort: Option<&str>) -> Result<models::CellLinesResponse, Error<CellLinesPeriodListError>> {
+pub async fn cell_lines_period_list(configuration: &configuration::Configuration, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::CellLinesResponse, Error<CellLinesPeriodListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
+    let p_cursor = cursor;
     let p_limit = limit;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
 
     let uri_str = format!("{}/api/v1/cell_lines", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());

@@ -159,17 +159,40 @@ func (a *CellLinesAPIService) CellLinesGetExecute(r ApiCellLinesGetRequest) (*Ce
 type ApiCellLinesListRequest struct {
 	ctx context.Context
 	ApiService *CellLinesAPIService
+	cursor *string
 	limit *int32
 	sort *string
+	groupBy *string
+	measure *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiCellLinesListRequest) Cursor(cursor string) ApiCellLinesListRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiCellLinesListRequest) Limit(limit int32) ApiCellLinesListRequest {
 	r.limit = &limit
 	return r
 }
 
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
 func (r ApiCellLinesListRequest) Sort(sort string) ApiCellLinesListRequest {
 	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiCellLinesListRequest) GroupBy(groupBy string) ApiCellLinesListRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiCellLinesListRequest) Measure(measure string) ApiCellLinesListRequest {
+	r.measure = &measure
 	return r
 }
 
@@ -211,11 +234,20 @@ func (a *CellLinesAPIService) CellLinesListExecute(r ApiCellLinesListRequest) (*
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

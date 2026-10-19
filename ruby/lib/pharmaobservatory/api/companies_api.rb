@@ -22,9 +22,12 @@ module PharmaObservatory
     # FDA biomarker qualification projects
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [BiomarkerBqpAssertionsResponse]
     def companies_biomarker_bqp_assertions(id, opts = {})
       data, _status_code, _headers = companies_biomarker_bqp_assertions_with_http_info(id, opts)
@@ -34,9 +37,12 @@ module PharmaObservatory
     # FDA biomarker qualification projects
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [Array<(BiomarkerBqpAssertionsResponse, Integer, Hash)>] BiomarkerBqpAssertionsResponse data, response status code and response headers
     def companies_biomarker_bqp_assertions_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -46,14 +52,29 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_biomarker_bqp_assertions"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_biomarker_bqp_assertions, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_biomarker_bqp_assertions, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
       # resource path
       local_var_path = '/api/v1/companies/{id}/biomarker_bqp_assertions'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -92,9 +113,12 @@ module PharmaObservatory
     # FDA companion diagnostic assertions
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [BiomarkerCdxAssertionsResponse]
     def companies_biomarker_cdx_assertions(id, opts = {})
       data, _status_code, _headers = companies_biomarker_cdx_assertions_with_http_info(id, opts)
@@ -104,9 +128,12 @@ module PharmaObservatory
     # FDA companion diagnostic assertions
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [Array<(BiomarkerCdxAssertionsResponse, Integer, Hash)>] BiomarkerCdxAssertionsResponse data, response status code and response headers
     def companies_biomarker_cdx_assertions_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -116,14 +143,29 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_biomarker_cdx_assertions"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_biomarker_cdx_assertions, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_biomarker_cdx_assertions, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
       # resource path
       local_var_path = '/api/v1/companies/{id}/biomarker_cdx_assertions'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -162,9 +204,12 @@ module PharmaObservatory
     # Companies publishing on a biomarker
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [BiomarkerPublishingCompaniesResponse]
     def companies_biomarker_publishing_companies(id, opts = {})
       data, _status_code, _headers = companies_biomarker_publishing_companies_with_http_info(id, opts)
@@ -174,9 +219,12 @@ module PharmaObservatory
     # Companies publishing on a biomarker
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [Array<(BiomarkerPublishingCompaniesResponse, Integer, Hash)>] BiomarkerPublishingCompaniesResponse data, response status code and response headers
     def companies_biomarker_publishing_companies_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -186,14 +234,29 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_biomarker_publishing_companies"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_biomarker_publishing_companies, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_biomarker_publishing_companies, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
       # resource path
       local_var_path = '/api/v1/companies/{id}/biomarker_publishing_companies'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -232,9 +295,12 @@ module PharmaObservatory
     # Company members
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [CompanyMembersResponse]
     def companies_company_members(id, opts = {})
       data, _status_code, _headers = companies_company_members_with_http_info(id, opts)
@@ -244,9 +310,12 @@ module PharmaObservatory
     # Company members
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [Array<(CompanyMembersResponse, Integer, Hash)>] CompanyMembersResponse data, response status code and response headers
     def companies_company_members_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -256,14 +325,29 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_company_members"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_members, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_members, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
       # resource path
       local_var_path = '/api/v1/companies/{id}/company_members'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -302,9 +386,12 @@ module PharmaObservatory
     # Company programs
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [CompanyProgramsResponse]
     def companies_company_programs(id, opts = {})
       data, _status_code, _headers = companies_company_programs_with_http_info(id, opts)
@@ -314,9 +401,12 @@ module PharmaObservatory
     # Company programs
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [Array<(CompanyProgramsResponse, Integer, Hash)>] CompanyProgramsResponse data, response status code and response headers
     def companies_company_programs_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -326,14 +416,29 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_company_programs"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_programs, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_programs, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
       # resource path
       local_var_path = '/api/v1/companies/{id}/company_programs'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -372,9 +477,12 @@ module PharmaObservatory
     # Targets a company pursues
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [CompanyTargetsResponse]
     def companies_company_targets(id, opts = {})
       data, _status_code, _headers = companies_company_targets_with_http_info(id, opts)
@@ -384,9 +492,12 @@ module PharmaObservatory
     # Targets a company pursues
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [Array<(CompanyTargetsResponse, Integer, Hash)>] CompanyTargetsResponse data, response status code and response headers
     def companies_company_targets_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -396,14 +507,29 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_company_targets"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_targets, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_targets, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
       # resource path
       local_var_path = '/api/v1/companies/{id}/company_targets'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -442,9 +568,12 @@ module PharmaObservatory
     # Patent-cliff exposure
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [DrugPatentCliffResponse]
     def companies_drug_patent_cliff(id, opts = {})
       data, _status_code, _headers = companies_drug_patent_cliff_with_http_info(id, opts)
@@ -454,9 +583,12 @@ module PharmaObservatory
     # Patent-cliff exposure
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [Array<(DrugPatentCliffResponse, Integer, Hash)>] DrugPatentCliffResponse data, response status code and response headers
     def companies_drug_patent_cliff_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -466,14 +598,29 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_drug_patent_cliff"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_drug_patent_cliff, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_drug_patent_cliff, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
       # resource path
       local_var_path = '/api/v1/companies/{id}/drug_patent_cliff'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -573,9 +720,12 @@ module PharmaObservatory
     # Institutional holdings (SEC Form 13F)
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [InstitutionalHoldingsResponse]
     def companies_institutional_holdings(id, opts = {})
       data, _status_code, _headers = companies_institutional_holdings_with_http_info(id, opts)
@@ -585,9 +735,12 @@ module PharmaObservatory
     # Institutional holdings (SEC Form 13F)
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [Array<(InstitutionalHoldingsResponse, Integer, Hash)>] InstitutionalHoldingsResponse data, response status code and response headers
     def companies_institutional_holdings_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -597,14 +750,29 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_institutional_holdings"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_institutional_holdings, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_institutional_holdings, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
       # resource path
       local_var_path = '/api/v1/companies/{id}/institutional_holdings'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -643,9 +811,12 @@ module PharmaObservatory
     # Legal entities
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [LegalEntitiesResponse]
     def companies_legal_entities(id, opts = {})
       data, _status_code, _headers = companies_legal_entities_with_http_info(id, opts)
@@ -655,9 +826,12 @@ module PharmaObservatory
     # Legal entities
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [Array<(LegalEntitiesResponse, Integer, Hash)>] LegalEntitiesResponse data, response status code and response headers
     def companies_legal_entities_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -667,14 +841,29 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_legal_entities"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_legal_entities, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_legal_entities, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
       # resource path
       local_var_path = '/api/v1/companies/{id}/legal_entities'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -712,8 +901,11 @@ module PharmaObservatory
 
     # List companies
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [CompaniesResponse]
     def companies_list(opts = {})
       data, _status_code, _headers = companies_list_with_http_info(opts)
@@ -722,20 +914,34 @@ module PharmaObservatory
 
     # List companies
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [Array<(CompaniesResponse, Integer, Hash)>] CompaniesResponse data, response status code and response headers
     def companies_list_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: CompaniesApi.companies_list ...'
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_list, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_list, must be greater than or equal to 1.'
+      end
+
       # resource path
       local_var_path = '/api/v1/companies'
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -774,9 +980,12 @@ module PharmaObservatory
     # FDA decision dates (PDUFA) and catalysts
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [PdufaDatesResponse]
     def companies_pdufa_dates(id, opts = {})
       data, _status_code, _headers = companies_pdufa_dates_with_http_info(id, opts)
@@ -786,9 +995,12 @@ module PharmaObservatory
     # FDA decision dates (PDUFA) and catalysts
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [Array<(PdufaDatesResponse, Integer, Hash)>] PdufaDatesResponse data, response status code and response headers
     def companies_pdufa_dates_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -798,14 +1010,29 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_pdufa_dates"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_pdufa_dates, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_pdufa_dates, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
       # resource path
       local_var_path = '/api/v1/companies/{id}/pdufa_dates'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -844,9 +1071,12 @@ module PharmaObservatory
     # Trial recruitment duration by sponsor and phase
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [SponsorRecruitmentByPhaseResponse]
     def companies_sponsor_recruitment_by_phase(id, opts = {})
       data, _status_code, _headers = companies_sponsor_recruitment_by_phase_with_http_info(id, opts)
@@ -856,9 +1086,12 @@ module PharmaObservatory
     # Trial recruitment duration by sponsor and phase
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [Array<(SponsorRecruitmentByPhaseResponse, Integer, Hash)>] SponsorRecruitmentByPhaseResponse data, response status code and response headers
     def companies_sponsor_recruitment_by_phase_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -868,14 +1101,29 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_sponsor_recruitment_by_phase"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_sponsor_recruitment_by_phase, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_sponsor_recruitment_by_phase, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
       # resource path
       local_var_path = '/api/v1/companies/{id}/sponsor_recruitment_by_phase'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -914,9 +1162,12 @@ module PharmaObservatory
     # Trial recruitment duration by sponsor
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [SponsorRecruitmentDurationResponse]
     def companies_sponsor_recruitment_duration(id, opts = {})
       data, _status_code, _headers = companies_sponsor_recruitment_duration_with_http_info(id, opts)
@@ -926,9 +1177,12 @@ module PharmaObservatory
     # Trial recruitment duration by sponsor
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [Array<(SponsorRecruitmentDurationResponse, Integer, Hash)>] SponsorRecruitmentDurationResponse data, response status code and response headers
     def companies_sponsor_recruitment_duration_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -938,14 +1192,29 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_sponsor_recruitment_duration"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_sponsor_recruitment_duration, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_sponsor_recruitment_duration, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
       # resource path
       local_var_path = '/api/v1/companies/{id}/sponsor_recruitment_duration'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -984,9 +1253,12 @@ module PharmaObservatory
     # Trial-start forecast by sponsor
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [SponsorTrialStartForecastResponse]
     def companies_sponsor_trial_start_forecast(id, opts = {})
       data, _status_code, _headers = companies_sponsor_trial_start_forecast_with_http_info(id, opts)
@@ -996,9 +1268,12 @@ module PharmaObservatory
     # Trial-start forecast by sponsor
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [Array<(SponsorTrialStartForecastResponse, Integer, Hash)>] SponsorTrialStartForecastResponse data, response status code and response headers
     def companies_sponsor_trial_start_forecast_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -1008,14 +1283,29 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_sponsor_trial_start_forecast"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_sponsor_trial_start_forecast, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_sponsor_trial_start_forecast, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
       # resource path
       local_var_path = '/api/v1/companies/{id}/sponsor_trial_start_forecast'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -1054,9 +1344,12 @@ module PharmaObservatory
     # Sponsor trials
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [SponsorTrialsResponse]
     def companies_sponsor_trials(id, opts = {})
       data, _status_code, _headers = companies_sponsor_trials_with_http_info(id, opts)
@@ -1066,9 +1359,12 @@ module PharmaObservatory
     # Sponsor trials
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :scope 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
     # @return [Array<(SponsorTrialsResponse, Integer, Hash)>] SponsorTrialsResponse data, response status code and response headers
     def companies_sponsor_trials_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -1078,14 +1374,29 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_sponsor_trials"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_sponsor_trials, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_sponsor_trials, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
       # resource path
       local_var_path = '/api/v1/companies/{id}/sponsor_trials'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}

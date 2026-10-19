@@ -12,18 +12,46 @@ paths:
     get:
       operationId: biomarkers.list
       parameters:
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: evidence_tier
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
         required: false
         schema:
           type: string
@@ -143,18 +171,46 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: route_key
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
         required: false
         schema:
           type: string
@@ -226,18 +282,46 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: biomarker_id
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
         required: false
         schema:
           type: string
@@ -309,18 +393,46 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: gene_symbol
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
         required: false
         schema:
           type: string
@@ -392,18 +504,46 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: pub_year
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
         required: false
         schema:
           type: string
@@ -475,18 +615,46 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: n_publications
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
         required: false
         schema:
           type: string
@@ -558,18 +726,46 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: n_papers
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
         required: false
         schema:
           type: string
@@ -633,18 +829,46 @@ paths:
     get:
       operationId: cell_lines.list
       parameters:
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: cell_line_id
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
         required: false
         schema:
           type: string
@@ -756,18 +980,46 @@ paths:
     get:
       operationId: companies.list
       parameters:
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: activity_score
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
         required: false
         schema:
           type: string
@@ -887,28 +1139,59 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: company
-        explode: true
-        in: query
-        name: scope
-        required: false
-        schema:
-          type: string
-        style: form
-      - example: route_key
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
         required: false
         schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: company (this company only) or group (its corporate group).
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - company
+          - group
           type: string
         style: form
       responses:
@@ -978,28 +1261,59 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: company
-        explode: true
-        in: query
-        name: scope
-        required: false
-        schema:
-          type: string
-        style: form
-      - example: biomarker_id
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
         required: false
         schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: company (this company only) or group (its corporate group).
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - company
+          - group
           type: string
         style: form
       responses:
@@ -1069,28 +1383,59 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: company
-        explode: true
-        in: query
-        name: scope
-        required: false
-        schema:
-          type: string
-        style: form
-      - example: n_publications
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
         required: false
         schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: company (this company only) or group (its corporate group).
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - company
+          - group
           type: string
         style: form
       responses:
@@ -1160,28 +1505,59 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: company
-        explode: true
-        in: query
-        name: scope
-        required: false
-        schema:
-          type: string
-        style: form
-      - example: company_id
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
         required: false
         schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: company (this company only) or group (its corporate group).
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - company
+          - group
           type: string
         style: form
       responses:
@@ -1251,28 +1627,59 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: company
-        explode: true
-        in: query
-        name: scope
-        required: false
-        schema:
-          type: string
-        style: form
-      - example: max_phase
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
         required: false
         schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: company (this company only) or group (its corporate group).
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - company
+          - group
           type: string
         style: form
       responses:
@@ -1342,28 +1749,59 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: company
-        explode: true
-        in: query
-        name: scope
-        required: false
-        schema:
-          type: string
-        style: form
-      - example: max_phase
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
         required: false
         schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: company (this company only) or group (its corporate group).
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - company
+          - group
           type: string
         style: form
       responses:
@@ -1433,28 +1871,59 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: company
-        explode: true
-        in: query
-        name: scope
-        required: false
-        schema:
-          type: string
-        style: form
-      - example: cliff_date
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
         required: false
         schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: company (this company only) or group (its corporate group).
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - company
+          - group
           type: string
         style: form
       responses:
@@ -1524,28 +1993,59 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: company
-        explode: true
-        in: query
-        name: scope
-        required: false
-        schema:
-          type: string
-        style: form
-      - example: reported_value_amount
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
         required: false
         schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: company (this company only) or group (its corporate group).
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - company
+          - group
           type: string
         style: form
       responses:
@@ -1615,28 +2115,59 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: company
-        explode: true
-        in: query
-        name: scope
-        required: false
-        schema:
-          type: string
-        style: form
-      - example: activity_score
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
         required: false
         schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: company (this company only) or group (its corporate group).
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - company
+          - group
           type: string
         style: form
       responses:
@@ -1706,28 +2237,59 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: company
-        explode: true
-        in: query
-        name: scope
-        required: false
-        schema:
-          type: string
-        style: form
-      - example: decision_date
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
         required: false
         schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: company (this company only) or group (its corporate group).
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - company
+          - group
           type: string
         style: form
       responses:
@@ -1797,28 +2359,59 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: company
-        explode: true
-        in: query
-        name: scope
-        required: false
-        schema:
-          type: string
-        style: form
-      - example: sponsor_org_id
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
         required: false
         schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: company (this company only) or group (its corporate group).
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - company
+          - group
           type: string
         style: form
       responses:
@@ -1888,28 +2481,59 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: company
-        explode: true
-        in: query
-        name: scope
-        required: false
-        schema:
-          type: string
-        style: form
-      - example: sponsor_org_id
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
         required: false
         schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: company (this company only) or group (its corporate group).
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - company
+          - group
           type: string
         style: form
       responses:
@@ -1979,28 +2603,59 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: company
-        explode: true
-        in: query
-        name: scope
-        required: false
-        schema:
-          type: string
-        style: form
-      - example: sponsor_org_id
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
         required: false
         schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: company (this company only) or group (its corporate group).
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - company
+          - group
           type: string
         style: form
       responses:
@@ -2070,28 +2725,59 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: company
-        explode: true
-        in: query
-        name: scope
-        required: false
-        schema:
-          type: string
-        style: form
-      - example: start_date
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
         required: false
         schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: company (this company only) or group (its corporate group).
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - company
+          - group
           type: string
         style: form
       responses:
@@ -2231,18 +2917,46 @@ paths:
     get:
       operationId: legal_entities.list
       parameters:
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: activity_score
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
         required: false
         schema:
           type: string
@@ -2362,18 +3076,46 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: max_phase
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
         required: false
         schema:
           type: string
@@ -2445,18 +3187,46 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: cliff_date
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
         required: false
         schema:
           type: string
@@ -2528,18 +3298,46 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: reported_value_amount
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
         required: false
         schema:
           type: string
@@ -2611,18 +3409,46 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: decision_date
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
         required: false
         schema:
           type: string
@@ -2694,18 +3520,46 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: sponsor_org_id
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
         required: false
         schema:
           type: string
@@ -2777,18 +3631,46 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: sponsor_org_id
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
         required: false
         schema:
           type: string
@@ -2860,18 +3742,46 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: sponsor_org_id
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
         required: false
         schema:
           type: string
@@ -2943,18 +3853,46 @@ paths:
         schema:
           type: string
         style: simple
-      - example: 2
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
         explode: true
         in: query
         name: limit
         required: false
         schema:
+          maximum: 500
+          minimum: 1
           type: integer
         style: form
-      - example: start_date
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
         explode: true
         in: query
         name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
         required: false
         schema:
           type: string

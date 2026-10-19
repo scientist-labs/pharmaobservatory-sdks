@@ -27,17 +27,40 @@ type ApiLegalEntitiesCompanyProgramsRequest struct {
 	ctx context.Context
 	ApiService *LegalEntitiesAPIService
 	id string
+	cursor *string
 	limit *int32
 	sort *string
+	groupBy *string
+	measure *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiLegalEntitiesCompanyProgramsRequest) Cursor(cursor string) ApiLegalEntitiesCompanyProgramsRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiLegalEntitiesCompanyProgramsRequest) Limit(limit int32) ApiLegalEntitiesCompanyProgramsRequest {
 	r.limit = &limit
 	return r
 }
 
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
 func (r ApiLegalEntitiesCompanyProgramsRequest) Sort(sort string) ApiLegalEntitiesCompanyProgramsRequest {
 	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiLegalEntitiesCompanyProgramsRequest) GroupBy(groupBy string) ApiLegalEntitiesCompanyProgramsRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiLegalEntitiesCompanyProgramsRequest) Measure(measure string) ApiLegalEntitiesCompanyProgramsRequest {
+	r.measure = &measure
 	return r
 }
 
@@ -82,11 +105,20 @@ func (a *LegalEntitiesAPIService) LegalEntitiesCompanyProgramsExecute(r ApiLegal
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -200,17 +232,40 @@ type ApiLegalEntitiesDrugPatentCliffRequest struct {
 	ctx context.Context
 	ApiService *LegalEntitiesAPIService
 	id string
+	cursor *string
 	limit *int32
 	sort *string
+	groupBy *string
+	measure *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiLegalEntitiesDrugPatentCliffRequest) Cursor(cursor string) ApiLegalEntitiesDrugPatentCliffRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiLegalEntitiesDrugPatentCliffRequest) Limit(limit int32) ApiLegalEntitiesDrugPatentCliffRequest {
 	r.limit = &limit
 	return r
 }
 
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
 func (r ApiLegalEntitiesDrugPatentCliffRequest) Sort(sort string) ApiLegalEntitiesDrugPatentCliffRequest {
 	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiLegalEntitiesDrugPatentCliffRequest) GroupBy(groupBy string) ApiLegalEntitiesDrugPatentCliffRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiLegalEntitiesDrugPatentCliffRequest) Measure(measure string) ApiLegalEntitiesDrugPatentCliffRequest {
+	r.measure = &measure
 	return r
 }
 
@@ -255,11 +310,20 @@ func (a *LegalEntitiesAPIService) LegalEntitiesDrugPatentCliffExecute(r ApiLegal
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -506,17 +570,40 @@ type ApiLegalEntitiesInstitutionalHoldingsRequest struct {
 	ctx context.Context
 	ApiService *LegalEntitiesAPIService
 	id string
+	cursor *string
 	limit *int32
 	sort *string
+	groupBy *string
+	measure *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiLegalEntitiesInstitutionalHoldingsRequest) Cursor(cursor string) ApiLegalEntitiesInstitutionalHoldingsRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiLegalEntitiesInstitutionalHoldingsRequest) Limit(limit int32) ApiLegalEntitiesInstitutionalHoldingsRequest {
 	r.limit = &limit
 	return r
 }
 
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
 func (r ApiLegalEntitiesInstitutionalHoldingsRequest) Sort(sort string) ApiLegalEntitiesInstitutionalHoldingsRequest {
 	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiLegalEntitiesInstitutionalHoldingsRequest) GroupBy(groupBy string) ApiLegalEntitiesInstitutionalHoldingsRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiLegalEntitiesInstitutionalHoldingsRequest) Measure(measure string) ApiLegalEntitiesInstitutionalHoldingsRequest {
+	r.measure = &measure
 	return r
 }
 
@@ -561,11 +648,20 @@ func (a *LegalEntitiesAPIService) LegalEntitiesInstitutionalHoldingsExecute(r Ap
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -678,17 +774,40 @@ func (a *LegalEntitiesAPIService) LegalEntitiesInstitutionalHoldingsExecute(r Ap
 type ApiLegalEntitiesListRequest struct {
 	ctx context.Context
 	ApiService *LegalEntitiesAPIService
+	cursor *string
 	limit *int32
 	sort *string
+	groupBy *string
+	measure *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiLegalEntitiesListRequest) Cursor(cursor string) ApiLegalEntitiesListRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiLegalEntitiesListRequest) Limit(limit int32) ApiLegalEntitiesListRequest {
 	r.limit = &limit
 	return r
 }
 
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
 func (r ApiLegalEntitiesListRequest) Sort(sort string) ApiLegalEntitiesListRequest {
 	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiLegalEntitiesListRequest) GroupBy(groupBy string) ApiLegalEntitiesListRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiLegalEntitiesListRequest) Measure(measure string) ApiLegalEntitiesListRequest {
+	r.measure = &measure
 	return r
 }
 
@@ -730,11 +849,20 @@ func (a *LegalEntitiesAPIService) LegalEntitiesListExecute(r ApiLegalEntitiesLis
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -848,17 +976,40 @@ type ApiLegalEntitiesPdufaDatesRequest struct {
 	ctx context.Context
 	ApiService *LegalEntitiesAPIService
 	id string
+	cursor *string
 	limit *int32
 	sort *string
+	groupBy *string
+	measure *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiLegalEntitiesPdufaDatesRequest) Cursor(cursor string) ApiLegalEntitiesPdufaDatesRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiLegalEntitiesPdufaDatesRequest) Limit(limit int32) ApiLegalEntitiesPdufaDatesRequest {
 	r.limit = &limit
 	return r
 }
 
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
 func (r ApiLegalEntitiesPdufaDatesRequest) Sort(sort string) ApiLegalEntitiesPdufaDatesRequest {
 	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiLegalEntitiesPdufaDatesRequest) GroupBy(groupBy string) ApiLegalEntitiesPdufaDatesRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiLegalEntitiesPdufaDatesRequest) Measure(measure string) ApiLegalEntitiesPdufaDatesRequest {
+	r.measure = &measure
 	return r
 }
 
@@ -903,11 +1054,20 @@ func (a *LegalEntitiesAPIService) LegalEntitiesPdufaDatesExecute(r ApiLegalEntit
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1021,17 +1181,40 @@ type ApiLegalEntitiesSponsorRecruitmentByPhaseRequest struct {
 	ctx context.Context
 	ApiService *LegalEntitiesAPIService
 	id string
+	cursor *string
 	limit *int32
 	sort *string
+	groupBy *string
+	measure *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiLegalEntitiesSponsorRecruitmentByPhaseRequest) Cursor(cursor string) ApiLegalEntitiesSponsorRecruitmentByPhaseRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiLegalEntitiesSponsorRecruitmentByPhaseRequest) Limit(limit int32) ApiLegalEntitiesSponsorRecruitmentByPhaseRequest {
 	r.limit = &limit
 	return r
 }
 
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
 func (r ApiLegalEntitiesSponsorRecruitmentByPhaseRequest) Sort(sort string) ApiLegalEntitiesSponsorRecruitmentByPhaseRequest {
 	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiLegalEntitiesSponsorRecruitmentByPhaseRequest) GroupBy(groupBy string) ApiLegalEntitiesSponsorRecruitmentByPhaseRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiLegalEntitiesSponsorRecruitmentByPhaseRequest) Measure(measure string) ApiLegalEntitiesSponsorRecruitmentByPhaseRequest {
+	r.measure = &measure
 	return r
 }
 
@@ -1076,11 +1259,20 @@ func (a *LegalEntitiesAPIService) LegalEntitiesSponsorRecruitmentByPhaseExecute(
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1194,17 +1386,40 @@ type ApiLegalEntitiesSponsorRecruitmentDurationRequest struct {
 	ctx context.Context
 	ApiService *LegalEntitiesAPIService
 	id string
+	cursor *string
 	limit *int32
 	sort *string
+	groupBy *string
+	measure *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiLegalEntitiesSponsorRecruitmentDurationRequest) Cursor(cursor string) ApiLegalEntitiesSponsorRecruitmentDurationRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiLegalEntitiesSponsorRecruitmentDurationRequest) Limit(limit int32) ApiLegalEntitiesSponsorRecruitmentDurationRequest {
 	r.limit = &limit
 	return r
 }
 
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
 func (r ApiLegalEntitiesSponsorRecruitmentDurationRequest) Sort(sort string) ApiLegalEntitiesSponsorRecruitmentDurationRequest {
 	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiLegalEntitiesSponsorRecruitmentDurationRequest) GroupBy(groupBy string) ApiLegalEntitiesSponsorRecruitmentDurationRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiLegalEntitiesSponsorRecruitmentDurationRequest) Measure(measure string) ApiLegalEntitiesSponsorRecruitmentDurationRequest {
+	r.measure = &measure
 	return r
 }
 
@@ -1249,11 +1464,20 @@ func (a *LegalEntitiesAPIService) LegalEntitiesSponsorRecruitmentDurationExecute
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1367,17 +1591,40 @@ type ApiLegalEntitiesSponsorTrialStartForecastRequest struct {
 	ctx context.Context
 	ApiService *LegalEntitiesAPIService
 	id string
+	cursor *string
 	limit *int32
 	sort *string
+	groupBy *string
+	measure *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiLegalEntitiesSponsorTrialStartForecastRequest) Cursor(cursor string) ApiLegalEntitiesSponsorTrialStartForecastRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiLegalEntitiesSponsorTrialStartForecastRequest) Limit(limit int32) ApiLegalEntitiesSponsorTrialStartForecastRequest {
 	r.limit = &limit
 	return r
 }
 
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
 func (r ApiLegalEntitiesSponsorTrialStartForecastRequest) Sort(sort string) ApiLegalEntitiesSponsorTrialStartForecastRequest {
 	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiLegalEntitiesSponsorTrialStartForecastRequest) GroupBy(groupBy string) ApiLegalEntitiesSponsorTrialStartForecastRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiLegalEntitiesSponsorTrialStartForecastRequest) Measure(measure string) ApiLegalEntitiesSponsorTrialStartForecastRequest {
+	r.measure = &measure
 	return r
 }
 
@@ -1422,11 +1669,20 @@ func (a *LegalEntitiesAPIService) LegalEntitiesSponsorTrialStartForecastExecute(
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1540,17 +1796,40 @@ type ApiLegalEntitiesSponsorTrialsRequest struct {
 	ctx context.Context
 	ApiService *LegalEntitiesAPIService
 	id string
+	cursor *string
 	limit *int32
 	sort *string
+	groupBy *string
+	measure *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiLegalEntitiesSponsorTrialsRequest) Cursor(cursor string) ApiLegalEntitiesSponsorTrialsRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiLegalEntitiesSponsorTrialsRequest) Limit(limit int32) ApiLegalEntitiesSponsorTrialsRequest {
 	r.limit = &limit
 	return r
 }
 
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
 func (r ApiLegalEntitiesSponsorTrialsRequest) Sort(sort string) ApiLegalEntitiesSponsorTrialsRequest {
 	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiLegalEntitiesSponsorTrialsRequest) GroupBy(groupBy string) ApiLegalEntitiesSponsorTrialsRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiLegalEntitiesSponsorTrialsRequest) Measure(measure string) ApiLegalEntitiesSponsorTrialsRequest {
+	r.measure = &measure
 	return r
 }
 
@@ -1595,11 +1874,20 @@ func (a *LegalEntitiesAPIService) LegalEntitiesSponsorTrialsExecute(r ApiLegalEn
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

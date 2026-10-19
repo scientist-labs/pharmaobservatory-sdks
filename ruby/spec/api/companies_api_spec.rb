@@ -36,9 +36,12 @@ describe 'CompaniesApi' do
   # FDA biomarker qualification projects
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :scope 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
   # @return [BiomarkerBqpAssertionsResponse]
   describe 'companies_biomarker_bqp_assertions test' do
     it 'should work' do
@@ -50,9 +53,12 @@ describe 'CompaniesApi' do
   # FDA companion diagnostic assertions
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :scope 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
   # @return [BiomarkerCdxAssertionsResponse]
   describe 'companies_biomarker_cdx_assertions test' do
     it 'should work' do
@@ -64,9 +70,12 @@ describe 'CompaniesApi' do
   # Companies publishing on a biomarker
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :scope 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
   # @return [BiomarkerPublishingCompaniesResponse]
   describe 'companies_biomarker_publishing_companies test' do
     it 'should work' do
@@ -78,9 +87,12 @@ describe 'CompaniesApi' do
   # Company members
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :scope 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
   # @return [CompanyMembersResponse]
   describe 'companies_company_members test' do
     it 'should work' do
@@ -92,9 +104,12 @@ describe 'CompaniesApi' do
   # Company programs
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :scope 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
   # @return [CompanyProgramsResponse]
   describe 'companies_company_programs test' do
     it 'should work' do
@@ -106,9 +121,12 @@ describe 'CompaniesApi' do
   # Targets a company pursues
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :scope 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
   # @return [CompanyTargetsResponse]
   describe 'companies_company_targets test' do
     it 'should work' do
@@ -120,9 +138,12 @@ describe 'CompaniesApi' do
   # Patent-cliff exposure
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :scope 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
   # @return [DrugPatentCliffResponse]
   describe 'companies_drug_patent_cliff test' do
     it 'should work' do
@@ -145,9 +166,12 @@ describe 'CompaniesApi' do
   # Institutional holdings (SEC Form 13F)
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :scope 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
   # @return [InstitutionalHoldingsResponse]
   describe 'companies_institutional_holdings test' do
     it 'should work' do
@@ -159,9 +183,12 @@ describe 'CompaniesApi' do
   # Legal entities
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :scope 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
   # @return [LegalEntitiesResponse]
   describe 'companies_legal_entities test' do
     it 'should work' do
@@ -172,8 +199,11 @@ describe 'CompaniesApi' do
   # unit tests for companies_list
   # List companies
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
   # @return [CompaniesResponse]
   describe 'companies_list test' do
     it 'should work' do
@@ -185,9 +215,12 @@ describe 'CompaniesApi' do
   # FDA decision dates (PDUFA) and catalysts
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :scope 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
   # @return [PdufaDatesResponse]
   describe 'companies_pdufa_dates test' do
     it 'should work' do
@@ -199,9 +232,12 @@ describe 'CompaniesApi' do
   # Trial recruitment duration by sponsor and phase
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :scope 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
   # @return [SponsorRecruitmentByPhaseResponse]
   describe 'companies_sponsor_recruitment_by_phase test' do
     it 'should work' do
@@ -213,9 +249,12 @@ describe 'CompaniesApi' do
   # Trial recruitment duration by sponsor
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :scope 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
   # @return [SponsorRecruitmentDurationResponse]
   describe 'companies_sponsor_recruitment_duration test' do
     it 'should work' do
@@ -227,9 +266,12 @@ describe 'CompaniesApi' do
   # Trial-start forecast by sponsor
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :scope 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
   # @return [SponsorTrialStartForecastResponse]
   describe 'companies_sponsor_trial_start_forecast test' do
     it 'should work' do
@@ -241,9 +283,12 @@ describe 'CompaniesApi' do
   # Sponsor trials
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :scope 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
   # @return [SponsorTrialsResponse]
   describe 'companies_sponsor_trials test' do
     it 'should work' do

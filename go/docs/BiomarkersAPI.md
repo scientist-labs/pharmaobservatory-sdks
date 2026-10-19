@@ -17,7 +17,7 @@ Method | HTTP request | Description
 
 ## BiomarkersBiomarkerBqpAssertions
 
-> BiomarkerBqpAssertionsResponse BiomarkersBiomarkerBqpAssertions(ctx, id).Limit(limit).Sort(sort).Execute()
+> BiomarkerBqpAssertionsResponse BiomarkersBiomarkerBqpAssertions(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 
 FDA biomarker qualification projects
 
@@ -35,12 +35,15 @@ import (
 
 func main() {
 	id := "ESR1" // string | 
-	limit := int32(2) // int32 |  (optional)
-	sort := "route_key" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.BiomarkersAPI.BiomarkersBiomarkerBqpAssertions(context.Background(), id).Limit(limit).Sort(sort).Execute()
+	resp, r, err := apiClient.BiomarkersAPI.BiomarkersBiomarkerBqpAssertions(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `BiomarkersAPI.BiomarkersBiomarkerBqpAssertions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -66,8 +69,11 @@ Other parameters are passed through a pointer to a apiBiomarkersBiomarkerBqpAsse
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
 
 ### Return type
 
@@ -89,7 +95,7 @@ Name | Type | Description  | Notes
 
 ## BiomarkersBiomarkerCdxAssertions
 
-> BiomarkerCdxAssertionsResponse BiomarkersBiomarkerCdxAssertions(ctx, id).Limit(limit).Sort(sort).Execute()
+> BiomarkerCdxAssertionsResponse BiomarkersBiomarkerCdxAssertions(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 
 FDA companion diagnostic assertions
 
@@ -107,12 +113,15 @@ import (
 
 func main() {
 	id := "ESR1" // string | 
-	limit := int32(2) // int32 |  (optional)
-	sort := "biomarker_id" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.BiomarkersAPI.BiomarkersBiomarkerCdxAssertions(context.Background(), id).Limit(limit).Sort(sort).Execute()
+	resp, r, err := apiClient.BiomarkersAPI.BiomarkersBiomarkerCdxAssertions(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `BiomarkersAPI.BiomarkersBiomarkerCdxAssertions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -138,8 +147,11 @@ Other parameters are passed through a pointer to a apiBiomarkersBiomarkerCdxAsse
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
 
 ### Return type
 
@@ -161,7 +173,7 @@ Name | Type | Description  | Notes
 
 ## BiomarkersBiomarkerEvidence
 
-> BiomarkerEvidenceResponse BiomarkersBiomarkerEvidence(ctx, id).Limit(limit).Sort(sort).Execute()
+> BiomarkerEvidenceResponse BiomarkersBiomarkerEvidence(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 
 Biomarker evidence
 
@@ -179,12 +191,15 @@ import (
 
 func main() {
 	id := "ESR1" // string | 
-	limit := int32(2) // int32 |  (optional)
-	sort := "gene_symbol" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.BiomarkersAPI.BiomarkersBiomarkerEvidence(context.Background(), id).Limit(limit).Sort(sort).Execute()
+	resp, r, err := apiClient.BiomarkersAPI.BiomarkersBiomarkerEvidence(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `BiomarkersAPI.BiomarkersBiomarkerEvidence``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -210,8 +225,11 @@ Other parameters are passed through a pointer to a apiBiomarkersBiomarkerEvidenc
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
 
 ### Return type
 
@@ -233,7 +251,7 @@ Name | Type | Description  | Notes
 
 ## BiomarkersBiomarkerLiterature
 
-> BiomarkerLiteratureResponse BiomarkersBiomarkerLiterature(ctx, id).Limit(limit).Sort(sort).Execute()
+> BiomarkerLiteratureResponse BiomarkersBiomarkerLiterature(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 
 Trial-cited literature mentions
 
@@ -251,12 +269,15 @@ import (
 
 func main() {
 	id := "ESR1" // string | 
-	limit := int32(2) // int32 |  (optional)
-	sort := "pub_year" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.BiomarkersAPI.BiomarkersBiomarkerLiterature(context.Background(), id).Limit(limit).Sort(sort).Execute()
+	resp, r, err := apiClient.BiomarkersAPI.BiomarkersBiomarkerLiterature(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `BiomarkersAPI.BiomarkersBiomarkerLiterature``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -282,8 +303,11 @@ Other parameters are passed through a pointer to a apiBiomarkersBiomarkerLiterat
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
 
 ### Return type
 
@@ -305,7 +329,7 @@ Name | Type | Description  | Notes
 
 ## BiomarkersBiomarkerPublishingCompanies
 
-> BiomarkerPublishingCompaniesResponse BiomarkersBiomarkerPublishingCompanies(ctx, id).Limit(limit).Sort(sort).Execute()
+> BiomarkerPublishingCompaniesResponse BiomarkersBiomarkerPublishingCompanies(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 
 Companies publishing on a biomarker
 
@@ -323,12 +347,15 @@ import (
 
 func main() {
 	id := "ESR1" // string | 
-	limit := int32(2) // int32 |  (optional)
-	sort := "n_publications" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.BiomarkersAPI.BiomarkersBiomarkerPublishingCompanies(context.Background(), id).Limit(limit).Sort(sort).Execute()
+	resp, r, err := apiClient.BiomarkersAPI.BiomarkersBiomarkerPublishingCompanies(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `BiomarkersAPI.BiomarkersBiomarkerPublishingCompanies``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -354,8 +381,11 @@ Other parameters are passed through a pointer to a apiBiomarkersBiomarkerPublish
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
 
 ### Return type
 
@@ -377,7 +407,7 @@ Name | Type | Description  | Notes
 
 ## BiomarkersBiomarkerVariantMentions
 
-> BiomarkerVariantMentionsResponse BiomarkersBiomarkerVariantMentions(ctx, id).Limit(limit).Sort(sort).Execute()
+> BiomarkerVariantMentionsResponse BiomarkersBiomarkerVariantMentions(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 
 Protein variant mentions
 
@@ -395,12 +425,15 @@ import (
 
 func main() {
 	id := "ESR1" // string | 
-	limit := int32(2) // int32 |  (optional)
-	sort := "n_papers" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.BiomarkersAPI.BiomarkersBiomarkerVariantMentions(context.Background(), id).Limit(limit).Sort(sort).Execute()
+	resp, r, err := apiClient.BiomarkersAPI.BiomarkersBiomarkerVariantMentions(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `BiomarkersAPI.BiomarkersBiomarkerVariantMentions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -426,8 +459,11 @@ Other parameters are passed through a pointer to a apiBiomarkersBiomarkerVariant
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
 
 ### Return type
 
@@ -517,7 +553,7 @@ Name | Type | Description  | Notes
 
 ## BiomarkersList
 
-> BiomarkersResponse BiomarkersList(ctx).Limit(limit).Sort(sort).Execute()
+> BiomarkersResponse BiomarkersList(ctx).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 
 List biomarkers
 
@@ -534,12 +570,15 @@ import (
 )
 
 func main() {
-	limit := int32(2) // int32 |  (optional)
-	sort := "evidence_tier" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.BiomarkersAPI.BiomarkersList(context.Background()).Limit(limit).Sort(sort).Execute()
+	resp, r, err := apiClient.BiomarkersAPI.BiomarkersList(context.Background()).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `BiomarkersAPI.BiomarkersList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -560,8 +599,11 @@ Other parameters are passed through a pointer to a apiBiomarkersListRequest stru
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int32** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
 
 ### Return type
 

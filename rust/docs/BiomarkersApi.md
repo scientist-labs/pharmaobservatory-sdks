@@ -17,7 +17,7 @@ Method | HTTP request | Description
 
 ## biomarkers_period_biomarker_bqp_assertions
 
-> models::BiomarkerBqpAssertionsResponse biomarkers_period_biomarker_bqp_assertions(id, limit, sort)
+> models::BiomarkerBqpAssertionsResponse biomarkers_period_biomarker_bqp_assertions(id, cursor, limit, sort, group_by, measure)
 FDA biomarker qualification projects
 
 ### Parameters
@@ -26,8 +26,11 @@ FDA biomarker qualification projects
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
 
 ### Return type
 
@@ -47,7 +50,7 @@ Name | Type | Description  | Required | Notes
 
 ## biomarkers_period_biomarker_cdx_assertions
 
-> models::BiomarkerCdxAssertionsResponse biomarkers_period_biomarker_cdx_assertions(id, limit, sort)
+> models::BiomarkerCdxAssertionsResponse biomarkers_period_biomarker_cdx_assertions(id, cursor, limit, sort, group_by, measure)
 FDA companion diagnostic assertions
 
 ### Parameters
@@ -56,8 +59,11 @@ FDA companion diagnostic assertions
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
 
 ### Return type
 
@@ -77,7 +83,7 @@ Name | Type | Description  | Required | Notes
 
 ## biomarkers_period_biomarker_evidence
 
-> models::BiomarkerEvidenceResponse biomarkers_period_biomarker_evidence(id, limit, sort)
+> models::BiomarkerEvidenceResponse biomarkers_period_biomarker_evidence(id, cursor, limit, sort, group_by, measure)
 Biomarker evidence
 
 ### Parameters
@@ -86,8 +92,11 @@ Biomarker evidence
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
 
 ### Return type
 
@@ -107,7 +116,7 @@ Name | Type | Description  | Required | Notes
 
 ## biomarkers_period_biomarker_literature
 
-> models::BiomarkerLiteratureResponse biomarkers_period_biomarker_literature(id, limit, sort)
+> models::BiomarkerLiteratureResponse biomarkers_period_biomarker_literature(id, cursor, limit, sort, group_by, measure)
 Trial-cited literature mentions
 
 ### Parameters
@@ -116,8 +125,11 @@ Trial-cited literature mentions
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
 
 ### Return type
 
@@ -137,7 +149,7 @@ Name | Type | Description  | Required | Notes
 
 ## biomarkers_period_biomarker_publishing_companies
 
-> models::BiomarkerPublishingCompaniesResponse biomarkers_period_biomarker_publishing_companies(id, limit, sort)
+> models::BiomarkerPublishingCompaniesResponse biomarkers_period_biomarker_publishing_companies(id, cursor, limit, sort, group_by, measure)
 Companies publishing on a biomarker
 
 ### Parameters
@@ -146,8 +158,11 @@ Companies publishing on a biomarker
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
 
 ### Return type
 
@@ -167,7 +182,7 @@ Name | Type | Description  | Required | Notes
 
 ## biomarkers_period_biomarker_variant_mentions
 
-> models::BiomarkerVariantMentionsResponse biomarkers_period_biomarker_variant_mentions(id, limit, sort)
+> models::BiomarkerVariantMentionsResponse biomarkers_period_biomarker_variant_mentions(id, cursor, limit, sort, group_by, measure)
 Protein variant mentions
 
 ### Parameters
@@ -176,8 +191,11 @@ Protein variant mentions
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
 
 ### Return type
 
@@ -225,7 +243,7 @@ Name | Type | Description  | Required | Notes
 
 ## biomarkers_period_list
 
-> models::BiomarkersResponse biomarkers_period_list(limit, sort)
+> models::BiomarkersResponse biomarkers_period_list(cursor, limit, sort, group_by, measure)
 List biomarkers
 
 ### Parameters
@@ -233,8 +251,11 @@ List biomarkers
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**limit** | Option<**i32**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
 
 ### Return type
 

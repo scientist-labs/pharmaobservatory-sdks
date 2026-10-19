@@ -134,20 +134,32 @@ pub enum LegalEntitiesPeriodSponsorTrialsError {
 }
 
 
-pub async fn legal_entities_period_company_programs(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, sort: Option<&str>) -> Result<models::CompanyProgramsResponse, Error<LegalEntitiesPeriodCompanyProgramsError>> {
+pub async fn legal_entities_period_company_programs(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::CompanyProgramsResponse, Error<LegalEntitiesPeriodCompanyProgramsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
 
     let uri_str = format!("{}/api/v1/legal_entities/{id}/company_programs", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -181,20 +193,32 @@ pub async fn legal_entities_period_company_programs(configuration: &configuratio
     }
 }
 
-pub async fn legal_entities_period_drug_patent_cliff(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, sort: Option<&str>) -> Result<models::DrugPatentCliffResponse, Error<LegalEntitiesPeriodDrugPatentCliffError>> {
+pub async fn legal_entities_period_drug_patent_cliff(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::DrugPatentCliffResponse, Error<LegalEntitiesPeriodDrugPatentCliffError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
 
     let uri_str = format!("{}/api/v1/legal_entities/{id}/drug_patent_cliff", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -267,20 +291,32 @@ pub async fn legal_entities_period_get(configuration: &configuration::Configurat
     }
 }
 
-pub async fn legal_entities_period_institutional_holdings(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, sort: Option<&str>) -> Result<models::InstitutionalHoldingsResponse, Error<LegalEntitiesPeriodInstitutionalHoldingsError>> {
+pub async fn legal_entities_period_institutional_holdings(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::InstitutionalHoldingsResponse, Error<LegalEntitiesPeriodInstitutionalHoldingsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
 
     let uri_str = format!("{}/api/v1/legal_entities/{id}/institutional_holdings", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -314,19 +350,31 @@ pub async fn legal_entities_period_institutional_holdings(configuration: &config
     }
 }
 
-pub async fn legal_entities_period_list(configuration: &configuration::Configuration, limit: Option<i32>, sort: Option<&str>) -> Result<models::LegalEntitiesResponse, Error<LegalEntitiesPeriodListError>> {
+pub async fn legal_entities_period_list(configuration: &configuration::Configuration, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::LegalEntitiesResponse, Error<LegalEntitiesPeriodListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
+    let p_cursor = cursor;
     let p_limit = limit;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
 
     let uri_str = format!("{}/api/v1/legal_entities", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -360,20 +408,32 @@ pub async fn legal_entities_period_list(configuration: &configuration::Configura
     }
 }
 
-pub async fn legal_entities_period_pdufa_dates(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, sort: Option<&str>) -> Result<models::PdufaDatesResponse, Error<LegalEntitiesPeriodPdufaDatesError>> {
+pub async fn legal_entities_period_pdufa_dates(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::PdufaDatesResponse, Error<LegalEntitiesPeriodPdufaDatesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
 
     let uri_str = format!("{}/api/v1/legal_entities/{id}/pdufa_dates", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -407,20 +467,32 @@ pub async fn legal_entities_period_pdufa_dates(configuration: &configuration::Co
     }
 }
 
-pub async fn legal_entities_period_sponsor_recruitment_by_phase(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, sort: Option<&str>) -> Result<models::SponsorRecruitmentByPhaseResponse, Error<LegalEntitiesPeriodSponsorRecruitmentByPhaseError>> {
+pub async fn legal_entities_period_sponsor_recruitment_by_phase(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::SponsorRecruitmentByPhaseResponse, Error<LegalEntitiesPeriodSponsorRecruitmentByPhaseError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
 
     let uri_str = format!("{}/api/v1/legal_entities/{id}/sponsor_recruitment_by_phase", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -454,20 +526,32 @@ pub async fn legal_entities_period_sponsor_recruitment_by_phase(configuration: &
     }
 }
 
-pub async fn legal_entities_period_sponsor_recruitment_duration(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, sort: Option<&str>) -> Result<models::SponsorRecruitmentDurationResponse, Error<LegalEntitiesPeriodSponsorRecruitmentDurationError>> {
+pub async fn legal_entities_period_sponsor_recruitment_duration(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::SponsorRecruitmentDurationResponse, Error<LegalEntitiesPeriodSponsorRecruitmentDurationError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
 
     let uri_str = format!("{}/api/v1/legal_entities/{id}/sponsor_recruitment_duration", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -501,20 +585,32 @@ pub async fn legal_entities_period_sponsor_recruitment_duration(configuration: &
     }
 }
 
-pub async fn legal_entities_period_sponsor_trial_start_forecast(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, sort: Option<&str>) -> Result<models::SponsorTrialStartForecastResponse, Error<LegalEntitiesPeriodSponsorTrialStartForecastError>> {
+pub async fn legal_entities_period_sponsor_trial_start_forecast(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::SponsorTrialStartForecastResponse, Error<LegalEntitiesPeriodSponsorTrialStartForecastError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
 
     let uri_str = format!("{}/api/v1/legal_entities/{id}/sponsor_trial_start_forecast", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
@@ -548,20 +644,32 @@ pub async fn legal_entities_period_sponsor_trial_start_forecast(configuration: &
     }
 }
 
-pub async fn legal_entities_period_sponsor_trials(configuration: &configuration::Configuration, id: &str, limit: Option<i32>, sort: Option<&str>) -> Result<models::SponsorTrialsResponse, Error<LegalEntitiesPeriodSponsorTrialsError>> {
+pub async fn legal_entities_period_sponsor_trials(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::SponsorTrialsResponse, Error<LegalEntitiesPeriodSponsorTrialsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
+    let p_cursor = cursor;
     let p_limit = limit;
     let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
 
     let uri_str = format!("{}/api/v1/legal_entities/{id}/sponsor_trials", configuration.base_path, id=crate::apis::urlencode(p_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = p_limit {
         req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
     }
     if let Some(ref param_value) = p_sort {
         req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
     }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());

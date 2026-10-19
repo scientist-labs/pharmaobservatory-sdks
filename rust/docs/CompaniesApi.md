@@ -25,7 +25,7 @@ Method | HTTP request | Description
 
 ## companies_period_biomarker_bqp_assertions
 
-> models::BiomarkerBqpAssertionsResponse companies_period_biomarker_bqp_assertions(id, limit, scope, sort)
+> models::BiomarkerBqpAssertionsResponse companies_period_biomarker_bqp_assertions(id, cursor, limit, sort, group_by, measure, scope)
 FDA biomarker qualification projects
 
 ### Parameters
@@ -34,9 +34,12 @@ FDA biomarker qualification projects
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**scope** | Option<**String**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
 
 ### Return type
 
@@ -56,7 +59,7 @@ Name | Type | Description  | Required | Notes
 
 ## companies_period_biomarker_cdx_assertions
 
-> models::BiomarkerCdxAssertionsResponse companies_period_biomarker_cdx_assertions(id, limit, scope, sort)
+> models::BiomarkerCdxAssertionsResponse companies_period_biomarker_cdx_assertions(id, cursor, limit, sort, group_by, measure, scope)
 FDA companion diagnostic assertions
 
 ### Parameters
@@ -65,9 +68,12 @@ FDA companion diagnostic assertions
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**scope** | Option<**String**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
 
 ### Return type
 
@@ -87,7 +93,7 @@ Name | Type | Description  | Required | Notes
 
 ## companies_period_biomarker_publishing_companies
 
-> models::BiomarkerPublishingCompaniesResponse companies_period_biomarker_publishing_companies(id, limit, scope, sort)
+> models::BiomarkerPublishingCompaniesResponse companies_period_biomarker_publishing_companies(id, cursor, limit, sort, group_by, measure, scope)
 Companies publishing on a biomarker
 
 ### Parameters
@@ -96,9 +102,12 @@ Companies publishing on a biomarker
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**scope** | Option<**String**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
 
 ### Return type
 
@@ -118,7 +127,7 @@ Name | Type | Description  | Required | Notes
 
 ## companies_period_company_members
 
-> models::CompanyMembersResponse companies_period_company_members(id, limit, scope, sort)
+> models::CompanyMembersResponse companies_period_company_members(id, cursor, limit, sort, group_by, measure, scope)
 Company members
 
 ### Parameters
@@ -127,9 +136,12 @@ Company members
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**scope** | Option<**String**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
 
 ### Return type
 
@@ -149,7 +161,7 @@ Name | Type | Description  | Required | Notes
 
 ## companies_period_company_programs
 
-> models::CompanyProgramsResponse companies_period_company_programs(id, limit, scope, sort)
+> models::CompanyProgramsResponse companies_period_company_programs(id, cursor, limit, sort, group_by, measure, scope)
 Company programs
 
 ### Parameters
@@ -158,9 +170,12 @@ Company programs
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**scope** | Option<**String**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
 
 ### Return type
 
@@ -180,7 +195,7 @@ Name | Type | Description  | Required | Notes
 
 ## companies_period_company_targets
 
-> models::CompanyTargetsResponse companies_period_company_targets(id, limit, scope, sort)
+> models::CompanyTargetsResponse companies_period_company_targets(id, cursor, limit, sort, group_by, measure, scope)
 Targets a company pursues
 
 ### Parameters
@@ -189,9 +204,12 @@ Targets a company pursues
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**scope** | Option<**String**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
 
 ### Return type
 
@@ -211,7 +229,7 @@ Name | Type | Description  | Required | Notes
 
 ## companies_period_drug_patent_cliff
 
-> models::DrugPatentCliffResponse companies_period_drug_patent_cliff(id, limit, scope, sort)
+> models::DrugPatentCliffResponse companies_period_drug_patent_cliff(id, cursor, limit, sort, group_by, measure, scope)
 Patent-cliff exposure
 
 ### Parameters
@@ -220,9 +238,12 @@ Patent-cliff exposure
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**scope** | Option<**String**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
 
 ### Return type
 
@@ -270,7 +291,7 @@ Name | Type | Description  | Required | Notes
 
 ## companies_period_institutional_holdings
 
-> models::InstitutionalHoldingsResponse companies_period_institutional_holdings(id, limit, scope, sort)
+> models::InstitutionalHoldingsResponse companies_period_institutional_holdings(id, cursor, limit, sort, group_by, measure, scope)
 Institutional holdings (SEC Form 13F)
 
 ### Parameters
@@ -279,9 +300,12 @@ Institutional holdings (SEC Form 13F)
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**scope** | Option<**String**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
 
 ### Return type
 
@@ -301,7 +325,7 @@ Name | Type | Description  | Required | Notes
 
 ## companies_period_legal_entities
 
-> models::LegalEntitiesResponse companies_period_legal_entities(id, limit, scope, sort)
+> models::LegalEntitiesResponse companies_period_legal_entities(id, cursor, limit, sort, group_by, measure, scope)
 Legal entities
 
 ### Parameters
@@ -310,9 +334,12 @@ Legal entities
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**scope** | Option<**String**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
 
 ### Return type
 
@@ -332,7 +359,7 @@ Name | Type | Description  | Required | Notes
 
 ## companies_period_list
 
-> models::CompaniesResponse companies_period_list(limit, sort)
+> models::CompaniesResponse companies_period_list(cursor, limit, sort, group_by, measure)
 List companies
 
 ### Parameters
@@ -340,8 +367,11 @@ List companies
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**limit** | Option<**i32**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
 
 ### Return type
 
@@ -361,7 +391,7 @@ Name | Type | Description  | Required | Notes
 
 ## companies_period_pdufa_dates
 
-> models::PdufaDatesResponse companies_period_pdufa_dates(id, limit, scope, sort)
+> models::PdufaDatesResponse companies_period_pdufa_dates(id, cursor, limit, sort, group_by, measure, scope)
 FDA decision dates (PDUFA) and catalysts
 
 ### Parameters
@@ -370,9 +400,12 @@ FDA decision dates (PDUFA) and catalysts
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**scope** | Option<**String**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
 
 ### Return type
 
@@ -392,7 +425,7 @@ Name | Type | Description  | Required | Notes
 
 ## companies_period_sponsor_recruitment_by_phase
 
-> models::SponsorRecruitmentByPhaseResponse companies_period_sponsor_recruitment_by_phase(id, limit, scope, sort)
+> models::SponsorRecruitmentByPhaseResponse companies_period_sponsor_recruitment_by_phase(id, cursor, limit, sort, group_by, measure, scope)
 Trial recruitment duration by sponsor and phase
 
 ### Parameters
@@ -401,9 +434,12 @@ Trial recruitment duration by sponsor and phase
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**scope** | Option<**String**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
 
 ### Return type
 
@@ -423,7 +459,7 @@ Name | Type | Description  | Required | Notes
 
 ## companies_period_sponsor_recruitment_duration
 
-> models::SponsorRecruitmentDurationResponse companies_period_sponsor_recruitment_duration(id, limit, scope, sort)
+> models::SponsorRecruitmentDurationResponse companies_period_sponsor_recruitment_duration(id, cursor, limit, sort, group_by, measure, scope)
 Trial recruitment duration by sponsor
 
 ### Parameters
@@ -432,9 +468,12 @@ Trial recruitment duration by sponsor
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**scope** | Option<**String**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
 
 ### Return type
 
@@ -454,7 +493,7 @@ Name | Type | Description  | Required | Notes
 
 ## companies_period_sponsor_trial_start_forecast
 
-> models::SponsorTrialStartForecastResponse companies_period_sponsor_trial_start_forecast(id, limit, scope, sort)
+> models::SponsorTrialStartForecastResponse companies_period_sponsor_trial_start_forecast(id, cursor, limit, sort, group_by, measure, scope)
 Trial-start forecast by sponsor
 
 ### Parameters
@@ -463,9 +502,12 @@ Trial-start forecast by sponsor
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**scope** | Option<**String**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
 
 ### Return type
 
@@ -485,7 +527,7 @@ Name | Type | Description  | Required | Notes
 
 ## companies_period_sponsor_trials
 
-> models::SponsorTrialsResponse companies_period_sponsor_trials(id, limit, scope, sort)
+> models::SponsorTrialsResponse companies_period_sponsor_trials(id, cursor, limit, sort, group_by, measure, scope)
 Sponsor trials
 
 ### Parameters
@@ -494,9 +536,12 @@ Sponsor trials
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **String** |  | [required] |
-**limit** | Option<**i32**> |  |  |
-**scope** | Option<**String**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
 
 ### Return type
 

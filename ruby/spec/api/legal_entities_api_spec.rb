@@ -36,8 +36,11 @@ describe 'LegalEntitiesApi' do
   # Company programs
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
   # @return [CompanyProgramsResponse]
   describe 'legal_entities_company_programs test' do
     it 'should work' do
@@ -49,8 +52,11 @@ describe 'LegalEntitiesApi' do
   # Patent-cliff exposure
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
   # @return [DrugPatentCliffResponse]
   describe 'legal_entities_drug_patent_cliff test' do
     it 'should work' do
@@ -73,8 +79,11 @@ describe 'LegalEntitiesApi' do
   # Institutional holdings (SEC Form 13F)
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
   # @return [InstitutionalHoldingsResponse]
   describe 'legal_entities_institutional_holdings test' do
     it 'should work' do
@@ -85,8 +94,11 @@ describe 'LegalEntitiesApi' do
   # unit tests for legal_entities_list
   # List legal entities
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
   # @return [LegalEntitiesResponse]
   describe 'legal_entities_list test' do
     it 'should work' do
@@ -98,8 +110,11 @@ describe 'LegalEntitiesApi' do
   # FDA decision dates (PDUFA) and catalysts
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
   # @return [PdufaDatesResponse]
   describe 'legal_entities_pdufa_dates test' do
     it 'should work' do
@@ -111,8 +126,11 @@ describe 'LegalEntitiesApi' do
   # Trial recruitment duration by sponsor and phase
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
   # @return [SponsorRecruitmentByPhaseResponse]
   describe 'legal_entities_sponsor_recruitment_by_phase test' do
     it 'should work' do
@@ -124,8 +142,11 @@ describe 'LegalEntitiesApi' do
   # Trial recruitment duration by sponsor
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
   # @return [SponsorRecruitmentDurationResponse]
   describe 'legal_entities_sponsor_recruitment_duration test' do
     it 'should work' do
@@ -137,8 +158,11 @@ describe 'LegalEntitiesApi' do
   # Trial-start forecast by sponsor
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
   # @return [SponsorTrialStartForecastResponse]
   describe 'legal_entities_sponsor_trial_start_forecast test' do
     it 'should work' do
@@ -150,8 +174,11 @@ describe 'LegalEntitiesApi' do
   # Sponsor trials
   # @param id 
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
   # @return [SponsorTrialsResponse]
   describe 'legal_entities_sponsor_trials test' do
     it 'should work' do

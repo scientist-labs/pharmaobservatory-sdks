@@ -25,7 +25,7 @@ Method | HTTP request | Description
 
 ## CompaniesBiomarkerBqpAssertions
 
-> BiomarkerBqpAssertionsResponse CompaniesBiomarkerBqpAssertions(ctx, id).Limit(limit).Scope(scope).Sort(sort).Execute()
+> BiomarkerBqpAssertionsResponse CompaniesBiomarkerBqpAssertions(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 
 FDA biomarker qualification projects
 
@@ -43,13 +43,16 @@ import (
 
 func main() {
 	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
-	limit := int32(2) // int32 |  (optional)
-	scope := "company" // string |  (optional)
-	sort := "route_key" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CompaniesAPI.CompaniesBiomarkerBqpAssertions(context.Background(), id).Limit(limit).Scope(scope).Sort(sort).Execute()
+	resp, r, err := apiClient.CompaniesAPI.CompaniesBiomarkerBqpAssertions(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesBiomarkerBqpAssertions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -75,9 +78,12 @@ Other parameters are passed through a pointer to a apiCompaniesBiomarkerBqpAsser
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **scope** | **string** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
 
 ### Return type
 
@@ -99,7 +105,7 @@ Name | Type | Description  | Notes
 
 ## CompaniesBiomarkerCdxAssertions
 
-> BiomarkerCdxAssertionsResponse CompaniesBiomarkerCdxAssertions(ctx, id).Limit(limit).Scope(scope).Sort(sort).Execute()
+> BiomarkerCdxAssertionsResponse CompaniesBiomarkerCdxAssertions(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 
 FDA companion diagnostic assertions
 
@@ -117,13 +123,16 @@ import (
 
 func main() {
 	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
-	limit := int32(2) // int32 |  (optional)
-	scope := "company" // string |  (optional)
-	sort := "biomarker_id" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CompaniesAPI.CompaniesBiomarkerCdxAssertions(context.Background(), id).Limit(limit).Scope(scope).Sort(sort).Execute()
+	resp, r, err := apiClient.CompaniesAPI.CompaniesBiomarkerCdxAssertions(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesBiomarkerCdxAssertions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -149,9 +158,12 @@ Other parameters are passed through a pointer to a apiCompaniesBiomarkerCdxAsser
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **scope** | **string** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
 
 ### Return type
 
@@ -173,7 +185,7 @@ Name | Type | Description  | Notes
 
 ## CompaniesBiomarkerPublishingCompanies
 
-> BiomarkerPublishingCompaniesResponse CompaniesBiomarkerPublishingCompanies(ctx, id).Limit(limit).Scope(scope).Sort(sort).Execute()
+> BiomarkerPublishingCompaniesResponse CompaniesBiomarkerPublishingCompanies(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 
 Companies publishing on a biomarker
 
@@ -191,13 +203,16 @@ import (
 
 func main() {
 	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
-	limit := int32(2) // int32 |  (optional)
-	scope := "company" // string |  (optional)
-	sort := "n_publications" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CompaniesAPI.CompaniesBiomarkerPublishingCompanies(context.Background(), id).Limit(limit).Scope(scope).Sort(sort).Execute()
+	resp, r, err := apiClient.CompaniesAPI.CompaniesBiomarkerPublishingCompanies(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesBiomarkerPublishingCompanies``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -223,9 +238,12 @@ Other parameters are passed through a pointer to a apiCompaniesBiomarkerPublishi
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **scope** | **string** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
 
 ### Return type
 
@@ -247,7 +265,7 @@ Name | Type | Description  | Notes
 
 ## CompaniesCompanyMembers
 
-> CompanyMembersResponse CompaniesCompanyMembers(ctx, id).Limit(limit).Scope(scope).Sort(sort).Execute()
+> CompanyMembersResponse CompaniesCompanyMembers(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 
 Company members
 
@@ -265,13 +283,16 @@ import (
 
 func main() {
 	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
-	limit := int32(2) // int32 |  (optional)
-	scope := "company" // string |  (optional)
-	sort := "company_id" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CompaniesAPI.CompaniesCompanyMembers(context.Background(), id).Limit(limit).Scope(scope).Sort(sort).Execute()
+	resp, r, err := apiClient.CompaniesAPI.CompaniesCompanyMembers(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesCompanyMembers``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -297,9 +318,12 @@ Other parameters are passed through a pointer to a apiCompaniesCompanyMembersReq
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **scope** | **string** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
 
 ### Return type
 
@@ -321,7 +345,7 @@ Name | Type | Description  | Notes
 
 ## CompaniesCompanyPrograms
 
-> CompanyProgramsResponse CompaniesCompanyPrograms(ctx, id).Limit(limit).Scope(scope).Sort(sort).Execute()
+> CompanyProgramsResponse CompaniesCompanyPrograms(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 
 Company programs
 
@@ -339,13 +363,16 @@ import (
 
 func main() {
 	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
-	limit := int32(2) // int32 |  (optional)
-	scope := "company" // string |  (optional)
-	sort := "max_phase" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CompaniesAPI.CompaniesCompanyPrograms(context.Background(), id).Limit(limit).Scope(scope).Sort(sort).Execute()
+	resp, r, err := apiClient.CompaniesAPI.CompaniesCompanyPrograms(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesCompanyPrograms``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -371,9 +398,12 @@ Other parameters are passed through a pointer to a apiCompaniesCompanyProgramsRe
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **scope** | **string** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
 
 ### Return type
 
@@ -395,7 +425,7 @@ Name | Type | Description  | Notes
 
 ## CompaniesCompanyTargets
 
-> CompanyTargetsResponse CompaniesCompanyTargets(ctx, id).Limit(limit).Scope(scope).Sort(sort).Execute()
+> CompanyTargetsResponse CompaniesCompanyTargets(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 
 Targets a company pursues
 
@@ -413,13 +443,16 @@ import (
 
 func main() {
 	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
-	limit := int32(2) // int32 |  (optional)
-	scope := "company" // string |  (optional)
-	sort := "max_phase" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CompaniesAPI.CompaniesCompanyTargets(context.Background(), id).Limit(limit).Scope(scope).Sort(sort).Execute()
+	resp, r, err := apiClient.CompaniesAPI.CompaniesCompanyTargets(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesCompanyTargets``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -445,9 +478,12 @@ Other parameters are passed through a pointer to a apiCompaniesCompanyTargetsReq
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **scope** | **string** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
 
 ### Return type
 
@@ -469,7 +505,7 @@ Name | Type | Description  | Notes
 
 ## CompaniesDrugPatentCliff
 
-> DrugPatentCliffResponse CompaniesDrugPatentCliff(ctx, id).Limit(limit).Scope(scope).Sort(sort).Execute()
+> DrugPatentCliffResponse CompaniesDrugPatentCliff(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 
 Patent-cliff exposure
 
@@ -487,13 +523,16 @@ import (
 
 func main() {
 	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
-	limit := int32(2) // int32 |  (optional)
-	scope := "company" // string |  (optional)
-	sort := "cliff_date" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CompaniesAPI.CompaniesDrugPatentCliff(context.Background(), id).Limit(limit).Scope(scope).Sort(sort).Execute()
+	resp, r, err := apiClient.CompaniesAPI.CompaniesDrugPatentCliff(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesDrugPatentCliff``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -519,9 +558,12 @@ Other parameters are passed through a pointer to a apiCompaniesDrugPatentCliffRe
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **scope** | **string** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
 
 ### Return type
 
@@ -611,7 +653,7 @@ Name | Type | Description  | Notes
 
 ## CompaniesInstitutionalHoldings
 
-> InstitutionalHoldingsResponse CompaniesInstitutionalHoldings(ctx, id).Limit(limit).Scope(scope).Sort(sort).Execute()
+> InstitutionalHoldingsResponse CompaniesInstitutionalHoldings(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 
 Institutional holdings (SEC Form 13F)
 
@@ -629,13 +671,16 @@ import (
 
 func main() {
 	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
-	limit := int32(2) // int32 |  (optional)
-	scope := "company" // string |  (optional)
-	sort := "reported_value_amount" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CompaniesAPI.CompaniesInstitutionalHoldings(context.Background(), id).Limit(limit).Scope(scope).Sort(sort).Execute()
+	resp, r, err := apiClient.CompaniesAPI.CompaniesInstitutionalHoldings(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesInstitutionalHoldings``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -661,9 +706,12 @@ Other parameters are passed through a pointer to a apiCompaniesInstitutionalHold
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **scope** | **string** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
 
 ### Return type
 
@@ -685,7 +733,7 @@ Name | Type | Description  | Notes
 
 ## CompaniesLegalEntities
 
-> LegalEntitiesResponse CompaniesLegalEntities(ctx, id).Limit(limit).Scope(scope).Sort(sort).Execute()
+> LegalEntitiesResponse CompaniesLegalEntities(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 
 Legal entities
 
@@ -703,13 +751,16 @@ import (
 
 func main() {
 	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
-	limit := int32(2) // int32 |  (optional)
-	scope := "company" // string |  (optional)
-	sort := "activity_score" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CompaniesAPI.CompaniesLegalEntities(context.Background(), id).Limit(limit).Scope(scope).Sort(sort).Execute()
+	resp, r, err := apiClient.CompaniesAPI.CompaniesLegalEntities(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesLegalEntities``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -735,9 +786,12 @@ Other parameters are passed through a pointer to a apiCompaniesLegalEntitiesRequ
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **scope** | **string** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
 
 ### Return type
 
@@ -759,7 +813,7 @@ Name | Type | Description  | Notes
 
 ## CompaniesList
 
-> CompaniesResponse CompaniesList(ctx).Limit(limit).Sort(sort).Execute()
+> CompaniesResponse CompaniesList(ctx).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 
 List companies
 
@@ -776,12 +830,15 @@ import (
 )
 
 func main() {
-	limit := int32(2) // int32 |  (optional)
-	sort := "activity_score" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CompaniesAPI.CompaniesList(context.Background()).Limit(limit).Sort(sort).Execute()
+	resp, r, err := apiClient.CompaniesAPI.CompaniesList(context.Background()).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -802,8 +859,11 @@ Other parameters are passed through a pointer to a apiCompaniesListRequest struc
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int32** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
 
 ### Return type
 
@@ -825,7 +885,7 @@ Name | Type | Description  | Notes
 
 ## CompaniesPdufaDates
 
-> PdufaDatesResponse CompaniesPdufaDates(ctx, id).Limit(limit).Scope(scope).Sort(sort).Execute()
+> PdufaDatesResponse CompaniesPdufaDates(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 
 FDA decision dates (PDUFA) and catalysts
 
@@ -843,13 +903,16 @@ import (
 
 func main() {
 	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
-	limit := int32(2) // int32 |  (optional)
-	scope := "company" // string |  (optional)
-	sort := "decision_date" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CompaniesAPI.CompaniesPdufaDates(context.Background(), id).Limit(limit).Scope(scope).Sort(sort).Execute()
+	resp, r, err := apiClient.CompaniesAPI.CompaniesPdufaDates(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesPdufaDates``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -875,9 +938,12 @@ Other parameters are passed through a pointer to a apiCompaniesPdufaDatesRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **scope** | **string** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
 
 ### Return type
 
@@ -899,7 +965,7 @@ Name | Type | Description  | Notes
 
 ## CompaniesSponsorRecruitmentByPhase
 
-> SponsorRecruitmentByPhaseResponse CompaniesSponsorRecruitmentByPhase(ctx, id).Limit(limit).Scope(scope).Sort(sort).Execute()
+> SponsorRecruitmentByPhaseResponse CompaniesSponsorRecruitmentByPhase(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 
 Trial recruitment duration by sponsor and phase
 
@@ -917,13 +983,16 @@ import (
 
 func main() {
 	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
-	limit := int32(2) // int32 |  (optional)
-	scope := "company" // string |  (optional)
-	sort := "sponsor_org_id" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CompaniesAPI.CompaniesSponsorRecruitmentByPhase(context.Background(), id).Limit(limit).Scope(scope).Sort(sort).Execute()
+	resp, r, err := apiClient.CompaniesAPI.CompaniesSponsorRecruitmentByPhase(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesSponsorRecruitmentByPhase``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -949,9 +1018,12 @@ Other parameters are passed through a pointer to a apiCompaniesSponsorRecruitmen
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **scope** | **string** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
 
 ### Return type
 
@@ -973,7 +1045,7 @@ Name | Type | Description  | Notes
 
 ## CompaniesSponsorRecruitmentDuration
 
-> SponsorRecruitmentDurationResponse CompaniesSponsorRecruitmentDuration(ctx, id).Limit(limit).Scope(scope).Sort(sort).Execute()
+> SponsorRecruitmentDurationResponse CompaniesSponsorRecruitmentDuration(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 
 Trial recruitment duration by sponsor
 
@@ -991,13 +1063,16 @@ import (
 
 func main() {
 	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
-	limit := int32(2) // int32 |  (optional)
-	scope := "company" // string |  (optional)
-	sort := "sponsor_org_id" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CompaniesAPI.CompaniesSponsorRecruitmentDuration(context.Background(), id).Limit(limit).Scope(scope).Sort(sort).Execute()
+	resp, r, err := apiClient.CompaniesAPI.CompaniesSponsorRecruitmentDuration(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesSponsorRecruitmentDuration``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1023,9 +1098,12 @@ Other parameters are passed through a pointer to a apiCompaniesSponsorRecruitmen
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **scope** | **string** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
 
 ### Return type
 
@@ -1047,7 +1125,7 @@ Name | Type | Description  | Notes
 
 ## CompaniesSponsorTrialStartForecast
 
-> SponsorTrialStartForecastResponse CompaniesSponsorTrialStartForecast(ctx, id).Limit(limit).Scope(scope).Sort(sort).Execute()
+> SponsorTrialStartForecastResponse CompaniesSponsorTrialStartForecast(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 
 Trial-start forecast by sponsor
 
@@ -1065,13 +1143,16 @@ import (
 
 func main() {
 	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
-	limit := int32(2) // int32 |  (optional)
-	scope := "company" // string |  (optional)
-	sort := "sponsor_org_id" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CompaniesAPI.CompaniesSponsorTrialStartForecast(context.Background(), id).Limit(limit).Scope(scope).Sort(sort).Execute()
+	resp, r, err := apiClient.CompaniesAPI.CompaniesSponsorTrialStartForecast(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesSponsorTrialStartForecast``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1097,9 +1178,12 @@ Other parameters are passed through a pointer to a apiCompaniesSponsorTrialStart
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **scope** | **string** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
 
 ### Return type
 
@@ -1121,7 +1205,7 @@ Name | Type | Description  | Notes
 
 ## CompaniesSponsorTrials
 
-> SponsorTrialsResponse CompaniesSponsorTrials(ctx, id).Limit(limit).Scope(scope).Sort(sort).Execute()
+> SponsorTrialsResponse CompaniesSponsorTrials(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 
 Sponsor trials
 
@@ -1139,13 +1223,16 @@ import (
 
 func main() {
 	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
-	limit := int32(2) // int32 |  (optional)
-	scope := "company" // string |  (optional)
-	sort := "start_date" // string |  (optional)
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CompaniesAPI.CompaniesSponsorTrials(context.Background(), id).Limit(limit).Scope(scope).Sort(sort).Execute()
+	resp, r, err := apiClient.CompaniesAPI.CompaniesSponsorTrials(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesSponsorTrials``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1171,9 +1258,12 @@ Other parameters are passed through a pointer to a apiCompaniesSponsorTrialsRequ
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** |  | 
- **scope** | **string** |  | 
- **sort** | **string** |  | 
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
 
 ### Return type
 

@@ -27,23 +27,47 @@ type ApiCompaniesBiomarkerBqpAssertionsRequest struct {
 	ctx context.Context
 	ApiService *CompaniesAPIService
 	id string
+	cursor *string
 	limit *int32
-	scope *string
 	sort *string
+	groupBy *string
+	measure *string
+	scope *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiCompaniesBiomarkerBqpAssertionsRequest) Cursor(cursor string) ApiCompaniesBiomarkerBqpAssertionsRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiCompaniesBiomarkerBqpAssertionsRequest) Limit(limit int32) ApiCompaniesBiomarkerBqpAssertionsRequest {
 	r.limit = &limit
 	return r
 }
 
-func (r ApiCompaniesBiomarkerBqpAssertionsRequest) Scope(scope string) ApiCompaniesBiomarkerBqpAssertionsRequest {
-	r.scope = &scope
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiCompaniesBiomarkerBqpAssertionsRequest) Sort(sort string) ApiCompaniesBiomarkerBqpAssertionsRequest {
+	r.sort = &sort
 	return r
 }
 
-func (r ApiCompaniesBiomarkerBqpAssertionsRequest) Sort(sort string) ApiCompaniesBiomarkerBqpAssertionsRequest {
-	r.sort = &sort
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiCompaniesBiomarkerBqpAssertionsRequest) GroupBy(groupBy string) ApiCompaniesBiomarkerBqpAssertionsRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiCompaniesBiomarkerBqpAssertionsRequest) Measure(measure string) ApiCompaniesBiomarkerBqpAssertionsRequest {
+	r.measure = &measure
+	return r
+}
+
+// company (this company only) or group (its corporate group).
+func (r ApiCompaniesBiomarkerBqpAssertionsRequest) Scope(scope string) ApiCompaniesBiomarkerBqpAssertionsRequest {
+	r.scope = &scope
 	return r
 }
 
@@ -88,14 +112,23 @@ func (a *CompaniesAPIService) CompaniesBiomarkerBqpAssertionsExecute(r ApiCompan
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
-	if r.scope != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
-	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -209,23 +242,47 @@ type ApiCompaniesBiomarkerCdxAssertionsRequest struct {
 	ctx context.Context
 	ApiService *CompaniesAPIService
 	id string
+	cursor *string
 	limit *int32
-	scope *string
 	sort *string
+	groupBy *string
+	measure *string
+	scope *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiCompaniesBiomarkerCdxAssertionsRequest) Cursor(cursor string) ApiCompaniesBiomarkerCdxAssertionsRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiCompaniesBiomarkerCdxAssertionsRequest) Limit(limit int32) ApiCompaniesBiomarkerCdxAssertionsRequest {
 	r.limit = &limit
 	return r
 }
 
-func (r ApiCompaniesBiomarkerCdxAssertionsRequest) Scope(scope string) ApiCompaniesBiomarkerCdxAssertionsRequest {
-	r.scope = &scope
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiCompaniesBiomarkerCdxAssertionsRequest) Sort(sort string) ApiCompaniesBiomarkerCdxAssertionsRequest {
+	r.sort = &sort
 	return r
 }
 
-func (r ApiCompaniesBiomarkerCdxAssertionsRequest) Sort(sort string) ApiCompaniesBiomarkerCdxAssertionsRequest {
-	r.sort = &sort
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiCompaniesBiomarkerCdxAssertionsRequest) GroupBy(groupBy string) ApiCompaniesBiomarkerCdxAssertionsRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiCompaniesBiomarkerCdxAssertionsRequest) Measure(measure string) ApiCompaniesBiomarkerCdxAssertionsRequest {
+	r.measure = &measure
+	return r
+}
+
+// company (this company only) or group (its corporate group).
+func (r ApiCompaniesBiomarkerCdxAssertionsRequest) Scope(scope string) ApiCompaniesBiomarkerCdxAssertionsRequest {
+	r.scope = &scope
 	return r
 }
 
@@ -270,14 +327,23 @@ func (a *CompaniesAPIService) CompaniesBiomarkerCdxAssertionsExecute(r ApiCompan
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
-	if r.scope != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
-	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -391,23 +457,47 @@ type ApiCompaniesBiomarkerPublishingCompaniesRequest struct {
 	ctx context.Context
 	ApiService *CompaniesAPIService
 	id string
+	cursor *string
 	limit *int32
-	scope *string
 	sort *string
+	groupBy *string
+	measure *string
+	scope *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiCompaniesBiomarkerPublishingCompaniesRequest) Cursor(cursor string) ApiCompaniesBiomarkerPublishingCompaniesRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiCompaniesBiomarkerPublishingCompaniesRequest) Limit(limit int32) ApiCompaniesBiomarkerPublishingCompaniesRequest {
 	r.limit = &limit
 	return r
 }
 
-func (r ApiCompaniesBiomarkerPublishingCompaniesRequest) Scope(scope string) ApiCompaniesBiomarkerPublishingCompaniesRequest {
-	r.scope = &scope
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiCompaniesBiomarkerPublishingCompaniesRequest) Sort(sort string) ApiCompaniesBiomarkerPublishingCompaniesRequest {
+	r.sort = &sort
 	return r
 }
 
-func (r ApiCompaniesBiomarkerPublishingCompaniesRequest) Sort(sort string) ApiCompaniesBiomarkerPublishingCompaniesRequest {
-	r.sort = &sort
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiCompaniesBiomarkerPublishingCompaniesRequest) GroupBy(groupBy string) ApiCompaniesBiomarkerPublishingCompaniesRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiCompaniesBiomarkerPublishingCompaniesRequest) Measure(measure string) ApiCompaniesBiomarkerPublishingCompaniesRequest {
+	r.measure = &measure
+	return r
+}
+
+// company (this company only) or group (its corporate group).
+func (r ApiCompaniesBiomarkerPublishingCompaniesRequest) Scope(scope string) ApiCompaniesBiomarkerPublishingCompaniesRequest {
+	r.scope = &scope
 	return r
 }
 
@@ -452,14 +542,23 @@ func (a *CompaniesAPIService) CompaniesBiomarkerPublishingCompaniesExecute(r Api
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
-	if r.scope != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
-	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -573,23 +672,47 @@ type ApiCompaniesCompanyMembersRequest struct {
 	ctx context.Context
 	ApiService *CompaniesAPIService
 	id string
+	cursor *string
 	limit *int32
-	scope *string
 	sort *string
+	groupBy *string
+	measure *string
+	scope *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiCompaniesCompanyMembersRequest) Cursor(cursor string) ApiCompaniesCompanyMembersRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiCompaniesCompanyMembersRequest) Limit(limit int32) ApiCompaniesCompanyMembersRequest {
 	r.limit = &limit
 	return r
 }
 
-func (r ApiCompaniesCompanyMembersRequest) Scope(scope string) ApiCompaniesCompanyMembersRequest {
-	r.scope = &scope
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiCompaniesCompanyMembersRequest) Sort(sort string) ApiCompaniesCompanyMembersRequest {
+	r.sort = &sort
 	return r
 }
 
-func (r ApiCompaniesCompanyMembersRequest) Sort(sort string) ApiCompaniesCompanyMembersRequest {
-	r.sort = &sort
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiCompaniesCompanyMembersRequest) GroupBy(groupBy string) ApiCompaniesCompanyMembersRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiCompaniesCompanyMembersRequest) Measure(measure string) ApiCompaniesCompanyMembersRequest {
+	r.measure = &measure
+	return r
+}
+
+// company (this company only) or group (its corporate group).
+func (r ApiCompaniesCompanyMembersRequest) Scope(scope string) ApiCompaniesCompanyMembersRequest {
+	r.scope = &scope
 	return r
 }
 
@@ -634,14 +757,23 @@ func (a *CompaniesAPIService) CompaniesCompanyMembersExecute(r ApiCompaniesCompa
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
-	if r.scope != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
-	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -755,23 +887,47 @@ type ApiCompaniesCompanyProgramsRequest struct {
 	ctx context.Context
 	ApiService *CompaniesAPIService
 	id string
+	cursor *string
 	limit *int32
-	scope *string
 	sort *string
+	groupBy *string
+	measure *string
+	scope *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiCompaniesCompanyProgramsRequest) Cursor(cursor string) ApiCompaniesCompanyProgramsRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiCompaniesCompanyProgramsRequest) Limit(limit int32) ApiCompaniesCompanyProgramsRequest {
 	r.limit = &limit
 	return r
 }
 
-func (r ApiCompaniesCompanyProgramsRequest) Scope(scope string) ApiCompaniesCompanyProgramsRequest {
-	r.scope = &scope
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiCompaniesCompanyProgramsRequest) Sort(sort string) ApiCompaniesCompanyProgramsRequest {
+	r.sort = &sort
 	return r
 }
 
-func (r ApiCompaniesCompanyProgramsRequest) Sort(sort string) ApiCompaniesCompanyProgramsRequest {
-	r.sort = &sort
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiCompaniesCompanyProgramsRequest) GroupBy(groupBy string) ApiCompaniesCompanyProgramsRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiCompaniesCompanyProgramsRequest) Measure(measure string) ApiCompaniesCompanyProgramsRequest {
+	r.measure = &measure
+	return r
+}
+
+// company (this company only) or group (its corporate group).
+func (r ApiCompaniesCompanyProgramsRequest) Scope(scope string) ApiCompaniesCompanyProgramsRequest {
+	r.scope = &scope
 	return r
 }
 
@@ -816,14 +972,23 @@ func (a *CompaniesAPIService) CompaniesCompanyProgramsExecute(r ApiCompaniesComp
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
-	if r.scope != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
-	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -937,23 +1102,47 @@ type ApiCompaniesCompanyTargetsRequest struct {
 	ctx context.Context
 	ApiService *CompaniesAPIService
 	id string
+	cursor *string
 	limit *int32
-	scope *string
 	sort *string
+	groupBy *string
+	measure *string
+	scope *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiCompaniesCompanyTargetsRequest) Cursor(cursor string) ApiCompaniesCompanyTargetsRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiCompaniesCompanyTargetsRequest) Limit(limit int32) ApiCompaniesCompanyTargetsRequest {
 	r.limit = &limit
 	return r
 }
 
-func (r ApiCompaniesCompanyTargetsRequest) Scope(scope string) ApiCompaniesCompanyTargetsRequest {
-	r.scope = &scope
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiCompaniesCompanyTargetsRequest) Sort(sort string) ApiCompaniesCompanyTargetsRequest {
+	r.sort = &sort
 	return r
 }
 
-func (r ApiCompaniesCompanyTargetsRequest) Sort(sort string) ApiCompaniesCompanyTargetsRequest {
-	r.sort = &sort
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiCompaniesCompanyTargetsRequest) GroupBy(groupBy string) ApiCompaniesCompanyTargetsRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiCompaniesCompanyTargetsRequest) Measure(measure string) ApiCompaniesCompanyTargetsRequest {
+	r.measure = &measure
+	return r
+}
+
+// company (this company only) or group (its corporate group).
+func (r ApiCompaniesCompanyTargetsRequest) Scope(scope string) ApiCompaniesCompanyTargetsRequest {
+	r.scope = &scope
 	return r
 }
 
@@ -998,14 +1187,23 @@ func (a *CompaniesAPIService) CompaniesCompanyTargetsExecute(r ApiCompaniesCompa
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
-	if r.scope != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
-	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1119,23 +1317,47 @@ type ApiCompaniesDrugPatentCliffRequest struct {
 	ctx context.Context
 	ApiService *CompaniesAPIService
 	id string
+	cursor *string
 	limit *int32
-	scope *string
 	sort *string
+	groupBy *string
+	measure *string
+	scope *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiCompaniesDrugPatentCliffRequest) Cursor(cursor string) ApiCompaniesDrugPatentCliffRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiCompaniesDrugPatentCliffRequest) Limit(limit int32) ApiCompaniesDrugPatentCliffRequest {
 	r.limit = &limit
 	return r
 }
 
-func (r ApiCompaniesDrugPatentCliffRequest) Scope(scope string) ApiCompaniesDrugPatentCliffRequest {
-	r.scope = &scope
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiCompaniesDrugPatentCliffRequest) Sort(sort string) ApiCompaniesDrugPatentCliffRequest {
+	r.sort = &sort
 	return r
 }
 
-func (r ApiCompaniesDrugPatentCliffRequest) Sort(sort string) ApiCompaniesDrugPatentCliffRequest {
-	r.sort = &sort
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiCompaniesDrugPatentCliffRequest) GroupBy(groupBy string) ApiCompaniesDrugPatentCliffRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiCompaniesDrugPatentCliffRequest) Measure(measure string) ApiCompaniesDrugPatentCliffRequest {
+	r.measure = &measure
+	return r
+}
+
+// company (this company only) or group (its corporate group).
+func (r ApiCompaniesDrugPatentCliffRequest) Scope(scope string) ApiCompaniesDrugPatentCliffRequest {
+	r.scope = &scope
 	return r
 }
 
@@ -1180,14 +1402,23 @@ func (a *CompaniesAPIService) CompaniesDrugPatentCliffExecute(r ApiCompaniesDrug
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
-	if r.scope != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
-	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1434,23 +1665,47 @@ type ApiCompaniesInstitutionalHoldingsRequest struct {
 	ctx context.Context
 	ApiService *CompaniesAPIService
 	id string
+	cursor *string
 	limit *int32
-	scope *string
 	sort *string
+	groupBy *string
+	measure *string
+	scope *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiCompaniesInstitutionalHoldingsRequest) Cursor(cursor string) ApiCompaniesInstitutionalHoldingsRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiCompaniesInstitutionalHoldingsRequest) Limit(limit int32) ApiCompaniesInstitutionalHoldingsRequest {
 	r.limit = &limit
 	return r
 }
 
-func (r ApiCompaniesInstitutionalHoldingsRequest) Scope(scope string) ApiCompaniesInstitutionalHoldingsRequest {
-	r.scope = &scope
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiCompaniesInstitutionalHoldingsRequest) Sort(sort string) ApiCompaniesInstitutionalHoldingsRequest {
+	r.sort = &sort
 	return r
 }
 
-func (r ApiCompaniesInstitutionalHoldingsRequest) Sort(sort string) ApiCompaniesInstitutionalHoldingsRequest {
-	r.sort = &sort
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiCompaniesInstitutionalHoldingsRequest) GroupBy(groupBy string) ApiCompaniesInstitutionalHoldingsRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiCompaniesInstitutionalHoldingsRequest) Measure(measure string) ApiCompaniesInstitutionalHoldingsRequest {
+	r.measure = &measure
+	return r
+}
+
+// company (this company only) or group (its corporate group).
+func (r ApiCompaniesInstitutionalHoldingsRequest) Scope(scope string) ApiCompaniesInstitutionalHoldingsRequest {
+	r.scope = &scope
 	return r
 }
 
@@ -1495,14 +1750,23 @@ func (a *CompaniesAPIService) CompaniesInstitutionalHoldingsExecute(r ApiCompani
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
-	if r.scope != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
-	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1616,23 +1880,47 @@ type ApiCompaniesLegalEntitiesRequest struct {
 	ctx context.Context
 	ApiService *CompaniesAPIService
 	id string
+	cursor *string
 	limit *int32
-	scope *string
 	sort *string
+	groupBy *string
+	measure *string
+	scope *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiCompaniesLegalEntitiesRequest) Cursor(cursor string) ApiCompaniesLegalEntitiesRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiCompaniesLegalEntitiesRequest) Limit(limit int32) ApiCompaniesLegalEntitiesRequest {
 	r.limit = &limit
 	return r
 }
 
-func (r ApiCompaniesLegalEntitiesRequest) Scope(scope string) ApiCompaniesLegalEntitiesRequest {
-	r.scope = &scope
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiCompaniesLegalEntitiesRequest) Sort(sort string) ApiCompaniesLegalEntitiesRequest {
+	r.sort = &sort
 	return r
 }
 
-func (r ApiCompaniesLegalEntitiesRequest) Sort(sort string) ApiCompaniesLegalEntitiesRequest {
-	r.sort = &sort
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiCompaniesLegalEntitiesRequest) GroupBy(groupBy string) ApiCompaniesLegalEntitiesRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiCompaniesLegalEntitiesRequest) Measure(measure string) ApiCompaniesLegalEntitiesRequest {
+	r.measure = &measure
+	return r
+}
+
+// company (this company only) or group (its corporate group).
+func (r ApiCompaniesLegalEntitiesRequest) Scope(scope string) ApiCompaniesLegalEntitiesRequest {
+	r.scope = &scope
 	return r
 }
 
@@ -1677,14 +1965,23 @@ func (a *CompaniesAPIService) CompaniesLegalEntitiesExecute(r ApiCompaniesLegalE
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
-	if r.scope != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
-	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1797,17 +2094,40 @@ func (a *CompaniesAPIService) CompaniesLegalEntitiesExecute(r ApiCompaniesLegalE
 type ApiCompaniesListRequest struct {
 	ctx context.Context
 	ApiService *CompaniesAPIService
+	cursor *string
 	limit *int32
 	sort *string
+	groupBy *string
+	measure *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiCompaniesListRequest) Cursor(cursor string) ApiCompaniesListRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiCompaniesListRequest) Limit(limit int32) ApiCompaniesListRequest {
 	r.limit = &limit
 	return r
 }
 
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
 func (r ApiCompaniesListRequest) Sort(sort string) ApiCompaniesListRequest {
 	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiCompaniesListRequest) GroupBy(groupBy string) ApiCompaniesListRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiCompaniesListRequest) Measure(measure string) ApiCompaniesListRequest {
+	r.measure = &measure
 	return r
 }
 
@@ -1849,11 +2169,20 @@ func (a *CompaniesAPIService) CompaniesListExecute(r ApiCompaniesListRequest) (*
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1967,23 +2296,47 @@ type ApiCompaniesPdufaDatesRequest struct {
 	ctx context.Context
 	ApiService *CompaniesAPIService
 	id string
+	cursor *string
 	limit *int32
-	scope *string
 	sort *string
+	groupBy *string
+	measure *string
+	scope *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiCompaniesPdufaDatesRequest) Cursor(cursor string) ApiCompaniesPdufaDatesRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiCompaniesPdufaDatesRequest) Limit(limit int32) ApiCompaniesPdufaDatesRequest {
 	r.limit = &limit
 	return r
 }
 
-func (r ApiCompaniesPdufaDatesRequest) Scope(scope string) ApiCompaniesPdufaDatesRequest {
-	r.scope = &scope
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiCompaniesPdufaDatesRequest) Sort(sort string) ApiCompaniesPdufaDatesRequest {
+	r.sort = &sort
 	return r
 }
 
-func (r ApiCompaniesPdufaDatesRequest) Sort(sort string) ApiCompaniesPdufaDatesRequest {
-	r.sort = &sort
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiCompaniesPdufaDatesRequest) GroupBy(groupBy string) ApiCompaniesPdufaDatesRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiCompaniesPdufaDatesRequest) Measure(measure string) ApiCompaniesPdufaDatesRequest {
+	r.measure = &measure
+	return r
+}
+
+// company (this company only) or group (its corporate group).
+func (r ApiCompaniesPdufaDatesRequest) Scope(scope string) ApiCompaniesPdufaDatesRequest {
+	r.scope = &scope
 	return r
 }
 
@@ -2028,14 +2381,23 @@ func (a *CompaniesAPIService) CompaniesPdufaDatesExecute(r ApiCompaniesPdufaDate
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
-	if r.scope != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
-	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2149,23 +2511,47 @@ type ApiCompaniesSponsorRecruitmentByPhaseRequest struct {
 	ctx context.Context
 	ApiService *CompaniesAPIService
 	id string
+	cursor *string
 	limit *int32
-	scope *string
 	sort *string
+	groupBy *string
+	measure *string
+	scope *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiCompaniesSponsorRecruitmentByPhaseRequest) Cursor(cursor string) ApiCompaniesSponsorRecruitmentByPhaseRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiCompaniesSponsorRecruitmentByPhaseRequest) Limit(limit int32) ApiCompaniesSponsorRecruitmentByPhaseRequest {
 	r.limit = &limit
 	return r
 }
 
-func (r ApiCompaniesSponsorRecruitmentByPhaseRequest) Scope(scope string) ApiCompaniesSponsorRecruitmentByPhaseRequest {
-	r.scope = &scope
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiCompaniesSponsorRecruitmentByPhaseRequest) Sort(sort string) ApiCompaniesSponsorRecruitmentByPhaseRequest {
+	r.sort = &sort
 	return r
 }
 
-func (r ApiCompaniesSponsorRecruitmentByPhaseRequest) Sort(sort string) ApiCompaniesSponsorRecruitmentByPhaseRequest {
-	r.sort = &sort
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiCompaniesSponsorRecruitmentByPhaseRequest) GroupBy(groupBy string) ApiCompaniesSponsorRecruitmentByPhaseRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiCompaniesSponsorRecruitmentByPhaseRequest) Measure(measure string) ApiCompaniesSponsorRecruitmentByPhaseRequest {
+	r.measure = &measure
+	return r
+}
+
+// company (this company only) or group (its corporate group).
+func (r ApiCompaniesSponsorRecruitmentByPhaseRequest) Scope(scope string) ApiCompaniesSponsorRecruitmentByPhaseRequest {
+	r.scope = &scope
 	return r
 }
 
@@ -2210,14 +2596,23 @@ func (a *CompaniesAPIService) CompaniesSponsorRecruitmentByPhaseExecute(r ApiCom
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
-	if r.scope != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
-	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2331,23 +2726,47 @@ type ApiCompaniesSponsorRecruitmentDurationRequest struct {
 	ctx context.Context
 	ApiService *CompaniesAPIService
 	id string
+	cursor *string
 	limit *int32
-	scope *string
 	sort *string
+	groupBy *string
+	measure *string
+	scope *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiCompaniesSponsorRecruitmentDurationRequest) Cursor(cursor string) ApiCompaniesSponsorRecruitmentDurationRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiCompaniesSponsorRecruitmentDurationRequest) Limit(limit int32) ApiCompaniesSponsorRecruitmentDurationRequest {
 	r.limit = &limit
 	return r
 }
 
-func (r ApiCompaniesSponsorRecruitmentDurationRequest) Scope(scope string) ApiCompaniesSponsorRecruitmentDurationRequest {
-	r.scope = &scope
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiCompaniesSponsorRecruitmentDurationRequest) Sort(sort string) ApiCompaniesSponsorRecruitmentDurationRequest {
+	r.sort = &sort
 	return r
 }
 
-func (r ApiCompaniesSponsorRecruitmentDurationRequest) Sort(sort string) ApiCompaniesSponsorRecruitmentDurationRequest {
-	r.sort = &sort
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiCompaniesSponsorRecruitmentDurationRequest) GroupBy(groupBy string) ApiCompaniesSponsorRecruitmentDurationRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiCompaniesSponsorRecruitmentDurationRequest) Measure(measure string) ApiCompaniesSponsorRecruitmentDurationRequest {
+	r.measure = &measure
+	return r
+}
+
+// company (this company only) or group (its corporate group).
+func (r ApiCompaniesSponsorRecruitmentDurationRequest) Scope(scope string) ApiCompaniesSponsorRecruitmentDurationRequest {
+	r.scope = &scope
 	return r
 }
 
@@ -2392,14 +2811,23 @@ func (a *CompaniesAPIService) CompaniesSponsorRecruitmentDurationExecute(r ApiCo
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
-	if r.scope != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
-	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2513,23 +2941,47 @@ type ApiCompaniesSponsorTrialStartForecastRequest struct {
 	ctx context.Context
 	ApiService *CompaniesAPIService
 	id string
+	cursor *string
 	limit *int32
-	scope *string
 	sort *string
+	groupBy *string
+	measure *string
+	scope *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiCompaniesSponsorTrialStartForecastRequest) Cursor(cursor string) ApiCompaniesSponsorTrialStartForecastRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiCompaniesSponsorTrialStartForecastRequest) Limit(limit int32) ApiCompaniesSponsorTrialStartForecastRequest {
 	r.limit = &limit
 	return r
 }
 
-func (r ApiCompaniesSponsorTrialStartForecastRequest) Scope(scope string) ApiCompaniesSponsorTrialStartForecastRequest {
-	r.scope = &scope
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiCompaniesSponsorTrialStartForecastRequest) Sort(sort string) ApiCompaniesSponsorTrialStartForecastRequest {
+	r.sort = &sort
 	return r
 }
 
-func (r ApiCompaniesSponsorTrialStartForecastRequest) Sort(sort string) ApiCompaniesSponsorTrialStartForecastRequest {
-	r.sort = &sort
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiCompaniesSponsorTrialStartForecastRequest) GroupBy(groupBy string) ApiCompaniesSponsorTrialStartForecastRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiCompaniesSponsorTrialStartForecastRequest) Measure(measure string) ApiCompaniesSponsorTrialStartForecastRequest {
+	r.measure = &measure
+	return r
+}
+
+// company (this company only) or group (its corporate group).
+func (r ApiCompaniesSponsorTrialStartForecastRequest) Scope(scope string) ApiCompaniesSponsorTrialStartForecastRequest {
+	r.scope = &scope
 	return r
 }
 
@@ -2574,14 +3026,23 @@ func (a *CompaniesAPIService) CompaniesSponsorTrialStartForecastExecute(r ApiCom
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
-	if r.scope != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
-	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2695,23 +3156,47 @@ type ApiCompaniesSponsorTrialsRequest struct {
 	ctx context.Context
 	ApiService *CompaniesAPIService
 	id string
+	cursor *string
 	limit *int32
-	scope *string
 	sort *string
+	groupBy *string
+	measure *string
+	scope *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiCompaniesSponsorTrialsRequest) Cursor(cursor string) ApiCompaniesSponsorTrialsRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiCompaniesSponsorTrialsRequest) Limit(limit int32) ApiCompaniesSponsorTrialsRequest {
 	r.limit = &limit
 	return r
 }
 
-func (r ApiCompaniesSponsorTrialsRequest) Scope(scope string) ApiCompaniesSponsorTrialsRequest {
-	r.scope = &scope
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiCompaniesSponsorTrialsRequest) Sort(sort string) ApiCompaniesSponsorTrialsRequest {
+	r.sort = &sort
 	return r
 }
 
-func (r ApiCompaniesSponsorTrialsRequest) Sort(sort string) ApiCompaniesSponsorTrialsRequest {
-	r.sort = &sort
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiCompaniesSponsorTrialsRequest) GroupBy(groupBy string) ApiCompaniesSponsorTrialsRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiCompaniesSponsorTrialsRequest) Measure(measure string) ApiCompaniesSponsorTrialsRequest {
+	r.measure = &measure
+	return r
+}
+
+// company (this company only) or group (its corporate group).
+func (r ApiCompaniesSponsorTrialsRequest) Scope(scope string) ApiCompaniesSponsorTrialsRequest {
+	r.scope = &scope
 	return r
 }
 
@@ -2756,14 +3241,23 @@ func (a *CompaniesAPIService) CompaniesSponsorTrialsExecute(r ApiCompaniesSponso
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
-	if r.scope != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
-	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

@@ -22,8 +22,11 @@ module PharmaObservatory
     # Company programs
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [CompanyProgramsResponse]
     def legal_entities_company_programs(id, opts = {})
       data, _status_code, _headers = legal_entities_company_programs_with_http_info(id, opts)
@@ -33,8 +36,11 @@ module PharmaObservatory
     # Company programs
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [Array<(CompanyProgramsResponse, Integer, Hash)>] CompanyProgramsResponse data, response status code and response headers
     def legal_entities_company_programs_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -44,13 +50,24 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling LegalEntitiesApi.legal_entities_company_programs"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_company_programs, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_company_programs, must be greater than or equal to 1.'
+      end
+
       # resource path
       local_var_path = '/api/v1/legal_entities/{id}/company_programs'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -89,8 +106,11 @@ module PharmaObservatory
     # Patent-cliff exposure
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [DrugPatentCliffResponse]
     def legal_entities_drug_patent_cliff(id, opts = {})
       data, _status_code, _headers = legal_entities_drug_patent_cliff_with_http_info(id, opts)
@@ -100,8 +120,11 @@ module PharmaObservatory
     # Patent-cliff exposure
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [Array<(DrugPatentCliffResponse, Integer, Hash)>] DrugPatentCliffResponse data, response status code and response headers
     def legal_entities_drug_patent_cliff_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -111,13 +134,24 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling LegalEntitiesApi.legal_entities_drug_patent_cliff"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_drug_patent_cliff, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_drug_patent_cliff, must be greater than or equal to 1.'
+      end
+
       # resource path
       local_var_path = '/api/v1/legal_entities/{id}/drug_patent_cliff'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -217,8 +251,11 @@ module PharmaObservatory
     # Institutional holdings (SEC Form 13F)
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [InstitutionalHoldingsResponse]
     def legal_entities_institutional_holdings(id, opts = {})
       data, _status_code, _headers = legal_entities_institutional_holdings_with_http_info(id, opts)
@@ -228,8 +265,11 @@ module PharmaObservatory
     # Institutional holdings (SEC Form 13F)
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [Array<(InstitutionalHoldingsResponse, Integer, Hash)>] InstitutionalHoldingsResponse data, response status code and response headers
     def legal_entities_institutional_holdings_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -239,13 +279,24 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling LegalEntitiesApi.legal_entities_institutional_holdings"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_institutional_holdings, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_institutional_holdings, must be greater than or equal to 1.'
+      end
+
       # resource path
       local_var_path = '/api/v1/legal_entities/{id}/institutional_holdings'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -283,8 +334,11 @@ module PharmaObservatory
 
     # List legal entities
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [LegalEntitiesResponse]
     def legal_entities_list(opts = {})
       data, _status_code, _headers = legal_entities_list_with_http_info(opts)
@@ -293,20 +347,34 @@ module PharmaObservatory
 
     # List legal entities
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [Array<(LegalEntitiesResponse, Integer, Hash)>] LegalEntitiesResponse data, response status code and response headers
     def legal_entities_list_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: LegalEntitiesApi.legal_entities_list ...'
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_list, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_list, must be greater than or equal to 1.'
+      end
+
       # resource path
       local_var_path = '/api/v1/legal_entities'
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -345,8 +413,11 @@ module PharmaObservatory
     # FDA decision dates (PDUFA) and catalysts
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [PdufaDatesResponse]
     def legal_entities_pdufa_dates(id, opts = {})
       data, _status_code, _headers = legal_entities_pdufa_dates_with_http_info(id, opts)
@@ -356,8 +427,11 @@ module PharmaObservatory
     # FDA decision dates (PDUFA) and catalysts
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [Array<(PdufaDatesResponse, Integer, Hash)>] PdufaDatesResponse data, response status code and response headers
     def legal_entities_pdufa_dates_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -367,13 +441,24 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling LegalEntitiesApi.legal_entities_pdufa_dates"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_pdufa_dates, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_pdufa_dates, must be greater than or equal to 1.'
+      end
+
       # resource path
       local_var_path = '/api/v1/legal_entities/{id}/pdufa_dates'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -412,8 +497,11 @@ module PharmaObservatory
     # Trial recruitment duration by sponsor and phase
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [SponsorRecruitmentByPhaseResponse]
     def legal_entities_sponsor_recruitment_by_phase(id, opts = {})
       data, _status_code, _headers = legal_entities_sponsor_recruitment_by_phase_with_http_info(id, opts)
@@ -423,8 +511,11 @@ module PharmaObservatory
     # Trial recruitment duration by sponsor and phase
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [Array<(SponsorRecruitmentByPhaseResponse, Integer, Hash)>] SponsorRecruitmentByPhaseResponse data, response status code and response headers
     def legal_entities_sponsor_recruitment_by_phase_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -434,13 +525,24 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling LegalEntitiesApi.legal_entities_sponsor_recruitment_by_phase"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_sponsor_recruitment_by_phase, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_sponsor_recruitment_by_phase, must be greater than or equal to 1.'
+      end
+
       # resource path
       local_var_path = '/api/v1/legal_entities/{id}/sponsor_recruitment_by_phase'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -479,8 +581,11 @@ module PharmaObservatory
     # Trial recruitment duration by sponsor
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [SponsorRecruitmentDurationResponse]
     def legal_entities_sponsor_recruitment_duration(id, opts = {})
       data, _status_code, _headers = legal_entities_sponsor_recruitment_duration_with_http_info(id, opts)
@@ -490,8 +595,11 @@ module PharmaObservatory
     # Trial recruitment duration by sponsor
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [Array<(SponsorRecruitmentDurationResponse, Integer, Hash)>] SponsorRecruitmentDurationResponse data, response status code and response headers
     def legal_entities_sponsor_recruitment_duration_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -501,13 +609,24 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling LegalEntitiesApi.legal_entities_sponsor_recruitment_duration"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_sponsor_recruitment_duration, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_sponsor_recruitment_duration, must be greater than or equal to 1.'
+      end
+
       # resource path
       local_var_path = '/api/v1/legal_entities/{id}/sponsor_recruitment_duration'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -546,8 +665,11 @@ module PharmaObservatory
     # Trial-start forecast by sponsor
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [SponsorTrialStartForecastResponse]
     def legal_entities_sponsor_trial_start_forecast(id, opts = {})
       data, _status_code, _headers = legal_entities_sponsor_trial_start_forecast_with_http_info(id, opts)
@@ -557,8 +679,11 @@ module PharmaObservatory
     # Trial-start forecast by sponsor
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [Array<(SponsorTrialStartForecastResponse, Integer, Hash)>] SponsorTrialStartForecastResponse data, response status code and response headers
     def legal_entities_sponsor_trial_start_forecast_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -568,13 +693,24 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling LegalEntitiesApi.legal_entities_sponsor_trial_start_forecast"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_sponsor_trial_start_forecast, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_sponsor_trial_start_forecast, must be greater than or equal to 1.'
+      end
+
       # resource path
       local_var_path = '/api/v1/legal_entities/{id}/sponsor_trial_start_forecast'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -613,8 +749,11 @@ module PharmaObservatory
     # Sponsor trials
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [SponsorTrialsResponse]
     def legal_entities_sponsor_trials(id, opts = {})
       data, _status_code, _headers = legal_entities_sponsor_trials_with_http_info(id, opts)
@@ -624,8 +763,11 @@ module PharmaObservatory
     # Sponsor trials
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [Array<(SponsorTrialsResponse, Integer, Hash)>] SponsorTrialsResponse data, response status code and response headers
     def legal_entities_sponsor_trials_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -635,13 +777,24 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling LegalEntitiesApi.legal_entities_sponsor_trials"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_sponsor_trials, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling LegalEntitiesApi.legal_entities_sponsor_trials, must be greater than or equal to 1.'
+      end
+
       # resource path
       local_var_path = '/api/v1/legal_entities/{id}/sponsor_trials'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}

@@ -46,8 +46,11 @@ describe 'CellLinesApi' do
   # unit tests for cell_lines_list
   # List cell lines
   # @param [Hash] opts the optional parameters
-  # @option opts [Integer] :limit 
-  # @option opts [String] :sort 
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
   # @return [CellLinesResponse]
   describe 'cell_lines_list test' do
     it 'should work' do

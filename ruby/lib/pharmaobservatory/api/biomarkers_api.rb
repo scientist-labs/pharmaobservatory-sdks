@@ -22,8 +22,11 @@ module PharmaObservatory
     # FDA biomarker qualification projects
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [BiomarkerBqpAssertionsResponse]
     def biomarkers_biomarker_bqp_assertions(id, opts = {})
       data, _status_code, _headers = biomarkers_biomarker_bqp_assertions_with_http_info(id, opts)
@@ -33,8 +36,11 @@ module PharmaObservatory
     # FDA biomarker qualification projects
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [Array<(BiomarkerBqpAssertionsResponse, Integer, Hash)>] BiomarkerBqpAssertionsResponse data, response status code and response headers
     def biomarkers_biomarker_bqp_assertions_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -44,13 +50,24 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling BiomarkersApi.biomarkers_biomarker_bqp_assertions"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_bqp_assertions, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_bqp_assertions, must be greater than or equal to 1.'
+      end
+
       # resource path
       local_var_path = '/api/v1/biomarkers/{id}/biomarker_bqp_assertions'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -89,8 +106,11 @@ module PharmaObservatory
     # FDA companion diagnostic assertions
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [BiomarkerCdxAssertionsResponse]
     def biomarkers_biomarker_cdx_assertions(id, opts = {})
       data, _status_code, _headers = biomarkers_biomarker_cdx_assertions_with_http_info(id, opts)
@@ -100,8 +120,11 @@ module PharmaObservatory
     # FDA companion diagnostic assertions
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [Array<(BiomarkerCdxAssertionsResponse, Integer, Hash)>] BiomarkerCdxAssertionsResponse data, response status code and response headers
     def biomarkers_biomarker_cdx_assertions_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -111,13 +134,24 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling BiomarkersApi.biomarkers_biomarker_cdx_assertions"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_cdx_assertions, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_cdx_assertions, must be greater than or equal to 1.'
+      end
+
       # resource path
       local_var_path = '/api/v1/biomarkers/{id}/biomarker_cdx_assertions'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -156,8 +190,11 @@ module PharmaObservatory
     # Biomarker evidence
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [BiomarkerEvidenceResponse]
     def biomarkers_biomarker_evidence(id, opts = {})
       data, _status_code, _headers = biomarkers_biomarker_evidence_with_http_info(id, opts)
@@ -167,8 +204,11 @@ module PharmaObservatory
     # Biomarker evidence
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [Array<(BiomarkerEvidenceResponse, Integer, Hash)>] BiomarkerEvidenceResponse data, response status code and response headers
     def biomarkers_biomarker_evidence_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -178,13 +218,24 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling BiomarkersApi.biomarkers_biomarker_evidence"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_evidence, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_evidence, must be greater than or equal to 1.'
+      end
+
       # resource path
       local_var_path = '/api/v1/biomarkers/{id}/biomarker_evidence'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -223,8 +274,11 @@ module PharmaObservatory
     # Trial-cited literature mentions
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [BiomarkerLiteratureResponse]
     def biomarkers_biomarker_literature(id, opts = {})
       data, _status_code, _headers = biomarkers_biomarker_literature_with_http_info(id, opts)
@@ -234,8 +288,11 @@ module PharmaObservatory
     # Trial-cited literature mentions
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [Array<(BiomarkerLiteratureResponse, Integer, Hash)>] BiomarkerLiteratureResponse data, response status code and response headers
     def biomarkers_biomarker_literature_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -245,13 +302,24 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling BiomarkersApi.biomarkers_biomarker_literature"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_literature, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_literature, must be greater than or equal to 1.'
+      end
+
       # resource path
       local_var_path = '/api/v1/biomarkers/{id}/biomarker_literature'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -290,8 +358,11 @@ module PharmaObservatory
     # Companies publishing on a biomarker
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [BiomarkerPublishingCompaniesResponse]
     def biomarkers_biomarker_publishing_companies(id, opts = {})
       data, _status_code, _headers = biomarkers_biomarker_publishing_companies_with_http_info(id, opts)
@@ -301,8 +372,11 @@ module PharmaObservatory
     # Companies publishing on a biomarker
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [Array<(BiomarkerPublishingCompaniesResponse, Integer, Hash)>] BiomarkerPublishingCompaniesResponse data, response status code and response headers
     def biomarkers_biomarker_publishing_companies_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -312,13 +386,24 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling BiomarkersApi.biomarkers_biomarker_publishing_companies"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_publishing_companies, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_publishing_companies, must be greater than or equal to 1.'
+      end
+
       # resource path
       local_var_path = '/api/v1/biomarkers/{id}/biomarker_publishing_companies'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -357,8 +442,11 @@ module PharmaObservatory
     # Protein variant mentions
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [BiomarkerVariantMentionsResponse]
     def biomarkers_biomarker_variant_mentions(id, opts = {})
       data, _status_code, _headers = biomarkers_biomarker_variant_mentions_with_http_info(id, opts)
@@ -368,8 +456,11 @@ module PharmaObservatory
     # Protein variant mentions
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [Array<(BiomarkerVariantMentionsResponse, Integer, Hash)>] BiomarkerVariantMentionsResponse data, response status code and response headers
     def biomarkers_biomarker_variant_mentions_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -379,13 +470,24 @@ module PharmaObservatory
       if @api_client.config.client_side_validation && id.nil?
         fail ArgumentError, "Missing the required parameter 'id' when calling BiomarkersApi.biomarkers_biomarker_variant_mentions"
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_variant_mentions, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_variant_mentions, must be greater than or equal to 1.'
+      end
+
       # resource path
       local_var_path = '/api/v1/biomarkers/{id}/biomarker_variant_mentions'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -484,8 +586,11 @@ module PharmaObservatory
 
     # List biomarkers
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [BiomarkersResponse]
     def biomarkers_list(opts = {})
       data, _status_code, _headers = biomarkers_list_with_http_info(opts)
@@ -494,20 +599,34 @@ module PharmaObservatory
 
     # List biomarkers
     # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :limit 
-    # @option opts [String] :sort 
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
     # @return [Array<(BiomarkersResponse, Integer, Hash)>] BiomarkersResponse data, response status code and response headers
     def biomarkers_list_with_http_info(opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: BiomarkersApi.biomarkers_list ...'
       end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_list, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_list, must be greater than or equal to 1.'
+      end
+
       # resource path
       local_var_path = '/api/v1/biomarkers'
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}

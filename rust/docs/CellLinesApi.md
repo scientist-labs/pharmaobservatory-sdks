@@ -39,7 +39,7 @@ Name | Type | Description  | Required | Notes
 
 ## cell_lines_period_list
 
-> models::CellLinesResponse cell_lines_period_list(limit, sort)
+> models::CellLinesResponse cell_lines_period_list(cursor, limit, sort, group_by, measure)
 List cell lines
 
 ### Parameters
@@ -47,8 +47,11 @@ List cell lines
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**limit** | Option<**i32**> |  |  |
-**sort** | Option<**String**> |  |  |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
 
 ### Return type
 

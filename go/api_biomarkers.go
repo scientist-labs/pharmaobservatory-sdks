@@ -27,17 +27,40 @@ type ApiBiomarkersBiomarkerBqpAssertionsRequest struct {
 	ctx context.Context
 	ApiService *BiomarkersAPIService
 	id string
+	cursor *string
 	limit *int32
 	sort *string
+	groupBy *string
+	measure *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiBiomarkersBiomarkerBqpAssertionsRequest) Cursor(cursor string) ApiBiomarkersBiomarkerBqpAssertionsRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiBiomarkersBiomarkerBqpAssertionsRequest) Limit(limit int32) ApiBiomarkersBiomarkerBqpAssertionsRequest {
 	r.limit = &limit
 	return r
 }
 
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
 func (r ApiBiomarkersBiomarkerBqpAssertionsRequest) Sort(sort string) ApiBiomarkersBiomarkerBqpAssertionsRequest {
 	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiBiomarkersBiomarkerBqpAssertionsRequest) GroupBy(groupBy string) ApiBiomarkersBiomarkerBqpAssertionsRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiBiomarkersBiomarkerBqpAssertionsRequest) Measure(measure string) ApiBiomarkersBiomarkerBqpAssertionsRequest {
+	r.measure = &measure
 	return r
 }
 
@@ -82,11 +105,20 @@ func (a *BiomarkersAPIService) BiomarkersBiomarkerBqpAssertionsExecute(r ApiBiom
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -200,17 +232,40 @@ type ApiBiomarkersBiomarkerCdxAssertionsRequest struct {
 	ctx context.Context
 	ApiService *BiomarkersAPIService
 	id string
+	cursor *string
 	limit *int32
 	sort *string
+	groupBy *string
+	measure *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiBiomarkersBiomarkerCdxAssertionsRequest) Cursor(cursor string) ApiBiomarkersBiomarkerCdxAssertionsRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiBiomarkersBiomarkerCdxAssertionsRequest) Limit(limit int32) ApiBiomarkersBiomarkerCdxAssertionsRequest {
 	r.limit = &limit
 	return r
 }
 
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
 func (r ApiBiomarkersBiomarkerCdxAssertionsRequest) Sort(sort string) ApiBiomarkersBiomarkerCdxAssertionsRequest {
 	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiBiomarkersBiomarkerCdxAssertionsRequest) GroupBy(groupBy string) ApiBiomarkersBiomarkerCdxAssertionsRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiBiomarkersBiomarkerCdxAssertionsRequest) Measure(measure string) ApiBiomarkersBiomarkerCdxAssertionsRequest {
+	r.measure = &measure
 	return r
 }
 
@@ -255,11 +310,20 @@ func (a *BiomarkersAPIService) BiomarkersBiomarkerCdxAssertionsExecute(r ApiBiom
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -373,17 +437,40 @@ type ApiBiomarkersBiomarkerEvidenceRequest struct {
 	ctx context.Context
 	ApiService *BiomarkersAPIService
 	id string
+	cursor *string
 	limit *int32
 	sort *string
+	groupBy *string
+	measure *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiBiomarkersBiomarkerEvidenceRequest) Cursor(cursor string) ApiBiomarkersBiomarkerEvidenceRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiBiomarkersBiomarkerEvidenceRequest) Limit(limit int32) ApiBiomarkersBiomarkerEvidenceRequest {
 	r.limit = &limit
 	return r
 }
 
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
 func (r ApiBiomarkersBiomarkerEvidenceRequest) Sort(sort string) ApiBiomarkersBiomarkerEvidenceRequest {
 	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiBiomarkersBiomarkerEvidenceRequest) GroupBy(groupBy string) ApiBiomarkersBiomarkerEvidenceRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiBiomarkersBiomarkerEvidenceRequest) Measure(measure string) ApiBiomarkersBiomarkerEvidenceRequest {
+	r.measure = &measure
 	return r
 }
 
@@ -428,11 +515,20 @@ func (a *BiomarkersAPIService) BiomarkersBiomarkerEvidenceExecute(r ApiBiomarker
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -546,17 +642,40 @@ type ApiBiomarkersBiomarkerLiteratureRequest struct {
 	ctx context.Context
 	ApiService *BiomarkersAPIService
 	id string
+	cursor *string
 	limit *int32
 	sort *string
+	groupBy *string
+	measure *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiBiomarkersBiomarkerLiteratureRequest) Cursor(cursor string) ApiBiomarkersBiomarkerLiteratureRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiBiomarkersBiomarkerLiteratureRequest) Limit(limit int32) ApiBiomarkersBiomarkerLiteratureRequest {
 	r.limit = &limit
 	return r
 }
 
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
 func (r ApiBiomarkersBiomarkerLiteratureRequest) Sort(sort string) ApiBiomarkersBiomarkerLiteratureRequest {
 	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiBiomarkersBiomarkerLiteratureRequest) GroupBy(groupBy string) ApiBiomarkersBiomarkerLiteratureRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiBiomarkersBiomarkerLiteratureRequest) Measure(measure string) ApiBiomarkersBiomarkerLiteratureRequest {
+	r.measure = &measure
 	return r
 }
 
@@ -601,11 +720,20 @@ func (a *BiomarkersAPIService) BiomarkersBiomarkerLiteratureExecute(r ApiBiomark
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -719,17 +847,40 @@ type ApiBiomarkersBiomarkerPublishingCompaniesRequest struct {
 	ctx context.Context
 	ApiService *BiomarkersAPIService
 	id string
+	cursor *string
 	limit *int32
 	sort *string
+	groupBy *string
+	measure *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiBiomarkersBiomarkerPublishingCompaniesRequest) Cursor(cursor string) ApiBiomarkersBiomarkerPublishingCompaniesRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiBiomarkersBiomarkerPublishingCompaniesRequest) Limit(limit int32) ApiBiomarkersBiomarkerPublishingCompaniesRequest {
 	r.limit = &limit
 	return r
 }
 
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
 func (r ApiBiomarkersBiomarkerPublishingCompaniesRequest) Sort(sort string) ApiBiomarkersBiomarkerPublishingCompaniesRequest {
 	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiBiomarkersBiomarkerPublishingCompaniesRequest) GroupBy(groupBy string) ApiBiomarkersBiomarkerPublishingCompaniesRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiBiomarkersBiomarkerPublishingCompaniesRequest) Measure(measure string) ApiBiomarkersBiomarkerPublishingCompaniesRequest {
+	r.measure = &measure
 	return r
 }
 
@@ -774,11 +925,20 @@ func (a *BiomarkersAPIService) BiomarkersBiomarkerPublishingCompaniesExecute(r A
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -892,17 +1052,40 @@ type ApiBiomarkersBiomarkerVariantMentionsRequest struct {
 	ctx context.Context
 	ApiService *BiomarkersAPIService
 	id string
+	cursor *string
 	limit *int32
 	sort *string
+	groupBy *string
+	measure *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiBiomarkersBiomarkerVariantMentionsRequest) Cursor(cursor string) ApiBiomarkersBiomarkerVariantMentionsRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiBiomarkersBiomarkerVariantMentionsRequest) Limit(limit int32) ApiBiomarkersBiomarkerVariantMentionsRequest {
 	r.limit = &limit
 	return r
 }
 
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
 func (r ApiBiomarkersBiomarkerVariantMentionsRequest) Sort(sort string) ApiBiomarkersBiomarkerVariantMentionsRequest {
 	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiBiomarkersBiomarkerVariantMentionsRequest) GroupBy(groupBy string) ApiBiomarkersBiomarkerVariantMentionsRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiBiomarkersBiomarkerVariantMentionsRequest) Measure(measure string) ApiBiomarkersBiomarkerVariantMentionsRequest {
+	r.measure = &measure
 	return r
 }
 
@@ -947,11 +1130,20 @@ func (a *BiomarkersAPIService) BiomarkersBiomarkerVariantMentionsExecute(r ApiBi
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1197,17 +1389,40 @@ func (a *BiomarkersAPIService) BiomarkersGetExecute(r ApiBiomarkersGetRequest) (
 type ApiBiomarkersListRequest struct {
 	ctx context.Context
 	ApiService *BiomarkersAPIService
+	cursor *string
 	limit *int32
 	sort *string
+	groupBy *string
+	measure *string
 }
 
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiBiomarkersListRequest) Cursor(cursor string) ApiBiomarkersListRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
 func (r ApiBiomarkersListRequest) Limit(limit int32) ApiBiomarkersListRequest {
 	r.limit = &limit
 	return r
 }
 
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
 func (r ApiBiomarkersListRequest) Sort(sort string) ApiBiomarkersListRequest {
 	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiBiomarkersListRequest) GroupBy(groupBy string) ApiBiomarkersListRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiBiomarkersListRequest) Measure(measure string) ApiBiomarkersListRequest {
+	r.measure = &measure
 	return r
 }
 
@@ -1249,11 +1464,20 @@ func (a *BiomarkersAPIService) BiomarkersListExecute(r ApiBiomarkersListRequest)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
