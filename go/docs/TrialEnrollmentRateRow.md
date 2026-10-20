@@ -5,7 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TrialId** | Pointer to **NullableString** | The trial&#39;s ClinicalTrials.gov registry id (NCT, National Clinical Trial, number). | [optional] 
-**Phase** | Pointer to **NullableString** | The registry&#39;s phase code. | [optional] 
+**Phase** | Pointer to **NullableString** | The registry&#39;s phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those. | [optional] 
+**PhaseLabel** | Pointer to **NullableString** | The trial phase as a display label (Phase 2, Phase 3, Observational, Not applicable, Expanded access, Unknown). The same trial&#39;s phase column holds the registry code. | [optional] 
 **LeadSponsorName** | Pointer to **NullableString** | The lead sponsor name as filed. | [optional] 
 **OverallStatusSummary** | Pointer to **NullableString** | A coarse status label (Completed and so on). | [optional] 
 **ActualEnrollment** | Pointer to **NullableInt32** | Enrollment typed ACTUAL. | [optional] 
@@ -17,8 +18,8 @@ Name | Type | Description | Notes
 **StartDate** | Pointer to **NullableString** | Trial start date. | [optional] 
 **PrimaryCompletionDate** | Pointer to **NullableString** | Primary completion date. | [optional] 
 **CompletionDate** | Pointer to **NullableString** | Completion date. | [optional] 
-**PrimaryCompletionDateType** | Pointer to **NullableString** | ACTUAL or ESTIMATED. | [optional] 
-**CompletionDateType** | Pointer to **NullableString** | ACTUAL or ESTIMATED. | [optional] 
+**PrimaryCompletionDateType** | Pointer to **NullableString** | ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry&#39;s older ANTICIPATED is published as ESTIMATED. | [optional] 
+**CompletionDateType** | Pointer to **NullableString** | ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry&#39;s older ANTICIPATED is published as ESTIMATED. | [optional] 
 **IsRateComputable** | Pointer to **NullableBool** | Whether the inputs support a rate. | [optional] 
 **RateFlagReason** | Pointer to **NullableString** | Why a rate could not be computed (null when it could). | [optional] 
 **DurationMonths** | Pointer to **NullableFloat32** | Months from start to primary completion. | [optional] 
@@ -115,6 +116,41 @@ HasPhase returns a boolean if a field has been set.
 `func (o *TrialEnrollmentRateRow) UnsetPhase()`
 
 UnsetPhase ensures that no value is present for Phase, not even an explicit nil
+### GetPhaseLabel
+
+`func (o *TrialEnrollmentRateRow) GetPhaseLabel() string`
+
+GetPhaseLabel returns the PhaseLabel field if non-nil, zero value otherwise.
+
+### GetPhaseLabelOk
+
+`func (o *TrialEnrollmentRateRow) GetPhaseLabelOk() (*string, bool)`
+
+GetPhaseLabelOk returns a tuple with the PhaseLabel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPhaseLabel
+
+`func (o *TrialEnrollmentRateRow) SetPhaseLabel(v string)`
+
+SetPhaseLabel sets PhaseLabel field to given value.
+
+### HasPhaseLabel
+
+`func (o *TrialEnrollmentRateRow) HasPhaseLabel() bool`
+
+HasPhaseLabel returns a boolean if a field has been set.
+
+### SetPhaseLabelNil
+
+`func (o *TrialEnrollmentRateRow) SetPhaseLabelNil(b bool)`
+
+ SetPhaseLabelNil sets the value for PhaseLabel to be an explicit nil
+
+### UnsetPhaseLabel
+`func (o *TrialEnrollmentRateRow) UnsetPhaseLabel()`
+
+UnsetPhaseLabel ensures that no value is present for PhaseLabel, not even an explicit nil
 ### GetLeadSponsorName
 
 `func (o *TrialEnrollmentRateRow) GetLeadSponsorName() string`

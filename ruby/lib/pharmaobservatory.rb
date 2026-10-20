@@ -18,6 +18,10 @@ require 'pharmaobservatory/configuration'
 
 # Models
 require 'pharmaobservatory/models/api_v1_whoami_get200_response'
+require 'pharmaobservatory/models/api_v1_whoami_get200_response_limits'
+require 'pharmaobservatory/models/api_v1_whoami_get200_response_quota'
+require 'pharmaobservatory/models/api_v1_whoami_get200_response_quota_buckets'
+require 'pharmaobservatory/models/api_v1_whoami_get200_response_quota_buckets_requests_per_minute'
 require 'pharmaobservatory/models/auth_error'
 require 'pharmaobservatory/models/biomarker_bqp_assertions_response'
 require 'pharmaobservatory/models/biomarker_bqp_assertions_row'

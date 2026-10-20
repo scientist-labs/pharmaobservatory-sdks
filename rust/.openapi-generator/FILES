@@ -3,6 +3,10 @@ Cargo.toml
 README.md
 docs/ApiV1BaseApi.md
 docs/ApiV1WhoamiGet200Response.md
+docs/ApiV1WhoamiGet200ResponseLimits.md
+docs/ApiV1WhoamiGet200ResponseQuota.md
+docs/ApiV1WhoamiGet200ResponseQuotaBuckets.md
+docs/ApiV1WhoamiGet200ResponseQuotaBucketsRequestsPerMinute.md
 docs/AuthError.md
 docs/BiomarkerBqpAssertionsResponse.md
 docs/BiomarkerBqpAssertionsRow.md
@@ -165,6 +169,10 @@ src/apis/sites_api.rs
 src/apis/trials_api.rs
 src/lib.rs
 src/models/_api_v1_whoami_get_200_response.rs
+src/models/_api_v1_whoami_get_200_response_limits.rs
+src/models/_api_v1_whoami_get_200_response_quota.rs
+src/models/_api_v1_whoami_get_200_response_quota_buckets.rs
+src/models/_api_v1_whoami_get_200_response_quota_buckets_requests_per_minute.rs
 src/models/auth_error.rs
 src/models/biomarker_bqp_assertions_response.rs
 src/models/biomarker_bqp_assertions_row.rs

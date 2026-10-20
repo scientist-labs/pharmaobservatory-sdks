@@ -32,7 +32,7 @@ pub struct TrialsRow {
     /// A coarse status label derived from the overall status (Recruiting, Completed, Discontinued and so on).
     #[serde(rename = "overall_status_summary", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub overall_status_summary: Option<Option<String>>,
-    /// The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA).
+    /// The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those.
     #[serde(rename = "phase", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub phase: Option<Option<String>>,
     /// The trial phase as a label (Phase 2, Phase 3, Observational, Not applicable).
@@ -62,13 +62,13 @@ pub struct TrialsRow {
     /// Primary completion date.
     #[serde(rename = "primary_completion_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub primary_completion_date: Option<Option<String>>,
-    /// ACTUAL (a date that has occurred) or ESTIMATED (a planned date).
+    /// ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry's older ANTICIPATED is published as ESTIMATED.
     #[serde(rename = "primary_completion_date_type", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub primary_completion_date_type: Option<Option<String>>,
     /// Completion date.
     #[serde(rename = "completion_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub completion_date: Option<Option<String>>,
-    /// ACTUAL (a date that has occurred) or ESTIMATED (a planned date).
+    /// ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry's older ANTICIPATED is published as ESTIMATED.
     #[serde(rename = "completion_date_type", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub completion_date_type: Option<Option<String>>,
     /// Date the study was first posted to the registry.

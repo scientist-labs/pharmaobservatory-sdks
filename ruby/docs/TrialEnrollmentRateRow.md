@@ -5,7 +5,8 @@
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **trial_id** | **String** | The trial&#39;s ClinicalTrials.gov registry id (NCT, National Clinical Trial, number). | [optional] |
-| **phase** | **String** | The registry&#39;s phase code. | [optional] |
+| **phase** | **String** | The registry&#39;s phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those. | [optional] |
+| **phase_label** | **String** | The trial phase as a display label (Phase 2, Phase 3, Observational, Not applicable, Expanded access, Unknown). The same trial&#39;s phase column holds the registry code. | [optional] |
 | **lead_sponsor_name** | **String** | The lead sponsor name as filed. | [optional] |
 | **overall_status_summary** | **String** | A coarse status label (Completed and so on). | [optional] |
 | **actual_enrollment** | **Integer** | Enrollment typed ACTUAL. | [optional] |
@@ -17,8 +18,8 @@
 | **start_date** | **Date** | Trial start date. | [optional] |
 | **primary_completion_date** | **Date** | Primary completion date. | [optional] |
 | **completion_date** | **Date** | Completion date. | [optional] |
-| **primary_completion_date_type** | **String** | ACTUAL or ESTIMATED. | [optional] |
-| **completion_date_type** | **String** | ACTUAL or ESTIMATED. | [optional] |
+| **primary_completion_date_type** | **String** | ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry&#39;s older ANTICIPATED is published as ESTIMATED. | [optional] |
+| **completion_date_type** | **String** | ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry&#39;s older ANTICIPATED is published as ESTIMATED. | [optional] |
 | **is_rate_computable** | **Boolean** | Whether the inputs support a rate. | [optional] |
 | **rate_flag_reason** | **String** | Why a rate could not be computed (null when it could). | [optional] |
 | **duration_months** | **Float** | Months from start to primary completion. | [optional] |
@@ -34,6 +35,7 @@ require 'pharmaobservatory'
 instance = PharmaObservatory::TrialEnrollmentRateRow.new(
   trial_id: null,
   phase: null,
+  phase_label: null,
   lead_sponsor_name: null,
   overall_status_summary: null,
   actual_enrollment: null,

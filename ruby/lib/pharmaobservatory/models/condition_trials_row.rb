@@ -34,8 +34,11 @@ module PharmaObservatory
     # The registry's study type (INTERVENTIONAL, OBSERVATIONAL or EXPANDED_ACCESS).
     attr_accessor :study_type
 
-    # The trial phase label (Phase 1, Phase 2, Phase 3, Phase 4, Not Applicable and so on).
+    # The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those.
     attr_accessor :phase
+
+    # The trial phase as a display label (Phase 2, Phase 3, Observational, Not applicable, Expanded access, Unknown). The same trial's phase column holds the registry code.
+    attr_accessor :phase_label
 
     # The registry's overall recruitment status (COMPLETED, RECRUITING, TERMINATED and so on).
     attr_accessor :overall_status
@@ -76,7 +79,7 @@ module PharmaObservatory
     # Display name of the lead sponsor's group.
     attr_accessor :sponsor_group_name
 
-    # The registry's declared funder class of the lead sponsor (INDUSTRY, NIH for the US National Institutes of Health, OTHER and so on).
+    # The funder class the registry declared for the sponsor (INDUSTRY, NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state. Null when the trial has no lead sponsor row.
     attr_accessor :sponsor_agency_class
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -89,6 +92,7 @@ module PharmaObservatory
         :'trial_title' => :'trial_title',
         :'study_type' => :'study_type',
         :'phase' => :'phase',
+        :'phase_label' => :'phase_label',
         :'overall_status' => :'overall_status',
         :'start_date' => :'start_date',
         :'start_year' => :'start_year',
@@ -126,6 +130,7 @@ module PharmaObservatory
         :'trial_title' => :'String',
         :'study_type' => :'String',
         :'phase' => :'String',
+        :'phase_label' => :'String',
         :'overall_status' => :'String',
         :'start_date' => :'Date',
         :'start_year' => :'Integer',
@@ -153,6 +158,7 @@ module PharmaObservatory
         :'trial_title',
         :'study_type',
         :'phase',
+        :'phase_label',
         :'overall_status',
         :'start_date',
         :'start_year',
@@ -212,6 +218,10 @@ module PharmaObservatory
 
       if attributes.key?(:'phase')
         self.phase = attributes[:'phase']
+      end
+
+      if attributes.key?(:'phase_label')
+        self.phase_label = attributes[:'phase_label']
       end
 
       if attributes.key?(:'overall_status')
@@ -298,6 +308,7 @@ module PharmaObservatory
           trial_title == o.trial_title &&
           study_type == o.study_type &&
           phase == o.phase &&
+          phase_label == o.phase_label &&
           overall_status == o.overall_status &&
           start_date == o.start_date &&
           start_year == o.start_year &&
@@ -323,7 +334,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [condition_id, condition_name, trial_id, is_direct, trial_title, study_type, phase, overall_status, start_date, start_year, primary_completion_date, last_update_posted_date, enrollment, were_results_reported, sponsor_name, sponsor_org_id, sponsor_company_id, sponsor_company_name, sponsor_group_id, sponsor_group_name, sponsor_agency_class].hash
+      [condition_id, condition_name, trial_id, is_direct, trial_title, study_type, phase, phase_label, overall_status, start_date, start_year, primary_completion_date, last_update_posted_date, enrollment, were_results_reported, sponsor_name, sponsor_org_id, sponsor_company_id, sponsor_company_name, sponsor_group_id, sponsor_group_name, sponsor_agency_class].hash
     end
 
     # Builds the object from hash

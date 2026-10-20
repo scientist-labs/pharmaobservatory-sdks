@@ -8,7 +8,8 @@ Name | Type | Description | Notes
 **TrialId** | Pointer to **NullableString** | The trial&#39;s ClinicalTrials.gov registry id (NCT, National Clinical Trial, number). | [optional] 
 **TrialTitle** | Pointer to **NullableString** | The trial&#39;s brief title. | [optional] 
 **StudyType** | Pointer to **NullableString** | INTERVENTIONAL or OBSERVATIONAL. | [optional] 
-**Phase** | Pointer to **NullableString** | The trial phase label. | [optional] 
+**Phase** | Pointer to **NullableString** | The registry&#39;s phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those. | [optional] 
+**PhaseLabel** | Pointer to **NullableString** | The trial phase as a display label (Phase 2, Phase 3, Observational, Not applicable, Expanded access, Unknown). The same trial&#39;s phase column holds the registry code. | [optional] 
 **OverallStatus** | Pointer to **NullableString** | The registry&#39;s overall status. | [optional] 
 **StartDate** | Pointer to **NullableString** | Trial start date. | [optional] 
 **StartYear** | Pointer to **NullableInt32** | Year of the trial start. | [optional] 
@@ -214,6 +215,41 @@ HasPhase returns a boolean if a field has been set.
 `func (o *SiteTrialsRow) UnsetPhase()`
 
 UnsetPhase ensures that no value is present for Phase, not even an explicit nil
+### GetPhaseLabel
+
+`func (o *SiteTrialsRow) GetPhaseLabel() string`
+
+GetPhaseLabel returns the PhaseLabel field if non-nil, zero value otherwise.
+
+### GetPhaseLabelOk
+
+`func (o *SiteTrialsRow) GetPhaseLabelOk() (*string, bool)`
+
+GetPhaseLabelOk returns a tuple with the PhaseLabel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPhaseLabel
+
+`func (o *SiteTrialsRow) SetPhaseLabel(v string)`
+
+SetPhaseLabel sets PhaseLabel field to given value.
+
+### HasPhaseLabel
+
+`func (o *SiteTrialsRow) HasPhaseLabel() bool`
+
+HasPhaseLabel returns a boolean if a field has been set.
+
+### SetPhaseLabelNil
+
+`func (o *SiteTrialsRow) SetPhaseLabelNil(b bool)`
+
+ SetPhaseLabelNil sets the value for PhaseLabel to be an explicit nil
+
+### UnsetPhaseLabel
+`func (o *SiteTrialsRow) UnsetPhaseLabel()`
+
+UnsetPhaseLabel ensures that no value is present for PhaseLabel, not even an explicit nil
 ### GetOverallStatus
 
 `func (o *SiteTrialsRow) GetOverallStatus() string`

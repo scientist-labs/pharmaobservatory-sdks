@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **CompanyName** | Pointer to **NullableString** | The company&#39;s display name: its own legal entity&#39;s name where one is known. | [optional] 
 **NameBasis** | Pointer to **NullableString** | Which source supplied the name: gleif_legal_name, edgar_registrant, ror or sponsor_display_name. | [optional] 
 **Country** | Pointer to **NullableString** | Country of the company&#39;s own legal entity, as the source states it. | [optional] 
-**OrgType** | Pointer to **NullableString** | The organization type of the company&#39;s representative record. | [optional] 
+**OrgType** | Pointer to **NullableString** | The organization type of the company&#39;s representative record: Academic, Government, Hospital, Industry, Nonprofit or Other (from the ROR record or the filing), or the lowercase tags investor and manufacturer that mark a minted adviser or manufacturer record. | [optional] 
 **OrgKinds** | Pointer to **[]string** | The roles the company&#39;s organizations play (Manufacturer, Sponsor and so on). | [optional] 
 **EdgarCik** | Pointer to **NullableString** | Central index key (CIK) in EDGAR, the US Securities and Exchange Commission (SEC) filing system, of the representative record, when it files. | [optional] 
 **EdgarTicker** | Pointer to **NullableString** | Exchange ticker of the representative record, when listed. | [optional] 

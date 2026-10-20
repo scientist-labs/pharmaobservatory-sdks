@@ -35,7 +35,7 @@ type SponsorTrialsRow struct {
 	SponsorGroupId NullableString `json:"sponsor_group_id,omitempty"`
 	// Display name of the sponsor's group.
 	SponsorGroupName NullableString `json:"sponsor_group_name,omitempty"`
-	// The registry's agency class for the sponsor (INDUSTRY, NIH for the US National Institutes of Health, OTHER ...).
+	// The funder class the registry declared for the sponsor (INDUSTRY, NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state.
 	SponsorAgencyClass NullableString `json:"sponsor_agency_class,omitempty"`
 	// How the sponsor name was resolved to an organization record.
 	SponsorResolutionMethod NullableString `json:"sponsor_resolution_method,omitempty"`
@@ -43,8 +43,10 @@ type SponsorTrialsRow struct {
 	TrialTitle NullableString `json:"trial_title,omitempty"`
 	// INTERVENTIONAL or OBSERVATIONAL.
 	StudyType NullableString `json:"study_type,omitempty"`
-	// The trial phase label.
+	// The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those.
 	Phase NullableString `json:"phase,omitempty"`
+	// The trial phase as a display label (Phase 2, Phase 3, Observational, Not applicable, Expanded access, Unknown). The same trial's phase column holds the registry code.
+	PhaseLabel NullableString `json:"phase_label,omitempty"`
 	// The registry's overall status.
 	OverallStatus NullableString `json:"overall_status,omitempty"`
 	// Trial start date.
@@ -629,6 +631,48 @@ func (o *SponsorTrialsRow) UnsetPhase() {
 	o.Phase.Unset()
 }
 
+// GetPhaseLabel returns the PhaseLabel field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *SponsorTrialsRow) GetPhaseLabel() string {
+	if o == nil || IsNil(o.PhaseLabel.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.PhaseLabel.Get()
+}
+
+// GetPhaseLabelOk returns a tuple with the PhaseLabel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *SponsorTrialsRow) GetPhaseLabelOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PhaseLabel.Get(), o.PhaseLabel.IsSet()
+}
+
+// HasPhaseLabel returns a boolean if a field has been set.
+func (o *SponsorTrialsRow) HasPhaseLabel() bool {
+	if o != nil && o.PhaseLabel.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPhaseLabel gets a reference to the given NullableString and assigns it to the PhaseLabel field.
+func (o *SponsorTrialsRow) SetPhaseLabel(v string) {
+	o.PhaseLabel.Set(&v)
+}
+// SetPhaseLabelNil sets the value for PhaseLabel to be an explicit nil
+func (o *SponsorTrialsRow) SetPhaseLabelNil() {
+	o.PhaseLabel.Set(nil)
+}
+
+// UnsetPhaseLabel ensures that no value is present for PhaseLabel, not even an explicit nil
+func (o *SponsorTrialsRow) UnsetPhaseLabel() {
+	o.PhaseLabel.Unset()
+}
+
 // GetOverallStatus returns the OverallStatus field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *SponsorTrialsRow) GetOverallStatus() string {
 	if o == nil || IsNil(o.OverallStatus.Get()) {
@@ -996,6 +1040,9 @@ func (o SponsorTrialsRow) ToMap() (map[string]interface{}, error) {
 	if o.Phase.IsSet() {
 		toSerialize["phase"] = o.Phase.Get()
 	}
+	if o.PhaseLabel.IsSet() {
+		toSerialize["phase_label"] = o.PhaseLabel.Get()
+	}
 	if o.OverallStatus.IsSet() {
 		toSerialize["overall_status"] = o.OverallStatus.Get()
 	}
@@ -1055,6 +1102,7 @@ func (o *SponsorTrialsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "trial_title")
 		delete(additionalProperties, "study_type")
 		delete(additionalProperties, "phase")
+		delete(additionalProperties, "phase_label")
 		delete(additionalProperties, "overall_status")
 		delete(additionalProperties, "start_date")
 		delete(additionalProperties, "start_year")

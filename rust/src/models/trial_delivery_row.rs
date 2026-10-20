@@ -26,9 +26,12 @@ pub struct TrialDeliveryRow {
     /// INTERVENTIONAL, OBSERVATIONAL or EXPANDED_ACCESS.
     #[serde(rename = "study_type", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub study_type: Option<Option<String>>,
-    /// The registry's phase code.
+    /// The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those.
     #[serde(rename = "phase", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub phase: Option<Option<String>>,
+    /// The trial phase as a display label (Phase 2, Phase 3, Observational, Not applicable, Expanded access, Unknown). The same trial's phase column holds the registry code.
+    #[serde(rename = "phase_label", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub phase_label: Option<Option<String>>,
     /// Planned enrollment from the earliest snapshot typed ESTIMATED.
     #[serde(rename = "planned_enrollment", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub planned_enrollment: Option<Option<i32>>,
@@ -48,8 +51,8 @@ pub struct TrialDeliveryRow {
     #[serde(rename = "enrollment_met", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub enrollment_met: Option<Option<bool>>,
     /// Whether a planned and an actual enrollment are both recorded.
-    #[serde(rename = "has_enrollment_delta", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub has_enrollment_delta: Option<Option<bool>>,
+    #[serde(rename = "enrollment_delta_known", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub enrollment_delta_known: Option<Option<bool>>,
     /// Where the planned enrollment came from: history_earliest_estimated, type_estimated_current or none.
     #[serde(rename = "planned_basis", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub planned_basis: Option<Option<String>>,
@@ -68,10 +71,10 @@ pub struct TrialDeliveryRow {
     /// Completion date once typed ACTUAL.
     #[serde(rename = "actual_completion_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub actual_completion_date: Option<Option<String>>,
-    /// Type of the current primary completion date (ACTUAL or ESTIMATED).
+    /// ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry's older ANTICIPATED is published as ESTIMATED.
     #[serde(rename = "primary_completion_date_type", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub primary_completion_date_type: Option<Option<String>>,
-    /// Type of the current completion date (ACTUAL or ESTIMATED).
+    /// ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry's older ANTICIPATED is published as ESTIMATED.
     #[serde(rename = "completion_date_type", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub completion_date_type: Option<Option<String>>,
     /// Actual minus planned primary completion date; positive is later than planned (null without both).
@@ -97,13 +100,14 @@ impl TrialDeliveryRow {
             overall_status_summary: None,
             study_type: None,
             phase: None,
+            phase_label: None,
             planned_enrollment: None,
             actual_enrollment: None,
             enrollment_type: None,
             enrollment_delta: None,
             enrollment_attainment_pct: None,
             enrollment_met: None,
-            has_enrollment_delta: None,
+            enrollment_delta_known: None,
             planned_basis: None,
             actual_basis: None,
             planned_primary_completion_date: None,

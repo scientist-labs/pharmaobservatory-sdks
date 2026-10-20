@@ -31,7 +31,7 @@ type TrialsRow struct {
 	OverallStatus NullableString `json:"overall_status,omitempty"`
 	// A coarse status label derived from the overall status (Recruiting, Completed, Discontinued and so on).
 	OverallStatusSummary NullableString `json:"overall_status_summary,omitempty"`
-	// The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA).
+	// The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those.
 	Phase NullableString `json:"phase,omitempty"`
 	// The trial phase as a label (Phase 2, Phase 3, Observational, Not applicable).
 	PhaseLabel NullableString `json:"phase_label,omitempty"`
@@ -51,11 +51,11 @@ type TrialsRow struct {
 	StartYear NullableInt32 `json:"start_year,omitempty"`
 	// Primary completion date.
 	PrimaryCompletionDate NullableString `json:"primary_completion_date,omitempty"`
-	// ACTUAL (a date that has occurred) or ESTIMATED (a planned date).
+	// ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry's older ANTICIPATED is published as ESTIMATED.
 	PrimaryCompletionDateType NullableString `json:"primary_completion_date_type,omitempty"`
 	// Completion date.
 	CompletionDate NullableString `json:"completion_date,omitempty"`
-	// ACTUAL (a date that has occurred) or ESTIMATED (a planned date).
+	// ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry's older ANTICIPATED is published as ESTIMATED.
 	CompletionDateType NullableString `json:"completion_date_type,omitempty"`
 	// Date the study was first posted to the registry.
 	StudyFirstPostedDate NullableString `json:"study_first_posted_date,omitempty"`

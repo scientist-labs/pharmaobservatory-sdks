@@ -5,6 +5,10 @@ README.md
 Rakefile
 docs/ApiV1BaseApi.md
 docs/ApiV1WhoamiGet200Response.md
+docs/ApiV1WhoamiGet200ResponseLimits.md
+docs/ApiV1WhoamiGet200ResponseQuota.md
+docs/ApiV1WhoamiGet200ResponseQuotaBuckets.md
+docs/ApiV1WhoamiGet200ResponseQuotaBucketsRequestsPerMinute.md
 docs/AuthError.md
 docs/BiomarkerBqpAssertionsResponse.md
 docs/BiomarkerBqpAssertionsRow.md
@@ -168,6 +172,10 @@ lib/pharmaobservatory/api_client.rb
 lib/pharmaobservatory/api_error.rb
 lib/pharmaobservatory/configuration.rb
 lib/pharmaobservatory/models/api_v1_whoami_get200_response.rb
+lib/pharmaobservatory/models/api_v1_whoami_get200_response_limits.rb
+lib/pharmaobservatory/models/api_v1_whoami_get200_response_quota.rb
+lib/pharmaobservatory/models/api_v1_whoami_get200_response_quota_buckets.rb
+lib/pharmaobservatory/models/api_v1_whoami_get200_response_quota_buckets_requests_per_minute.rb
 lib/pharmaobservatory/models/auth_error.rb
 lib/pharmaobservatory/models/biomarker_bqp_assertions_response.rb
 lib/pharmaobservatory/models/biomarker_bqp_assertions_row.rb
@@ -319,6 +327,10 @@ spec/api/legal_entities_api_spec.rb
 spec/api/query_api_spec.rb
 spec/api/sites_api_spec.rb
 spec/api/trials_api_spec.rb
+spec/models/api_v1_whoami_get200_response_limits_spec.rb
+spec/models/api_v1_whoami_get200_response_quota_buckets_requests_per_minute_spec.rb
+spec/models/api_v1_whoami_get200_response_quota_buckets_spec.rb
+spec/models/api_v1_whoami_get200_response_quota_spec.rb
 spec/models/api_v1_whoami_get200_response_spec.rb
 spec/models/auth_error_spec.rb
 spec/models/biomarker_bqp_assertions_response_spec.rb

@@ -34,7 +34,7 @@ module PharmaObservatory
     # A coarse status label derived from the overall status (Recruiting, Completed, Discontinued and so on).
     attr_accessor :overall_status_summary
 
-    # The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA).
+    # The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those.
     attr_accessor :phase
 
     # The trial phase as a label (Phase 2, Phase 3, Observational, Not applicable).
@@ -64,13 +64,13 @@ module PharmaObservatory
     # Primary completion date.
     attr_accessor :primary_completion_date
 
-    # ACTUAL (a date that has occurred) or ESTIMATED (a planned date).
+    # ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry's older ANTICIPATED is published as ESTIMATED.
     attr_accessor :primary_completion_date_type
 
     # Completion date.
     attr_accessor :completion_date
 
-    # ACTUAL (a date that has occurred) or ESTIMATED (a planned date).
+    # ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry's older ANTICIPATED is published as ESTIMATED.
     attr_accessor :completion_date_type
 
     # Date the study was first posted to the registry.

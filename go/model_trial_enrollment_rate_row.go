@@ -21,8 +21,10 @@ var _ MappedNullable = &TrialEnrollmentRateRow{}
 type TrialEnrollmentRateRow struct {
 	// The trial's ClinicalTrials.gov registry id (NCT, National Clinical Trial, number).
 	TrialId NullableString `json:"trial_id,omitempty"`
-	// The registry's phase code.
+	// The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those.
 	Phase NullableString `json:"phase,omitempty"`
+	// The trial phase as a display label (Phase 2, Phase 3, Observational, Not applicable, Expanded access, Unknown). The same trial's phase column holds the registry code.
+	PhaseLabel NullableString `json:"phase_label,omitempty"`
 	// The lead sponsor name as filed.
 	LeadSponsorName NullableString `json:"lead_sponsor_name,omitempty"`
 	// A coarse status label (Completed and so on).
@@ -45,9 +47,9 @@ type TrialEnrollmentRateRow struct {
 	PrimaryCompletionDate NullableString `json:"primary_completion_date,omitempty"`
 	// Completion date.
 	CompletionDate NullableString `json:"completion_date,omitempty"`
-	// ACTUAL or ESTIMATED.
+	// ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry's older ANTICIPATED is published as ESTIMATED.
 	PrimaryCompletionDateType NullableString `json:"primary_completion_date_type,omitempty"`
-	// ACTUAL or ESTIMATED.
+	// ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry's older ANTICIPATED is published as ESTIMATED.
 	CompletionDateType NullableString `json:"completion_date_type,omitempty"`
 	// Whether the inputs support a rate.
 	IsRateComputable NullableBool `json:"is_rate_computable,omitempty"`
@@ -165,6 +167,48 @@ func (o *TrialEnrollmentRateRow) SetPhaseNil() {
 // UnsetPhase ensures that no value is present for Phase, not even an explicit nil
 func (o *TrialEnrollmentRateRow) UnsetPhase() {
 	o.Phase.Unset()
+}
+
+// GetPhaseLabel returns the PhaseLabel field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *TrialEnrollmentRateRow) GetPhaseLabel() string {
+	if o == nil || IsNil(o.PhaseLabel.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.PhaseLabel.Get()
+}
+
+// GetPhaseLabelOk returns a tuple with the PhaseLabel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *TrialEnrollmentRateRow) GetPhaseLabelOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PhaseLabel.Get(), o.PhaseLabel.IsSet()
+}
+
+// HasPhaseLabel returns a boolean if a field has been set.
+func (o *TrialEnrollmentRateRow) HasPhaseLabel() bool {
+	if o != nil && o.PhaseLabel.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPhaseLabel gets a reference to the given NullableString and assigns it to the PhaseLabel field.
+func (o *TrialEnrollmentRateRow) SetPhaseLabel(v string) {
+	o.PhaseLabel.Set(&v)
+}
+// SetPhaseLabelNil sets the value for PhaseLabel to be an explicit nil
+func (o *TrialEnrollmentRateRow) SetPhaseLabelNil() {
+	o.PhaseLabel.Set(nil)
+}
+
+// UnsetPhaseLabel ensures that no value is present for PhaseLabel, not even an explicit nil
+func (o *TrialEnrollmentRateRow) UnsetPhaseLabel() {
+	o.PhaseLabel.Unset()
 }
 
 // GetLeadSponsorName returns the LeadSponsorName field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -981,6 +1025,9 @@ func (o TrialEnrollmentRateRow) ToMap() (map[string]interface{}, error) {
 	if o.Phase.IsSet() {
 		toSerialize["phase"] = o.Phase.Get()
 	}
+	if o.PhaseLabel.IsSet() {
+		toSerialize["phase_label"] = o.PhaseLabel.Get()
+	}
 	if o.LeadSponsorName.IsSet() {
 		toSerialize["lead_sponsor_name"] = o.LeadSponsorName.Get()
 	}
@@ -1062,6 +1109,7 @@ func (o *TrialEnrollmentRateRow) UnmarshalJSON(data []byte) (err error) {
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "trial_id")
 		delete(additionalProperties, "phase")
+		delete(additionalProperties, "phase_label")
 		delete(additionalProperties, "lead_sponsor_name")
 		delete(additionalProperties, "overall_status_summary")
 		delete(additionalProperties, "actual_enrollment")

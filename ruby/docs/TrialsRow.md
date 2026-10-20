@@ -10,7 +10,7 @@
 | **study_type** | **String** | INTERVENTIONAL, OBSERVATIONAL or EXPANDED_ACCESS. | [optional] |
 | **overall_status** | **String** | The registry&#39;s overall status code (RECRUITING, COMPLETED, TERMINATED and so on). | [optional] |
 | **overall_status_summary** | **String** | A coarse status label derived from the overall status (Recruiting, Completed, Discontinued and so on). | [optional] |
-| **phase** | **String** | The registry&#39;s phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA). | [optional] |
+| **phase** | **String** | The registry&#39;s phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those. | [optional] |
 | **phase_label** | **String** | The trial phase as a label (Phase 2, Phase 3, Observational, Not applicable). | [optional] |
 | **phase_by_status** | **String** | The phase code and the status summary joined with a colon (PHASE2:Completed). | [optional] |
 | **enrollment** | **Integer** | Enrollment as registered: a planned target or an achieved count (see enrollment_type). | [optional] |
@@ -20,9 +20,9 @@
 | **start_date** | **Date** | Trial start date. | [optional] |
 | **start_year** | **Integer** | Year of the trial start. | [optional] |
 | **primary_completion_date** | **Date** | Primary completion date. | [optional] |
-| **primary_completion_date_type** | **String** | ACTUAL (a date that has occurred) or ESTIMATED (a planned date). | [optional] |
+| **primary_completion_date_type** | **String** | ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry&#39;s older ANTICIPATED is published as ESTIMATED. | [optional] |
 | **completion_date** | **Date** | Completion date. | [optional] |
-| **completion_date_type** | **String** | ACTUAL (a date that has occurred) or ESTIMATED (a planned date). | [optional] |
+| **completion_date_type** | **String** | ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry&#39;s older ANTICIPATED is published as ESTIMATED. | [optional] |
 | **study_first_posted_date** | **Date** | Date the study was first posted to the registry. | [optional] |
 | **last_update_posted_date** | **Date** | Date the registry record was last updated. | [optional] |
 | **why_stopped** | **String** | The sponsor&#39;s stated reason a trial was stopped early, as filed. | [optional] |

@@ -19,6 +19,18 @@ pub struct ApiV1WhoamiGet200Response {
     pub sub: String,
     #[serde(rename = "roles")]
     pub roles: Vec<String>,
+    #[serde(rename = "name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub name: Option<Option<serde_json::Value>>,
+    #[serde(rename = "email", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub email: Option<Option<serde_json::Value>>,
+    #[serde(rename = "organization", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub organization: Option<Option<serde_json::Value>>,
+    #[serde(rename = "plan", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub plan: Option<Option<serde_json::Value>>,
+    #[serde(rename = "limits", skip_serializing_if = "Option::is_none")]
+    pub limits: Option<Box<models::ApiV1WhoamiGet200ResponseLimits>>,
+    #[serde(rename = "quota", skip_serializing_if = "Option::is_none")]
+    pub quota: Option<Box<models::ApiV1WhoamiGet200ResponseQuota>>,
 }
 
 impl ApiV1WhoamiGet200Response {
@@ -27,6 +39,12 @@ impl ApiV1WhoamiGet200Response {
             ok,
             sub,
             roles,
+            name: None,
+            email: None,
+            organization: None,
+            plan: None,
+            limits: None,
+            quota: None,
         }
     }
 }

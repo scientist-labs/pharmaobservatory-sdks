@@ -17,9 +17,12 @@ pub struct TrialEnrollmentRateRow {
     /// The trial's ClinicalTrials.gov registry id (NCT, National Clinical Trial, number).
     #[serde(rename = "trial_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub trial_id: Option<Option<String>>,
-    /// The registry's phase code.
+    /// The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those.
     #[serde(rename = "phase", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub phase: Option<Option<String>>,
+    /// The trial phase as a display label (Phase 2, Phase 3, Observational, Not applicable, Expanded access, Unknown). The same trial's phase column holds the registry code.
+    #[serde(rename = "phase_label", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub phase_label: Option<Option<String>>,
     /// The lead sponsor name as filed.
     #[serde(rename = "lead_sponsor_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub lead_sponsor_name: Option<Option<String>>,
@@ -53,10 +56,10 @@ pub struct TrialEnrollmentRateRow {
     /// Completion date.
     #[serde(rename = "completion_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub completion_date: Option<Option<String>>,
-    /// ACTUAL or ESTIMATED.
+    /// ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry's older ANTICIPATED is published as ESTIMATED.
     #[serde(rename = "primary_completion_date_type", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub primary_completion_date_type: Option<Option<String>>,
-    /// ACTUAL or ESTIMATED.
+    /// ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry's older ANTICIPATED is published as ESTIMATED.
     #[serde(rename = "completion_date_type", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub completion_date_type: Option<Option<String>>,
     /// Whether the inputs support a rate.
@@ -85,6 +88,7 @@ impl TrialEnrollmentRateRow {
         TrialEnrollmentRateRow {
             trial_id: None,
             phase: None,
+            phase_label: None,
             lead_sponsor_name: None,
             overall_status_summary: None,
             actual_enrollment: None,

@@ -8,7 +8,7 @@
 | **company_name** | **String** | The company&#39;s display name: its own legal entity&#39;s name where one is known. | [optional] |
 | **name_basis** | **String** | Which source supplied the name: gleif_legal_name, edgar_registrant, ror or sponsor_display_name. | [optional] |
 | **country** | **String** | Country of the company&#39;s own legal entity, as the source states it. | [optional] |
-| **org_type** | **String** | The organization type of the company&#39;s representative record. | [optional] |
+| **org_type** | **String** | The organization type of the company&#39;s representative record: Academic, Government, Hospital, Industry, Nonprofit or Other (from the ROR record or the filing), or the lowercase tags investor and manufacturer that mark a minted adviser or manufacturer record. | [optional] |
 | **org_kinds** | **Array&lt;String&gt;** | The roles the company&#39;s organizations play (Manufacturer, Sponsor and so on). | [optional] |
 | **edgar_cik** | **String** | Central index key (CIK) in EDGAR, the US Securities and Exchange Commission (SEC) filing system, of the representative record, when it files. | [optional] |
 | **edgar_ticker** | **String** | Exchange ticker of the representative record, when listed. | [optional] |

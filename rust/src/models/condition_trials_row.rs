@@ -32,9 +32,12 @@ pub struct ConditionTrialsRow {
     /// The registry's study type (INTERVENTIONAL, OBSERVATIONAL or EXPANDED_ACCESS).
     #[serde(rename = "study_type", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub study_type: Option<Option<String>>,
-    /// The trial phase label (Phase 1, Phase 2, Phase 3, Phase 4, Not Applicable and so on).
+    /// The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those.
     #[serde(rename = "phase", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub phase: Option<Option<String>>,
+    /// The trial phase as a display label (Phase 2, Phase 3, Observational, Not applicable, Expanded access, Unknown). The same trial's phase column holds the registry code.
+    #[serde(rename = "phase_label", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub phase_label: Option<Option<String>>,
     /// The registry's overall recruitment status (COMPLETED, RECRUITING, TERMINATED and so on).
     #[serde(rename = "overall_status", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub overall_status: Option<Option<String>>,
@@ -74,7 +77,7 @@ pub struct ConditionTrialsRow {
     /// Display name of the lead sponsor's group.
     #[serde(rename = "sponsor_group_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub sponsor_group_name: Option<Option<String>>,
-    /// The registry's declared funder class of the lead sponsor (INDUSTRY, NIH for the US National Institutes of Health, OTHER and so on).
+    /// The funder class the registry declared for the sponsor (INDUSTRY, NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state. Null when the trial has no lead sponsor row.
     #[serde(rename = "sponsor_agency_class", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub sponsor_agency_class: Option<Option<String>>,
 }
@@ -90,6 +93,7 @@ impl ConditionTrialsRow {
             trial_title: None,
             study_type: None,
             phase: None,
+            phase_label: None,
             overall_status: None,
             start_date: None,
             start_year: None,

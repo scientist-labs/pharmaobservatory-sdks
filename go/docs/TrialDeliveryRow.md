@@ -8,21 +8,23 @@ Name | Type | Description | Notes
 **LeadSponsorName** | Pointer to **NullableString** | The lead sponsor name as filed. | [optional] 
 **OverallStatusSummary** | Pointer to **NullableString** | A coarse status label (Recruiting, Completed and so on). | [optional] 
 **StudyType** | Pointer to **NullableString** | INTERVENTIONAL, OBSERVATIONAL or EXPANDED_ACCESS. | [optional] 
-**Phase** | Pointer to **NullableString** | The registry&#39;s phase code. | [optional] 
+**Phase** | Pointer to **NullableString** | The registry&#39;s phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those. | [optional] 
+**PhaseLabel** | Pointer to **NullableString** | The trial phase as a display label (Phase 2, Phase 3, Observational, Not applicable, Expanded access, Unknown). The same trial&#39;s phase column holds the registry code. | [optional] 
 **PlannedEnrollment** | Pointer to **NullableInt32** | Planned enrollment from the earliest snapshot typed ESTIMATED. | [optional] 
 **ActualEnrollment** | Pointer to **NullableInt32** | Enrollment from the latest observation typed ACTUAL. | [optional] 
 **EnrollmentType** | Pointer to **NullableString** | Enrollment type on the current record (ACTUAL or ESTIMATED). | [optional] 
 **EnrollmentDelta** | Pointer to **NullableInt32** | Actual minus planned enrollment (null without both). | [optional] 
 **EnrollmentAttainmentPct** | Pointer to **NullableFloat32** | Actual as a percentage of planned enrollment (null without both). | [optional] 
 **EnrollmentMet** | Pointer to **NullableBool** | Whether actual enrollment reached the plan (null without both). | [optional] 
+**EnrollmentDeltaKnown** | Pointer to **NullableBool** | Whether a planned and an actual enrollment are both recorded. | [optional] 
 **PlannedBasis** | Pointer to **NullableString** | Where the planned enrollment came from: history_earliest_estimated, type_estimated_current or none. | [optional] 
 **ActualBasis** | Pointer to **NullableString** | How the actual enrollment was taken (from the snapshot history, from the current record, or none). | [optional] 
 **PlannedPrimaryCompletionDate** | Pointer to **NullableString** | Planned primary completion date from the earliest snapshot typed ESTIMATED. | [optional] 
 **ActualPrimaryCompletionDate** | Pointer to **NullableString** | Primary completion date once typed ACTUAL. | [optional] 
 **PlannedCompletionDate** | Pointer to **NullableString** | Planned completion date from the earliest snapshot typed ESTIMATED. | [optional] 
 **ActualCompletionDate** | Pointer to **NullableString** | Completion date once typed ACTUAL. | [optional] 
-**PrimaryCompletionDateType** | Pointer to **NullableString** | Type of the current primary completion date (ACTUAL or ESTIMATED). | [optional] 
-**CompletionDateType** | Pointer to **NullableString** | Type of the current completion date (ACTUAL or ESTIMATED). | [optional] 
+**PrimaryCompletionDateType** | Pointer to **NullableString** | ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry&#39;s older ANTICIPATED is published as ESTIMATED. | [optional] 
+**CompletionDateType** | Pointer to **NullableString** | ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry&#39;s older ANTICIPATED is published as ESTIMATED. | [optional] 
 **PrimaryCompletionSlipDays** | Pointer to **NullableInt32** | Actual minus planned primary completion date; positive is later than planned (null without both). | [optional] 
 **CompletionSlipDays** | Pointer to **NullableInt32** | Actual minus planned completion date; positive is later than planned (null without both). | [optional] 
 **CompletionSlipped** | Pointer to **NullableBool** | Whether the primary completion came later than planned (null without both). | [optional] 
@@ -222,6 +224,41 @@ HasPhase returns a boolean if a field has been set.
 `func (o *TrialDeliveryRow) UnsetPhase()`
 
 UnsetPhase ensures that no value is present for Phase, not even an explicit nil
+### GetPhaseLabel
+
+`func (o *TrialDeliveryRow) GetPhaseLabel() string`
+
+GetPhaseLabel returns the PhaseLabel field if non-nil, zero value otherwise.
+
+### GetPhaseLabelOk
+
+`func (o *TrialDeliveryRow) GetPhaseLabelOk() (*string, bool)`
+
+GetPhaseLabelOk returns a tuple with the PhaseLabel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPhaseLabel
+
+`func (o *TrialDeliveryRow) SetPhaseLabel(v string)`
+
+SetPhaseLabel sets PhaseLabel field to given value.
+
+### HasPhaseLabel
+
+`func (o *TrialDeliveryRow) HasPhaseLabel() bool`
+
+HasPhaseLabel returns a boolean if a field has been set.
+
+### SetPhaseLabelNil
+
+`func (o *TrialDeliveryRow) SetPhaseLabelNil(b bool)`
+
+ SetPhaseLabelNil sets the value for PhaseLabel to be an explicit nil
+
+### UnsetPhaseLabel
+`func (o *TrialDeliveryRow) UnsetPhaseLabel()`
+
+UnsetPhaseLabel ensures that no value is present for PhaseLabel, not even an explicit nil
 ### GetPlannedEnrollment
 
 `func (o *TrialDeliveryRow) GetPlannedEnrollment() int32`
@@ -432,6 +469,41 @@ HasEnrollmentMet returns a boolean if a field has been set.
 `func (o *TrialDeliveryRow) UnsetEnrollmentMet()`
 
 UnsetEnrollmentMet ensures that no value is present for EnrollmentMet, not even an explicit nil
+### GetEnrollmentDeltaKnown
+
+`func (o *TrialDeliveryRow) GetEnrollmentDeltaKnown() bool`
+
+GetEnrollmentDeltaKnown returns the EnrollmentDeltaKnown field if non-nil, zero value otherwise.
+
+### GetEnrollmentDeltaKnownOk
+
+`func (o *TrialDeliveryRow) GetEnrollmentDeltaKnownOk() (*bool, bool)`
+
+GetEnrollmentDeltaKnownOk returns a tuple with the EnrollmentDeltaKnown field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnrollmentDeltaKnown
+
+`func (o *TrialDeliveryRow) SetEnrollmentDeltaKnown(v bool)`
+
+SetEnrollmentDeltaKnown sets EnrollmentDeltaKnown field to given value.
+
+### HasEnrollmentDeltaKnown
+
+`func (o *TrialDeliveryRow) HasEnrollmentDeltaKnown() bool`
+
+HasEnrollmentDeltaKnown returns a boolean if a field has been set.
+
+### SetEnrollmentDeltaKnownNil
+
+`func (o *TrialDeliveryRow) SetEnrollmentDeltaKnownNil(b bool)`
+
+ SetEnrollmentDeltaKnownNil sets the value for EnrollmentDeltaKnown to be an explicit nil
+
+### UnsetEnrollmentDeltaKnown
+`func (o *TrialDeliveryRow) UnsetEnrollmentDeltaKnown()`
+
+UnsetEnrollmentDeltaKnown ensures that no value is present for EnrollmentDeltaKnown, not even an explicit nil
 ### GetPlannedBasis
 
 `func (o *TrialDeliveryRow) GetPlannedBasis() string`

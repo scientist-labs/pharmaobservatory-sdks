@@ -23,6 +23,12 @@ type ApiV1WhoamiGet200Response struct {
 	Ok bool `json:"ok"`
 	Sub string `json:"sub"`
 	Roles []string `json:"roles"`
+	Name interface{} `json:"name,omitempty"`
+	Email interface{} `json:"email,omitempty"`
+	Organization interface{} `json:"organization,omitempty"`
+	Plan interface{} `json:"plan,omitempty"`
+	Limits *ApiV1WhoamiGet200ResponseLimits `json:"limits,omitempty"`
+	Quota *ApiV1WhoamiGet200ResponseQuota `json:"quota,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -120,6 +126,202 @@ func (o *ApiV1WhoamiGet200Response) SetRoles(v []string) {
 	o.Roles = v
 }
 
+// GetName returns the Name field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ApiV1WhoamiGet200Response) GetName() interface{} {
+	if o == nil {
+		var ret interface{}
+		return ret
+	}
+	return o.Name
+}
+
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ApiV1WhoamiGet200Response) GetNameOk() (*interface{}, bool) {
+	if o == nil || IsNil(o.Name) {
+		return nil, false
+	}
+	return &o.Name, true
+}
+
+// HasName returns a boolean if a field has been set.
+func (o *ApiV1WhoamiGet200Response) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given interface{} and assigns it to the Name field.
+func (o *ApiV1WhoamiGet200Response) SetName(v interface{}) {
+	o.Name = v
+}
+
+// GetEmail returns the Email field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ApiV1WhoamiGet200Response) GetEmail() interface{} {
+	if o == nil {
+		var ret interface{}
+		return ret
+	}
+	return o.Email
+}
+
+// GetEmailOk returns a tuple with the Email field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ApiV1WhoamiGet200Response) GetEmailOk() (*interface{}, bool) {
+	if o == nil || IsNil(o.Email) {
+		return nil, false
+	}
+	return &o.Email, true
+}
+
+// HasEmail returns a boolean if a field has been set.
+func (o *ApiV1WhoamiGet200Response) HasEmail() bool {
+	if o != nil && !IsNil(o.Email) {
+		return true
+	}
+
+	return false
+}
+
+// SetEmail gets a reference to the given interface{} and assigns it to the Email field.
+func (o *ApiV1WhoamiGet200Response) SetEmail(v interface{}) {
+	o.Email = v
+}
+
+// GetOrganization returns the Organization field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ApiV1WhoamiGet200Response) GetOrganization() interface{} {
+	if o == nil {
+		var ret interface{}
+		return ret
+	}
+	return o.Organization
+}
+
+// GetOrganizationOk returns a tuple with the Organization field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ApiV1WhoamiGet200Response) GetOrganizationOk() (*interface{}, bool) {
+	if o == nil || IsNil(o.Organization) {
+		return nil, false
+	}
+	return &o.Organization, true
+}
+
+// HasOrganization returns a boolean if a field has been set.
+func (o *ApiV1WhoamiGet200Response) HasOrganization() bool {
+	if o != nil && !IsNil(o.Organization) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrganization gets a reference to the given interface{} and assigns it to the Organization field.
+func (o *ApiV1WhoamiGet200Response) SetOrganization(v interface{}) {
+	o.Organization = v
+}
+
+// GetPlan returns the Plan field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ApiV1WhoamiGet200Response) GetPlan() interface{} {
+	if o == nil {
+		var ret interface{}
+		return ret
+	}
+	return o.Plan
+}
+
+// GetPlanOk returns a tuple with the Plan field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ApiV1WhoamiGet200Response) GetPlanOk() (*interface{}, bool) {
+	if o == nil || IsNil(o.Plan) {
+		return nil, false
+	}
+	return &o.Plan, true
+}
+
+// HasPlan returns a boolean if a field has been set.
+func (o *ApiV1WhoamiGet200Response) HasPlan() bool {
+	if o != nil && !IsNil(o.Plan) {
+		return true
+	}
+
+	return false
+}
+
+// SetPlan gets a reference to the given interface{} and assigns it to the Plan field.
+func (o *ApiV1WhoamiGet200Response) SetPlan(v interface{}) {
+	o.Plan = v
+}
+
+// GetLimits returns the Limits field value if set, zero value otherwise.
+func (o *ApiV1WhoamiGet200Response) GetLimits() ApiV1WhoamiGet200ResponseLimits {
+	if o == nil || IsNil(o.Limits) {
+		var ret ApiV1WhoamiGet200ResponseLimits
+		return ret
+	}
+	return *o.Limits
+}
+
+// GetLimitsOk returns a tuple with the Limits field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApiV1WhoamiGet200Response) GetLimitsOk() (*ApiV1WhoamiGet200ResponseLimits, bool) {
+	if o == nil || IsNil(o.Limits) {
+		return nil, false
+	}
+	return o.Limits, true
+}
+
+// HasLimits returns a boolean if a field has been set.
+func (o *ApiV1WhoamiGet200Response) HasLimits() bool {
+	if o != nil && !IsNil(o.Limits) {
+		return true
+	}
+
+	return false
+}
+
+// SetLimits gets a reference to the given ApiV1WhoamiGet200ResponseLimits and assigns it to the Limits field.
+func (o *ApiV1WhoamiGet200Response) SetLimits(v ApiV1WhoamiGet200ResponseLimits) {
+	o.Limits = &v
+}
+
+// GetQuota returns the Quota field value if set, zero value otherwise.
+func (o *ApiV1WhoamiGet200Response) GetQuota() ApiV1WhoamiGet200ResponseQuota {
+	if o == nil || IsNil(o.Quota) {
+		var ret ApiV1WhoamiGet200ResponseQuota
+		return ret
+	}
+	return *o.Quota
+}
+
+// GetQuotaOk returns a tuple with the Quota field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApiV1WhoamiGet200Response) GetQuotaOk() (*ApiV1WhoamiGet200ResponseQuota, bool) {
+	if o == nil || IsNil(o.Quota) {
+		return nil, false
+	}
+	return o.Quota, true
+}
+
+// HasQuota returns a boolean if a field has been set.
+func (o *ApiV1WhoamiGet200Response) HasQuota() bool {
+	if o != nil && !IsNil(o.Quota) {
+		return true
+	}
+
+	return false
+}
+
+// SetQuota gets a reference to the given ApiV1WhoamiGet200ResponseQuota and assigns it to the Quota field.
+func (o *ApiV1WhoamiGet200Response) SetQuota(v ApiV1WhoamiGet200ResponseQuota) {
+	o.Quota = &v
+}
+
 func (o ApiV1WhoamiGet200Response) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -133,6 +335,24 @@ func (o ApiV1WhoamiGet200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize["ok"] = o.Ok
 	toSerialize["sub"] = o.Sub
 	toSerialize["roles"] = o.Roles
+	if o.Name != nil {
+		toSerialize["name"] = o.Name
+	}
+	if o.Email != nil {
+		toSerialize["email"] = o.Email
+	}
+	if o.Organization != nil {
+		toSerialize["organization"] = o.Organization
+	}
+	if o.Plan != nil {
+		toSerialize["plan"] = o.Plan
+	}
+	if !IsNil(o.Limits) {
+		toSerialize["limits"] = o.Limits
+	}
+	if !IsNil(o.Quota) {
+		toSerialize["quota"] = o.Quota
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -181,6 +401,12 @@ func (o *ApiV1WhoamiGet200Response) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "ok")
 		delete(additionalProperties, "sub")
 		delete(additionalProperties, "roles")
+		delete(additionalProperties, "name")
+		delete(additionalProperties, "email")
+		delete(additionalProperties, "organization")
+		delete(additionalProperties, "plan")
+		delete(additionalProperties, "limits")
+		delete(additionalProperties, "quota")
 		o.AdditionalProperties = additionalProperties
 	}
 

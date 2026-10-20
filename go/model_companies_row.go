@@ -27,7 +27,7 @@ type CompaniesRow struct {
 	NameBasis NullableString `json:"name_basis,omitempty"`
 	// Country of the company's own legal entity, as the source states it.
 	Country NullableString `json:"country,omitempty"`
-	// The organization type of the company's representative record.
+	// The organization type of the company's representative record: Academic, Government, Hospital, Industry, Nonprofit or Other (from the ROR record or the filing), or the lowercase tags investor and manufacturer that mark a minted adviser or manufacturer record.
 	OrgType NullableString `json:"org_type,omitempty"`
 	// The roles the company's organizations play (Manufacturer, Sponsor and so on).
 	OrgKinds []string `json:"org_kinds,omitempty"`
