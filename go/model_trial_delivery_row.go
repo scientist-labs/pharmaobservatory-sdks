@@ -27,8 +27,10 @@ type TrialDeliveryRow struct {
 	OverallStatusSummary NullableString `json:"overall_status_summary,omitempty"`
 	// INTERVENTIONAL, OBSERVATIONAL or EXPANDED_ACCESS.
 	StudyType NullableString `json:"study_type,omitempty"`
-	// The registry's phase code.
+	// The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those.
 	Phase NullableString `json:"phase,omitempty"`
+	// The trial phase as a display label (Phase 2, Phase 3, Observational, Not applicable, Expanded access, Unknown). The same trial's phase column holds the registry code.
+	PhaseLabel NullableString `json:"phase_label,omitempty"`
 	// Planned enrollment from the earliest snapshot typed ESTIMATED.
 	PlannedEnrollment NullableInt32 `json:"planned_enrollment,omitempty"`
 	// Enrollment from the latest observation typed ACTUAL.
@@ -41,6 +43,8 @@ type TrialDeliveryRow struct {
 	EnrollmentAttainmentPct NullableFloat32 `json:"enrollment_attainment_pct,omitempty"`
 	// Whether actual enrollment reached the plan (null without both).
 	EnrollmentMet NullableBool `json:"enrollment_met,omitempty"`
+	// Whether a planned and an actual enrollment are both recorded.
+	EnrollmentDeltaKnown NullableBool `json:"enrollment_delta_known,omitempty"`
 	// Where the planned enrollment came from: history_earliest_estimated, type_estimated_current or none.
 	PlannedBasis NullableString `json:"planned_basis,omitempty"`
 	// How the actual enrollment was taken (from the snapshot history, from the current record, or none).
@@ -53,9 +57,9 @@ type TrialDeliveryRow struct {
 	PlannedCompletionDate NullableString `json:"planned_completion_date,omitempty"`
 	// Completion date once typed ACTUAL.
 	ActualCompletionDate NullableString `json:"actual_completion_date,omitempty"`
-	// Type of the current primary completion date (ACTUAL or ESTIMATED).
+	// ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry's older ANTICIPATED is published as ESTIMATED.
 	PrimaryCompletionDateType NullableString `json:"primary_completion_date_type,omitempty"`
-	// Type of the current completion date (ACTUAL or ESTIMATED).
+	// ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry's older ANTICIPATED is published as ESTIMATED.
 	CompletionDateType NullableString `json:"completion_date_type,omitempty"`
 	// Actual minus planned primary completion date; positive is later than planned (null without both).
 	PrimaryCompletionSlipDays NullableInt32 `json:"primary_completion_slip_days,omitempty"`
@@ -295,6 +299,48 @@ func (o *TrialDeliveryRow) SetPhaseNil() {
 // UnsetPhase ensures that no value is present for Phase, not even an explicit nil
 func (o *TrialDeliveryRow) UnsetPhase() {
 	o.Phase.Unset()
+}
+
+// GetPhaseLabel returns the PhaseLabel field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *TrialDeliveryRow) GetPhaseLabel() string {
+	if o == nil || IsNil(o.PhaseLabel.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.PhaseLabel.Get()
+}
+
+// GetPhaseLabelOk returns a tuple with the PhaseLabel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *TrialDeliveryRow) GetPhaseLabelOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PhaseLabel.Get(), o.PhaseLabel.IsSet()
+}
+
+// HasPhaseLabel returns a boolean if a field has been set.
+func (o *TrialDeliveryRow) HasPhaseLabel() bool {
+	if o != nil && o.PhaseLabel.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPhaseLabel gets a reference to the given NullableString and assigns it to the PhaseLabel field.
+func (o *TrialDeliveryRow) SetPhaseLabel(v string) {
+	o.PhaseLabel.Set(&v)
+}
+// SetPhaseLabelNil sets the value for PhaseLabel to be an explicit nil
+func (o *TrialDeliveryRow) SetPhaseLabelNil() {
+	o.PhaseLabel.Set(nil)
+}
+
+// UnsetPhaseLabel ensures that no value is present for PhaseLabel, not even an explicit nil
+func (o *TrialDeliveryRow) UnsetPhaseLabel() {
+	o.PhaseLabel.Unset()
 }
 
 // GetPlannedEnrollment returns the PlannedEnrollment field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -547,6 +593,48 @@ func (o *TrialDeliveryRow) SetEnrollmentMetNil() {
 // UnsetEnrollmentMet ensures that no value is present for EnrollmentMet, not even an explicit nil
 func (o *TrialDeliveryRow) UnsetEnrollmentMet() {
 	o.EnrollmentMet.Unset()
+}
+
+// GetEnrollmentDeltaKnown returns the EnrollmentDeltaKnown field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *TrialDeliveryRow) GetEnrollmentDeltaKnown() bool {
+	if o == nil || IsNil(o.EnrollmentDeltaKnown.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.EnrollmentDeltaKnown.Get()
+}
+
+// GetEnrollmentDeltaKnownOk returns a tuple with the EnrollmentDeltaKnown field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *TrialDeliveryRow) GetEnrollmentDeltaKnownOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.EnrollmentDeltaKnown.Get(), o.EnrollmentDeltaKnown.IsSet()
+}
+
+// HasEnrollmentDeltaKnown returns a boolean if a field has been set.
+func (o *TrialDeliveryRow) HasEnrollmentDeltaKnown() bool {
+	if o != nil && o.EnrollmentDeltaKnown.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetEnrollmentDeltaKnown gets a reference to the given NullableBool and assigns it to the EnrollmentDeltaKnown field.
+func (o *TrialDeliveryRow) SetEnrollmentDeltaKnown(v bool) {
+	o.EnrollmentDeltaKnown.Set(&v)
+}
+// SetEnrollmentDeltaKnownNil sets the value for EnrollmentDeltaKnown to be an explicit nil
+func (o *TrialDeliveryRow) SetEnrollmentDeltaKnownNil() {
+	o.EnrollmentDeltaKnown.Set(nil)
+}
+
+// UnsetEnrollmentDeltaKnown ensures that no value is present for EnrollmentDeltaKnown, not even an explicit nil
+func (o *TrialDeliveryRow) UnsetEnrollmentDeltaKnown() {
+	o.EnrollmentDeltaKnown.Unset()
 }
 
 // GetPlannedBasis returns the PlannedBasis field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1078,6 +1166,9 @@ func (o TrialDeliveryRow) ToMap() (map[string]interface{}, error) {
 	if o.Phase.IsSet() {
 		toSerialize["phase"] = o.Phase.Get()
 	}
+	if o.PhaseLabel.IsSet() {
+		toSerialize["phase_label"] = o.PhaseLabel.Get()
+	}
 	if o.PlannedEnrollment.IsSet() {
 		toSerialize["planned_enrollment"] = o.PlannedEnrollment.Get()
 	}
@@ -1095,6 +1186,9 @@ func (o TrialDeliveryRow) ToMap() (map[string]interface{}, error) {
 	}
 	if o.EnrollmentMet.IsSet() {
 		toSerialize["enrollment_met"] = o.EnrollmentMet.Get()
+	}
+	if o.EnrollmentDeltaKnown.IsSet() {
+		toSerialize["enrollment_delta_known"] = o.EnrollmentDeltaKnown.Get()
 	}
 	if o.PlannedBasis.IsSet() {
 		toSerialize["planned_basis"] = o.PlannedBasis.Get()
@@ -1159,12 +1253,14 @@ func (o *TrialDeliveryRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "overall_status_summary")
 		delete(additionalProperties, "study_type")
 		delete(additionalProperties, "phase")
+		delete(additionalProperties, "phase_label")
 		delete(additionalProperties, "planned_enrollment")
 		delete(additionalProperties, "actual_enrollment")
 		delete(additionalProperties, "enrollment_type")
 		delete(additionalProperties, "enrollment_delta")
 		delete(additionalProperties, "enrollment_attainment_pct")
 		delete(additionalProperties, "enrollment_met")
+		delete(additionalProperties, "enrollment_delta_known")
 		delete(additionalProperties, "planned_basis")
 		delete(additionalProperties, "actual_basis")
 		delete(additionalProperties, "planned_primary_completion_date")

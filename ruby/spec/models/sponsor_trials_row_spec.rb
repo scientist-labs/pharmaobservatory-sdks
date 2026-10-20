@@ -105,6 +105,12 @@ describe PharmaObservatory::SponsorTrialsRow do
     end
   end
 
+  describe 'test attribute "phase_label"' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   describe 'test attribute "overall_status"' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/

@@ -57,6 +57,12 @@ describe PharmaObservatory::TrialDeliveryRow do
     end
   end
 
+  describe 'test attribute "phase_label"' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   describe 'test attribute "planned_enrollment"' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
@@ -93,7 +99,7 @@ describe PharmaObservatory::TrialDeliveryRow do
     end
   end
 
-  describe 'test attribute "has_enrollment_delta"' do
+  describe 'test attribute "enrollment_delta_known"' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end

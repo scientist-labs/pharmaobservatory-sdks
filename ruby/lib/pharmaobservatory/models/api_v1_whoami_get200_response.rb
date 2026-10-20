@@ -21,12 +21,30 @@ module PharmaObservatory
 
     attr_accessor :roles
 
+    attr_accessor :name
+
+    attr_accessor :email
+
+    attr_accessor :organization
+
+    attr_accessor :plan
+
+    attr_accessor :limits
+
+    attr_accessor :quota
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'ok' => :'ok',
         :'sub' => :'sub',
-        :'roles' => :'roles'
+        :'roles' => :'roles',
+        :'name' => :'name',
+        :'email' => :'email',
+        :'organization' => :'organization',
+        :'plan' => :'plan',
+        :'limits' => :'limits',
+        :'quota' => :'quota'
       }
     end
 
@@ -45,13 +63,23 @@ module PharmaObservatory
       {
         :'ok' => :'Boolean',
         :'sub' => :'String',
-        :'roles' => :'Array<String>'
+        :'roles' => :'Array<String>',
+        :'name' => :'Object',
+        :'email' => :'Object',
+        :'organization' => :'Object',
+        :'plan' => :'Object',
+        :'limits' => :'ApiV1WhoamiGet200ResponseLimits',
+        :'quota' => :'ApiV1WhoamiGet200ResponseQuota'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'name',
+        :'email',
+        :'organization',
+        :'plan',
       ])
     end
 
@@ -89,6 +117,30 @@ module PharmaObservatory
         end
       else
         self.roles = nil
+      end
+
+      if attributes.key?(:'name')
+        self.name = attributes[:'name']
+      end
+
+      if attributes.key?(:'email')
+        self.email = attributes[:'email']
+      end
+
+      if attributes.key?(:'organization')
+        self.organization = attributes[:'organization']
+      end
+
+      if attributes.key?(:'plan')
+        self.plan = attributes[:'plan']
+      end
+
+      if attributes.key?(:'limits')
+        self.limits = attributes[:'limits']
+      end
+
+      if attributes.key?(:'quota')
+        self.quota = attributes[:'quota']
       end
     end
 
@@ -159,7 +211,13 @@ module PharmaObservatory
       self.class == o.class &&
           ok == o.ok &&
           sub == o.sub &&
-          roles == o.roles
+          roles == o.roles &&
+          name == o.name &&
+          email == o.email &&
+          organization == o.organization &&
+          plan == o.plan &&
+          limits == o.limits &&
+          quota == o.quota
     end
 
     # @see the `==` method
@@ -171,7 +229,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [ok, sub, roles].hash
+      [ok, sub, roles, name, email, organization, plan, limits, quota].hash
     end
 
     # Builds the object from hash

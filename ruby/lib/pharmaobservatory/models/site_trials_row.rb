@@ -28,8 +28,11 @@ module PharmaObservatory
     # INTERVENTIONAL or OBSERVATIONAL.
     attr_accessor :study_type
 
-    # The trial phase label.
+    # The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those.
     attr_accessor :phase
+
+    # The trial phase as a display label (Phase 2, Phase 3, Observational, Not applicable, Expanded access, Unknown). The same trial's phase column holds the registry code.
+    attr_accessor :phase_label
 
     # The registry's overall status.
     attr_accessor :overall_status
@@ -69,6 +72,7 @@ module PharmaObservatory
         :'trial_title' => :'trial_title',
         :'study_type' => :'study_type',
         :'phase' => :'phase',
+        :'phase_label' => :'phase_label',
         :'overall_status' => :'overall_status',
         :'start_date' => :'start_date',
         :'start_year' => :'start_year',
@@ -100,6 +104,7 @@ module PharmaObservatory
         :'trial_title' => :'String',
         :'study_type' => :'String',
         :'phase' => :'String',
+        :'phase_label' => :'String',
         :'overall_status' => :'String',
         :'start_date' => :'Date',
         :'start_year' => :'Integer',
@@ -121,6 +126,7 @@ module PharmaObservatory
         :'trial_title',
         :'study_type',
         :'phase',
+        :'phase_label',
         :'overall_status',
         :'start_date',
         :'start_year',
@@ -168,6 +174,10 @@ module PharmaObservatory
 
       if attributes.key?(:'phase')
         self.phase = attributes[:'phase']
+      end
+
+      if attributes.key?(:'phase_label')
+        self.phase_label = attributes[:'phase_label']
       end
 
       if attributes.key?(:'overall_status')
@@ -236,6 +246,7 @@ module PharmaObservatory
           trial_title == o.trial_title &&
           study_type == o.study_type &&
           phase == o.phase &&
+          phase_label == o.phase_label &&
           overall_status == o.overall_status &&
           start_date == o.start_date &&
           start_year == o.start_year &&
@@ -257,7 +268,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [site_id, trial_id, trial_title, study_type, phase, overall_status, start_date, start_year, enrollment, lead_sponsor_name, lead_sponsor_org_id, lead_sponsor_company_id, lead_sponsor_company_name, lead_sponsor_group_id, lead_sponsor_group_name].hash
+      [site_id, trial_id, trial_title, study_type, phase, phase_label, overall_status, start_date, start_year, enrollment, lead_sponsor_name, lead_sponsor_org_id, lead_sponsor_company_id, lead_sponsor_company_name, lead_sponsor_group_id, lead_sponsor_group_name].hash
     end
 
     # Builds the object from hash

@@ -10788,7 +10788,10 @@ components:
           nullable: true
           type: string
         org_type:
-          description: The organization type of the company's representative record.
+          description: "The organization type of the company's representative record:\
+            \ Academic, Government, Hospital, Industry, Nonprofit or Other (from the\
+            \ ROR record or the filing), or the lowercase tags investor and manufacturer\
+            \ that mark a minted adviser or manufacturer record."
           nullable: true
           type: string
         org_kinds:
@@ -12014,7 +12017,10 @@ components:
           nullable: true
           type: string
         org_type:
-          description: Organization type.
+          description: "Organization type: Academic, Government, Hospital, Industry,\
+            \ Nonprofit or Other (from the ROR record or the filing), or the lowercase\
+            \ tags investor and manufacturer that mark a minted adviser or manufacturer\
+            \ record."
           nullable: true
           type: string
         edgar_cik:
@@ -12627,6 +12633,7 @@ components:
         study_type: study_type
         sponsor_role: sponsor_role
         primary_completion_date: 2000-01-23
+        phase_label: phase_label
         sponsor_org_id: sponsor_org_id
         sponsor_group_id: sponsor_group_id
         sponsor_name: sponsor_name
@@ -12672,8 +12679,9 @@ components:
           nullable: true
           type: string
         sponsor_agency_class:
-          description: "The registry's agency class for the sponsor (INDUSTRY, NIH\
-            \ for the US National Institutes of Health, OTHER ...)."
+          description: "The funder class the registry declared for the sponsor (INDUSTRY,\
+            \ NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN\
+            \ is the registry's own code for a class it does not state."
           nullable: true
           type: string
         sponsor_resolution_method:
@@ -12689,7 +12697,16 @@ components:
           nullable: true
           type: string
         phase:
-          description: The trial phase label.
+          description: "The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3,\
+            \ NA and so on). Null when the registry gives no phase (observational\
+            \ and expanded-access trials); phase_label carries the display label for\
+            \ those."
+          nullable: true
+          type: string
+        phase_label:
+          description: "The trial phase as a display label (Phase 2, Phase 3, Observational,\
+            \ Not applicable, Expanded access, Unknown). The same trial's phase column\
+            \ holds the registry code."
           nullable: true
           type: string
         overall_status:
@@ -12782,6 +12799,7 @@ components:
           study_type: study_type
           sponsor_role: sponsor_role
           primary_completion_date: 2000-01-23
+          phase_label: phase_label
           sponsor_org_id: sponsor_org_id
           sponsor_group_id: sponsor_group_id
           sponsor_name: sponsor_name
@@ -12807,6 +12825,7 @@ components:
           study_type: study_type
           sponsor_role: sponsor_role
           primary_completion_date: 2000-01-23
+          phase_label: phase_label
           sponsor_org_id: sponsor_org_id
           sponsor_group_id: sponsor_group_id
           sponsor_name: sponsor_name
@@ -17283,6 +17302,7 @@ components:
         study_type: study_type
         site_id: site_id
         lead_sponsor_company_name: lead_sponsor_company_name
+        phase_label: phase_label
         lead_sponsor_name: lead_sponsor_name
         lead_sponsor_company_id: lead_sponsor_company_id
         start_date: 2000-01-23
@@ -17305,7 +17325,16 @@ components:
           nullable: true
           type: string
         phase:
-          description: The trial phase label.
+          description: "The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3,\
+            \ NA and so on). Null when the registry gives no phase (observational\
+            \ and expanded-access trials); phase_label carries the display label for\
+            \ those."
+          nullable: true
+          type: string
+        phase_label:
+          description: "The trial phase as a display label (Phase 2, Phase 3, Observational,\
+            \ Not applicable, Expanded access, Unknown). The same trial's phase column\
+            \ holds the registry code."
           nullable: true
           type: string
         overall_status:
@@ -17398,6 +17427,7 @@ components:
           study_type: study_type
           site_id: site_id
           lead_sponsor_company_name: lead_sponsor_company_name
+          phase_label: phase_label
           lead_sponsor_name: lead_sponsor_name
           lead_sponsor_company_id: lead_sponsor_company_id
           start_date: 2000-01-23
@@ -17413,6 +17443,7 @@ components:
           study_type: study_type
           site_id: site_id
           lead_sponsor_company_name: lead_sponsor_company_name
+          phase_label: phase_label
           lead_sponsor_name: lead_sponsor_name
           lead_sponsor_company_id: lead_sponsor_company_id
           start_date: 2000-01-23
@@ -19555,6 +19586,7 @@ components:
         is_direct: true
         study_type: study_type
         primary_completion_date: 2000-01-23
+        phase_label: phase_label
         sponsor_org_id: sponsor_org_id
         sponsor_group_id: sponsor_group_id
         condition_name: condition_name
@@ -19590,8 +19622,16 @@ components:
           nullable: true
           type: string
         phase:
-          description: "The trial phase label (Phase 1, Phase 2, Phase 3, Phase 4,\
-            \ Not Applicable and so on)."
+          description: "The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3,\
+            \ NA and so on). Null when the registry gives no phase (observational\
+            \ and expanded-access trials); phase_label carries the display label for\
+            \ those."
+          nullable: true
+          type: string
+        phase_label:
+          description: "The trial phase as a display label (Phase 2, Phase 3, Observational,\
+            \ Not applicable, Expanded access, Unknown). The same trial's phase column\
+            \ holds the registry code."
           nullable: true
           type: string
         overall_status:
@@ -19655,8 +19695,10 @@ components:
           nullable: true
           type: string
         sponsor_agency_class:
-          description: "The registry's declared funder class of the lead sponsor (INDUSTRY,\
-            \ NIH for the US National Institutes of Health, OTHER and so on)."
+          description: "The funder class the registry declared for the sponsor (INDUSTRY,\
+            \ NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN\
+            \ is the registry's own code for a class it does not state. Null when\
+            \ the trial has no lead sponsor row."
           nullable: true
           type: string
       type: object
@@ -19707,6 +19749,7 @@ components:
           is_direct: true
           study_type: study_type
           primary_completion_date: 2000-01-23
+          phase_label: phase_label
           sponsor_org_id: sponsor_org_id
           sponsor_group_id: sponsor_group_id
           condition_name: condition_name
@@ -19728,6 +19771,7 @@ components:
           is_direct: true
           study_type: study_type
           primary_completion_date: 2000-01-23
+          phase_label: phase_label
           sponsor_org_id: sponsor_org_id
           sponsor_group_id: sponsor_group_id
           condition_name: condition_name
@@ -20654,29 +20698,31 @@ components:
         \ request returns the group columns and the measures instead, as additional\
         \ properties."
       example:
+        enrollment_delta: 1
+        enrollment_met: true
+        actual_primary_completion_date: 2000-01-23
+        enrollment_delta_known: true
+        primary_completion_slip_days: 5
+        completion_slipped: true
+        planned_basis: planned_basis
+        planned_primary_completion_date: 2000-01-23
+        has_completion_delta: true
+        planned_completion_date: 2000-01-23
         phase: phase
         trial_id: trial_id
         actual_completion_date: 2000-01-23
         actual_enrollment: 6
-        enrollment_delta: 1
         enrollment_attainment_pct: 5.962133916683182
-        enrollment_met: true
-        actual_primary_completion_date: 2000-01-23
         planned_enrollment: 0
         enrollment_type: enrollment_type
         completion_slip_days: 2
-        primary_completion_slip_days: 5
-        completion_slipped: true
         study_type: study_type
-        planned_basis: planned_basis
-        planned_primary_completion_date: 2000-01-23
-        has_completion_delta: true
         overall_status_summary: overall_status_summary
+        phase_label: phase_label
         lead_sponsor_name: lead_sponsor_name
         completion_date_type: completion_date_type
         primary_completion_date_type: primary_completion_date_type
         actual_basis: actual_basis
-        planned_completion_date: 2000-01-23
       properties:
         trial_id:
           description: "The trial's ClinicalTrials.gov registry id (NCT, National\
@@ -20696,7 +20742,16 @@ components:
           nullable: true
           type: string
         phase:
-          description: The registry's phase code.
+          description: "The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3,\
+            \ NA and so on). Null when the registry gives no phase (observational\
+            \ and expanded-access trials); phase_label carries the display label for\
+            \ those."
+          nullable: true
+          type: string
+        phase_label:
+          description: "The trial phase as a display label (Phase 2, Phase 3, Observational,\
+            \ Not applicable, Expanded access, Unknown). The same trial's phase column\
+            \ holds the registry code."
           nullable: true
           type: string
         planned_enrollment:
@@ -20725,6 +20780,10 @@ components:
           type: number
         enrollment_met:
           description: Whether actual enrollment reached the plan (null without both).
+          nullable: true
+          type: boolean
+        enrollment_delta_known:
+          description: Whether a planned and an actual enrollment are both recorded.
           nullable: true
           type: boolean
         planned_basis:
@@ -20759,11 +20818,13 @@ components:
           nullable: true
           type: string
         primary_completion_date_type:
-          description: Type of the current primary completion date (ACTUAL or ESTIMATED).
+          description: ACTUAL (a date that has occurred) or ESTIMATED (a planned date).
+            The registry's older ANTICIPATED is published as ESTIMATED.
           nullable: true
           type: string
         completion_date_type:
-          description: Type of the current completion date (ACTUAL or ESTIMATED).
+          description: ACTUAL (a date that has occurred) or ESTIMATED (a planned date).
+            The registry's older ANTICIPATED is published as ESTIMATED.
           nullable: true
           type: string
         primary_completion_slip_days:
@@ -20820,52 +20881,56 @@ components:
         - key: ""
         - key: ""
         rows:
-        - phase: phase
-          trial_id: trial_id
-          actual_completion_date: 2000-01-23
-          actual_enrollment: 6
-          enrollment_delta: 1
-          enrollment_attainment_pct: 5.962133916683182
+        - enrollment_delta: 1
           enrollment_met: true
           actual_primary_completion_date: 2000-01-23
-          planned_enrollment: 0
-          enrollment_type: enrollment_type
-          completion_slip_days: 2
+          enrollment_delta_known: true
           primary_completion_slip_days: 5
           completion_slipped: true
-          study_type: study_type
           planned_basis: planned_basis
           planned_primary_completion_date: 2000-01-23
           has_completion_delta: true
+          planned_completion_date: 2000-01-23
+          phase: phase
+          trial_id: trial_id
+          actual_completion_date: 2000-01-23
+          actual_enrollment: 6
+          enrollment_attainment_pct: 5.962133916683182
+          planned_enrollment: 0
+          enrollment_type: enrollment_type
+          completion_slip_days: 2
+          study_type: study_type
           overall_status_summary: overall_status_summary
+          phase_label: phase_label
           lead_sponsor_name: lead_sponsor_name
           completion_date_type: completion_date_type
           primary_completion_date_type: primary_completion_date_type
           actual_basis: actual_basis
-          planned_completion_date: 2000-01-23
-        - phase: phase
-          trial_id: trial_id
-          actual_completion_date: 2000-01-23
-          actual_enrollment: 6
-          enrollment_delta: 1
-          enrollment_attainment_pct: 5.962133916683182
+        - enrollment_delta: 1
           enrollment_met: true
           actual_primary_completion_date: 2000-01-23
-          planned_enrollment: 0
-          enrollment_type: enrollment_type
-          completion_slip_days: 2
+          enrollment_delta_known: true
           primary_completion_slip_days: 5
           completion_slipped: true
-          study_type: study_type
           planned_basis: planned_basis
           planned_primary_completion_date: 2000-01-23
           has_completion_delta: true
+          planned_completion_date: 2000-01-23
+          phase: phase
+          trial_id: trial_id
+          actual_completion_date: 2000-01-23
+          actual_enrollment: 6
+          enrollment_attainment_pct: 5.962133916683182
+          planned_enrollment: 0
+          enrollment_type: enrollment_type
+          completion_slip_days: 2
+          study_type: study_type
           overall_status_summary: overall_status_summary
+          phase_label: phase_label
           lead_sponsor_name: lead_sponsor_name
           completion_date_type: completion_date_type
           primary_completion_date_type: primary_completion_date_type
           actual_basis: actual_basis
-          planned_completion_date: 2000-01-23
         freshness:
           last_loaded: last_loaded
           source: source
@@ -21663,6 +21728,7 @@ components:
         pts_per_site_month: 1.4894159098541704
         duration_months: 7.386281948385884
         overall_status_summary: overall_status_summary
+        phase_label: phase_label
         completion_date: 2000-01-23
         lead_sponsor_name: lead_sponsor_name
         completion_date_type: completion_date_type
@@ -21675,7 +21741,16 @@ components:
           nullable: true
           type: string
         phase:
-          description: The registry's phase code.
+          description: "The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3,\
+            \ NA and so on). Null when the registry gives no phase (observational\
+            \ and expanded-access trials); phase_label carries the display label for\
+            \ those."
+          nullable: true
+          type: string
+        phase_label:
+          description: "The trial phase as a display label (Phase 2, Phase 3, Observational,\
+            \ Not applicable, Expanded access, Unknown). The same trial's phase column\
+            \ holds the registry code."
           nullable: true
           type: string
         lead_sponsor_name:
@@ -21730,11 +21805,13 @@ components:
           nullable: true
           type: string
         primary_completion_date_type:
-          description: ACTUAL or ESTIMATED.
+          description: ACTUAL (a date that has occurred) or ESTIMATED (a planned date).
+            The registry's older ANTICIPATED is published as ESTIMATED.
           nullable: true
           type: string
         completion_date_type:
-          description: ACTUAL or ESTIMATED.
+          description: ACTUAL (a date that has occurred) or ESTIMATED (a planned date).
+            The registry's older ANTICIPATED is published as ESTIMATED.
           nullable: true
           type: string
         is_rate_computable:
@@ -21809,6 +21886,7 @@ components:
           pts_per_site_month: 1.4894159098541704
           duration_months: 7.386281948385884
           overall_status_summary: overall_status_summary
+          phase_label: phase_label
           completion_date: 2000-01-23
           lead_sponsor_name: lead_sponsor_name
           completion_date_type: completion_date_type
@@ -21830,6 +21908,7 @@ components:
           pts_per_site_month: 1.4894159098541704
           duration_months: 7.386281948385884
           overall_status_summary: overall_status_summary
+          phase_label: phase_label
           completion_date: 2000-01-23
           lead_sponsor_name: lead_sponsor_name
           completion_date_type: completion_date_type
@@ -22769,7 +22848,9 @@ components:
           type: string
         phase:
           description: "The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3,\
-            \ NA)."
+            \ NA and so on). Null when the registry gives no phase (observational\
+            \ and expanded-access trials); phase_label carries the display label for\
+            \ those."
           nullable: true
           type: string
         phase_label:
@@ -22819,6 +22900,7 @@ components:
           type: string
         primary_completion_date_type:
           description: ACTUAL (a date that has occurred) or ESTIMATED (a planned date).
+            The registry's older ANTICIPATED is published as ESTIMATED.
           nullable: true
           type: string
         completion_date:
@@ -22828,6 +22910,7 @@ components:
           type: string
         completion_date_type:
           description: ACTUAL (a date that has occurred) or ESTIMATED (a planned date).
+            The registry's older ANTICIPATED is published as ESTIMATED.
           nullable: true
           type: string
         study_first_posted_date:
@@ -23396,6 +23479,7 @@ components:
             pts_per_site_month: 1.4894159098541704
             duration_months: 7.386281948385884
             overall_status_summary: overall_status_summary
+            phase_label: phase_label
             completion_date: 2000-01-23
             lead_sponsor_name: lead_sponsor_name
             completion_date_type: completion_date_type
@@ -23417,29 +23501,31 @@ components:
             signal: signal
             source_url: source_url
           trial_delivery:
+            enrollment_delta: 1
+            enrollment_met: true
+            actual_primary_completion_date: 2000-01-23
+            enrollment_delta_known: true
+            primary_completion_slip_days: 5
+            completion_slipped: true
+            planned_basis: planned_basis
+            planned_primary_completion_date: 2000-01-23
+            has_completion_delta: true
+            planned_completion_date: 2000-01-23
             phase: phase
             trial_id: trial_id
             actual_completion_date: 2000-01-23
             actual_enrollment: 6
-            enrollment_delta: 1
             enrollment_attainment_pct: 5.962133916683182
-            enrollment_met: true
-            actual_primary_completion_date: 2000-01-23
             planned_enrollment: 0
             enrollment_type: enrollment_type
             completion_slip_days: 2
-            primary_completion_slip_days: 5
-            completion_slipped: true
             study_type: study_type
-            planned_basis: planned_basis
-            planned_primary_completion_date: 2000-01-23
-            has_completion_delta: true
             overall_status_summary: overall_status_summary
+            phase_label: phase_label
             lead_sponsor_name: lead_sponsor_name
             completion_date_type: completion_date_type
             primary_completion_date_type: primary_completion_date_type
             actual_basis: actual_basis
-            planned_completion_date: 2000-01-23
           trial_demographics:
             trial_id: trial_id
             has_ethnicity_data: true
@@ -26063,13 +26149,257 @@ components:
       required:
       - sql
       type: object
+    _api_v1_whoami_get_200_response_limits:
+      example:
+        query_seconds_per_day: 7
+        requests_per_minute: 0
+        requests_per_day: 6
+        rows_per_day: 1
+        rwd_catalogue_calls_per_day: 5
+        paging_depth: 5
+        benzinga_calls_per_day: 2
+        defaults_from: defaults_from
+      properties:
+        defaults_from:
+          type: string
+        requests_per_minute:
+          type: integer
+        requests_per_day:
+          type: integer
+        rows_per_day:
+          type: integer
+        paging_depth:
+          type: integer
+        rwd_catalogue_calls_per_day:
+          type: integer
+        benzinga_calls_per_day:
+          type: integer
+        query_seconds_per_day:
+          type: integer
+      required:
+      - benzinga_calls_per_day
+      - defaults_from
+      - paging_depth
+      - query_seconds_per_day
+      - requests_per_day
+      - requests_per_minute
+      - rows_per_day
+      - rwd_catalogue_calls_per_day
+      type: object
+    _api_v1_whoami_get_200_response_quota_buckets_requests_per_minute:
+      example:
+        resets_at: resets_at
+        unit: unit
+        limit: 9
+        window: window
+        used: 3
+        remaining: 2
+      properties:
+        unit:
+          type: string
+        window:
+          type: string
+        limit:
+          type: integer
+        used:
+          type: integer
+        remaining:
+          type: integer
+        resets_at:
+          type: string
+      required:
+      - limit
+      - remaining
+      - resets_at
+      - unit
+      - used
+      - window
+      type: object
+    _api_v1_whoami_get_200_response_quota_buckets:
+      example:
+        query_seconds_per_day:
+          resets_at: resets_at
+          unit: unit
+          limit: 9
+          window: window
+          used: 3
+          remaining: 2
+        requests_per_minute:
+          resets_at: resets_at
+          unit: unit
+          limit: 9
+          window: window
+          used: 3
+          remaining: 2
+        requests_per_day:
+          resets_at: resets_at
+          unit: unit
+          limit: 9
+          window: window
+          used: 3
+          remaining: 2
+        rows_per_day:
+          resets_at: resets_at
+          unit: unit
+          limit: 9
+          window: window
+          used: 3
+          remaining: 2
+        rwd_catalogue_calls_per_day:
+          resets_at: resets_at
+          unit: unit
+          limit: 9
+          window: window
+          used: 3
+          remaining: 2
+        benzinga_calls_per_day:
+          resets_at: resets_at
+          unit: unit
+          limit: 9
+          window: window
+          used: 3
+          remaining: 2
+      properties:
+        requests_per_minute:
+          $ref: '#/components/schemas/_api_v1_whoami_get_200_response_quota_buckets_requests_per_minute'
+        requests_per_day:
+          $ref: '#/components/schemas/_api_v1_whoami_get_200_response_quota_buckets_requests_per_minute'
+        rows_per_day:
+          $ref: '#/components/schemas/_api_v1_whoami_get_200_response_quota_buckets_requests_per_minute'
+        rwd_catalogue_calls_per_day:
+          $ref: '#/components/schemas/_api_v1_whoami_get_200_response_quota_buckets_requests_per_minute'
+        benzinga_calls_per_day:
+          $ref: '#/components/schemas/_api_v1_whoami_get_200_response_quota_buckets_requests_per_minute'
+        query_seconds_per_day:
+          $ref: '#/components/schemas/_api_v1_whoami_get_200_response_quota_buckets_requests_per_minute'
+      required:
+      - benzinga_calls_per_day
+      - query_seconds_per_day
+      - requests_per_day
+      - requests_per_minute
+      - rows_per_day
+      - rwd_catalogue_calls_per_day
+      type: object
+    _api_v1_whoami_get_200_response_quota:
+      example:
+        keyed_by: keyed_by
+        buckets:
+          query_seconds_per_day:
+            resets_at: resets_at
+            unit: unit
+            limit: 9
+            window: window
+            used: 3
+            remaining: 2
+          requests_per_minute:
+            resets_at: resets_at
+            unit: unit
+            limit: 9
+            window: window
+            used: 3
+            remaining: 2
+          requests_per_day:
+            resets_at: resets_at
+            unit: unit
+            limit: 9
+            window: window
+            used: 3
+            remaining: 2
+          rows_per_day:
+            resets_at: resets_at
+            unit: unit
+            limit: 9
+            window: window
+            used: 3
+            remaining: 2
+          rwd_catalogue_calls_per_day:
+            resets_at: resets_at
+            unit: unit
+            limit: 9
+            window: window
+            used: 3
+            remaining: 2
+          benzinga_calls_per_day:
+            resets_at: resets_at
+            unit: unit
+            limit: 9
+            window: window
+            used: 3
+            remaining: 2
+      properties:
+        keyed_by:
+          type: string
+        buckets:
+          $ref: '#/components/schemas/_api_v1_whoami_get_200_response_quota_buckets'
+      required:
+      - buckets
+      - keyed_by
+      type: object
     _api_v1_whoami_get_200_response:
       example:
         sub: sub
         roles:
         - roles
         - roles
+        organization: ""
+        quota:
+          keyed_by: keyed_by
+          buckets:
+            query_seconds_per_day:
+              resets_at: resets_at
+              unit: unit
+              limit: 9
+              window: window
+              used: 3
+              remaining: 2
+            requests_per_minute:
+              resets_at: resets_at
+              unit: unit
+              limit: 9
+              window: window
+              used: 3
+              remaining: 2
+            requests_per_day:
+              resets_at: resets_at
+              unit: unit
+              limit: 9
+              window: window
+              used: 3
+              remaining: 2
+            rows_per_day:
+              resets_at: resets_at
+              unit: unit
+              limit: 9
+              window: window
+              used: 3
+              remaining: 2
+            rwd_catalogue_calls_per_day:
+              resets_at: resets_at
+              unit: unit
+              limit: 9
+              window: window
+              used: 3
+              remaining: 2
+            benzinga_calls_per_day:
+              resets_at: resets_at
+              unit: unit
+              limit: 9
+              window: window
+              used: 3
+              remaining: 2
+        name: ""
         ok: true
+        plan: ""
+        email: ""
+        limits:
+          query_seconds_per_day: 7
+          requests_per_minute: 0
+          requests_per_day: 6
+          rows_per_day: 1
+          rwd_catalogue_calls_per_day: 5
+          paging_depth: 5
+          benzinga_calls_per_day: 2
+          defaults_from: defaults_from
       properties:
         ok:
           type: boolean
@@ -26079,6 +26409,18 @@ components:
           items:
             type: string
           type: array
+        name:
+          nullable: true
+        email:
+          nullable: true
+        organization:
+          nullable: true
+        plan:
+          nullable: true
+        limits:
+          $ref: '#/components/schemas/_api_v1_whoami_get_200_response_limits'
+        quota:
+          $ref: '#/components/schemas/_api_v1_whoami_get_200_response_quota'
       required:
       - ok
       - roles
@@ -26309,6 +26651,7 @@ components:
           pts_per_site_month: 1.4894159098541704
           duration_months: 7.386281948385884
           overall_status_summary: overall_status_summary
+          phase_label: phase_label
           completion_date: 2000-01-23
           lead_sponsor_name: lead_sponsor_name
           completion_date_type: completion_date_type
@@ -26330,29 +26673,31 @@ components:
           signal: signal
           source_url: source_url
         trial_delivery:
+          enrollment_delta: 1
+          enrollment_met: true
+          actual_primary_completion_date: 2000-01-23
+          enrollment_delta_known: true
+          primary_completion_slip_days: 5
+          completion_slipped: true
+          planned_basis: planned_basis
+          planned_primary_completion_date: 2000-01-23
+          has_completion_delta: true
+          planned_completion_date: 2000-01-23
           phase: phase
           trial_id: trial_id
           actual_completion_date: 2000-01-23
           actual_enrollment: 6
-          enrollment_delta: 1
           enrollment_attainment_pct: 5.962133916683182
-          enrollment_met: true
-          actual_primary_completion_date: 2000-01-23
           planned_enrollment: 0
           enrollment_type: enrollment_type
           completion_slip_days: 2
-          primary_completion_slip_days: 5
-          completion_slipped: true
           study_type: study_type
-          planned_basis: planned_basis
-          planned_primary_completion_date: 2000-01-23
-          has_completion_delta: true
           overall_status_summary: overall_status_summary
+          phase_label: phase_label
           lead_sponsor_name: lead_sponsor_name
           completion_date_type: completion_date_type
           primary_completion_date_type: primary_completion_date_type
           actual_basis: actual_basis
-          planned_completion_date: 2000-01-23
         trial_demographics:
           trial_id: trial_id
           has_ethnicity_data: true

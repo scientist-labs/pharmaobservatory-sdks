@@ -15,6 +15,10 @@ client.go
 configuration.go
 docs/ApiV1BaseAPI.md
 docs/ApiV1WhoamiGet200Response.md
+docs/ApiV1WhoamiGet200ResponseLimits.md
+docs/ApiV1WhoamiGet200ResponseQuota.md
+docs/ApiV1WhoamiGet200ResponseQuotaBuckets.md
+docs/ApiV1WhoamiGet200ResponseQuotaBucketsRequestsPerMinute.md
 docs/AuthError.md
 docs/BiomarkerBqpAssertionsResponse.md
 docs/BiomarkerBqpAssertionsRow.md
@@ -166,6 +170,10 @@ docs/TrialsRow.md
 go.mod
 go.sum
 model__api_v1_whoami_get_200_response.go
+model__api_v1_whoami_get_200_response_limits.go
+model__api_v1_whoami_get_200_response_quota.go
+model__api_v1_whoami_get_200_response_quota_buckets.go
+model__api_v1_whoami_get_200_response_quota_buckets_requests_per_minute.go
 model_auth_error.go
 model_biomarker_bqp_assertions_response.go
 model_biomarker_bqp_assertions_row.go

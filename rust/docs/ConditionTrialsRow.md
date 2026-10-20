@@ -10,7 +10,8 @@ Name | Type | Description | Notes
 **is_direct** | Option<**bool**> | True when the trial is tagged with this condition itself; false when it is tagged with a condition beneath it in the MeSH tree. | [optional]
 **trial_title** | Option<**String**> | The trial's brief title. | [optional]
 **study_type** | Option<**String**> | The registry's study type (INTERVENTIONAL, OBSERVATIONAL or EXPANDED_ACCESS). | [optional]
-**phase** | Option<**String**> | The trial phase label (Phase 1, Phase 2, Phase 3, Phase 4, Not Applicable and so on). | [optional]
+**phase** | Option<**String**> | The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those. | [optional]
+**phase_label** | Option<**String**> | The trial phase as a display label (Phase 2, Phase 3, Observational, Not applicable, Expanded access, Unknown). The same trial's phase column holds the registry code. | [optional]
 **overall_status** | Option<**String**> | The registry's overall recruitment status (COMPLETED, RECRUITING, TERMINATED and so on). | [optional]
 **start_date** | Option<[**String**](string.md)> | Trial start date as registered. | [optional]
 **start_year** | Option<**i32**> | Calendar year of the start date. | [optional]
@@ -24,7 +25,7 @@ Name | Type | Description | Notes
 **sponsor_company_name** | Option<**String**> | The lead sponsor's company name. | [optional]
 **sponsor_group_id** | Option<**String**> | Group level: the current ultimate parent of the lead sponsor's company; dated links are in company_members. | [optional]
 **sponsor_group_name** | Option<**String**> | Display name of the lead sponsor's group. | [optional]
-**sponsor_agency_class** | Option<**String**> | The registry's declared funder class of the lead sponsor (INDUSTRY, NIH for the US National Institutes of Health, OTHER and so on). | [optional]
+**sponsor_agency_class** | Option<**String**> | The funder class the registry declared for the sponsor (INDUSTRY, NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state. Null when the trial has no lead sponsor row. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

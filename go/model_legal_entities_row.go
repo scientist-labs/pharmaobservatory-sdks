@@ -29,7 +29,7 @@ type LegalEntitiesRow struct {
 	OrgOrigin NullableString `json:"org_origin,omitempty"`
 	// Country as the source states it.
 	Country NullableString `json:"country,omitempty"`
-	// Organization type.
+	// Organization type: Academic, Government, Hospital, Industry, Nonprofit or Other (from the ROR record or the filing), or the lowercase tags investor and manufacturer that mark a minted adviser or manufacturer record.
 	OrgType NullableString `json:"org_type,omitempty"`
 	// Central index key (CIK) in EDGAR, the US Securities and Exchange Commission (SEC) filing system, when it files.
 	EdgarCik NullableString `json:"edgar_cik,omitempty"`

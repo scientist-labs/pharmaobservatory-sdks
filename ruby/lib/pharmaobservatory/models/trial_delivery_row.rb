@@ -28,8 +28,11 @@ module PharmaObservatory
     # INTERVENTIONAL, OBSERVATIONAL or EXPANDED_ACCESS.
     attr_accessor :study_type
 
-    # The registry's phase code.
+    # The registry's phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those.
     attr_accessor :phase
+
+    # The trial phase as a display label (Phase 2, Phase 3, Observational, Not applicable, Expanded access, Unknown). The same trial's phase column holds the registry code.
+    attr_accessor :phase_label
 
     # Planned enrollment from the earliest snapshot typed ESTIMATED.
     attr_accessor :planned_enrollment
@@ -50,7 +53,7 @@ module PharmaObservatory
     attr_accessor :enrollment_met
 
     # Whether a planned and an actual enrollment are both recorded.
-    attr_accessor :has_enrollment_delta
+    attr_accessor :enrollment_delta_known
 
     # Where the planned enrollment came from: history_earliest_estimated, type_estimated_current or none.
     attr_accessor :planned_basis
@@ -70,10 +73,10 @@ module PharmaObservatory
     # Completion date once typed ACTUAL.
     attr_accessor :actual_completion_date
 
-    # Type of the current primary completion date (ACTUAL or ESTIMATED).
+    # ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry's older ANTICIPATED is published as ESTIMATED.
     attr_accessor :primary_completion_date_type
 
-    # Type of the current completion date (ACTUAL or ESTIMATED).
+    # ACTUAL (a date that has occurred) or ESTIMATED (a planned date). The registry's older ANTICIPATED is published as ESTIMATED.
     attr_accessor :completion_date_type
 
     # Actual minus planned primary completion date; positive is later than planned (null without both).
@@ -96,13 +99,14 @@ module PharmaObservatory
         :'overall_status_summary' => :'overall_status_summary',
         :'study_type' => :'study_type',
         :'phase' => :'phase',
+        :'phase_label' => :'phase_label',
         :'planned_enrollment' => :'planned_enrollment',
         :'actual_enrollment' => :'actual_enrollment',
         :'enrollment_type' => :'enrollment_type',
         :'enrollment_delta' => :'enrollment_delta',
         :'enrollment_attainment_pct' => :'enrollment_attainment_pct',
         :'enrollment_met' => :'enrollment_met',
-        :'has_enrollment_delta' => :'has_enrollment_delta',
+        :'enrollment_delta_known' => :'enrollment_delta_known',
         :'planned_basis' => :'planned_basis',
         :'actual_basis' => :'actual_basis',
         :'planned_primary_completion_date' => :'planned_primary_completion_date',
@@ -136,13 +140,14 @@ module PharmaObservatory
         :'overall_status_summary' => :'String',
         :'study_type' => :'String',
         :'phase' => :'String',
+        :'phase_label' => :'String',
         :'planned_enrollment' => :'Integer',
         :'actual_enrollment' => :'Integer',
         :'enrollment_type' => :'String',
         :'enrollment_delta' => :'Integer',
         :'enrollment_attainment_pct' => :'Float',
         :'enrollment_met' => :'Boolean',
-        :'has_enrollment_delta' => :'Boolean',
+        :'enrollment_delta_known' => :'Boolean',
         :'planned_basis' => :'String',
         :'actual_basis' => :'String',
         :'planned_primary_completion_date' => :'Date',
@@ -166,13 +171,14 @@ module PharmaObservatory
         :'overall_status_summary',
         :'study_type',
         :'phase',
+        :'phase_label',
         :'planned_enrollment',
         :'actual_enrollment',
         :'enrollment_type',
         :'enrollment_delta',
         :'enrollment_attainment_pct',
         :'enrollment_met',
-        :'has_enrollment_delta',
+        :'enrollment_delta_known',
         :'planned_basis',
         :'actual_basis',
         :'planned_primary_completion_date',
@@ -224,6 +230,10 @@ module PharmaObservatory
         self.phase = attributes[:'phase']
       end
 
+      if attributes.key?(:'phase_label')
+        self.phase_label = attributes[:'phase_label']
+      end
+
       if attributes.key?(:'planned_enrollment')
         self.planned_enrollment = attributes[:'planned_enrollment']
       end
@@ -248,8 +258,8 @@ module PharmaObservatory
         self.enrollment_met = attributes[:'enrollment_met']
       end
 
-      if attributes.key?(:'has_enrollment_delta')
-        self.has_enrollment_delta = attributes[:'has_enrollment_delta']
+      if attributes.key?(:'enrollment_delta_known')
+        self.enrollment_delta_known = attributes[:'enrollment_delta_known']
       end
 
       if attributes.key?(:'planned_basis')
@@ -326,13 +336,14 @@ module PharmaObservatory
           overall_status_summary == o.overall_status_summary &&
           study_type == o.study_type &&
           phase == o.phase &&
+          phase_label == o.phase_label &&
           planned_enrollment == o.planned_enrollment &&
           actual_enrollment == o.actual_enrollment &&
           enrollment_type == o.enrollment_type &&
           enrollment_delta == o.enrollment_delta &&
           enrollment_attainment_pct == o.enrollment_attainment_pct &&
           enrollment_met == o.enrollment_met &&
-          has_enrollment_delta == o.has_enrollment_delta &&
+          enrollment_delta_known == o.enrollment_delta_known &&
           planned_basis == o.planned_basis &&
           actual_basis == o.actual_basis &&
           planned_primary_completion_date == o.planned_primary_completion_date &&
@@ -356,7 +367,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [trial_id, lead_sponsor_name, overall_status_summary, study_type, phase, planned_enrollment, actual_enrollment, enrollment_type, enrollment_delta, enrollment_attainment_pct, enrollment_met, has_enrollment_delta, planned_basis, actual_basis, planned_primary_completion_date, actual_primary_completion_date, planned_completion_date, actual_completion_date, primary_completion_date_type, completion_date_type, primary_completion_slip_days, completion_slip_days, completion_slipped, has_completion_delta].hash
+      [trial_id, lead_sponsor_name, overall_status_summary, study_type, phase, phase_label, planned_enrollment, actual_enrollment, enrollment_type, enrollment_delta, enrollment_attainment_pct, enrollment_met, enrollment_delta_known, planned_basis, actual_basis, planned_primary_completion_date, actual_primary_completion_date, planned_completion_date, actual_completion_date, primary_completion_date_type, completion_date_type, primary_completion_slip_days, completion_slip_days, completion_slipped, has_completion_delta].hash
     end
 
     # Builds the object from hash

@@ -10,7 +10,8 @@
 | **is_direct** | **Boolean** | True when the trial is tagged with this condition itself; false when it is tagged with a condition beneath it in the MeSH tree. | [optional] |
 | **trial_title** | **String** | The trial&#39;s brief title. | [optional] |
 | **study_type** | **String** | The registry&#39;s study type (INTERVENTIONAL, OBSERVATIONAL or EXPANDED_ACCESS). | [optional] |
-| **phase** | **String** | The trial phase label (Phase 1, Phase 2, Phase 3, Phase 4, Not Applicable and so on). | [optional] |
+| **phase** | **String** | The registry&#39;s phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those. | [optional] |
+| **phase_label** | **String** | The trial phase as a display label (Phase 2, Phase 3, Observational, Not applicable, Expanded access, Unknown). The same trial&#39;s phase column holds the registry code. | [optional] |
 | **overall_status** | **String** | The registry&#39;s overall recruitment status (COMPLETED, RECRUITING, TERMINATED and so on). | [optional] |
 | **start_date** | **Date** | Trial start date as registered. | [optional] |
 | **start_year** | **Integer** | Calendar year of the start date. | [optional] |
@@ -24,7 +25,7 @@
 | **sponsor_company_name** | **String** | The lead sponsor&#39;s company name. | [optional] |
 | **sponsor_group_id** | **String** | Group level: the current ultimate parent of the lead sponsor&#39;s company; dated links are in company_members. | [optional] |
 | **sponsor_group_name** | **String** | Display name of the lead sponsor&#39;s group. | [optional] |
-| **sponsor_agency_class** | **String** | The registry&#39;s declared funder class of the lead sponsor (INDUSTRY, NIH for the US National Institutes of Health, OTHER and so on). | [optional] |
+| **sponsor_agency_class** | **String** | The funder class the registry declared for the sponsor (INDUSTRY, NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry&#39;s own code for a class it does not state. Null when the trial has no lead sponsor row. | [optional] |
 
 ## Example
 
@@ -39,6 +40,7 @@ instance = PharmaObservatory::ConditionTrialsRow.new(
   trial_title: null,
   study_type: null,
   phase: null,
+  phase_label: null,
   overall_status: null,
   start_date: null,
   start_year: null,

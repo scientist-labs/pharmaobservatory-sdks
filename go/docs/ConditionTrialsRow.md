@@ -10,7 +10,8 @@ Name | Type | Description | Notes
 **IsDirect** | Pointer to **NullableBool** | True when the trial is tagged with this condition itself; false when it is tagged with a condition beneath it in the MeSH tree. | [optional] 
 **TrialTitle** | Pointer to **NullableString** | The trial&#39;s brief title. | [optional] 
 **StudyType** | Pointer to **NullableString** | The registry&#39;s study type (INTERVENTIONAL, OBSERVATIONAL or EXPANDED_ACCESS). | [optional] 
-**Phase** | Pointer to **NullableString** | The trial phase label (Phase 1, Phase 2, Phase 3, Phase 4, Not Applicable and so on). | [optional] 
+**Phase** | Pointer to **NullableString** | The registry&#39;s phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those. | [optional] 
+**PhaseLabel** | Pointer to **NullableString** | The trial phase as a display label (Phase 2, Phase 3, Observational, Not applicable, Expanded access, Unknown). The same trial&#39;s phase column holds the registry code. | [optional] 
 **OverallStatus** | Pointer to **NullableString** | The registry&#39;s overall recruitment status (COMPLETED, RECRUITING, TERMINATED and so on). | [optional] 
 **StartDate** | Pointer to **NullableString** | Trial start date as registered. | [optional] 
 **StartYear** | Pointer to **NullableInt32** | Calendar year of the start date. | [optional] 
@@ -24,7 +25,7 @@ Name | Type | Description | Notes
 **SponsorCompanyName** | Pointer to **NullableString** | The lead sponsor&#39;s company name. | [optional] 
 **SponsorGroupId** | Pointer to **NullableString** | Group level: the current ultimate parent of the lead sponsor&#39;s company; dated links are in company_members. | [optional] 
 **SponsorGroupName** | Pointer to **NullableString** | Display name of the lead sponsor&#39;s group. | [optional] 
-**SponsorAgencyClass** | Pointer to **NullableString** | The registry&#39;s declared funder class of the lead sponsor (INDUSTRY, NIH for the US National Institutes of Health, OTHER and so on). | [optional] 
+**SponsorAgencyClass** | Pointer to **NullableString** | The funder class the registry declared for the sponsor (INDUSTRY, NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry&#39;s own code for a class it does not state. Null when the trial has no lead sponsor row. | [optional] 
 
 ## Methods
 
@@ -290,6 +291,41 @@ HasPhase returns a boolean if a field has been set.
 `func (o *ConditionTrialsRow) UnsetPhase()`
 
 UnsetPhase ensures that no value is present for Phase, not even an explicit nil
+### GetPhaseLabel
+
+`func (o *ConditionTrialsRow) GetPhaseLabel() string`
+
+GetPhaseLabel returns the PhaseLabel field if non-nil, zero value otherwise.
+
+### GetPhaseLabelOk
+
+`func (o *ConditionTrialsRow) GetPhaseLabelOk() (*string, bool)`
+
+GetPhaseLabelOk returns a tuple with the PhaseLabel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPhaseLabel
+
+`func (o *ConditionTrialsRow) SetPhaseLabel(v string)`
+
+SetPhaseLabel sets PhaseLabel field to given value.
+
+### HasPhaseLabel
+
+`func (o *ConditionTrialsRow) HasPhaseLabel() bool`
+
+HasPhaseLabel returns a boolean if a field has been set.
+
+### SetPhaseLabelNil
+
+`func (o *ConditionTrialsRow) SetPhaseLabelNil(b bool)`
+
+ SetPhaseLabelNil sets the value for PhaseLabel to be an explicit nil
+
+### UnsetPhaseLabel
+`func (o *ConditionTrialsRow) UnsetPhaseLabel()`
+
+UnsetPhaseLabel ensures that no value is present for PhaseLabel, not even an explicit nil
 ### GetOverallStatus
 
 `func (o *ConditionTrialsRow) GetOverallStatus() string`

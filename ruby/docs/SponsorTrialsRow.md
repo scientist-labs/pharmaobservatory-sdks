@@ -12,11 +12,12 @@
 | **sponsor_company_name** | **String** | Display name of the sponsor&#39;s company. | [optional] |
 | **sponsor_group_id** | **String** | Group level: the sponsor&#39;s current ultimate parent company; a root company&#39;s group is itself. | [optional] |
 | **sponsor_group_name** | **String** | Display name of the sponsor&#39;s group. | [optional] |
-| **sponsor_agency_class** | **String** | The registry&#39;s agency class for the sponsor (INDUSTRY, NIH for the US National Institutes of Health, OTHER ...). | [optional] |
+| **sponsor_agency_class** | **String** | The funder class the registry declared for the sponsor (INDUSTRY, NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry&#39;s own code for a class it does not state. | [optional] |
 | **sponsor_resolution_method** | **String** | How the sponsor name was resolved to an organization record. | [optional] |
 | **trial_title** | **String** | The trial&#39;s brief title. | [optional] |
 | **study_type** | **String** | INTERVENTIONAL or OBSERVATIONAL. | [optional] |
-| **phase** | **String** | The trial phase label. | [optional] |
+| **phase** | **String** | The registry&#39;s phase code (PHASE1, PHASE2, PHASE2/PHASE3, NA and so on). Null when the registry gives no phase (observational and expanded-access trials); phase_label carries the display label for those. | [optional] |
+| **phase_label** | **String** | The trial phase as a display label (Phase 2, Phase 3, Observational, Not applicable, Expanded access, Unknown). The same trial&#39;s phase column holds the registry code. | [optional] |
 | **overall_status** | **String** | The registry&#39;s overall status. | [optional] |
 | **start_date** | **Date** | Trial start date. | [optional] |
 | **start_year** | **Integer** | Year of the trial start. | [optional] |
@@ -45,6 +46,7 @@ instance = PharmaObservatory::SponsorTrialsRow.new(
   trial_title: null,
   study_type: null,
   phase: null,
+  phase_label: null,
   overall_status: null,
   start_date: null,
   start_year: null,
