@@ -49,6 +49,9 @@ module PharmaObservatory
     # The UniProt accession.
     attr_accessor :uniprot_accession
 
+    # The recommended name of the protein the biomarker's gene encodes: the UniProt protein of the accession, else the first UniProt protein of the gene symbol, else the Open Targets target name. Null when none names it.
+    attr_accessor :target_protein_name
+
     # Feature code for a non-gene feature.
     attr_accessor :feature_code
 
@@ -108,6 +111,7 @@ module PharmaObservatory
         :'target_id' => :'target_id',
         :'hgnc_id' => :'hgnc_id',
         :'uniprot_accession' => :'uniprot_accession',
+        :'target_protein_name' => :'target_protein_name',
         :'feature_code' => :'feature_code',
         :'feature_type' => :'feature_type',
         :'evidence_tier' => :'evidence_tier',
@@ -150,6 +154,7 @@ module PharmaObservatory
         :'target_id' => :'String',
         :'hgnc_id' => :'String',
         :'uniprot_accession' => :'String',
+        :'target_protein_name' => :'String',
         :'feature_code' => :'String',
         :'feature_type' => :'String',
         :'evidence_tier' => :'Integer',
@@ -182,6 +187,7 @@ module PharmaObservatory
         :'target_id',
         :'hgnc_id',
         :'uniprot_accession',
+        :'target_protein_name',
         :'feature_code',
         :'feature_type',
         :'evidence_tier',
@@ -258,6 +264,10 @@ module PharmaObservatory
 
       if attributes.key?(:'uniprot_accession')
         self.uniprot_accession = attributes[:'uniprot_accession']
+      end
+
+      if attributes.key?(:'target_protein_name')
+        self.target_protein_name = attributes[:'target_protein_name']
       end
 
       if attributes.key?(:'feature_code')
@@ -352,6 +362,7 @@ module PharmaObservatory
           target_id == o.target_id &&
           hgnc_id == o.hgnc_id &&
           uniprot_accession == o.uniprot_accession &&
+          target_protein_name == o.target_protein_name &&
           feature_code == o.feature_code &&
           feature_type == o.feature_type &&
           evidence_tier == o.evidence_tier &&
@@ -378,7 +389,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [biomarker_id, route_key, biomarker_kind, identity_status, display_name, parent_biomarker_id, gene_symbol, amino_acid_change, target_id, hgnc_id, uniprot_accession, feature_code, feature_type, evidence_tier, evidence_tier_label, n_fda_cdx_assertions, n_fda_bqp_assertions, n_cancer_actionable_cgi, n_ot_association, n_trial_mention, n_publication_variant_mentions, has_clinical_validation_evidence, has_analytical_validation_evidence, n_assay_provider_papers, n_assay_provider_suppliers, n_diagnostic_provider_suppliers].hash
+      [biomarker_id, route_key, biomarker_kind, identity_status, display_name, parent_biomarker_id, gene_symbol, amino_acid_change, target_id, hgnc_id, uniprot_accession, target_protein_name, feature_code, feature_type, evidence_tier, evidence_tier_label, n_fda_cdx_assertions, n_fda_bqp_assertions, n_cancer_actionable_cgi, n_ot_association, n_trial_mention, n_publication_variant_mentions, has_clinical_validation_evidence, has_analytical_validation_evidence, n_assay_provider_papers, n_assay_provider_suppliers, n_diagnostic_provider_suppliers].hash
     end
 
     # Builds the object from hash

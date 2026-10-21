@@ -10,12 +10,15 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**legal_entities_get**](LegalEntitiesApi.md#legal_entities_get) | **GET** /api/v1/legal_entities/{id} | One legal entity |
 | [**legal_entities_institutional_holdings**](LegalEntitiesApi.md#legal_entities_institutional_holdings) | **GET** /api/v1/legal_entities/{id}/institutional_holdings | Institutional holdings (SEC Form 13F) |
 | [**legal_entities_list**](LegalEntitiesApi.md#legal_entities_list) | **GET** /api/v1/legal_entities | List legal entities |
+| [**legal_entities_org_disclosures**](LegalEntitiesApi.md#legal_entities_org_disclosures) | **GET** /api/v1/legal_entities/{id}/org_disclosures | Organization disclosures (climate and diversity) |
+| [**legal_entities_org_relationships**](LegalEntitiesApi.md#legal_entities_org_relationships) | **GET** /api/v1/legal_entities/{id}/org_relationships | Organization relationships |
 | [**legal_entities_ownership_positions**](LegalEntitiesApi.md#legal_entities_ownership_positions) | **GET** /api/v1/legal_entities/{id}/ownership_positions | Ownership and control positions |
 | [**legal_entities_pdufa_dates**](LegalEntitiesApi.md#legal_entities_pdufa_dates) | **GET** /api/v1/legal_entities/{id}/pdufa_dates | FDA decision dates (PDUFA) and catalysts |
 | [**legal_entities_sponsor_recruitment_by_phase**](LegalEntitiesApi.md#legal_entities_sponsor_recruitment_by_phase) | **GET** /api/v1/legal_entities/{id}/sponsor_recruitment_by_phase | Trial recruitment duration by sponsor and phase |
 | [**legal_entities_sponsor_recruitment_duration**](LegalEntitiesApi.md#legal_entities_sponsor_recruitment_duration) | **GET** /api/v1/legal_entities/{id}/sponsor_recruitment_duration | Trial recruitment duration by sponsor |
 | [**legal_entities_sponsor_trial_start_forecast**](LegalEntitiesApi.md#legal_entities_sponsor_trial_start_forecast) | **GET** /api/v1/legal_entities/{id}/sponsor_trial_start_forecast | Trial-start forecast by sponsor |
 | [**legal_entities_sponsor_trials**](LegalEntitiesApi.md#legal_entities_sponsor_trials) | **GET** /api/v1/legal_entities/{id}/sponsor_trials | Sponsor trials |
+| [**legal_entities_supplier_capability_esg**](LegalEntitiesApi.md#legal_entities_supplier_capability_esg) | **GET** /api/v1/legal_entities/{id}/supplier_capability_esg | Supplier capability and ESG disclosure |
 
 
 ## legal_entities_company_assets
@@ -467,6 +470,164 @@ end
 ### Return type
 
 [**LegalEntitiesResponse**](LegalEntitiesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## legal_entities_org_disclosures
+
+> <OrgDisclosuresResponse> legal_entities_org_disclosures(id, opts)
+
+Organization disclosures (climate and diversity)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::LegalEntitiesApi.new
+id = 'edgar:0001114448' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Organization disclosures (climate and diversity)
+  result = api_instance.legal_entities_org_disclosures(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_org_disclosures: #{e}"
+end
+```
+
+#### Using the legal_entities_org_disclosures_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<OrgDisclosuresResponse>, Integer, Hash)> legal_entities_org_disclosures_with_http_info(id, opts)
+
+```ruby
+begin
+  # Organization disclosures (climate and diversity)
+  data, status_code, headers = api_instance.legal_entities_org_disclosures_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <OrgDisclosuresResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_org_disclosures_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**OrgDisclosuresResponse**](OrgDisclosuresResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## legal_entities_org_relationships
+
+> <OrgRelationshipsResponse> legal_entities_org_relationships(id, opts)
+
+Organization relationships
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::LegalEntitiesApi.new
+id = 'edgar:0001114448' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Organization relationships
+  result = api_instance.legal_entities_org_relationships(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_org_relationships: #{e}"
+end
+```
+
+#### Using the legal_entities_org_relationships_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<OrgRelationshipsResponse>, Integer, Hash)> legal_entities_org_relationships_with_http_info(id, opts)
+
+```ruby
+begin
+  # Organization relationships
+  data, status_code, headers = api_instance.legal_entities_org_relationships_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <OrgRelationshipsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_org_relationships_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**OrgRelationshipsResponse**](OrgRelationshipsResponse.md)
 
 ### Authorization
 
@@ -941,6 +1102,85 @@ end
 ### Return type
 
 [**SponsorTrialsResponse**](SponsorTrialsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## legal_entities_supplier_capability_esg
+
+> <SupplierCapabilityEsgResponse> legal_entities_supplier_capability_esg(id, opts)
+
+Supplier capability and ESG disclosure
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::LegalEntitiesApi.new
+id = 'edgar:0001114448' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Supplier capability and ESG disclosure
+  result = api_instance.legal_entities_supplier_capability_esg(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_supplier_capability_esg: #{e}"
+end
+```
+
+#### Using the legal_entities_supplier_capability_esg_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<SupplierCapabilityEsgResponse>, Integer, Hash)> legal_entities_supplier_capability_esg_with_http_info(id, opts)
+
+```ruby
+begin
+  # Supplier capability and ESG disclosure
+  data, status_code, headers = api_instance.legal_entities_supplier_capability_esg_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <SupplierCapabilityEsgResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_supplier_capability_esg_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**SupplierCapabilityEsgResponse**](SupplierCapabilityEsgResponse.md)
 
 ### Authorization
 

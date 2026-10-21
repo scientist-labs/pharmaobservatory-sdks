@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **IssuerGroupId** | Pointer to **NullableString** | Group level: the issuer&#39;s current ultimate parent company; a root company&#39;s group is itself. | [optional] 
 **IssuerGroupName** | Pointer to **NullableString** | Display name of the issuer&#39;s group. | [optional] 
 **EventDate** | Pointer to **NullableString** | The date the source gives for the event; event_stage says what the date means. | [optional] 
-**FiscalYear** | Pointer to **NullableInt32** | The NIH fiscal year, for a grant; null for the other sources. | [optional] 
+**FiscalYear** | Pointer to **NullableInt32** | The fiscal year of the US National Institutes of Health (NIH), for a grant; null for the other sources. | [optional] 
 **Source** | Pointer to **NullableString** | The source lane: reporter (NIH RePORTER grants), form_d (SEC Form D Regulation D offerings), edgar_offerings (SEC registered offerings) or sec_extracted (financings extracted from SEC filings). | [optional] 
 **RoundType** | Pointer to **NullableString** | The kind of round (for example grant_nih, sbir, reg_d_private, ipo, follow_on, public_offering, atm, registered_direct, debt). | [optional] 
 **RoundSubtype** | Pointer to **NullableString** | A finer type, such as the grant activity code, the Regulation D exemption or the SEC form. | [optional] 

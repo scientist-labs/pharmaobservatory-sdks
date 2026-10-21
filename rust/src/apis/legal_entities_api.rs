@@ -15,6 +15,30 @@ use crate::{apis::ResponseContent, models};
 use super::{Error, configuration, ContentType};
 
 
+/// struct for typed errors of method [`legal_entities_period_catalysts`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum LegalEntitiesPeriodCatalystsError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`legal_entities_period_clia_certificates`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum LegalEntitiesPeriodCliaCertificatesError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`legal_entities_period_company_assets`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -39,10 +63,34 @@ pub enum LegalEntitiesPeriodCompanyProgramsError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`legal_entities_period_debarments`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum LegalEntitiesPeriodDebarmentsError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`legal_entities_period_drug_patent_cliff`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum LegalEntitiesPeriodDrugPatentCliffError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`legal_entities_period_enforcement_events`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum LegalEntitiesPeriodEnforcementEventsError {
     Status400(models::QueryError),
     Status401(models::AuthError),
     Status403(models::AuthError),
@@ -58,6 +106,54 @@ pub enum LegalEntitiesPeriodGetError {
     Status401(models::AuthError),
     Status403(models::AuthError),
     Status404(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`legal_entities_period_gxp_facilities`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum LegalEntitiesPeriodGxpFacilitiesError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`legal_entities_period_import_refusals`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum LegalEntitiesPeriodImportRefusalsError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`legal_entities_period_inspection_findings`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum LegalEntitiesPeriodInspectionFindingsError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`legal_entities_period_inspections`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum LegalEntitiesPeriodInspectionsError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
     UnknownValue(serde_json::Value),
 }
 
@@ -85,6 +181,30 @@ pub enum LegalEntitiesPeriodListError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`legal_entities_period_org_disclosures`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum LegalEntitiesPeriodOrgDisclosuresError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`legal_entities_period_org_relationships`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum LegalEntitiesPeriodOrgRelationshipsError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`legal_entities_period_ownership_positions`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -101,6 +221,18 @@ pub enum LegalEntitiesPeriodOwnershipPositionsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum LegalEntitiesPeriodPdufaDatesError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`legal_entities_period_recalls`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum LegalEntitiesPeriodRecallsError {
     Status400(models::QueryError),
     Status401(models::AuthError),
     Status403(models::AuthError),
@@ -157,6 +289,160 @@ pub enum LegalEntitiesPeriodSponsorTrialsError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`legal_entities_period_supplier_capability_esg`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum LegalEntitiesPeriodSupplierCapabilityEsgError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`legal_entities_period_untitled_letters`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum LegalEntitiesPeriodUntitledLettersError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`legal_entities_period_warning_letters`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum LegalEntitiesPeriodWarningLettersError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+
+pub async fn legal_entities_period_catalysts(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::CatalystsResponse, Error<LegalEntitiesPeriodCatalystsError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/legal_entities/{id}/catalysts", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CatalystsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CatalystsResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<LegalEntitiesPeriodCatalystsError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn legal_entities_period_clia_certificates(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::CliaCertificatesResponse, Error<LegalEntitiesPeriodCliaCertificatesError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/legal_entities/{id}/clia_certificates", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CliaCertificatesResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CliaCertificatesResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<LegalEntitiesPeriodCliaCertificatesError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
 
 pub async fn legal_entities_period_company_assets(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::CompanyAssetsResponse, Error<LegalEntitiesPeriodCompanyAssetsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
@@ -276,6 +562,65 @@ pub async fn legal_entities_period_company_programs(configuration: &configuratio
     }
 }
 
+pub async fn legal_entities_period_debarments(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::DebarmentsResponse, Error<LegalEntitiesPeriodDebarmentsError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/legal_entities/{id}/debarments", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DebarmentsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DebarmentsResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<LegalEntitiesPeriodDebarmentsError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
 pub async fn legal_entities_period_drug_patent_cliff(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::DrugPatentCliffResponse, Error<LegalEntitiesPeriodDrugPatentCliffError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
@@ -335,6 +680,65 @@ pub async fn legal_entities_period_drug_patent_cliff(configuration: &configurati
     }
 }
 
+pub async fn legal_entities_period_enforcement_events(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::EnforcementEventsResponse, Error<LegalEntitiesPeriodEnforcementEventsError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/legal_entities/{id}/enforcement_events", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EnforcementEventsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EnforcementEventsResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<LegalEntitiesPeriodEnforcementEventsError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
 pub async fn legal_entities_period_get(configuration: &configuration::Configuration, id: &str) -> Result<models::LegalEntitiesRecord, Error<LegalEntitiesPeriodGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
@@ -370,6 +774,242 @@ pub async fn legal_entities_period_get(configuration: &configuration::Configurat
     } else {
         let content = resp.text().await?;
         let entity: Option<LegalEntitiesPeriodGetError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn legal_entities_period_gxp_facilities(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::GxpFacilitiesResponse, Error<LegalEntitiesPeriodGxpFacilitiesError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/legal_entities/{id}/gxp_facilities", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GxpFacilitiesResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GxpFacilitiesResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<LegalEntitiesPeriodGxpFacilitiesError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn legal_entities_period_import_refusals(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::ImportRefusalsResponse, Error<LegalEntitiesPeriodImportRefusalsError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/legal_entities/{id}/import_refusals", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ImportRefusalsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ImportRefusalsResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<LegalEntitiesPeriodImportRefusalsError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn legal_entities_period_inspection_findings(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::InspectionFindingsResponse, Error<LegalEntitiesPeriodInspectionFindingsError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/legal_entities/{id}/inspection_findings", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::InspectionFindingsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::InspectionFindingsResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<LegalEntitiesPeriodInspectionFindingsError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn legal_entities_period_inspections(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::InspectionsResponse, Error<LegalEntitiesPeriodInspectionsError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/legal_entities/{id}/inspections", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::InspectionsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::InspectionsResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<LegalEntitiesPeriodInspectionsError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
@@ -491,6 +1131,124 @@ pub async fn legal_entities_period_list(configuration: &configuration::Configura
     }
 }
 
+pub async fn legal_entities_period_org_disclosures(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::OrgDisclosuresResponse, Error<LegalEntitiesPeriodOrgDisclosuresError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/legal_entities/{id}/org_disclosures", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::OrgDisclosuresResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::OrgDisclosuresResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<LegalEntitiesPeriodOrgDisclosuresError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn legal_entities_period_org_relationships(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::OrgRelationshipsResponse, Error<LegalEntitiesPeriodOrgRelationshipsError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/legal_entities/{id}/org_relationships", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::OrgRelationshipsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::OrgRelationshipsResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<LegalEntitiesPeriodOrgRelationshipsError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
 pub async fn legal_entities_period_ownership_positions(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::OwnershipPositionsResponse, Error<LegalEntitiesPeriodOwnershipPositionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
@@ -605,6 +1363,65 @@ pub async fn legal_entities_period_pdufa_dates(configuration: &configuration::Co
     } else {
         let content = resp.text().await?;
         let entity: Option<LegalEntitiesPeriodPdufaDatesError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn legal_entities_period_recalls(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::RecallsResponse, Error<LegalEntitiesPeriodRecallsError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/legal_entities/{id}/recalls", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::RecallsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::RecallsResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<LegalEntitiesPeriodRecallsError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
@@ -841,6 +1658,183 @@ pub async fn legal_entities_period_sponsor_trials(configuration: &configuration:
     } else {
         let content = resp.text().await?;
         let entity: Option<LegalEntitiesPeriodSponsorTrialsError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn legal_entities_period_supplier_capability_esg(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::SupplierCapabilityEsgResponse, Error<LegalEntitiesPeriodSupplierCapabilityEsgError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/legal_entities/{id}/supplier_capability_esg", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SupplierCapabilityEsgResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SupplierCapabilityEsgResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<LegalEntitiesPeriodSupplierCapabilityEsgError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn legal_entities_period_untitled_letters(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::UntitledLettersResponse, Error<LegalEntitiesPeriodUntitledLettersError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/legal_entities/{id}/untitled_letters", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UntitledLettersResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UntitledLettersResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<LegalEntitiesPeriodUntitledLettersError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn legal_entities_period_warning_letters(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::WarningLettersResponse, Error<LegalEntitiesPeriodWarningLettersError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/legal_entities/{id}/warning_letters", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::WarningLettersResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::WarningLettersResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<LegalEntitiesPeriodWarningLettersError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }

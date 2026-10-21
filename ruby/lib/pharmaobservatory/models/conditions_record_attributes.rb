@@ -19,11 +19,14 @@ module PharmaObservatory
 
     attr_accessor :condition_delivery
 
+    attr_accessor :condition_recruitment_duration
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'condition_burden' => :'condition_burden',
-        :'condition_delivery' => :'condition_delivery'
+        :'condition_delivery' => :'condition_delivery',
+        :'condition_recruitment_duration' => :'condition_recruitment_duration'
       }
     end
 
@@ -41,7 +44,8 @@ module PharmaObservatory
     def self.openapi_types
       {
         :'condition_burden' => :'ConditionBurdenRow',
-        :'condition_delivery' => :'ConditionDeliveryRow'
+        :'condition_delivery' => :'ConditionDeliveryRow',
+        :'condition_recruitment_duration' => :'ConditionRecruitmentDurationRow'
       }
     end
 
@@ -74,6 +78,10 @@ module PharmaObservatory
       if attributes.key?(:'condition_delivery')
         self.condition_delivery = attributes[:'condition_delivery']
       end
+
+      if attributes.key?(:'condition_recruitment_duration')
+        self.condition_recruitment_duration = attributes[:'condition_recruitment_duration']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -97,7 +105,8 @@ module PharmaObservatory
       return true if self.equal?(o)
       self.class == o.class &&
           condition_burden == o.condition_burden &&
-          condition_delivery == o.condition_delivery
+          condition_delivery == o.condition_delivery &&
+          condition_recruitment_duration == o.condition_recruitment_duration
     end
 
     # @see the `==` method
@@ -109,7 +118,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [condition_burden, condition_delivery].hash
+      [condition_burden, condition_delivery, condition_recruitment_duration].hash
     end
 
     # Builds the object from hash

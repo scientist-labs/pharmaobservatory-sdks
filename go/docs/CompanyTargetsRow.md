@@ -15,6 +15,8 @@ Name | Type | Description | Notes
 **NDrugs** | Pointer to **NullableInt32** | Distinct drugs of the company&#39;s qualifying programs against the target. | [optional] 
 **NConditions** | Pointer to **NullableInt32** | Distinct conditions of the company&#39;s qualifying programs against the target. | [optional] 
 **NTrials** | Pointer to **NullableInt32** | Distinct trials the company leads in those programs. | [optional] 
+**NPrograms** | Pointer to **NullableInt32** | Distinct drug and indication programs (a specific indication with at least two trials) the company leads against the target. | [optional] 
+**LastYear** | Pointer to **NullableInt32** | The latest start year among the company&#39;s trials against the target in those programs. | [optional] 
 
 ## Methods
 
@@ -420,6 +422,76 @@ HasNTrials returns a boolean if a field has been set.
 `func (o *CompanyTargetsRow) UnsetNTrials()`
 
 UnsetNTrials ensures that no value is present for NTrials, not even an explicit nil
+### GetNPrograms
+
+`func (o *CompanyTargetsRow) GetNPrograms() int32`
+
+GetNPrograms returns the NPrograms field if non-nil, zero value otherwise.
+
+### GetNProgramsOk
+
+`func (o *CompanyTargetsRow) GetNProgramsOk() (*int32, bool)`
+
+GetNProgramsOk returns a tuple with the NPrograms field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNPrograms
+
+`func (o *CompanyTargetsRow) SetNPrograms(v int32)`
+
+SetNPrograms sets NPrograms field to given value.
+
+### HasNPrograms
+
+`func (o *CompanyTargetsRow) HasNPrograms() bool`
+
+HasNPrograms returns a boolean if a field has been set.
+
+### SetNProgramsNil
+
+`func (o *CompanyTargetsRow) SetNProgramsNil(b bool)`
+
+ SetNProgramsNil sets the value for NPrograms to be an explicit nil
+
+### UnsetNPrograms
+`func (o *CompanyTargetsRow) UnsetNPrograms()`
+
+UnsetNPrograms ensures that no value is present for NPrograms, not even an explicit nil
+### GetLastYear
+
+`func (o *CompanyTargetsRow) GetLastYear() int32`
+
+GetLastYear returns the LastYear field if non-nil, zero value otherwise.
+
+### GetLastYearOk
+
+`func (o *CompanyTargetsRow) GetLastYearOk() (*int32, bool)`
+
+GetLastYearOk returns a tuple with the LastYear field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLastYear
+
+`func (o *CompanyTargetsRow) SetLastYear(v int32)`
+
+SetLastYear sets LastYear field to given value.
+
+### HasLastYear
+
+`func (o *CompanyTargetsRow) HasLastYear() bool`
+
+HasLastYear returns a boolean if a field has been set.
+
+### SetLastYearNil
+
+`func (o *CompanyTargetsRow) SetLastYearNil(b bool)`
+
+ SetLastYearNil sets the value for LastYear to be an explicit nil
+
+### UnsetLastYear
+`func (o *CompanyTargetsRow) UnsetLastYear()`
+
+UnsetLastYear ensures that no value is present for LastYear, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

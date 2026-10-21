@@ -9,7 +9,7 @@
 | **is_name_resolved_sponsor** | **Boolean** | True for a sponsor resolved from a filed name alone rather than from a registration. | [optional] |
 | **org_origin** | **String** | How the organization record was minted. | [optional] |
 | **country** | **String** | Country as the source states it. | [optional] |
-| **org_type** | **String** | Organization type: Academic, Government, Hospital, Industry, Nonprofit or Other (from the ROR record or the filing), or the lowercase tags investor and manufacturer that mark a minted adviser or manufacturer record. | [optional] |
+| **org_type** | **String** | Organization type: Academic, Government, Hospital, Industry, Nonprofit or Other (from the Research Organization Registry (ROR) record or the filing), or the lowercase tags investor and manufacturer that mark a minted adviser or manufacturer record. | [optional] |
 | **edgar_cik** | **String** | Central index key (CIK) in EDGAR, the US Securities and Exchange Commission (SEC) filing system, when it files. | [optional] |
 | **edgar_ticker** | **String** | Exchange ticker, when listed. | [optional] |
 | **ror_id** | **String** | Research Organization Registry id, when it has one. | [optional] |

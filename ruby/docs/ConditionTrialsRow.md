@@ -25,7 +25,7 @@
 | **sponsor_company_name** | **String** | The lead sponsor&#39;s company name. | [optional] |
 | **sponsor_group_id** | **String** | Group level: the current ultimate parent of the lead sponsor&#39;s company; dated links are in company_members. | [optional] |
 | **sponsor_group_name** | **String** | Display name of the lead sponsor&#39;s group. | [optional] |
-| **sponsor_agency_class** | **String** | The funder class the registry declared for the sponsor (INDUSTRY, NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry&#39;s own code for a class it does not state. Null when the trial has no lead sponsor row. | [optional] |
+| **sponsor_agency_class** | **String** | The funder class the registry declared for the sponsor (INDUSTRY, NIH for the US National Institutes of Health, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry&#39;s own code for a class it does not state. Null when the trial has no lead sponsor row. | [optional] |
 
 ## Example
 

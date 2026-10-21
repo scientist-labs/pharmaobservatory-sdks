@@ -47,6 +47,9 @@ pub struct BiomarkersRow {
     /// The UniProt accession.
     #[serde(rename = "uniprot_accession", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub uniprot_accession: Option<Option<String>>,
+    /// The recommended name of the protein the biomarker's gene encodes: the UniProt protein of the accession, else the first UniProt protein of the gene symbol, else the Open Targets target name. Null when none names it.
+    #[serde(rename = "target_protein_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub target_protein_name: Option<Option<String>>,
     /// Feature code for a non-gene feature.
     #[serde(rename = "feature_code", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub feature_code: Option<Option<String>>,
@@ -109,6 +112,7 @@ impl BiomarkersRow {
             target_id: None,
             hgnc_id: None,
             uniprot_accession: None,
+            target_protein_name: None,
             feature_code: None,
             feature_type: None,
             evidence_tier: None,

@@ -35,7 +35,7 @@ type CompanyFundingEventsRow struct {
 	IssuerGroupName NullableString `json:"issuer_group_name,omitempty"`
 	// The date the source gives for the event; event_stage says what the date means.
 	EventDate NullableString `json:"event_date,omitempty"`
-	// The NIH fiscal year, for a grant; null for the other sources.
+	// The fiscal year of the US National Institutes of Health (NIH), for a grant; null for the other sources.
 	FiscalYear NullableInt32 `json:"fiscal_year,omitempty"`
 	// The source lane: reporter (NIH RePORTER grants), form_d (SEC Form D Regulation D offerings), edgar_offerings (SEC registered offerings) or sec_extracted (financings extracted from SEC filings).
 	Source NullableString `json:"source,omitempty"`

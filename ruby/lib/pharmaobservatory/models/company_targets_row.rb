@@ -49,6 +49,12 @@ module PharmaObservatory
     # Distinct trials the company leads in those programs.
     attr_accessor :n_trials
 
+    # Distinct drug and indication programs (a specific indication with at least two trials) the company leads against the target.
+    attr_accessor :n_programs
+
+    # The latest start year among the company's trials against the target in those programs.
+    attr_accessor :last_year
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -62,7 +68,9 @@ module PharmaObservatory
         :'max_phase' => :'max_phase',
         :'n_drugs' => :'n_drugs',
         :'n_conditions' => :'n_conditions',
-        :'n_trials' => :'n_trials'
+        :'n_trials' => :'n_trials',
+        :'n_programs' => :'n_programs',
+        :'last_year' => :'last_year'
       }
     end
 
@@ -89,7 +97,9 @@ module PharmaObservatory
         :'max_phase' => :'Integer',
         :'n_drugs' => :'Integer',
         :'n_conditions' => :'Integer',
-        :'n_trials' => :'Integer'
+        :'n_trials' => :'Integer',
+        :'n_programs' => :'Integer',
+        :'last_year' => :'Integer'
       }
     end
 
@@ -106,7 +116,9 @@ module PharmaObservatory
         :'max_phase',
         :'n_drugs',
         :'n_conditions',
-        :'n_trials'
+        :'n_trials',
+        :'n_programs',
+        :'last_year'
       ])
     end
 
@@ -169,6 +181,14 @@ module PharmaObservatory
       if attributes.key?(:'n_trials')
         self.n_trials = attributes[:'n_trials']
       end
+
+      if attributes.key?(:'n_programs')
+        self.n_programs = attributes[:'n_programs']
+      end
+
+      if attributes.key?(:'last_year')
+        self.last_year = attributes[:'last_year']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -201,7 +221,9 @@ module PharmaObservatory
           max_phase == o.max_phase &&
           n_drugs == o.n_drugs &&
           n_conditions == o.n_conditions &&
-          n_trials == o.n_trials
+          n_trials == o.n_trials &&
+          n_programs == o.n_programs &&
+          last_year == o.last_year
     end
 
     # @see the `==` method
@@ -213,7 +235,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [sponsor_company_id, sponsor_company_name, sponsor_group_id, sponsor_group_name, target_id, target_symbol, target_name, max_phase, n_drugs, n_conditions, n_trials].hash
+      [sponsor_company_id, sponsor_company_name, sponsor_group_id, sponsor_group_name, target_id, target_symbol, target_name, max_phase, n_drugs, n_conditions, n_trials, n_programs, last_year].hash
     end
 
     # Builds the object from hash

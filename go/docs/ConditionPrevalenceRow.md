@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 **Qualification** | Pointer to **NullableString** | The source&#39;s qualification of the figure (class_only, value_and_class and so on). | [optional] 
 **ValidationStatus** | Pointer to **NullableString** | The source&#39;s validation status for the figure (validated or not_yet_validated). | [optional] 
 **Geography** | Pointer to **NullableString** | The geography the figure describes, as the source states it. | [optional] 
-**JurisdictionCode** | Pointer to **NullableString** | US, EU or GB where the geography is that jurisdiction; null otherwise. | [optional] 
+**JurisdictionCode** | Pointer to **NullableString** | US, EU (European Union) or GB (Great Britain) where the geography is that jurisdiction; null otherwise. | [optional] 
 **ObservationDate** | Pointer to **NullableString** | The date the source assigns to the observation. | [optional] 
 **SourceSnapshotDate** | Pointer to **NullableString** | The date of the source release the figure was read from. | [optional] 
 **Source** | Pointer to **NullableString** | The publication reference the source cites for the figure. | [optional] 

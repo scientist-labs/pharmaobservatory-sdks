@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **SponsorCompanyName** | Pointer to **NullableString** | Display name of the sponsor&#39;s company. | [optional] 
 **SponsorGroupId** | Pointer to **NullableString** | Group level: the sponsor&#39;s current ultimate parent company; a root company&#39;s group is itself. | [optional] 
 **SponsorGroupName** | Pointer to **NullableString** | Display name of the sponsor&#39;s group. | [optional] 
-**SponsorAgencyClass** | Pointer to **NullableString** | The funder class the registry declared for the sponsor (INDUSTRY, NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry&#39;s own code for a class it does not state. | [optional] 
+**SponsorAgencyClass** | Pointer to **NullableString** | The funder class the registry declared for the sponsor (INDUSTRY, NIH for the US National Institutes of Health, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry&#39;s own code for a class it does not state. | [optional] 
 **SponsorResolutionMethod** | Pointer to **NullableString** | How the sponsor name was resolved to an organization record. | [optional] 
 **TrialTitle** | Pointer to **NullableString** | The trial&#39;s brief title. | [optional] 
 **StudyType** | Pointer to **NullableString** | INTERVENTIONAL or OBSERVATIONAL. | [optional] 

@@ -41,6 +41,10 @@ type CompanyTargetsRow struct {
 	NConditions NullableInt32 `json:"n_conditions,omitempty"`
 	// Distinct trials the company leads in those programs.
 	NTrials NullableInt32 `json:"n_trials,omitempty"`
+	// Distinct drug and indication programs (a specific indication with at least two trials) the company leads against the target.
+	NPrograms NullableInt32 `json:"n_programs,omitempty"`
+	// The latest start year among the company's trials against the target in those programs.
+	LastYear NullableInt32 `json:"last_year,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -525,6 +529,90 @@ func (o *CompanyTargetsRow) UnsetNTrials() {
 	o.NTrials.Unset()
 }
 
+// GetNPrograms returns the NPrograms field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyTargetsRow) GetNPrograms() int32 {
+	if o == nil || IsNil(o.NPrograms.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.NPrograms.Get()
+}
+
+// GetNProgramsOk returns a tuple with the NPrograms field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyTargetsRow) GetNProgramsOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NPrograms.Get(), o.NPrograms.IsSet()
+}
+
+// HasNPrograms returns a boolean if a field has been set.
+func (o *CompanyTargetsRow) HasNPrograms() bool {
+	if o != nil && o.NPrograms.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNPrograms gets a reference to the given NullableInt32 and assigns it to the NPrograms field.
+func (o *CompanyTargetsRow) SetNPrograms(v int32) {
+	o.NPrograms.Set(&v)
+}
+// SetNProgramsNil sets the value for NPrograms to be an explicit nil
+func (o *CompanyTargetsRow) SetNProgramsNil() {
+	o.NPrograms.Set(nil)
+}
+
+// UnsetNPrograms ensures that no value is present for NPrograms, not even an explicit nil
+func (o *CompanyTargetsRow) UnsetNPrograms() {
+	o.NPrograms.Unset()
+}
+
+// GetLastYear returns the LastYear field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyTargetsRow) GetLastYear() int32 {
+	if o == nil || IsNil(o.LastYear.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.LastYear.Get()
+}
+
+// GetLastYearOk returns a tuple with the LastYear field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyTargetsRow) GetLastYearOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.LastYear.Get(), o.LastYear.IsSet()
+}
+
+// HasLastYear returns a boolean if a field has been set.
+func (o *CompanyTargetsRow) HasLastYear() bool {
+	if o != nil && o.LastYear.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetLastYear gets a reference to the given NullableInt32 and assigns it to the LastYear field.
+func (o *CompanyTargetsRow) SetLastYear(v int32) {
+	o.LastYear.Set(&v)
+}
+// SetLastYearNil sets the value for LastYear to be an explicit nil
+func (o *CompanyTargetsRow) SetLastYearNil() {
+	o.LastYear.Set(nil)
+}
+
+// UnsetLastYear ensures that no value is present for LastYear, not even an explicit nil
+func (o *CompanyTargetsRow) UnsetLastYear() {
+	o.LastYear.Unset()
+}
+
 func (o CompanyTargetsRow) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -568,6 +656,12 @@ func (o CompanyTargetsRow) ToMap() (map[string]interface{}, error) {
 	if o.NTrials.IsSet() {
 		toSerialize["n_trials"] = o.NTrials.Get()
 	}
+	if o.NPrograms.IsSet() {
+		toSerialize["n_programs"] = o.NPrograms.Get()
+	}
+	if o.LastYear.IsSet() {
+		toSerialize["last_year"] = o.LastYear.Get()
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -601,6 +695,8 @@ func (o *CompanyTargetsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "n_drugs")
 		delete(additionalProperties, "n_conditions")
 		delete(additionalProperties, "n_trials")
+		delete(additionalProperties, "n_programs")
+		delete(additionalProperties, "last_year")
 		o.AdditionalProperties = additionalProperties
 	}
 

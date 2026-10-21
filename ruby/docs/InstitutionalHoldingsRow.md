@@ -14,14 +14,17 @@
 | **security_ref** | **String** | The security&#39;s CUSIP (Committee on Uniform Securities Identification Procedures) identifier. | [optional] |
 | **holder_name** | **String** | The institutional manager&#39;s name. | [optional] |
 | **holder_identity_key** | **String** | The institutional manager&#39;s stable identity (an SEC registration number), the key that groups all of one manager&#39;s holdings. | [optional] |
+| **holder_investor_id** | **String** | The manager&#39;s investor key where the link resolves (null when the manager resolves to no investor or its rows disagree). A manager-level value: the same on every row of one manager. | [optional] |
+| **holder_link_conflict** | **Boolean** | True when the manager&#39;s own holding rows resolve to different investors, so holder_investor_id is null. | [optional] |
 | **holder_kind** | **String** | Manager kind. | [optional] |
 | **holder_org_id** | **String** | Legal-entity level: the manager&#39;s organization record (null when unresolved). | [optional] |
 | **holder_company_id** | **String** | Company level: the manager&#39;s company (null when unresolved). | [optional] |
 | **holder_company_name** | **String** | Display name of the manager&#39;s company. | [optional] |
 | **holder_group_id** | **String** | Group level: the manager&#39;s current ultimate parent. | [optional] |
 | **holder_group_name** | **String** | Display name of the manager&#39;s group. | [optional] |
-| **reported_value_amount** | **Float** | Reported value of the position. | [optional] |
+| **reported_value_amount** | **Float** | Reported value of the position in whole US dollars at the filing&#39;s inferred value scale; equity (SH) lines only. Null where the scale or currency is ambiguous. | [optional] |
 | **reported_value_currency** | **String** | Currency of the reported value. | [optional] |
+| **shares_basis** | **String** | How the share figure was reached: sum_latest_period_positions, the sum of the manager&#39;s positions in the issuer&#39;s latest reporting period. Read a share figure with its basis. | [optional] |
 | **shares** | **Float** | Shares standing. | [optional] |
 | **percent_basis** | **String** | The basis the percent is measured on. | [optional] |
 | **reported_percent** | **Float** | Reported share of the issuer. | [optional] |
@@ -46,6 +49,8 @@ instance = PharmaObservatory::InstitutionalHoldingsRow.new(
   security_ref: null,
   holder_name: null,
   holder_identity_key: null,
+  holder_investor_id: null,
+  holder_link_conflict: null,
   holder_kind: null,
   holder_org_id: null,
   holder_company_id: null,
@@ -54,6 +59,7 @@ instance = PharmaObservatory::InstitutionalHoldingsRow.new(
   holder_group_name: null,
   reported_value_amount: null,
   reported_value_currency: null,
+  shares_basis: null,
   shares: null,
   percent_basis: null,
   reported_percent: null,

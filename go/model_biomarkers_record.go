@@ -27,8 +27,8 @@ type BiomarkersRecord struct {
 	Datasets []DatasetListing `json:"datasets"`
 	Attribution []DatasetAttribution `json:"attribution,omitempty"`
 	SourceCredit *string `json:"source_credit,omitempty"`
-	Freshness *BiomarkerCdxAssertionsResponseFreshness `json:"freshness,omitempty"`
-	Build *BiomarkerCdxAssertionsResponseBuild `json:"build,omitempty"`
+	Freshness *BiomarkerAssayEvidenceResponseFreshness `json:"freshness,omitempty"`
+	Build *BiomarkerAssayEvidenceResponseBuild `json:"build,omitempty"`
 	BuildState *DatasetBuildState `json:"build_state,omitempty"`
 	Restriction map[string]interface{} `json:"restriction,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -250,9 +250,9 @@ func (o *BiomarkersRecord) SetSourceCredit(v string) {
 }
 
 // GetFreshness returns the Freshness field value if set, zero value otherwise.
-func (o *BiomarkersRecord) GetFreshness() BiomarkerCdxAssertionsResponseFreshness {
+func (o *BiomarkersRecord) GetFreshness() BiomarkerAssayEvidenceResponseFreshness {
 	if o == nil || IsNil(o.Freshness) {
-		var ret BiomarkerCdxAssertionsResponseFreshness
+		var ret BiomarkerAssayEvidenceResponseFreshness
 		return ret
 	}
 	return *o.Freshness
@@ -260,7 +260,7 @@ func (o *BiomarkersRecord) GetFreshness() BiomarkerCdxAssertionsResponseFreshnes
 
 // GetFreshnessOk returns a tuple with the Freshness field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BiomarkersRecord) GetFreshnessOk() (*BiomarkerCdxAssertionsResponseFreshness, bool) {
+func (o *BiomarkersRecord) GetFreshnessOk() (*BiomarkerAssayEvidenceResponseFreshness, bool) {
 	if o == nil || IsNil(o.Freshness) {
 		return nil, false
 	}
@@ -276,15 +276,15 @@ func (o *BiomarkersRecord) HasFreshness() bool {
 	return false
 }
 
-// SetFreshness gets a reference to the given BiomarkerCdxAssertionsResponseFreshness and assigns it to the Freshness field.
-func (o *BiomarkersRecord) SetFreshness(v BiomarkerCdxAssertionsResponseFreshness) {
+// SetFreshness gets a reference to the given BiomarkerAssayEvidenceResponseFreshness and assigns it to the Freshness field.
+func (o *BiomarkersRecord) SetFreshness(v BiomarkerAssayEvidenceResponseFreshness) {
 	o.Freshness = &v
 }
 
 // GetBuild returns the Build field value if set, zero value otherwise.
-func (o *BiomarkersRecord) GetBuild() BiomarkerCdxAssertionsResponseBuild {
+func (o *BiomarkersRecord) GetBuild() BiomarkerAssayEvidenceResponseBuild {
 	if o == nil || IsNil(o.Build) {
-		var ret BiomarkerCdxAssertionsResponseBuild
+		var ret BiomarkerAssayEvidenceResponseBuild
 		return ret
 	}
 	return *o.Build
@@ -292,7 +292,7 @@ func (o *BiomarkersRecord) GetBuild() BiomarkerCdxAssertionsResponseBuild {
 
 // GetBuildOk returns a tuple with the Build field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BiomarkersRecord) GetBuildOk() (*BiomarkerCdxAssertionsResponseBuild, bool) {
+func (o *BiomarkersRecord) GetBuildOk() (*BiomarkerAssayEvidenceResponseBuild, bool) {
 	if o == nil || IsNil(o.Build) {
 		return nil, false
 	}
@@ -308,8 +308,8 @@ func (o *BiomarkersRecord) HasBuild() bool {
 	return false
 }
 
-// SetBuild gets a reference to the given BiomarkerCdxAssertionsResponseBuild and assigns it to the Build field.
-func (o *BiomarkersRecord) SetBuild(v BiomarkerCdxAssertionsResponseBuild) {
+// SetBuild gets a reference to the given BiomarkerAssayEvidenceResponseBuild and assigns it to the Build field.
+func (o *BiomarkersRecord) SetBuild(v BiomarkerAssayEvidenceResponseBuild) {
 	o.Build = &v
 }
 

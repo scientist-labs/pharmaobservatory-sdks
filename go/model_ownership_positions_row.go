@@ -19,9 +19,9 @@ var _ MappedNullable = &OwnershipPositionsRow{}
 
 // OwnershipPositionsRow One row of the ownership_positions dataset: one row per owner, owned company, filing family and measured dimension (the owner's consolidated current position). A grouped request returns the group columns and the measures instead, as additional properties.
 type OwnershipPositionsRow struct {
-	// The position id. For a position whose owner name is withheld it is an opaque handle that derives nothing from the owner and is stable only while the other positions of the same owned company, filing family and dimension are unchanged.
+	// The position id (the owner rollup id).
 	PositionId NullableString `json:"position_id,omitempty"`
-	// The filing family: sec_forms_3_4_5 (insiders), sec_schedules_13d_g (beneficial owners), sec_form_adv (investment adviser control persons) or sec_def_14a (proxy-statement tables).
+	// The filing family: sec_forms_3_4_5 (insiders), sec_schedules_13d_g (beneficial owners), sec_form_adv (investment adviser control persons), sec_def_14a (proxy-statement tables) or wikidata (ownership statements in Wikidata).
 	SourceClass NullableString `json:"source_class,omitempty"`
 	// What the position measures: insider_reporting, beneficial_ownership, voting_power, economic_interest or control. Positions of different dimensions are different measurements and are not added.
 	OwnershipDimension NullableString `json:"ownership_dimension,omitempty"`
@@ -39,25 +39,27 @@ type OwnershipPositionsRow struct {
 	SubjectGroupId NullableString `json:"subject_group_id,omitempty"`
 	// Display name of the owned company's group.
 	SubjectGroupName NullableString `json:"subject_group_name,omitempty"`
-	// The owner's name as filed. Null for an owner whose filing does not mark the name public (see owner_name_is_public).
+	// The key of the owned party in the investor directory when it is an investor (null otherwise). Filter on it for who is reported to own or control an investor.
+	SubjectInvestorId NullableString `json:"subject_investor_id,omitempty"`
+	// The owner's name as filed.
 	OwnerName NullableString `json:"owner_name,omitempty"`
-	// True when the filing marks the owner's name public. When false every column that could identify the owner is null (name, identity key, person id, investor id, organization and company columns, source_url and the dates); the position and its figures stay.
+	// A label, not a gate: true when the filing marks the owner's privacy status public. It does not affect any other column; the owner's name, identity key and every other field below are populated whatever this value is.
 	OwnerNameIsPublic NullableBool `json:"owner_name_is_public,omitempty"`
 	// What the owner is: organization, natural_person, reporting_group or unknown.
 	OwnerKind NullableString `json:"owner_kind,omitempty"`
-	// The owner's stable identity (an SEC registration number or an adviser registration number); null when the name is withheld.
+	// The owner's stable identity (an SEC registration number or an adviser registration number).
 	OwnerIdentityKey NullableString `json:"owner_identity_key,omitempty"`
-	// The key of an owner who is a natural person; null for other owners and when the name is withheld.
+	// The key of an owner who is a natural person; null for other owners.
 	OwnerPersonId NullableString `json:"owner_person_id,omitempty"`
-	// The key of the owner in the investor directory when it is one; null when the name is withheld.
+	// The key of the owner in the investor directory when it is one.
 	OwnerInvestorId NullableString `json:"owner_investor_id,omitempty"`
-	// Legal-entity level: the owner's organization record (null when the owner is not an organization, is unresolved or is withheld).
+	// Legal-entity level: the owner's organization record (null when the owner is not an organization or is unresolved).
 	OwnerOrgId NullableString `json:"owner_org_id,omitempty"`
-	// Company level: the owner's company (null when unresolved or when the name is withheld).
+	// Company level: the owner's company (null when unresolved).
 	OwnerCompanyId NullableString `json:"owner_company_id,omitempty"`
 	// Display name of the owner's company.
 	OwnerCompanyName NullableString `json:"owner_company_name,omitempty"`
-	// Group level: the owner's current ultimate parent; a root's group is itself (null when the owner is withheld).
+	// Group level: the owner's current ultimate parent; a root's group is itself.
 	OwnerGroupId NullableString `json:"owner_group_id,omitempty"`
 	// Display name of the owner's group.
 	OwnerGroupName NullableString `json:"owner_group_name,omitempty"`
@@ -91,13 +93,13 @@ type OwnershipPositionsRow struct {
 	CeasedPositionCount NullableInt32 `json:"ceased_position_count,omitempty"`
 	// Of those, positions the filer no longer reports.
 	NoLongerReportedPositionCount NullableInt32 `json:"no_longer_reported_position_count,omitempty"`
-	// Date the position was first reported; null when the owner's name is withheld.
+	// Date the position was first reported.
 	FirstObservedDate NullableString `json:"first_observed_date,omitempty"`
-	// Date of the latest reported activity; null when the owner's name is withheld.
+	// Date of the latest reported activity.
 	LastActivityDate NullableString `json:"last_activity_date,omitempty"`
-	// Date of the latest filing; null when the owner's name is withheld.
+	// Date of the latest filing.
 	LastFilingDate NullableString `json:"last_filing_date,omitempty"`
-	// A link to the latest filing; null when the owner's name is withheld, because the filing names the owner.
+	// A link to the latest filing.
 	SourceUrl NullableString `json:"source_url,omitempty"`
 	// True when the row names a natural person.
 	ContainsPersonalData NullableBool `json:"contains_personal_data,omitempty"`
@@ -543,6 +545,48 @@ func (o *OwnershipPositionsRow) SetSubjectGroupNameNil() {
 // UnsetSubjectGroupName ensures that no value is present for SubjectGroupName, not even an explicit nil
 func (o *OwnershipPositionsRow) UnsetSubjectGroupName() {
 	o.SubjectGroupName.Unset()
+}
+
+// GetSubjectInvestorId returns the SubjectInvestorId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *OwnershipPositionsRow) GetSubjectInvestorId() string {
+	if o == nil || IsNil(o.SubjectInvestorId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.SubjectInvestorId.Get()
+}
+
+// GetSubjectInvestorIdOk returns a tuple with the SubjectInvestorId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *OwnershipPositionsRow) GetSubjectInvestorIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SubjectInvestorId.Get(), o.SubjectInvestorId.IsSet()
+}
+
+// HasSubjectInvestorId returns a boolean if a field has been set.
+func (o *OwnershipPositionsRow) HasSubjectInvestorId() bool {
+	if o != nil && o.SubjectInvestorId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSubjectInvestorId gets a reference to the given NullableString and assigns it to the SubjectInvestorId field.
+func (o *OwnershipPositionsRow) SetSubjectInvestorId(v string) {
+	o.SubjectInvestorId.Set(&v)
+}
+// SetSubjectInvestorIdNil sets the value for SubjectInvestorId to be an explicit nil
+func (o *OwnershipPositionsRow) SetSubjectInvestorIdNil() {
+	o.SubjectInvestorId.Set(nil)
+}
+
+// UnsetSubjectInvestorId ensures that no value is present for SubjectInvestorId, not even an explicit nil
+func (o *OwnershipPositionsRow) UnsetSubjectInvestorId() {
+	o.SubjectInvestorId.Unset()
 }
 
 // GetOwnerName returns the OwnerName field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1929,6 +1973,9 @@ func (o OwnershipPositionsRow) ToMap() (map[string]interface{}, error) {
 	if o.SubjectGroupName.IsSet() {
 		toSerialize["subject_group_name"] = o.SubjectGroupName.Get()
 	}
+	if o.SubjectInvestorId.IsSet() {
+		toSerialize["subject_investor_id"] = o.SubjectInvestorId.Get()
+	}
 	if o.OwnerName.IsSet() {
 		toSerialize["owner_name"] = o.OwnerName.Get()
 	}
@@ -2057,6 +2104,7 @@ func (o *OwnershipPositionsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "subject_company_name")
 		delete(additionalProperties, "subject_group_id")
 		delete(additionalProperties, "subject_group_name")
+		delete(additionalProperties, "subject_investor_id")
 		delete(additionalProperties, "owner_name")
 		delete(additionalProperties, "owner_name_is_public")
 		delete(additionalProperties, "owner_kind")

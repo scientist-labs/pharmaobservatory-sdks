@@ -20,7 +20,7 @@
 | **qualification** | **String** | The source&#39;s qualification of the figure (class_only, value_and_class and so on). | [optional] |
 | **validation_status** | **String** | The source&#39;s validation status for the figure (validated or not_yet_validated). | [optional] |
 | **geography** | **String** | The geography the figure describes, as the source states it. | [optional] |
-| **jurisdiction_code** | **String** | US, EU or GB where the geography is that jurisdiction; null otherwise. | [optional] |
+| **jurisdiction_code** | **String** | US, EU (European Union) or GB (Great Britain) where the geography is that jurisdiction; null otherwise. | [optional] |
 | **observation_date** | **Date** | The date the source assigns to the observation. | [optional] |
 | **source_snapshot_date** | **Date** | The date of the source release the figure was read from. | [optional] |
 | **source** | **String** | The publication reference the source cites for the figure. | [optional] |

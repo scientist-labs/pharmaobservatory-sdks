@@ -14,9 +14,12 @@ use serde::{Deserialize, Serialize};
 /// DrugPatentCliffRow : One row of the drug_patent_cliff dataset: one row per drug whose exclusivity ends in the future. A grouped request returns the group columns and the measures instead, as additional properties.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct DrugPatentCliffRow {
-    /// The drug key.
+    /// The drug key at the member grain: the drug record the patent-cliff row is built on, which is the molecule's own record or a record folded under it. Enter from a drug on molecule_id.
     #[serde(rename = "drug_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub drug_id: Option<Option<String>>,
+    /// The molecule key the drug record rolls up to, and the entry key for the drugs object type.
+    #[serde(rename = "molecule_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub molecule_id: Option<Option<String>>,
     /// The drug's name.
     #[serde(rename = "drug_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub drug_name: Option<Option<String>>,
@@ -99,6 +102,7 @@ impl DrugPatentCliffRow {
     pub fn new() -> DrugPatentCliffRow {
         DrugPatentCliffRow {
             drug_id: None,
+            molecule_id: None,
             drug_name: None,
             pharm_class: None,
             atc_class: None,

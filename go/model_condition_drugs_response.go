@@ -24,7 +24,7 @@ type ConditionDrugsResponse struct {
 	Grain *string `json:"grain,omitempty"`
 	ObjectType NullableString `json:"object_type,omitempty"`
 	Id NullableString `json:"id,omitempty"`
-	Scope NullableBiomarkerCdxAssertionsResponseScope `json:"scope,omitempty"`
+	Scope NullableBiomarkerAssayEvidenceResponseScope `json:"scope,omitempty"`
 	Columns []DatasetColumn `json:"columns"`
 	Rows []ConditionDrugsRow `json:"rows"`
 	// The exact count of the filtered rows on an ungrouped read, carried by the cursor; null when grouped.
@@ -38,8 +38,8 @@ type ConditionDrugsResponse struct {
 	SourceCredit *string `json:"source_credit,omitempty"`
 	WithheldTiers []string `json:"withheld_tiers,omitempty"`
 	WithheldColumns []string `json:"withheld_columns,omitempty"`
-	Freshness *BiomarkerCdxAssertionsResponseFreshness `json:"freshness,omitempty"`
-	Build *BiomarkerCdxAssertionsResponseBuild `json:"build,omitempty"`
+	Freshness *BiomarkerAssayEvidenceResponseFreshness `json:"freshness,omitempty"`
+	Build *BiomarkerAssayEvidenceResponseBuild `json:"build,omitempty"`
 	BuildState *DatasetBuildState `json:"build_state,omitempty"`
 	Restriction map[string]interface{} `json:"restriction,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -208,9 +208,9 @@ func (o *ConditionDrugsResponse) UnsetId() {
 }
 
 // GetScope returns the Scope field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *ConditionDrugsResponse) GetScope() BiomarkerCdxAssertionsResponseScope {
+func (o *ConditionDrugsResponse) GetScope() BiomarkerAssayEvidenceResponseScope {
 	if o == nil || IsNil(o.Scope.Get()) {
-		var ret BiomarkerCdxAssertionsResponseScope
+		var ret BiomarkerAssayEvidenceResponseScope
 		return ret
 	}
 	return *o.Scope.Get()
@@ -219,7 +219,7 @@ func (o *ConditionDrugsResponse) GetScope() BiomarkerCdxAssertionsResponseScope 
 // GetScopeOk returns a tuple with the Scope field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ConditionDrugsResponse) GetScopeOk() (*BiomarkerCdxAssertionsResponseScope, bool) {
+func (o *ConditionDrugsResponse) GetScopeOk() (*BiomarkerAssayEvidenceResponseScope, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -235,8 +235,8 @@ func (o *ConditionDrugsResponse) HasScope() bool {
 	return false
 }
 
-// SetScope gets a reference to the given NullableBiomarkerCdxAssertionsResponseScope and assigns it to the Scope field.
-func (o *ConditionDrugsResponse) SetScope(v BiomarkerCdxAssertionsResponseScope) {
+// SetScope gets a reference to the given NullableBiomarkerAssayEvidenceResponseScope and assigns it to the Scope field.
+func (o *ConditionDrugsResponse) SetScope(v BiomarkerAssayEvidenceResponseScope) {
 	o.Scope.Set(&v)
 }
 // SetScopeNil sets the value for Scope to be an explicit nil
@@ -638,9 +638,9 @@ func (o *ConditionDrugsResponse) SetWithheldColumns(v []string) {
 }
 
 // GetFreshness returns the Freshness field value if set, zero value otherwise.
-func (o *ConditionDrugsResponse) GetFreshness() BiomarkerCdxAssertionsResponseFreshness {
+func (o *ConditionDrugsResponse) GetFreshness() BiomarkerAssayEvidenceResponseFreshness {
 	if o == nil || IsNil(o.Freshness) {
-		var ret BiomarkerCdxAssertionsResponseFreshness
+		var ret BiomarkerAssayEvidenceResponseFreshness
 		return ret
 	}
 	return *o.Freshness
@@ -648,7 +648,7 @@ func (o *ConditionDrugsResponse) GetFreshness() BiomarkerCdxAssertionsResponseFr
 
 // GetFreshnessOk returns a tuple with the Freshness field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ConditionDrugsResponse) GetFreshnessOk() (*BiomarkerCdxAssertionsResponseFreshness, bool) {
+func (o *ConditionDrugsResponse) GetFreshnessOk() (*BiomarkerAssayEvidenceResponseFreshness, bool) {
 	if o == nil || IsNil(o.Freshness) {
 		return nil, false
 	}
@@ -664,15 +664,15 @@ func (o *ConditionDrugsResponse) HasFreshness() bool {
 	return false
 }
 
-// SetFreshness gets a reference to the given BiomarkerCdxAssertionsResponseFreshness and assigns it to the Freshness field.
-func (o *ConditionDrugsResponse) SetFreshness(v BiomarkerCdxAssertionsResponseFreshness) {
+// SetFreshness gets a reference to the given BiomarkerAssayEvidenceResponseFreshness and assigns it to the Freshness field.
+func (o *ConditionDrugsResponse) SetFreshness(v BiomarkerAssayEvidenceResponseFreshness) {
 	o.Freshness = &v
 }
 
 // GetBuild returns the Build field value if set, zero value otherwise.
-func (o *ConditionDrugsResponse) GetBuild() BiomarkerCdxAssertionsResponseBuild {
+func (o *ConditionDrugsResponse) GetBuild() BiomarkerAssayEvidenceResponseBuild {
 	if o == nil || IsNil(o.Build) {
-		var ret BiomarkerCdxAssertionsResponseBuild
+		var ret BiomarkerAssayEvidenceResponseBuild
 		return ret
 	}
 	return *o.Build
@@ -680,7 +680,7 @@ func (o *ConditionDrugsResponse) GetBuild() BiomarkerCdxAssertionsResponseBuild 
 
 // GetBuildOk returns a tuple with the Build field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ConditionDrugsResponse) GetBuildOk() (*BiomarkerCdxAssertionsResponseBuild, bool) {
+func (o *ConditionDrugsResponse) GetBuildOk() (*BiomarkerAssayEvidenceResponseBuild, bool) {
 	if o == nil || IsNil(o.Build) {
 		return nil, false
 	}
@@ -696,8 +696,8 @@ func (o *ConditionDrugsResponse) HasBuild() bool {
 	return false
 }
 
-// SetBuild gets a reference to the given BiomarkerCdxAssertionsResponseBuild and assigns it to the Build field.
-func (o *ConditionDrugsResponse) SetBuild(v BiomarkerCdxAssertionsResponseBuild) {
+// SetBuild gets a reference to the given BiomarkerAssayEvidenceResponseBuild and assigns it to the Build field.
+func (o *ConditionDrugsResponse) SetBuild(v BiomarkerAssayEvidenceResponseBuild) {
 	o.Build = &v
 }
 

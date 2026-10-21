@@ -18,6 +18,10 @@
 | **supporting_pmids** | **Array&lt;String&gt;** | A sample of the supporting PubMed ids. | [optional] |
 | **supporting_pmids_truncated** | **Boolean** | True when the sample is shorter than the paper count. | [optional] |
 | **n_papers_excluded_as_consortium** | **Integer** | Papers left out because they name too many organizations. | [optional] |
+| **corpus_articles** | **Integer** | Articles in the trial-cited publication set the publishing counts are drawn from (not all of PubMed). Corpus-wide, the same value on every row, never per biomarker or per company. | [optional] |
+| **n_affiliations** | **Integer** | Distinct author affiliation strings in the corpus. Corpus-wide, the same value on every row. | [optional] |
+| **n_resolved_affiliations** | **Integer** | Affiliation strings that resolved to an organization. Corpus-wide, the same value on every row. | [optional] |
+| **affiliation_resolved_share** | **Float** | n_resolved_affiliations divided by n_affiliations, rounded to four places. Corpus-wide, the same value on every row: how much of the corpus the company attribution can see, not a figure about this biomarker. | [optional] |
 
 ## Example
 
@@ -38,7 +42,11 @@ instance = PharmaObservatory::BiomarkerPublishingCompaniesRow.new(
   last_pub_year: null,
   supporting_pmids: null,
   supporting_pmids_truncated: null,
-  n_papers_excluded_as_consortium: null
+  n_papers_excluded_as_consortium: null,
+  corpus_articles: null,
+  n_affiliations: null,
+  n_resolved_affiliations: null,
+  affiliation_resolved_share: null
 )
 ```
 

@@ -279,6 +279,40 @@ describe 'CompaniesApi' do
     end
   end
 
+  # unit tests for companies_org_disclosures
+  # Organization disclosures (climate and diversity)
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
+  # @return [OrgDisclosuresResponse]
+  describe 'companies_org_disclosures test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for companies_org_relationships
+  # Organization relationships
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
+  # @return [OrgRelationshipsResponse]
+  describe 'companies_org_relationships test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   # unit tests for companies_ownership_positions
   # Ownership and control positions
   # @param id 
@@ -376,6 +410,23 @@ describe 'CompaniesApi' do
   # @option opts [String] :scope company (this company only) or group (its corporate group).
   # @return [SponsorTrialsResponse]
   describe 'companies_sponsor_trials test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for companies_supplier_capability_esg
+  # Supplier capability and ESG disclosure
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @option opts [String] :scope company (this company only) or group (its corporate group).
+  # @return [SupplierCapabilityEsgResponse]
+  describe 'companies_supplier_capability_esg test' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end

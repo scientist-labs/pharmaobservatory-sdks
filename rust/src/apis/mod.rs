@@ -117,9 +117,14 @@ pub mod cell_lines_api;
 pub mod companies_api;
 pub mod conditions_api;
 pub mod datasets_api;
+pub mod drugs_api;
+pub mod investors_api;
 pub mod legal_entities_api;
+pub mod managers_api;
 pub mod query_api;
 pub mod sites_api;
+pub mod suppliers_api;
+pub mod targets_api;
 pub mod trials_api;
 
 pub mod configuration;

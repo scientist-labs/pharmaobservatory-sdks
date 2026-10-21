@@ -14,14 +14,17 @@ Name | Type | Description | Notes
 **SecurityRef** | Pointer to **NullableString** | The security&#39;s CUSIP (Committee on Uniform Securities Identification Procedures) identifier. | [optional] 
 **HolderName** | Pointer to **NullableString** | The institutional manager&#39;s name. | [optional] 
 **HolderIdentityKey** | Pointer to **NullableString** | The institutional manager&#39;s stable identity (an SEC registration number), the key that groups all of one manager&#39;s holdings. | [optional] 
+**HolderInvestorId** | Pointer to **NullableString** | The manager&#39;s investor key where the link resolves (null when the manager resolves to no investor or its rows disagree). A manager-level value: the same on every row of one manager. | [optional] 
+**HolderLinkConflict** | Pointer to **NullableBool** | True when the manager&#39;s own holding rows resolve to different investors, so holder_investor_id is null. | [optional] 
 **HolderKind** | Pointer to **NullableString** | Manager kind. | [optional] 
 **HolderOrgId** | Pointer to **NullableString** | Legal-entity level: the manager&#39;s organization record (null when unresolved). | [optional] 
 **HolderCompanyId** | Pointer to **NullableString** | Company level: the manager&#39;s company (null when unresolved). | [optional] 
 **HolderCompanyName** | Pointer to **NullableString** | Display name of the manager&#39;s company. | [optional] 
 **HolderGroupId** | Pointer to **NullableString** | Group level: the manager&#39;s current ultimate parent. | [optional] 
 **HolderGroupName** | Pointer to **NullableString** | Display name of the manager&#39;s group. | [optional] 
-**ReportedValueAmount** | Pointer to **NullableFloat32** | Reported value of the position. | [optional] 
+**ReportedValueAmount** | Pointer to **NullableFloat32** | Reported value of the position in whole US dollars at the filing&#39;s inferred value scale; equity (SH) lines only. Null where the scale or currency is ambiguous. | [optional] 
 **ReportedValueCurrency** | Pointer to **NullableString** | Currency of the reported value. | [optional] 
+**SharesBasis** | Pointer to **NullableString** | How the share figure was reached: sum_latest_period_positions, the sum of the manager&#39;s positions in the issuer&#39;s latest reporting period. Read a share figure with its basis. | [optional] 
 **Shares** | Pointer to **NullableFloat32** | Shares standing. | [optional] 
 **PercentBasis** | Pointer to **NullableString** | The basis the percent is measured on. | [optional] 
 **ReportedPercent** | Pointer to **NullableFloat32** | Reported share of the issuer. | [optional] 
@@ -399,6 +402,76 @@ HasHolderIdentityKey returns a boolean if a field has been set.
 `func (o *InstitutionalHoldingsRow) UnsetHolderIdentityKey()`
 
 UnsetHolderIdentityKey ensures that no value is present for HolderIdentityKey, not even an explicit nil
+### GetHolderInvestorId
+
+`func (o *InstitutionalHoldingsRow) GetHolderInvestorId() string`
+
+GetHolderInvestorId returns the HolderInvestorId field if non-nil, zero value otherwise.
+
+### GetHolderInvestorIdOk
+
+`func (o *InstitutionalHoldingsRow) GetHolderInvestorIdOk() (*string, bool)`
+
+GetHolderInvestorIdOk returns a tuple with the HolderInvestorId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHolderInvestorId
+
+`func (o *InstitutionalHoldingsRow) SetHolderInvestorId(v string)`
+
+SetHolderInvestorId sets HolderInvestorId field to given value.
+
+### HasHolderInvestorId
+
+`func (o *InstitutionalHoldingsRow) HasHolderInvestorId() bool`
+
+HasHolderInvestorId returns a boolean if a field has been set.
+
+### SetHolderInvestorIdNil
+
+`func (o *InstitutionalHoldingsRow) SetHolderInvestorIdNil(b bool)`
+
+ SetHolderInvestorIdNil sets the value for HolderInvestorId to be an explicit nil
+
+### UnsetHolderInvestorId
+`func (o *InstitutionalHoldingsRow) UnsetHolderInvestorId()`
+
+UnsetHolderInvestorId ensures that no value is present for HolderInvestorId, not even an explicit nil
+### GetHolderLinkConflict
+
+`func (o *InstitutionalHoldingsRow) GetHolderLinkConflict() bool`
+
+GetHolderLinkConflict returns the HolderLinkConflict field if non-nil, zero value otherwise.
+
+### GetHolderLinkConflictOk
+
+`func (o *InstitutionalHoldingsRow) GetHolderLinkConflictOk() (*bool, bool)`
+
+GetHolderLinkConflictOk returns a tuple with the HolderLinkConflict field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHolderLinkConflict
+
+`func (o *InstitutionalHoldingsRow) SetHolderLinkConflict(v bool)`
+
+SetHolderLinkConflict sets HolderLinkConflict field to given value.
+
+### HasHolderLinkConflict
+
+`func (o *InstitutionalHoldingsRow) HasHolderLinkConflict() bool`
+
+HasHolderLinkConflict returns a boolean if a field has been set.
+
+### SetHolderLinkConflictNil
+
+`func (o *InstitutionalHoldingsRow) SetHolderLinkConflictNil(b bool)`
+
+ SetHolderLinkConflictNil sets the value for HolderLinkConflict to be an explicit nil
+
+### UnsetHolderLinkConflict
+`func (o *InstitutionalHoldingsRow) UnsetHolderLinkConflict()`
+
+UnsetHolderLinkConflict ensures that no value is present for HolderLinkConflict, not even an explicit nil
 ### GetHolderKind
 
 `func (o *InstitutionalHoldingsRow) GetHolderKind() string`
@@ -679,6 +752,41 @@ HasReportedValueCurrency returns a boolean if a field has been set.
 `func (o *InstitutionalHoldingsRow) UnsetReportedValueCurrency()`
 
 UnsetReportedValueCurrency ensures that no value is present for ReportedValueCurrency, not even an explicit nil
+### GetSharesBasis
+
+`func (o *InstitutionalHoldingsRow) GetSharesBasis() string`
+
+GetSharesBasis returns the SharesBasis field if non-nil, zero value otherwise.
+
+### GetSharesBasisOk
+
+`func (o *InstitutionalHoldingsRow) GetSharesBasisOk() (*string, bool)`
+
+GetSharesBasisOk returns a tuple with the SharesBasis field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSharesBasis
+
+`func (o *InstitutionalHoldingsRow) SetSharesBasis(v string)`
+
+SetSharesBasis sets SharesBasis field to given value.
+
+### HasSharesBasis
+
+`func (o *InstitutionalHoldingsRow) HasSharesBasis() bool`
+
+HasSharesBasis returns a boolean if a field has been set.
+
+### SetSharesBasisNil
+
+`func (o *InstitutionalHoldingsRow) SetSharesBasisNil(b bool)`
+
+ SetSharesBasisNil sets the value for SharesBasis to be an explicit nil
+
+### UnsetSharesBasis
+`func (o *InstitutionalHoldingsRow) UnsetSharesBasis()`
+
+UnsetSharesBasis ensures that no value is present for SharesBasis, not even an explicit nil
 ### GetShares
 
 `func (o *InstitutionalHoldingsRow) GetShares() float32`

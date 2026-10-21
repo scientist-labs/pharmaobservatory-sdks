@@ -40,7 +40,7 @@ module PharmaObservatory
     # The date the source gives for the event; event_stage says what the date means.
     attr_accessor :event_date
 
-    # The NIH fiscal year, for a grant; null for the other sources.
+    # The fiscal year of the US National Institutes of Health (NIH), for a grant; null for the other sources.
     attr_accessor :fiscal_year
 
     # The source lane: reporter (NIH RePORTER grants), form_d (SEC Form D Regulation D offerings), edgar_offerings (SEC registered offerings) or sec_extracted (financings extracted from SEC filings).

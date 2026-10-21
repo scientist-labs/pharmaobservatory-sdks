@@ -56,6 +56,18 @@ pub struct BiomarkerPublishingCompaniesRow {
     /// Papers left out because they name too many organizations.
     #[serde(rename = "n_papers_excluded_as_consortium", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_papers_excluded_as_consortium: Option<Option<i32>>,
+    /// Articles in the trial-cited publication set the publishing counts are drawn from (not all of PubMed). Corpus-wide, the same value on every row, never per biomarker or per company.
+    #[serde(rename = "corpus_articles", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub corpus_articles: Option<Option<i32>>,
+    /// Distinct author affiliation strings in the corpus. Corpus-wide, the same value on every row.
+    #[serde(rename = "n_affiliations", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_affiliations: Option<Option<i32>>,
+    /// Affiliation strings that resolved to an organization. Corpus-wide, the same value on every row.
+    #[serde(rename = "n_resolved_affiliations", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_resolved_affiliations: Option<Option<i32>>,
+    /// n_resolved_affiliations divided by n_affiliations, rounded to four places. Corpus-wide, the same value on every row: how much of the corpus the company attribution can see, not a figure about this biomarker.
+    #[serde(rename = "affiliation_resolved_share", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub affiliation_resolved_share: Option<Option<f64>>,
 }
 
 impl BiomarkerPublishingCompaniesRow {
@@ -76,6 +88,10 @@ impl BiomarkerPublishingCompaniesRow {
             supporting_pmids: None,
             supporting_pmids_truncated: None,
             n_papers_excluded_as_consortium: None,
+            corpus_articles: None,
+            n_affiliations: None,
+            n_resolved_affiliations: None,
+            affiliation_resolved_share: None,
         }
     }
 }

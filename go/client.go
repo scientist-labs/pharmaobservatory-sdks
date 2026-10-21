@@ -61,11 +61,21 @@ type APIClient struct {
 
 	DatasetsAPI *DatasetsAPIService
 
+	DrugsAPI *DrugsAPIService
+
+	InvestorsAPI *InvestorsAPIService
+
 	LegalEntitiesAPI *LegalEntitiesAPIService
+
+	ManagersAPI *ManagersAPIService
 
 	QueryAPI *QueryAPIService
 
 	SitesAPI *SitesAPIService
+
+	SuppliersAPI *SuppliersAPIService
+
+	TargetsAPI *TargetsAPIService
 
 	TrialsAPI *TrialsAPIService
 }
@@ -92,9 +102,14 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.CompaniesAPI = (*CompaniesAPIService)(&c.common)
 	c.ConditionsAPI = (*ConditionsAPIService)(&c.common)
 	c.DatasetsAPI = (*DatasetsAPIService)(&c.common)
+	c.DrugsAPI = (*DrugsAPIService)(&c.common)
+	c.InvestorsAPI = (*InvestorsAPIService)(&c.common)
 	c.LegalEntitiesAPI = (*LegalEntitiesAPIService)(&c.common)
+	c.ManagersAPI = (*ManagersAPIService)(&c.common)
 	c.QueryAPI = (*QueryAPIService)(&c.common)
 	c.SitesAPI = (*SitesAPIService)(&c.common)
+	c.SuppliersAPI = (*SuppliersAPIService)(&c.common)
+	c.TargetsAPI = (*TargetsAPIService)(&c.common)
 	c.TrialsAPI = (*TrialsAPIService)(&c.common)
 
 	return c

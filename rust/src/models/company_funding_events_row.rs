@@ -38,7 +38,7 @@ pub struct CompanyFundingEventsRow {
     /// The date the source gives for the event; event_stage says what the date means.
     #[serde(rename = "event_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub event_date: Option<Option<String>>,
-    /// The NIH fiscal year, for a grant; null for the other sources.
+    /// The fiscal year of the US National Institutes of Health (NIH), for a grant; null for the other sources.
     #[serde(rename = "fiscal_year", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub fiscal_year: Option<Option<i32>>,
     /// The source lane: reporter (NIH RePORTER grants), form_d (SEC Form D Regulation D offerings), edgar_offerings (SEC registered offerings) or sec_extracted (financings extracted from SEC filings).

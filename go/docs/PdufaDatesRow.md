@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **EventCategory** | Pointer to **NullableString** | Event category (pdufa, adcomm and so on). | [optional] 
 **DrugName** | Pointer to **NullableString** | The drug name as filed. | [optional] 
 **DrugId** | Pointer to **NullableString** | The drug key. | [optional] 
-**MoleculeId** | Pointer to **NullableString** | The molecule key. | [optional] 
+**MoleculeId** | Pointer to **NullableString** | The molecule key, the resolved drug of the calendar entry and the entry key for the drugs object type (null when the drug name did not resolve to a drug). | [optional] 
 **SponsorName** | Pointer to **NullableString** | The sponsor name as filed. | [optional] 
 **SponsorOrgId** | Pointer to **NullableString** | Legal-entity level: the organization record the sponsor resolved to (null when unresolved). | [optional] 
 **SponsorCompanyId** | Pointer to **NullableString** | Company level: the company the sponsor belongs to (null when unresolved). | [optional] 

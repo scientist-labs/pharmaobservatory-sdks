@@ -15,6 +15,7 @@
 | **target_id** | **String** | The target&#39;s Ensembl gene id. | [optional] |
 | **hgnc_id** | **String** | The HUGO Gene Nomenclature Committee (HGNC) gene id. | [optional] |
 | **uniprot_accession** | **String** | The UniProt accession. | [optional] |
+| **target_protein_name** | **String** | The recommended name of the protein the biomarker&#39;s gene encodes: the UniProt protein of the accession, else the first UniProt protein of the gene symbol, else the Open Targets target name. Null when none names it. | [optional] |
 | **feature_code** | **String** | Feature code for a non-gene feature. | [optional] |
 | **feature_type** | **String** | Feature type for a non-gene feature. | [optional] |
 | **evidence_tier** | **Integer** | Strongest evidence tier: 1 companion diagnostic of the US Food and Drug Administration (FDA) through 6 no evidence. | [optional] |
@@ -48,6 +49,7 @@ instance = PharmaObservatory::BiomarkersRow.new(
   target_id: null,
   hgnc_id: null,
   uniprot_accession: null,
+  target_protein_name: null,
   feature_code: null,
   feature_type: null,
   evidence_tier: null,

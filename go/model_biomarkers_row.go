@@ -41,6 +41,8 @@ type BiomarkersRow struct {
 	HgncId NullableString `json:"hgnc_id,omitempty"`
 	// The UniProt accession.
 	UniprotAccession NullableString `json:"uniprot_accession,omitempty"`
+	// The recommended name of the protein the biomarker's gene encodes: the UniProt protein of the accession, else the first UniProt protein of the gene symbol, else the Open Targets target name. Null when none names it.
+	TargetProteinName NullableString `json:"target_protein_name,omitempty"`
 	// Feature code for a non-gene feature.
 	FeatureCode NullableString `json:"feature_code,omitempty"`
 	// Feature type for a non-gene feature.
@@ -553,6 +555,48 @@ func (o *BiomarkersRow) SetUniprotAccessionNil() {
 // UnsetUniprotAccession ensures that no value is present for UniprotAccession, not even an explicit nil
 func (o *BiomarkersRow) UnsetUniprotAccession() {
 	o.UniprotAccession.Unset()
+}
+
+// GetTargetProteinName returns the TargetProteinName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkersRow) GetTargetProteinName() string {
+	if o == nil || IsNil(o.TargetProteinName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.TargetProteinName.Get()
+}
+
+// GetTargetProteinNameOk returns a tuple with the TargetProteinName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkersRow) GetTargetProteinNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.TargetProteinName.Get(), o.TargetProteinName.IsSet()
+}
+
+// HasTargetProteinName returns a boolean if a field has been set.
+func (o *BiomarkersRow) HasTargetProteinName() bool {
+	if o != nil && o.TargetProteinName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetProteinName gets a reference to the given NullableString and assigns it to the TargetProteinName field.
+func (o *BiomarkersRow) SetTargetProteinName(v string) {
+	o.TargetProteinName.Set(&v)
+}
+// SetTargetProteinNameNil sets the value for TargetProteinName to be an explicit nil
+func (o *BiomarkersRow) SetTargetProteinNameNil() {
+	o.TargetProteinName.Set(nil)
+}
+
+// UnsetTargetProteinName ensures that no value is present for TargetProteinName, not even an explicit nil
+func (o *BiomarkersRow) UnsetTargetProteinName() {
+	o.TargetProteinName.Unset()
 }
 
 // GetFeatureCode returns the FeatureCode field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1228,6 +1272,9 @@ func (o BiomarkersRow) ToMap() (map[string]interface{}, error) {
 	if o.UniprotAccession.IsSet() {
 		toSerialize["uniprot_accession"] = o.UniprotAccession.Get()
 	}
+	if o.TargetProteinName.IsSet() {
+		toSerialize["target_protein_name"] = o.TargetProteinName.Get()
+	}
 	if o.FeatureCode.IsSet() {
 		toSerialize["feature_code"] = o.FeatureCode.Get()
 	}
@@ -1306,6 +1353,7 @@ func (o *BiomarkersRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "target_id")
 		delete(additionalProperties, "hgnc_id")
 		delete(additionalProperties, "uniprot_accession")
+		delete(additionalProperties, "target_protein_name")
 		delete(additionalProperties, "feature_code")
 		delete(additionalProperties, "feature_type")
 		delete(additionalProperties, "evidence_tier")

@@ -47,6 +47,12 @@ pub struct CompanyTargetsRow {
     /// Distinct trials the company leads in those programs.
     #[serde(rename = "n_trials", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_trials: Option<Option<i32>>,
+    /// Distinct drug and indication programs (a specific indication with at least two trials) the company leads against the target.
+    #[serde(rename = "n_programs", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_programs: Option<Option<i32>>,
+    /// The latest start year among the company's trials against the target in those programs.
+    #[serde(rename = "last_year", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub last_year: Option<Option<i32>>,
 }
 
 impl CompanyTargetsRow {
@@ -64,6 +70,8 @@ impl CompanyTargetsRow {
             n_drugs: None,
             n_conditions: None,
             n_trials: None,
+            n_programs: None,
+            last_year: None,
         }
     }
 }

@@ -11,8 +11,8 @@ Name | Type | Description | Notes
 **datasets** | [**Vec<models::DatasetListing>**](DatasetListing.md) |  | 
 **attribution** | Option<[**Vec<models::DatasetAttribution>**](DatasetAttribution.md)> |  | [optional]
 **source_credit** | Option<**String**> |  | [optional]
-**freshness** | Option<[**models::BiomarkerCdxAssertionsResponseFreshness**](BiomarkerCdxAssertionsResponse_freshness.md)> |  | [optional]
-**build** | Option<[**models::BiomarkerCdxAssertionsResponseBuild**](BiomarkerCdxAssertionsResponse_build.md)> |  | [optional]
+**freshness** | Option<[**models::BiomarkerAssayEvidenceResponseFreshness**](BiomarkerAssayEvidenceResponse_freshness.md)> |  | [optional]
+**build** | Option<[**models::BiomarkerAssayEvidenceResponseBuild**](BiomarkerAssayEvidenceResponse_build.md)> |  | [optional]
 **build_state** | Option<[**models::DatasetBuildState**](DatasetBuildState.md)> |  | [optional]
 **restriction** | Option<[**std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)> |  | [optional]
 

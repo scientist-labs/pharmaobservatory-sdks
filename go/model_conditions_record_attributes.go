@@ -21,6 +21,7 @@ var _ MappedNullable = &ConditionsRecordAttributes{}
 type ConditionsRecordAttributes struct {
 	ConditionBurden *ConditionBurdenRow `json:"condition_burden,omitempty"`
 	ConditionDelivery *ConditionDeliveryRow `json:"condition_delivery,omitempty"`
+	ConditionRecruitmentDuration *ConditionRecruitmentDurationRow `json:"condition_recruitment_duration,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -107,6 +108,38 @@ func (o *ConditionsRecordAttributes) SetConditionDelivery(v ConditionDeliveryRow
 	o.ConditionDelivery = &v
 }
 
+// GetConditionRecruitmentDuration returns the ConditionRecruitmentDuration field value if set, zero value otherwise.
+func (o *ConditionsRecordAttributes) GetConditionRecruitmentDuration() ConditionRecruitmentDurationRow {
+	if o == nil || IsNil(o.ConditionRecruitmentDuration) {
+		var ret ConditionRecruitmentDurationRow
+		return ret
+	}
+	return *o.ConditionRecruitmentDuration
+}
+
+// GetConditionRecruitmentDurationOk returns a tuple with the ConditionRecruitmentDuration field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConditionsRecordAttributes) GetConditionRecruitmentDurationOk() (*ConditionRecruitmentDurationRow, bool) {
+	if o == nil || IsNil(o.ConditionRecruitmentDuration) {
+		return nil, false
+	}
+	return o.ConditionRecruitmentDuration, true
+}
+
+// HasConditionRecruitmentDuration returns a boolean if a field has been set.
+func (o *ConditionsRecordAttributes) HasConditionRecruitmentDuration() bool {
+	if o != nil && !IsNil(o.ConditionRecruitmentDuration) {
+		return true
+	}
+
+	return false
+}
+
+// SetConditionRecruitmentDuration gets a reference to the given ConditionRecruitmentDurationRow and assigns it to the ConditionRecruitmentDuration field.
+func (o *ConditionsRecordAttributes) SetConditionRecruitmentDuration(v ConditionRecruitmentDurationRow) {
+	o.ConditionRecruitmentDuration = &v
+}
+
 func (o ConditionsRecordAttributes) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -122,6 +155,9 @@ func (o ConditionsRecordAttributes) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ConditionDelivery) {
 		toSerialize["condition_delivery"] = o.ConditionDelivery
+	}
+	if !IsNil(o.ConditionRecruitmentDuration) {
+		toSerialize["condition_recruitment_duration"] = o.ConditionRecruitmentDuration
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -147,6 +183,7 @@ func (o *ConditionsRecordAttributes) UnmarshalJSON(data []byte) (err error) {
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "condition_burden")
 		delete(additionalProperties, "condition_delivery")
+		delete(additionalProperties, "condition_recruitment_duration")
 		o.AdditionalProperties = additionalProperties
 	}
 

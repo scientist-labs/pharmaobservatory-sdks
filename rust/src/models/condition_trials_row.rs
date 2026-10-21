@@ -77,7 +77,7 @@ pub struct ConditionTrialsRow {
     /// Display name of the lead sponsor's group.
     #[serde(rename = "sponsor_group_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub sponsor_group_name: Option<Option<String>>,
-    /// The funder class the registry declared for the sponsor (INDUSTRY, NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state. Null when the trial has no lead sponsor row.
+    /// The funder class the registry declared for the sponsor (INDUSTRY, NIH for the US National Institutes of Health, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state. Null when the trial has no lead sponsor row.
     #[serde(rename = "sponsor_agency_class", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub sponsor_agency_class: Option<Option<String>>,
 }
