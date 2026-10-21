@@ -16,10 +16,10 @@ require 'time'
 module PharmaObservatory
   # One row of the ownership_positions dataset: one row per owner, owned company, filing family and measured dimension (the owner's consolidated current position). A grouped request returns the group columns and the measures instead, as additional properties.
   class OwnershipPositionsRow
-    # The position id. For a position whose owner name is withheld it is an opaque handle that derives nothing from the owner and is stable only while the other positions of the same owned company, filing family and dimension are unchanged.
+    # The position id (the owner rollup id).
     attr_accessor :position_id
 
-    # The filing family: sec_forms_3_4_5 (insiders), sec_schedules_13d_g (beneficial owners), sec_form_adv (investment adviser control persons) or sec_def_14a (proxy-statement tables).
+    # The filing family: sec_forms_3_4_5 (insiders), sec_schedules_13d_g (beneficial owners), sec_form_adv (investment adviser control persons), sec_def_14a (proxy-statement tables) or wikidata (ownership statements in Wikidata).
     attr_accessor :source_class
 
     # What the position measures: insider_reporting, beneficial_ownership, voting_power, economic_interest or control. Positions of different dimensions are different measurements and are not added.
@@ -46,34 +46,37 @@ module PharmaObservatory
     # Display name of the owned company's group.
     attr_accessor :subject_group_name
 
-    # The owner's name as filed. Null for an owner whose filing does not mark the name public (see owner_name_is_public).
+    # The key of the owned party in the investor directory when it is an investor (null otherwise). Filter on it for who is reported to own or control an investor.
+    attr_accessor :subject_investor_id
+
+    # The owner's name as filed.
     attr_accessor :owner_name
 
-    # True when the filing marks the owner's name public. When false every column that could identify the owner is null (name, identity key, person id, investor id, organization and company columns, source_url and the dates); the position and its figures stay.
+    # A label, not a gate: true when the filing marks the owner's privacy status public. It does not affect any other column; the owner's name, identity key and every other field below are populated whatever this value is.
     attr_accessor :owner_name_is_public
 
     # What the owner is: organization, natural_person, reporting_group or unknown.
     attr_accessor :owner_kind
 
-    # The owner's stable identity (an SEC registration number or an adviser registration number); null when the name is withheld.
+    # The owner's stable identity (an SEC registration number or an adviser registration number).
     attr_accessor :owner_identity_key
 
-    # The key of an owner who is a natural person; null for other owners and when the name is withheld.
+    # The key of an owner who is a natural person; null for other owners.
     attr_accessor :owner_person_id
 
-    # The key of the owner in the investor directory when it is one; null when the name is withheld.
+    # The key of the owner in the investor directory when it is one.
     attr_accessor :owner_investor_id
 
-    # Legal-entity level: the owner's organization record (null when the owner is not an organization, is unresolved or is withheld).
+    # Legal-entity level: the owner's organization record (null when the owner is not an organization or is unresolved).
     attr_accessor :owner_org_id
 
-    # Company level: the owner's company (null when unresolved or when the name is withheld).
+    # Company level: the owner's company (null when unresolved).
     attr_accessor :owner_company_id
 
     # Display name of the owner's company.
     attr_accessor :owner_company_name
 
-    # Group level: the owner's current ultimate parent; a root's group is itself (null when the owner is withheld).
+    # Group level: the owner's current ultimate parent; a root's group is itself.
     attr_accessor :owner_group_id
 
     # Display name of the owner's group.
@@ -124,16 +127,16 @@ module PharmaObservatory
     # Of those, positions the filer no longer reports.
     attr_accessor :no_longer_reported_position_count
 
-    # Date the position was first reported; null when the owner's name is withheld.
+    # Date the position was first reported.
     attr_accessor :first_observed_date
 
-    # Date of the latest reported activity; null when the owner's name is withheld.
+    # Date of the latest reported activity.
     attr_accessor :last_activity_date
 
-    # Date of the latest filing; null when the owner's name is withheld.
+    # Date of the latest filing.
     attr_accessor :last_filing_date
 
-    # A link to the latest filing; null when the owner's name is withheld, because the filing names the owner.
+    # A link to the latest filing.
     attr_accessor :source_url
 
     # True when the row names a natural person.
@@ -155,6 +158,7 @@ module PharmaObservatory
         :'subject_company_name' => :'subject_company_name',
         :'subject_group_id' => :'subject_group_id',
         :'subject_group_name' => :'subject_group_name',
+        :'subject_investor_id' => :'subject_investor_id',
         :'owner_name' => :'owner_name',
         :'owner_name_is_public' => :'owner_name_is_public',
         :'owner_kind' => :'owner_kind',
@@ -213,6 +217,7 @@ module PharmaObservatory
         :'subject_company_name' => :'String',
         :'subject_group_id' => :'String',
         :'subject_group_name' => :'String',
+        :'subject_investor_id' => :'String',
         :'owner_name' => :'String',
         :'owner_name_is_public' => :'Boolean',
         :'owner_kind' => :'String',
@@ -261,6 +266,7 @@ module PharmaObservatory
         :'subject_company_name',
         :'subject_group_id',
         :'subject_group_name',
+        :'subject_investor_id',
         :'owner_name',
         :'owner_name_is_public',
         :'owner_kind',
@@ -350,6 +356,10 @@ module PharmaObservatory
 
       if attributes.key?(:'subject_group_name')
         self.subject_group_name = attributes[:'subject_group_name']
+      end
+
+      if attributes.key?(:'subject_investor_id')
+        self.subject_investor_id = attributes[:'subject_investor_id']
       end
 
       if attributes.key?(:'owner_name')
@@ -511,6 +521,7 @@ module PharmaObservatory
           subject_company_name == o.subject_company_name &&
           subject_group_id == o.subject_group_id &&
           subject_group_name == o.subject_group_name &&
+          subject_investor_id == o.subject_investor_id &&
           owner_name == o.owner_name &&
           owner_name_is_public == o.owner_name_is_public &&
           owner_kind == o.owner_kind &&
@@ -554,7 +565,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [position_id, source_class, ownership_dimension, relationship_type, subject_name, subject_org_id, subject_company_id, subject_company_name, subject_group_id, subject_group_name, owner_name, owner_name_is_public, owner_kind, owner_identity_key, owner_person_id, owner_investor_id, owner_org_id, owner_company_id, owner_company_name, owner_group_id, owner_group_name, shares_basis, shares, shares_direct, shares_indirect, derivative_underlying_shares, percent_basis, reported_percent, reported_percent_low, reported_percent_high, percentage_basis, edge_state, position_count, standing_position_count, ceased_position_count, no_longer_reported_position_count, first_observed_date, last_activity_date, last_filing_date, source_url, contains_personal_data, privacy_status].hash
+      [position_id, source_class, ownership_dimension, relationship_type, subject_name, subject_org_id, subject_company_id, subject_company_name, subject_group_id, subject_group_name, subject_investor_id, owner_name, owner_name_is_public, owner_kind, owner_identity_key, owner_person_id, owner_investor_id, owner_org_id, owner_company_id, owner_company_name, owner_group_id, owner_group_name, shares_basis, shares, shares_direct, shares_indirect, derivative_underlying_shares, percent_basis, reported_percent, reported_percent_low, reported_percent_high, percentage_basis, edge_state, position_count, standing_position_count, ceased_position_count, no_longer_reported_position_count, first_observed_date, last_activity_date, last_filing_date, source_url, contains_personal_data, privacy_status].hash
     end
 
     # Builds the object from hash

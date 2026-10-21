@@ -11,8 +11,8 @@
 | **datasets** | [**Array&lt;DatasetListing&gt;**](DatasetListing.md) |  |  |
 | **attribution** | [**Array&lt;DatasetAttribution&gt;**](DatasetAttribution.md) |  | [optional] |
 | **source_credit** | **String** |  | [optional] |
-| **freshness** | [**BiomarkerCdxAssertionsResponseFreshness**](BiomarkerCdxAssertionsResponseFreshness.md) |  | [optional] |
-| **build** | [**BiomarkerCdxAssertionsResponseBuild**](BiomarkerCdxAssertionsResponseBuild.md) |  | [optional] |
+| **freshness** | [**BiomarkerAssayEvidenceResponseFreshness**](BiomarkerAssayEvidenceResponseFreshness.md) |  | [optional] |
+| **build** | [**BiomarkerAssayEvidenceResponseBuild**](BiomarkerAssayEvidenceResponseBuild.md) |  | [optional] |
 | **build_state** | [**DatasetBuildState**](DatasetBuildState.md) |  | [optional] |
 | **restriction** | **Hash&lt;String, Object&gt;** |  | [optional] |
 

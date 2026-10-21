@@ -43,7 +43,7 @@ type PdufaDatesRow struct {
 	DrugName NullableString `json:"drug_name,omitempty"`
 	// The drug key.
 	DrugId NullableString `json:"drug_id,omitempty"`
-	// The molecule key.
+	// The molecule key, the resolved drug of the calendar entry and the entry key for the drugs object type (null when the drug name did not resolve to a drug).
 	MoleculeId NullableString `json:"molecule_id,omitempty"`
 	// The sponsor name as filed.
 	SponsorName NullableString `json:"sponsor_name,omitempty"`

@@ -58,6 +58,18 @@ module PharmaObservatory
     # Papers left out because they name too many organizations.
     attr_accessor :n_papers_excluded_as_consortium
 
+    # Articles in the trial-cited publication set the publishing counts are drawn from (not all of PubMed). Corpus-wide, the same value on every row, never per biomarker or per company.
+    attr_accessor :corpus_articles
+
+    # Distinct author affiliation strings in the corpus. Corpus-wide, the same value on every row.
+    attr_accessor :n_affiliations
+
+    # Affiliation strings that resolved to an organization. Corpus-wide, the same value on every row.
+    attr_accessor :n_resolved_affiliations
+
+    # n_resolved_affiliations divided by n_affiliations, rounded to four places. Corpus-wide, the same value on every row: how much of the corpus the company attribution can see, not a figure about this biomarker.
+    attr_accessor :affiliation_resolved_share
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -74,7 +86,11 @@ module PharmaObservatory
         :'last_pub_year' => :'last_pub_year',
         :'supporting_pmids' => :'supporting_pmids',
         :'supporting_pmids_truncated' => :'supporting_pmids_truncated',
-        :'n_papers_excluded_as_consortium' => :'n_papers_excluded_as_consortium'
+        :'n_papers_excluded_as_consortium' => :'n_papers_excluded_as_consortium',
+        :'corpus_articles' => :'corpus_articles',
+        :'n_affiliations' => :'n_affiliations',
+        :'n_resolved_affiliations' => :'n_resolved_affiliations',
+        :'affiliation_resolved_share' => :'affiliation_resolved_share'
       }
     end
 
@@ -104,7 +120,11 @@ module PharmaObservatory
         :'last_pub_year' => :'Integer',
         :'supporting_pmids' => :'Array<String>',
         :'supporting_pmids_truncated' => :'Boolean',
-        :'n_papers_excluded_as_consortium' => :'Integer'
+        :'n_papers_excluded_as_consortium' => :'Integer',
+        :'corpus_articles' => :'Integer',
+        :'n_affiliations' => :'Integer',
+        :'n_resolved_affiliations' => :'Integer',
+        :'affiliation_resolved_share' => :'Float'
       }
     end
 
@@ -124,7 +144,11 @@ module PharmaObservatory
         :'last_pub_year',
         :'supporting_pmids',
         :'supporting_pmids_truncated',
-        :'n_papers_excluded_as_consortium'
+        :'n_papers_excluded_as_consortium',
+        :'corpus_articles',
+        :'n_affiliations',
+        :'n_resolved_affiliations',
+        :'affiliation_resolved_share'
       ])
     end
 
@@ -201,6 +225,22 @@ module PharmaObservatory
       if attributes.key?(:'n_papers_excluded_as_consortium')
         self.n_papers_excluded_as_consortium = attributes[:'n_papers_excluded_as_consortium']
       end
+
+      if attributes.key?(:'corpus_articles')
+        self.corpus_articles = attributes[:'corpus_articles']
+      end
+
+      if attributes.key?(:'n_affiliations')
+        self.n_affiliations = attributes[:'n_affiliations']
+      end
+
+      if attributes.key?(:'n_resolved_affiliations')
+        self.n_resolved_affiliations = attributes[:'n_resolved_affiliations']
+      end
+
+      if attributes.key?(:'affiliation_resolved_share')
+        self.affiliation_resolved_share = attributes[:'affiliation_resolved_share']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -236,7 +276,11 @@ module PharmaObservatory
           last_pub_year == o.last_pub_year &&
           supporting_pmids == o.supporting_pmids &&
           supporting_pmids_truncated == o.supporting_pmids_truncated &&
-          n_papers_excluded_as_consortium == o.n_papers_excluded_as_consortium
+          n_papers_excluded_as_consortium == o.n_papers_excluded_as_consortium &&
+          corpus_articles == o.corpus_articles &&
+          n_affiliations == o.n_affiliations &&
+          n_resolved_affiliations == o.n_resolved_affiliations &&
+          affiliation_resolved_share == o.affiliation_resolved_share
     end
 
     # @see the `==` method
@@ -248,7 +292,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [route_key, gene_symbol, publisher_company_id, publisher_company_name, publisher_group_id, publisher_group_name, n_publications, n_member_orgs, best_match_tier, first_pub_year, last_pub_year, supporting_pmids, supporting_pmids_truncated, n_papers_excluded_as_consortium].hash
+      [route_key, gene_symbol, publisher_company_id, publisher_company_name, publisher_group_id, publisher_group_name, n_publications, n_member_orgs, best_match_tier, first_pub_year, last_pub_year, supporting_pmids, supporting_pmids_truncated, n_papers_excluded_as_consortium, corpus_articles, n_affiliations, n_resolved_affiliations, affiliation_resolved_share].hash
     end
 
     # Builds the object from hash

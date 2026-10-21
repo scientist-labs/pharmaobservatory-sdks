@@ -62,7 +62,7 @@ pub struct ConditionPrevalenceRow {
     /// The geography the figure describes, as the source states it.
     #[serde(rename = "geography", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub geography: Option<Option<String>>,
-    /// US, EU or GB where the geography is that jurisdiction; null otherwise.
+    /// US, EU (European Union) or GB (Great Britain) where the geography is that jurisdiction; null otherwise.
     #[serde(rename = "jurisdiction_code", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub jurisdiction_code: Option<Option<String>>,
     /// The date the source assigns to the observation.

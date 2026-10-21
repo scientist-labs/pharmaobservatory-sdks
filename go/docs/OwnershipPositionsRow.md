@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**PositionId** | Pointer to **NullableString** | The position id. For a position whose owner name is withheld it is an opaque handle that derives nothing from the owner and is stable only while the other positions of the same owned company, filing family and dimension are unchanged. | [optional] 
-**SourceClass** | Pointer to **NullableString** | The filing family: sec_forms_3_4_5 (insiders), sec_schedules_13d_g (beneficial owners), sec_form_adv (investment adviser control persons) or sec_def_14a (proxy-statement tables). | [optional] 
+**PositionId** | Pointer to **NullableString** | The position id (the owner rollup id). | [optional] 
+**SourceClass** | Pointer to **NullableString** | The filing family: sec_forms_3_4_5 (insiders), sec_schedules_13d_g (beneficial owners), sec_form_adv (investment adviser control persons), sec_def_14a (proxy-statement tables) or wikidata (ownership statements in Wikidata). | [optional] 
 **OwnershipDimension** | Pointer to **NullableString** | What the position measures: insider_reporting, beneficial_ownership, voting_power, economic_interest or control. Positions of different dimensions are different measurements and are not added. | [optional] 
 **RelationshipType** | Pointer to **NullableString** | The owner&#39;s relationship to the company as the filing family states it. | [optional] 
 **SubjectName** | Pointer to **NullableString** | The owned company as filed. | [optional] 
@@ -14,16 +14,17 @@ Name | Type | Description | Notes
 **SubjectCompanyName** | Pointer to **NullableString** | Display name of the owned company. | [optional] 
 **SubjectGroupId** | Pointer to **NullableString** | Group level: the owned company&#39;s current ultimate parent; a root&#39;s group is itself. | [optional] 
 **SubjectGroupName** | Pointer to **NullableString** | Display name of the owned company&#39;s group. | [optional] 
-**OwnerName** | Pointer to **NullableString** | The owner&#39;s name as filed. Null for an owner whose filing does not mark the name public (see owner_name_is_public). | [optional] 
-**OwnerNameIsPublic** | Pointer to **NullableBool** | True when the filing marks the owner&#39;s name public. When false every column that could identify the owner is null (name, identity key, person id, investor id, organization and company columns, source_url and the dates); the position and its figures stay. | [optional] 
+**SubjectInvestorId** | Pointer to **NullableString** | The key of the owned party in the investor directory when it is an investor (null otherwise). Filter on it for who is reported to own or control an investor. | [optional] 
+**OwnerName** | Pointer to **NullableString** | The owner&#39;s name as filed. | [optional] 
+**OwnerNameIsPublic** | Pointer to **NullableBool** | A label, not a gate: true when the filing marks the owner&#39;s privacy status public. It does not affect any other column; the owner&#39;s name, identity key and every other field below are populated whatever this value is. | [optional] 
 **OwnerKind** | Pointer to **NullableString** | What the owner is: organization, natural_person, reporting_group or unknown. | [optional] 
-**OwnerIdentityKey** | Pointer to **NullableString** | The owner&#39;s stable identity (an SEC registration number or an adviser registration number); null when the name is withheld. | [optional] 
-**OwnerPersonId** | Pointer to **NullableString** | The key of an owner who is a natural person; null for other owners and when the name is withheld. | [optional] 
-**OwnerInvestorId** | Pointer to **NullableString** | The key of the owner in the investor directory when it is one; null when the name is withheld. | [optional] 
-**OwnerOrgId** | Pointer to **NullableString** | Legal-entity level: the owner&#39;s organization record (null when the owner is not an organization, is unresolved or is withheld). | [optional] 
-**OwnerCompanyId** | Pointer to **NullableString** | Company level: the owner&#39;s company (null when unresolved or when the name is withheld). | [optional] 
+**OwnerIdentityKey** | Pointer to **NullableString** | The owner&#39;s stable identity (an SEC registration number or an adviser registration number). | [optional] 
+**OwnerPersonId** | Pointer to **NullableString** | The key of an owner who is a natural person; null for other owners. | [optional] 
+**OwnerInvestorId** | Pointer to **NullableString** | The key of the owner in the investor directory when it is one. | [optional] 
+**OwnerOrgId** | Pointer to **NullableString** | Legal-entity level: the owner&#39;s organization record (null when the owner is not an organization or is unresolved). | [optional] 
+**OwnerCompanyId** | Pointer to **NullableString** | Company level: the owner&#39;s company (null when unresolved). | [optional] 
 **OwnerCompanyName** | Pointer to **NullableString** | Display name of the owner&#39;s company. | [optional] 
-**OwnerGroupId** | Pointer to **NullableString** | Group level: the owner&#39;s current ultimate parent; a root&#39;s group is itself (null when the owner is withheld). | [optional] 
+**OwnerGroupId** | Pointer to **NullableString** | Group level: the owner&#39;s current ultimate parent; a root&#39;s group is itself. | [optional] 
 **OwnerGroupName** | Pointer to **NullableString** | Display name of the owner&#39;s group. | [optional] 
 **SharesBasis** | Pointer to **NullableString** | How the share figure was reached: sum_standing_balances (insider balances), group_reported_maximum (a joint filing&#39;s maximum, never a sum of its filers) or no_quantity (the source gives none). Read a share figure with its basis. | [optional] 
 **Shares** | Pointer to **NullableFloat32** | Shares the owner holds, on the shares_basis. Null when the source gives no quantity. | [optional] 
@@ -40,10 +41,10 @@ Name | Type | Description | Notes
 **StandingPositionCount** | Pointer to **NullableInt32** | Of those, positions still standing. | [optional] 
 **CeasedPositionCount** | Pointer to **NullableInt32** | Of those, positions reported ceased. | [optional] 
 **NoLongerReportedPositionCount** | Pointer to **NullableInt32** | Of those, positions the filer no longer reports. | [optional] 
-**FirstObservedDate** | Pointer to **NullableString** | Date the position was first reported; null when the owner&#39;s name is withheld. | [optional] 
-**LastActivityDate** | Pointer to **NullableString** | Date of the latest reported activity; null when the owner&#39;s name is withheld. | [optional] 
-**LastFilingDate** | Pointer to **NullableString** | Date of the latest filing; null when the owner&#39;s name is withheld. | [optional] 
-**SourceUrl** | Pointer to **NullableString** | A link to the latest filing; null when the owner&#39;s name is withheld, because the filing names the owner. | [optional] 
+**FirstObservedDate** | Pointer to **NullableString** | Date the position was first reported. | [optional] 
+**LastActivityDate** | Pointer to **NullableString** | Date of the latest reported activity. | [optional] 
+**LastFilingDate** | Pointer to **NullableString** | Date of the latest filing. | [optional] 
+**SourceUrl** | Pointer to **NullableString** | A link to the latest filing. | [optional] 
 **ContainsPersonalData** | Pointer to **NullableBool** | True when the row names a natural person. | [optional] 
 **PrivacyStatus** | Pointer to **NullableString** | The filing&#39;s privacy status for the owner: not_applicable, pending_review, approved_public_fields, restricted or protected. | [optional] 
 
@@ -416,6 +417,41 @@ HasSubjectGroupName returns a boolean if a field has been set.
 `func (o *OwnershipPositionsRow) UnsetSubjectGroupName()`
 
 UnsetSubjectGroupName ensures that no value is present for SubjectGroupName, not even an explicit nil
+### GetSubjectInvestorId
+
+`func (o *OwnershipPositionsRow) GetSubjectInvestorId() string`
+
+GetSubjectInvestorId returns the SubjectInvestorId field if non-nil, zero value otherwise.
+
+### GetSubjectInvestorIdOk
+
+`func (o *OwnershipPositionsRow) GetSubjectInvestorIdOk() (*string, bool)`
+
+GetSubjectInvestorIdOk returns a tuple with the SubjectInvestorId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubjectInvestorId
+
+`func (o *OwnershipPositionsRow) SetSubjectInvestorId(v string)`
+
+SetSubjectInvestorId sets SubjectInvestorId field to given value.
+
+### HasSubjectInvestorId
+
+`func (o *OwnershipPositionsRow) HasSubjectInvestorId() bool`
+
+HasSubjectInvestorId returns a boolean if a field has been set.
+
+### SetSubjectInvestorIdNil
+
+`func (o *OwnershipPositionsRow) SetSubjectInvestorIdNil(b bool)`
+
+ SetSubjectInvestorIdNil sets the value for SubjectInvestorId to be an explicit nil
+
+### UnsetSubjectInvestorId
+`func (o *OwnershipPositionsRow) UnsetSubjectInvestorId()`
+
+UnsetSubjectInvestorId ensures that no value is present for SubjectInvestorId, not even an explicit nil
 ### GetOwnerName
 
 `func (o *OwnershipPositionsRow) GetOwnerName() string`

@@ -11,11 +11,15 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**trials_trial_changes**](TrialsApi.md#trials_trial_changes) | **GET** /api/v1/trials/{id}/trial_changes | Trial changes |
 | [**trials_trial_delivery**](TrialsApi.md#trials_trial_delivery) | **GET** /api/v1/trials/{id}/trial_delivery | Trial delivery |
 | [**trials_trial_demographics**](TrialsApi.md#trials_trial_demographics) | **GET** /api/v1/trials/{id}/trial_demographics | Trial demographics |
+| [**trials_trial_drug_classes**](TrialsApi.md#trials_trial_drug_classes) | **GET** /api/v1/trials/{id}/trial_drug_classes | Trial drug classes |
 | [**trials_trial_drugs**](TrialsApi.md#trials_trial_drugs) | **GET** /api/v1/trials/{id}/trial_drugs | Trial drugs |
 | [**trials_trial_enrollment_history**](TrialsApi.md#trials_trial_enrollment_history) | **GET** /api/v1/trials/{id}/trial_enrollment_history | Trial enrollment history |
 | [**trials_trial_enrollment_rate**](TrialsApi.md#trials_trial_enrollment_rate) | **GET** /api/v1/trials/{id}/trial_enrollment_rate | Trial enrollment rate |
 | [**trials_trial_extracted_endpoints**](TrialsApi.md#trials_trial_extracted_endpoints) | **GET** /api/v1/trials/{id}/trial_extracted_endpoints | Trial extracted endpoints |
+| [**trials_trial_kols**](TrialsApi.md#trials_trial_kols) | **GET** /api/v1/trials/{id}/trial_kols | Trial investigators |
 | [**trials_trial_outcome_measures**](TrialsApi.md#trials_trial_outcome_measures) | **GET** /api/v1/trials/{id}/trial_outcome_measures | Trial outcome measures |
+| [**trials_trial_research_payments**](TrialsApi.md#trials_trial_research_payments) | **GET** /api/v1/trials/{id}/trial_research_payments | Trial research payments |
+| [**trials_trial_site_history**](TrialsApi.md#trials_trial_site_history) | **GET** /api/v1/trials/{id}/trial_site_history | Trial site history |
 | [**trials_trial_sites**](TrialsApi.md#trials_trial_sites) | **GET** /api/v1/trials/{id}/trial_sites | Trial sites |
 
 
@@ -558,6 +562,85 @@ end
 - **Accept**: application/json
 
 
+## trials_trial_drug_classes
+
+> <TrialDrugClassesResponse> trials_trial_drug_classes(id, opts)
+
+Trial drug classes
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::TrialsApi.new
+id = 'NCT00000125' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Trial drug classes
+  result = api_instance.trials_trial_drug_classes(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling TrialsApi->trials_trial_drug_classes: #{e}"
+end
+```
+
+#### Using the trials_trial_drug_classes_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<TrialDrugClassesResponse>, Integer, Hash)> trials_trial_drug_classes_with_http_info(id, opts)
+
+```ruby
+begin
+  # Trial drug classes
+  data, status_code, headers = api_instance.trials_trial_drug_classes_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <TrialDrugClassesResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling TrialsApi->trials_trial_drug_classes_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**TrialDrugClassesResponse**](TrialDrugClassesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
 ## trials_trial_drugs
 
 > <TrialDrugsResponse> trials_trial_drugs(id, opts)
@@ -874,6 +957,85 @@ end
 - **Accept**: application/json
 
 
+## trials_trial_kols
+
+> <TrialKolsResponse> trials_trial_kols(id, opts)
+
+Trial investigators
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::TrialsApi.new
+id = 'NCT00000125' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Trial investigators
+  result = api_instance.trials_trial_kols(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling TrialsApi->trials_trial_kols: #{e}"
+end
+```
+
+#### Using the trials_trial_kols_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<TrialKolsResponse>, Integer, Hash)> trials_trial_kols_with_http_info(id, opts)
+
+```ruby
+begin
+  # Trial investigators
+  data, status_code, headers = api_instance.trials_trial_kols_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <TrialKolsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling TrialsApi->trials_trial_kols_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**TrialKolsResponse**](TrialKolsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
 ## trials_trial_outcome_measures
 
 > <TrialOutcomeMeasuresResponse> trials_trial_outcome_measures(id, opts)
@@ -942,6 +1104,164 @@ end
 ### Return type
 
 [**TrialOutcomeMeasuresResponse**](TrialOutcomeMeasuresResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## trials_trial_research_payments
+
+> <TrialResearchPaymentsResponse> trials_trial_research_payments(id, opts)
+
+Trial research payments
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::TrialsApi.new
+id = 'NCT00000125' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Trial research payments
+  result = api_instance.trials_trial_research_payments(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling TrialsApi->trials_trial_research_payments: #{e}"
+end
+```
+
+#### Using the trials_trial_research_payments_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<TrialResearchPaymentsResponse>, Integer, Hash)> trials_trial_research_payments_with_http_info(id, opts)
+
+```ruby
+begin
+  # Trial research payments
+  data, status_code, headers = api_instance.trials_trial_research_payments_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <TrialResearchPaymentsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling TrialsApi->trials_trial_research_payments_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**TrialResearchPaymentsResponse**](TrialResearchPaymentsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## trials_trial_site_history
+
+> <TrialSiteHistoryResponse> trials_trial_site_history(id, opts)
+
+Trial site history
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::TrialsApi.new
+id = 'NCT00000125' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Trial site history
+  result = api_instance.trials_trial_site_history(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling TrialsApi->trials_trial_site_history: #{e}"
+end
+```
+
+#### Using the trials_trial_site_history_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<TrialSiteHistoryResponse>, Integer, Hash)> trials_trial_site_history_with_http_info(id, opts)
+
+```ruby
+begin
+  # Trial site history
+  data, status_code, headers = api_instance.trials_trial_site_history_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <TrialSiteHistoryResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling TrialsApi->trials_trial_site_history_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**TrialSiteHistoryResponse**](TrialSiteHistoryResponse.md)
 
 ### Authorization
 

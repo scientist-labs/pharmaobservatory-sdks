@@ -25,7 +25,7 @@ Name | Type | Description | Notes
 **sponsor_company_name** | Option<**String**> | The lead sponsor's company name. | [optional]
 **sponsor_group_id** | Option<**String**> | Group level: the current ultimate parent of the lead sponsor's company; dated links are in company_members. | [optional]
 **sponsor_group_name** | Option<**String**> | Display name of the lead sponsor's group. | [optional]
-**sponsor_agency_class** | Option<**String**> | The funder class the registry declared for the sponsor (INDUSTRY, NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state. Null when the trial has no lead sponsor row. | [optional]
+**sponsor_agency_class** | Option<**String**> | The funder class the registry declared for the sponsor (INDUSTRY, NIH for the US National Institutes of Health, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state. Null when the trial has no lead sponsor row. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

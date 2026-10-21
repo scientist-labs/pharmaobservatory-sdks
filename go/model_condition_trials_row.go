@@ -61,7 +61,7 @@ type ConditionTrialsRow struct {
 	SponsorGroupId NullableString `json:"sponsor_group_id,omitempty"`
 	// Display name of the lead sponsor's group.
 	SponsorGroupName NullableString `json:"sponsor_group_name,omitempty"`
-	// The funder class the registry declared for the sponsor (INDUSTRY, NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state. Null when the trial has no lead sponsor row.
+	// The funder class the registry declared for the sponsor (INDUSTRY, NIH for the US National Institutes of Health, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state. Null when the trial has no lead sponsor row.
 	SponsorAgencyClass NullableString `json:"sponsor_agency_class,omitempty"`
 	AdditionalProperties map[string]interface{}
 }

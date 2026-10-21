@@ -4,6 +4,8 @@ All URIs are relative to *https://pharmaobservatory.com*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
+| [**biomarkers_biomarker_assay_evidence**](BiomarkersApi.md#biomarkers_biomarker_assay_evidence) | **GET** /api/v1/biomarkers/{id}/biomarker_assay_evidence | Biomarker assay evidence from the literature |
+| [**biomarkers_biomarker_assay_whitespace**](BiomarkersApi.md#biomarkers_biomarker_assay_whitespace) | **GET** /api/v1/biomarkers/{id}/biomarker_assay_whitespace | Biomarker assay whitespace (evidence against supplier supply) |
 | [**biomarkers_biomarker_bqp_assertions**](BiomarkersApi.md#biomarkers_biomarker_bqp_assertions) | **GET** /api/v1/biomarkers/{id}/biomarker_bqp_assertions | FDA biomarker qualification projects |
 | [**biomarkers_biomarker_cdx_assertions**](BiomarkersApi.md#biomarkers_biomarker_cdx_assertions) | **GET** /api/v1/biomarkers/{id}/biomarker_cdx_assertions | FDA companion diagnostic assertions |
 | [**biomarkers_biomarker_evidence**](BiomarkersApi.md#biomarkers_biomarker_evidence) | **GET** /api/v1/biomarkers/{id}/biomarker_evidence | Biomarker evidence |
@@ -16,6 +18,164 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**biomarkers_biomarker_variant_mentions**](BiomarkersApi.md#biomarkers_biomarker_variant_mentions) | **GET** /api/v1/biomarkers/{id}/biomarker_variant_mentions | Protein variant mentions |
 | [**biomarkers_get**](BiomarkersApi.md#biomarkers_get) | **GET** /api/v1/biomarkers/{id} | One biomarker |
 | [**biomarkers_list**](BiomarkersApi.md#biomarkers_list) | **GET** /api/v1/biomarkers | List biomarkers |
+
+
+## biomarkers_biomarker_assay_evidence
+
+> <BiomarkerAssayEvidenceResponse> biomarkers_biomarker_assay_evidence(id, opts)
+
+Biomarker assay evidence from the literature
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::BiomarkersApi.new
+id = 'ESR1' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Biomarker assay evidence from the literature
+  result = api_instance.biomarkers_biomarker_assay_evidence(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling BiomarkersApi->biomarkers_biomarker_assay_evidence: #{e}"
+end
+```
+
+#### Using the biomarkers_biomarker_assay_evidence_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<BiomarkerAssayEvidenceResponse>, Integer, Hash)> biomarkers_biomarker_assay_evidence_with_http_info(id, opts)
+
+```ruby
+begin
+  # Biomarker assay evidence from the literature
+  data, status_code, headers = api_instance.biomarkers_biomarker_assay_evidence_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <BiomarkerAssayEvidenceResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling BiomarkersApi->biomarkers_biomarker_assay_evidence_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**BiomarkerAssayEvidenceResponse**](BiomarkerAssayEvidenceResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## biomarkers_biomarker_assay_whitespace
+
+> <BiomarkerAssayWhitespaceResponse> biomarkers_biomarker_assay_whitespace(id, opts)
+
+Biomarker assay whitespace (evidence against supplier supply)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::BiomarkersApi.new
+id = 'ESR1' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Biomarker assay whitespace (evidence against supplier supply)
+  result = api_instance.biomarkers_biomarker_assay_whitespace(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling BiomarkersApi->biomarkers_biomarker_assay_whitespace: #{e}"
+end
+```
+
+#### Using the biomarkers_biomarker_assay_whitespace_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<BiomarkerAssayWhitespaceResponse>, Integer, Hash)> biomarkers_biomarker_assay_whitespace_with_http_info(id, opts)
+
+```ruby
+begin
+  # Biomarker assay whitespace (evidence against supplier supply)
+  data, status_code, headers = api_instance.biomarkers_biomarker_assay_whitespace_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <BiomarkerAssayWhitespaceResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling BiomarkersApi->biomarkers_biomarker_assay_whitespace_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**BiomarkerAssayWhitespaceResponse**](BiomarkerAssayWhitespaceResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 
 ## biomarkers_biomarker_bqp_assertions

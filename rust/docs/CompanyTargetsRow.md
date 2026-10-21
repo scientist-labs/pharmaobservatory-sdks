@@ -15,6 +15,8 @@ Name | Type | Description | Notes
 **n_drugs** | Option<**i32**> | Distinct drugs of the company's qualifying programs against the target. | [optional]
 **n_conditions** | Option<**i32**> | Distinct conditions of the company's qualifying programs against the target. | [optional]
 **n_trials** | Option<**i32**> | Distinct trials the company leads in those programs. | [optional]
+**n_programs** | Option<**i32**> | Distinct drug and indication programs (a specific indication with at least two trials) the company leads against the target. | [optional]
+**last_year** | Option<**i32**> | The latest start year among the company's trials against the target in those programs. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

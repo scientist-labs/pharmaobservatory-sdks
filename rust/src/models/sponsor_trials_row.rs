@@ -38,7 +38,7 @@ pub struct SponsorTrialsRow {
     /// Display name of the sponsor's group.
     #[serde(rename = "sponsor_group_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub sponsor_group_name: Option<Option<String>>,
-    /// The funder class the registry declared for the sponsor (INDUSTRY, NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state.
+    /// The funder class the registry declared for the sponsor (INDUSTRY, NIH for the US National Institutes of Health, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state.
     #[serde(rename = "sponsor_agency_class", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub sponsor_agency_class: Option<Option<String>>,
     /// How the sponsor name was resolved to an organization record.

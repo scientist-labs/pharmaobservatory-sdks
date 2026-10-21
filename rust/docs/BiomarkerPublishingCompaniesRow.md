@@ -18,6 +18,10 @@ Name | Type | Description | Notes
 **supporting_pmids** | Option<**Vec<String>**> | A sample of the supporting PubMed ids. | [optional]
 **supporting_pmids_truncated** | Option<**bool**> | True when the sample is shorter than the paper count. | [optional]
 **n_papers_excluded_as_consortium** | Option<**i32**> | Papers left out because they name too many organizations. | [optional]
+**corpus_articles** | Option<**i32**> | Articles in the trial-cited publication set the publishing counts are drawn from (not all of PubMed). Corpus-wide, the same value on every row, never per biomarker or per company. | [optional]
+**n_affiliations** | Option<**i32**> | Distinct author affiliation strings in the corpus. Corpus-wide, the same value on every row. | [optional]
+**n_resolved_affiliations** | Option<**i32**> | Affiliation strings that resolved to an organization. Corpus-wide, the same value on every row. | [optional]
+**affiliation_resolved_share** | Option<**f64**> | n_resolved_affiliations divided by n_affiliations, rounded to four places. Corpus-wide, the same value on every row: how much of the corpus the company attribution can see, not a figure about this biomarker. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -15,6 +15,8 @@
 | **n_drugs** | **Integer** | Distinct drugs of the company&#39;s qualifying programs against the target. | [optional] |
 | **n_conditions** | **Integer** | Distinct conditions of the company&#39;s qualifying programs against the target. | [optional] |
 | **n_trials** | **Integer** | Distinct trials the company leads in those programs. | [optional] |
+| **n_programs** | **Integer** | Distinct drug and indication programs (a specific indication with at least two trials) the company leads against the target. | [optional] |
+| **last_year** | **Integer** | The latest start year among the company&#39;s trials against the target in those programs. | [optional] |
 
 ## Example
 
@@ -32,7 +34,9 @@ instance = PharmaObservatory::CompanyTargetsRow.new(
   max_phase: null,
   n_drugs: null,
   n_conditions: null,
-  n_trials: null
+  n_trials: null,
+  n_programs: null,
+  last_year: null
 )
 ```
 

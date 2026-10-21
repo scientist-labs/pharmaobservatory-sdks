@@ -51,7 +51,7 @@ type ConditionPrevalenceRow struct {
 	ValidationStatus NullableString `json:"validation_status,omitempty"`
 	// The geography the figure describes, as the source states it.
 	Geography NullableString `json:"geography,omitempty"`
-	// US, EU or GB where the geography is that jurisdiction; null otherwise.
+	// US, EU (European Union) or GB (Great Britain) where the geography is that jurisdiction; null otherwise.
 	JurisdictionCode NullableString `json:"jurisdiction_code,omitempty"`
 	// The date the source assigns to the observation.
 	ObservationDate NullableString `json:"observation_date,omitempty"`

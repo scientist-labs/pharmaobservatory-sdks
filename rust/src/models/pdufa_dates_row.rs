@@ -50,7 +50,7 @@ pub struct PdufaDatesRow {
     /// The drug key.
     #[serde(rename = "drug_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub drug_id: Option<Option<String>>,
-    /// The molecule key.
+    /// The molecule key, the resolved drug of the calendar entry and the entry key for the drugs object type (null when the drug name did not resolve to a drug).
     #[serde(rename = "molecule_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub molecule_id: Option<Option<String>>,
     /// The sponsor name as filed.

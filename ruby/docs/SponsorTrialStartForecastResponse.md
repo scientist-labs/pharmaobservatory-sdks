@@ -8,7 +8,7 @@
 | **grain** | **String** |  | [optional] |
 | **object_type** | **String** |  | [optional] |
 | **id** | **String** |  | [optional] |
-| **scope** | [**BiomarkerCdxAssertionsResponseScope**](BiomarkerCdxAssertionsResponseScope.md) |  | [optional] |
+| **scope** | [**BiomarkerAssayEvidenceResponseScope**](BiomarkerAssayEvidenceResponseScope.md) |  | [optional] |
 | **columns** | [**Array&lt;DatasetColumn&gt;**](DatasetColumn.md) |  |  |
 | **rows** | [**Array&lt;SponsorTrialStartForecastRow&gt;**](SponsorTrialStartForecastRow.md) |  |  |
 | **total** | **Integer** | The exact count of the filtered rows on an ungrouped read, carried by the cursor; null when grouped. | [optional] |
@@ -21,8 +21,8 @@
 | **source_credit** | **String** |  | [optional] |
 | **withheld_tiers** | **Array&lt;String&gt;** |  | [optional] |
 | **withheld_columns** | **Array&lt;String&gt;** |  | [optional] |
-| **freshness** | [**BiomarkerCdxAssertionsResponseFreshness**](BiomarkerCdxAssertionsResponseFreshness.md) |  | [optional] |
-| **build** | [**BiomarkerCdxAssertionsResponseBuild**](BiomarkerCdxAssertionsResponseBuild.md) |  | [optional] |
+| **freshness** | [**BiomarkerAssayEvidenceResponseFreshness**](BiomarkerAssayEvidenceResponseFreshness.md) |  | [optional] |
+| **build** | [**BiomarkerAssayEvidenceResponseBuild**](BiomarkerAssayEvidenceResponseBuild.md) |  | [optional] |
 | **build_state** | [**DatasetBuildState**](DatasetBuildState.md) |  | [optional] |
 | **restriction** | **Hash&lt;String, Object&gt;** |  | [optional] |
 

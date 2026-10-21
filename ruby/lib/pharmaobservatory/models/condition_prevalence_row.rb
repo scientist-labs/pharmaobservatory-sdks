@@ -64,7 +64,7 @@ module PharmaObservatory
     # The geography the figure describes, as the source states it.
     attr_accessor :geography
 
-    # US, EU or GB where the geography is that jurisdiction; null otherwise.
+    # US, EU (European Union) or GB (Great Britain) where the geography is that jurisdiction; null otherwise.
     attr_accessor :jurisdiction_code
 
     # The date the source assigns to the observation.

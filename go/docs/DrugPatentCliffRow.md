@@ -4,7 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DrugId** | Pointer to **NullableString** | The drug key. | [optional] 
+**DrugId** | Pointer to **NullableString** | The drug key at the member grain: the drug record the patent-cliff row is built on, which is the molecule&#39;s own record or a record folded under it. Enter from a drug on molecule_id. | [optional] 
+**MoleculeId** | Pointer to **NullableString** | The molecule key the drug record rolls up to, and the entry key for the drugs object type. | [optional] 
 **DrugName** | Pointer to **NullableString** | The drug&#39;s name. | [optional] 
 **PharmClass** | Pointer to **NullableString** | The drug&#39;s pharmacologic class. | [optional] 
 **AtcClass** | Pointer to **NullableString** | The drug&#39;s Anatomical Therapeutic Chemical (ATC) class. | [optional] 
@@ -85,6 +86,41 @@ HasDrugId returns a boolean if a field has been set.
 `func (o *DrugPatentCliffRow) UnsetDrugId()`
 
 UnsetDrugId ensures that no value is present for DrugId, not even an explicit nil
+### GetMoleculeId
+
+`func (o *DrugPatentCliffRow) GetMoleculeId() string`
+
+GetMoleculeId returns the MoleculeId field if non-nil, zero value otherwise.
+
+### GetMoleculeIdOk
+
+`func (o *DrugPatentCliffRow) GetMoleculeIdOk() (*string, bool)`
+
+GetMoleculeIdOk returns a tuple with the MoleculeId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMoleculeId
+
+`func (o *DrugPatentCliffRow) SetMoleculeId(v string)`
+
+SetMoleculeId sets MoleculeId field to given value.
+
+### HasMoleculeId
+
+`func (o *DrugPatentCliffRow) HasMoleculeId() bool`
+
+HasMoleculeId returns a boolean if a field has been set.
+
+### SetMoleculeIdNil
+
+`func (o *DrugPatentCliffRow) SetMoleculeIdNil(b bool)`
+
+ SetMoleculeIdNil sets the value for MoleculeId to be an explicit nil
+
+### UnsetMoleculeId
+`func (o *DrugPatentCliffRow) UnsetMoleculeId()`
+
+UnsetMoleculeId ensures that no value is present for MoleculeId, not even an explicit nil
 ### GetDrugName
 
 `func (o *DrugPatentCliffRow) GetDrugName() string`

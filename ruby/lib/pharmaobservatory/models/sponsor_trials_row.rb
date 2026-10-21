@@ -40,7 +40,7 @@ module PharmaObservatory
     # Display name of the sponsor's group.
     attr_accessor :sponsor_group_name
 
-    # The funder class the registry declared for the sponsor (INDUSTRY, NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state.
+    # The funder class the registry declared for the sponsor (INDUSTRY, NIH for the US National Institutes of Health, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state.
     attr_accessor :sponsor_agency_class
 
     # How the sponsor name was resolved to an organization record.

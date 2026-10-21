@@ -19,8 +19,10 @@ var _ MappedNullable = &DrugPatentCliffRow{}
 
 // DrugPatentCliffRow One row of the drug_patent_cliff dataset: one row per drug whose exclusivity ends in the future. A grouped request returns the group columns and the measures instead, as additional properties.
 type DrugPatentCliffRow struct {
-	// The drug key.
+	// The drug key at the member grain: the drug record the patent-cliff row is built on, which is the molecule's own record or a record folded under it. Enter from a drug on molecule_id.
 	DrugId NullableString `json:"drug_id,omitempty"`
+	// The molecule key the drug record rolls up to, and the entry key for the drugs object type.
+	MoleculeId NullableString `json:"molecule_id,omitempty"`
 	// The drug's name.
 	DrugName NullableString `json:"drug_name,omitempty"`
 	// The drug's pharmacologic class.
@@ -133,6 +135,48 @@ func (o *DrugPatentCliffRow) SetDrugIdNil() {
 // UnsetDrugId ensures that no value is present for DrugId, not even an explicit nil
 func (o *DrugPatentCliffRow) UnsetDrugId() {
 	o.DrugId.Unset()
+}
+
+// GetMoleculeId returns the MoleculeId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DrugPatentCliffRow) GetMoleculeId() string {
+	if o == nil || IsNil(o.MoleculeId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.MoleculeId.Get()
+}
+
+// GetMoleculeIdOk returns a tuple with the MoleculeId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DrugPatentCliffRow) GetMoleculeIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.MoleculeId.Get(), o.MoleculeId.IsSet()
+}
+
+// HasMoleculeId returns a boolean if a field has been set.
+func (o *DrugPatentCliffRow) HasMoleculeId() bool {
+	if o != nil && o.MoleculeId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMoleculeId gets a reference to the given NullableString and assigns it to the MoleculeId field.
+func (o *DrugPatentCliffRow) SetMoleculeId(v string) {
+	o.MoleculeId.Set(&v)
+}
+// SetMoleculeIdNil sets the value for MoleculeId to be an explicit nil
+func (o *DrugPatentCliffRow) SetMoleculeIdNil() {
+	o.MoleculeId.Set(nil)
+}
+
+// UnsetMoleculeId ensures that no value is present for MoleculeId, not even an explicit nil
+func (o *DrugPatentCliffRow) UnsetMoleculeId() {
+	o.MoleculeId.Unset()
 }
 
 // GetDrugName returns the DrugName field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1198,6 +1242,9 @@ func (o DrugPatentCliffRow) ToMap() (map[string]interface{}, error) {
 	if o.DrugId.IsSet() {
 		toSerialize["drug_id"] = o.DrugId.Get()
 	}
+	if o.MoleculeId.IsSet() {
+		toSerialize["molecule_id"] = o.MoleculeId.Get()
+	}
 	if o.DrugName.IsSet() {
 		toSerialize["drug_name"] = o.DrugName.Get()
 	}
@@ -1296,6 +1343,7 @@ func (o *DrugPatentCliffRow) UnmarshalJSON(data []byte) (err error) {
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "drug_id")
+		delete(additionalProperties, "molecule_id")
 		delete(additionalProperties, "drug_name")
 		delete(additionalProperties, "pharm_class")
 		delete(additionalProperties, "atc_class")

@@ -44,6 +44,12 @@ pub struct InstitutionalHoldingsRow {
     /// The institutional manager's stable identity (an SEC registration number), the key that groups all of one manager's holdings.
     #[serde(rename = "holder_identity_key", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub holder_identity_key: Option<Option<String>>,
+    /// The manager's investor key where the link resolves (null when the manager resolves to no investor or its rows disagree). A manager-level value: the same on every row of one manager.
+    #[serde(rename = "holder_investor_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub holder_investor_id: Option<Option<String>>,
+    /// True when the manager's own holding rows resolve to different investors, so holder_investor_id is null.
+    #[serde(rename = "holder_link_conflict", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub holder_link_conflict: Option<Option<bool>>,
     /// Manager kind.
     #[serde(rename = "holder_kind", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub holder_kind: Option<Option<String>>,
@@ -62,12 +68,15 @@ pub struct InstitutionalHoldingsRow {
     /// Display name of the manager's group.
     #[serde(rename = "holder_group_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub holder_group_name: Option<Option<String>>,
-    /// Reported value of the position.
+    /// Reported value of the position in whole US dollars at the filing's inferred value scale; equity (SH) lines only. Null where the scale or currency is ambiguous.
     #[serde(rename = "reported_value_amount", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub reported_value_amount: Option<Option<f64>>,
     /// Currency of the reported value.
     #[serde(rename = "reported_value_currency", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub reported_value_currency: Option<Option<String>>,
+    /// How the share figure was reached: sum_latest_period_positions, the sum of the manager's positions in the issuer's latest reporting period. Read a share figure with its basis.
+    #[serde(rename = "shares_basis", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub shares_basis: Option<Option<String>>,
     /// Shares standing.
     #[serde(rename = "shares", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub shares: Option<Option<f64>>,
@@ -105,6 +114,8 @@ impl InstitutionalHoldingsRow {
             security_ref: None,
             holder_name: None,
             holder_identity_key: None,
+            holder_investor_id: None,
+            holder_link_conflict: None,
             holder_kind: None,
             holder_org_id: None,
             holder_company_id: None,
@@ -113,6 +124,7 @@ impl InstitutionalHoldingsRow {
             holder_group_name: None,
             reported_value_amount: None,
             reported_value_currency: None,
+            shares_basis: None,
             shares: None,
             percent_basis: None,
             reported_percent: None,

@@ -25,7 +25,7 @@ Name | Type | Description | Notes
 **SponsorCompanyName** | Pointer to **NullableString** | The lead sponsor&#39;s company name. | [optional] 
 **SponsorGroupId** | Pointer to **NullableString** | Group level: the current ultimate parent of the lead sponsor&#39;s company; dated links are in company_members. | [optional] 
 **SponsorGroupName** | Pointer to **NullableString** | Display name of the lead sponsor&#39;s group. | [optional] 
-**SponsorAgencyClass** | Pointer to **NullableString** | The funder class the registry declared for the sponsor (INDUSTRY, NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry&#39;s own code for a class it does not state. Null when the trial has no lead sponsor row. | [optional] 
+**SponsorAgencyClass** | Pointer to **NullableString** | The funder class the registry declared for the sponsor (INDUSTRY, NIH for the US National Institutes of Health, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry&#39;s own code for a class it does not state. Null when the trial has no lead sponsor row. | [optional] 
 
 ## Methods
 

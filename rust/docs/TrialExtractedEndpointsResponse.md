@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **grain** | Option<**String**> |  | [optional]
 **object_type** | Option<**String**> |  | [optional]
 **id** | Option<**String**> |  | [optional]
-**scope** | Option<[**models::BiomarkerCdxAssertionsResponseScope**](BiomarkerCdxAssertionsResponse_scope.md)> |  | [optional]
+**scope** | Option<[**models::BiomarkerAssayEvidenceResponseScope**](BiomarkerAssayEvidenceResponse_scope.md)> |  | [optional]
 **columns** | [**Vec<models::DatasetColumn>**](DatasetColumn.md) |  | 
 **rows** | [**Vec<models::TrialExtractedEndpointsRow>**](TrialExtractedEndpointsRow.md) |  | 
 **total** | Option<**i32**> | The exact count of the filtered rows on an ungrouped read, carried by the cursor; null when grouped. | [optional]
@@ -21,8 +21,8 @@ Name | Type | Description | Notes
 **source_credit** | Option<**String**> |  | [optional]
 **withheld_tiers** | Option<**Vec<String>**> |  | [optional]
 **withheld_columns** | Option<**Vec<String>**> |  | [optional]
-**freshness** | Option<[**models::BiomarkerCdxAssertionsResponseFreshness**](BiomarkerCdxAssertionsResponse_freshness.md)> |  | [optional]
-**build** | Option<[**models::BiomarkerCdxAssertionsResponseBuild**](BiomarkerCdxAssertionsResponse_build.md)> |  | [optional]
+**freshness** | Option<[**models::BiomarkerAssayEvidenceResponseFreshness**](BiomarkerAssayEvidenceResponse_freshness.md)> |  | [optional]
+**build** | Option<[**models::BiomarkerAssayEvidenceResponseBuild**](BiomarkerAssayEvidenceResponse_build.md)> |  | [optional]
 **build_state** | Option<[**models::DatasetBuildState**](DatasetBuildState.md)> |  | [optional]
 **restriction** | Option<[**std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)> |  | [optional]
 

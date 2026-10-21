@@ -46,6 +46,12 @@ module PharmaObservatory
     # The institutional manager's stable identity (an SEC registration number), the key that groups all of one manager's holdings.
     attr_accessor :holder_identity_key
 
+    # The manager's investor key where the link resolves (null when the manager resolves to no investor or its rows disagree). A manager-level value: the same on every row of one manager.
+    attr_accessor :holder_investor_id
+
+    # True when the manager's own holding rows resolve to different investors, so holder_investor_id is null.
+    attr_accessor :holder_link_conflict
+
     # Manager kind.
     attr_accessor :holder_kind
 
@@ -64,11 +70,14 @@ module PharmaObservatory
     # Display name of the manager's group.
     attr_accessor :holder_group_name
 
-    # Reported value of the position.
+    # Reported value of the position in whole US dollars at the filing's inferred value scale; equity (SH) lines only. Null where the scale or currency is ambiguous.
     attr_accessor :reported_value_amount
 
     # Currency of the reported value.
     attr_accessor :reported_value_currency
+
+    # How the share figure was reached: sum_latest_period_positions, the sum of the manager's positions in the issuer's latest reporting period. Read a share figure with its basis.
+    attr_accessor :shares_basis
 
     # Shares standing.
     attr_accessor :shares
@@ -104,6 +113,8 @@ module PharmaObservatory
         :'security_ref' => :'security_ref',
         :'holder_name' => :'holder_name',
         :'holder_identity_key' => :'holder_identity_key',
+        :'holder_investor_id' => :'holder_investor_id',
+        :'holder_link_conflict' => :'holder_link_conflict',
         :'holder_kind' => :'holder_kind',
         :'holder_org_id' => :'holder_org_id',
         :'holder_company_id' => :'holder_company_id',
@@ -112,6 +123,7 @@ module PharmaObservatory
         :'holder_group_name' => :'holder_group_name',
         :'reported_value_amount' => :'reported_value_amount',
         :'reported_value_currency' => :'reported_value_currency',
+        :'shares_basis' => :'shares_basis',
         :'shares' => :'shares',
         :'percent_basis' => :'percent_basis',
         :'reported_percent' => :'reported_percent',
@@ -145,6 +157,8 @@ module PharmaObservatory
         :'security_ref' => :'String',
         :'holder_name' => :'String',
         :'holder_identity_key' => :'String',
+        :'holder_investor_id' => :'String',
+        :'holder_link_conflict' => :'Boolean',
         :'holder_kind' => :'String',
         :'holder_org_id' => :'String',
         :'holder_company_id' => :'String',
@@ -153,6 +167,7 @@ module PharmaObservatory
         :'holder_group_name' => :'String',
         :'reported_value_amount' => :'Float',
         :'reported_value_currency' => :'String',
+        :'shares_basis' => :'String',
         :'shares' => :'Float',
         :'percent_basis' => :'String',
         :'reported_percent' => :'Float',
@@ -176,6 +191,8 @@ module PharmaObservatory
         :'security_ref',
         :'holder_name',
         :'holder_identity_key',
+        :'holder_investor_id',
+        :'holder_link_conflict',
         :'holder_kind',
         :'holder_org_id',
         :'holder_company_id',
@@ -184,6 +201,7 @@ module PharmaObservatory
         :'holder_group_name',
         :'reported_value_amount',
         :'reported_value_currency',
+        :'shares_basis',
         :'shares',
         :'percent_basis',
         :'reported_percent',
@@ -250,6 +268,14 @@ module PharmaObservatory
         self.holder_identity_key = attributes[:'holder_identity_key']
       end
 
+      if attributes.key?(:'holder_investor_id')
+        self.holder_investor_id = attributes[:'holder_investor_id']
+      end
+
+      if attributes.key?(:'holder_link_conflict')
+        self.holder_link_conflict = attributes[:'holder_link_conflict']
+      end
+
       if attributes.key?(:'holder_kind')
         self.holder_kind = attributes[:'holder_kind']
       end
@@ -280,6 +306,10 @@ module PharmaObservatory
 
       if attributes.key?(:'reported_value_currency')
         self.reported_value_currency = attributes[:'reported_value_currency']
+      end
+
+      if attributes.key?(:'shares_basis')
+        self.shares_basis = attributes[:'shares_basis']
       end
 
       if attributes.key?(:'shares')
@@ -341,6 +371,8 @@ module PharmaObservatory
           security_ref == o.security_ref &&
           holder_name == o.holder_name &&
           holder_identity_key == o.holder_identity_key &&
+          holder_investor_id == o.holder_investor_id &&
+          holder_link_conflict == o.holder_link_conflict &&
           holder_kind == o.holder_kind &&
           holder_org_id == o.holder_org_id &&
           holder_company_id == o.holder_company_id &&
@@ -349,6 +381,7 @@ module PharmaObservatory
           holder_group_name == o.holder_group_name &&
           reported_value_amount == o.reported_value_amount &&
           reported_value_currency == o.reported_value_currency &&
+          shares_basis == o.shares_basis &&
           shares == o.shares &&
           percent_basis == o.percent_basis &&
           reported_percent == o.reported_percent &&
@@ -367,7 +400,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [holding_id, issuer_name, issuer_org_id, issuer_company_id, issuer_company_name, issuer_group_id, issuer_group_name, security_ref, holder_name, holder_identity_key, holder_kind, holder_org_id, holder_company_id, holder_company_name, holder_group_id, holder_group_name, reported_value_amount, reported_value_currency, shares, percent_basis, reported_percent, edge_state, first_observed_date, last_filing_date, contains_personal_data].hash
+      [holding_id, issuer_name, issuer_org_id, issuer_company_id, issuer_company_name, issuer_group_id, issuer_group_name, security_ref, holder_name, holder_identity_key, holder_investor_id, holder_link_conflict, holder_kind, holder_org_id, holder_company_id, holder_company_name, holder_group_id, holder_group_name, reported_value_amount, reported_value_currency, shares_basis, shares, percent_basis, reported_percent, edge_state, first_observed_date, last_filing_date, contains_personal_data].hash
     end
 
     # Builds the object from hash

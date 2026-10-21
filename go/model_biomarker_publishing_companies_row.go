@@ -47,6 +47,14 @@ type BiomarkerPublishingCompaniesRow struct {
 	SupportingPmidsTruncated NullableBool `json:"supporting_pmids_truncated,omitempty"`
 	// Papers left out because they name too many organizations.
 	NPapersExcludedAsConsortium NullableInt32 `json:"n_papers_excluded_as_consortium,omitempty"`
+	// Articles in the trial-cited publication set the publishing counts are drawn from (not all of PubMed). Corpus-wide, the same value on every row, never per biomarker or per company.
+	CorpusArticles NullableInt32 `json:"corpus_articles,omitempty"`
+	// Distinct author affiliation strings in the corpus. Corpus-wide, the same value on every row.
+	NAffiliations NullableInt32 `json:"n_affiliations,omitempty"`
+	// Affiliation strings that resolved to an organization. Corpus-wide, the same value on every row.
+	NResolvedAffiliations NullableInt32 `json:"n_resolved_affiliations,omitempty"`
+	// n_resolved_affiliations divided by n_affiliations, rounded to four places. Corpus-wide, the same value on every row: how much of the corpus the company attribution can see, not a figure about this biomarker.
+	AffiliationResolvedShare NullableFloat32 `json:"affiliation_resolved_share,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -648,6 +656,174 @@ func (o *BiomarkerPublishingCompaniesRow) UnsetNPapersExcludedAsConsortium() {
 	o.NPapersExcludedAsConsortium.Unset()
 }
 
+// GetCorpusArticles returns the CorpusArticles field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerPublishingCompaniesRow) GetCorpusArticles() int32 {
+	if o == nil || IsNil(o.CorpusArticles.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.CorpusArticles.Get()
+}
+
+// GetCorpusArticlesOk returns a tuple with the CorpusArticles field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerPublishingCompaniesRow) GetCorpusArticlesOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CorpusArticles.Get(), o.CorpusArticles.IsSet()
+}
+
+// HasCorpusArticles returns a boolean if a field has been set.
+func (o *BiomarkerPublishingCompaniesRow) HasCorpusArticles() bool {
+	if o != nil && o.CorpusArticles.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCorpusArticles gets a reference to the given NullableInt32 and assigns it to the CorpusArticles field.
+func (o *BiomarkerPublishingCompaniesRow) SetCorpusArticles(v int32) {
+	o.CorpusArticles.Set(&v)
+}
+// SetCorpusArticlesNil sets the value for CorpusArticles to be an explicit nil
+func (o *BiomarkerPublishingCompaniesRow) SetCorpusArticlesNil() {
+	o.CorpusArticles.Set(nil)
+}
+
+// UnsetCorpusArticles ensures that no value is present for CorpusArticles, not even an explicit nil
+func (o *BiomarkerPublishingCompaniesRow) UnsetCorpusArticles() {
+	o.CorpusArticles.Unset()
+}
+
+// GetNAffiliations returns the NAffiliations field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerPublishingCompaniesRow) GetNAffiliations() int32 {
+	if o == nil || IsNil(o.NAffiliations.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.NAffiliations.Get()
+}
+
+// GetNAffiliationsOk returns a tuple with the NAffiliations field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerPublishingCompaniesRow) GetNAffiliationsOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NAffiliations.Get(), o.NAffiliations.IsSet()
+}
+
+// HasNAffiliations returns a boolean if a field has been set.
+func (o *BiomarkerPublishingCompaniesRow) HasNAffiliations() bool {
+	if o != nil && o.NAffiliations.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNAffiliations gets a reference to the given NullableInt32 and assigns it to the NAffiliations field.
+func (o *BiomarkerPublishingCompaniesRow) SetNAffiliations(v int32) {
+	o.NAffiliations.Set(&v)
+}
+// SetNAffiliationsNil sets the value for NAffiliations to be an explicit nil
+func (o *BiomarkerPublishingCompaniesRow) SetNAffiliationsNil() {
+	o.NAffiliations.Set(nil)
+}
+
+// UnsetNAffiliations ensures that no value is present for NAffiliations, not even an explicit nil
+func (o *BiomarkerPublishingCompaniesRow) UnsetNAffiliations() {
+	o.NAffiliations.Unset()
+}
+
+// GetNResolvedAffiliations returns the NResolvedAffiliations field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerPublishingCompaniesRow) GetNResolvedAffiliations() int32 {
+	if o == nil || IsNil(o.NResolvedAffiliations.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.NResolvedAffiliations.Get()
+}
+
+// GetNResolvedAffiliationsOk returns a tuple with the NResolvedAffiliations field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerPublishingCompaniesRow) GetNResolvedAffiliationsOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NResolvedAffiliations.Get(), o.NResolvedAffiliations.IsSet()
+}
+
+// HasNResolvedAffiliations returns a boolean if a field has been set.
+func (o *BiomarkerPublishingCompaniesRow) HasNResolvedAffiliations() bool {
+	if o != nil && o.NResolvedAffiliations.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNResolvedAffiliations gets a reference to the given NullableInt32 and assigns it to the NResolvedAffiliations field.
+func (o *BiomarkerPublishingCompaniesRow) SetNResolvedAffiliations(v int32) {
+	o.NResolvedAffiliations.Set(&v)
+}
+// SetNResolvedAffiliationsNil sets the value for NResolvedAffiliations to be an explicit nil
+func (o *BiomarkerPublishingCompaniesRow) SetNResolvedAffiliationsNil() {
+	o.NResolvedAffiliations.Set(nil)
+}
+
+// UnsetNResolvedAffiliations ensures that no value is present for NResolvedAffiliations, not even an explicit nil
+func (o *BiomarkerPublishingCompaniesRow) UnsetNResolvedAffiliations() {
+	o.NResolvedAffiliations.Unset()
+}
+
+// GetAffiliationResolvedShare returns the AffiliationResolvedShare field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerPublishingCompaniesRow) GetAffiliationResolvedShare() float32 {
+	if o == nil || IsNil(o.AffiliationResolvedShare.Get()) {
+		var ret float32
+		return ret
+	}
+	return *o.AffiliationResolvedShare.Get()
+}
+
+// GetAffiliationResolvedShareOk returns a tuple with the AffiliationResolvedShare field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerPublishingCompaniesRow) GetAffiliationResolvedShareOk() (*float32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AffiliationResolvedShare.Get(), o.AffiliationResolvedShare.IsSet()
+}
+
+// HasAffiliationResolvedShare returns a boolean if a field has been set.
+func (o *BiomarkerPublishingCompaniesRow) HasAffiliationResolvedShare() bool {
+	if o != nil && o.AffiliationResolvedShare.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAffiliationResolvedShare gets a reference to the given NullableFloat32 and assigns it to the AffiliationResolvedShare field.
+func (o *BiomarkerPublishingCompaniesRow) SetAffiliationResolvedShare(v float32) {
+	o.AffiliationResolvedShare.Set(&v)
+}
+// SetAffiliationResolvedShareNil sets the value for AffiliationResolvedShare to be an explicit nil
+func (o *BiomarkerPublishingCompaniesRow) SetAffiliationResolvedShareNil() {
+	o.AffiliationResolvedShare.Set(nil)
+}
+
+// UnsetAffiliationResolvedShare ensures that no value is present for AffiliationResolvedShare, not even an explicit nil
+func (o *BiomarkerPublishingCompaniesRow) UnsetAffiliationResolvedShare() {
+	o.AffiliationResolvedShare.Unset()
+}
+
 func (o BiomarkerPublishingCompaniesRow) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -700,6 +876,18 @@ func (o BiomarkerPublishingCompaniesRow) ToMap() (map[string]interface{}, error)
 	if o.NPapersExcludedAsConsortium.IsSet() {
 		toSerialize["n_papers_excluded_as_consortium"] = o.NPapersExcludedAsConsortium.Get()
 	}
+	if o.CorpusArticles.IsSet() {
+		toSerialize["corpus_articles"] = o.CorpusArticles.Get()
+	}
+	if o.NAffiliations.IsSet() {
+		toSerialize["n_affiliations"] = o.NAffiliations.Get()
+	}
+	if o.NResolvedAffiliations.IsSet() {
+		toSerialize["n_resolved_affiliations"] = o.NResolvedAffiliations.Get()
+	}
+	if o.AffiliationResolvedShare.IsSet() {
+		toSerialize["affiliation_resolved_share"] = o.AffiliationResolvedShare.Get()
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -736,6 +924,10 @@ func (o *BiomarkerPublishingCompaniesRow) UnmarshalJSON(data []byte) (err error)
 		delete(additionalProperties, "supporting_pmids")
 		delete(additionalProperties, "supporting_pmids_truncated")
 		delete(additionalProperties, "n_papers_excluded_as_consortium")
+		delete(additionalProperties, "corpus_articles")
+		delete(additionalProperties, "n_affiliations")
+		delete(additionalProperties, "n_resolved_affiliations")
+		delete(additionalProperties, "affiliation_resolved_share")
 		o.AdditionalProperties = additionalProperties
 	}
 

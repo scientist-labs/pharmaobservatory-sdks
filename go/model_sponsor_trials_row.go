@@ -35,7 +35,7 @@ type SponsorTrialsRow struct {
 	SponsorGroupId NullableString `json:"sponsor_group_id,omitempty"`
 	// Display name of the sponsor's group.
 	SponsorGroupName NullableString `json:"sponsor_group_name,omitempty"`
-	// The funder class the registry declared for the sponsor (INDUSTRY, NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state.
+	// The funder class the registry declared for the sponsor (INDUSTRY, NIH for the US National Institutes of Health, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state.
 	SponsorAgencyClass NullableString `json:"sponsor_agency_class,omitempty"`
 	// How the sponsor name was resolved to an organization record.
 	SponsorResolutionMethod NullableString `json:"sponsor_resolution_method,omitempty"`

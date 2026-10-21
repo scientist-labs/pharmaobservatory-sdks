@@ -79,7 +79,7 @@ module PharmaObservatory
     # Display name of the lead sponsor's group.
     attr_accessor :sponsor_group_name
 
-    # The funder class the registry declared for the sponsor (INDUSTRY, NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state. Null when the trial has no lead sponsor row.
+    # The funder class the registry declared for the sponsor (INDUSTRY, NIH for the US National Institutes of Health, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state. Null when the trial has no lead sponsor row.
     attr_accessor :sponsor_agency_class
 
     # Attribute mapping from ruby-style variable name to JSON key.

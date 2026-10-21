@@ -4,7 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**drug_id** | Option<**String**> | The drug key. | [optional]
+**drug_id** | Option<**String**> | The drug key at the member grain: the drug record the patent-cliff row is built on, which is the molecule's own record or a record folded under it. Enter from a drug on molecule_id. | [optional]
+**molecule_id** | Option<**String**> | The molecule key the drug record rolls up to, and the entry key for the drugs object type. | [optional]
 **drug_name** | Option<**String**> | The drug's name. | [optional]
 **pharm_class** | Option<**String**> | The drug's pharmacologic class. | [optional]
 **atc_class** | Option<**String**> | The drug's Anatomical Therapeutic Chemical (ATC) class. | [optional]

@@ -11,8 +11,8 @@ Name | Type | Description | Notes
 **Datasets** | [**[]DatasetListing**](DatasetListing.md) |  | 
 **Attribution** | Pointer to [**[]DatasetAttribution**](DatasetAttribution.md) |  | [optional] 
 **SourceCredit** | Pointer to **string** |  | [optional] 
-**Freshness** | Pointer to [**BiomarkerCdxAssertionsResponseFreshness**](BiomarkerCdxAssertionsResponseFreshness.md) |  | [optional] 
-**Build** | Pointer to [**BiomarkerCdxAssertionsResponseBuild**](BiomarkerCdxAssertionsResponseBuild.md) |  | [optional] 
+**Freshness** | Pointer to [**BiomarkerAssayEvidenceResponseFreshness**](BiomarkerAssayEvidenceResponseFreshness.md) |  | [optional] 
+**Build** | Pointer to [**BiomarkerAssayEvidenceResponseBuild**](BiomarkerAssayEvidenceResponseBuild.md) |  | [optional] 
 **BuildState** | Pointer to [**DatasetBuildState**](DatasetBuildState.md) |  | [optional] 
 **Restriction** | Pointer to **map[string]interface{}** |  | [optional] 
 
@@ -192,20 +192,20 @@ HasSourceCredit returns a boolean if a field has been set.
 
 ### GetFreshness
 
-`func (o *TrialsRecord) GetFreshness() BiomarkerCdxAssertionsResponseFreshness`
+`func (o *TrialsRecord) GetFreshness() BiomarkerAssayEvidenceResponseFreshness`
 
 GetFreshness returns the Freshness field if non-nil, zero value otherwise.
 
 ### GetFreshnessOk
 
-`func (o *TrialsRecord) GetFreshnessOk() (*BiomarkerCdxAssertionsResponseFreshness, bool)`
+`func (o *TrialsRecord) GetFreshnessOk() (*BiomarkerAssayEvidenceResponseFreshness, bool)`
 
 GetFreshnessOk returns a tuple with the Freshness field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFreshness
 
-`func (o *TrialsRecord) SetFreshness(v BiomarkerCdxAssertionsResponseFreshness)`
+`func (o *TrialsRecord) SetFreshness(v BiomarkerAssayEvidenceResponseFreshness)`
 
 SetFreshness sets Freshness field to given value.
 
@@ -217,20 +217,20 @@ HasFreshness returns a boolean if a field has been set.
 
 ### GetBuild
 
-`func (o *TrialsRecord) GetBuild() BiomarkerCdxAssertionsResponseBuild`
+`func (o *TrialsRecord) GetBuild() BiomarkerAssayEvidenceResponseBuild`
 
 GetBuild returns the Build field if non-nil, zero value otherwise.
 
 ### GetBuildOk
 
-`func (o *TrialsRecord) GetBuildOk() (*BiomarkerCdxAssertionsResponseBuild, bool)`
+`func (o *TrialsRecord) GetBuildOk() (*BiomarkerAssayEvidenceResponseBuild, bool)`
 
 GetBuildOk returns a tuple with the Build field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBuild
 
-`func (o *TrialsRecord) SetBuild(v BiomarkerCdxAssertionsResponseBuild)`
+`func (o *TrialsRecord) SetBuild(v BiomarkerAssayEvidenceResponseBuild)`
 
 SetBuild sets Build field to given value.
 

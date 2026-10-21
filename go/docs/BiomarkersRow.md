@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **TargetId** | Pointer to **NullableString** | The target&#39;s Ensembl gene id. | [optional] 
 **HgncId** | Pointer to **NullableString** | The HUGO Gene Nomenclature Committee (HGNC) gene id. | [optional] 
 **UniprotAccession** | Pointer to **NullableString** | The UniProt accession. | [optional] 
+**TargetProteinName** | Pointer to **NullableString** | The recommended name of the protein the biomarker&#39;s gene encodes: the UniProt protein of the accession, else the first UniProt protein of the gene symbol, else the Open Targets target name. Null when none names it. | [optional] 
 **FeatureCode** | Pointer to **NullableString** | Feature code for a non-gene feature. | [optional] 
 **FeatureType** | Pointer to **NullableString** | Feature type for a non-gene feature. | [optional] 
 **EvidenceTier** | Pointer to **NullableInt32** | Strongest evidence tier: 1 companion diagnostic of the US Food and Drug Administration (FDA) through 6 no evidence. | [optional] 
@@ -435,6 +436,41 @@ HasUniprotAccession returns a boolean if a field has been set.
 `func (o *BiomarkersRow) UnsetUniprotAccession()`
 
 UnsetUniprotAccession ensures that no value is present for UniprotAccession, not even an explicit nil
+### GetTargetProteinName
+
+`func (o *BiomarkersRow) GetTargetProteinName() string`
+
+GetTargetProteinName returns the TargetProteinName field if non-nil, zero value otherwise.
+
+### GetTargetProteinNameOk
+
+`func (o *BiomarkersRow) GetTargetProteinNameOk() (*string, bool)`
+
+GetTargetProteinNameOk returns a tuple with the TargetProteinName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTargetProteinName
+
+`func (o *BiomarkersRow) SetTargetProteinName(v string)`
+
+SetTargetProteinName sets TargetProteinName field to given value.
+
+### HasTargetProteinName
+
+`func (o *BiomarkersRow) HasTargetProteinName() bool`
+
+HasTargetProteinName returns a boolean if a field has been set.
+
+### SetTargetProteinNameNil
+
+`func (o *BiomarkersRow) SetTargetProteinNameNil(b bool)`
+
+ SetTargetProteinNameNil sets the value for TargetProteinName to be an explicit nil
+
+### UnsetTargetProteinName
+`func (o *BiomarkersRow) UnsetTargetProteinName()`
+
+UnsetTargetProteinName ensures that no value is present for TargetProteinName, not even an explicit nil
 ### GetFeatureCode
 
 `func (o *BiomarkersRow) GetFeatureCode() string`

@@ -22,7 +22,7 @@ pub struct TrialAdverseEventsResponse {
     #[serde(rename = "id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub id: Option<Option<String>>,
     #[serde(rename = "scope", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub scope: Option<Option<Box<models::BiomarkerCdxAssertionsResponseScope>>>,
+    pub scope: Option<Option<Box<models::BiomarkerAssayEvidenceResponseScope>>>,
     #[serde(rename = "columns")]
     pub columns: Vec<models::DatasetColumn>,
     #[serde(rename = "rows")]
@@ -49,9 +49,9 @@ pub struct TrialAdverseEventsResponse {
     #[serde(rename = "withheld_columns", skip_serializing_if = "Option::is_none")]
     pub withheld_columns: Option<Vec<String>>,
     #[serde(rename = "freshness", skip_serializing_if = "Option::is_none")]
-    pub freshness: Option<Box<models::BiomarkerCdxAssertionsResponseFreshness>>,
+    pub freshness: Option<Box<models::BiomarkerAssayEvidenceResponseFreshness>>,
     #[serde(rename = "build", skip_serializing_if = "Option::is_none")]
-    pub build: Option<Box<models::BiomarkerCdxAssertionsResponseBuild>>,
+    pub build: Option<Box<models::BiomarkerAssayEvidenceResponseBuild>>,
     #[serde(rename = "build_state", skip_serializing_if = "Option::is_none")]
     pub build_state: Option<Box<models::DatasetBuildState>>,
     #[serde(rename = "restriction", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]

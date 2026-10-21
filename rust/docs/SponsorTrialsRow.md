@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **sponsor_company_name** | Option<**String**> | Display name of the sponsor's company. | [optional]
 **sponsor_group_id** | Option<**String**> | Group level: the sponsor's current ultimate parent company; a root company's group is itself. | [optional]
 **sponsor_group_name** | Option<**String**> | Display name of the sponsor's group. | [optional]
-**sponsor_agency_class** | Option<**String**> | The funder class the registry declared for the sponsor (INDUSTRY, NIH, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state. | [optional]
+**sponsor_agency_class** | Option<**String**> | The funder class the registry declared for the sponsor (INDUSTRY, NIH for the US National Institutes of Health, FED, OTHER_GOV, NETWORK, OTHER, INDIV, AMBIG, UNKNOWN). UNKNOWN is the registry's own code for a class it does not state. | [optional]
 **sponsor_resolution_method** | Option<**String**> | How the sponsor name was resolved to an organization record. | [optional]
 **trial_title** | Option<**String**> | The trial's brief title. | [optional]
 **study_type** | Option<**String**> | INTERVENTIONAL or OBSERVATIONAL. | [optional]

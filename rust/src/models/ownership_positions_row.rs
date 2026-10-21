@@ -14,10 +14,10 @@ use serde::{Deserialize, Serialize};
 /// OwnershipPositionsRow : One row of the ownership_positions dataset: one row per owner, owned company, filing family and measured dimension (the owner's consolidated current position). A grouped request returns the group columns and the measures instead, as additional properties.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct OwnershipPositionsRow {
-    /// The position id. For a position whose owner name is withheld it is an opaque handle that derives nothing from the owner and is stable only while the other positions of the same owned company, filing family and dimension are unchanged.
+    /// The position id (the owner rollup id).
     #[serde(rename = "position_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub position_id: Option<Option<String>>,
-    /// The filing family: sec_forms_3_4_5 (insiders), sec_schedules_13d_g (beneficial owners), sec_form_adv (investment adviser control persons) or sec_def_14a (proxy-statement tables).
+    /// The filing family: sec_forms_3_4_5 (insiders), sec_schedules_13d_g (beneficial owners), sec_form_adv (investment adviser control persons), sec_def_14a (proxy-statement tables) or wikidata (ownership statements in Wikidata).
     #[serde(rename = "source_class", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub source_class: Option<Option<String>>,
     /// What the position measures: insider_reporting, beneficial_ownership, voting_power, economic_interest or control. Positions of different dimensions are different measurements and are not added.
@@ -44,34 +44,37 @@ pub struct OwnershipPositionsRow {
     /// Display name of the owned company's group.
     #[serde(rename = "subject_group_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub subject_group_name: Option<Option<String>>,
-    /// The owner's name as filed. Null for an owner whose filing does not mark the name public (see owner_name_is_public).
+    /// The key of the owned party in the investor directory when it is an investor (null otherwise). Filter on it for who is reported to own or control an investor.
+    #[serde(rename = "subject_investor_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub subject_investor_id: Option<Option<String>>,
+    /// The owner's name as filed.
     #[serde(rename = "owner_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub owner_name: Option<Option<String>>,
-    /// True when the filing marks the owner's name public. When false every column that could identify the owner is null (name, identity key, person id, investor id, organization and company columns, source_url and the dates); the position and its figures stay.
+    /// A label, not a gate: true when the filing marks the owner's privacy status public. It does not affect any other column; the owner's name, identity key and every other field below are populated whatever this value is.
     #[serde(rename = "owner_name_is_public", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub owner_name_is_public: Option<Option<bool>>,
     /// What the owner is: organization, natural_person, reporting_group or unknown.
     #[serde(rename = "owner_kind", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub owner_kind: Option<Option<String>>,
-    /// The owner's stable identity (an SEC registration number or an adviser registration number); null when the name is withheld.
+    /// The owner's stable identity (an SEC registration number or an adviser registration number).
     #[serde(rename = "owner_identity_key", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub owner_identity_key: Option<Option<String>>,
-    /// The key of an owner who is a natural person; null for other owners and when the name is withheld.
+    /// The key of an owner who is a natural person; null for other owners.
     #[serde(rename = "owner_person_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub owner_person_id: Option<Option<String>>,
-    /// The key of the owner in the investor directory when it is one; null when the name is withheld.
+    /// The key of the owner in the investor directory when it is one.
     #[serde(rename = "owner_investor_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub owner_investor_id: Option<Option<String>>,
-    /// Legal-entity level: the owner's organization record (null when the owner is not an organization, is unresolved or is withheld).
+    /// Legal-entity level: the owner's organization record (null when the owner is not an organization or is unresolved).
     #[serde(rename = "owner_org_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub owner_org_id: Option<Option<String>>,
-    /// Company level: the owner's company (null when unresolved or when the name is withheld).
+    /// Company level: the owner's company (null when unresolved).
     #[serde(rename = "owner_company_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub owner_company_id: Option<Option<String>>,
     /// Display name of the owner's company.
     #[serde(rename = "owner_company_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub owner_company_name: Option<Option<String>>,
-    /// Group level: the owner's current ultimate parent; a root's group is itself (null when the owner is withheld).
+    /// Group level: the owner's current ultimate parent; a root's group is itself.
     #[serde(rename = "owner_group_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub owner_group_id: Option<Option<String>>,
     /// Display name of the owner's group.
@@ -122,16 +125,16 @@ pub struct OwnershipPositionsRow {
     /// Of those, positions the filer no longer reports.
     #[serde(rename = "no_longer_reported_position_count", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub no_longer_reported_position_count: Option<Option<i32>>,
-    /// Date the position was first reported; null when the owner's name is withheld.
+    /// Date the position was first reported.
     #[serde(rename = "first_observed_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub first_observed_date: Option<Option<String>>,
-    /// Date of the latest reported activity; null when the owner's name is withheld.
+    /// Date of the latest reported activity.
     #[serde(rename = "last_activity_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub last_activity_date: Option<Option<String>>,
-    /// Date of the latest filing; null when the owner's name is withheld.
+    /// Date of the latest filing.
     #[serde(rename = "last_filing_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub last_filing_date: Option<Option<String>>,
-    /// A link to the latest filing; null when the owner's name is withheld, because the filing names the owner.
+    /// A link to the latest filing.
     #[serde(rename = "source_url", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub source_url: Option<Option<String>>,
     /// True when the row names a natural person.
@@ -156,6 +159,7 @@ impl OwnershipPositionsRow {
             subject_company_name: None,
             subject_group_id: None,
             subject_group_name: None,
+            subject_investor_id: None,
             owner_name: None,
             owner_name_is_public: None,
             owner_kind: None,

@@ -17,6 +17,8 @@ pub struct ConditionsRecordAttributes {
     pub condition_burden: Option<models::ConditionBurdenRow>,
     #[serde(rename = "condition_delivery", skip_serializing_if = "Option::is_none")]
     pub condition_delivery: Option<models::ConditionDeliveryRow>,
+    #[serde(rename = "condition_recruitment_duration", skip_serializing_if = "Option::is_none")]
+    pub condition_recruitment_duration: Option<models::ConditionRecruitmentDurationRow>,
 }
 
 impl ConditionsRecordAttributes {
@@ -24,6 +26,7 @@ impl ConditionsRecordAttributes {
         ConditionsRecordAttributes {
             condition_burden: None,
             condition_delivery: None,
+            condition_recruitment_duration: None,
         }
     }
 }

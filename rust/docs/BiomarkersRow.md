@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **target_id** | Option<**String**> | The target's Ensembl gene id. | [optional]
 **hgnc_id** | Option<**String**> | The HUGO Gene Nomenclature Committee (HGNC) gene id. | [optional]
 **uniprot_accession** | Option<**String**> | The UniProt accession. | [optional]
+**target_protein_name** | Option<**String**> | The recommended name of the protein the biomarker's gene encodes: the UniProt protein of the accession, else the first UniProt protein of the gene symbol, else the Open Targets target name. Null when none names it. | [optional]
 **feature_code** | Option<**String**> | Feature code for a non-gene feature. | [optional]
 **feature_type** | Option<**String**> | Feature type for a non-gene feature. | [optional]
 **evidence_tier** | Option<**i32**> | Strongest evidence tier: 1 companion diagnostic of the US Food and Drug Administration (FDA) through 6 no evidence. | [optional]

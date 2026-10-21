@@ -18,6 +18,10 @@ Name | Type | Description | Notes
 **SupportingPmids** | Pointer to **[]string** | A sample of the supporting PubMed ids. | [optional] 
 **SupportingPmidsTruncated** | Pointer to **NullableBool** | True when the sample is shorter than the paper count. | [optional] 
 **NPapersExcludedAsConsortium** | Pointer to **NullableInt32** | Papers left out because they name too many organizations. | [optional] 
+**CorpusArticles** | Pointer to **NullableInt32** | Articles in the trial-cited publication set the publishing counts are drawn from (not all of PubMed). Corpus-wide, the same value on every row, never per biomarker or per company. | [optional] 
+**NAffiliations** | Pointer to **NullableInt32** | Distinct author affiliation strings in the corpus. Corpus-wide, the same value on every row. | [optional] 
+**NResolvedAffiliations** | Pointer to **NullableInt32** | Affiliation strings that resolved to an organization. Corpus-wide, the same value on every row. | [optional] 
+**AffiliationResolvedShare** | Pointer to **NullableFloat32** | n_resolved_affiliations divided by n_affiliations, rounded to four places. Corpus-wide, the same value on every row: how much of the corpus the company attribution can see, not a figure about this biomarker. | [optional] 
 
 ## Methods
 
@@ -528,6 +532,146 @@ HasNPapersExcludedAsConsortium returns a boolean if a field has been set.
 `func (o *BiomarkerPublishingCompaniesRow) UnsetNPapersExcludedAsConsortium()`
 
 UnsetNPapersExcludedAsConsortium ensures that no value is present for NPapersExcludedAsConsortium, not even an explicit nil
+### GetCorpusArticles
+
+`func (o *BiomarkerPublishingCompaniesRow) GetCorpusArticles() int32`
+
+GetCorpusArticles returns the CorpusArticles field if non-nil, zero value otherwise.
+
+### GetCorpusArticlesOk
+
+`func (o *BiomarkerPublishingCompaniesRow) GetCorpusArticlesOk() (*int32, bool)`
+
+GetCorpusArticlesOk returns a tuple with the CorpusArticles field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCorpusArticles
+
+`func (o *BiomarkerPublishingCompaniesRow) SetCorpusArticles(v int32)`
+
+SetCorpusArticles sets CorpusArticles field to given value.
+
+### HasCorpusArticles
+
+`func (o *BiomarkerPublishingCompaniesRow) HasCorpusArticles() bool`
+
+HasCorpusArticles returns a boolean if a field has been set.
+
+### SetCorpusArticlesNil
+
+`func (o *BiomarkerPublishingCompaniesRow) SetCorpusArticlesNil(b bool)`
+
+ SetCorpusArticlesNil sets the value for CorpusArticles to be an explicit nil
+
+### UnsetCorpusArticles
+`func (o *BiomarkerPublishingCompaniesRow) UnsetCorpusArticles()`
+
+UnsetCorpusArticles ensures that no value is present for CorpusArticles, not even an explicit nil
+### GetNAffiliations
+
+`func (o *BiomarkerPublishingCompaniesRow) GetNAffiliations() int32`
+
+GetNAffiliations returns the NAffiliations field if non-nil, zero value otherwise.
+
+### GetNAffiliationsOk
+
+`func (o *BiomarkerPublishingCompaniesRow) GetNAffiliationsOk() (*int32, bool)`
+
+GetNAffiliationsOk returns a tuple with the NAffiliations field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNAffiliations
+
+`func (o *BiomarkerPublishingCompaniesRow) SetNAffiliations(v int32)`
+
+SetNAffiliations sets NAffiliations field to given value.
+
+### HasNAffiliations
+
+`func (o *BiomarkerPublishingCompaniesRow) HasNAffiliations() bool`
+
+HasNAffiliations returns a boolean if a field has been set.
+
+### SetNAffiliationsNil
+
+`func (o *BiomarkerPublishingCompaniesRow) SetNAffiliationsNil(b bool)`
+
+ SetNAffiliationsNil sets the value for NAffiliations to be an explicit nil
+
+### UnsetNAffiliations
+`func (o *BiomarkerPublishingCompaniesRow) UnsetNAffiliations()`
+
+UnsetNAffiliations ensures that no value is present for NAffiliations, not even an explicit nil
+### GetNResolvedAffiliations
+
+`func (o *BiomarkerPublishingCompaniesRow) GetNResolvedAffiliations() int32`
+
+GetNResolvedAffiliations returns the NResolvedAffiliations field if non-nil, zero value otherwise.
+
+### GetNResolvedAffiliationsOk
+
+`func (o *BiomarkerPublishingCompaniesRow) GetNResolvedAffiliationsOk() (*int32, bool)`
+
+GetNResolvedAffiliationsOk returns a tuple with the NResolvedAffiliations field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNResolvedAffiliations
+
+`func (o *BiomarkerPublishingCompaniesRow) SetNResolvedAffiliations(v int32)`
+
+SetNResolvedAffiliations sets NResolvedAffiliations field to given value.
+
+### HasNResolvedAffiliations
+
+`func (o *BiomarkerPublishingCompaniesRow) HasNResolvedAffiliations() bool`
+
+HasNResolvedAffiliations returns a boolean if a field has been set.
+
+### SetNResolvedAffiliationsNil
+
+`func (o *BiomarkerPublishingCompaniesRow) SetNResolvedAffiliationsNil(b bool)`
+
+ SetNResolvedAffiliationsNil sets the value for NResolvedAffiliations to be an explicit nil
+
+### UnsetNResolvedAffiliations
+`func (o *BiomarkerPublishingCompaniesRow) UnsetNResolvedAffiliations()`
+
+UnsetNResolvedAffiliations ensures that no value is present for NResolvedAffiliations, not even an explicit nil
+### GetAffiliationResolvedShare
+
+`func (o *BiomarkerPublishingCompaniesRow) GetAffiliationResolvedShare() float32`
+
+GetAffiliationResolvedShare returns the AffiliationResolvedShare field if non-nil, zero value otherwise.
+
+### GetAffiliationResolvedShareOk
+
+`func (o *BiomarkerPublishingCompaniesRow) GetAffiliationResolvedShareOk() (*float32, bool)`
+
+GetAffiliationResolvedShareOk returns a tuple with the AffiliationResolvedShare field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAffiliationResolvedShare
+
+`func (o *BiomarkerPublishingCompaniesRow) SetAffiliationResolvedShare(v float32)`
+
+SetAffiliationResolvedShare sets AffiliationResolvedShare field to given value.
+
+### HasAffiliationResolvedShare
+
+`func (o *BiomarkerPublishingCompaniesRow) HasAffiliationResolvedShare() bool`
+
+HasAffiliationResolvedShare returns a boolean if a field has been set.
+
+### SetAffiliationResolvedShareNil
+
+`func (o *BiomarkerPublishingCompaniesRow) SetAffiliationResolvedShareNil(b bool)`
+
+ SetAffiliationResolvedShareNil sets the value for AffiliationResolvedShare to be an explicit nil
+
+### UnsetAffiliationResolvedShare
+`func (o *BiomarkerPublishingCompaniesRow) UnsetAffiliationResolvedShare()`
+
+UnsetAffiliationResolvedShare ensures that no value is present for AffiliationResolvedShare, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -4,6 +4,8 @@ All URIs are relative to *https://pharmaobservatory.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**biomarkers_period_biomarker_assay_evidence**](BiomarkersApi.md#biomarkers_period_biomarker_assay_evidence) | **GET** /api/v1/biomarkers/{id}/biomarker_assay_evidence | Biomarker assay evidence from the literature
+[**biomarkers_period_biomarker_assay_whitespace**](BiomarkersApi.md#biomarkers_period_biomarker_assay_whitespace) | **GET** /api/v1/biomarkers/{id}/biomarker_assay_whitespace | Biomarker assay whitespace (evidence against supplier supply)
 [**biomarkers_period_biomarker_bqp_assertions**](BiomarkersApi.md#biomarkers_period_biomarker_bqp_assertions) | **GET** /api/v1/biomarkers/{id}/biomarker_bqp_assertions | FDA biomarker qualification projects
 [**biomarkers_period_biomarker_cdx_assertions**](BiomarkersApi.md#biomarkers_period_biomarker_cdx_assertions) | **GET** /api/v1/biomarkers/{id}/biomarker_cdx_assertions | FDA companion diagnostic assertions
 [**biomarkers_period_biomarker_evidence**](BiomarkersApi.md#biomarkers_period_biomarker_evidence) | **GET** /api/v1/biomarkers/{id}/biomarker_evidence | Biomarker evidence
@@ -17,6 +19,72 @@ Method | HTTP request | Description
 [**biomarkers_period_get**](BiomarkersApi.md#biomarkers_period_get) | **GET** /api/v1/biomarkers/{id} | One biomarker
 [**biomarkers_period_list**](BiomarkersApi.md#biomarkers_period_list) | **GET** /api/v1/biomarkers | List biomarkers
 
+
+
+## biomarkers_period_biomarker_assay_evidence
+
+> models::BiomarkerAssayEvidenceResponse biomarkers_period_biomarker_assay_evidence(id, cursor, limit, sort, group_by, measure)
+Biomarker assay evidence from the literature
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::BiomarkerAssayEvidenceResponse**](BiomarkerAssayEvidenceResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## biomarkers_period_biomarker_assay_whitespace
+
+> models::BiomarkerAssayWhitespaceResponse biomarkers_period_biomarker_assay_whitespace(id, cursor, limit, sort, group_by, measure)
+Biomarker assay whitespace (evidence against supplier supply)
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::BiomarkerAssayWhitespaceResponse**](BiomarkerAssayWhitespaceResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## biomarkers_period_biomarker_bqp_assertions

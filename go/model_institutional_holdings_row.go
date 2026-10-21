@@ -39,6 +39,10 @@ type InstitutionalHoldingsRow struct {
 	HolderName NullableString `json:"holder_name,omitempty"`
 	// The institutional manager's stable identity (an SEC registration number), the key that groups all of one manager's holdings.
 	HolderIdentityKey NullableString `json:"holder_identity_key,omitempty"`
+	// The manager's investor key where the link resolves (null when the manager resolves to no investor or its rows disagree). A manager-level value: the same on every row of one manager.
+	HolderInvestorId NullableString `json:"holder_investor_id,omitempty"`
+	// True when the manager's own holding rows resolve to different investors, so holder_investor_id is null.
+	HolderLinkConflict NullableBool `json:"holder_link_conflict,omitempty"`
 	// Manager kind.
 	HolderKind NullableString `json:"holder_kind,omitempty"`
 	// Legal-entity level: the manager's organization record (null when unresolved).
@@ -51,10 +55,12 @@ type InstitutionalHoldingsRow struct {
 	HolderGroupId NullableString `json:"holder_group_id,omitempty"`
 	// Display name of the manager's group.
 	HolderGroupName NullableString `json:"holder_group_name,omitempty"`
-	// Reported value of the position.
+	// Reported value of the position in whole US dollars at the filing's inferred value scale; equity (SH) lines only. Null where the scale or currency is ambiguous.
 	ReportedValueAmount NullableFloat32 `json:"reported_value_amount,omitempty"`
 	// Currency of the reported value.
 	ReportedValueCurrency NullableString `json:"reported_value_currency,omitempty"`
+	// How the share figure was reached: sum_latest_period_positions, the sum of the manager's positions in the issuer's latest reporting period. Read a share figure with its basis.
+	SharesBasis NullableString `json:"shares_basis,omitempty"`
 	// Shares standing.
 	Shares NullableFloat32 `json:"shares,omitempty"`
 	// The basis the percent is measured on.
@@ -511,6 +517,90 @@ func (o *InstitutionalHoldingsRow) UnsetHolderIdentityKey() {
 	o.HolderIdentityKey.Unset()
 }
 
+// GetHolderInvestorId returns the HolderInvestorId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InstitutionalHoldingsRow) GetHolderInvestorId() string {
+	if o == nil || IsNil(o.HolderInvestorId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.HolderInvestorId.Get()
+}
+
+// GetHolderInvestorIdOk returns a tuple with the HolderInvestorId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InstitutionalHoldingsRow) GetHolderInvestorIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HolderInvestorId.Get(), o.HolderInvestorId.IsSet()
+}
+
+// HasHolderInvestorId returns a boolean if a field has been set.
+func (o *InstitutionalHoldingsRow) HasHolderInvestorId() bool {
+	if o != nil && o.HolderInvestorId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHolderInvestorId gets a reference to the given NullableString and assigns it to the HolderInvestorId field.
+func (o *InstitutionalHoldingsRow) SetHolderInvestorId(v string) {
+	o.HolderInvestorId.Set(&v)
+}
+// SetHolderInvestorIdNil sets the value for HolderInvestorId to be an explicit nil
+func (o *InstitutionalHoldingsRow) SetHolderInvestorIdNil() {
+	o.HolderInvestorId.Set(nil)
+}
+
+// UnsetHolderInvestorId ensures that no value is present for HolderInvestorId, not even an explicit nil
+func (o *InstitutionalHoldingsRow) UnsetHolderInvestorId() {
+	o.HolderInvestorId.Unset()
+}
+
+// GetHolderLinkConflict returns the HolderLinkConflict field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InstitutionalHoldingsRow) GetHolderLinkConflict() bool {
+	if o == nil || IsNil(o.HolderLinkConflict.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.HolderLinkConflict.Get()
+}
+
+// GetHolderLinkConflictOk returns a tuple with the HolderLinkConflict field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InstitutionalHoldingsRow) GetHolderLinkConflictOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HolderLinkConflict.Get(), o.HolderLinkConflict.IsSet()
+}
+
+// HasHolderLinkConflict returns a boolean if a field has been set.
+func (o *InstitutionalHoldingsRow) HasHolderLinkConflict() bool {
+	if o != nil && o.HolderLinkConflict.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHolderLinkConflict gets a reference to the given NullableBool and assigns it to the HolderLinkConflict field.
+func (o *InstitutionalHoldingsRow) SetHolderLinkConflict(v bool) {
+	o.HolderLinkConflict.Set(&v)
+}
+// SetHolderLinkConflictNil sets the value for HolderLinkConflict to be an explicit nil
+func (o *InstitutionalHoldingsRow) SetHolderLinkConflictNil() {
+	o.HolderLinkConflict.Set(nil)
+}
+
+// UnsetHolderLinkConflict ensures that no value is present for HolderLinkConflict, not even an explicit nil
+func (o *InstitutionalHoldingsRow) UnsetHolderLinkConflict() {
+	o.HolderLinkConflict.Unset()
+}
+
 // GetHolderKind returns the HolderKind field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *InstitutionalHoldingsRow) GetHolderKind() string {
 	if o == nil || IsNil(o.HolderKind.Get()) {
@@ -847,6 +937,48 @@ func (o *InstitutionalHoldingsRow) UnsetReportedValueCurrency() {
 	o.ReportedValueCurrency.Unset()
 }
 
+// GetSharesBasis returns the SharesBasis field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InstitutionalHoldingsRow) GetSharesBasis() string {
+	if o == nil || IsNil(o.SharesBasis.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.SharesBasis.Get()
+}
+
+// GetSharesBasisOk returns a tuple with the SharesBasis field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InstitutionalHoldingsRow) GetSharesBasisOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SharesBasis.Get(), o.SharesBasis.IsSet()
+}
+
+// HasSharesBasis returns a boolean if a field has been set.
+func (o *InstitutionalHoldingsRow) HasSharesBasis() bool {
+	if o != nil && o.SharesBasis.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSharesBasis gets a reference to the given NullableString and assigns it to the SharesBasis field.
+func (o *InstitutionalHoldingsRow) SetSharesBasis(v string) {
+	o.SharesBasis.Set(&v)
+}
+// SetSharesBasisNil sets the value for SharesBasis to be an explicit nil
+func (o *InstitutionalHoldingsRow) SetSharesBasisNil() {
+	o.SharesBasis.Set(nil)
+}
+
+// UnsetSharesBasis ensures that no value is present for SharesBasis, not even an explicit nil
+func (o *InstitutionalHoldingsRow) UnsetSharesBasis() {
+	o.SharesBasis.Unset()
+}
+
 // GetShares returns the Shares field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *InstitutionalHoldingsRow) GetShares() float32 {
 	if o == nil || IsNil(o.Shares.Get()) {
@@ -1181,6 +1313,12 @@ func (o InstitutionalHoldingsRow) ToMap() (map[string]interface{}, error) {
 	if o.HolderIdentityKey.IsSet() {
 		toSerialize["holder_identity_key"] = o.HolderIdentityKey.Get()
 	}
+	if o.HolderInvestorId.IsSet() {
+		toSerialize["holder_investor_id"] = o.HolderInvestorId.Get()
+	}
+	if o.HolderLinkConflict.IsSet() {
+		toSerialize["holder_link_conflict"] = o.HolderLinkConflict.Get()
+	}
 	if o.HolderKind.IsSet() {
 		toSerialize["holder_kind"] = o.HolderKind.Get()
 	}
@@ -1204,6 +1342,9 @@ func (o InstitutionalHoldingsRow) ToMap() (map[string]interface{}, error) {
 	}
 	if o.ReportedValueCurrency.IsSet() {
 		toSerialize["reported_value_currency"] = o.ReportedValueCurrency.Get()
+	}
+	if o.SharesBasis.IsSet() {
+		toSerialize["shares_basis"] = o.SharesBasis.Get()
 	}
 	if o.Shares.IsSet() {
 		toSerialize["shares"] = o.Shares.Get()
@@ -1258,6 +1399,8 @@ func (o *InstitutionalHoldingsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "security_ref")
 		delete(additionalProperties, "holder_name")
 		delete(additionalProperties, "holder_identity_key")
+		delete(additionalProperties, "holder_investor_id")
+		delete(additionalProperties, "holder_link_conflict")
 		delete(additionalProperties, "holder_kind")
 		delete(additionalProperties, "holder_org_id")
 		delete(additionalProperties, "holder_company_id")
@@ -1266,6 +1409,7 @@ func (o *InstitutionalHoldingsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "holder_group_name")
 		delete(additionalProperties, "reported_value_amount")
 		delete(additionalProperties, "reported_value_currency")
+		delete(additionalProperties, "shares_basis")
 		delete(additionalProperties, "shares")
 		delete(additionalProperties, "percent_basis")
 		delete(additionalProperties, "reported_percent")

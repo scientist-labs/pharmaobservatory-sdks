@@ -26,7 +26,7 @@ pub struct CompaniesRow {
     /// Country of the company's own legal entity, as the source states it.
     #[serde(rename = "country", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub country: Option<Option<String>>,
-    /// The organization type of the company's representative record: Academic, Government, Hospital, Industry, Nonprofit or Other (from the ROR record or the filing), or the lowercase tags investor and manufacturer that mark a minted adviser or manufacturer record.
+    /// The organization type of the company's representative record: Academic, Government, Hospital, Industry, Nonprofit or Other (from the Research Organization Registry (ROR) record or the filing), or the lowercase tags investor and manufacturer that mark a minted adviser or manufacturer record.
     #[serde(rename = "org_type", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub org_type: Option<Option<String>>,
     /// The roles the company's organizations play (Manufacturer, Sponsor and so on).
