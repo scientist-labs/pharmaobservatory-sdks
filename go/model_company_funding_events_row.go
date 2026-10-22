@@ -61,6 +61,8 @@ type CompanyFundingEventsRow struct {
 	AdministeringIc NullableString `json:"administering_ic,omitempty"`
 	// Grant applications folded into the event; 1 for the other sources.
 	NAwards NullableInt64 `json:"n_awards,omitempty"`
+	// Whether the event is life-sciences capital: a grant is always true, a Regulation D offering follows the filer's self-declared industry group, and an extracted financing follows the filer's SIC code. Never null; a filer that cannot be classified is false.
+	IsBiomedical NullableBool `json:"is_biomedical,omitempty"`
 	// The running total of disclosed amounts over the company's own events up to and including this one, in date order; null where the event has no company.
 	CumulativeRaisedUsd NullableFloat32 `json:"cumulative_raised_usd,omitempty"`
 	// Link to the filing the event was read from, where the source has one.
@@ -969,6 +971,48 @@ func (o *CompanyFundingEventsRow) UnsetNAwards() {
 	o.NAwards.Unset()
 }
 
+// GetIsBiomedical returns the IsBiomedical field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyFundingEventsRow) GetIsBiomedical() bool {
+	if o == nil || IsNil(o.IsBiomedical.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.IsBiomedical.Get()
+}
+
+// GetIsBiomedicalOk returns a tuple with the IsBiomedical field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyFundingEventsRow) GetIsBiomedicalOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IsBiomedical.Get(), o.IsBiomedical.IsSet()
+}
+
+// HasIsBiomedical returns a boolean if a field has been set.
+func (o *CompanyFundingEventsRow) HasIsBiomedical() bool {
+	if o != nil && o.IsBiomedical.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetIsBiomedical gets a reference to the given NullableBool and assigns it to the IsBiomedical field.
+func (o *CompanyFundingEventsRow) SetIsBiomedical(v bool) {
+	o.IsBiomedical.Set(&v)
+}
+// SetIsBiomedicalNil sets the value for IsBiomedical to be an explicit nil
+func (o *CompanyFundingEventsRow) SetIsBiomedicalNil() {
+	o.IsBiomedical.Set(nil)
+}
+
+// UnsetIsBiomedical ensures that no value is present for IsBiomedical, not even an explicit nil
+func (o *CompanyFundingEventsRow) UnsetIsBiomedical() {
+	o.IsBiomedical.Unset()
+}
+
 // GetCumulativeRaisedUsd returns the CumulativeRaisedUsd field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *CompanyFundingEventsRow) GetCumulativeRaisedUsd() float32 {
 	if o == nil || IsNil(o.CumulativeRaisedUsd.Get()) {
@@ -1126,6 +1170,9 @@ func (o CompanyFundingEventsRow) ToMap() (map[string]interface{}, error) {
 	if o.NAwards.IsSet() {
 		toSerialize["n_awards"] = o.NAwards.Get()
 	}
+	if o.IsBiomedical.IsSet() {
+		toSerialize["is_biomedical"] = o.IsBiomedical.Get()
+	}
 	if o.CumulativeRaisedUsd.IsSet() {
 		toSerialize["cumulative_raised_usd"] = o.CumulativeRaisedUsd.Get()
 	}
@@ -1175,6 +1222,7 @@ func (o *CompanyFundingEventsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "event_stage")
 		delete(additionalProperties, "administering_ic")
 		delete(additionalProperties, "n_awards")
+		delete(additionalProperties, "is_biomedical")
 		delete(additionalProperties, "cumulative_raised_usd")
 		delete(additionalProperties, "source_url")
 		o.AdditionalProperties = additionalProperties

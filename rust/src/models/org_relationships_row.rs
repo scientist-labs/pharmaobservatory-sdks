@@ -89,7 +89,7 @@ pub struct OrgRelationshipsRow {
     /// The credit line the source requires for the edge. Show it wherever the edge is shown: the Charity Commission and UK Research and Innovation edges require it under the Open Government Licence v3.0.
     #[serde(rename = "attribution", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub attribution: Option<Option<String>>,
-    /// Always none: every source behind these edges is open, and a test on the source assertions reports any restricted source that is ever added.
+    /// The tier vocabulary is none or licensable. Every row here is none: every source behind these edges is open, and a test on the source assertions reports any restricted source that is ever added.
     #[serde(rename = "restriction_tier", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub restriction_tier: Option<Option<String>>,
 }

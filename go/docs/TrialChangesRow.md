@@ -4,7 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TrialId** | Pointer to **NullableString** | The trial&#39;s ClinicalTrials.gov registry id (NCT, National Clinical Trial, number). | [optional] 
+**TrialId** | Pointer to **NullableString** | The trial&#39;s id: the ClinicalTrials.gov registry id (NCT, National Clinical Trial, number), or the WHO TrialID of a trial registered only with a WHO ICTRP member registry. | [optional] 
+**SourceRegistry** | Pointer to **NullableString** | The registry source of the trial: clinicaltrials or ictrp (a trial registered only with a WHO ICTRP member registry). | [optional] 
+**RestrictionTier** | Pointer to **NullableString** | none for a change to a ClinicalTrials.gov trial; licensable for a change to a WHO ICTRP trial, which only a caller holding the licensable tier receives. | [optional] 
 **ObservedAt** | Pointer to **NullableTime** | When the platform observed the change. | [optional] 
 **EventType** | Pointer to **NullableString** | The kind of event (first_seen, status_change and so on). | [optional] 
 **Field** | Pointer to **NullableString** | The record field that changed (null for a first_seen event). | [optional] 
@@ -69,6 +71,76 @@ HasTrialId returns a boolean if a field has been set.
 `func (o *TrialChangesRow) UnsetTrialId()`
 
 UnsetTrialId ensures that no value is present for TrialId, not even an explicit nil
+### GetSourceRegistry
+
+`func (o *TrialChangesRow) GetSourceRegistry() string`
+
+GetSourceRegistry returns the SourceRegistry field if non-nil, zero value otherwise.
+
+### GetSourceRegistryOk
+
+`func (o *TrialChangesRow) GetSourceRegistryOk() (*string, bool)`
+
+GetSourceRegistryOk returns a tuple with the SourceRegistry field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSourceRegistry
+
+`func (o *TrialChangesRow) SetSourceRegistry(v string)`
+
+SetSourceRegistry sets SourceRegistry field to given value.
+
+### HasSourceRegistry
+
+`func (o *TrialChangesRow) HasSourceRegistry() bool`
+
+HasSourceRegistry returns a boolean if a field has been set.
+
+### SetSourceRegistryNil
+
+`func (o *TrialChangesRow) SetSourceRegistryNil(b bool)`
+
+ SetSourceRegistryNil sets the value for SourceRegistry to be an explicit nil
+
+### UnsetSourceRegistry
+`func (o *TrialChangesRow) UnsetSourceRegistry()`
+
+UnsetSourceRegistry ensures that no value is present for SourceRegistry, not even an explicit nil
+### GetRestrictionTier
+
+`func (o *TrialChangesRow) GetRestrictionTier() string`
+
+GetRestrictionTier returns the RestrictionTier field if non-nil, zero value otherwise.
+
+### GetRestrictionTierOk
+
+`func (o *TrialChangesRow) GetRestrictionTierOk() (*string, bool)`
+
+GetRestrictionTierOk returns a tuple with the RestrictionTier field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRestrictionTier
+
+`func (o *TrialChangesRow) SetRestrictionTier(v string)`
+
+SetRestrictionTier sets RestrictionTier field to given value.
+
+### HasRestrictionTier
+
+`func (o *TrialChangesRow) HasRestrictionTier() bool`
+
+HasRestrictionTier returns a boolean if a field has been set.
+
+### SetRestrictionTierNil
+
+`func (o *TrialChangesRow) SetRestrictionTierNil(b bool)`
+
+ SetRestrictionTierNil sets the value for RestrictionTier to be an explicit nil
+
+### UnsetRestrictionTier
+`func (o *TrialChangesRow) UnsetRestrictionTier()`
+
+UnsetRestrictionTier ensures that no value is present for RestrictionTier, not even an explicit nil
 ### GetObservedAt
 
 `func (o *TrialChangesRow) GetObservedAt() time.Time`

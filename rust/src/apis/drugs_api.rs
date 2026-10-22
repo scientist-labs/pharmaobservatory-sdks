@@ -15,6 +15,30 @@ use crate::{apis::ResponseContent, models};
 use super::{Error, configuration, ContentType};
 
 
+/// struct for typed errors of method [`drugs_period_brand_companies`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DrugsPeriodBrandCompaniesError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`drugs_period_brand_revenue`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DrugsPeriodBrandRevenueError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`drugs_period_catalysts`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -43,6 +67,18 @@ pub enum DrugsPeriodDrugApprovalsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DrugsPeriodDrugAspCodesError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`drugs_period_drug_brands`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DrugsPeriodDrugBrandsError {
     Status400(models::QueryError),
     Status401(models::AuthError),
     Status403(models::AuthError),
@@ -171,10 +207,46 @@ pub enum DrugsPeriodDrugRegulatoryError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`drugs_period_drug_sites`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DrugsPeriodDrugSitesError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`drugs_period_drug_targets`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DrugsPeriodDrugTargetsError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`drugs_period_drug_trial_conditions`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DrugsPeriodDrugTrialConditionsError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`drugs_period_drug_trials`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DrugsPeriodDrugTrialsError {
     Status400(models::QueryError),
     Status401(models::AuthError),
     Status403(models::AuthError),
@@ -229,6 +301,18 @@ pub enum DrugsPeriodPdufaDatesError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`drugs_period_programs`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum DrugsPeriodProgramsError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`drugs_period_sec_pdufa_dates`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -253,6 +337,124 @@ pub enum DrugsPeriodTrialDrugsError {
     UnknownValue(serde_json::Value),
 }
 
+
+pub async fn drugs_period_brand_companies(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::BrandCompaniesResponse, Error<DrugsPeriodBrandCompaniesError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/drugs/{id}/brand_companies", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BrandCompaniesResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BrandCompaniesResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<DrugsPeriodBrandCompaniesError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn drugs_period_brand_revenue(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::BrandRevenueResponse, Error<DrugsPeriodBrandRevenueError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/drugs/{id}/brand_revenue", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BrandRevenueResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BrandRevenueResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<DrugsPeriodBrandRevenueError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
 
 pub async fn drugs_period_catalysts(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::CatalystsResponse, Error<DrugsPeriodCatalystsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
@@ -427,6 +629,65 @@ pub async fn drugs_period_drug_asp_codes(configuration: &configuration::Configur
     } else {
         let content = resp.text().await?;
         let entity: Option<DrugsPeriodDrugAspCodesError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn drugs_period_drug_brands(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::DrugBrandsResponse, Error<DrugsPeriodDrugBrandsError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/drugs/{id}/drug_brands", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DrugBrandsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DrugBrandsResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<DrugsPeriodDrugBrandsError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
@@ -1021,6 +1282,65 @@ pub async fn drugs_period_drug_regulatory(configuration: &configuration::Configu
     }
 }
 
+pub async fn drugs_period_drug_sites(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::DrugSitesResponse, Error<DrugsPeriodDrugSitesError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/drugs/{id}/drug_sites", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DrugSitesResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DrugSitesResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<DrugsPeriodDrugSitesError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
 pub async fn drugs_period_drug_targets(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::DrugTargetsResponse, Error<DrugsPeriodDrugTargetsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
@@ -1076,6 +1396,124 @@ pub async fn drugs_period_drug_targets(configuration: &configuration::Configurat
     } else {
         let content = resp.text().await?;
         let entity: Option<DrugsPeriodDrugTargetsError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn drugs_period_drug_trial_conditions(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::DrugTrialConditionsResponse, Error<DrugsPeriodDrugTrialConditionsError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/drugs/{id}/drug_trial_conditions", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DrugTrialConditionsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DrugTrialConditionsResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<DrugsPeriodDrugTrialConditionsError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn drugs_period_drug_trials(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::DrugTrialsResponse, Error<DrugsPeriodDrugTrialsError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/drugs/{id}/drug_trials", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DrugTrialsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DrugTrialsResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<DrugsPeriodDrugTrialsError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }
@@ -1291,6 +1729,65 @@ pub async fn drugs_period_pdufa_dates(configuration: &configuration::Configurati
     } else {
         let content = resp.text().await?;
         let entity: Option<DrugsPeriodPdufaDatesError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn drugs_period_programs(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::ProgramsResponse, Error<DrugsPeriodProgramsError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/drugs/{id}/programs", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ProgramsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ProgramsResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<DrugsPeriodProgramsError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }

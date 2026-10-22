@@ -1,0 +1,57 @@
+# RwdNetworksRow
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**network_id** | Option<**String**> | The register's own Network ID. The entry key of the rwd_networks object type. | [optional]
+**network_name** | Option<**String**> | The network's name as the register spells it. | [optional]
+**network_name_key** | Option<**String**> | The normalised name key the study and member edges join on. | [optional]
+**register_state** | Option<**String**> | self_registered_profile when the entry declares at least one of description, countries, therapeutic areas or funding source, catalogue_name_entry otherwise. is_encepp_partner is null on a catalogue name entry. | [optional]
+**is_self_registered_profile** | Option<**bool**> | True when registration_state is self_registered_profile. | [optional]
+**declared_profile_fields** | Option<**i32**> | How many of the declarable profile fields the entry answered. | [optional]
+**declarable_profile_fields** | Option<**i32**> | How many profile fields the register offers; the denominator of declared_profile_fields. | [optional]
+**network_countries** | Option<**String**> | The country text the network declares, as typed. | [optional]
+**primary_therapeutic_disease_areas** | Option<**String**> | The primary therapeutic and disease areas the network declares, as typed; blank on most networks, so a facet over it would remove the largest networks. | [optional]
+**has_declared_therapeutic_area** | Option<**bool**> | Whether the network declares a therapeutic area at all (the blank is the registrant's silence). | [optional]
+**sources_of_funding** | Option<**String**> | The sources of funding the network declares, as typed. | [optional]
+**network_website** | Option<**String**> | The network's website as the register holds it. | [optional]
+**catalogue_url** | Option<**String**> | The address of this entry on the HMA-EMA catalogue site (the register's URL LINK). | [optional]
+**is_encepp_partner** | Option<**bool**> | Whether the entry declares an ENCePP partnership; null on a catalogue name entry, where the export writes a default No that is not an answer. | [optional]
+**declared_member_count** | Option<**i32**> | How many member institutions the network's own list names; zero says the network named nobody, not that it has no members. | [optional]
+**declared_member_name_keys** | Option<**Vec<String>**> | The normalised name keys of the declared members. | [optional]
+**declared_member_names** | Option<**Vec<String>**> | The names of the declared members as the register spells them. | [optional]
+**lists_any_member** | Option<**bool**> | Whether the network's own list names at least one member. | [optional]
+**delivered_studies_lifetime** | Option<**i32**> | Distinct registered studies that named the network. Declared membership and delivered work are different facts and never share a column. | [optional]
+**delivered_studies_last_5_years** | Option<**i32**> | Delivered studies that started within five years of the snapshot. | [optional]
+**delivered_studies_ongoing** | Option<**i32**> | Delivered studies whose status is Ongoing. | [optional]
+**delivered_studies_planned** | Option<**i32**> | Delivered studies whose status is Planned. | [optional]
+**most_recent_study_start_on** | Option<[**String**](string.md)> | The latest actual start date among the studies it conducted (or delivered, for a network). | [optional]
+**record_updated_at** | Option<**String**> | When the registrant last edited this catalogue entry. A different clock from last_refreshed_on: it dates the web form, not the database. | [optional]
+**record_updated_is_mass_edit** | Option<**bool**> | True when the record's last update date is a mass-edit date: one shared by an outsized part of the register, so it dates a migration and not the registrant. | [optional]
+**record_updated_at_attested** | Option<**String**> | record_updated_at with the mass-edit dates removed (null for a mass-edit date or no timestamp): the column to sort a freshness question on. | [optional]
+**record_updated_date_share** | Option<**f64**> | The share of the register whose last update carries the same date, on every row so a mass-edit date is visible. | [optional]
+**record_first_published_at** | Option<**String**> | When the catalogue entry was first published. | [optional]
+**is_outdated** | Option<**bool**> | EMA's own Outdated flag, carried through untouched; the register flags none of the data sources, so read false as EMA's answer and not as a currency finding. | [optional]
+**network_register_total** | Option<**i32**> | The number of networks in the whole network register at the snapshot. | [optional]
+**networks_listing_any_member** | Option<**i32**> | How many register networks list at least one member. | [optional]
+**membership_edge_total** | Option<**i32**> | How many network-to-institution membership edges the member lists hold. | [optional]
+**institutions_in_any_member_list** | Option<**i32**> | How many register institutions at least one network member list names. | [optional]
+**institution_name_key_total** | Option<**i32**> | How many distinct institution name keys the register holds. | [optional]
+**networks_declaring_a_therapeutic_area** | Option<**i32**> | How many register networks declare a therapeutic area. | [optional]
+**networks_with_any_delivered_study** | Option<**i32**> | How many register networks at least one registered study named. | [optional]
+**self_registered_profile_total** | Option<**i32**> | How many register entries are self-registered profiles. | [optional]
+**catalogue_name_entry_total** | Option<**i32**> | How many register entries are catalogue name entries. | [optional]
+**self_registered_profile_encepp_yes_total** | Option<**i32**> | How many self-registered networks declare an ENCePP partnership. | [optional]
+**catalogue_name_entry_encepp_yes_total** | Option<**i32**> | How many catalogue name entries declare one (the mart nulls the declaration there, so this is the false-No check). | [optional]
+**register_source_count** | Option<**i32**> | The number of data sources in the whole data source register at the snapshot: the denominator every source count is over. Not a count of real-world data sources in the world. | [optional]
+**study_register_total** | Option<**i32**> | The number of studies in the whole study register at the snapshot. | [optional]
+**studies_naming_a_registered_source** | Option<**i32**> | How many registered studies name at least one data source that is itself registered; the denominator under study_count. | [optional]
+**snapshot_label** | Option<**String**> | The label of the catalogue snapshot the row was read from (a date). | [optional]
+**accessed_month** | Option<**String**> | The month and year the catalogue was accessed (YYYY-MM), which EMA's site asks to be cited with its URL. | [optional]
+**restriction_tier** | Option<**String**> | The license restriction tier of the row's source. Every row of this dataset is licensable (PROVISIONAL, legal read pending). | [optional]
+**attribution** | Option<**String**> | The attribution line EMA requires, including the catalogue URL and the access month; quote it with any figure taken from the row. | [optional]
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

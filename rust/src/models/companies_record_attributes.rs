@@ -15,12 +15,15 @@ use serde::{Deserialize, Serialize};
 pub struct CompaniesRecordAttributes {
     #[serde(rename = "company_funding_summary", skip_serializing_if = "Option::is_none")]
     pub company_funding_summary: Option<models::CompanyFundingSummaryRow>,
+    #[serde(rename = "company_trial_geography", skip_serializing_if = "Option::is_none")]
+    pub company_trial_geography: Option<models::CompanyTrialGeographyRow>,
 }
 
 impl CompaniesRecordAttributes {
     pub fn new() -> CompaniesRecordAttributes {
         CompaniesRecordAttributes {
             company_funding_summary: None,
+            company_trial_geography: None,
         }
     }
 }

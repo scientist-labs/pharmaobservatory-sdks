@@ -4,7 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**trial_id** | Option<**String**> | The trial's ClinicalTrials.gov registry id (NCT, National Clinical Trial, number). | [optional]
+**trial_id** | Option<**String**> | The trial's id: the ClinicalTrials.gov registry id (NCT, National Clinical Trial, number), or the WHO TrialID of a trial registered only with a WHO ICTRP member registry. | [optional]
+**source_registry** | Option<**String**> | The registry source of the trial: clinicaltrials or ictrp (a trial registered only with a WHO ICTRP member registry). | [optional]
+**restriction_tier** | Option<**String**> | none for a change to a ClinicalTrials.gov trial; licensable for a change to a WHO ICTRP trial, which only a caller holding the licensable tier receives. | [optional]
 **observed_at** | Option<**String**> | When the platform observed the change. | [optional]
 **event_type** | Option<**String**> | The kind of event (first_seen, status_change and so on). | [optional]
 **field** | Option<**String**> | The record field that changed (null for a first_seen event). | [optional]

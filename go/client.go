@@ -63,6 +63,8 @@ type APIClient struct {
 
 	DrugsAPI *DrugsAPIService
 
+	HospitalsAPI *HospitalsAPIService
+
 	InvestorsAPI *InvestorsAPIService
 
 	LegalEntitiesAPI *LegalEntitiesAPIService
@@ -70,6 +72,20 @@ type APIClient struct {
 	ManagersAPI *ManagersAPIService
 
 	QueryAPI *QueryAPIService
+
+	RareDiseasesAPI *RareDiseasesAPIService
+
+	RwdConductorsAPI *RwdConductorsAPIService
+
+	RwdInstitutionsAPI *RwdInstitutionsAPIService
+
+	RwdNetworksAPI *RwdNetworksAPIService
+
+	RwdRegistersAPI *RwdRegistersAPIService
+
+	RwdSourcesAPI *RwdSourcesAPIService
+
+	RwdStudiesAPI *RwdStudiesAPIService
 
 	SitesAPI *SitesAPIService
 
@@ -103,10 +119,18 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.ConditionsAPI = (*ConditionsAPIService)(&c.common)
 	c.DatasetsAPI = (*DatasetsAPIService)(&c.common)
 	c.DrugsAPI = (*DrugsAPIService)(&c.common)
+	c.HospitalsAPI = (*HospitalsAPIService)(&c.common)
 	c.InvestorsAPI = (*InvestorsAPIService)(&c.common)
 	c.LegalEntitiesAPI = (*LegalEntitiesAPIService)(&c.common)
 	c.ManagersAPI = (*ManagersAPIService)(&c.common)
 	c.QueryAPI = (*QueryAPIService)(&c.common)
+	c.RareDiseasesAPI = (*RareDiseasesAPIService)(&c.common)
+	c.RwdConductorsAPI = (*RwdConductorsAPIService)(&c.common)
+	c.RwdInstitutionsAPI = (*RwdInstitutionsAPIService)(&c.common)
+	c.RwdNetworksAPI = (*RwdNetworksAPIService)(&c.common)
+	c.RwdRegistersAPI = (*RwdRegistersAPIService)(&c.common)
+	c.RwdSourcesAPI = (*RwdSourcesAPIService)(&c.common)
+	c.RwdStudiesAPI = (*RwdStudiesAPIService)(&c.common)
 	c.SitesAPI = (*SitesAPIService)(&c.common)
 	c.SuppliersAPI = (*SuppliersAPIService)(&c.common)
 	c.TargetsAPI = (*TargetsAPIService)(&c.common)

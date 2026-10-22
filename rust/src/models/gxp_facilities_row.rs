@@ -17,6 +17,12 @@ pub struct GxpFacilitiesRow {
     /// The canonical facility id.
     #[serde(rename = "facility_key", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub facility_key: Option<Option<String>>,
+    /// The registry of the lead member record. Provenance and a facet, never a join key.
+    #[serde(rename = "registry", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub registry: Option<Option<String>>,
+    /// The lead registry's own site id (FEI, EudraGMDP site key, Health Canada location id).
+    #[serde(rename = "registry_native_site_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub registry_native_site_id: Option<Option<String>>,
     /// The registry records the facility is made of, each as registry:native site id (for example fda_fei:3004123456), sorted.
     #[serde(rename = "registry_facility_keys", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub registry_facility_keys: Option<Option<Vec<String>>>,
@@ -116,6 +122,9 @@ pub struct GxpFacilitiesRow {
     /// The in-force site-scope severity: no_signal, clean, advisory, action or non_compliant.
     #[serde(rename = "severity_level", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub severity_level: Option<Option<String>>,
+    /// site when a site-scope verdict set the severity rank, none when nothing did. Never org.
+    #[serde(rename = "severity_scope", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub severity_scope: Option<Option<String>>,
     /// The regulator behind the severity: fda, ema, health_canada or mhra.
     #[serde(rename = "severity_source", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub severity_source: Option<Option<String>>,
@@ -128,24 +137,48 @@ pub struct GxpFacilitiesRow {
     /// The date of the signal behind the severity.
     #[serde(rename = "severity_signal_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub severity_signal_date: Option<Option<String>>,
+    /// The source page of the signal that set the severity.
+    #[serde(rename = "severity_source_url", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub severity_source_url: Option<Option<String>>,
     /// The highest site-scope severity the facility has ever had, 0 to 4.
     #[serde(rename = "worst_severity_rank_ever", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub worst_severity_rank_ever: Option<Option<i32>>,
     /// The worst severity ever: no_signal, clean, advisory, action or non_compliant.
     #[serde(rename = "worst_severity_level_ever", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub worst_severity_level_ever: Option<Option<String>>,
+    /// The regulator's own verdict word behind the worst severity ever.
+    #[serde(rename = "worst_severity_raw_verdict", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub worst_severity_raw_verdict: Option<Option<String>>,
+    /// The date of the signal behind the worst severity ever.
+    #[serde(rename = "worst_severity_signal_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub worst_severity_signal_date: Option<Option<String>>,
     /// True when the facility has any quality signal.
     #[serde(rename = "has_quality_signal", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub has_quality_signal: Option<Option<bool>>,
+    /// True when a signal is about this site itself.
+    #[serde(rename = "has_site_scope_signal", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub has_site_scope_signal: Option<Option<bool>>,
+    /// True when a signal is about the operating firm.
+    #[serde(rename = "has_org_scope_signal", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub has_org_scope_signal: Option<Option<bool>>,
     /// The date of the latest signal of any scope.
     #[serde(rename = "latest_signal_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub latest_signal_date: Option<Option<String>>,
+    /// The date of the earliest dated signal of any scope.
+    #[serde(rename = "first_signal_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub first_signal_date: Option<Option<String>>,
     /// Signals of any scope, all time.
     #[serde(rename = "n_signals_total", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_signals_total: Option<Option<i32>>,
     /// Signals in the last 365 days of the build.
     #[serde(rename = "n_signals_365d", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_signals_365d: Option<Option<i32>>,
+    /// Signals in the last 1,095 days of the build.
+    #[serde(rename = "n_signals_1095d", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_signals_1095d: Option<Option<i32>>,
+    /// Signals in the last 1,825 days of the build.
+    #[serde(rename = "n_signals_1825d", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_signals_1825d: Option<Option<i32>>,
     /// Inspections of the site by any regulator.
     #[serde(rename = "n_inspections", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_inspections: Option<Option<i32>>,
@@ -225,6 +258,8 @@ impl GxpFacilitiesRow {
     pub fn new() -> GxpFacilitiesRow {
         GxpFacilitiesRow {
             facility_key: None,
+            registry: None,
+            registry_native_site_id: None,
             registry_facility_keys: None,
             facility_name: None,
             member_count: None,
@@ -258,16 +293,25 @@ impl GxpFacilitiesRow {
             org_regulators: None,
             severity_rank: None,
             severity_level: None,
+            severity_scope: None,
             severity_source: None,
             severity_signal_type: None,
             severity_raw_verdict: None,
             severity_signal_date: None,
+            severity_source_url: None,
             worst_severity_rank_ever: None,
             worst_severity_level_ever: None,
+            worst_severity_raw_verdict: None,
+            worst_severity_signal_date: None,
             has_quality_signal: None,
+            has_site_scope_signal: None,
+            has_org_scope_signal: None,
             latest_signal_date: None,
+            first_signal_date: None,
             n_signals_total: None,
             n_signals_365d: None,
+            n_signals_1095d: None,
+            n_signals_1825d: None,
             n_inspections: None,
             latest_inspection_date: None,
             n_fda_inspections: None,

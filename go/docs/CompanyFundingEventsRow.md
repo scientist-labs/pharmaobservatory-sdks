@@ -25,6 +25,7 @@ Name | Type | Description | Notes
 **EventStage** | Pointer to **NullableString** | The lifecycle stage the event&#39;s date refers to (for example sold_to_date, funded, closed, registered, announced). | [optional] 
 **AdministeringIc** | Pointer to **NullableString** | The National Institutes of Health institute or center that administers the grant (for example CA for the National Cancer Institute); null for the other sources. | [optional] 
 **NAwards** | Pointer to **NullableInt64** | Grant applications folded into the event; 1 for the other sources. | [optional] 
+**IsBiomedical** | Pointer to **NullableBool** | Whether the event is life-sciences capital: a grant is always true, a Regulation D offering follows the filer&#39;s self-declared industry group, and an extracted financing follows the filer&#39;s SIC code. Never null; a filer that cannot be classified is false. | [optional] 
 **CumulativeRaisedUsd** | Pointer to **NullableFloat32** | The running total of disclosed amounts over the company&#39;s own events up to and including this one, in date order; null where the event has no company. | [optional] 
 **SourceUrl** | Pointer to **NullableString** | Link to the filing the event was read from, where the source has one. | [optional] 
 
@@ -782,6 +783,41 @@ HasNAwards returns a boolean if a field has been set.
 `func (o *CompanyFundingEventsRow) UnsetNAwards()`
 
 UnsetNAwards ensures that no value is present for NAwards, not even an explicit nil
+### GetIsBiomedical
+
+`func (o *CompanyFundingEventsRow) GetIsBiomedical() bool`
+
+GetIsBiomedical returns the IsBiomedical field if non-nil, zero value otherwise.
+
+### GetIsBiomedicalOk
+
+`func (o *CompanyFundingEventsRow) GetIsBiomedicalOk() (*bool, bool)`
+
+GetIsBiomedicalOk returns a tuple with the IsBiomedical field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsBiomedical
+
+`func (o *CompanyFundingEventsRow) SetIsBiomedical(v bool)`
+
+SetIsBiomedical sets IsBiomedical field to given value.
+
+### HasIsBiomedical
+
+`func (o *CompanyFundingEventsRow) HasIsBiomedical() bool`
+
+HasIsBiomedical returns a boolean if a field has been set.
+
+### SetIsBiomedicalNil
+
+`func (o *CompanyFundingEventsRow) SetIsBiomedicalNil(b bool)`
+
+ SetIsBiomedicalNil sets the value for IsBiomedical to be an explicit nil
+
+### UnsetIsBiomedical
+`func (o *CompanyFundingEventsRow) UnsetIsBiomedical()`
+
+UnsetIsBiomedical ensures that no value is present for IsBiomedical, not even an explicit nil
 ### GetCumulativeRaisedUsd
 
 `func (o *CompanyFundingEventsRow) GetCumulativeRaisedUsd() float32`

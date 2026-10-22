@@ -4,7 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**trial_id** | Option<**String**> | The trial's ClinicalTrials.gov registry id (NCT, National Clinical Trial, number). | [optional]
+**trial_id** | Option<**String**> | The trial's id: the ClinicalTrials.gov registry id (NCT, National Clinical Trial, number), or the WHO TrialID of a trial registered only with a WHO ICTRP member registry. | [optional]
+**nct_id** | Option<**String**> | The ClinicalTrials.gov registry id; null for a trial registered only with a WHO ICTRP member registry. | [optional]
+**source_registry** | Option<**String**> | The registry source of the row: clinicaltrials or ictrp (a trial registered only with a WHO ICTRP member registry). | [optional]
+**registry** | Option<**String**> | The registry that holds the record: NCT for ClinicalTrials.gov, or a WHO ICTRP member registry (ChiCTR, ISRCTN, CTIS, ACTRN, NL, KCT, EUCTR and so on). | [optional]
+**restriction_tier** | Option<**String**> | none for a ClinicalTrials.gov trial; licensable for a WHO ICTRP trial, which only a caller holding the licensable tier receives. | [optional]
 **brief_title** | Option<**String**> | The trial's brief title. | [optional]
 **official_title** | Option<**String**> | The trial's official title. | [optional]
 **study_type** | Option<**String**> | INTERVENTIONAL, OBSERVATIONAL or EXPANDED_ACCESS. | [optional]

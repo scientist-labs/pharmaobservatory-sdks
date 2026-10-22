@@ -4,7 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TrialId** | Pointer to **NullableString** | The trial&#39;s ClinicalTrials.gov registry id (NCT, National Clinical Trial, number). | [optional] 
+**TrialId** | Pointer to **NullableString** | The trial&#39;s id: the ClinicalTrials.gov registry id (NCT, National Clinical Trial, number), or the WHO TrialID of a trial registered only with a WHO ICTRP member registry. | [optional] 
+**NctId** | Pointer to **NullableString** | The ClinicalTrials.gov registry id; null for a trial registered only with a WHO ICTRP member registry. | [optional] 
+**SourceRegistry** | Pointer to **NullableString** | The registry source of the row: clinicaltrials or ictrp (a trial registered only with a WHO ICTRP member registry). | [optional] 
+**Registry** | Pointer to **NullableString** | The registry that holds the record: NCT for ClinicalTrials.gov, or a WHO ICTRP member registry (ChiCTR, ISRCTN, CTIS, ACTRN, NL, KCT, EUCTR and so on). | [optional] 
+**RestrictionTier** | Pointer to **NullableString** | none for a ClinicalTrials.gov trial; licensable for a WHO ICTRP trial, which only a caller holding the licensable tier receives. | [optional] 
 **BriefTitle** | Pointer to **NullableString** | The trial&#39;s brief title. | [optional] 
 **OfficialTitle** | Pointer to **NullableString** | The trial&#39;s official title. | [optional] 
 **StudyType** | Pointer to **NullableString** | INTERVENTIONAL, OBSERVATIONAL or EXPANDED_ACCESS. | [optional] 
@@ -109,6 +113,146 @@ HasTrialId returns a boolean if a field has been set.
 `func (o *TrialsRow) UnsetTrialId()`
 
 UnsetTrialId ensures that no value is present for TrialId, not even an explicit nil
+### GetNctId
+
+`func (o *TrialsRow) GetNctId() string`
+
+GetNctId returns the NctId field if non-nil, zero value otherwise.
+
+### GetNctIdOk
+
+`func (o *TrialsRow) GetNctIdOk() (*string, bool)`
+
+GetNctIdOk returns a tuple with the NctId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNctId
+
+`func (o *TrialsRow) SetNctId(v string)`
+
+SetNctId sets NctId field to given value.
+
+### HasNctId
+
+`func (o *TrialsRow) HasNctId() bool`
+
+HasNctId returns a boolean if a field has been set.
+
+### SetNctIdNil
+
+`func (o *TrialsRow) SetNctIdNil(b bool)`
+
+ SetNctIdNil sets the value for NctId to be an explicit nil
+
+### UnsetNctId
+`func (o *TrialsRow) UnsetNctId()`
+
+UnsetNctId ensures that no value is present for NctId, not even an explicit nil
+### GetSourceRegistry
+
+`func (o *TrialsRow) GetSourceRegistry() string`
+
+GetSourceRegistry returns the SourceRegistry field if non-nil, zero value otherwise.
+
+### GetSourceRegistryOk
+
+`func (o *TrialsRow) GetSourceRegistryOk() (*string, bool)`
+
+GetSourceRegistryOk returns a tuple with the SourceRegistry field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSourceRegistry
+
+`func (o *TrialsRow) SetSourceRegistry(v string)`
+
+SetSourceRegistry sets SourceRegistry field to given value.
+
+### HasSourceRegistry
+
+`func (o *TrialsRow) HasSourceRegistry() bool`
+
+HasSourceRegistry returns a boolean if a field has been set.
+
+### SetSourceRegistryNil
+
+`func (o *TrialsRow) SetSourceRegistryNil(b bool)`
+
+ SetSourceRegistryNil sets the value for SourceRegistry to be an explicit nil
+
+### UnsetSourceRegistry
+`func (o *TrialsRow) UnsetSourceRegistry()`
+
+UnsetSourceRegistry ensures that no value is present for SourceRegistry, not even an explicit nil
+### GetRegistry
+
+`func (o *TrialsRow) GetRegistry() string`
+
+GetRegistry returns the Registry field if non-nil, zero value otherwise.
+
+### GetRegistryOk
+
+`func (o *TrialsRow) GetRegistryOk() (*string, bool)`
+
+GetRegistryOk returns a tuple with the Registry field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRegistry
+
+`func (o *TrialsRow) SetRegistry(v string)`
+
+SetRegistry sets Registry field to given value.
+
+### HasRegistry
+
+`func (o *TrialsRow) HasRegistry() bool`
+
+HasRegistry returns a boolean if a field has been set.
+
+### SetRegistryNil
+
+`func (o *TrialsRow) SetRegistryNil(b bool)`
+
+ SetRegistryNil sets the value for Registry to be an explicit nil
+
+### UnsetRegistry
+`func (o *TrialsRow) UnsetRegistry()`
+
+UnsetRegistry ensures that no value is present for Registry, not even an explicit nil
+### GetRestrictionTier
+
+`func (o *TrialsRow) GetRestrictionTier() string`
+
+GetRestrictionTier returns the RestrictionTier field if non-nil, zero value otherwise.
+
+### GetRestrictionTierOk
+
+`func (o *TrialsRow) GetRestrictionTierOk() (*string, bool)`
+
+GetRestrictionTierOk returns a tuple with the RestrictionTier field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRestrictionTier
+
+`func (o *TrialsRow) SetRestrictionTier(v string)`
+
+SetRestrictionTier sets RestrictionTier field to given value.
+
+### HasRestrictionTier
+
+`func (o *TrialsRow) HasRestrictionTier() bool`
+
+HasRestrictionTier returns a boolean if a field has been set.
+
+### SetRestrictionTierNil
+
+`func (o *TrialsRow) SetRestrictionTierNil(b bool)`
+
+ SetRestrictionTierNil sets the value for RestrictionTier to be an explicit nil
+
+### UnsetRestrictionTier
+`func (o *TrialsRow) UnsetRestrictionTier()`
+
+UnsetRestrictionTier ensures that no value is present for RestrictionTier, not even an explicit nil
 ### GetBriefTitle
 
 `func (o *TrialsRow) GetBriefTitle() string`

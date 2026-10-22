@@ -5,6 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **FacilityKey** | Pointer to **NullableString** | The canonical facility id. | [optional] 
+**Registry** | Pointer to **NullableString** | The registry of the lead member record. Provenance and a facet, never a join key. | [optional] 
+**RegistryNativeSiteId** | Pointer to **NullableString** | The lead registry&#39;s own site id (FEI, EudraGMDP site key, Health Canada location id). | [optional] 
 **RegistryFacilityKeys** | Pointer to **[]string** | The registry records the facility is made of, each as registry:native site id (for example fda_fei:3004123456), sorted. | [optional] 
 **FacilityName** | Pointer to **NullableString** | The facility&#39;s name. | [optional] 
 **MemberCount** | Pointer to **NullableInt64** | How many registry records are clustered into the facility. | [optional] 
@@ -38,16 +40,25 @@ Name | Type | Description | Notes
 **OrgRegulators** | Pointer to **[]string** | The regulators holding an organization-level record for the operating firm (this carries the UK MHRA leg). | [optional] 
 **SeverityRank** | Pointer to **NullableInt32** | The in-force site-scope severity, 0 (no signal) to 4 (non-compliant). | [optional] 
 **SeverityLevel** | Pointer to **NullableString** | The in-force site-scope severity: no_signal, clean, advisory, action or non_compliant. | [optional] 
+**SeverityScope** | Pointer to **NullableString** | site when a site-scope verdict set the severity rank, none when nothing did. Never org. | [optional] 
 **SeveritySource** | Pointer to **NullableString** | The regulator behind the severity: fda, ema, health_canada or mhra. | [optional] 
 **SeveritySignalType** | Pointer to **NullableString** | The kind of signal behind the severity (for example an inspection classification). | [optional] 
 **SeverityRawVerdict** | Pointer to **NullableString** | The regulator&#39;s own verdict behind the severity (for example OAI). | [optional] 
 **SeveritySignalDate** | Pointer to **NullableString** | The date of the signal behind the severity. | [optional] 
+**SeveritySourceUrl** | Pointer to **NullableString** | The source page of the signal that set the severity. | [optional] 
 **WorstSeverityRankEver** | Pointer to **NullableInt32** | The highest site-scope severity the facility has ever had, 0 to 4. | [optional] 
 **WorstSeverityLevelEver** | Pointer to **NullableString** | The worst severity ever: no_signal, clean, advisory, action or non_compliant. | [optional] 
+**WorstSeverityRawVerdict** | Pointer to **NullableString** | The regulator&#39;s own verdict word behind the worst severity ever. | [optional] 
+**WorstSeveritySignalDate** | Pointer to **NullableString** | The date of the signal behind the worst severity ever. | [optional] 
 **HasQualitySignal** | Pointer to **NullableBool** | True when the facility has any quality signal. | [optional] 
+**HasSiteScopeSignal** | Pointer to **NullableBool** | True when a signal is about this site itself. | [optional] 
+**HasOrgScopeSignal** | Pointer to **NullableBool** | True when a signal is about the operating firm. | [optional] 
 **LatestSignalDate** | Pointer to **NullableString** | The date of the latest signal of any scope. | [optional] 
+**FirstSignalDate** | Pointer to **NullableString** | The date of the earliest dated signal of any scope. | [optional] 
 **NSignalsTotal** | Pointer to **NullableInt32** | Signals of any scope, all time. | [optional] 
 **NSignals365d** | Pointer to **NullableInt32** | Signals in the last 365 days of the build. | [optional] 
+**NSignals1095d** | Pointer to **NullableInt32** | Signals in the last 1,095 days of the build. | [optional] 
+**NSignals1825d** | Pointer to **NullableInt32** | Signals in the last 1,825 days of the build. | [optional] 
 **NInspections** | Pointer to **NullableInt32** | Inspections of the site by any regulator. | [optional] 
 **LatestInspectionDate** | Pointer to **NullableString** | The date of the latest inspection by any regulator. | [optional] 
 **NFdaInspections** | Pointer to **NullableInt32** | FDA inspections of the site. | [optional] 
@@ -127,6 +138,76 @@ HasFacilityKey returns a boolean if a field has been set.
 `func (o *GxpFacilitiesRow) UnsetFacilityKey()`
 
 UnsetFacilityKey ensures that no value is present for FacilityKey, not even an explicit nil
+### GetRegistry
+
+`func (o *GxpFacilitiesRow) GetRegistry() string`
+
+GetRegistry returns the Registry field if non-nil, zero value otherwise.
+
+### GetRegistryOk
+
+`func (o *GxpFacilitiesRow) GetRegistryOk() (*string, bool)`
+
+GetRegistryOk returns a tuple with the Registry field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRegistry
+
+`func (o *GxpFacilitiesRow) SetRegistry(v string)`
+
+SetRegistry sets Registry field to given value.
+
+### HasRegistry
+
+`func (o *GxpFacilitiesRow) HasRegistry() bool`
+
+HasRegistry returns a boolean if a field has been set.
+
+### SetRegistryNil
+
+`func (o *GxpFacilitiesRow) SetRegistryNil(b bool)`
+
+ SetRegistryNil sets the value for Registry to be an explicit nil
+
+### UnsetRegistry
+`func (o *GxpFacilitiesRow) UnsetRegistry()`
+
+UnsetRegistry ensures that no value is present for Registry, not even an explicit nil
+### GetRegistryNativeSiteId
+
+`func (o *GxpFacilitiesRow) GetRegistryNativeSiteId() string`
+
+GetRegistryNativeSiteId returns the RegistryNativeSiteId field if non-nil, zero value otherwise.
+
+### GetRegistryNativeSiteIdOk
+
+`func (o *GxpFacilitiesRow) GetRegistryNativeSiteIdOk() (*string, bool)`
+
+GetRegistryNativeSiteIdOk returns a tuple with the RegistryNativeSiteId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRegistryNativeSiteId
+
+`func (o *GxpFacilitiesRow) SetRegistryNativeSiteId(v string)`
+
+SetRegistryNativeSiteId sets RegistryNativeSiteId field to given value.
+
+### HasRegistryNativeSiteId
+
+`func (o *GxpFacilitiesRow) HasRegistryNativeSiteId() bool`
+
+HasRegistryNativeSiteId returns a boolean if a field has been set.
+
+### SetRegistryNativeSiteIdNil
+
+`func (o *GxpFacilitiesRow) SetRegistryNativeSiteIdNil(b bool)`
+
+ SetRegistryNativeSiteIdNil sets the value for RegistryNativeSiteId to be an explicit nil
+
+### UnsetRegistryNativeSiteId
+`func (o *GxpFacilitiesRow) UnsetRegistryNativeSiteId()`
+
+UnsetRegistryNativeSiteId ensures that no value is present for RegistryNativeSiteId, not even an explicit nil
 ### GetRegistryFacilityKeys
 
 `func (o *GxpFacilitiesRow) GetRegistryFacilityKeys() []string`
@@ -1282,6 +1363,41 @@ HasSeverityLevel returns a boolean if a field has been set.
 `func (o *GxpFacilitiesRow) UnsetSeverityLevel()`
 
 UnsetSeverityLevel ensures that no value is present for SeverityLevel, not even an explicit nil
+### GetSeverityScope
+
+`func (o *GxpFacilitiesRow) GetSeverityScope() string`
+
+GetSeverityScope returns the SeverityScope field if non-nil, zero value otherwise.
+
+### GetSeverityScopeOk
+
+`func (o *GxpFacilitiesRow) GetSeverityScopeOk() (*string, bool)`
+
+GetSeverityScopeOk returns a tuple with the SeverityScope field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSeverityScope
+
+`func (o *GxpFacilitiesRow) SetSeverityScope(v string)`
+
+SetSeverityScope sets SeverityScope field to given value.
+
+### HasSeverityScope
+
+`func (o *GxpFacilitiesRow) HasSeverityScope() bool`
+
+HasSeverityScope returns a boolean if a field has been set.
+
+### SetSeverityScopeNil
+
+`func (o *GxpFacilitiesRow) SetSeverityScopeNil(b bool)`
+
+ SetSeverityScopeNil sets the value for SeverityScope to be an explicit nil
+
+### UnsetSeverityScope
+`func (o *GxpFacilitiesRow) UnsetSeverityScope()`
+
+UnsetSeverityScope ensures that no value is present for SeverityScope, not even an explicit nil
 ### GetSeveritySource
 
 `func (o *GxpFacilitiesRow) GetSeveritySource() string`
@@ -1422,6 +1538,41 @@ HasSeveritySignalDate returns a boolean if a field has been set.
 `func (o *GxpFacilitiesRow) UnsetSeveritySignalDate()`
 
 UnsetSeveritySignalDate ensures that no value is present for SeveritySignalDate, not even an explicit nil
+### GetSeveritySourceUrl
+
+`func (o *GxpFacilitiesRow) GetSeveritySourceUrl() string`
+
+GetSeveritySourceUrl returns the SeveritySourceUrl field if non-nil, zero value otherwise.
+
+### GetSeveritySourceUrlOk
+
+`func (o *GxpFacilitiesRow) GetSeveritySourceUrlOk() (*string, bool)`
+
+GetSeveritySourceUrlOk returns a tuple with the SeveritySourceUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSeveritySourceUrl
+
+`func (o *GxpFacilitiesRow) SetSeveritySourceUrl(v string)`
+
+SetSeveritySourceUrl sets SeveritySourceUrl field to given value.
+
+### HasSeveritySourceUrl
+
+`func (o *GxpFacilitiesRow) HasSeveritySourceUrl() bool`
+
+HasSeveritySourceUrl returns a boolean if a field has been set.
+
+### SetSeveritySourceUrlNil
+
+`func (o *GxpFacilitiesRow) SetSeveritySourceUrlNil(b bool)`
+
+ SetSeveritySourceUrlNil sets the value for SeveritySourceUrl to be an explicit nil
+
+### UnsetSeveritySourceUrl
+`func (o *GxpFacilitiesRow) UnsetSeveritySourceUrl()`
+
+UnsetSeveritySourceUrl ensures that no value is present for SeveritySourceUrl, not even an explicit nil
 ### GetWorstSeverityRankEver
 
 `func (o *GxpFacilitiesRow) GetWorstSeverityRankEver() int32`
@@ -1492,6 +1643,76 @@ HasWorstSeverityLevelEver returns a boolean if a field has been set.
 `func (o *GxpFacilitiesRow) UnsetWorstSeverityLevelEver()`
 
 UnsetWorstSeverityLevelEver ensures that no value is present for WorstSeverityLevelEver, not even an explicit nil
+### GetWorstSeverityRawVerdict
+
+`func (o *GxpFacilitiesRow) GetWorstSeverityRawVerdict() string`
+
+GetWorstSeverityRawVerdict returns the WorstSeverityRawVerdict field if non-nil, zero value otherwise.
+
+### GetWorstSeverityRawVerdictOk
+
+`func (o *GxpFacilitiesRow) GetWorstSeverityRawVerdictOk() (*string, bool)`
+
+GetWorstSeverityRawVerdictOk returns a tuple with the WorstSeverityRawVerdict field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWorstSeverityRawVerdict
+
+`func (o *GxpFacilitiesRow) SetWorstSeverityRawVerdict(v string)`
+
+SetWorstSeverityRawVerdict sets WorstSeverityRawVerdict field to given value.
+
+### HasWorstSeverityRawVerdict
+
+`func (o *GxpFacilitiesRow) HasWorstSeverityRawVerdict() bool`
+
+HasWorstSeverityRawVerdict returns a boolean if a field has been set.
+
+### SetWorstSeverityRawVerdictNil
+
+`func (o *GxpFacilitiesRow) SetWorstSeverityRawVerdictNil(b bool)`
+
+ SetWorstSeverityRawVerdictNil sets the value for WorstSeverityRawVerdict to be an explicit nil
+
+### UnsetWorstSeverityRawVerdict
+`func (o *GxpFacilitiesRow) UnsetWorstSeverityRawVerdict()`
+
+UnsetWorstSeverityRawVerdict ensures that no value is present for WorstSeverityRawVerdict, not even an explicit nil
+### GetWorstSeveritySignalDate
+
+`func (o *GxpFacilitiesRow) GetWorstSeveritySignalDate() string`
+
+GetWorstSeveritySignalDate returns the WorstSeveritySignalDate field if non-nil, zero value otherwise.
+
+### GetWorstSeveritySignalDateOk
+
+`func (o *GxpFacilitiesRow) GetWorstSeveritySignalDateOk() (*string, bool)`
+
+GetWorstSeveritySignalDateOk returns a tuple with the WorstSeveritySignalDate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWorstSeveritySignalDate
+
+`func (o *GxpFacilitiesRow) SetWorstSeveritySignalDate(v string)`
+
+SetWorstSeveritySignalDate sets WorstSeveritySignalDate field to given value.
+
+### HasWorstSeveritySignalDate
+
+`func (o *GxpFacilitiesRow) HasWorstSeveritySignalDate() bool`
+
+HasWorstSeveritySignalDate returns a boolean if a field has been set.
+
+### SetWorstSeveritySignalDateNil
+
+`func (o *GxpFacilitiesRow) SetWorstSeveritySignalDateNil(b bool)`
+
+ SetWorstSeveritySignalDateNil sets the value for WorstSeveritySignalDate to be an explicit nil
+
+### UnsetWorstSeveritySignalDate
+`func (o *GxpFacilitiesRow) UnsetWorstSeveritySignalDate()`
+
+UnsetWorstSeveritySignalDate ensures that no value is present for WorstSeveritySignalDate, not even an explicit nil
 ### GetHasQualitySignal
 
 `func (o *GxpFacilitiesRow) GetHasQualitySignal() bool`
@@ -1527,6 +1748,76 @@ HasHasQualitySignal returns a boolean if a field has been set.
 `func (o *GxpFacilitiesRow) UnsetHasQualitySignal()`
 
 UnsetHasQualitySignal ensures that no value is present for HasQualitySignal, not even an explicit nil
+### GetHasSiteScopeSignal
+
+`func (o *GxpFacilitiesRow) GetHasSiteScopeSignal() bool`
+
+GetHasSiteScopeSignal returns the HasSiteScopeSignal field if non-nil, zero value otherwise.
+
+### GetHasSiteScopeSignalOk
+
+`func (o *GxpFacilitiesRow) GetHasSiteScopeSignalOk() (*bool, bool)`
+
+GetHasSiteScopeSignalOk returns a tuple with the HasSiteScopeSignal field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHasSiteScopeSignal
+
+`func (o *GxpFacilitiesRow) SetHasSiteScopeSignal(v bool)`
+
+SetHasSiteScopeSignal sets HasSiteScopeSignal field to given value.
+
+### HasHasSiteScopeSignal
+
+`func (o *GxpFacilitiesRow) HasHasSiteScopeSignal() bool`
+
+HasHasSiteScopeSignal returns a boolean if a field has been set.
+
+### SetHasSiteScopeSignalNil
+
+`func (o *GxpFacilitiesRow) SetHasSiteScopeSignalNil(b bool)`
+
+ SetHasSiteScopeSignalNil sets the value for HasSiteScopeSignal to be an explicit nil
+
+### UnsetHasSiteScopeSignal
+`func (o *GxpFacilitiesRow) UnsetHasSiteScopeSignal()`
+
+UnsetHasSiteScopeSignal ensures that no value is present for HasSiteScopeSignal, not even an explicit nil
+### GetHasOrgScopeSignal
+
+`func (o *GxpFacilitiesRow) GetHasOrgScopeSignal() bool`
+
+GetHasOrgScopeSignal returns the HasOrgScopeSignal field if non-nil, zero value otherwise.
+
+### GetHasOrgScopeSignalOk
+
+`func (o *GxpFacilitiesRow) GetHasOrgScopeSignalOk() (*bool, bool)`
+
+GetHasOrgScopeSignalOk returns a tuple with the HasOrgScopeSignal field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHasOrgScopeSignal
+
+`func (o *GxpFacilitiesRow) SetHasOrgScopeSignal(v bool)`
+
+SetHasOrgScopeSignal sets HasOrgScopeSignal field to given value.
+
+### HasHasOrgScopeSignal
+
+`func (o *GxpFacilitiesRow) HasHasOrgScopeSignal() bool`
+
+HasHasOrgScopeSignal returns a boolean if a field has been set.
+
+### SetHasOrgScopeSignalNil
+
+`func (o *GxpFacilitiesRow) SetHasOrgScopeSignalNil(b bool)`
+
+ SetHasOrgScopeSignalNil sets the value for HasOrgScopeSignal to be an explicit nil
+
+### UnsetHasOrgScopeSignal
+`func (o *GxpFacilitiesRow) UnsetHasOrgScopeSignal()`
+
+UnsetHasOrgScopeSignal ensures that no value is present for HasOrgScopeSignal, not even an explicit nil
 ### GetLatestSignalDate
 
 `func (o *GxpFacilitiesRow) GetLatestSignalDate() string`
@@ -1562,6 +1853,41 @@ HasLatestSignalDate returns a boolean if a field has been set.
 `func (o *GxpFacilitiesRow) UnsetLatestSignalDate()`
 
 UnsetLatestSignalDate ensures that no value is present for LatestSignalDate, not even an explicit nil
+### GetFirstSignalDate
+
+`func (o *GxpFacilitiesRow) GetFirstSignalDate() string`
+
+GetFirstSignalDate returns the FirstSignalDate field if non-nil, zero value otherwise.
+
+### GetFirstSignalDateOk
+
+`func (o *GxpFacilitiesRow) GetFirstSignalDateOk() (*string, bool)`
+
+GetFirstSignalDateOk returns a tuple with the FirstSignalDate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFirstSignalDate
+
+`func (o *GxpFacilitiesRow) SetFirstSignalDate(v string)`
+
+SetFirstSignalDate sets FirstSignalDate field to given value.
+
+### HasFirstSignalDate
+
+`func (o *GxpFacilitiesRow) HasFirstSignalDate() bool`
+
+HasFirstSignalDate returns a boolean if a field has been set.
+
+### SetFirstSignalDateNil
+
+`func (o *GxpFacilitiesRow) SetFirstSignalDateNil(b bool)`
+
+ SetFirstSignalDateNil sets the value for FirstSignalDate to be an explicit nil
+
+### UnsetFirstSignalDate
+`func (o *GxpFacilitiesRow) UnsetFirstSignalDate()`
+
+UnsetFirstSignalDate ensures that no value is present for FirstSignalDate, not even an explicit nil
 ### GetNSignalsTotal
 
 `func (o *GxpFacilitiesRow) GetNSignalsTotal() int32`
@@ -1632,6 +1958,76 @@ HasNSignals365d returns a boolean if a field has been set.
 `func (o *GxpFacilitiesRow) UnsetNSignals365d()`
 
 UnsetNSignals365d ensures that no value is present for NSignals365d, not even an explicit nil
+### GetNSignals1095d
+
+`func (o *GxpFacilitiesRow) GetNSignals1095d() int32`
+
+GetNSignals1095d returns the NSignals1095d field if non-nil, zero value otherwise.
+
+### GetNSignals1095dOk
+
+`func (o *GxpFacilitiesRow) GetNSignals1095dOk() (*int32, bool)`
+
+GetNSignals1095dOk returns a tuple with the NSignals1095d field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNSignals1095d
+
+`func (o *GxpFacilitiesRow) SetNSignals1095d(v int32)`
+
+SetNSignals1095d sets NSignals1095d field to given value.
+
+### HasNSignals1095d
+
+`func (o *GxpFacilitiesRow) HasNSignals1095d() bool`
+
+HasNSignals1095d returns a boolean if a field has been set.
+
+### SetNSignals1095dNil
+
+`func (o *GxpFacilitiesRow) SetNSignals1095dNil(b bool)`
+
+ SetNSignals1095dNil sets the value for NSignals1095d to be an explicit nil
+
+### UnsetNSignals1095d
+`func (o *GxpFacilitiesRow) UnsetNSignals1095d()`
+
+UnsetNSignals1095d ensures that no value is present for NSignals1095d, not even an explicit nil
+### GetNSignals1825d
+
+`func (o *GxpFacilitiesRow) GetNSignals1825d() int32`
+
+GetNSignals1825d returns the NSignals1825d field if non-nil, zero value otherwise.
+
+### GetNSignals1825dOk
+
+`func (o *GxpFacilitiesRow) GetNSignals1825dOk() (*int32, bool)`
+
+GetNSignals1825dOk returns a tuple with the NSignals1825d field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNSignals1825d
+
+`func (o *GxpFacilitiesRow) SetNSignals1825d(v int32)`
+
+SetNSignals1825d sets NSignals1825d field to given value.
+
+### HasNSignals1825d
+
+`func (o *GxpFacilitiesRow) HasNSignals1825d() bool`
+
+HasNSignals1825d returns a boolean if a field has been set.
+
+### SetNSignals1825dNil
+
+`func (o *GxpFacilitiesRow) SetNSignals1825dNil(b bool)`
+
+ SetNSignals1825dNil sets the value for NSignals1825d to be an explicit nil
+
+### UnsetNSignals1825d
+`func (o *GxpFacilitiesRow) UnsetNSignals1825d()`
+
+UnsetNSignals1825d ensures that no value is present for NSignals1825d, not even an explicit nil
 ### GetNInspections
 
 `func (o *GxpFacilitiesRow) GetNInspections() int32`

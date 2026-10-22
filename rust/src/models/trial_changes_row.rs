@@ -14,9 +14,15 @@ use serde::{Deserialize, Serialize};
 /// TrialChangesRow : One row of the trial_changes dataset: one row per recorded change to a trial (event, field and time). A grouped request returns the group columns and the measures instead, as additional properties.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct TrialChangesRow {
-    /// The trial's ClinicalTrials.gov registry id (NCT, National Clinical Trial, number).
+    /// The trial's id: the ClinicalTrials.gov registry id (NCT, National Clinical Trial, number), or the WHO TrialID of a trial registered only with a WHO ICTRP member registry.
     #[serde(rename = "trial_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub trial_id: Option<Option<String>>,
+    /// The registry source of the trial: clinicaltrials or ictrp (a trial registered only with a WHO ICTRP member registry).
+    #[serde(rename = "source_registry", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub source_registry: Option<Option<String>>,
+    /// none for a change to a ClinicalTrials.gov trial; licensable for a change to a WHO ICTRP trial, which only a caller holding the licensable tier receives.
+    #[serde(rename = "restriction_tier", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub restriction_tier: Option<Option<String>>,
     /// When the platform observed the change.
     #[serde(rename = "observed_at", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub observed_at: Option<Option<String>>,
@@ -51,6 +57,8 @@ impl TrialChangesRow {
     pub fn new() -> TrialChangesRow {
         TrialChangesRow {
             trial_id: None,
+            source_registry: None,
+            restriction_tier: None,
             observed_at: None,
             event_type: None,
             field: None,

@@ -19,6 +19,10 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**conditions_get**](ConditionsApi.md#conditions_get) | **GET** /api/v1/conditions/{id} | One condition |
 | [**conditions_list**](ConditionsApi.md#conditions_list) | **GET** /api/v1/conditions | List conditions |
 | [**conditions_pdufa_dates**](ConditionsApi.md#conditions_pdufa_dates) | **GET** /api/v1/conditions/{id}/pdufa_dates | FDA decision dates (PDUFA) and catalysts |
+| [**conditions_program_licensing_candidates**](ConditionsApi.md#conditions_program_licensing_candidates) | **GET** /api/v1/conditions/{id}/program_licensing_candidates | Program licensing candidates |
+| [**conditions_programs**](ConditionsApi.md#conditions_programs) | **GET** /api/v1/conditions/{id}/programs | Programs |
+| [**conditions_rwd_source_conditions**](ConditionsApi.md#conditions_rwd_source_conditions) | **GET** /api/v1/conditions/{id}/rwd_source_conditions | Real-world data sources named by registered studies of a condition |
+| [**conditions_rwd_study_conditions**](ConditionsApi.md#conditions_rwd_study_conditions) | **GET** /api/v1/conditions/{id}/rwd_study_conditions | Registered real-world data study conditions |
 
 
 ## conditions_company_programs
@@ -1181,6 +1185,322 @@ end
 ### Return type
 
 [**PdufaDatesResponse**](PdufaDatesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## conditions_program_licensing_candidates
+
+> <ProgramLicensingCandidatesResponse> conditions_program_licensing_candidates(id, opts)
+
+Program licensing candidates
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::ConditionsApi.new
+id = 'D001523' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Program licensing candidates
+  result = api_instance.conditions_program_licensing_candidates(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_program_licensing_candidates: #{e}"
+end
+```
+
+#### Using the conditions_program_licensing_candidates_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ProgramLicensingCandidatesResponse>, Integer, Hash)> conditions_program_licensing_candidates_with_http_info(id, opts)
+
+```ruby
+begin
+  # Program licensing candidates
+  data, status_code, headers = api_instance.conditions_program_licensing_candidates_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ProgramLicensingCandidatesResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_program_licensing_candidates_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**ProgramLicensingCandidatesResponse**](ProgramLicensingCandidatesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## conditions_programs
+
+> <ProgramsResponse> conditions_programs(id, opts)
+
+Programs
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::ConditionsApi.new
+id = 'D001523' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Programs
+  result = api_instance.conditions_programs(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_programs: #{e}"
+end
+```
+
+#### Using the conditions_programs_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ProgramsResponse>, Integer, Hash)> conditions_programs_with_http_info(id, opts)
+
+```ruby
+begin
+  # Programs
+  data, status_code, headers = api_instance.conditions_programs_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ProgramsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_programs_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**ProgramsResponse**](ProgramsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## conditions_rwd_source_conditions
+
+> <RwdSourceConditionsResponse> conditions_rwd_source_conditions(id, opts)
+
+Real-world data sources named by registered studies of a condition
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::ConditionsApi.new
+id = 'D001523' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Real-world data sources named by registered studies of a condition
+  result = api_instance.conditions_rwd_source_conditions(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_rwd_source_conditions: #{e}"
+end
+```
+
+#### Using the conditions_rwd_source_conditions_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<RwdSourceConditionsResponse>, Integer, Hash)> conditions_rwd_source_conditions_with_http_info(id, opts)
+
+```ruby
+begin
+  # Real-world data sources named by registered studies of a condition
+  data, status_code, headers = api_instance.conditions_rwd_source_conditions_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <RwdSourceConditionsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_rwd_source_conditions_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**RwdSourceConditionsResponse**](RwdSourceConditionsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## conditions_rwd_study_conditions
+
+> <RwdStudyConditionsResponse> conditions_rwd_study_conditions(id, opts)
+
+Registered real-world data study conditions
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::ConditionsApi.new
+id = 'D001523' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Registered real-world data study conditions
+  result = api_instance.conditions_rwd_study_conditions(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_rwd_study_conditions: #{e}"
+end
+```
+
+#### Using the conditions_rwd_study_conditions_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<RwdStudyConditionsResponse>, Integer, Hash)> conditions_rwd_study_conditions_with_http_info(id, opts)
+
+```ruby
+begin
+  # Registered real-world data study conditions
+  data, status_code, headers = api_instance.conditions_rwd_study_conditions_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <RwdStudyConditionsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_rwd_study_conditions_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**RwdStudyConditionsResponse**](RwdStudyConditionsResponse.md)
 
 ### Authorization
 

@@ -16,8 +16,11 @@ require 'time'
 module PharmaObservatory
   # One row of the drug_patent_cliff dataset: one row per drug whose exclusivity ends in the future. A grouped request returns the group columns and the measures instead, as additional properties.
   class DrugPatentCliffRow
-    # The drug key.
+    # The drug key at the member grain: the drug record the patent-cliff row is built on, which is the molecule's own record or a record folded under it. Enter from a drug on molecule_id.
     attr_accessor :drug_id
+
+    # The molecule key the drug record rolls up to, and the entry key for the drugs object type.
+    attr_accessor :molecule_id
 
     # The drug's name.
     attr_accessor :drug_name
@@ -98,6 +101,7 @@ module PharmaObservatory
     def self.attribute_map
       {
         :'drug_id' => :'drug_id',
+        :'molecule_id' => :'molecule_id',
         :'drug_name' => :'drug_name',
         :'pharm_class' => :'pharm_class',
         :'atc_class' => :'atc_class',
@@ -140,6 +144,7 @@ module PharmaObservatory
     def self.openapi_types
       {
         :'drug_id' => :'String',
+        :'molecule_id' => :'String',
         :'drug_name' => :'String',
         :'pharm_class' => :'String',
         :'atc_class' => :'String',
@@ -172,6 +177,7 @@ module PharmaObservatory
     def self.openapi_nullable
       Set.new([
         :'drug_id',
+        :'molecule_id',
         :'drug_name',
         :'pharm_class',
         :'atc_class',
@@ -218,6 +224,10 @@ module PharmaObservatory
 
       if attributes.key?(:'drug_id')
         self.drug_id = attributes[:'drug_id']
+      end
+
+      if attributes.key?(:'molecule_id')
+        self.molecule_id = attributes[:'molecule_id']
       end
 
       if attributes.key?(:'drug_name')
@@ -342,6 +352,7 @@ module PharmaObservatory
       return true if self.equal?(o)
       self.class == o.class &&
           drug_id == o.drug_id &&
+          molecule_id == o.molecule_id &&
           drug_name == o.drug_name &&
           pharm_class == o.pharm_class &&
           atc_class == o.atc_class &&
@@ -378,7 +389,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [drug_id, drug_name, pharm_class, atc_class, brand, candidate_brands, cliff_date, cliff_year, cliff_basis, cliff_source, cliff_confidence, has_generic, biosimilar_available, applicant_name, applicant_org_id, applicant_company_id, applicant_company_name, applicant_group_id, applicant_group_name, applicant_match_scope, medicare_spend, medicare_spend_year, disclosed_revenue_usd_millions, disclosed_revenue_year, size_usd, size_basis].hash
+      [drug_id, molecule_id, drug_name, pharm_class, atc_class, brand, candidate_brands, cliff_date, cliff_year, cliff_basis, cliff_source, cliff_confidence, has_generic, biosimilar_available, applicant_name, applicant_org_id, applicant_company_id, applicant_company_name, applicant_group_id, applicant_group_name, applicant_match_scope, medicare_spend, medicare_spend_year, disclosed_revenue_usd_millions, disclosed_revenue_year, size_usd, size_basis].hash
     end
 
     # Builds the object from hash

@@ -15,11 +15,14 @@ require 'time'
 
 module PharmaObservatory
   class LegalEntitiesRecordAttributes
+    attr_accessor :ownership_percentages
+
     attr_accessor :sponsor_recruitment_duration
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'ownership_percentages' => :'ownership_percentages',
         :'sponsor_recruitment_duration' => :'sponsor_recruitment_duration'
       }
     end
@@ -37,6 +40,7 @@ module PharmaObservatory
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'ownership_percentages' => :'OwnershipPercentagesRow',
         :'sponsor_recruitment_duration' => :'SponsorRecruitmentDurationRow'
       }
     end
@@ -63,6 +67,10 @@ module PharmaObservatory
         h[k.to_sym] = v
       }
 
+      if attributes.key?(:'ownership_percentages')
+        self.ownership_percentages = attributes[:'ownership_percentages']
+      end
+
       if attributes.key?(:'sponsor_recruitment_duration')
         self.sponsor_recruitment_duration = attributes[:'sponsor_recruitment_duration']
       end
@@ -88,6 +96,7 @@ module PharmaObservatory
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          ownership_percentages == o.ownership_percentages &&
           sponsor_recruitment_duration == o.sponsor_recruitment_duration
     end
 
@@ -100,7 +109,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [sponsor_recruitment_duration].hash
+      [ownership_percentages, sponsor_recruitment_duration].hash
     end
 
     # Builds the object from hash

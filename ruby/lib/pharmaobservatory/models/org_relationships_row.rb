@@ -91,7 +91,7 @@ module PharmaObservatory
     # The credit line the source requires for the edge. Show it wherever the edge is shown: the Charity Commission and UK Research and Innovation edges require it under the Open Government Licence v3.0.
     attr_accessor :attribution
 
-    # Always none: every source behind these edges is open, and a test on the source assertions reports any restricted source that is ever added.
+    # The tier vocabulary is none or licensable. Every row here is none: every source behind these edges is open, and a test on the source assertions reports any restricted source that is ever added.
     attr_accessor :restriction_tier
 
     # Attribute mapping from ruby-style variable name to JSON key.

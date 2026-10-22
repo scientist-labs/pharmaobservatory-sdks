@@ -25,6 +25,7 @@ Name | Type | Description | Notes
 **event_stage** | Option<**String**> | The lifecycle stage the event's date refers to (for example sold_to_date, funded, closed, registered, announced). | [optional]
 **administering_ic** | Option<**String**> | The National Institutes of Health institute or center that administers the grant (for example CA for the National Cancer Institute); null for the other sources. | [optional]
 **n_awards** | Option<**i64**> | Grant applications folded into the event; 1 for the other sources. | [optional]
+**is_biomedical** | Option<**bool**> | Whether the event is life-sciences capital: a grant is always true, a Regulation D offering follows the filer's self-declared industry group, and an extracted financing follows the filer's SIC code. Never null; a filer that cannot be classified is false. | [optional]
 **cumulative_raised_usd** | Option<**f64**> | The running total of disclosed amounts over the company's own events up to and including this one, in date order; null where the event has no company. | [optional]
 **source_url** | Option<**String**> | Link to the filing the event was read from, where the source has one. | [optional]
 

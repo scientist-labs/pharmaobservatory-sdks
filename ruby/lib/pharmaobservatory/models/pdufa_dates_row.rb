@@ -52,7 +52,7 @@ module PharmaObservatory
     # The drug key.
     attr_accessor :drug_id
 
-    # The molecule key.
+    # The molecule key, the resolved drug of the calendar entry and the entry key for the drugs object type (null when the drug name did not resolve to a drug).
     attr_accessor :molecule_id
 
     # The sponsor name as filed.

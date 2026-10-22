@@ -14,10 +14,22 @@ require 'date'
 require 'time'
 
 module PharmaObservatory
-  # One row of the trials dataset: one row per ClinicalTrials.gov trial. A grouped request returns the group columns and the measures instead, as additional properties.
+  # One row of the trials dataset: one row per registered trial: a ClinicalTrials.gov trial, or a trial registered only with a WHO ICTRP member registry (an ICTRP record that duplicates a ClinicalTrials.gov trial is folded onto it). A grouped request returns the group columns and the measures instead, as additional properties.
   class TrialsRow
-    # The trial's ClinicalTrials.gov registry id (NCT, National Clinical Trial, number).
+    # The trial's id: the ClinicalTrials.gov registry id (NCT, National Clinical Trial, number), or the WHO TrialID of a trial registered only with a WHO ICTRP member registry.
     attr_accessor :trial_id
+
+    # The ClinicalTrials.gov registry id; null for a trial registered only with a WHO ICTRP member registry.
+    attr_accessor :nct_id
+
+    # The registry source of the row: clinicaltrials or ictrp (a trial registered only with a WHO ICTRP member registry).
+    attr_accessor :source_registry
+
+    # The registry that holds the record: NCT for ClinicalTrials.gov, or a WHO ICTRP member registry (ChiCTR, ISRCTN, CTIS, ACTRN, NL, KCT, EUCTR and so on).
+    attr_accessor :registry
+
+    # none for a ClinicalTrials.gov trial; licensable for a WHO ICTRP trial, which only a caller holding the licensable tier receives.
+    attr_accessor :restriction_tier
 
     # The trial's brief title.
     attr_accessor :brief_title
@@ -170,6 +182,10 @@ module PharmaObservatory
     def self.attribute_map
       {
         :'trial_id' => :'trial_id',
+        :'nct_id' => :'nct_id',
+        :'source_registry' => :'source_registry',
+        :'registry' => :'registry',
+        :'restriction_tier' => :'restriction_tier',
         :'brief_title' => :'brief_title',
         :'official_title' => :'official_title',
         :'study_type' => :'study_type',
@@ -236,6 +252,10 @@ module PharmaObservatory
     def self.openapi_types
       {
         :'trial_id' => :'String',
+        :'nct_id' => :'String',
+        :'source_registry' => :'String',
+        :'registry' => :'String',
+        :'restriction_tier' => :'String',
         :'brief_title' => :'String',
         :'official_title' => :'String',
         :'study_type' => :'String',
@@ -292,6 +312,10 @@ module PharmaObservatory
     def self.openapi_nullable
       Set.new([
         :'trial_id',
+        :'nct_id',
+        :'source_registry',
+        :'registry',
+        :'restriction_tier',
         :'brief_title',
         :'official_title',
         :'study_type',
@@ -362,6 +386,22 @@ module PharmaObservatory
 
       if attributes.key?(:'trial_id')
         self.trial_id = attributes[:'trial_id']
+      end
+
+      if attributes.key?(:'nct_id')
+        self.nct_id = attributes[:'nct_id']
+      end
+
+      if attributes.key?(:'source_registry')
+        self.source_registry = attributes[:'source_registry']
+      end
+
+      if attributes.key?(:'registry')
+        self.registry = attributes[:'registry']
+      end
+
+      if attributes.key?(:'restriction_tier')
+        self.restriction_tier = attributes[:'restriction_tier']
       end
 
       if attributes.key?(:'brief_title')
@@ -604,6 +644,10 @@ module PharmaObservatory
       return true if self.equal?(o)
       self.class == o.class &&
           trial_id == o.trial_id &&
+          nct_id == o.nct_id &&
+          source_registry == o.source_registry &&
+          registry == o.registry &&
+          restriction_tier == o.restriction_tier &&
           brief_title == o.brief_title &&
           official_title == o.official_title &&
           study_type == o.study_type &&
@@ -664,7 +708,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [trial_id, brief_title, official_title, study_type, overall_status, overall_status_summary, phase, phase_label, phase_by_status, enrollment, enrollment_type, enrollment_is_plausible, enrollment_flag_reason, start_date, start_year, primary_completion_date, primary_completion_date_type, completion_date, completion_date_type, study_first_posted_date, last_update_posted_date, why_stopped, number_of_arms, were_results_reported, gender, minimum_age, maximum_age, healthy_volunteers, eligibility_criteria, lead_sponsor_name, lead_sponsor_org_id, lead_sponsor_company_id, lead_sponsor_company_name, lead_sponsor_group_id, lead_sponsor_group_name, collaborators, participating_sponsors, conditions, condition_mesh, interventions, intervention_mesh, intervention_types, number_of_facilities, facility_count, has_us_facility, facility_country_count, facility_countries, condition_ids, drug_ids, sponsor_org_ids].hash
+      [trial_id, nct_id, source_registry, registry, restriction_tier, brief_title, official_title, study_type, overall_status, overall_status_summary, phase, phase_label, phase_by_status, enrollment, enrollment_type, enrollment_is_plausible, enrollment_flag_reason, start_date, start_year, primary_completion_date, primary_completion_date_type, completion_date, completion_date_type, study_first_posted_date, last_update_posted_date, why_stopped, number_of_arms, were_results_reported, gender, minimum_age, maximum_age, healthy_volunteers, eligibility_criteria, lead_sponsor_name, lead_sponsor_org_id, lead_sponsor_company_id, lead_sponsor_company_name, lead_sponsor_group_id, lead_sponsor_group_name, collaborators, participating_sponsors, conditions, condition_mesh, interventions, intervention_mesh, intervention_types, number_of_facilities, facility_count, has_us_facility, facility_country_count, facility_countries, condition_ids, drug_ids, sponsor_org_ids].hash
     end
 
     # Builds the object from hash
