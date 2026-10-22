@@ -70,7 +70,7 @@ type OrgRelationshipsRow struct {
 	LicenseName NullableString `json:"license_name,omitempty"`
 	// The credit line the source requires for the edge. Show it wherever the edge is shown: the Charity Commission and UK Research and Innovation edges require it under the Open Government Licence v3.0.
 	Attribution NullableString `json:"attribution,omitempty"`
-	// Always none: every source behind these edges is open, and a test on the source assertions reports any restricted source that is ever added.
+	// The tier vocabulary is none or licensable. Every row here is none: every source behind these edges is open, and a test on the source assertions reports any restricted source that is ever added.
 	RestrictionTier NullableString `json:"restriction_tier,omitempty"`
 	AdditionalProperties map[string]interface{}
 }

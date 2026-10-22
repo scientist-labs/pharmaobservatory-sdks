@@ -21,6 +21,10 @@ var _ MappedNullable = &GxpFacilitiesRow{}
 type GxpFacilitiesRow struct {
 	// The canonical facility id.
 	FacilityKey NullableString `json:"facility_key,omitempty"`
+	// The registry of the lead member record. Provenance and a facet, never a join key.
+	Registry NullableString `json:"registry,omitempty"`
+	// The lead registry's own site id (FEI, EudraGMDP site key, Health Canada location id).
+	RegistryNativeSiteId NullableString `json:"registry_native_site_id,omitempty"`
 	// The registry records the facility is made of, each as registry:native site id (for example fda_fei:3004123456), sorted.
 	RegistryFacilityKeys []string `json:"registry_facility_keys,omitempty"`
 	// The facility's name.
@@ -87,6 +91,8 @@ type GxpFacilitiesRow struct {
 	SeverityRank NullableInt32 `json:"severity_rank,omitempty"`
 	// The in-force site-scope severity: no_signal, clean, advisory, action or non_compliant.
 	SeverityLevel NullableString `json:"severity_level,omitempty"`
+	// site when a site-scope verdict set the severity rank, none when nothing did. Never org.
+	SeverityScope NullableString `json:"severity_scope,omitempty"`
 	// The regulator behind the severity: fda, ema, health_canada or mhra.
 	SeveritySource NullableString `json:"severity_source,omitempty"`
 	// The kind of signal behind the severity (for example an inspection classification).
@@ -95,18 +101,34 @@ type GxpFacilitiesRow struct {
 	SeverityRawVerdict NullableString `json:"severity_raw_verdict,omitempty"`
 	// The date of the signal behind the severity.
 	SeveritySignalDate NullableString `json:"severity_signal_date,omitempty"`
+	// The source page of the signal that set the severity.
+	SeveritySourceUrl NullableString `json:"severity_source_url,omitempty"`
 	// The highest site-scope severity the facility has ever had, 0 to 4.
 	WorstSeverityRankEver NullableInt32 `json:"worst_severity_rank_ever,omitempty"`
 	// The worst severity ever: no_signal, clean, advisory, action or non_compliant.
 	WorstSeverityLevelEver NullableString `json:"worst_severity_level_ever,omitempty"`
+	// The regulator's own verdict word behind the worst severity ever.
+	WorstSeverityRawVerdict NullableString `json:"worst_severity_raw_verdict,omitempty"`
+	// The date of the signal behind the worst severity ever.
+	WorstSeveritySignalDate NullableString `json:"worst_severity_signal_date,omitempty"`
 	// True when the facility has any quality signal.
 	HasQualitySignal NullableBool `json:"has_quality_signal,omitempty"`
+	// True when a signal is about this site itself.
+	HasSiteScopeSignal NullableBool `json:"has_site_scope_signal,omitempty"`
+	// True when a signal is about the operating firm.
+	HasOrgScopeSignal NullableBool `json:"has_org_scope_signal,omitempty"`
 	// The date of the latest signal of any scope.
 	LatestSignalDate NullableString `json:"latest_signal_date,omitempty"`
+	// The date of the earliest dated signal of any scope.
+	FirstSignalDate NullableString `json:"first_signal_date,omitempty"`
 	// Signals of any scope, all time.
 	NSignalsTotal NullableInt32 `json:"n_signals_total,omitempty"`
 	// Signals in the last 365 days of the build.
 	NSignals365d NullableInt32 `json:"n_signals_365d,omitempty"`
+	// Signals in the last 1,095 days of the build.
+	NSignals1095d NullableInt32 `json:"n_signals_1095d,omitempty"`
+	// Signals in the last 1,825 days of the build.
+	NSignals1825d NullableInt32 `json:"n_signals_1825d,omitempty"`
 	// Inspections of the site by any regulator.
 	NInspections NullableInt32 `json:"n_inspections,omitempty"`
 	// The date of the latest inspection by any regulator.
@@ -217,6 +239,90 @@ func (o *GxpFacilitiesRow) SetFacilityKeyNil() {
 // UnsetFacilityKey ensures that no value is present for FacilityKey, not even an explicit nil
 func (o *GxpFacilitiesRow) UnsetFacilityKey() {
 	o.FacilityKey.Unset()
+}
+
+// GetRegistry returns the Registry field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GxpFacilitiesRow) GetRegistry() string {
+	if o == nil || IsNil(o.Registry.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Registry.Get()
+}
+
+// GetRegistryOk returns a tuple with the Registry field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GxpFacilitiesRow) GetRegistryOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Registry.Get(), o.Registry.IsSet()
+}
+
+// HasRegistry returns a boolean if a field has been set.
+func (o *GxpFacilitiesRow) HasRegistry() bool {
+	if o != nil && o.Registry.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetRegistry gets a reference to the given NullableString and assigns it to the Registry field.
+func (o *GxpFacilitiesRow) SetRegistry(v string) {
+	o.Registry.Set(&v)
+}
+// SetRegistryNil sets the value for Registry to be an explicit nil
+func (o *GxpFacilitiesRow) SetRegistryNil() {
+	o.Registry.Set(nil)
+}
+
+// UnsetRegistry ensures that no value is present for Registry, not even an explicit nil
+func (o *GxpFacilitiesRow) UnsetRegistry() {
+	o.Registry.Unset()
+}
+
+// GetRegistryNativeSiteId returns the RegistryNativeSiteId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GxpFacilitiesRow) GetRegistryNativeSiteId() string {
+	if o == nil || IsNil(o.RegistryNativeSiteId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.RegistryNativeSiteId.Get()
+}
+
+// GetRegistryNativeSiteIdOk returns a tuple with the RegistryNativeSiteId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GxpFacilitiesRow) GetRegistryNativeSiteIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.RegistryNativeSiteId.Get(), o.RegistryNativeSiteId.IsSet()
+}
+
+// HasRegistryNativeSiteId returns a boolean if a field has been set.
+func (o *GxpFacilitiesRow) HasRegistryNativeSiteId() bool {
+	if o != nil && o.RegistryNativeSiteId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetRegistryNativeSiteId gets a reference to the given NullableString and assigns it to the RegistryNativeSiteId field.
+func (o *GxpFacilitiesRow) SetRegistryNativeSiteId(v string) {
+	o.RegistryNativeSiteId.Set(&v)
+}
+// SetRegistryNativeSiteIdNil sets the value for RegistryNativeSiteId to be an explicit nil
+func (o *GxpFacilitiesRow) SetRegistryNativeSiteIdNil() {
+	o.RegistryNativeSiteId.Set(nil)
+}
+
+// UnsetRegistryNativeSiteId ensures that no value is present for RegistryNativeSiteId, not even an explicit nil
+func (o *GxpFacilitiesRow) UnsetRegistryNativeSiteId() {
+	o.RegistryNativeSiteId.Unset()
 }
 
 // GetRegistryFacilityKeys returns the RegistryFacilityKeys field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1569,6 +1675,48 @@ func (o *GxpFacilitiesRow) UnsetSeverityLevel() {
 	o.SeverityLevel.Unset()
 }
 
+// GetSeverityScope returns the SeverityScope field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GxpFacilitiesRow) GetSeverityScope() string {
+	if o == nil || IsNil(o.SeverityScope.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.SeverityScope.Get()
+}
+
+// GetSeverityScopeOk returns a tuple with the SeverityScope field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GxpFacilitiesRow) GetSeverityScopeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SeverityScope.Get(), o.SeverityScope.IsSet()
+}
+
+// HasSeverityScope returns a boolean if a field has been set.
+func (o *GxpFacilitiesRow) HasSeverityScope() bool {
+	if o != nil && o.SeverityScope.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSeverityScope gets a reference to the given NullableString and assigns it to the SeverityScope field.
+func (o *GxpFacilitiesRow) SetSeverityScope(v string) {
+	o.SeverityScope.Set(&v)
+}
+// SetSeverityScopeNil sets the value for SeverityScope to be an explicit nil
+func (o *GxpFacilitiesRow) SetSeverityScopeNil() {
+	o.SeverityScope.Set(nil)
+}
+
+// UnsetSeverityScope ensures that no value is present for SeverityScope, not even an explicit nil
+func (o *GxpFacilitiesRow) UnsetSeverityScope() {
+	o.SeverityScope.Unset()
+}
+
 // GetSeveritySource returns the SeveritySource field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GxpFacilitiesRow) GetSeveritySource() string {
 	if o == nil || IsNil(o.SeveritySource.Get()) {
@@ -1737,6 +1885,48 @@ func (o *GxpFacilitiesRow) UnsetSeveritySignalDate() {
 	o.SeveritySignalDate.Unset()
 }
 
+// GetSeveritySourceUrl returns the SeveritySourceUrl field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GxpFacilitiesRow) GetSeveritySourceUrl() string {
+	if o == nil || IsNil(o.SeveritySourceUrl.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.SeveritySourceUrl.Get()
+}
+
+// GetSeveritySourceUrlOk returns a tuple with the SeveritySourceUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GxpFacilitiesRow) GetSeveritySourceUrlOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SeveritySourceUrl.Get(), o.SeveritySourceUrl.IsSet()
+}
+
+// HasSeveritySourceUrl returns a boolean if a field has been set.
+func (o *GxpFacilitiesRow) HasSeveritySourceUrl() bool {
+	if o != nil && o.SeveritySourceUrl.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSeveritySourceUrl gets a reference to the given NullableString and assigns it to the SeveritySourceUrl field.
+func (o *GxpFacilitiesRow) SetSeveritySourceUrl(v string) {
+	o.SeveritySourceUrl.Set(&v)
+}
+// SetSeveritySourceUrlNil sets the value for SeveritySourceUrl to be an explicit nil
+func (o *GxpFacilitiesRow) SetSeveritySourceUrlNil() {
+	o.SeveritySourceUrl.Set(nil)
+}
+
+// UnsetSeveritySourceUrl ensures that no value is present for SeveritySourceUrl, not even an explicit nil
+func (o *GxpFacilitiesRow) UnsetSeveritySourceUrl() {
+	o.SeveritySourceUrl.Unset()
+}
+
 // GetWorstSeverityRankEver returns the WorstSeverityRankEver field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GxpFacilitiesRow) GetWorstSeverityRankEver() int32 {
 	if o == nil || IsNil(o.WorstSeverityRankEver.Get()) {
@@ -1821,6 +2011,90 @@ func (o *GxpFacilitiesRow) UnsetWorstSeverityLevelEver() {
 	o.WorstSeverityLevelEver.Unset()
 }
 
+// GetWorstSeverityRawVerdict returns the WorstSeverityRawVerdict field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GxpFacilitiesRow) GetWorstSeverityRawVerdict() string {
+	if o == nil || IsNil(o.WorstSeverityRawVerdict.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.WorstSeverityRawVerdict.Get()
+}
+
+// GetWorstSeverityRawVerdictOk returns a tuple with the WorstSeverityRawVerdict field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GxpFacilitiesRow) GetWorstSeverityRawVerdictOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.WorstSeverityRawVerdict.Get(), o.WorstSeverityRawVerdict.IsSet()
+}
+
+// HasWorstSeverityRawVerdict returns a boolean if a field has been set.
+func (o *GxpFacilitiesRow) HasWorstSeverityRawVerdict() bool {
+	if o != nil && o.WorstSeverityRawVerdict.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetWorstSeverityRawVerdict gets a reference to the given NullableString and assigns it to the WorstSeverityRawVerdict field.
+func (o *GxpFacilitiesRow) SetWorstSeverityRawVerdict(v string) {
+	o.WorstSeverityRawVerdict.Set(&v)
+}
+// SetWorstSeverityRawVerdictNil sets the value for WorstSeverityRawVerdict to be an explicit nil
+func (o *GxpFacilitiesRow) SetWorstSeverityRawVerdictNil() {
+	o.WorstSeverityRawVerdict.Set(nil)
+}
+
+// UnsetWorstSeverityRawVerdict ensures that no value is present for WorstSeverityRawVerdict, not even an explicit nil
+func (o *GxpFacilitiesRow) UnsetWorstSeverityRawVerdict() {
+	o.WorstSeverityRawVerdict.Unset()
+}
+
+// GetWorstSeveritySignalDate returns the WorstSeveritySignalDate field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GxpFacilitiesRow) GetWorstSeveritySignalDate() string {
+	if o == nil || IsNil(o.WorstSeveritySignalDate.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.WorstSeveritySignalDate.Get()
+}
+
+// GetWorstSeveritySignalDateOk returns a tuple with the WorstSeveritySignalDate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GxpFacilitiesRow) GetWorstSeveritySignalDateOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.WorstSeveritySignalDate.Get(), o.WorstSeveritySignalDate.IsSet()
+}
+
+// HasWorstSeveritySignalDate returns a boolean if a field has been set.
+func (o *GxpFacilitiesRow) HasWorstSeveritySignalDate() bool {
+	if o != nil && o.WorstSeveritySignalDate.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetWorstSeveritySignalDate gets a reference to the given NullableString and assigns it to the WorstSeveritySignalDate field.
+func (o *GxpFacilitiesRow) SetWorstSeveritySignalDate(v string) {
+	o.WorstSeveritySignalDate.Set(&v)
+}
+// SetWorstSeveritySignalDateNil sets the value for WorstSeveritySignalDate to be an explicit nil
+func (o *GxpFacilitiesRow) SetWorstSeveritySignalDateNil() {
+	o.WorstSeveritySignalDate.Set(nil)
+}
+
+// UnsetWorstSeveritySignalDate ensures that no value is present for WorstSeveritySignalDate, not even an explicit nil
+func (o *GxpFacilitiesRow) UnsetWorstSeveritySignalDate() {
+	o.WorstSeveritySignalDate.Unset()
+}
+
 // GetHasQualitySignal returns the HasQualitySignal field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GxpFacilitiesRow) GetHasQualitySignal() bool {
 	if o == nil || IsNil(o.HasQualitySignal.Get()) {
@@ -1863,6 +2137,90 @@ func (o *GxpFacilitiesRow) UnsetHasQualitySignal() {
 	o.HasQualitySignal.Unset()
 }
 
+// GetHasSiteScopeSignal returns the HasSiteScopeSignal field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GxpFacilitiesRow) GetHasSiteScopeSignal() bool {
+	if o == nil || IsNil(o.HasSiteScopeSignal.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.HasSiteScopeSignal.Get()
+}
+
+// GetHasSiteScopeSignalOk returns a tuple with the HasSiteScopeSignal field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GxpFacilitiesRow) GetHasSiteScopeSignalOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HasSiteScopeSignal.Get(), o.HasSiteScopeSignal.IsSet()
+}
+
+// HasHasSiteScopeSignal returns a boolean if a field has been set.
+func (o *GxpFacilitiesRow) HasHasSiteScopeSignal() bool {
+	if o != nil && o.HasSiteScopeSignal.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHasSiteScopeSignal gets a reference to the given NullableBool and assigns it to the HasSiteScopeSignal field.
+func (o *GxpFacilitiesRow) SetHasSiteScopeSignal(v bool) {
+	o.HasSiteScopeSignal.Set(&v)
+}
+// SetHasSiteScopeSignalNil sets the value for HasSiteScopeSignal to be an explicit nil
+func (o *GxpFacilitiesRow) SetHasSiteScopeSignalNil() {
+	o.HasSiteScopeSignal.Set(nil)
+}
+
+// UnsetHasSiteScopeSignal ensures that no value is present for HasSiteScopeSignal, not even an explicit nil
+func (o *GxpFacilitiesRow) UnsetHasSiteScopeSignal() {
+	o.HasSiteScopeSignal.Unset()
+}
+
+// GetHasOrgScopeSignal returns the HasOrgScopeSignal field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GxpFacilitiesRow) GetHasOrgScopeSignal() bool {
+	if o == nil || IsNil(o.HasOrgScopeSignal.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.HasOrgScopeSignal.Get()
+}
+
+// GetHasOrgScopeSignalOk returns a tuple with the HasOrgScopeSignal field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GxpFacilitiesRow) GetHasOrgScopeSignalOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HasOrgScopeSignal.Get(), o.HasOrgScopeSignal.IsSet()
+}
+
+// HasHasOrgScopeSignal returns a boolean if a field has been set.
+func (o *GxpFacilitiesRow) HasHasOrgScopeSignal() bool {
+	if o != nil && o.HasOrgScopeSignal.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHasOrgScopeSignal gets a reference to the given NullableBool and assigns it to the HasOrgScopeSignal field.
+func (o *GxpFacilitiesRow) SetHasOrgScopeSignal(v bool) {
+	o.HasOrgScopeSignal.Set(&v)
+}
+// SetHasOrgScopeSignalNil sets the value for HasOrgScopeSignal to be an explicit nil
+func (o *GxpFacilitiesRow) SetHasOrgScopeSignalNil() {
+	o.HasOrgScopeSignal.Set(nil)
+}
+
+// UnsetHasOrgScopeSignal ensures that no value is present for HasOrgScopeSignal, not even an explicit nil
+func (o *GxpFacilitiesRow) UnsetHasOrgScopeSignal() {
+	o.HasOrgScopeSignal.Unset()
+}
+
 // GetLatestSignalDate returns the LatestSignalDate field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GxpFacilitiesRow) GetLatestSignalDate() string {
 	if o == nil || IsNil(o.LatestSignalDate.Get()) {
@@ -1903,6 +2261,48 @@ func (o *GxpFacilitiesRow) SetLatestSignalDateNil() {
 // UnsetLatestSignalDate ensures that no value is present for LatestSignalDate, not even an explicit nil
 func (o *GxpFacilitiesRow) UnsetLatestSignalDate() {
 	o.LatestSignalDate.Unset()
+}
+
+// GetFirstSignalDate returns the FirstSignalDate field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GxpFacilitiesRow) GetFirstSignalDate() string {
+	if o == nil || IsNil(o.FirstSignalDate.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.FirstSignalDate.Get()
+}
+
+// GetFirstSignalDateOk returns a tuple with the FirstSignalDate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GxpFacilitiesRow) GetFirstSignalDateOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.FirstSignalDate.Get(), o.FirstSignalDate.IsSet()
+}
+
+// HasFirstSignalDate returns a boolean if a field has been set.
+func (o *GxpFacilitiesRow) HasFirstSignalDate() bool {
+	if o != nil && o.FirstSignalDate.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetFirstSignalDate gets a reference to the given NullableString and assigns it to the FirstSignalDate field.
+func (o *GxpFacilitiesRow) SetFirstSignalDate(v string) {
+	o.FirstSignalDate.Set(&v)
+}
+// SetFirstSignalDateNil sets the value for FirstSignalDate to be an explicit nil
+func (o *GxpFacilitiesRow) SetFirstSignalDateNil() {
+	o.FirstSignalDate.Set(nil)
+}
+
+// UnsetFirstSignalDate ensures that no value is present for FirstSignalDate, not even an explicit nil
+func (o *GxpFacilitiesRow) UnsetFirstSignalDate() {
+	o.FirstSignalDate.Unset()
 }
 
 // GetNSignalsTotal returns the NSignalsTotal field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1987,6 +2387,90 @@ func (o *GxpFacilitiesRow) SetNSignals365dNil() {
 // UnsetNSignals365d ensures that no value is present for NSignals365d, not even an explicit nil
 func (o *GxpFacilitiesRow) UnsetNSignals365d() {
 	o.NSignals365d.Unset()
+}
+
+// GetNSignals1095d returns the NSignals1095d field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GxpFacilitiesRow) GetNSignals1095d() int32 {
+	if o == nil || IsNil(o.NSignals1095d.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.NSignals1095d.Get()
+}
+
+// GetNSignals1095dOk returns a tuple with the NSignals1095d field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GxpFacilitiesRow) GetNSignals1095dOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NSignals1095d.Get(), o.NSignals1095d.IsSet()
+}
+
+// HasNSignals1095d returns a boolean if a field has been set.
+func (o *GxpFacilitiesRow) HasNSignals1095d() bool {
+	if o != nil && o.NSignals1095d.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNSignals1095d gets a reference to the given NullableInt32 and assigns it to the NSignals1095d field.
+func (o *GxpFacilitiesRow) SetNSignals1095d(v int32) {
+	o.NSignals1095d.Set(&v)
+}
+// SetNSignals1095dNil sets the value for NSignals1095d to be an explicit nil
+func (o *GxpFacilitiesRow) SetNSignals1095dNil() {
+	o.NSignals1095d.Set(nil)
+}
+
+// UnsetNSignals1095d ensures that no value is present for NSignals1095d, not even an explicit nil
+func (o *GxpFacilitiesRow) UnsetNSignals1095d() {
+	o.NSignals1095d.Unset()
+}
+
+// GetNSignals1825d returns the NSignals1825d field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GxpFacilitiesRow) GetNSignals1825d() int32 {
+	if o == nil || IsNil(o.NSignals1825d.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.NSignals1825d.Get()
+}
+
+// GetNSignals1825dOk returns a tuple with the NSignals1825d field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GxpFacilitiesRow) GetNSignals1825dOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NSignals1825d.Get(), o.NSignals1825d.IsSet()
+}
+
+// HasNSignals1825d returns a boolean if a field has been set.
+func (o *GxpFacilitiesRow) HasNSignals1825d() bool {
+	if o != nil && o.NSignals1825d.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNSignals1825d gets a reference to the given NullableInt32 and assigns it to the NSignals1825d field.
+func (o *GxpFacilitiesRow) SetNSignals1825d(v int32) {
+	o.NSignals1825d.Set(&v)
+}
+// SetNSignals1825dNil sets the value for NSignals1825d to be an explicit nil
+func (o *GxpFacilitiesRow) SetNSignals1825dNil() {
+	o.NSignals1825d.Set(nil)
+}
+
+// UnsetNSignals1825d ensures that no value is present for NSignals1825d, not even an explicit nil
+func (o *GxpFacilitiesRow) UnsetNSignals1825d() {
+	o.NSignals1825d.Unset()
 }
 
 // GetNInspections returns the NInspections field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -3010,6 +3494,12 @@ func (o GxpFacilitiesRow) ToMap() (map[string]interface{}, error) {
 	if o.FacilityKey.IsSet() {
 		toSerialize["facility_key"] = o.FacilityKey.Get()
 	}
+	if o.Registry.IsSet() {
+		toSerialize["registry"] = o.Registry.Get()
+	}
+	if o.RegistryNativeSiteId.IsSet() {
+		toSerialize["registry_native_site_id"] = o.RegistryNativeSiteId.Get()
+	}
 	if o.RegistryFacilityKeys != nil {
 		toSerialize["registry_facility_keys"] = o.RegistryFacilityKeys
 	}
@@ -3109,6 +3599,9 @@ func (o GxpFacilitiesRow) ToMap() (map[string]interface{}, error) {
 	if o.SeverityLevel.IsSet() {
 		toSerialize["severity_level"] = o.SeverityLevel.Get()
 	}
+	if o.SeverityScope.IsSet() {
+		toSerialize["severity_scope"] = o.SeverityScope.Get()
+	}
 	if o.SeveritySource.IsSet() {
 		toSerialize["severity_source"] = o.SeveritySource.Get()
 	}
@@ -3121,23 +3614,47 @@ func (o GxpFacilitiesRow) ToMap() (map[string]interface{}, error) {
 	if o.SeveritySignalDate.IsSet() {
 		toSerialize["severity_signal_date"] = o.SeveritySignalDate.Get()
 	}
+	if o.SeveritySourceUrl.IsSet() {
+		toSerialize["severity_source_url"] = o.SeveritySourceUrl.Get()
+	}
 	if o.WorstSeverityRankEver.IsSet() {
 		toSerialize["worst_severity_rank_ever"] = o.WorstSeverityRankEver.Get()
 	}
 	if o.WorstSeverityLevelEver.IsSet() {
 		toSerialize["worst_severity_level_ever"] = o.WorstSeverityLevelEver.Get()
 	}
+	if o.WorstSeverityRawVerdict.IsSet() {
+		toSerialize["worst_severity_raw_verdict"] = o.WorstSeverityRawVerdict.Get()
+	}
+	if o.WorstSeveritySignalDate.IsSet() {
+		toSerialize["worst_severity_signal_date"] = o.WorstSeveritySignalDate.Get()
+	}
 	if o.HasQualitySignal.IsSet() {
 		toSerialize["has_quality_signal"] = o.HasQualitySignal.Get()
 	}
+	if o.HasSiteScopeSignal.IsSet() {
+		toSerialize["has_site_scope_signal"] = o.HasSiteScopeSignal.Get()
+	}
+	if o.HasOrgScopeSignal.IsSet() {
+		toSerialize["has_org_scope_signal"] = o.HasOrgScopeSignal.Get()
+	}
 	if o.LatestSignalDate.IsSet() {
 		toSerialize["latest_signal_date"] = o.LatestSignalDate.Get()
+	}
+	if o.FirstSignalDate.IsSet() {
+		toSerialize["first_signal_date"] = o.FirstSignalDate.Get()
 	}
 	if o.NSignalsTotal.IsSet() {
 		toSerialize["n_signals_total"] = o.NSignalsTotal.Get()
 	}
 	if o.NSignals365d.IsSet() {
 		toSerialize["n_signals_365d"] = o.NSignals365d.Get()
+	}
+	if o.NSignals1095d.IsSet() {
+		toSerialize["n_signals_1095d"] = o.NSignals1095d.Get()
+	}
+	if o.NSignals1825d.IsSet() {
+		toSerialize["n_signals_1825d"] = o.NSignals1825d.Get()
 	}
 	if o.NInspections.IsSet() {
 		toSerialize["n_inspections"] = o.NInspections.Get()
@@ -3234,6 +3751,8 @@ func (o *GxpFacilitiesRow) UnmarshalJSON(data []byte) (err error) {
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "facility_key")
+		delete(additionalProperties, "registry")
+		delete(additionalProperties, "registry_native_site_id")
 		delete(additionalProperties, "registry_facility_keys")
 		delete(additionalProperties, "facility_name")
 		delete(additionalProperties, "member_count")
@@ -3267,16 +3786,25 @@ func (o *GxpFacilitiesRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "org_regulators")
 		delete(additionalProperties, "severity_rank")
 		delete(additionalProperties, "severity_level")
+		delete(additionalProperties, "severity_scope")
 		delete(additionalProperties, "severity_source")
 		delete(additionalProperties, "severity_signal_type")
 		delete(additionalProperties, "severity_raw_verdict")
 		delete(additionalProperties, "severity_signal_date")
+		delete(additionalProperties, "severity_source_url")
 		delete(additionalProperties, "worst_severity_rank_ever")
 		delete(additionalProperties, "worst_severity_level_ever")
+		delete(additionalProperties, "worst_severity_raw_verdict")
+		delete(additionalProperties, "worst_severity_signal_date")
 		delete(additionalProperties, "has_quality_signal")
+		delete(additionalProperties, "has_site_scope_signal")
+		delete(additionalProperties, "has_org_scope_signal")
 		delete(additionalProperties, "latest_signal_date")
+		delete(additionalProperties, "first_signal_date")
 		delete(additionalProperties, "n_signals_total")
 		delete(additionalProperties, "n_signals_365d")
+		delete(additionalProperties, "n_signals_1095d")
+		delete(additionalProperties, "n_signals_1825d")
 		delete(additionalProperties, "n_inspections")
 		delete(additionalProperties, "latest_inspection_date")
 		delete(additionalProperties, "n_fda_inspections")

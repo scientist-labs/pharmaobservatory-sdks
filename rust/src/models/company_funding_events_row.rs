@@ -77,6 +77,9 @@ pub struct CompanyFundingEventsRow {
     /// Grant applications folded into the event; 1 for the other sources.
     #[serde(rename = "n_awards", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_awards: Option<Option<i64>>,
+    /// Whether the event is life-sciences capital: a grant is always true, a Regulation D offering follows the filer's self-declared industry group, and an extracted financing follows the filer's SIC code. Never null; a filer that cannot be classified is false.
+    #[serde(rename = "is_biomedical", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub is_biomedical: Option<Option<bool>>,
     /// The running total of disclosed amounts over the company's own events up to and including this one, in date order; null where the event has no company.
     #[serde(rename = "cumulative_raised_usd", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub cumulative_raised_usd: Option<Option<f64>>,
@@ -110,6 +113,7 @@ impl CompanyFundingEventsRow {
             event_stage: None,
             administering_ic: None,
             n_awards: None,
+            is_biomedical: None,
             cumulative_raised_usd: None,
             source_url: None,
         }

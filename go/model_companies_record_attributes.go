@@ -20,6 +20,7 @@ var _ MappedNullable = &CompaniesRecordAttributes{}
 // CompaniesRecordAttributes struct for CompaniesRecordAttributes
 type CompaniesRecordAttributes struct {
 	CompanyFundingSummary *CompanyFundingSummaryRow `json:"company_funding_summary,omitempty"`
+	CompanyTrialGeography *CompanyTrialGeographyRow `json:"company_trial_geography,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -74,6 +75,38 @@ func (o *CompaniesRecordAttributes) SetCompanyFundingSummary(v CompanyFundingSum
 	o.CompanyFundingSummary = &v
 }
 
+// GetCompanyTrialGeography returns the CompanyTrialGeography field value if set, zero value otherwise.
+func (o *CompaniesRecordAttributes) GetCompanyTrialGeography() CompanyTrialGeographyRow {
+	if o == nil || IsNil(o.CompanyTrialGeography) {
+		var ret CompanyTrialGeographyRow
+		return ret
+	}
+	return *o.CompanyTrialGeography
+}
+
+// GetCompanyTrialGeographyOk returns a tuple with the CompanyTrialGeography field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CompaniesRecordAttributes) GetCompanyTrialGeographyOk() (*CompanyTrialGeographyRow, bool) {
+	if o == nil || IsNil(o.CompanyTrialGeography) {
+		return nil, false
+	}
+	return o.CompanyTrialGeography, true
+}
+
+// HasCompanyTrialGeography returns a boolean if a field has been set.
+func (o *CompaniesRecordAttributes) HasCompanyTrialGeography() bool {
+	if o != nil && !IsNil(o.CompanyTrialGeography) {
+		return true
+	}
+
+	return false
+}
+
+// SetCompanyTrialGeography gets a reference to the given CompanyTrialGeographyRow and assigns it to the CompanyTrialGeography field.
+func (o *CompaniesRecordAttributes) SetCompanyTrialGeography(v CompanyTrialGeographyRow) {
+	o.CompanyTrialGeography = &v
+}
+
 func (o CompaniesRecordAttributes) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -86,6 +119,9 @@ func (o CompaniesRecordAttributes) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.CompanyFundingSummary) {
 		toSerialize["company_funding_summary"] = o.CompanyFundingSummary
+	}
+	if !IsNil(o.CompanyTrialGeography) {
+		toSerialize["company_trial_geography"] = o.CompanyTrialGeography
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -110,6 +146,7 @@ func (o *CompaniesRecordAttributes) UnmarshalJSON(data []byte) (err error) {
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "company_funding_summary")
+		delete(additionalProperties, "company_trial_geography")
 		o.AdditionalProperties = additionalProperties
 	}
 

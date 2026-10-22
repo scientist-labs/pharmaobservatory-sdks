@@ -20,8 +20,12 @@ var _ MappedNullable = &TrialChangesRow{}
 
 // TrialChangesRow One row of the trial_changes dataset: one row per recorded change to a trial (event, field and time). A grouped request returns the group columns and the measures instead, as additional properties.
 type TrialChangesRow struct {
-	// The trial's ClinicalTrials.gov registry id (NCT, National Clinical Trial, number).
+	// The trial's id: the ClinicalTrials.gov registry id (NCT, National Clinical Trial, number), or the WHO TrialID of a trial registered only with a WHO ICTRP member registry.
 	TrialId NullableString `json:"trial_id,omitempty"`
+	// The registry source of the trial: clinicaltrials or ictrp (a trial registered only with a WHO ICTRP member registry).
+	SourceRegistry NullableString `json:"source_registry,omitempty"`
+	// none for a change to a ClinicalTrials.gov trial; licensable for a change to a WHO ICTRP trial, which only a caller holding the licensable tier receives.
+	RestrictionTier NullableString `json:"restriction_tier,omitempty"`
 	// When the platform observed the change.
 	ObservedAt NullableTime `json:"observed_at,omitempty"`
 	// The kind of event (first_seen, status_change and so on).
@@ -102,6 +106,90 @@ func (o *TrialChangesRow) SetTrialIdNil() {
 // UnsetTrialId ensures that no value is present for TrialId, not even an explicit nil
 func (o *TrialChangesRow) UnsetTrialId() {
 	o.TrialId.Unset()
+}
+
+// GetSourceRegistry returns the SourceRegistry field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *TrialChangesRow) GetSourceRegistry() string {
+	if o == nil || IsNil(o.SourceRegistry.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.SourceRegistry.Get()
+}
+
+// GetSourceRegistryOk returns a tuple with the SourceRegistry field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *TrialChangesRow) GetSourceRegistryOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SourceRegistry.Get(), o.SourceRegistry.IsSet()
+}
+
+// HasSourceRegistry returns a boolean if a field has been set.
+func (o *TrialChangesRow) HasSourceRegistry() bool {
+	if o != nil && o.SourceRegistry.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSourceRegistry gets a reference to the given NullableString and assigns it to the SourceRegistry field.
+func (o *TrialChangesRow) SetSourceRegistry(v string) {
+	o.SourceRegistry.Set(&v)
+}
+// SetSourceRegistryNil sets the value for SourceRegistry to be an explicit nil
+func (o *TrialChangesRow) SetSourceRegistryNil() {
+	o.SourceRegistry.Set(nil)
+}
+
+// UnsetSourceRegistry ensures that no value is present for SourceRegistry, not even an explicit nil
+func (o *TrialChangesRow) UnsetSourceRegistry() {
+	o.SourceRegistry.Unset()
+}
+
+// GetRestrictionTier returns the RestrictionTier field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *TrialChangesRow) GetRestrictionTier() string {
+	if o == nil || IsNil(o.RestrictionTier.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.RestrictionTier.Get()
+}
+
+// GetRestrictionTierOk returns a tuple with the RestrictionTier field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *TrialChangesRow) GetRestrictionTierOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.RestrictionTier.Get(), o.RestrictionTier.IsSet()
+}
+
+// HasRestrictionTier returns a boolean if a field has been set.
+func (o *TrialChangesRow) HasRestrictionTier() bool {
+	if o != nil && o.RestrictionTier.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetRestrictionTier gets a reference to the given NullableString and assigns it to the RestrictionTier field.
+func (o *TrialChangesRow) SetRestrictionTier(v string) {
+	o.RestrictionTier.Set(&v)
+}
+// SetRestrictionTierNil sets the value for RestrictionTier to be an explicit nil
+func (o *TrialChangesRow) SetRestrictionTierNil() {
+	o.RestrictionTier.Set(nil)
+}
+
+// UnsetRestrictionTier ensures that no value is present for RestrictionTier, not even an explicit nil
+func (o *TrialChangesRow) UnsetRestrictionTier() {
+	o.RestrictionTier.Unset()
 }
 
 // GetObservedAt returns the ObservedAt field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -468,6 +556,12 @@ func (o TrialChangesRow) ToMap() (map[string]interface{}, error) {
 	if o.TrialId.IsSet() {
 		toSerialize["trial_id"] = o.TrialId.Get()
 	}
+	if o.SourceRegistry.IsSet() {
+		toSerialize["source_registry"] = o.SourceRegistry.Get()
+	}
+	if o.RestrictionTier.IsSet() {
+		toSerialize["restriction_tier"] = o.RestrictionTier.Get()
+	}
 	if o.ObservedAt.IsSet() {
 		toSerialize["observed_at"] = o.ObservedAt.Get()
 	}
@@ -518,6 +612,8 @@ func (o *TrialChangesRow) UnmarshalJSON(data []byte) (err error) {
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "trial_id")
+		delete(additionalProperties, "source_registry")
+		delete(additionalProperties, "restriction_tier")
 		delete(additionalProperties, "observed_at")
 		delete(additionalProperties, "event_type")
 		delete(additionalProperties, "field")

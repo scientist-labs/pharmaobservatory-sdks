@@ -79,6 +79,9 @@ module PharmaObservatory
     # Grant applications folded into the event; 1 for the other sources.
     attr_accessor :n_awards
 
+    # Whether the event is life-sciences capital: a grant is always true, a Regulation D offering follows the filer's self-declared industry group, and an extracted financing follows the filer's SIC code. Never null; a filer that cannot be classified is false.
+    attr_accessor :is_biomedical
+
     # The running total of disclosed amounts over the company's own events up to and including this one, in date order; null where the event has no company.
     attr_accessor :cumulative_raised_usd
 
@@ -109,6 +112,7 @@ module PharmaObservatory
         :'event_stage' => :'event_stage',
         :'administering_ic' => :'administering_ic',
         :'n_awards' => :'n_awards',
+        :'is_biomedical' => :'is_biomedical',
         :'cumulative_raised_usd' => :'cumulative_raised_usd',
         :'source_url' => :'source_url'
       }
@@ -148,6 +152,7 @@ module PharmaObservatory
         :'event_stage' => :'String',
         :'administering_ic' => :'String',
         :'n_awards' => :'Integer',
+        :'is_biomedical' => :'Boolean',
         :'cumulative_raised_usd' => :'Float',
         :'source_url' => :'String'
       }
@@ -177,6 +182,7 @@ module PharmaObservatory
         :'event_stage',
         :'administering_ic',
         :'n_awards',
+        :'is_biomedical',
         :'cumulative_raised_usd',
         :'source_url'
       ])
@@ -282,6 +288,10 @@ module PharmaObservatory
         self.n_awards = attributes[:'n_awards']
       end
 
+      if attributes.key?(:'is_biomedical')
+        self.is_biomedical = attributes[:'is_biomedical']
+      end
+
       if attributes.key?(:'cumulative_raised_usd')
         self.cumulative_raised_usd = attributes[:'cumulative_raised_usd']
       end
@@ -332,6 +342,7 @@ module PharmaObservatory
           event_stage == o.event_stage &&
           administering_ic == o.administering_ic &&
           n_awards == o.n_awards &&
+          is_biomedical == o.is_biomedical &&
           cumulative_raised_usd == o.cumulative_raised_usd &&
           source_url == o.source_url
     end
@@ -345,7 +356,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [funding_event_id, issuer_name, issuer_org_id, issuer_company_id, issuer_company_name, issuer_group_id, issuer_group_name, event_date, fiscal_year, source, round_type, round_subtype, is_dilutive, amount_usd, currency, amount_is_disclosed, capital_treatment, is_actual_issuer_inflow, event_stage, administering_ic, n_awards, cumulative_raised_usd, source_url].hash
+      [funding_event_id, issuer_name, issuer_org_id, issuer_company_id, issuer_company_name, issuer_group_id, issuer_group_name, event_date, fiscal_year, source, round_type, round_subtype, is_dilutive, amount_usd, currency, amount_is_disclosed, capital_treatment, is_actual_issuer_inflow, event_stage, administering_ic, n_awards, is_biomedical, cumulative_raised_usd, source_url].hash
     end
 
     # Builds the object from hash

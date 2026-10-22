@@ -17,10 +17,13 @@ module PharmaObservatory
   class CompaniesRecordAttributes
     attr_accessor :company_funding_summary
 
+    attr_accessor :company_trial_geography
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'company_funding_summary' => :'company_funding_summary'
+        :'company_funding_summary' => :'company_funding_summary',
+        :'company_trial_geography' => :'company_trial_geography'
       }
     end
 
@@ -37,7 +40,8 @@ module PharmaObservatory
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'company_funding_summary' => :'CompanyFundingSummaryRow'
+        :'company_funding_summary' => :'CompanyFundingSummaryRow',
+        :'company_trial_geography' => :'CompanyTrialGeographyRow'
       }
     end
 
@@ -66,6 +70,10 @@ module PharmaObservatory
       if attributes.key?(:'company_funding_summary')
         self.company_funding_summary = attributes[:'company_funding_summary']
       end
+
+      if attributes.key?(:'company_trial_geography')
+        self.company_trial_geography = attributes[:'company_trial_geography']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -88,7 +96,8 @@ module PharmaObservatory
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          company_funding_summary == o.company_funding_summary
+          company_funding_summary == o.company_funding_summary &&
+          company_trial_geography == o.company_trial_geography
     end
 
     # @see the `==` method
@@ -100,7 +109,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [company_funding_summary].hash
+      [company_funding_summary, company_trial_geography].hash
     end
 
     # Builds the object from hash

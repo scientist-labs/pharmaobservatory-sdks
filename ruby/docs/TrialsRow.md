@@ -4,7 +4,11 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **trial_id** | **String** | The trial&#39;s ClinicalTrials.gov registry id (NCT, National Clinical Trial, number). | [optional] |
+| **trial_id** | **String** | The trial&#39;s id: the ClinicalTrials.gov registry id (NCT, National Clinical Trial, number), or the WHO TrialID of a trial registered only with a WHO ICTRP member registry. | [optional] |
+| **nct_id** | **String** | The ClinicalTrials.gov registry id; null for a trial registered only with a WHO ICTRP member registry. | [optional] |
+| **source_registry** | **String** | The registry source of the row: clinicaltrials or ictrp (a trial registered only with a WHO ICTRP member registry). | [optional] |
+| **registry** | **String** | The registry that holds the record: NCT for ClinicalTrials.gov, or a WHO ICTRP member registry (ChiCTR, ISRCTN, CTIS, ACTRN, NL, KCT, EUCTR and so on). | [optional] |
+| **restriction_tier** | **String** | none for a ClinicalTrials.gov trial; licensable for a WHO ICTRP trial, which only a caller holding the licensable tier receives. | [optional] |
 | **brief_title** | **String** | The trial&#39;s brief title. | [optional] |
 | **official_title** | **String** | The trial&#39;s official title. | [optional] |
 | **study_type** | **String** | INTERVENTIONAL, OBSERVATIONAL or EXPANDED_ACCESS. | [optional] |
@@ -62,6 +66,10 @@ require 'pharmaobservatory'
 
 instance = PharmaObservatory::TrialsRow.new(
   trial_id: null,
+  nct_id: null,
+  source_registry: null,
+  registry: null,
+  restriction_tier: null,
   brief_title: null,
   official_title: null,
   study_type: null,

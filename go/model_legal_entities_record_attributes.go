@@ -19,6 +19,10 @@ var _ MappedNullable = &LegalEntitiesRecordAttributes{}
 
 // LegalEntitiesRecordAttributes struct for LegalEntitiesRecordAttributes
 type LegalEntitiesRecordAttributes struct {
+	LegalEntitySecFilings *LegalEntitySecFilingsRow `json:"legal_entity_sec_filings,omitempty"`
+	OwnershipPercentages *OwnershipPercentagesRow `json:"ownership_percentages,omitempty"`
+	SbtiCrosscheck *SbtiCrosscheckRow `json:"sbti_crosscheck,omitempty"`
+	SponsorDelivery *SponsorDeliveryRow `json:"sponsor_delivery,omitempty"`
 	SponsorRecruitmentDuration *SponsorRecruitmentDurationRow `json:"sponsor_recruitment_duration,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -40,6 +44,134 @@ func NewLegalEntitiesRecordAttributes() *LegalEntitiesRecordAttributes {
 func NewLegalEntitiesRecordAttributesWithDefaults() *LegalEntitiesRecordAttributes {
 	this := LegalEntitiesRecordAttributes{}
 	return &this
+}
+
+// GetLegalEntitySecFilings returns the LegalEntitySecFilings field value if set, zero value otherwise.
+func (o *LegalEntitiesRecordAttributes) GetLegalEntitySecFilings() LegalEntitySecFilingsRow {
+	if o == nil || IsNil(o.LegalEntitySecFilings) {
+		var ret LegalEntitySecFilingsRow
+		return ret
+	}
+	return *o.LegalEntitySecFilings
+}
+
+// GetLegalEntitySecFilingsOk returns a tuple with the LegalEntitySecFilings field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LegalEntitiesRecordAttributes) GetLegalEntitySecFilingsOk() (*LegalEntitySecFilingsRow, bool) {
+	if o == nil || IsNil(o.LegalEntitySecFilings) {
+		return nil, false
+	}
+	return o.LegalEntitySecFilings, true
+}
+
+// HasLegalEntitySecFilings returns a boolean if a field has been set.
+func (o *LegalEntitiesRecordAttributes) HasLegalEntitySecFilings() bool {
+	if o != nil && !IsNil(o.LegalEntitySecFilings) {
+		return true
+	}
+
+	return false
+}
+
+// SetLegalEntitySecFilings gets a reference to the given LegalEntitySecFilingsRow and assigns it to the LegalEntitySecFilings field.
+func (o *LegalEntitiesRecordAttributes) SetLegalEntitySecFilings(v LegalEntitySecFilingsRow) {
+	o.LegalEntitySecFilings = &v
+}
+
+// GetOwnershipPercentages returns the OwnershipPercentages field value if set, zero value otherwise.
+func (o *LegalEntitiesRecordAttributes) GetOwnershipPercentages() OwnershipPercentagesRow {
+	if o == nil || IsNil(o.OwnershipPercentages) {
+		var ret OwnershipPercentagesRow
+		return ret
+	}
+	return *o.OwnershipPercentages
+}
+
+// GetOwnershipPercentagesOk returns a tuple with the OwnershipPercentages field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LegalEntitiesRecordAttributes) GetOwnershipPercentagesOk() (*OwnershipPercentagesRow, bool) {
+	if o == nil || IsNil(o.OwnershipPercentages) {
+		return nil, false
+	}
+	return o.OwnershipPercentages, true
+}
+
+// HasOwnershipPercentages returns a boolean if a field has been set.
+func (o *LegalEntitiesRecordAttributes) HasOwnershipPercentages() bool {
+	if o != nil && !IsNil(o.OwnershipPercentages) {
+		return true
+	}
+
+	return false
+}
+
+// SetOwnershipPercentages gets a reference to the given OwnershipPercentagesRow and assigns it to the OwnershipPercentages field.
+func (o *LegalEntitiesRecordAttributes) SetOwnershipPercentages(v OwnershipPercentagesRow) {
+	o.OwnershipPercentages = &v
+}
+
+// GetSbtiCrosscheck returns the SbtiCrosscheck field value if set, zero value otherwise.
+func (o *LegalEntitiesRecordAttributes) GetSbtiCrosscheck() SbtiCrosscheckRow {
+	if o == nil || IsNil(o.SbtiCrosscheck) {
+		var ret SbtiCrosscheckRow
+		return ret
+	}
+	return *o.SbtiCrosscheck
+}
+
+// GetSbtiCrosscheckOk returns a tuple with the SbtiCrosscheck field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LegalEntitiesRecordAttributes) GetSbtiCrosscheckOk() (*SbtiCrosscheckRow, bool) {
+	if o == nil || IsNil(o.SbtiCrosscheck) {
+		return nil, false
+	}
+	return o.SbtiCrosscheck, true
+}
+
+// HasSbtiCrosscheck returns a boolean if a field has been set.
+func (o *LegalEntitiesRecordAttributes) HasSbtiCrosscheck() bool {
+	if o != nil && !IsNil(o.SbtiCrosscheck) {
+		return true
+	}
+
+	return false
+}
+
+// SetSbtiCrosscheck gets a reference to the given SbtiCrosscheckRow and assigns it to the SbtiCrosscheck field.
+func (o *LegalEntitiesRecordAttributes) SetSbtiCrosscheck(v SbtiCrosscheckRow) {
+	o.SbtiCrosscheck = &v
+}
+
+// GetSponsorDelivery returns the SponsorDelivery field value if set, zero value otherwise.
+func (o *LegalEntitiesRecordAttributes) GetSponsorDelivery() SponsorDeliveryRow {
+	if o == nil || IsNil(o.SponsorDelivery) {
+		var ret SponsorDeliveryRow
+		return ret
+	}
+	return *o.SponsorDelivery
+}
+
+// GetSponsorDeliveryOk returns a tuple with the SponsorDelivery field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LegalEntitiesRecordAttributes) GetSponsorDeliveryOk() (*SponsorDeliveryRow, bool) {
+	if o == nil || IsNil(o.SponsorDelivery) {
+		return nil, false
+	}
+	return o.SponsorDelivery, true
+}
+
+// HasSponsorDelivery returns a boolean if a field has been set.
+func (o *LegalEntitiesRecordAttributes) HasSponsorDelivery() bool {
+	if o != nil && !IsNil(o.SponsorDelivery) {
+		return true
+	}
+
+	return false
+}
+
+// SetSponsorDelivery gets a reference to the given SponsorDeliveryRow and assigns it to the SponsorDelivery field.
+func (o *LegalEntitiesRecordAttributes) SetSponsorDelivery(v SponsorDeliveryRow) {
+	o.SponsorDelivery = &v
 }
 
 // GetSponsorRecruitmentDuration returns the SponsorRecruitmentDuration field value if set, zero value otherwise.
@@ -84,6 +216,18 @@ func (o LegalEntitiesRecordAttributes) MarshalJSON() ([]byte, error) {
 
 func (o LegalEntitiesRecordAttributes) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.LegalEntitySecFilings) {
+		toSerialize["legal_entity_sec_filings"] = o.LegalEntitySecFilings
+	}
+	if !IsNil(o.OwnershipPercentages) {
+		toSerialize["ownership_percentages"] = o.OwnershipPercentages
+	}
+	if !IsNil(o.SbtiCrosscheck) {
+		toSerialize["sbti_crosscheck"] = o.SbtiCrosscheck
+	}
+	if !IsNil(o.SponsorDelivery) {
+		toSerialize["sponsor_delivery"] = o.SponsorDelivery
+	}
 	if !IsNil(o.SponsorRecruitmentDuration) {
 		toSerialize["sponsor_recruitment_duration"] = o.SponsorRecruitmentDuration
 	}
@@ -109,6 +253,10 @@ func (o *LegalEntitiesRecordAttributes) UnmarshalJSON(data []byte) (err error) {
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "legal_entity_sec_filings")
+		delete(additionalProperties, "ownership_percentages")
+		delete(additionalProperties, "sbti_crosscheck")
+		delete(additionalProperties, "sponsor_delivery")
 		delete(additionalProperties, "sponsor_recruitment_duration")
 		o.AdditionalProperties = additionalProperties
 	}

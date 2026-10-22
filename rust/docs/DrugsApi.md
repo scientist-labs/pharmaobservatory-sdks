@@ -4,9 +4,12 @@ All URIs are relative to *https://pharmaobservatory.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**drugs_period_brand_companies**](DrugsApi.md#drugs_period_brand_companies) | **GET** /api/v1/drugs/{id}/brand_companies | Brand companies
+[**drugs_period_brand_revenue**](DrugsApi.md#drugs_period_brand_revenue) | **GET** /api/v1/drugs/{id}/brand_revenue | Brand revenue
 [**drugs_period_catalysts**](DrugsApi.md#drugs_period_catalysts) | **GET** /api/v1/drugs/{id}/catalysts | Catalysts: trial readouts, patent cliffs, FDA decision dates and press-release events
 [**drugs_period_drug_approvals**](DrugsApi.md#drugs_period_drug_approvals) | **GET** /api/v1/drugs/{id}/drug_approvals | Drug approvals
 [**drugs_period_drug_asp_codes**](DrugsApi.md#drugs_period_drug_asp_codes) | **GET** /api/v1/drugs/{id}/drug_asp_codes | Drug ASP payment limits
+[**drugs_period_drug_brands**](DrugsApi.md#drugs_period_drug_brands) | **GET** /api/v1/drugs/{id}/drug_brands | Drug brands
 [**drugs_period_drug_combinations**](DrugsApi.md#drugs_period_drug_combinations) | **GET** /api/v1/drugs/{id}/drug_combinations | Drug combinations
 [**drugs_period_drug_declared_patents**](DrugsApi.md#drugs_period_drug_declared_patents) | **GET** /api/v1/drugs/{id}/drug_declared_patents | Drug declared patents
 [**drugs_period_drug_label_safety**](DrugsApi.md#drugs_period_drug_label_safety) | **GET** /api/v1/drugs/{id}/drug_label_safety | Drug label safety
@@ -17,14 +20,84 @@ Method | HTTP request | Description
 [**drugs_period_drug_pricing**](DrugsApi.md#drugs_period_drug_pricing) | **GET** /api/v1/drugs/{id}/drug_pricing | Drug pricing (NADAC)
 [**drugs_period_drug_recalls**](DrugsApi.md#drugs_period_drug_recalls) | **GET** /api/v1/drugs/{id}/drug_recalls | Drug recalls
 [**drugs_period_drug_regulatory**](DrugsApi.md#drugs_period_drug_regulatory) | **GET** /api/v1/drugs/{id}/drug_regulatory | Drug regulatory status
+[**drugs_period_drug_sites**](DrugsApi.md#drugs_period_drug_sites) | **GET** /api/v1/drugs/{id}/drug_sites | Drug sites
 [**drugs_period_drug_targets**](DrugsApi.md#drugs_period_drug_targets) | **GET** /api/v1/drugs/{id}/drug_targets | Drug targets
+[**drugs_period_drug_trial_conditions**](DrugsApi.md#drugs_period_drug_trial_conditions) | **GET** /api/v1/drugs/{id}/drug_trial_conditions | Drug trial conditions
+[**drugs_period_drug_trials**](DrugsApi.md#drugs_period_drug_trials) | **GET** /api/v1/drugs/{id}/drug_trials | Drug trials
 [**drugs_period_drug_variants**](DrugsApi.md#drugs_period_drug_variants) | **GET** /api/v1/drugs/{id}/drug_variants | Drug variants
 [**drugs_period_get**](DrugsApi.md#drugs_period_get) | **GET** /api/v1/drugs/{id} | One drug
 [**drugs_period_list**](DrugsApi.md#drugs_period_list) | **GET** /api/v1/drugs | List drugs
 [**drugs_period_pdufa_dates**](DrugsApi.md#drugs_period_pdufa_dates) | **GET** /api/v1/drugs/{id}/pdufa_dates | FDA decision dates (PDUFA) and catalysts
+[**drugs_period_programs**](DrugsApi.md#drugs_period_programs) | **GET** /api/v1/drugs/{id}/programs | Programs
 [**drugs_period_sec_pdufa_dates**](DrugsApi.md#drugs_period_sec_pdufa_dates) | **GET** /api/v1/drugs/{id}/sec_pdufa_dates | FDA dates disclosed in SEC filings
 [**drugs_period_trial_drugs**](DrugsApi.md#drugs_period_trial_drugs) | **GET** /api/v1/drugs/{id}/trial_drugs | Trial drugs
 
+
+
+## drugs_period_brand_companies
+
+> models::BrandCompaniesResponse drugs_period_brand_companies(id, cursor, limit, sort, group_by, measure)
+Brand companies
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::BrandCompaniesResponse**](BrandCompaniesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## drugs_period_brand_revenue
+
+> models::BrandRevenueResponse drugs_period_brand_revenue(id, cursor, limit, sort, group_by, measure)
+Brand revenue
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::BrandRevenueResponse**](BrandRevenueResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## drugs_period_catalysts
@@ -113,6 +186,39 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::DrugAspCodesResponse**](DrugAspCodesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## drugs_period_drug_brands
+
+> models::DrugBrandsResponse drugs_period_drug_brands(id, cursor, limit, sort, group_by, measure)
+Drug brands
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::DrugBrandsResponse**](DrugBrandsResponse.md)
 
 ### Authorization
 
@@ -456,6 +562,39 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## drugs_period_drug_sites
+
+> models::DrugSitesResponse drugs_period_drug_sites(id, cursor, limit, sort, group_by, measure)
+Drug sites
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::DrugSitesResponse**](DrugSitesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## drugs_period_drug_targets
 
 > models::DrugTargetsResponse drugs_period_drug_targets(id, cursor, limit, sort, group_by, measure)
@@ -476,6 +615,72 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::DrugTargetsResponse**](DrugTargetsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## drugs_period_drug_trial_conditions
+
+> models::DrugTrialConditionsResponse drugs_period_drug_trial_conditions(id, cursor, limit, sort, group_by, measure)
+Drug trial conditions
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::DrugTrialConditionsResponse**](DrugTrialConditionsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## drugs_period_drug_trials
+
+> models::DrugTrialsResponse drugs_period_drug_trials(id, cursor, limit, sort, group_by, measure)
+Drug trials
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::DrugTrialsResponse**](DrugTrialsResponse.md)
 
 ### Authorization
 
@@ -602,6 +807,39 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::PdufaDatesResponse**](PdufaDatesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## drugs_period_programs
+
+> models::ProgramsResponse drugs_period_programs(id, cursor, limit, sort, group_by, measure)
+Programs
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::ProgramsResponse**](ProgramsResponse.md)
 
 ### Authorization
 

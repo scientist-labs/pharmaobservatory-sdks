@@ -17,10 +17,18 @@ import (
 // checks if the TrialsRow type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &TrialsRow{}
 
-// TrialsRow One row of the trials dataset: one row per ClinicalTrials.gov trial. A grouped request returns the group columns and the measures instead, as additional properties.
+// TrialsRow One row of the trials dataset: one row per registered trial: a ClinicalTrials.gov trial, or a trial registered only with a WHO ICTRP member registry (an ICTRP record that duplicates a ClinicalTrials.gov trial is folded onto it). A grouped request returns the group columns and the measures instead, as additional properties.
 type TrialsRow struct {
-	// The trial's ClinicalTrials.gov registry id (NCT, National Clinical Trial, number).
+	// The trial's id: the ClinicalTrials.gov registry id (NCT, National Clinical Trial, number), or the WHO TrialID of a trial registered only with a WHO ICTRP member registry.
 	TrialId NullableString `json:"trial_id,omitempty"`
+	// The ClinicalTrials.gov registry id; null for a trial registered only with a WHO ICTRP member registry.
+	NctId NullableString `json:"nct_id,omitempty"`
+	// The registry source of the row: clinicaltrials or ictrp (a trial registered only with a WHO ICTRP member registry).
+	SourceRegistry NullableString `json:"source_registry,omitempty"`
+	// The registry that holds the record: NCT for ClinicalTrials.gov, or a WHO ICTRP member registry (ChiCTR, ISRCTN, CTIS, ACTRN, NL, KCT, EUCTR and so on).
+	Registry NullableString `json:"registry,omitempty"`
+	// none for a ClinicalTrials.gov trial; licensable for a WHO ICTRP trial, which only a caller holding the licensable tier receives.
+	RestrictionTier NullableString `json:"restriction_tier,omitempty"`
 	// The trial's brief title.
 	BriefTitle NullableString `json:"brief_title,omitempty"`
 	// The trial's official title.
@@ -181,6 +189,174 @@ func (o *TrialsRow) SetTrialIdNil() {
 // UnsetTrialId ensures that no value is present for TrialId, not even an explicit nil
 func (o *TrialsRow) UnsetTrialId() {
 	o.TrialId.Unset()
+}
+
+// GetNctId returns the NctId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *TrialsRow) GetNctId() string {
+	if o == nil || IsNil(o.NctId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.NctId.Get()
+}
+
+// GetNctIdOk returns a tuple with the NctId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *TrialsRow) GetNctIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NctId.Get(), o.NctId.IsSet()
+}
+
+// HasNctId returns a boolean if a field has been set.
+func (o *TrialsRow) HasNctId() bool {
+	if o != nil && o.NctId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNctId gets a reference to the given NullableString and assigns it to the NctId field.
+func (o *TrialsRow) SetNctId(v string) {
+	o.NctId.Set(&v)
+}
+// SetNctIdNil sets the value for NctId to be an explicit nil
+func (o *TrialsRow) SetNctIdNil() {
+	o.NctId.Set(nil)
+}
+
+// UnsetNctId ensures that no value is present for NctId, not even an explicit nil
+func (o *TrialsRow) UnsetNctId() {
+	o.NctId.Unset()
+}
+
+// GetSourceRegistry returns the SourceRegistry field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *TrialsRow) GetSourceRegistry() string {
+	if o == nil || IsNil(o.SourceRegistry.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.SourceRegistry.Get()
+}
+
+// GetSourceRegistryOk returns a tuple with the SourceRegistry field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *TrialsRow) GetSourceRegistryOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SourceRegistry.Get(), o.SourceRegistry.IsSet()
+}
+
+// HasSourceRegistry returns a boolean if a field has been set.
+func (o *TrialsRow) HasSourceRegistry() bool {
+	if o != nil && o.SourceRegistry.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSourceRegistry gets a reference to the given NullableString and assigns it to the SourceRegistry field.
+func (o *TrialsRow) SetSourceRegistry(v string) {
+	o.SourceRegistry.Set(&v)
+}
+// SetSourceRegistryNil sets the value for SourceRegistry to be an explicit nil
+func (o *TrialsRow) SetSourceRegistryNil() {
+	o.SourceRegistry.Set(nil)
+}
+
+// UnsetSourceRegistry ensures that no value is present for SourceRegistry, not even an explicit nil
+func (o *TrialsRow) UnsetSourceRegistry() {
+	o.SourceRegistry.Unset()
+}
+
+// GetRegistry returns the Registry field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *TrialsRow) GetRegistry() string {
+	if o == nil || IsNil(o.Registry.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Registry.Get()
+}
+
+// GetRegistryOk returns a tuple with the Registry field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *TrialsRow) GetRegistryOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Registry.Get(), o.Registry.IsSet()
+}
+
+// HasRegistry returns a boolean if a field has been set.
+func (o *TrialsRow) HasRegistry() bool {
+	if o != nil && o.Registry.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetRegistry gets a reference to the given NullableString and assigns it to the Registry field.
+func (o *TrialsRow) SetRegistry(v string) {
+	o.Registry.Set(&v)
+}
+// SetRegistryNil sets the value for Registry to be an explicit nil
+func (o *TrialsRow) SetRegistryNil() {
+	o.Registry.Set(nil)
+}
+
+// UnsetRegistry ensures that no value is present for Registry, not even an explicit nil
+func (o *TrialsRow) UnsetRegistry() {
+	o.Registry.Unset()
+}
+
+// GetRestrictionTier returns the RestrictionTier field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *TrialsRow) GetRestrictionTier() string {
+	if o == nil || IsNil(o.RestrictionTier.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.RestrictionTier.Get()
+}
+
+// GetRestrictionTierOk returns a tuple with the RestrictionTier field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *TrialsRow) GetRestrictionTierOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.RestrictionTier.Get(), o.RestrictionTier.IsSet()
+}
+
+// HasRestrictionTier returns a boolean if a field has been set.
+func (o *TrialsRow) HasRestrictionTier() bool {
+	if o != nil && o.RestrictionTier.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetRestrictionTier gets a reference to the given NullableString and assigns it to the RestrictionTier field.
+func (o *TrialsRow) SetRestrictionTier(v string) {
+	o.RestrictionTier.Set(&v)
+}
+// SetRestrictionTierNil sets the value for RestrictionTier to be an explicit nil
+func (o *TrialsRow) SetRestrictionTierNil() {
+	o.RestrictionTier.Set(nil)
+}
+
+// UnsetRestrictionTier ensures that no value is present for RestrictionTier, not even an explicit nil
+func (o *TrialsRow) UnsetRestrictionTier() {
+	o.RestrictionTier.Unset()
 }
 
 // GetBriefTitle returns the BriefTitle field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -2155,6 +2331,18 @@ func (o TrialsRow) ToMap() (map[string]interface{}, error) {
 	if o.TrialId.IsSet() {
 		toSerialize["trial_id"] = o.TrialId.Get()
 	}
+	if o.NctId.IsSet() {
+		toSerialize["nct_id"] = o.NctId.Get()
+	}
+	if o.SourceRegistry.IsSet() {
+		toSerialize["source_registry"] = o.SourceRegistry.Get()
+	}
+	if o.Registry.IsSet() {
+		toSerialize["registry"] = o.Registry.Get()
+	}
+	if o.RestrictionTier.IsSet() {
+		toSerialize["restriction_tier"] = o.RestrictionTier.Get()
+	}
 	if o.BriefTitle.IsSet() {
 		toSerialize["brief_title"] = o.BriefTitle.Get()
 	}
@@ -2325,6 +2513,10 @@ func (o *TrialsRow) UnmarshalJSON(data []byte) (err error) {
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "trial_id")
+		delete(additionalProperties, "nct_id")
+		delete(additionalProperties, "source_registry")
+		delete(additionalProperties, "registry")
+		delete(additionalProperties, "restriction_tier")
 		delete(additionalProperties, "brief_title")
 		delete(additionalProperties, "official_title")
 		delete(additionalProperties, "study_type")

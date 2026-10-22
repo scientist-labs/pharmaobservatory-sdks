@@ -13,6 +13,14 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct LegalEntitiesRecordAttributes {
+    #[serde(rename = "legal_entity_sec_filings", skip_serializing_if = "Option::is_none")]
+    pub legal_entity_sec_filings: Option<models::LegalEntitySecFilingsRow>,
+    #[serde(rename = "ownership_percentages", skip_serializing_if = "Option::is_none")]
+    pub ownership_percentages: Option<models::OwnershipPercentagesRow>,
+    #[serde(rename = "sbti_crosscheck", skip_serializing_if = "Option::is_none")]
+    pub sbti_crosscheck: Option<models::SbtiCrosscheckRow>,
+    #[serde(rename = "sponsor_delivery", skip_serializing_if = "Option::is_none")]
+    pub sponsor_delivery: Option<models::SponsorDeliveryRow>,
     #[serde(rename = "sponsor_recruitment_duration", skip_serializing_if = "Option::is_none")]
     pub sponsor_recruitment_duration: Option<models::SponsorRecruitmentDurationRow>,
 }
@@ -20,6 +28,10 @@ pub struct LegalEntitiesRecordAttributes {
 impl LegalEntitiesRecordAttributes {
     pub fn new() -> LegalEntitiesRecordAttributes {
         LegalEntitiesRecordAttributes {
+            legal_entity_sec_filings: None,
+            ownership_percentages: None,
+            sbti_crosscheck: None,
+            sponsor_delivery: None,
             sponsor_recruitment_duration: None,
         }
     }

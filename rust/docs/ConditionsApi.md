@@ -19,6 +19,10 @@ Method | HTTP request | Description
 [**conditions_period_get**](ConditionsApi.md#conditions_period_get) | **GET** /api/v1/conditions/{id} | One condition
 [**conditions_period_list**](ConditionsApi.md#conditions_period_list) | **GET** /api/v1/conditions | List conditions
 [**conditions_period_pdufa_dates**](ConditionsApi.md#conditions_period_pdufa_dates) | **GET** /api/v1/conditions/{id}/pdufa_dates | FDA decision dates (PDUFA) and catalysts
+[**conditions_period_program_licensing_candidates**](ConditionsApi.md#conditions_period_program_licensing_candidates) | **GET** /api/v1/conditions/{id}/program_licensing_candidates | Program licensing candidates
+[**conditions_period_programs**](ConditionsApi.md#conditions_period_programs) | **GET** /api/v1/conditions/{id}/programs | Programs
+[**conditions_period_rwd_source_conditions**](ConditionsApi.md#conditions_period_rwd_source_conditions) | **GET** /api/v1/conditions/{id}/rwd_source_conditions | Real-world data sources named by registered studies of a condition
+[**conditions_period_rwd_study_conditions**](ConditionsApi.md#conditions_period_rwd_study_conditions) | **GET** /api/v1/conditions/{id}/rwd_study_conditions | Registered real-world data study conditions
 
 
 
@@ -498,6 +502,138 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::PdufaDatesResponse**](PdufaDatesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## conditions_period_program_licensing_candidates
+
+> models::ProgramLicensingCandidatesResponse conditions_period_program_licensing_candidates(id, cursor, limit, sort, group_by, measure)
+Program licensing candidates
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::ProgramLicensingCandidatesResponse**](ProgramLicensingCandidatesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## conditions_period_programs
+
+> models::ProgramsResponse conditions_period_programs(id, cursor, limit, sort, group_by, measure)
+Programs
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::ProgramsResponse**](ProgramsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## conditions_period_rwd_source_conditions
+
+> models::RwdSourceConditionsResponse conditions_period_rwd_source_conditions(id, cursor, limit, sort, group_by, measure)
+Real-world data sources named by registered studies of a condition
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::RwdSourceConditionsResponse**](RwdSourceConditionsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## conditions_period_rwd_study_conditions
+
+> models::RwdStudyConditionsResponse conditions_period_rwd_study_conditions(id, cursor, limit, sort, group_by, measure)
+Registered real-world data study conditions
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::RwdStudyConditionsResponse**](RwdStudyConditionsResponse.md)
 
 ### Authorization
 

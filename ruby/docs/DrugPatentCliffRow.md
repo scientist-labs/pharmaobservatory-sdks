@@ -4,7 +4,8 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **drug_id** | **String** | The drug key. | [optional] |
+| **drug_id** | **String** | The drug key at the member grain: the drug record the patent-cliff row is built on, which is the molecule&#39;s own record or a record folded under it. Enter from a drug on molecule_id. | [optional] |
+| **molecule_id** | **String** | The molecule key the drug record rolls up to, and the entry key for the drugs object type. | [optional] |
 | **drug_name** | **String** | The drug&#39;s name. | [optional] |
 | **pharm_class** | **String** | The drug&#39;s pharmacologic class. | [optional] |
 | **atc_class** | **String** | The drug&#39;s Anatomical Therapeutic Chemical (ATC) class. | [optional] |
@@ -38,6 +39,7 @@ require 'pharmaobservatory'
 
 instance = PharmaObservatory::DrugPatentCliffRow.new(
   drug_id: null,
+  molecule_id: null,
   drug_name: null,
   pharm_class: null,
   atc_class: null,

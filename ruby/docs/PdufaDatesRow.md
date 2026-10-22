@@ -16,7 +16,7 @@
 | **event_category** | **String** | Event category (pdufa, adcomm and so on). | [optional] |
 | **drug_name** | **String** | The drug name as filed. | [optional] |
 | **drug_id** | **String** | The drug key. | [optional] |
-| **molecule_id** | **String** | The molecule key. | [optional] |
+| **molecule_id** | **String** | The molecule key, the resolved drug of the calendar entry and the entry key for the drugs object type (null when the drug name did not resolve to a drug). | [optional] |
 | **sponsor_name** | **String** | The sponsor name as filed. | [optional] |
 | **sponsor_org_id** | **String** | Legal-entity level: the organization record the sponsor resolved to (null when unresolved). | [optional] |
 | **sponsor_company_id** | **String** | Company level: the company the sponsor belongs to (null when unresolved). | [optional] |

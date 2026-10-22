@@ -1,6 +1,6 @@
 [package]
 name = "pharmaobservatory"
-version = "0.1.6"
+version = "0.1.7"
 authors = ["Scientist.com <support@scientist.com>"]
 description = "Rust client for the Pharma Observatory public REST API (https://pharmaobservatory.com/api-reference)"
 license = "MIT"

@@ -11,12 +11,24 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// TrialsRow : One row of the trials dataset: one row per ClinicalTrials.gov trial. A grouped request returns the group columns and the measures instead, as additional properties.
+/// TrialsRow : One row of the trials dataset: one row per registered trial: a ClinicalTrials.gov trial, or a trial registered only with a WHO ICTRP member registry (an ICTRP record that duplicates a ClinicalTrials.gov trial is folded onto it). A grouped request returns the group columns and the measures instead, as additional properties.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct TrialsRow {
-    /// The trial's ClinicalTrials.gov registry id (NCT, National Clinical Trial, number).
+    /// The trial's id: the ClinicalTrials.gov registry id (NCT, National Clinical Trial, number), or the WHO TrialID of a trial registered only with a WHO ICTRP member registry.
     #[serde(rename = "trial_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub trial_id: Option<Option<String>>,
+    /// The ClinicalTrials.gov registry id; null for a trial registered only with a WHO ICTRP member registry.
+    #[serde(rename = "nct_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub nct_id: Option<Option<String>>,
+    /// The registry source of the row: clinicaltrials or ictrp (a trial registered only with a WHO ICTRP member registry).
+    #[serde(rename = "source_registry", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub source_registry: Option<Option<String>>,
+    /// The registry that holds the record: NCT for ClinicalTrials.gov, or a WHO ICTRP member registry (ChiCTR, ISRCTN, CTIS, ACTRN, NL, KCT, EUCTR and so on).
+    #[serde(rename = "registry", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub registry: Option<Option<String>>,
+    /// none for a ClinicalTrials.gov trial; licensable for a WHO ICTRP trial, which only a caller holding the licensable tier receives.
+    #[serde(rename = "restriction_tier", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub restriction_tier: Option<Option<String>>,
     /// The trial's brief title.
     #[serde(rename = "brief_title", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub brief_title: Option<Option<String>>,
@@ -167,10 +179,14 @@ pub struct TrialsRow {
 }
 
 impl TrialsRow {
-    /// One row of the trials dataset: one row per ClinicalTrials.gov trial. A grouped request returns the group columns and the measures instead, as additional properties.
+    /// One row of the trials dataset: one row per registered trial: a ClinicalTrials.gov trial, or a trial registered only with a WHO ICTRP member registry (an ICTRP record that duplicates a ClinicalTrials.gov trial is folded onto it). A grouped request returns the group columns and the measures instead, as additional properties.
     pub fn new() -> TrialsRow {
         TrialsRow {
             trial_id: None,
+            nct_id: None,
+            source_registry: None,
+            registry: None,
+            restriction_tier: None,
             brief_title: None,
             official_title: None,
             study_type: None,

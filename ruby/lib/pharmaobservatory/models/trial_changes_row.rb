@@ -16,8 +16,14 @@ require 'time'
 module PharmaObservatory
   # One row of the trial_changes dataset: one row per recorded change to a trial (event, field and time). A grouped request returns the group columns and the measures instead, as additional properties.
   class TrialChangesRow
-    # The trial's ClinicalTrials.gov registry id (NCT, National Clinical Trial, number).
+    # The trial's id: the ClinicalTrials.gov registry id (NCT, National Clinical Trial, number), or the WHO TrialID of a trial registered only with a WHO ICTRP member registry.
     attr_accessor :trial_id
+
+    # The registry source of the trial: clinicaltrials or ictrp (a trial registered only with a WHO ICTRP member registry).
+    attr_accessor :source_registry
+
+    # none for a change to a ClinicalTrials.gov trial; licensable for a change to a WHO ICTRP trial, which only a caller holding the licensable tier receives.
+    attr_accessor :restriction_tier
 
     # When the platform observed the change.
     attr_accessor :observed_at
@@ -50,6 +56,8 @@ module PharmaObservatory
     def self.attribute_map
       {
         :'trial_id' => :'trial_id',
+        :'source_registry' => :'source_registry',
+        :'restriction_tier' => :'restriction_tier',
         :'observed_at' => :'observed_at',
         :'event_type' => :'event_type',
         :'field' => :'field',
@@ -76,6 +84,8 @@ module PharmaObservatory
     def self.openapi_types
       {
         :'trial_id' => :'String',
+        :'source_registry' => :'String',
+        :'restriction_tier' => :'String',
         :'observed_at' => :'Time',
         :'event_type' => :'String',
         :'field' => :'String',
@@ -92,6 +102,8 @@ module PharmaObservatory
     def self.openapi_nullable
       Set.new([
         :'trial_id',
+        :'source_registry',
+        :'restriction_tier',
         :'observed_at',
         :'event_type',
         :'field',
@@ -122,6 +134,14 @@ module PharmaObservatory
 
       if attributes.key?(:'trial_id')
         self.trial_id = attributes[:'trial_id']
+      end
+
+      if attributes.key?(:'source_registry')
+        self.source_registry = attributes[:'source_registry']
+      end
+
+      if attributes.key?(:'restriction_tier')
+        self.restriction_tier = attributes[:'restriction_tier']
       end
 
       if attributes.key?(:'observed_at')
@@ -188,6 +208,8 @@ module PharmaObservatory
       return true if self.equal?(o)
       self.class == o.class &&
           trial_id == o.trial_id &&
+          source_registry == o.source_registry &&
+          restriction_tier == o.restriction_tier &&
           observed_at == o.observed_at &&
           event_type == o.event_type &&
           field == o.field &&
@@ -208,7 +230,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [trial_id, observed_at, event_type, field, old_value, new_value, trial_title, condition_ids, drug_ids, sponsor_org_ids].hash
+      [trial_id, source_registry, restriction_tier, observed_at, event_type, field, old_value, new_value, trial_title, condition_ids, drug_ids, sponsor_org_ids].hash
     end
 
     # Builds the object from hash

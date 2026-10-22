@@ -29,7 +29,7 @@ Name | Type | Description | Notes
 **last_observed_at** | Option<**String**> | When the latest of the edge's records was observed in the source. | [optional]
 **license_name** | Option<**String**> | The licence of the source behind the edge. | [optional]
 **attribution** | Option<**String**> | The credit line the source requires for the edge. Show it wherever the edge is shown: the Charity Commission and UK Research and Innovation edges require it under the Open Government Licence v3.0. | [optional]
-**restriction_tier** | Option<**String**> | Always none: every source behind these edges is open, and a test on the source assertions reports any restricted source that is ever added. | [optional]
+**restriction_tier** | Option<**String**> | The tier vocabulary is none or licensable. Every row here is none: every source behind these edges is open, and a test on the source assertions reports any restricted source that is ever added. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
