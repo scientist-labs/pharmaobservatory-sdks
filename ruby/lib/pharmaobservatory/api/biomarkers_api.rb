@@ -19,6 +19,90 @@ module PharmaObservatory
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
+    # Population allele frequency of protein variants (gnomAD)
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @return [BiomarkerAlleleFrequenciesResponse]
+    def biomarkers_biomarker_allele_frequencies(id, opts = {})
+      data, _status_code, _headers = biomarkers_biomarker_allele_frequencies_with_http_info(id, opts)
+      data
+    end
+
+    # Population allele frequency of protein variants (gnomAD)
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @return [Array<(BiomarkerAlleleFrequenciesResponse, Integer, Hash)>] BiomarkerAlleleFrequenciesResponse data, response status code and response headers
+    def biomarkers_biomarker_allele_frequencies_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: BiomarkersApi.biomarkers_biomarker_allele_frequencies ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling BiomarkersApi.biomarkers_biomarker_allele_frequencies"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_allele_frequencies, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_allele_frequencies, must be greater than or equal to 1.'
+      end
+
+      # resource path
+      local_var_path = '/api/v1/biomarkers/{id}/biomarker_allele_frequencies'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'BiomarkerAlleleFrequenciesResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"BiomarkersApi.biomarkers_biomarker_allele_frequencies",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: BiomarkersApi#biomarkers_biomarker_allele_frequencies\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Biomarker assay evidence from the literature
     # @param id [String] 
     # @param [Hash] opts the optional parameters
@@ -99,6 +183,90 @@ module PharmaObservatory
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: BiomarkersApi#biomarkers_biomarker_assay_evidence\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Biomarker assay providers (from validating papers)
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @return [BiomarkerAssayProvidersResponse]
+    def biomarkers_biomarker_assay_providers(id, opts = {})
+      data, _status_code, _headers = biomarkers_biomarker_assay_providers_with_http_info(id, opts)
+      data
+    end
+
+    # Biomarker assay providers (from validating papers)
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @return [Array<(BiomarkerAssayProvidersResponse, Integer, Hash)>] BiomarkerAssayProvidersResponse data, response status code and response headers
+    def biomarkers_biomarker_assay_providers_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: BiomarkersApi.biomarkers_biomarker_assay_providers ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling BiomarkersApi.biomarkers_biomarker_assay_providers"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_assay_providers, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_assay_providers, must be greater than or equal to 1.'
+      end
+
+      # resource path
+      local_var_path = '/api/v1/biomarkers/{id}/biomarker_assay_providers'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'BiomarkerAssayProvidersResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"BiomarkersApi.biomarkers_biomarker_assay_providers",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: BiomarkersApi#biomarkers_biomarker_assay_providers\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -435,6 +603,90 @@ module PharmaObservatory
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: BiomarkersApi#biomarkers_biomarker_evidence\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Biomarker evidence by year (trial and publication mentions)
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @return [BiomarkerEvidenceByYearResponse]
+    def biomarkers_biomarker_evidence_by_year(id, opts = {})
+      data, _status_code, _headers = biomarkers_biomarker_evidence_by_year_with_http_info(id, opts)
+      data
+    end
+
+    # Biomarker evidence by year (trial and publication mentions)
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @return [Array<(BiomarkerEvidenceByYearResponse, Integer, Hash)>] BiomarkerEvidenceByYearResponse data, response status code and response headers
+    def biomarkers_biomarker_evidence_by_year_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: BiomarkersApi.biomarkers_biomarker_evidence_by_year ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling BiomarkersApi.biomarkers_biomarker_evidence_by_year"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_evidence_by_year, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_evidence_by_year, must be greater than or equal to 1.'
+      end
+
+      # resource path
+      local_var_path = '/api/v1/biomarkers/{id}/biomarker_evidence_by_year'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'BiomarkerEvidenceByYearResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"BiomarkersApi.biomarkers_biomarker_evidence_by_year",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: BiomarkersApi#biomarkers_biomarker_evidence_by_year\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -855,6 +1107,90 @@ module PharmaObservatory
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: BiomarkersApi#biomarkers_biomarker_sample_prevalence\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Biomarker coverage by traversal
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @return [BiomarkerTraversalStatusResponse]
+    def biomarkers_biomarker_traversal_status(id, opts = {})
+      data, _status_code, _headers = biomarkers_biomarker_traversal_status_with_http_info(id, opts)
+      data
+    end
+
+    # Biomarker coverage by traversal
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @return [Array<(BiomarkerTraversalStatusResponse, Integer, Hash)>] BiomarkerTraversalStatusResponse data, response status code and response headers
+    def biomarkers_biomarker_traversal_status_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: BiomarkersApi.biomarkers_biomarker_traversal_status ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling BiomarkersApi.biomarkers_biomarker_traversal_status"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_traversal_status, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling BiomarkersApi.biomarkers_biomarker_traversal_status, must be greater than or equal to 1.'
+      end
+
+      # resource path
+      local_var_path = '/api/v1/biomarkers/{id}/biomarker_traversal_status'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'BiomarkerTraversalStatusResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"BiomarkersApi.biomarkers_biomarker_traversal_status",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: BiomarkersApi#biomarkers_biomarker_traversal_status\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end

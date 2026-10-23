@@ -80,6 +80,22 @@ describe 'LegalEntitiesApi' do
     end
   end
 
+  # unit tests for legal_entities_company_biomarker_capability
+  # Company biomarker capability
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @return [CompanyBiomarkerCapabilityResponse]
+  describe 'legal_entities_company_biomarker_capability test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   # unit tests for legal_entities_company_programs
   # Company programs
   # @param id 
@@ -91,6 +107,22 @@ describe 'LegalEntitiesApi' do
   # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
   # @return [CompanyProgramsResponse]
   describe 'legal_entities_company_programs test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for legal_entities_company_rare_disease_declarations
+  # Organization-wide rare disease declarations
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @return [CompanyRareDiseaseDeclarationsResponse]
+  describe 'legal_entities_company_rare_disease_declarations test' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end
@@ -251,6 +283,22 @@ describe 'LegalEntitiesApi' do
     end
   end
 
+  # unit tests for legal_entities_legal_entity_sec_filings
+  # SEC filer records
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @return [LegalEntitySecFilingsResponse]
+  describe 'legal_entities_legal_entity_sec_filings test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   # unit tests for legal_entities_list
   # List legal entities
   # @param [Hash] opts the optional parameters
@@ -261,6 +309,22 @@ describe 'LegalEntitiesApi' do
   # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
   # @return [LegalEntitiesResponse]
   describe 'legal_entities_list test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for legal_entities_org_disclosure_trend
+  # Organization disclosure trend
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @return [OrgDisclosureTrendResponse]
+  describe 'legal_entities_org_disclosure_trend test' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end
@@ -330,6 +394,22 @@ describe 'LegalEntitiesApi' do
     end
   end
 
+  # unit tests for legal_entities_ownership_source_coverage
+  # Ownership source coverage
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @return [OwnershipSourceCoverageResponse]
+  describe 'legal_entities_ownership_source_coverage test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   # unit tests for legal_entities_pdufa_dates
   # FDA decision dates (PDUFA) and catalysts
   # @param id 
@@ -378,6 +458,70 @@ describe 'LegalEntitiesApi' do
     end
   end
 
+  # unit tests for legal_entities_sbti_crosscheck
+  # SBTi cross-check
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @return [SbtiCrosscheckResponse]
+  describe 'legal_entities_sbti_crosscheck test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for legal_entities_sec_pdufa_dates
+  # FDA dates disclosed in SEC filings
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @return [SecPdufaDatesResponse]
+  describe 'legal_entities_sec_pdufa_dates test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for legal_entities_sponsor_delivery
+  # Sponsor delivery reliability
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @return [SponsorDeliveryResponse]
+  describe 'legal_entities_sponsor_delivery test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for legal_entities_sponsor_patent_mentions
+  # Sponsor patent mentions
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @return [SponsorPatentMentionsResponse]
+  describe 'legal_entities_sponsor_patent_mentions test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   # unit tests for legal_entities_sponsor_recruitment_by_phase
   # Trial recruitment duration by sponsor and phase
   # @param id 
@@ -405,6 +549,38 @@ describe 'LegalEntitiesApi' do
   # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
   # @return [SponsorRecruitmentDurationResponse]
   describe 'legal_entities_sponsor_recruitment_duration test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for legal_entities_sponsor_trial_conditions
+  # Sponsor trial conditions
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @return [SponsorTrialConditionsResponse]
+  describe 'legal_entities_sponsor_trial_conditions test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for legal_entities_sponsor_trial_drugs
+  # Sponsor trial drugs
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @return [SponsorTrialDrugsResponse]
+  describe 'legal_entities_sponsor_trial_drugs test' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end

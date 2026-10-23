@@ -5,6 +5,8 @@
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **facility_key** | **String** | The canonical facility id. | [optional] |
+| **registry** | **String** | The registry of the lead member record. Provenance and a facet, never a join key. | [optional] |
+| **registry_native_site_id** | **String** | The lead registry&#39;s own site id (FEI, EudraGMDP site key, Health Canada location id). | [optional] |
 | **registry_facility_keys** | **Array&lt;String&gt;** | The registry records the facility is made of, each as registry:native site id (for example fda_fei:3004123456), sorted. | [optional] |
 | **facility_name** | **String** | The facility&#39;s name. | [optional] |
 | **member_count** | **Integer** | How many registry records are clustered into the facility. | [optional] |
@@ -38,16 +40,25 @@
 | **org_regulators** | **Array&lt;String&gt;** | The regulators holding an organization-level record for the operating firm (this carries the UK MHRA leg). | [optional] |
 | **severity_rank** | **Integer** | The in-force site-scope severity, 0 (no signal) to 4 (non-compliant). | [optional] |
 | **severity_level** | **String** | The in-force site-scope severity: no_signal, clean, advisory, action or non_compliant. | [optional] |
+| **severity_scope** | **String** | site when a site-scope verdict set the severity rank, none when nothing did. Never org. | [optional] |
 | **severity_source** | **String** | The regulator behind the severity: fda, ema, health_canada or mhra. | [optional] |
 | **severity_signal_type** | **String** | The kind of signal behind the severity (for example an inspection classification). | [optional] |
 | **severity_raw_verdict** | **String** | The regulator&#39;s own verdict behind the severity (for example OAI). | [optional] |
 | **severity_signal_date** | **Date** | The date of the signal behind the severity. | [optional] |
+| **severity_source_url** | **String** | The source page of the signal that set the severity. | [optional] |
 | **worst_severity_rank_ever** | **Integer** | The highest site-scope severity the facility has ever had, 0 to 4. | [optional] |
 | **worst_severity_level_ever** | **String** | The worst severity ever: no_signal, clean, advisory, action or non_compliant. | [optional] |
+| **worst_severity_raw_verdict** | **String** | The regulator&#39;s own verdict word behind the worst severity ever. | [optional] |
+| **worst_severity_signal_date** | **Date** | The date of the signal behind the worst severity ever. | [optional] |
 | **has_quality_signal** | **Boolean** | True when the facility has any quality signal. | [optional] |
+| **has_site_scope_signal** | **Boolean** | True when a signal is about this site itself. | [optional] |
+| **has_org_scope_signal** | **Boolean** | True when a signal is about the operating firm. | [optional] |
 | **latest_signal_date** | **Date** | The date of the latest signal of any scope. | [optional] |
+| **first_signal_date** | **Date** | The date of the earliest dated signal of any scope. | [optional] |
 | **n_signals_total** | **Integer** | Signals of any scope, all time. | [optional] |
 | **n_signals_365d** | **Integer** | Signals in the last 365 days of the build. | [optional] |
+| **n_signals_1095d** | **Integer** | Signals in the last 1,095 days of the build. | [optional] |
+| **n_signals_1825d** | **Integer** | Signals in the last 1,825 days of the build. | [optional] |
 | **n_inspections** | **Integer** | Inspections of the site by any regulator. | [optional] |
 | **latest_inspection_date** | **Date** | The date of the latest inspection by any regulator. | [optional] |
 | **n_fda_inspections** | **Integer** | FDA inspections of the site. | [optional] |
@@ -80,6 +91,8 @@ require 'pharmaobservatory'
 
 instance = PharmaObservatory::GxpFacilitiesRow.new(
   facility_key: null,
+  registry: null,
+  registry_native_site_id: null,
   registry_facility_keys: null,
   facility_name: null,
   member_count: null,
@@ -113,16 +126,25 @@ instance = PharmaObservatory::GxpFacilitiesRow.new(
   org_regulators: null,
   severity_rank: null,
   severity_level: null,
+  severity_scope: null,
   severity_source: null,
   severity_signal_type: null,
   severity_raw_verdict: null,
   severity_signal_date: null,
+  severity_source_url: null,
   worst_severity_rank_ever: null,
   worst_severity_level_ever: null,
+  worst_severity_raw_verdict: null,
+  worst_severity_signal_date: null,
   has_quality_signal: null,
+  has_site_scope_signal: null,
+  has_org_scope_signal: null,
   latest_signal_date: null,
+  first_signal_date: null,
   n_signals_total: null,
   n_signals_365d: null,
+  n_signals_1095d: null,
+  n_signals_1825d: null,
   n_inspections: null,
   latest_inspection_date: null,
   n_fda_inspections: null,

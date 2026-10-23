@@ -11,10 +11,12 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**companies_catalysts**](CompaniesApi.md#companies_catalysts) | **GET** /api/v1/companies/{id}/catalysts | Catalysts: trial readouts, patent cliffs, FDA decision dates and press-release events |
 | [**companies_clia_certificates**](CompaniesApi.md#companies_clia_certificates) | **GET** /api/v1/companies/{id}/clia_certificates | CLIA laboratory certificates |
 | [**companies_company_assets**](CompaniesApi.md#companies_company_assets) | **GET** /api/v1/companies/{id}/company_assets | Company assets (approved and marketed drugs) |
+| [**companies_company_biomarker_capability**](CompaniesApi.md#companies_company_biomarker_capability) | **GET** /api/v1/companies/{id}/company_biomarker_capability | Company biomarker capability |
 | [**companies_company_funding_events**](CompaniesApi.md#companies_company_funding_events) | **GET** /api/v1/companies/{id}/company_funding_events | Company funding events |
 | [**companies_company_funding_summary**](CompaniesApi.md#companies_company_funding_summary) | **GET** /api/v1/companies/{id}/company_funding_summary | Company funding summary |
 | [**companies_company_members**](CompaniesApi.md#companies_company_members) | **GET** /api/v1/companies/{id}/company_members | Company members |
 | [**companies_company_programs**](CompaniesApi.md#companies_company_programs) | **GET** /api/v1/companies/{id}/company_programs | Company programs |
+| [**companies_company_rare_disease_declarations**](CompaniesApi.md#companies_company_rare_disease_declarations) | **GET** /api/v1/companies/{id}/company_rare_disease_declarations | Organization-wide rare disease declarations |
 | [**companies_company_targets**](CompaniesApi.md#companies_company_targets) | **GET** /api/v1/companies/{id}/company_targets | Targets a company pursues |
 | [**companies_company_trial_geography**](CompaniesApi.md#companies_company_trial_geography) | **GET** /api/v1/companies/{id}/company_trial_geography | Company trial geography |
 | [**companies_company_trial_sites**](CompaniesApi.md#companies_company_trial_sites) | **GET** /api/v1/companies/{id}/company_trial_sites | Company trial sites |
@@ -31,16 +33,25 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**companies_institutional_holdings**](CompaniesApi.md#companies_institutional_holdings) | **GET** /api/v1/companies/{id}/institutional_holdings | Institutional holdings (SEC Form 13F) |
 | [**companies_institutional_quarter_totals**](CompaniesApi.md#companies_institutional_quarter_totals) | **GET** /api/v1/companies/{id}/institutional_quarter_totals | Institutional quarter totals (SEC Form 13F) |
 | [**companies_legal_entities**](CompaniesApi.md#companies_legal_entities) | **GET** /api/v1/companies/{id}/legal_entities | Legal entities |
+| [**companies_legal_entity_sec_filings**](CompaniesApi.md#companies_legal_entity_sec_filings) | **GET** /api/v1/companies/{id}/legal_entity_sec_filings | SEC filer records |
 | [**companies_list**](CompaniesApi.md#companies_list) | **GET** /api/v1/companies | List companies |
+| [**companies_org_disclosure_trend**](CompaniesApi.md#companies_org_disclosure_trend) | **GET** /api/v1/companies/{id}/org_disclosure_trend | Organization disclosure trend |
 | [**companies_org_disclosures**](CompaniesApi.md#companies_org_disclosures) | **GET** /api/v1/companies/{id}/org_disclosures | Organization disclosures (climate and diversity) |
 | [**companies_org_relationships**](CompaniesApi.md#companies_org_relationships) | **GET** /api/v1/companies/{id}/org_relationships | Organization relationships |
 | [**companies_ownership_percentages**](CompaniesApi.md#companies_ownership_percentages) | **GET** /api/v1/companies/{id}/ownership_percentages | Ownership percentages |
 | [**companies_ownership_positions**](CompaniesApi.md#companies_ownership_positions) | **GET** /api/v1/companies/{id}/ownership_positions | Ownership and control positions |
+| [**companies_ownership_source_coverage**](CompaniesApi.md#companies_ownership_source_coverage) | **GET** /api/v1/companies/{id}/ownership_source_coverage | Ownership source coverage |
 | [**companies_pdufa_dates**](CompaniesApi.md#companies_pdufa_dates) | **GET** /api/v1/companies/{id}/pdufa_dates | FDA decision dates (PDUFA) and catalysts |
 | [**companies_program_licensing_candidates**](CompaniesApi.md#companies_program_licensing_candidates) | **GET** /api/v1/companies/{id}/program_licensing_candidates | Program licensing candidates |
 | [**companies_recalls**](CompaniesApi.md#companies_recalls) | **GET** /api/v1/companies/{id}/recalls | FDA recalls |
+| [**companies_sbti_crosscheck**](CompaniesApi.md#companies_sbti_crosscheck) | **GET** /api/v1/companies/{id}/sbti_crosscheck | SBTi cross-check |
+| [**companies_sec_pdufa_dates**](CompaniesApi.md#companies_sec_pdufa_dates) | **GET** /api/v1/companies/{id}/sec_pdufa_dates | FDA dates disclosed in SEC filings |
+| [**companies_sponsor_delivery**](CompaniesApi.md#companies_sponsor_delivery) | **GET** /api/v1/companies/{id}/sponsor_delivery | Sponsor delivery reliability |
+| [**companies_sponsor_patent_mentions**](CompaniesApi.md#companies_sponsor_patent_mentions) | **GET** /api/v1/companies/{id}/sponsor_patent_mentions | Sponsor patent mentions |
 | [**companies_sponsor_recruitment_by_phase**](CompaniesApi.md#companies_sponsor_recruitment_by_phase) | **GET** /api/v1/companies/{id}/sponsor_recruitment_by_phase | Trial recruitment duration by sponsor and phase |
 | [**companies_sponsor_recruitment_duration**](CompaniesApi.md#companies_sponsor_recruitment_duration) | **GET** /api/v1/companies/{id}/sponsor_recruitment_duration | Trial recruitment duration by sponsor |
+| [**companies_sponsor_trial_conditions**](CompaniesApi.md#companies_sponsor_trial_conditions) | **GET** /api/v1/companies/{id}/sponsor_trial_conditions | Sponsor trial conditions |
+| [**companies_sponsor_trial_drugs**](CompaniesApi.md#companies_sponsor_trial_drugs) | **GET** /api/v1/companies/{id}/sponsor_trial_drugs | Sponsor trial drugs |
 | [**companies_sponsor_trial_start_forecast**](CompaniesApi.md#companies_sponsor_trial_start_forecast) | **GET** /api/v1/companies/{id}/sponsor_trial_start_forecast | Trial-start forecast by sponsor |
 | [**companies_sponsor_trials**](CompaniesApi.md#companies_sponsor_trials) | **GET** /api/v1/companies/{id}/sponsor_trials | Sponsor trials |
 | [**companies_supplier_capability_esg**](CompaniesApi.md#companies_supplier_capability_esg) | **GET** /api/v1/companies/{id}/supplier_capability_esg | Supplier capability and ESG disclosure |
@@ -616,6 +627,87 @@ end
 - **Accept**: application/json
 
 
+## companies_company_biomarker_capability
+
+> <CompanyBiomarkerCapabilityResponse> companies_company_biomarker_capability(id, opts)
+
+Company biomarker capability
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::CompaniesApi.new
+id = 'company:c0185cf6c39a2536ad436cf6255494c0' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example', # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  scope: 'company' # String | company (this company only) or group (its corporate group).
+}
+
+begin
+  # Company biomarker capability
+  result = api_instance.companies_company_biomarker_capability(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_company_biomarker_capability: #{e}"
+end
+```
+
+#### Using the companies_company_biomarker_capability_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<CompanyBiomarkerCapabilityResponse>, Integer, Hash)> companies_company_biomarker_capability_with_http_info(id, opts)
+
+```ruby
+begin
+  # Company biomarker capability
+  data, status_code, headers = api_instance.companies_company_biomarker_capability_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <CompanyBiomarkerCapabilityResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_company_biomarker_capability_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+| **scope** | **String** | company (this company only) or group (its corporate group). | [optional] |
+
+### Return type
+
+[**CompanyBiomarkerCapabilityResponse**](CompanyBiomarkerCapabilityResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
 ## companies_company_funding_events
 
 > <CompanyFundingEventsResponse> companies_company_funding_events(id, opts)
@@ -929,6 +1021,87 @@ end
 ### Return type
 
 [**CompanyProgramsResponse**](CompanyProgramsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## companies_company_rare_disease_declarations
+
+> <CompanyRareDiseaseDeclarationsResponse> companies_company_rare_disease_declarations(id, opts)
+
+Organization-wide rare disease declarations
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::CompaniesApi.new
+id = 'company:c0185cf6c39a2536ad436cf6255494c0' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example', # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  scope: 'company' # String | company (this company only) or group (its corporate group).
+}
+
+begin
+  # Organization-wide rare disease declarations
+  result = api_instance.companies_company_rare_disease_declarations(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_company_rare_disease_declarations: #{e}"
+end
+```
+
+#### Using the companies_company_rare_disease_declarations_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<CompanyRareDiseaseDeclarationsResponse>, Integer, Hash)> companies_company_rare_disease_declarations_with_http_info(id, opts)
+
+```ruby
+begin
+  # Organization-wide rare disease declarations
+  data, status_code, headers = api_instance.companies_company_rare_disease_declarations_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <CompanyRareDiseaseDeclarationsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_company_rare_disease_declarations_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+| **scope** | **String** | company (this company only) or group (its corporate group). | [optional] |
+
+### Return type
+
+[**CompanyRareDiseaseDeclarationsResponse**](CompanyRareDiseaseDeclarationsResponse.md)
 
 ### Authorization
 
@@ -2222,6 +2395,87 @@ end
 - **Accept**: application/json
 
 
+## companies_legal_entity_sec_filings
+
+> <LegalEntitySecFilingsResponse> companies_legal_entity_sec_filings(id, opts)
+
+SEC filer records
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::CompaniesApi.new
+id = 'company:c0185cf6c39a2536ad436cf6255494c0' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example', # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  scope: 'company' # String | company (this company only) or group (its corporate group).
+}
+
+begin
+  # SEC filer records
+  result = api_instance.companies_legal_entity_sec_filings(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_legal_entity_sec_filings: #{e}"
+end
+```
+
+#### Using the companies_legal_entity_sec_filings_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<LegalEntitySecFilingsResponse>, Integer, Hash)> companies_legal_entity_sec_filings_with_http_info(id, opts)
+
+```ruby
+begin
+  # SEC filer records
+  data, status_code, headers = api_instance.companies_legal_entity_sec_filings_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <LegalEntitySecFilingsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_legal_entity_sec_filings_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+| **scope** | **String** | company (this company only) or group (its corporate group). | [optional] |
+
+### Return type
+
+[**LegalEntitySecFilingsResponse**](LegalEntitySecFilingsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
 ## companies_list
 
 > <CompaniesResponse> companies_list(opts)
@@ -2288,6 +2542,87 @@ end
 ### Return type
 
 [**CompaniesResponse**](CompaniesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## companies_org_disclosure_trend
+
+> <OrgDisclosureTrendResponse> companies_org_disclosure_trend(id, opts)
+
+Organization disclosure trend
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::CompaniesApi.new
+id = 'company:c0185cf6c39a2536ad436cf6255494c0' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example', # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  scope: 'company' # String | company (this company only) or group (its corporate group).
+}
+
+begin
+  # Organization disclosure trend
+  result = api_instance.companies_org_disclosure_trend(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_org_disclosure_trend: #{e}"
+end
+```
+
+#### Using the companies_org_disclosure_trend_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<OrgDisclosureTrendResponse>, Integer, Hash)> companies_org_disclosure_trend_with_http_info(id, opts)
+
+```ruby
+begin
+  # Organization disclosure trend
+  data, status_code, headers = api_instance.companies_org_disclosure_trend_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <OrgDisclosureTrendResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_org_disclosure_trend_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+| **scope** | **String** | company (this company only) or group (its corporate group). | [optional] |
+
+### Return type
+
+[**OrgDisclosureTrendResponse**](OrgDisclosureTrendResponse.md)
 
 ### Authorization
 
@@ -2623,6 +2958,87 @@ end
 - **Accept**: application/json
 
 
+## companies_ownership_source_coverage
+
+> <OwnershipSourceCoverageResponse> companies_ownership_source_coverage(id, opts)
+
+Ownership source coverage
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::CompaniesApi.new
+id = 'company:c0185cf6c39a2536ad436cf6255494c0' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example', # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  scope: 'company' # String | company (this company only) or group (its corporate group).
+}
+
+begin
+  # Ownership source coverage
+  result = api_instance.companies_ownership_source_coverage(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_ownership_source_coverage: #{e}"
+end
+```
+
+#### Using the companies_ownership_source_coverage_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<OwnershipSourceCoverageResponse>, Integer, Hash)> companies_ownership_source_coverage_with_http_info(id, opts)
+
+```ruby
+begin
+  # Ownership source coverage
+  data, status_code, headers = api_instance.companies_ownership_source_coverage_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <OwnershipSourceCoverageResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_ownership_source_coverage_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+| **scope** | **String** | company (this company only) or group (its corporate group). | [optional] |
+
+### Return type
+
+[**OwnershipSourceCoverageResponse**](OwnershipSourceCoverageResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
 ## companies_pdufa_dates
 
 > <PdufaDatesResponse> companies_pdufa_dates(id, opts)
@@ -2866,6 +3282,330 @@ end
 - **Accept**: application/json
 
 
+## companies_sbti_crosscheck
+
+> <SbtiCrosscheckResponse> companies_sbti_crosscheck(id, opts)
+
+SBTi cross-check
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::CompaniesApi.new
+id = 'company:c0185cf6c39a2536ad436cf6255494c0' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example', # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  scope: 'company' # String | company (this company only) or group (its corporate group).
+}
+
+begin
+  # SBTi cross-check
+  result = api_instance.companies_sbti_crosscheck(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_sbti_crosscheck: #{e}"
+end
+```
+
+#### Using the companies_sbti_crosscheck_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<SbtiCrosscheckResponse>, Integer, Hash)> companies_sbti_crosscheck_with_http_info(id, opts)
+
+```ruby
+begin
+  # SBTi cross-check
+  data, status_code, headers = api_instance.companies_sbti_crosscheck_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <SbtiCrosscheckResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_sbti_crosscheck_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+| **scope** | **String** | company (this company only) or group (its corporate group). | [optional] |
+
+### Return type
+
+[**SbtiCrosscheckResponse**](SbtiCrosscheckResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## companies_sec_pdufa_dates
+
+> <SecPdufaDatesResponse> companies_sec_pdufa_dates(id, opts)
+
+FDA dates disclosed in SEC filings
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::CompaniesApi.new
+id = 'company:c0185cf6c39a2536ad436cf6255494c0' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example', # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  scope: 'company' # String | company (this company only) or group (its corporate group).
+}
+
+begin
+  # FDA dates disclosed in SEC filings
+  result = api_instance.companies_sec_pdufa_dates(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_sec_pdufa_dates: #{e}"
+end
+```
+
+#### Using the companies_sec_pdufa_dates_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<SecPdufaDatesResponse>, Integer, Hash)> companies_sec_pdufa_dates_with_http_info(id, opts)
+
+```ruby
+begin
+  # FDA dates disclosed in SEC filings
+  data, status_code, headers = api_instance.companies_sec_pdufa_dates_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <SecPdufaDatesResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_sec_pdufa_dates_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+| **scope** | **String** | company (this company only) or group (its corporate group). | [optional] |
+
+### Return type
+
+[**SecPdufaDatesResponse**](SecPdufaDatesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## companies_sponsor_delivery
+
+> <SponsorDeliveryResponse> companies_sponsor_delivery(id, opts)
+
+Sponsor delivery reliability
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::CompaniesApi.new
+id = 'company:c0185cf6c39a2536ad436cf6255494c0' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example', # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  scope: 'company' # String | company (this company only) or group (its corporate group).
+}
+
+begin
+  # Sponsor delivery reliability
+  result = api_instance.companies_sponsor_delivery(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_sponsor_delivery: #{e}"
+end
+```
+
+#### Using the companies_sponsor_delivery_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<SponsorDeliveryResponse>, Integer, Hash)> companies_sponsor_delivery_with_http_info(id, opts)
+
+```ruby
+begin
+  # Sponsor delivery reliability
+  data, status_code, headers = api_instance.companies_sponsor_delivery_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <SponsorDeliveryResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_sponsor_delivery_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+| **scope** | **String** | company (this company only) or group (its corporate group). | [optional] |
+
+### Return type
+
+[**SponsorDeliveryResponse**](SponsorDeliveryResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## companies_sponsor_patent_mentions
+
+> <SponsorPatentMentionsResponse> companies_sponsor_patent_mentions(id, opts)
+
+Sponsor patent mentions
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::CompaniesApi.new
+id = 'company:c0185cf6c39a2536ad436cf6255494c0' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example', # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  scope: 'company' # String | company (this company only) or group (its corporate group).
+}
+
+begin
+  # Sponsor patent mentions
+  result = api_instance.companies_sponsor_patent_mentions(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_sponsor_patent_mentions: #{e}"
+end
+```
+
+#### Using the companies_sponsor_patent_mentions_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<SponsorPatentMentionsResponse>, Integer, Hash)> companies_sponsor_patent_mentions_with_http_info(id, opts)
+
+```ruby
+begin
+  # Sponsor patent mentions
+  data, status_code, headers = api_instance.companies_sponsor_patent_mentions_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <SponsorPatentMentionsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_sponsor_patent_mentions_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+| **scope** | **String** | company (this company only) or group (its corporate group). | [optional] |
+
+### Return type
+
+[**SponsorPatentMentionsResponse**](SponsorPatentMentionsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
 ## companies_sponsor_recruitment_by_phase
 
 > <SponsorRecruitmentByPhaseResponse> companies_sponsor_recruitment_by_phase(id, opts)
@@ -3017,6 +3757,168 @@ end
 ### Return type
 
 [**SponsorRecruitmentDurationResponse**](SponsorRecruitmentDurationResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## companies_sponsor_trial_conditions
+
+> <SponsorTrialConditionsResponse> companies_sponsor_trial_conditions(id, opts)
+
+Sponsor trial conditions
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::CompaniesApi.new
+id = 'company:c0185cf6c39a2536ad436cf6255494c0' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example', # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  scope: 'company' # String | company (this company only) or group (its corporate group).
+}
+
+begin
+  # Sponsor trial conditions
+  result = api_instance.companies_sponsor_trial_conditions(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_sponsor_trial_conditions: #{e}"
+end
+```
+
+#### Using the companies_sponsor_trial_conditions_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<SponsorTrialConditionsResponse>, Integer, Hash)> companies_sponsor_trial_conditions_with_http_info(id, opts)
+
+```ruby
+begin
+  # Sponsor trial conditions
+  data, status_code, headers = api_instance.companies_sponsor_trial_conditions_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <SponsorTrialConditionsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_sponsor_trial_conditions_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+| **scope** | **String** | company (this company only) or group (its corporate group). | [optional] |
+
+### Return type
+
+[**SponsorTrialConditionsResponse**](SponsorTrialConditionsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## companies_sponsor_trial_drugs
+
+> <SponsorTrialDrugsResponse> companies_sponsor_trial_drugs(id, opts)
+
+Sponsor trial drugs
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::CompaniesApi.new
+id = 'company:c0185cf6c39a2536ad436cf6255494c0' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example', # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  scope: 'company' # String | company (this company only) or group (its corporate group).
+}
+
+begin
+  # Sponsor trial drugs
+  result = api_instance.companies_sponsor_trial_drugs(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_sponsor_trial_drugs: #{e}"
+end
+```
+
+#### Using the companies_sponsor_trial_drugs_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<SponsorTrialDrugsResponse>, Integer, Hash)> companies_sponsor_trial_drugs_with_http_info(id, opts)
+
+```ruby
+begin
+  # Sponsor trial drugs
+  data, status_code, headers = api_instance.companies_sponsor_trial_drugs_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <SponsorTrialDrugsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_sponsor_trial_drugs_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+| **scope** | **String** | company (this company only) or group (its corporate group). | [optional] |
+
+### Return type
+
+[**SponsorTrialDrugsResponse**](SponsorTrialDrugsResponse.md)
 
 ### Authorization
 

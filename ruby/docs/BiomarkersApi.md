@@ -4,20 +4,103 @@ All URIs are relative to *https://pharmaobservatory.com*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
+| [**biomarkers_biomarker_allele_frequencies**](BiomarkersApi.md#biomarkers_biomarker_allele_frequencies) | **GET** /api/v1/biomarkers/{id}/biomarker_allele_frequencies | Population allele frequency of protein variants (gnomAD) |
 | [**biomarkers_biomarker_assay_evidence**](BiomarkersApi.md#biomarkers_biomarker_assay_evidence) | **GET** /api/v1/biomarkers/{id}/biomarker_assay_evidence | Biomarker assay evidence from the literature |
+| [**biomarkers_biomarker_assay_providers**](BiomarkersApi.md#biomarkers_biomarker_assay_providers) | **GET** /api/v1/biomarkers/{id}/biomarker_assay_providers | Biomarker assay providers (from validating papers) |
 | [**biomarkers_biomarker_assay_whitespace**](BiomarkersApi.md#biomarkers_biomarker_assay_whitespace) | **GET** /api/v1/biomarkers/{id}/biomarker_assay_whitespace | Biomarker assay whitespace (evidence against supplier supply) |
 | [**biomarkers_biomarker_bqp_assertions**](BiomarkersApi.md#biomarkers_biomarker_bqp_assertions) | **GET** /api/v1/biomarkers/{id}/biomarker_bqp_assertions | FDA biomarker qualification projects |
 | [**biomarkers_biomarker_cdx_assertions**](BiomarkersApi.md#biomarkers_biomarker_cdx_assertions) | **GET** /api/v1/biomarkers/{id}/biomarker_cdx_assertions | FDA companion diagnostic assertions |
 | [**biomarkers_biomarker_evidence**](BiomarkersApi.md#biomarkers_biomarker_evidence) | **GET** /api/v1/biomarkers/{id}/biomarker_evidence | Biomarker evidence |
+| [**biomarkers_biomarker_evidence_by_year**](BiomarkersApi.md#biomarkers_biomarker_evidence_by_year) | **GET** /api/v1/biomarkers/{id}/biomarker_evidence_by_year | Biomarker evidence by year (trial and publication mentions) |
 | [**biomarkers_biomarker_literature**](BiomarkersApi.md#biomarkers_biomarker_literature) | **GET** /api/v1/biomarkers/{id}/biomarker_literature | Trial-cited literature mentions |
 | [**biomarkers_biomarker_publishing_companies**](BiomarkersApi.md#biomarkers_biomarker_publishing_companies) | **GET** /api/v1/biomarkers/{id}/biomarker_publishing_companies | Companies publishing on a biomarker |
 | [**biomarkers_biomarker_relations**](BiomarkersApi.md#biomarkers_biomarker_relations) | **GET** /api/v1/biomarkers/{id}/biomarker_relations | Literature-extracted relations |
 | [**biomarkers_biomarker_sample_coverage**](BiomarkersApi.md#biomarkers_biomarker_sample_coverage) | **GET** /api/v1/biomarkers/{id}/biomarker_sample_coverage | Human sample screening coverage (GDC) |
 | [**biomarkers_biomarker_sample_prevalence**](BiomarkersApi.md#biomarkers_biomarker_sample_prevalence) | **GET** /api/v1/biomarkers/{id}/biomarker_sample_prevalence | Human sample screening reference (GDC cohorts) |
+| [**biomarkers_biomarker_traversal_status**](BiomarkersApi.md#biomarkers_biomarker_traversal_status) | **GET** /api/v1/biomarkers/{id}/biomarker_traversal_status | Biomarker coverage by traversal |
 | [**biomarkers_biomarker_validation**](BiomarkersApi.md#biomarkers_biomarker_validation) | **GET** /api/v1/biomarkers/{id}/biomarker_validation | Biomarker validation ladder |
 | [**biomarkers_biomarker_variant_mentions**](BiomarkersApi.md#biomarkers_biomarker_variant_mentions) | **GET** /api/v1/biomarkers/{id}/biomarker_variant_mentions | Protein variant mentions |
 | [**biomarkers_get**](BiomarkersApi.md#biomarkers_get) | **GET** /api/v1/biomarkers/{id} | One biomarker |
 | [**biomarkers_list**](BiomarkersApi.md#biomarkers_list) | **GET** /api/v1/biomarkers | List biomarkers |
+
+
+## biomarkers_biomarker_allele_frequencies
+
+> <BiomarkerAlleleFrequenciesResponse> biomarkers_biomarker_allele_frequencies(id, opts)
+
+Population allele frequency of protein variants (gnomAD)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::BiomarkersApi.new
+id = 'ESR1' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Population allele frequency of protein variants (gnomAD)
+  result = api_instance.biomarkers_biomarker_allele_frequencies(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling BiomarkersApi->biomarkers_biomarker_allele_frequencies: #{e}"
+end
+```
+
+#### Using the biomarkers_biomarker_allele_frequencies_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<BiomarkerAlleleFrequenciesResponse>, Integer, Hash)> biomarkers_biomarker_allele_frequencies_with_http_info(id, opts)
+
+```ruby
+begin
+  # Population allele frequency of protein variants (gnomAD)
+  data, status_code, headers = api_instance.biomarkers_biomarker_allele_frequencies_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <BiomarkerAlleleFrequenciesResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling BiomarkersApi->biomarkers_biomarker_allele_frequencies_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**BiomarkerAlleleFrequenciesResponse**](BiomarkerAlleleFrequenciesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 
 ## biomarkers_biomarker_assay_evidence
@@ -88,6 +171,85 @@ end
 ### Return type
 
 [**BiomarkerAssayEvidenceResponse**](BiomarkerAssayEvidenceResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## biomarkers_biomarker_assay_providers
+
+> <BiomarkerAssayProvidersResponse> biomarkers_biomarker_assay_providers(id, opts)
+
+Biomarker assay providers (from validating papers)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::BiomarkersApi.new
+id = 'ESR1' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Biomarker assay providers (from validating papers)
+  result = api_instance.biomarkers_biomarker_assay_providers(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling BiomarkersApi->biomarkers_biomarker_assay_providers: #{e}"
+end
+```
+
+#### Using the biomarkers_biomarker_assay_providers_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<BiomarkerAssayProvidersResponse>, Integer, Hash)> biomarkers_biomarker_assay_providers_with_http_info(id, opts)
+
+```ruby
+begin
+  # Biomarker assay providers (from validating papers)
+  data, status_code, headers = api_instance.biomarkers_biomarker_assay_providers_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <BiomarkerAssayProvidersResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling BiomarkersApi->biomarkers_biomarker_assay_providers_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**BiomarkerAssayProvidersResponse**](BiomarkerAssayProvidersResponse.md)
 
 ### Authorization
 
@@ -404,6 +566,85 @@ end
 ### Return type
 
 [**BiomarkerEvidenceResponse**](BiomarkerEvidenceResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## biomarkers_biomarker_evidence_by_year
+
+> <BiomarkerEvidenceByYearResponse> biomarkers_biomarker_evidence_by_year(id, opts)
+
+Biomarker evidence by year (trial and publication mentions)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::BiomarkersApi.new
+id = 'ESR1' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Biomarker evidence by year (trial and publication mentions)
+  result = api_instance.biomarkers_biomarker_evidence_by_year(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling BiomarkersApi->biomarkers_biomarker_evidence_by_year: #{e}"
+end
+```
+
+#### Using the biomarkers_biomarker_evidence_by_year_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<BiomarkerEvidenceByYearResponse>, Integer, Hash)> biomarkers_biomarker_evidence_by_year_with_http_info(id, opts)
+
+```ruby
+begin
+  # Biomarker evidence by year (trial and publication mentions)
+  data, status_code, headers = api_instance.biomarkers_biomarker_evidence_by_year_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <BiomarkerEvidenceByYearResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling BiomarkersApi->biomarkers_biomarker_evidence_by_year_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**BiomarkerEvidenceByYearResponse**](BiomarkerEvidenceByYearResponse.md)
 
 ### Authorization
 
@@ -799,6 +1040,85 @@ end
 ### Return type
 
 [**BiomarkerSamplePrevalenceResponse**](BiomarkerSamplePrevalenceResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## biomarkers_biomarker_traversal_status
+
+> <BiomarkerTraversalStatusResponse> biomarkers_biomarker_traversal_status(id, opts)
+
+Biomarker coverage by traversal
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::BiomarkersApi.new
+id = 'ESR1' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Biomarker coverage by traversal
+  result = api_instance.biomarkers_biomarker_traversal_status(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling BiomarkersApi->biomarkers_biomarker_traversal_status: #{e}"
+end
+```
+
+#### Using the biomarkers_biomarker_traversal_status_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<BiomarkerTraversalStatusResponse>, Integer, Hash)> biomarkers_biomarker_traversal_status_with_http_info(id, opts)
+
+```ruby
+begin
+  # Biomarker coverage by traversal
+  data, status_code, headers = api_instance.biomarkers_biomarker_traversal_status_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <BiomarkerTraversalStatusResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling BiomarkersApi->biomarkers_biomarker_traversal_status_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**BiomarkerTraversalStatusResponse**](BiomarkerTraversalStatusResponse.md)
 
 ### Authorization
 

@@ -19,6 +19,12 @@ module PharmaObservatory
     # The canonical facility id.
     attr_accessor :facility_key
 
+    # The registry of the lead member record. Provenance and a facet, never a join key.
+    attr_accessor :registry
+
+    # The lead registry's own site id (FEI, EudraGMDP site key, Health Canada location id).
+    attr_accessor :registry_native_site_id
+
     # The registry records the facility is made of, each as registry:native site id (for example fda_fei:3004123456), sorted.
     attr_accessor :registry_facility_keys
 
@@ -118,6 +124,9 @@ module PharmaObservatory
     # The in-force site-scope severity: no_signal, clean, advisory, action or non_compliant.
     attr_accessor :severity_level
 
+    # site when a site-scope verdict set the severity rank, none when nothing did. Never org.
+    attr_accessor :severity_scope
+
     # The regulator behind the severity: fda, ema, health_canada or mhra.
     attr_accessor :severity_source
 
@@ -130,23 +139,47 @@ module PharmaObservatory
     # The date of the signal behind the severity.
     attr_accessor :severity_signal_date
 
+    # The source page of the signal that set the severity.
+    attr_accessor :severity_source_url
+
     # The highest site-scope severity the facility has ever had, 0 to 4.
     attr_accessor :worst_severity_rank_ever
 
     # The worst severity ever: no_signal, clean, advisory, action or non_compliant.
     attr_accessor :worst_severity_level_ever
 
+    # The regulator's own verdict word behind the worst severity ever.
+    attr_accessor :worst_severity_raw_verdict
+
+    # The date of the signal behind the worst severity ever.
+    attr_accessor :worst_severity_signal_date
+
     # True when the facility has any quality signal.
     attr_accessor :has_quality_signal
 
+    # True when a signal is about this site itself.
+    attr_accessor :has_site_scope_signal
+
+    # True when a signal is about the operating firm.
+    attr_accessor :has_org_scope_signal
+
     # The date of the latest signal of any scope.
     attr_accessor :latest_signal_date
+
+    # The date of the earliest dated signal of any scope.
+    attr_accessor :first_signal_date
 
     # Signals of any scope, all time.
     attr_accessor :n_signals_total
 
     # Signals in the last 365 days of the build.
     attr_accessor :n_signals_365d
+
+    # Signals in the last 1,095 days of the build.
+    attr_accessor :n_signals_1095d
+
+    # Signals in the last 1,825 days of the build.
+    attr_accessor :n_signals_1825d
 
     # Inspections of the site by any regulator.
     attr_accessor :n_inspections
@@ -224,6 +257,8 @@ module PharmaObservatory
     def self.attribute_map
       {
         :'facility_key' => :'facility_key',
+        :'registry' => :'registry',
+        :'registry_native_site_id' => :'registry_native_site_id',
         :'registry_facility_keys' => :'registry_facility_keys',
         :'facility_name' => :'facility_name',
         :'member_count' => :'member_count',
@@ -257,16 +292,25 @@ module PharmaObservatory
         :'org_regulators' => :'org_regulators',
         :'severity_rank' => :'severity_rank',
         :'severity_level' => :'severity_level',
+        :'severity_scope' => :'severity_scope',
         :'severity_source' => :'severity_source',
         :'severity_signal_type' => :'severity_signal_type',
         :'severity_raw_verdict' => :'severity_raw_verdict',
         :'severity_signal_date' => :'severity_signal_date',
+        :'severity_source_url' => :'severity_source_url',
         :'worst_severity_rank_ever' => :'worst_severity_rank_ever',
         :'worst_severity_level_ever' => :'worst_severity_level_ever',
+        :'worst_severity_raw_verdict' => :'worst_severity_raw_verdict',
+        :'worst_severity_signal_date' => :'worst_severity_signal_date',
         :'has_quality_signal' => :'has_quality_signal',
+        :'has_site_scope_signal' => :'has_site_scope_signal',
+        :'has_org_scope_signal' => :'has_org_scope_signal',
         :'latest_signal_date' => :'latest_signal_date',
+        :'first_signal_date' => :'first_signal_date',
         :'n_signals_total' => :'n_signals_total',
         :'n_signals_365d' => :'n_signals_365d',
+        :'n_signals_1095d' => :'n_signals_1095d',
+        :'n_signals_1825d' => :'n_signals_1825d',
         :'n_inspections' => :'n_inspections',
         :'latest_inspection_date' => :'latest_inspection_date',
         :'n_fda_inspections' => :'n_fda_inspections',
@@ -308,6 +352,8 @@ module PharmaObservatory
     def self.openapi_types
       {
         :'facility_key' => :'String',
+        :'registry' => :'String',
+        :'registry_native_site_id' => :'String',
         :'registry_facility_keys' => :'Array<String>',
         :'facility_name' => :'String',
         :'member_count' => :'Integer',
@@ -341,16 +387,25 @@ module PharmaObservatory
         :'org_regulators' => :'Array<String>',
         :'severity_rank' => :'Integer',
         :'severity_level' => :'String',
+        :'severity_scope' => :'String',
         :'severity_source' => :'String',
         :'severity_signal_type' => :'String',
         :'severity_raw_verdict' => :'String',
         :'severity_signal_date' => :'Date',
+        :'severity_source_url' => :'String',
         :'worst_severity_rank_ever' => :'Integer',
         :'worst_severity_level_ever' => :'String',
+        :'worst_severity_raw_verdict' => :'String',
+        :'worst_severity_signal_date' => :'Date',
         :'has_quality_signal' => :'Boolean',
+        :'has_site_scope_signal' => :'Boolean',
+        :'has_org_scope_signal' => :'Boolean',
         :'latest_signal_date' => :'Date',
+        :'first_signal_date' => :'Date',
         :'n_signals_total' => :'Integer',
         :'n_signals_365d' => :'Integer',
+        :'n_signals_1095d' => :'Integer',
+        :'n_signals_1825d' => :'Integer',
         :'n_inspections' => :'Integer',
         :'latest_inspection_date' => :'Date',
         :'n_fda_inspections' => :'Integer',
@@ -382,6 +437,8 @@ module PharmaObservatory
     def self.openapi_nullable
       Set.new([
         :'facility_key',
+        :'registry',
+        :'registry_native_site_id',
         :'registry_facility_keys',
         :'facility_name',
         :'member_count',
@@ -415,16 +472,25 @@ module PharmaObservatory
         :'org_regulators',
         :'severity_rank',
         :'severity_level',
+        :'severity_scope',
         :'severity_source',
         :'severity_signal_type',
         :'severity_raw_verdict',
         :'severity_signal_date',
+        :'severity_source_url',
         :'worst_severity_rank_ever',
         :'worst_severity_level_ever',
+        :'worst_severity_raw_verdict',
+        :'worst_severity_signal_date',
         :'has_quality_signal',
+        :'has_site_scope_signal',
+        :'has_org_scope_signal',
         :'latest_signal_date',
+        :'first_signal_date',
         :'n_signals_total',
         :'n_signals_365d',
+        :'n_signals_1095d',
+        :'n_signals_1825d',
         :'n_inspections',
         :'latest_inspection_date',
         :'n_fda_inspections',
@@ -470,6 +536,14 @@ module PharmaObservatory
 
       if attributes.key?(:'facility_key')
         self.facility_key = attributes[:'facility_key']
+      end
+
+      if attributes.key?(:'registry')
+        self.registry = attributes[:'registry']
+      end
+
+      if attributes.key?(:'registry_native_site_id')
+        self.registry_native_site_id = attributes[:'registry_native_site_id']
       end
 
       if attributes.key?(:'registry_facility_keys')
@@ -612,6 +686,10 @@ module PharmaObservatory
         self.severity_level = attributes[:'severity_level']
       end
 
+      if attributes.key?(:'severity_scope')
+        self.severity_scope = attributes[:'severity_scope']
+      end
+
       if attributes.key?(:'severity_source')
         self.severity_source = attributes[:'severity_source']
       end
@@ -628,6 +706,10 @@ module PharmaObservatory
         self.severity_signal_date = attributes[:'severity_signal_date']
       end
 
+      if attributes.key?(:'severity_source_url')
+        self.severity_source_url = attributes[:'severity_source_url']
+      end
+
       if attributes.key?(:'worst_severity_rank_ever')
         self.worst_severity_rank_ever = attributes[:'worst_severity_rank_ever']
       end
@@ -636,12 +718,32 @@ module PharmaObservatory
         self.worst_severity_level_ever = attributes[:'worst_severity_level_ever']
       end
 
+      if attributes.key?(:'worst_severity_raw_verdict')
+        self.worst_severity_raw_verdict = attributes[:'worst_severity_raw_verdict']
+      end
+
+      if attributes.key?(:'worst_severity_signal_date')
+        self.worst_severity_signal_date = attributes[:'worst_severity_signal_date']
+      end
+
       if attributes.key?(:'has_quality_signal')
         self.has_quality_signal = attributes[:'has_quality_signal']
       end
 
+      if attributes.key?(:'has_site_scope_signal')
+        self.has_site_scope_signal = attributes[:'has_site_scope_signal']
+      end
+
+      if attributes.key?(:'has_org_scope_signal')
+        self.has_org_scope_signal = attributes[:'has_org_scope_signal']
+      end
+
       if attributes.key?(:'latest_signal_date')
         self.latest_signal_date = attributes[:'latest_signal_date']
+      end
+
+      if attributes.key?(:'first_signal_date')
+        self.first_signal_date = attributes[:'first_signal_date']
       end
 
       if attributes.key?(:'n_signals_total')
@@ -650,6 +752,14 @@ module PharmaObservatory
 
       if attributes.key?(:'n_signals_365d')
         self.n_signals_365d = attributes[:'n_signals_365d']
+      end
+
+      if attributes.key?(:'n_signals_1095d')
+        self.n_signals_1095d = attributes[:'n_signals_1095d']
+      end
+
+      if attributes.key?(:'n_signals_1825d')
+        self.n_signals_1825d = attributes[:'n_signals_1825d']
       end
 
       if attributes.key?(:'n_inspections')
@@ -770,6 +880,8 @@ module PharmaObservatory
       return true if self.equal?(o)
       self.class == o.class &&
           facility_key == o.facility_key &&
+          registry == o.registry &&
+          registry_native_site_id == o.registry_native_site_id &&
           registry_facility_keys == o.registry_facility_keys &&
           facility_name == o.facility_name &&
           member_count == o.member_count &&
@@ -803,16 +915,25 @@ module PharmaObservatory
           org_regulators == o.org_regulators &&
           severity_rank == o.severity_rank &&
           severity_level == o.severity_level &&
+          severity_scope == o.severity_scope &&
           severity_source == o.severity_source &&
           severity_signal_type == o.severity_signal_type &&
           severity_raw_verdict == o.severity_raw_verdict &&
           severity_signal_date == o.severity_signal_date &&
+          severity_source_url == o.severity_source_url &&
           worst_severity_rank_ever == o.worst_severity_rank_ever &&
           worst_severity_level_ever == o.worst_severity_level_ever &&
+          worst_severity_raw_verdict == o.worst_severity_raw_verdict &&
+          worst_severity_signal_date == o.worst_severity_signal_date &&
           has_quality_signal == o.has_quality_signal &&
+          has_site_scope_signal == o.has_site_scope_signal &&
+          has_org_scope_signal == o.has_org_scope_signal &&
           latest_signal_date == o.latest_signal_date &&
+          first_signal_date == o.first_signal_date &&
           n_signals_total == o.n_signals_total &&
           n_signals_365d == o.n_signals_365d &&
+          n_signals_1095d == o.n_signals_1095d &&
+          n_signals_1825d == o.n_signals_1825d &&
           n_inspections == o.n_inspections &&
           latest_inspection_date == o.latest_inspection_date &&
           n_fda_inspections == o.n_fda_inspections &&
@@ -848,7 +969,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [facility_key, registry_facility_keys, facility_name, member_count, address_line, city, state_region, postal, country, latitude, longitude, geocode_precision, coord_source, firm_name, firm_org_id, firm_company_id, firm_company_name, firm_group_id, firm_group_name, is_org_resolved, match_tier, domains, primary_domain, is_drug_facility, is_device_facility, register_domain, device_classification_status, is_low_signal_device, regulators, n_regulators, is_multi_regulator, org_regulators, severity_rank, severity_level, severity_source, severity_signal_type, severity_raw_verdict, severity_signal_date, worst_severity_rank_ever, worst_severity_level_ever, has_quality_signal, latest_signal_date, n_signals_total, n_signals_365d, n_inspections, latest_inspection_date, n_fda_inspections, latest_fda_inspection_date, latest_inspection_classification, n_inspections_nai, n_inspections_vai, n_inspections_oai, n_483, n_hc_inspections, latest_hc_inspection_date, latest_hc_inspection_rating, n_hc_inspections_non_compliant, n_import_refusals, latest_import_refusal_date, n_gmp_certificates, latest_gmp_certificate_date, n_noncompliance_statements, latest_noncompliance_statement_date, n_licences, licence_status, org_n_licence_actions, org_latest_licence_action_date, as_of].hash
+      [facility_key, registry, registry_native_site_id, registry_facility_keys, facility_name, member_count, address_line, city, state_region, postal, country, latitude, longitude, geocode_precision, coord_source, firm_name, firm_org_id, firm_company_id, firm_company_name, firm_group_id, firm_group_name, is_org_resolved, match_tier, domains, primary_domain, is_drug_facility, is_device_facility, register_domain, device_classification_status, is_low_signal_device, regulators, n_regulators, is_multi_regulator, org_regulators, severity_rank, severity_level, severity_scope, severity_source, severity_signal_type, severity_raw_verdict, severity_signal_date, severity_source_url, worst_severity_rank_ever, worst_severity_level_ever, worst_severity_raw_verdict, worst_severity_signal_date, has_quality_signal, has_site_scope_signal, has_org_scope_signal, latest_signal_date, first_signal_date, n_signals_total, n_signals_365d, n_signals_1095d, n_signals_1825d, n_inspections, latest_inspection_date, n_fda_inspections, latest_fda_inspection_date, latest_inspection_classification, n_inspections_nai, n_inspections_vai, n_inspections_oai, n_483, n_hc_inspections, latest_hc_inspection_date, latest_hc_inspection_rating, n_hc_inspections_non_compliant, n_import_refusals, latest_import_refusal_date, n_gmp_certificates, latest_gmp_certificate_date, n_noncompliance_statements, latest_noncompliance_statement_date, n_licences, licence_status, org_n_licence_actions, org_latest_licence_action_date, as_of].hash
     end
 
     # Builds the object from hash
