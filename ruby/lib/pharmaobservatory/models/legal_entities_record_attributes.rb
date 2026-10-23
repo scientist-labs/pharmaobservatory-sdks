@@ -15,14 +15,23 @@ require 'time'
 
 module PharmaObservatory
   class LegalEntitiesRecordAttributes
+    attr_accessor :legal_entity_sec_filings
+
     attr_accessor :ownership_percentages
+
+    attr_accessor :sbti_crosscheck
+
+    attr_accessor :sponsor_delivery
 
     attr_accessor :sponsor_recruitment_duration
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'legal_entity_sec_filings' => :'legal_entity_sec_filings',
         :'ownership_percentages' => :'ownership_percentages',
+        :'sbti_crosscheck' => :'sbti_crosscheck',
+        :'sponsor_delivery' => :'sponsor_delivery',
         :'sponsor_recruitment_duration' => :'sponsor_recruitment_duration'
       }
     end
@@ -40,7 +49,10 @@ module PharmaObservatory
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'legal_entity_sec_filings' => :'LegalEntitySecFilingsRow',
         :'ownership_percentages' => :'OwnershipPercentagesRow',
+        :'sbti_crosscheck' => :'SbtiCrosscheckRow',
+        :'sponsor_delivery' => :'SponsorDeliveryRow',
         :'sponsor_recruitment_duration' => :'SponsorRecruitmentDurationRow'
       }
     end
@@ -67,8 +79,20 @@ module PharmaObservatory
         h[k.to_sym] = v
       }
 
+      if attributes.key?(:'legal_entity_sec_filings')
+        self.legal_entity_sec_filings = attributes[:'legal_entity_sec_filings']
+      end
+
       if attributes.key?(:'ownership_percentages')
         self.ownership_percentages = attributes[:'ownership_percentages']
+      end
+
+      if attributes.key?(:'sbti_crosscheck')
+        self.sbti_crosscheck = attributes[:'sbti_crosscheck']
+      end
+
+      if attributes.key?(:'sponsor_delivery')
+        self.sponsor_delivery = attributes[:'sponsor_delivery']
       end
 
       if attributes.key?(:'sponsor_recruitment_duration')
@@ -96,7 +120,10 @@ module PharmaObservatory
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          legal_entity_sec_filings == o.legal_entity_sec_filings &&
           ownership_percentages == o.ownership_percentages &&
+          sbti_crosscheck == o.sbti_crosscheck &&
+          sponsor_delivery == o.sponsor_delivery &&
           sponsor_recruitment_duration == o.sponsor_recruitment_duration
     end
 
@@ -109,7 +136,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [ownership_percentages, sponsor_recruitment_duration].hash
+      [legal_entity_sec_filings, ownership_percentages, sbti_crosscheck, sponsor_delivery, sponsor_recruitment_duration].hash
     end
 
     # Builds the object from hash

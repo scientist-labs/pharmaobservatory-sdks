@@ -46,8 +46,14 @@ module PharmaObservatory
     # The condition's name.
     attr_accessor :condition_name
 
-    # Highest phase reached: 0 early phase 1 through 6 for phase 4 (marketed); -1 when unstated.
+    # Highest phase reached on the 0 to 4 scale: 0 not reported, 1 through 4 for phase 1 through phase 4 (4 is marketed); a split phase folds up to its higher phase.
     attr_accessor :max_phase
+
+    # The furthest phase reached with the split phases kept: Early 1, Phase 1, Phase 1/2, Phase 2, Phase 2/3, Phase 3, Phase 4, or Not reported. max_phase is the same value folded onto 0 to 4 (a split phase counts as its higher phase).
+    attr_accessor :max_phase_label
+
+    # The finest phase rank behind max_phase_label: 6 Phase 4, 5 Phase 3, 4 Phase 2/3, 3 Phase 2, 2 Phase 1/2, 1 Phase 1, 0 Early 1, -1 not reported. Sort on it to order programs by furthest phase with the split phases kept; max_phase is the same value folded onto 0 to 4.
+    attr_accessor :max_phase_fine_rank
 
     # Lead-sponsored trials in the program.
     attr_accessor :n_trials
@@ -81,6 +87,8 @@ module PharmaObservatory
         :'condition_id' => :'condition_id',
         :'condition_name' => :'condition_name',
         :'max_phase' => :'max_phase',
+        :'max_phase_label' => :'max_phase_label',
+        :'max_phase_fine_rank' => :'max_phase_fine_rank',
         :'n_trials' => :'n_trials',
         :'n_active' => :'n_active',
         :'last_year' => :'last_year',
@@ -114,6 +122,8 @@ module PharmaObservatory
         :'condition_id' => :'String',
         :'condition_name' => :'String',
         :'max_phase' => :'Integer',
+        :'max_phase_label' => :'String',
+        :'max_phase_fine_rank' => :'Integer',
         :'n_trials' => :'Integer',
         :'n_active' => :'Integer',
         :'last_year' => :'Integer',
@@ -137,6 +147,8 @@ module PharmaObservatory
         :'condition_id',
         :'condition_name',
         :'max_phase',
+        :'max_phase_label',
+        :'max_phase_fine_rank',
         :'n_trials',
         :'n_active',
         :'last_year',
@@ -206,6 +218,14 @@ module PharmaObservatory
         self.max_phase = attributes[:'max_phase']
       end
 
+      if attributes.key?(:'max_phase_label')
+        self.max_phase_label = attributes[:'max_phase_label']
+      end
+
+      if attributes.key?(:'max_phase_fine_rank')
+        self.max_phase_fine_rank = attributes[:'max_phase_fine_rank']
+      end
+
       if attributes.key?(:'n_trials')
         self.n_trials = attributes[:'n_trials']
       end
@@ -262,6 +282,8 @@ module PharmaObservatory
           condition_id == o.condition_id &&
           condition_name == o.condition_name &&
           max_phase == o.max_phase &&
+          max_phase_label == o.max_phase_label &&
+          max_phase_fine_rank == o.max_phase_fine_rank &&
           n_trials == o.n_trials &&
           n_active == o.n_active &&
           last_year == o.last_year &&
@@ -279,7 +301,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [sponsor_org_id, sponsor_name, sponsor_company_id, sponsor_company_name, sponsor_group_id, sponsor_group_name, drug_id, drug_name, condition_id, condition_name, max_phase, n_trials, n_active, last_year, withdrawn, lifecycle, dalys_millions].hash
+      [sponsor_org_id, sponsor_name, sponsor_company_id, sponsor_company_name, sponsor_group_id, sponsor_group_name, drug_id, drug_name, condition_id, condition_name, max_phase, max_phase_label, max_phase_fine_rank, n_trials, n_active, last_year, withdrawn, lifecycle, dalys_millions].hash
     end
 
     # Builds the object from hash
