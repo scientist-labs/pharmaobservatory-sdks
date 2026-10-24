@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**drugs_period_drug_brands**](DrugsApi.md#drugs_period_drug_brands) | **GET** /api/v1/drugs/{id}/drug_brands | Drug brands
 [**drugs_period_drug_combinations**](DrugsApi.md#drugs_period_drug_combinations) | **GET** /api/v1/drugs/{id}/drug_combinations | Drug combinations
 [**drugs_period_drug_declared_patents**](DrugsApi.md#drugs_period_drug_declared_patents) | **GET** /api/v1/drugs/{id}/drug_declared_patents | Drug declared patents
+[**drugs_period_drug_investigators**](DrugsApi.md#drugs_period_drug_investigators) | **GET** /api/v1/drugs/{id}/drug_investigators | Investigators on a drug's trials
 [**drugs_period_drug_label_safety**](DrugsApi.md#drugs_period_drug_label_safety) | **GET** /api/v1/drugs/{id}/drug_label_safety | Drug label safety
 [**drugs_period_drug_medicare_spend**](DrugsApi.md#drugs_period_drug_medicare_spend) | **GET** /api/v1/drugs/{id}/drug_medicare_spend | Drug Medicare spend
 [**drugs_period_drug_patent_cliff**](DrugsApi.md#drugs_period_drug_patent_cliff) | **GET** /api/v1/drugs/{id}/drug_patent_cliff | Patent-cliff exposure
@@ -285,6 +286,39 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::DrugDeclaredPatentsResponse**](DrugDeclaredPatentsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## drugs_period_drug_investigators
+
+> models::DrugInvestigatorsResponse drugs_period_drug_investigators(id, cursor, limit, sort, group_by, measure)
+Investigators on a drug's trials
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::DrugInvestigatorsResponse**](DrugInvestigatorsResponse.md)
 
 ### Authorization
 

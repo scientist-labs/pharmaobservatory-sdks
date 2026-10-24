@@ -19,6 +19,7 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum InvestorsPeriodGetError {
+    Status400(serde_json::Value),
     Status401(models::AuthError),
     Status403(models::AuthError),
     Status404(models::QueryError),

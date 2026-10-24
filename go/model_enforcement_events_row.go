@@ -21,13 +21,13 @@ var _ MappedNullable = &EnforcementEventsRow{}
 type EnforcementEventsRow struct {
 	// The event id: a hash of the lane and the lane's own key, unique across lanes.
 	EventId NullableString `json:"event_id,omitempty"`
-	// The lane the event came from: inspection_483 (an FDA inspection), import_refusal, warning_letter, untitled_letter, debarment or recall.
+	// The lane the event came from: inspection_483 (an FDA inspection), import_refusal, warning_letter, untitled_letter, debarment, recall or aphis_inspection (a USDA APHIS Animal Welfare Act inspection report).
 	Source NullableString `json:"source,omitempty"`
 	// The event date: the inspection date, refusal date, letter issue date (posted date when there is none), debarment effective date or recall initiation date.
 	EventDate NullableString `json:"event_date,omitempty"`
-	// The regulatory domain of the event, derived from the lane's own classifier: drug, biologic, device, veterinary, food, cosmetic, tobacco or other.
+	// The regulatory domain of the event, derived from the lane's own classifier: drug, biologic, device, animal_research (the APHIS lane), veterinary, food, cosmetic, tobacco or other.
 	Domain NullableString `json:"domain,omitempty"`
-	// True when domain is drug, biologic or device.
+	// True when domain is drug, biologic or device. The APHIS lane is false here on purpose; the page's default view adds domain animal_research to this set.
 	IsBiomedical NullableBool `json:"is_biomedical,omitempty"`
 	// A one-line description: the inspection product type, the refused product, the letter subject, the debarment type or the recalled product.
 	Headline NullableString `json:"headline,omitempty"`
@@ -49,6 +49,24 @@ type EnforcementEventsRow struct {
 	DeviceSpecialty NullableString `json:"device_specialty,omitempty"`
 	// True for a device event the biomedical view hides by default (a low-signal commodity class).
 	IsLowSignalDevice NullableBool `json:"is_low_signal_device,omitempty"`
+	// The APHIS report's verdict, the strongest citation kind on it: direct, critical, non_critical, no_citations or no_citations_no_animals; null for every FDA lane.
+	AwaOutcome NullableString `json:"awa_outcome,omitempty"`
+	// The inspection type as printed on the APHIS report (for example ROUTINE INSPECTION); null for every FDA lane.
+	AwaInspectionType NullableString `json:"awa_inspection_type,omitempty"`
+	// Citations on the APHIS report; null for every FDA lane. Read with awa_species_scope.
+	AwaNCitations NullableInt32 `json:"awa_n_citations,omitempty"`
+	// Of the report's citations, those cited as direct; null for every FDA lane.
+	AwaNDirect NullableInt32 `json:"awa_n_direct,omitempty"`
+	// Of the report's citations, those cited as critical; null for every FDA lane.
+	AwaNCritical NullableInt32 `json:"awa_n_critical,omitempty"`
+	// Of the report's citations, those cited as non-critical; null for every FDA lane.
+	AwaNNonCritical NullableInt32 `json:"awa_n_non_critical,omitempty"`
+	// Of the report's citations, those it marks as repeats; null for every FDA lane.
+	AwaNRepeatCitations NullableInt32 `json:"awa_n_repeat_citations,omitempty"`
+	// The species the APHIS report printed with their animal counts, as \"Common name count; ...\" in the report's order; null on an FDA lane or a report that printed none.
+	AwaSpeciesSummary NullableString `json:"awa_species_summary,omitempty"`
+	// The label AWA-covered species on every APHIS row; null for every FDA lane. The awa_* counts describe the species the Animal Welfare Act covers; read them with this label.
+	AwaSpeciesScope NullableString `json:"awa_species_scope,omitempty"`
 	// The firm's name as filed with the regulator (the party named on the record, an individual for an individual debarment).
 	FirmName NullableString `json:"firm_name,omitempty"`
 	// Legal-entity level: the organization record the firm resolved to (null when the firm did not resolve).
@@ -63,7 +81,7 @@ type EnforcementEventsRow struct {
 	FirmGroupName NullableString `json:"firm_group_name,omitempty"`
 	// How well the firm name was attached to an organization: high, medium or low name-and-geography matches, registry (the operating firm of a registered facility), ambiguous or unresolved.
 	MatchTier NullableString `json:"match_tier,omitempty"`
-	// The route that attached the firm: fei_bridge (the FDA establishment identifier bridge), fei_firm_mint or fei_firm_fold (the operating firm's registry record), firm_name_geo (name and geography), firm_name_only (name alone) or unresolved.
+	// The route that attached the firm: fei_bridge (the FDA establishment identifier bridge), fei_firm_mint or fei_firm_fold (the operating firm's registry record), aphis_bridge, aphis_firm_mint or aphis_firm_fold (the APHIS registrant certificate bridge and its operating-firm record), firm_name_geo (name and geography), firm_name_only (name alone) or unresolved.
 	OrgResolutionMethod NullableString `json:"org_resolution_method,omitempty"`
 	// True when the firm was attached to an organization. A false row is kept with null firm ids and the name as filed, so an empty read for a company is not proof of no enforcement history.
 	IsOrgResolved NullableBool `json:"is_org_resolved,omitempty"`
@@ -719,6 +737,384 @@ func (o *EnforcementEventsRow) UnsetIsLowSignalDevice() {
 	o.IsLowSignalDevice.Unset()
 }
 
+// GetAwaOutcome returns the AwaOutcome field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *EnforcementEventsRow) GetAwaOutcome() string {
+	if o == nil || IsNil(o.AwaOutcome.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.AwaOutcome.Get()
+}
+
+// GetAwaOutcomeOk returns a tuple with the AwaOutcome field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *EnforcementEventsRow) GetAwaOutcomeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AwaOutcome.Get(), o.AwaOutcome.IsSet()
+}
+
+// HasAwaOutcome returns a boolean if a field has been set.
+func (o *EnforcementEventsRow) HasAwaOutcome() bool {
+	if o != nil && o.AwaOutcome.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAwaOutcome gets a reference to the given NullableString and assigns it to the AwaOutcome field.
+func (o *EnforcementEventsRow) SetAwaOutcome(v string) {
+	o.AwaOutcome.Set(&v)
+}
+// SetAwaOutcomeNil sets the value for AwaOutcome to be an explicit nil
+func (o *EnforcementEventsRow) SetAwaOutcomeNil() {
+	o.AwaOutcome.Set(nil)
+}
+
+// UnsetAwaOutcome ensures that no value is present for AwaOutcome, not even an explicit nil
+func (o *EnforcementEventsRow) UnsetAwaOutcome() {
+	o.AwaOutcome.Unset()
+}
+
+// GetAwaInspectionType returns the AwaInspectionType field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *EnforcementEventsRow) GetAwaInspectionType() string {
+	if o == nil || IsNil(o.AwaInspectionType.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.AwaInspectionType.Get()
+}
+
+// GetAwaInspectionTypeOk returns a tuple with the AwaInspectionType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *EnforcementEventsRow) GetAwaInspectionTypeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AwaInspectionType.Get(), o.AwaInspectionType.IsSet()
+}
+
+// HasAwaInspectionType returns a boolean if a field has been set.
+func (o *EnforcementEventsRow) HasAwaInspectionType() bool {
+	if o != nil && o.AwaInspectionType.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAwaInspectionType gets a reference to the given NullableString and assigns it to the AwaInspectionType field.
+func (o *EnforcementEventsRow) SetAwaInspectionType(v string) {
+	o.AwaInspectionType.Set(&v)
+}
+// SetAwaInspectionTypeNil sets the value for AwaInspectionType to be an explicit nil
+func (o *EnforcementEventsRow) SetAwaInspectionTypeNil() {
+	o.AwaInspectionType.Set(nil)
+}
+
+// UnsetAwaInspectionType ensures that no value is present for AwaInspectionType, not even an explicit nil
+func (o *EnforcementEventsRow) UnsetAwaInspectionType() {
+	o.AwaInspectionType.Unset()
+}
+
+// GetAwaNCitations returns the AwaNCitations field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *EnforcementEventsRow) GetAwaNCitations() int32 {
+	if o == nil || IsNil(o.AwaNCitations.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.AwaNCitations.Get()
+}
+
+// GetAwaNCitationsOk returns a tuple with the AwaNCitations field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *EnforcementEventsRow) GetAwaNCitationsOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AwaNCitations.Get(), o.AwaNCitations.IsSet()
+}
+
+// HasAwaNCitations returns a boolean if a field has been set.
+func (o *EnforcementEventsRow) HasAwaNCitations() bool {
+	if o != nil && o.AwaNCitations.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAwaNCitations gets a reference to the given NullableInt32 and assigns it to the AwaNCitations field.
+func (o *EnforcementEventsRow) SetAwaNCitations(v int32) {
+	o.AwaNCitations.Set(&v)
+}
+// SetAwaNCitationsNil sets the value for AwaNCitations to be an explicit nil
+func (o *EnforcementEventsRow) SetAwaNCitationsNil() {
+	o.AwaNCitations.Set(nil)
+}
+
+// UnsetAwaNCitations ensures that no value is present for AwaNCitations, not even an explicit nil
+func (o *EnforcementEventsRow) UnsetAwaNCitations() {
+	o.AwaNCitations.Unset()
+}
+
+// GetAwaNDirect returns the AwaNDirect field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *EnforcementEventsRow) GetAwaNDirect() int32 {
+	if o == nil || IsNil(o.AwaNDirect.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.AwaNDirect.Get()
+}
+
+// GetAwaNDirectOk returns a tuple with the AwaNDirect field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *EnforcementEventsRow) GetAwaNDirectOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AwaNDirect.Get(), o.AwaNDirect.IsSet()
+}
+
+// HasAwaNDirect returns a boolean if a field has been set.
+func (o *EnforcementEventsRow) HasAwaNDirect() bool {
+	if o != nil && o.AwaNDirect.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAwaNDirect gets a reference to the given NullableInt32 and assigns it to the AwaNDirect field.
+func (o *EnforcementEventsRow) SetAwaNDirect(v int32) {
+	o.AwaNDirect.Set(&v)
+}
+// SetAwaNDirectNil sets the value for AwaNDirect to be an explicit nil
+func (o *EnforcementEventsRow) SetAwaNDirectNil() {
+	o.AwaNDirect.Set(nil)
+}
+
+// UnsetAwaNDirect ensures that no value is present for AwaNDirect, not even an explicit nil
+func (o *EnforcementEventsRow) UnsetAwaNDirect() {
+	o.AwaNDirect.Unset()
+}
+
+// GetAwaNCritical returns the AwaNCritical field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *EnforcementEventsRow) GetAwaNCritical() int32 {
+	if o == nil || IsNil(o.AwaNCritical.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.AwaNCritical.Get()
+}
+
+// GetAwaNCriticalOk returns a tuple with the AwaNCritical field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *EnforcementEventsRow) GetAwaNCriticalOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AwaNCritical.Get(), o.AwaNCritical.IsSet()
+}
+
+// HasAwaNCritical returns a boolean if a field has been set.
+func (o *EnforcementEventsRow) HasAwaNCritical() bool {
+	if o != nil && o.AwaNCritical.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAwaNCritical gets a reference to the given NullableInt32 and assigns it to the AwaNCritical field.
+func (o *EnforcementEventsRow) SetAwaNCritical(v int32) {
+	o.AwaNCritical.Set(&v)
+}
+// SetAwaNCriticalNil sets the value for AwaNCritical to be an explicit nil
+func (o *EnforcementEventsRow) SetAwaNCriticalNil() {
+	o.AwaNCritical.Set(nil)
+}
+
+// UnsetAwaNCritical ensures that no value is present for AwaNCritical, not even an explicit nil
+func (o *EnforcementEventsRow) UnsetAwaNCritical() {
+	o.AwaNCritical.Unset()
+}
+
+// GetAwaNNonCritical returns the AwaNNonCritical field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *EnforcementEventsRow) GetAwaNNonCritical() int32 {
+	if o == nil || IsNil(o.AwaNNonCritical.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.AwaNNonCritical.Get()
+}
+
+// GetAwaNNonCriticalOk returns a tuple with the AwaNNonCritical field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *EnforcementEventsRow) GetAwaNNonCriticalOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AwaNNonCritical.Get(), o.AwaNNonCritical.IsSet()
+}
+
+// HasAwaNNonCritical returns a boolean if a field has been set.
+func (o *EnforcementEventsRow) HasAwaNNonCritical() bool {
+	if o != nil && o.AwaNNonCritical.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAwaNNonCritical gets a reference to the given NullableInt32 and assigns it to the AwaNNonCritical field.
+func (o *EnforcementEventsRow) SetAwaNNonCritical(v int32) {
+	o.AwaNNonCritical.Set(&v)
+}
+// SetAwaNNonCriticalNil sets the value for AwaNNonCritical to be an explicit nil
+func (o *EnforcementEventsRow) SetAwaNNonCriticalNil() {
+	o.AwaNNonCritical.Set(nil)
+}
+
+// UnsetAwaNNonCritical ensures that no value is present for AwaNNonCritical, not even an explicit nil
+func (o *EnforcementEventsRow) UnsetAwaNNonCritical() {
+	o.AwaNNonCritical.Unset()
+}
+
+// GetAwaNRepeatCitations returns the AwaNRepeatCitations field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *EnforcementEventsRow) GetAwaNRepeatCitations() int32 {
+	if o == nil || IsNil(o.AwaNRepeatCitations.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.AwaNRepeatCitations.Get()
+}
+
+// GetAwaNRepeatCitationsOk returns a tuple with the AwaNRepeatCitations field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *EnforcementEventsRow) GetAwaNRepeatCitationsOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AwaNRepeatCitations.Get(), o.AwaNRepeatCitations.IsSet()
+}
+
+// HasAwaNRepeatCitations returns a boolean if a field has been set.
+func (o *EnforcementEventsRow) HasAwaNRepeatCitations() bool {
+	if o != nil && o.AwaNRepeatCitations.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAwaNRepeatCitations gets a reference to the given NullableInt32 and assigns it to the AwaNRepeatCitations field.
+func (o *EnforcementEventsRow) SetAwaNRepeatCitations(v int32) {
+	o.AwaNRepeatCitations.Set(&v)
+}
+// SetAwaNRepeatCitationsNil sets the value for AwaNRepeatCitations to be an explicit nil
+func (o *EnforcementEventsRow) SetAwaNRepeatCitationsNil() {
+	o.AwaNRepeatCitations.Set(nil)
+}
+
+// UnsetAwaNRepeatCitations ensures that no value is present for AwaNRepeatCitations, not even an explicit nil
+func (o *EnforcementEventsRow) UnsetAwaNRepeatCitations() {
+	o.AwaNRepeatCitations.Unset()
+}
+
+// GetAwaSpeciesSummary returns the AwaSpeciesSummary field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *EnforcementEventsRow) GetAwaSpeciesSummary() string {
+	if o == nil || IsNil(o.AwaSpeciesSummary.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.AwaSpeciesSummary.Get()
+}
+
+// GetAwaSpeciesSummaryOk returns a tuple with the AwaSpeciesSummary field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *EnforcementEventsRow) GetAwaSpeciesSummaryOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AwaSpeciesSummary.Get(), o.AwaSpeciesSummary.IsSet()
+}
+
+// HasAwaSpeciesSummary returns a boolean if a field has been set.
+func (o *EnforcementEventsRow) HasAwaSpeciesSummary() bool {
+	if o != nil && o.AwaSpeciesSummary.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAwaSpeciesSummary gets a reference to the given NullableString and assigns it to the AwaSpeciesSummary field.
+func (o *EnforcementEventsRow) SetAwaSpeciesSummary(v string) {
+	o.AwaSpeciesSummary.Set(&v)
+}
+// SetAwaSpeciesSummaryNil sets the value for AwaSpeciesSummary to be an explicit nil
+func (o *EnforcementEventsRow) SetAwaSpeciesSummaryNil() {
+	o.AwaSpeciesSummary.Set(nil)
+}
+
+// UnsetAwaSpeciesSummary ensures that no value is present for AwaSpeciesSummary, not even an explicit nil
+func (o *EnforcementEventsRow) UnsetAwaSpeciesSummary() {
+	o.AwaSpeciesSummary.Unset()
+}
+
+// GetAwaSpeciesScope returns the AwaSpeciesScope field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *EnforcementEventsRow) GetAwaSpeciesScope() string {
+	if o == nil || IsNil(o.AwaSpeciesScope.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.AwaSpeciesScope.Get()
+}
+
+// GetAwaSpeciesScopeOk returns a tuple with the AwaSpeciesScope field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *EnforcementEventsRow) GetAwaSpeciesScopeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AwaSpeciesScope.Get(), o.AwaSpeciesScope.IsSet()
+}
+
+// HasAwaSpeciesScope returns a boolean if a field has been set.
+func (o *EnforcementEventsRow) HasAwaSpeciesScope() bool {
+	if o != nil && o.AwaSpeciesScope.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAwaSpeciesScope gets a reference to the given NullableString and assigns it to the AwaSpeciesScope field.
+func (o *EnforcementEventsRow) SetAwaSpeciesScope(v string) {
+	o.AwaSpeciesScope.Set(&v)
+}
+// SetAwaSpeciesScopeNil sets the value for AwaSpeciesScope to be an explicit nil
+func (o *EnforcementEventsRow) SetAwaSpeciesScopeNil() {
+	o.AwaSpeciesScope.Set(nil)
+}
+
+// UnsetAwaSpeciesScope ensures that no value is present for AwaSpeciesScope, not even an explicit nil
+func (o *EnforcementEventsRow) UnsetAwaSpeciesScope() {
+	o.AwaSpeciesScope.Unset()
+}
+
 // GetFirmName returns the FirmName field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *EnforcementEventsRow) GetFirmName() string {
 	if o == nil || IsNil(o.FirmName.Get()) {
@@ -1152,6 +1548,33 @@ func (o EnforcementEventsRow) ToMap() (map[string]interface{}, error) {
 	if o.IsLowSignalDevice.IsSet() {
 		toSerialize["is_low_signal_device"] = o.IsLowSignalDevice.Get()
 	}
+	if o.AwaOutcome.IsSet() {
+		toSerialize["awa_outcome"] = o.AwaOutcome.Get()
+	}
+	if o.AwaInspectionType.IsSet() {
+		toSerialize["awa_inspection_type"] = o.AwaInspectionType.Get()
+	}
+	if o.AwaNCitations.IsSet() {
+		toSerialize["awa_n_citations"] = o.AwaNCitations.Get()
+	}
+	if o.AwaNDirect.IsSet() {
+		toSerialize["awa_n_direct"] = o.AwaNDirect.Get()
+	}
+	if o.AwaNCritical.IsSet() {
+		toSerialize["awa_n_critical"] = o.AwaNCritical.Get()
+	}
+	if o.AwaNNonCritical.IsSet() {
+		toSerialize["awa_n_non_critical"] = o.AwaNNonCritical.Get()
+	}
+	if o.AwaNRepeatCitations.IsSet() {
+		toSerialize["awa_n_repeat_citations"] = o.AwaNRepeatCitations.Get()
+	}
+	if o.AwaSpeciesSummary.IsSet() {
+		toSerialize["awa_species_summary"] = o.AwaSpeciesSummary.Get()
+	}
+	if o.AwaSpeciesScope.IsSet() {
+		toSerialize["awa_species_scope"] = o.AwaSpeciesScope.Get()
+	}
 	if o.FirmName.IsSet() {
 		toSerialize["firm_name"] = o.FirmName.Get()
 	}
@@ -1216,6 +1639,15 @@ func (o *EnforcementEventsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "device_class")
 		delete(additionalProperties, "device_specialty")
 		delete(additionalProperties, "is_low_signal_device")
+		delete(additionalProperties, "awa_outcome")
+		delete(additionalProperties, "awa_inspection_type")
+		delete(additionalProperties, "awa_n_citations")
+		delete(additionalProperties, "awa_n_direct")
+		delete(additionalProperties, "awa_n_critical")
+		delete(additionalProperties, "awa_n_non_critical")
+		delete(additionalProperties, "awa_n_repeat_citations")
+		delete(additionalProperties, "awa_species_summary")
+		delete(additionalProperties, "awa_species_scope")
 		delete(additionalProperties, "firm_name")
 		delete(additionalProperties, "firm_org_id")
 		delete(additionalProperties, "firm_company_id")

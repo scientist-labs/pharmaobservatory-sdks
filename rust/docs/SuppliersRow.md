@@ -33,6 +33,7 @@ Name | Type | Description | Notes
 **supplier_group_id** | Option<**String**> | Group level: the supplier's company's current ultimate parent company; a root company's group is itself. | [optional]
 **supplier_group_name** | Option<**String**> | Display name of the supplier's group. | [optional]
 **org_link_method** | Option<**String**> | How the supplier was linked to its organization record, so a caller can apply a confidence floor. The supplier pages on organization pages show only provider_ror_exact, provider_edgar_exact and supplier_curated. | [optional]
+**phs_animal_welfare_assurance_id** | Option<**String**> | The NIH Office of Laboratory Animal Welfare (OLAW) Public Health Service Animal Welfare Assurance id the supplier page badges (#5286). Set only when the supplier is linked to its organization with confidence (provider_ror_exact, provider_edgar_exact or supplier_curated) and the OLAW institution matched that organization at a high or medium tier, the same rule as the page. Null means no badge, never 'not assured': OLAW's list is matched to the organizations we hold, and most institutions do not resolve. Full detail, with the raw status code, is the animal_welfare_assurances dataset. | [optional]
 **has_public_page** | Option<**bool**> | True when the supplier has a public page on the web (every row of this dataset does). | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -11,8 +11,8 @@ Name | Type | Description | Notes
 **Datasets** | [**[]DatasetListing**](DatasetListing.md) |  | 
 **Attribution** | Pointer to [**[]DatasetAttribution**](DatasetAttribution.md) |  | [optional] 
 **SourceCredit** | Pointer to **string** |  | [optional] 
-**Freshness** | Pointer to [**BiomarkerAssayEvidenceResponseFreshness**](BiomarkerAssayEvidenceResponseFreshness.md) |  | [optional] 
-**Build** | Pointer to [**BiomarkerAssayEvidenceResponseBuild**](BiomarkerAssayEvidenceResponseBuild.md) |  | [optional] 
+**Freshness** | Pointer to [**AnimalWelfareAssurancesResponseFreshness**](AnimalWelfareAssurancesResponseFreshness.md) |  | [optional] 
+**Build** | Pointer to [**AnimalWelfareAssurancesResponseBuild**](AnimalWelfareAssurancesResponseBuild.md) |  | [optional] 
 **BuildState** | Pointer to [**DatasetBuildState**](DatasetBuildState.md) |  | [optional] 
 **Restriction** | Pointer to **map[string]interface{}** |  | [optional] 
 
@@ -192,20 +192,20 @@ HasSourceCredit returns a boolean if a field has been set.
 
 ### GetFreshness
 
-`func (o *LegalEntitiesRecord) GetFreshness() BiomarkerAssayEvidenceResponseFreshness`
+`func (o *LegalEntitiesRecord) GetFreshness() AnimalWelfareAssurancesResponseFreshness`
 
 GetFreshness returns the Freshness field if non-nil, zero value otherwise.
 
 ### GetFreshnessOk
 
-`func (o *LegalEntitiesRecord) GetFreshnessOk() (*BiomarkerAssayEvidenceResponseFreshness, bool)`
+`func (o *LegalEntitiesRecord) GetFreshnessOk() (*AnimalWelfareAssurancesResponseFreshness, bool)`
 
 GetFreshnessOk returns a tuple with the Freshness field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFreshness
 
-`func (o *LegalEntitiesRecord) SetFreshness(v BiomarkerAssayEvidenceResponseFreshness)`
+`func (o *LegalEntitiesRecord) SetFreshness(v AnimalWelfareAssurancesResponseFreshness)`
 
 SetFreshness sets Freshness field to given value.
 
@@ -217,20 +217,20 @@ HasFreshness returns a boolean if a field has been set.
 
 ### GetBuild
 
-`func (o *LegalEntitiesRecord) GetBuild() BiomarkerAssayEvidenceResponseBuild`
+`func (o *LegalEntitiesRecord) GetBuild() AnimalWelfareAssurancesResponseBuild`
 
 GetBuild returns the Build field if non-nil, zero value otherwise.
 
 ### GetBuildOk
 
-`func (o *LegalEntitiesRecord) GetBuildOk() (*BiomarkerAssayEvidenceResponseBuild, bool)`
+`func (o *LegalEntitiesRecord) GetBuildOk() (*AnimalWelfareAssurancesResponseBuild, bool)`
 
 GetBuildOk returns a tuple with the Build field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBuild
 
-`func (o *LegalEntitiesRecord) SetBuild(v BiomarkerAssayEvidenceResponseBuild)`
+`func (o *LegalEntitiesRecord) SetBuild(v AnimalWelfareAssurancesResponseBuild)`
 
 SetBuild sets Build field to given value.
 

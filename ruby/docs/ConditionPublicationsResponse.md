@@ -8,7 +8,7 @@
 | **grain** | **String** |  | [optional] |
 | **object_type** | **String** |  | [optional] |
 | **id** | **String** |  | [optional] |
-| **scope** | [**BiomarkerAssayEvidenceResponseScope**](BiomarkerAssayEvidenceResponseScope.md) |  | [optional] |
+| **scope** | [**AnimalWelfareAssurancesResponseScope**](AnimalWelfareAssurancesResponseScope.md) |  | [optional] |
 | **columns** | [**Array&lt;DatasetColumn&gt;**](DatasetColumn.md) |  |  |
 | **rows** | [**Array&lt;ConditionPublicationsRow&gt;**](ConditionPublicationsRow.md) |  |  |
 | **total** | **Integer** | The exact count of the filtered rows on an ungrouped read, carried by the cursor; null when grouped. | [optional] |
@@ -21,8 +21,8 @@
 | **source_credit** | **String** |  | [optional] |
 | **withheld_tiers** | **Array&lt;String&gt;** |  | [optional] |
 | **withheld_columns** | **Array&lt;String&gt;** |  | [optional] |
-| **freshness** | [**BiomarkerAssayEvidenceResponseFreshness**](BiomarkerAssayEvidenceResponseFreshness.md) |  | [optional] |
-| **build** | [**BiomarkerAssayEvidenceResponseBuild**](BiomarkerAssayEvidenceResponseBuild.md) |  | [optional] |
+| **freshness** | [**AnimalWelfareAssurancesResponseFreshness**](AnimalWelfareAssurancesResponseFreshness.md) |  | [optional] |
+| **build** | [**AnimalWelfareAssurancesResponseBuild**](AnimalWelfareAssurancesResponseBuild.md) |  | [optional] |
 | **build_state** | [**DatasetBuildState**](DatasetBuildState.md) |  | [optional] |
 | **restriction** | **Hash&lt;String, Object&gt;** |  | [optional] |
 

@@ -56,6 +56,15 @@ pub struct InvestorsRow {
     /// Current Form 13F positions reported by the managers that resolve to this investor, summed over its manager keys. 0 when none resolves.
     #[serde(rename = "holdings_position_count", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub holdings_position_count: Option<Option<i64>>,
+    /// The adviser's own website from Form ADV Schedule D Section 1.I (scheme and host lower-cased, path kept). Null for an agency and for an adviser whose only listed pages are social-media pages.
+    #[serde(rename = "website_url", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub website_url: Option<Option<String>>,
+    /// The host of website_url with the scheme, any port and a leading www stripped, lower-cased. It is never a social-media host.
+    #[serde(rename = "website_domain", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub website_domain: Option<Option<String>>,
+    /// Where website_url came from: adv (SEC Form ADV Schedule D Section 1.I). Null exactly when website_url is null.
+    #[serde(rename = "website_source", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub website_source: Option<Option<String>>,
     /// Legal-entity level: the investor's organization record where the link resolves (null otherwise). An advfirm:<CRD> shell resolves to no legal-entity record and no company.
     #[serde(rename = "org_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub org_id: Option<Option<String>>,
@@ -91,6 +100,9 @@ impl InvestorsRow {
             total_private_fund_gav: None,
             portfolio_co_count: None,
             holdings_position_count: None,
+            website_url: None,
+            website_domain: None,
+            website_source: None,
             org_id: None,
             company_id: None,
             company_name: None,

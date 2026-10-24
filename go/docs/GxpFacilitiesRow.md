@@ -31,7 +31,7 @@ Name | Type | Description | Notes
 **PrimaryDomain** | Pointer to **NullableString** | The domain with the most signals. | [optional] 
 **IsDrugFacility** | Pointer to **NullableBool** | True when the registers say the site makes medicines (an FDA drug registration, or an EU or Canadian medicines register entry). | [optional] 
 **IsDeviceFacility** | Pointer to **NullableBool** | True when the registers say the site makes devices. | [optional] 
-**RegisterDomain** | Pointer to **NullableString** | The display bucket over the two flags: drug, device, drug_and_device or non_medicine. | [optional] 
+**RegisterDomain** | Pointer to **NullableString** | The display bucket over the register flags: drug, device, drug_and_device, animal_research (a USDA APHIS research facility that is neither a drug nor a device facility) or non_medicine. | [optional] 
 **DeviceClassificationStatus** | Pointer to **NullableString** | The registered-product rollup for a device facility: material, unresolved, low_signal or not_applicable. | [optional] 
 **IsLowSignalDevice** | Pointer to **NullableBool** | True when the facility&#39;s device products are all low-signal commodity classes. | [optional] 
 **Regulators** | Pointer to **[]string** | The regulators holding a registry record for the facility (fda, ema, health_canada), sorted. | [optional] 
@@ -74,6 +74,19 @@ Name | Type | Description | Notes
 **NHcInspectionsNonCompliant** | Pointer to **NullableInt32** | Health Canada inspections rated non-compliant. | [optional] 
 **NImportRefusals** | Pointer to **NullableInt32** | FDA import refusals at the site. | [optional] 
 **LatestImportRefusalDate** | Pointer to **NullableString** | The date of the latest import refusal. | [optional] 
+**IsResearchFacility** | Pointer to **NullableBool** | True when the facility has a USDA APHIS Animal Welfare Act registrant site as a member (the animal_research register); a facility can also be a drug or device facility. | [optional] 
+**NAphisInspections** | Pointer to **NullableInt32** | USDA APHIS inspection reports for the site, one per report and never per citation; zero where the facility has no APHIS member. Read with awa_species_scope. | [optional] 
+**LatestAphisInspectionDate** | Pointer to **NullableString** | The date of the latest APHIS inspection report; null when there is none. | [optional] 
+**LatestAphisInspectionOutcome** | Pointer to **NullableString** | The latest APHIS report&#39;s verdict, the strongest citation kind on it: direct, critical, non_critical, no_citations or no_citations_no_animals; null when there is no APHIS report. | [optional] 
+**NAphisInspectionsCited** | Pointer to **NullableInt32** | APHIS reports at the site with at least one citation (direct, critical or non-critical). | [optional] 
+**NAphisCitations** | Pointer to **NullableInt32** | Citations across the site&#39;s APHIS reports. Read with awa_species_scope. | [optional] 
+**NAphisRepeatCitations** | Pointer to **NullableInt32** | Of those, the citations the report marks as repeats. | [optional] 
+**AwaSpeciesScope** | Pointer to **NullableString** | The label AWA-covered species on a facility with an APHIS member; null otherwise. The APHIS counts describe the species the Animal Welfare Act covers; read them with this label. | [optional] 
+**OrgOlawAssuranceId** | Pointer to **NullableString** | Organization scope, repeated onto every facility of the organization: the NIH OLAW Public Health Service Animal Welfare Assurance id, or null when the organization has no resolved row. Null is never evidence of no assurance. | [optional] 
+**OrgOlawAssuranceStatus** | Pointer to **NullableString** | OLAW&#39;s raw two-digit assurance status code as published, never decoded; null with org_olaw_assurance_id. | [optional] 
+**OrgOlawMatchTier** | Pointer to **NullableString** | How well the OLAW institution name resolved to the organization: high, medium or low; the web badge shows high and medium. | [optional] 
+**OrgOlawSourceAsof** | Pointer to **NullableTime** | When OLAW&#39;s lookup tool says its list was last updated; the source does not state a timezone. | [optional] 
+**HasOrgOlawAssurance** | Pointer to **NullableBool** | True when org_olaw_assurance_id is not null. Organization scope, repeated per facility, not additive. | [optional] 
 **NGmpCertificates** | Pointer to **NullableInt32** | EU GMP certificates of the site. | [optional] 
 **LatestGmpCertificateDate** | Pointer to **NullableString** | The date of the latest EU GMP certificate. | [optional] 
 **NNoncomplianceStatements** | Pointer to **NullableInt32** | EU GMP non-compliance statements about the site. | [optional] 
@@ -2553,6 +2566,461 @@ HasLatestImportRefusalDate returns a boolean if a field has been set.
 `func (o *GxpFacilitiesRow) UnsetLatestImportRefusalDate()`
 
 UnsetLatestImportRefusalDate ensures that no value is present for LatestImportRefusalDate, not even an explicit nil
+### GetIsResearchFacility
+
+`func (o *GxpFacilitiesRow) GetIsResearchFacility() bool`
+
+GetIsResearchFacility returns the IsResearchFacility field if non-nil, zero value otherwise.
+
+### GetIsResearchFacilityOk
+
+`func (o *GxpFacilitiesRow) GetIsResearchFacilityOk() (*bool, bool)`
+
+GetIsResearchFacilityOk returns a tuple with the IsResearchFacility field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsResearchFacility
+
+`func (o *GxpFacilitiesRow) SetIsResearchFacility(v bool)`
+
+SetIsResearchFacility sets IsResearchFacility field to given value.
+
+### HasIsResearchFacility
+
+`func (o *GxpFacilitiesRow) HasIsResearchFacility() bool`
+
+HasIsResearchFacility returns a boolean if a field has been set.
+
+### SetIsResearchFacilityNil
+
+`func (o *GxpFacilitiesRow) SetIsResearchFacilityNil(b bool)`
+
+ SetIsResearchFacilityNil sets the value for IsResearchFacility to be an explicit nil
+
+### UnsetIsResearchFacility
+`func (o *GxpFacilitiesRow) UnsetIsResearchFacility()`
+
+UnsetIsResearchFacility ensures that no value is present for IsResearchFacility, not even an explicit nil
+### GetNAphisInspections
+
+`func (o *GxpFacilitiesRow) GetNAphisInspections() int32`
+
+GetNAphisInspections returns the NAphisInspections field if non-nil, zero value otherwise.
+
+### GetNAphisInspectionsOk
+
+`func (o *GxpFacilitiesRow) GetNAphisInspectionsOk() (*int32, bool)`
+
+GetNAphisInspectionsOk returns a tuple with the NAphisInspections field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNAphisInspections
+
+`func (o *GxpFacilitiesRow) SetNAphisInspections(v int32)`
+
+SetNAphisInspections sets NAphisInspections field to given value.
+
+### HasNAphisInspections
+
+`func (o *GxpFacilitiesRow) HasNAphisInspections() bool`
+
+HasNAphisInspections returns a boolean if a field has been set.
+
+### SetNAphisInspectionsNil
+
+`func (o *GxpFacilitiesRow) SetNAphisInspectionsNil(b bool)`
+
+ SetNAphisInspectionsNil sets the value for NAphisInspections to be an explicit nil
+
+### UnsetNAphisInspections
+`func (o *GxpFacilitiesRow) UnsetNAphisInspections()`
+
+UnsetNAphisInspections ensures that no value is present for NAphisInspections, not even an explicit nil
+### GetLatestAphisInspectionDate
+
+`func (o *GxpFacilitiesRow) GetLatestAphisInspectionDate() string`
+
+GetLatestAphisInspectionDate returns the LatestAphisInspectionDate field if non-nil, zero value otherwise.
+
+### GetLatestAphisInspectionDateOk
+
+`func (o *GxpFacilitiesRow) GetLatestAphisInspectionDateOk() (*string, bool)`
+
+GetLatestAphisInspectionDateOk returns a tuple with the LatestAphisInspectionDate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLatestAphisInspectionDate
+
+`func (o *GxpFacilitiesRow) SetLatestAphisInspectionDate(v string)`
+
+SetLatestAphisInspectionDate sets LatestAphisInspectionDate field to given value.
+
+### HasLatestAphisInspectionDate
+
+`func (o *GxpFacilitiesRow) HasLatestAphisInspectionDate() bool`
+
+HasLatestAphisInspectionDate returns a boolean if a field has been set.
+
+### SetLatestAphisInspectionDateNil
+
+`func (o *GxpFacilitiesRow) SetLatestAphisInspectionDateNil(b bool)`
+
+ SetLatestAphisInspectionDateNil sets the value for LatestAphisInspectionDate to be an explicit nil
+
+### UnsetLatestAphisInspectionDate
+`func (o *GxpFacilitiesRow) UnsetLatestAphisInspectionDate()`
+
+UnsetLatestAphisInspectionDate ensures that no value is present for LatestAphisInspectionDate, not even an explicit nil
+### GetLatestAphisInspectionOutcome
+
+`func (o *GxpFacilitiesRow) GetLatestAphisInspectionOutcome() string`
+
+GetLatestAphisInspectionOutcome returns the LatestAphisInspectionOutcome field if non-nil, zero value otherwise.
+
+### GetLatestAphisInspectionOutcomeOk
+
+`func (o *GxpFacilitiesRow) GetLatestAphisInspectionOutcomeOk() (*string, bool)`
+
+GetLatestAphisInspectionOutcomeOk returns a tuple with the LatestAphisInspectionOutcome field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLatestAphisInspectionOutcome
+
+`func (o *GxpFacilitiesRow) SetLatestAphisInspectionOutcome(v string)`
+
+SetLatestAphisInspectionOutcome sets LatestAphisInspectionOutcome field to given value.
+
+### HasLatestAphisInspectionOutcome
+
+`func (o *GxpFacilitiesRow) HasLatestAphisInspectionOutcome() bool`
+
+HasLatestAphisInspectionOutcome returns a boolean if a field has been set.
+
+### SetLatestAphisInspectionOutcomeNil
+
+`func (o *GxpFacilitiesRow) SetLatestAphisInspectionOutcomeNil(b bool)`
+
+ SetLatestAphisInspectionOutcomeNil sets the value for LatestAphisInspectionOutcome to be an explicit nil
+
+### UnsetLatestAphisInspectionOutcome
+`func (o *GxpFacilitiesRow) UnsetLatestAphisInspectionOutcome()`
+
+UnsetLatestAphisInspectionOutcome ensures that no value is present for LatestAphisInspectionOutcome, not even an explicit nil
+### GetNAphisInspectionsCited
+
+`func (o *GxpFacilitiesRow) GetNAphisInspectionsCited() int32`
+
+GetNAphisInspectionsCited returns the NAphisInspectionsCited field if non-nil, zero value otherwise.
+
+### GetNAphisInspectionsCitedOk
+
+`func (o *GxpFacilitiesRow) GetNAphisInspectionsCitedOk() (*int32, bool)`
+
+GetNAphisInspectionsCitedOk returns a tuple with the NAphisInspectionsCited field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNAphisInspectionsCited
+
+`func (o *GxpFacilitiesRow) SetNAphisInspectionsCited(v int32)`
+
+SetNAphisInspectionsCited sets NAphisInspectionsCited field to given value.
+
+### HasNAphisInspectionsCited
+
+`func (o *GxpFacilitiesRow) HasNAphisInspectionsCited() bool`
+
+HasNAphisInspectionsCited returns a boolean if a field has been set.
+
+### SetNAphisInspectionsCitedNil
+
+`func (o *GxpFacilitiesRow) SetNAphisInspectionsCitedNil(b bool)`
+
+ SetNAphisInspectionsCitedNil sets the value for NAphisInspectionsCited to be an explicit nil
+
+### UnsetNAphisInspectionsCited
+`func (o *GxpFacilitiesRow) UnsetNAphisInspectionsCited()`
+
+UnsetNAphisInspectionsCited ensures that no value is present for NAphisInspectionsCited, not even an explicit nil
+### GetNAphisCitations
+
+`func (o *GxpFacilitiesRow) GetNAphisCitations() int32`
+
+GetNAphisCitations returns the NAphisCitations field if non-nil, zero value otherwise.
+
+### GetNAphisCitationsOk
+
+`func (o *GxpFacilitiesRow) GetNAphisCitationsOk() (*int32, bool)`
+
+GetNAphisCitationsOk returns a tuple with the NAphisCitations field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNAphisCitations
+
+`func (o *GxpFacilitiesRow) SetNAphisCitations(v int32)`
+
+SetNAphisCitations sets NAphisCitations field to given value.
+
+### HasNAphisCitations
+
+`func (o *GxpFacilitiesRow) HasNAphisCitations() bool`
+
+HasNAphisCitations returns a boolean if a field has been set.
+
+### SetNAphisCitationsNil
+
+`func (o *GxpFacilitiesRow) SetNAphisCitationsNil(b bool)`
+
+ SetNAphisCitationsNil sets the value for NAphisCitations to be an explicit nil
+
+### UnsetNAphisCitations
+`func (o *GxpFacilitiesRow) UnsetNAphisCitations()`
+
+UnsetNAphisCitations ensures that no value is present for NAphisCitations, not even an explicit nil
+### GetNAphisRepeatCitations
+
+`func (o *GxpFacilitiesRow) GetNAphisRepeatCitations() int32`
+
+GetNAphisRepeatCitations returns the NAphisRepeatCitations field if non-nil, zero value otherwise.
+
+### GetNAphisRepeatCitationsOk
+
+`func (o *GxpFacilitiesRow) GetNAphisRepeatCitationsOk() (*int32, bool)`
+
+GetNAphisRepeatCitationsOk returns a tuple with the NAphisRepeatCitations field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNAphisRepeatCitations
+
+`func (o *GxpFacilitiesRow) SetNAphisRepeatCitations(v int32)`
+
+SetNAphisRepeatCitations sets NAphisRepeatCitations field to given value.
+
+### HasNAphisRepeatCitations
+
+`func (o *GxpFacilitiesRow) HasNAphisRepeatCitations() bool`
+
+HasNAphisRepeatCitations returns a boolean if a field has been set.
+
+### SetNAphisRepeatCitationsNil
+
+`func (o *GxpFacilitiesRow) SetNAphisRepeatCitationsNil(b bool)`
+
+ SetNAphisRepeatCitationsNil sets the value for NAphisRepeatCitations to be an explicit nil
+
+### UnsetNAphisRepeatCitations
+`func (o *GxpFacilitiesRow) UnsetNAphisRepeatCitations()`
+
+UnsetNAphisRepeatCitations ensures that no value is present for NAphisRepeatCitations, not even an explicit nil
+### GetAwaSpeciesScope
+
+`func (o *GxpFacilitiesRow) GetAwaSpeciesScope() string`
+
+GetAwaSpeciesScope returns the AwaSpeciesScope field if non-nil, zero value otherwise.
+
+### GetAwaSpeciesScopeOk
+
+`func (o *GxpFacilitiesRow) GetAwaSpeciesScopeOk() (*string, bool)`
+
+GetAwaSpeciesScopeOk returns a tuple with the AwaSpeciesScope field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAwaSpeciesScope
+
+`func (o *GxpFacilitiesRow) SetAwaSpeciesScope(v string)`
+
+SetAwaSpeciesScope sets AwaSpeciesScope field to given value.
+
+### HasAwaSpeciesScope
+
+`func (o *GxpFacilitiesRow) HasAwaSpeciesScope() bool`
+
+HasAwaSpeciesScope returns a boolean if a field has been set.
+
+### SetAwaSpeciesScopeNil
+
+`func (o *GxpFacilitiesRow) SetAwaSpeciesScopeNil(b bool)`
+
+ SetAwaSpeciesScopeNil sets the value for AwaSpeciesScope to be an explicit nil
+
+### UnsetAwaSpeciesScope
+`func (o *GxpFacilitiesRow) UnsetAwaSpeciesScope()`
+
+UnsetAwaSpeciesScope ensures that no value is present for AwaSpeciesScope, not even an explicit nil
+### GetOrgOlawAssuranceId
+
+`func (o *GxpFacilitiesRow) GetOrgOlawAssuranceId() string`
+
+GetOrgOlawAssuranceId returns the OrgOlawAssuranceId field if non-nil, zero value otherwise.
+
+### GetOrgOlawAssuranceIdOk
+
+`func (o *GxpFacilitiesRow) GetOrgOlawAssuranceIdOk() (*string, bool)`
+
+GetOrgOlawAssuranceIdOk returns a tuple with the OrgOlawAssuranceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOrgOlawAssuranceId
+
+`func (o *GxpFacilitiesRow) SetOrgOlawAssuranceId(v string)`
+
+SetOrgOlawAssuranceId sets OrgOlawAssuranceId field to given value.
+
+### HasOrgOlawAssuranceId
+
+`func (o *GxpFacilitiesRow) HasOrgOlawAssuranceId() bool`
+
+HasOrgOlawAssuranceId returns a boolean if a field has been set.
+
+### SetOrgOlawAssuranceIdNil
+
+`func (o *GxpFacilitiesRow) SetOrgOlawAssuranceIdNil(b bool)`
+
+ SetOrgOlawAssuranceIdNil sets the value for OrgOlawAssuranceId to be an explicit nil
+
+### UnsetOrgOlawAssuranceId
+`func (o *GxpFacilitiesRow) UnsetOrgOlawAssuranceId()`
+
+UnsetOrgOlawAssuranceId ensures that no value is present for OrgOlawAssuranceId, not even an explicit nil
+### GetOrgOlawAssuranceStatus
+
+`func (o *GxpFacilitiesRow) GetOrgOlawAssuranceStatus() string`
+
+GetOrgOlawAssuranceStatus returns the OrgOlawAssuranceStatus field if non-nil, zero value otherwise.
+
+### GetOrgOlawAssuranceStatusOk
+
+`func (o *GxpFacilitiesRow) GetOrgOlawAssuranceStatusOk() (*string, bool)`
+
+GetOrgOlawAssuranceStatusOk returns a tuple with the OrgOlawAssuranceStatus field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOrgOlawAssuranceStatus
+
+`func (o *GxpFacilitiesRow) SetOrgOlawAssuranceStatus(v string)`
+
+SetOrgOlawAssuranceStatus sets OrgOlawAssuranceStatus field to given value.
+
+### HasOrgOlawAssuranceStatus
+
+`func (o *GxpFacilitiesRow) HasOrgOlawAssuranceStatus() bool`
+
+HasOrgOlawAssuranceStatus returns a boolean if a field has been set.
+
+### SetOrgOlawAssuranceStatusNil
+
+`func (o *GxpFacilitiesRow) SetOrgOlawAssuranceStatusNil(b bool)`
+
+ SetOrgOlawAssuranceStatusNil sets the value for OrgOlawAssuranceStatus to be an explicit nil
+
+### UnsetOrgOlawAssuranceStatus
+`func (o *GxpFacilitiesRow) UnsetOrgOlawAssuranceStatus()`
+
+UnsetOrgOlawAssuranceStatus ensures that no value is present for OrgOlawAssuranceStatus, not even an explicit nil
+### GetOrgOlawMatchTier
+
+`func (o *GxpFacilitiesRow) GetOrgOlawMatchTier() string`
+
+GetOrgOlawMatchTier returns the OrgOlawMatchTier field if non-nil, zero value otherwise.
+
+### GetOrgOlawMatchTierOk
+
+`func (o *GxpFacilitiesRow) GetOrgOlawMatchTierOk() (*string, bool)`
+
+GetOrgOlawMatchTierOk returns a tuple with the OrgOlawMatchTier field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOrgOlawMatchTier
+
+`func (o *GxpFacilitiesRow) SetOrgOlawMatchTier(v string)`
+
+SetOrgOlawMatchTier sets OrgOlawMatchTier field to given value.
+
+### HasOrgOlawMatchTier
+
+`func (o *GxpFacilitiesRow) HasOrgOlawMatchTier() bool`
+
+HasOrgOlawMatchTier returns a boolean if a field has been set.
+
+### SetOrgOlawMatchTierNil
+
+`func (o *GxpFacilitiesRow) SetOrgOlawMatchTierNil(b bool)`
+
+ SetOrgOlawMatchTierNil sets the value for OrgOlawMatchTier to be an explicit nil
+
+### UnsetOrgOlawMatchTier
+`func (o *GxpFacilitiesRow) UnsetOrgOlawMatchTier()`
+
+UnsetOrgOlawMatchTier ensures that no value is present for OrgOlawMatchTier, not even an explicit nil
+### GetOrgOlawSourceAsof
+
+`func (o *GxpFacilitiesRow) GetOrgOlawSourceAsof() time.Time`
+
+GetOrgOlawSourceAsof returns the OrgOlawSourceAsof field if non-nil, zero value otherwise.
+
+### GetOrgOlawSourceAsofOk
+
+`func (o *GxpFacilitiesRow) GetOrgOlawSourceAsofOk() (*time.Time, bool)`
+
+GetOrgOlawSourceAsofOk returns a tuple with the OrgOlawSourceAsof field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOrgOlawSourceAsof
+
+`func (o *GxpFacilitiesRow) SetOrgOlawSourceAsof(v time.Time)`
+
+SetOrgOlawSourceAsof sets OrgOlawSourceAsof field to given value.
+
+### HasOrgOlawSourceAsof
+
+`func (o *GxpFacilitiesRow) HasOrgOlawSourceAsof() bool`
+
+HasOrgOlawSourceAsof returns a boolean if a field has been set.
+
+### SetOrgOlawSourceAsofNil
+
+`func (o *GxpFacilitiesRow) SetOrgOlawSourceAsofNil(b bool)`
+
+ SetOrgOlawSourceAsofNil sets the value for OrgOlawSourceAsof to be an explicit nil
+
+### UnsetOrgOlawSourceAsof
+`func (o *GxpFacilitiesRow) UnsetOrgOlawSourceAsof()`
+
+UnsetOrgOlawSourceAsof ensures that no value is present for OrgOlawSourceAsof, not even an explicit nil
+### GetHasOrgOlawAssurance
+
+`func (o *GxpFacilitiesRow) GetHasOrgOlawAssurance() bool`
+
+GetHasOrgOlawAssurance returns the HasOrgOlawAssurance field if non-nil, zero value otherwise.
+
+### GetHasOrgOlawAssuranceOk
+
+`func (o *GxpFacilitiesRow) GetHasOrgOlawAssuranceOk() (*bool, bool)`
+
+GetHasOrgOlawAssuranceOk returns a tuple with the HasOrgOlawAssurance field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHasOrgOlawAssurance
+
+`func (o *GxpFacilitiesRow) SetHasOrgOlawAssurance(v bool)`
+
+SetHasOrgOlawAssurance sets HasOrgOlawAssurance field to given value.
+
+### HasHasOrgOlawAssurance
+
+`func (o *GxpFacilitiesRow) HasHasOrgOlawAssurance() bool`
+
+HasHasOrgOlawAssurance returns a boolean if a field has been set.
+
+### SetHasOrgOlawAssuranceNil
+
+`func (o *GxpFacilitiesRow) SetHasOrgOlawAssuranceNil(b bool)`
+
+ SetHasOrgOlawAssuranceNil sets the value for HasOrgOlawAssurance to be an explicit nil
+
+### UnsetHasOrgOlawAssurance
+`func (o *GxpFacilitiesRow) UnsetHasOrgOlawAssurance()`
+
+UnsetHasOrgOlawAssurance ensures that no value is present for HasOrgOlawAssurance, not even an explicit nil
 ### GetNGmpCertificates
 
 `func (o *GxpFacilitiesRow) GetNGmpCertificates() int32`

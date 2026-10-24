@@ -77,6 +77,8 @@ type SuppliersRow struct {
 	SupplierGroupName NullableString `json:"supplier_group_name,omitempty"`
 	// How the supplier was linked to its organization record, so a caller can apply a confidence floor. The supplier pages on organization pages show only provider_ror_exact, provider_edgar_exact and supplier_curated.
 	OrgLinkMethod NullableString `json:"org_link_method,omitempty"`
+	// The NIH Office of Laboratory Animal Welfare (OLAW) Public Health Service Animal Welfare Assurance id the supplier page badges (#5286). Set only when the supplier is linked to its organization with confidence (provider_ror_exact, provider_edgar_exact or supplier_curated) and the OLAW institution matched that organization at a high or medium tier, the same rule as the page. Null means no badge, never 'not assured': OLAW's list is matched to the organizations we hold, and most institutions do not resolve. Full detail, with the raw status code, is the animal_welfare_assurances dataset.
+	PhsAnimalWelfareAssuranceId NullableString `json:"phs_animal_welfare_assurance_id,omitempty"`
 	// True when the supplier has a public page on the web (every row of this dataset does).
 	HasPublicPage NullableBool `json:"has_public_page,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -1310,6 +1312,48 @@ func (o *SuppliersRow) UnsetOrgLinkMethod() {
 	o.OrgLinkMethod.Unset()
 }
 
+// GetPhsAnimalWelfareAssuranceId returns the PhsAnimalWelfareAssuranceId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *SuppliersRow) GetPhsAnimalWelfareAssuranceId() string {
+	if o == nil || IsNil(o.PhsAnimalWelfareAssuranceId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.PhsAnimalWelfareAssuranceId.Get()
+}
+
+// GetPhsAnimalWelfareAssuranceIdOk returns a tuple with the PhsAnimalWelfareAssuranceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *SuppliersRow) GetPhsAnimalWelfareAssuranceIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PhsAnimalWelfareAssuranceId.Get(), o.PhsAnimalWelfareAssuranceId.IsSet()
+}
+
+// HasPhsAnimalWelfareAssuranceId returns a boolean if a field has been set.
+func (o *SuppliersRow) HasPhsAnimalWelfareAssuranceId() bool {
+	if o != nil && o.PhsAnimalWelfareAssuranceId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPhsAnimalWelfareAssuranceId gets a reference to the given NullableString and assigns it to the PhsAnimalWelfareAssuranceId field.
+func (o *SuppliersRow) SetPhsAnimalWelfareAssuranceId(v string) {
+	o.PhsAnimalWelfareAssuranceId.Set(&v)
+}
+// SetPhsAnimalWelfareAssuranceIdNil sets the value for PhsAnimalWelfareAssuranceId to be an explicit nil
+func (o *SuppliersRow) SetPhsAnimalWelfareAssuranceIdNil() {
+	o.PhsAnimalWelfareAssuranceId.Set(nil)
+}
+
+// UnsetPhsAnimalWelfareAssuranceId ensures that no value is present for PhsAnimalWelfareAssuranceId, not even an explicit nil
+func (o *SuppliersRow) UnsetPhsAnimalWelfareAssuranceId() {
+	o.PhsAnimalWelfareAssuranceId.Unset()
+}
+
 // GetHasPublicPage returns the HasPublicPage field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *SuppliersRow) GetHasPublicPage() bool {
 	if o == nil || IsNil(o.HasPublicPage.Get()) {
@@ -1449,6 +1493,9 @@ func (o SuppliersRow) ToMap() (map[string]interface{}, error) {
 	if o.OrgLinkMethod.IsSet() {
 		toSerialize["org_link_method"] = o.OrgLinkMethod.Get()
 	}
+	if o.PhsAnimalWelfareAssuranceId.IsSet() {
+		toSerialize["phs_animal_welfare_assurance_id"] = o.PhsAnimalWelfareAssuranceId.Get()
+	}
 	if o.HasPublicPage.IsSet() {
 		toSerialize["has_public_page"] = o.HasPublicPage.Get()
 	}
@@ -1503,6 +1550,7 @@ func (o *SuppliersRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "supplier_group_id")
 		delete(additionalProperties, "supplier_group_name")
 		delete(additionalProperties, "org_link_method")
+		delete(additionalProperties, "phs_animal_welfare_assurance_id")
 		delete(additionalProperties, "has_public_page")
 		o.AdditionalProperties = additionalProperties
 	}

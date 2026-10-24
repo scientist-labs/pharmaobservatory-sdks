@@ -4,15 +4,17 @@ All URIs are relative to *https://pharmaobservatory.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**LegalEntitiesAnimalWelfareAssurances**](LegalEntitiesAPI.md#LegalEntitiesAnimalWelfareAssurances) | **Get** /api/v1/legal_entities/{id}/animal_welfare_assurances | Animal welfare assurances
 [**LegalEntitiesCatalysts**](LegalEntitiesAPI.md#LegalEntitiesCatalysts) | **Get** /api/v1/legal_entities/{id}/catalysts | Catalysts: trial readouts, patent cliffs, FDA decision dates and press-release events
 [**LegalEntitiesCliaCertificates**](LegalEntitiesAPI.md#LegalEntitiesCliaCertificates) | **Get** /api/v1/legal_entities/{id}/clia_certificates | CLIA laboratory certificates
 [**LegalEntitiesCompanyAssets**](LegalEntitiesAPI.md#LegalEntitiesCompanyAssets) | **Get** /api/v1/legal_entities/{id}/company_assets | Company assets (approved and marketed drugs)
 [**LegalEntitiesCompanyBiomarkerCapability**](LegalEntitiesAPI.md#LegalEntitiesCompanyBiomarkerCapability) | **Get** /api/v1/legal_entities/{id}/company_biomarker_capability | Company biomarker capability
+[**LegalEntitiesCompanyFinancials**](LegalEntitiesAPI.md#LegalEntitiesCompanyFinancials) | **Get** /api/v1/legal_entities/{id}/company_financials | Company SEC financials
 [**LegalEntitiesCompanyPrograms**](LegalEntitiesAPI.md#LegalEntitiesCompanyPrograms) | **Get** /api/v1/legal_entities/{id}/company_programs | Company programs
 [**LegalEntitiesCompanyRareDiseaseDeclarations**](LegalEntitiesAPI.md#LegalEntitiesCompanyRareDiseaseDeclarations) | **Get** /api/v1/legal_entities/{id}/company_rare_disease_declarations | Organization-wide rare disease declarations
 [**LegalEntitiesDebarments**](LegalEntitiesAPI.md#LegalEntitiesDebarments) | **Get** /api/v1/legal_entities/{id}/debarments | FDA firm debarments
 [**LegalEntitiesDrugPatentCliff**](LegalEntitiesAPI.md#LegalEntitiesDrugPatentCliff) | **Get** /api/v1/legal_entities/{id}/drug_patent_cliff | Patent-cliff exposure
-[**LegalEntitiesEnforcementEvents**](LegalEntitiesAPI.md#LegalEntitiesEnforcementEvents) | **Get** /api/v1/legal_entities/{id}/enforcement_events | FDA enforcement events
+[**LegalEntitiesEnforcementEvents**](LegalEntitiesAPI.md#LegalEntitiesEnforcementEvents) | **Get** /api/v1/legal_entities/{id}/enforcement_events | Regulatory enforcement events
 [**LegalEntitiesGet**](LegalEntitiesAPI.md#LegalEntitiesGet) | **Get** /api/v1/legal_entities/{id} | One legal entity
 [**LegalEntitiesGxpFacilities**](LegalEntitiesAPI.md#LegalEntitiesGxpFacilities) | **Get** /api/v1/legal_entities/{id}/gxp_facilities | GxP facilities and quality signals
 [**LegalEntitiesImportRefusals**](LegalEntitiesAPI.md#LegalEntitiesImportRefusals) | **Get** /api/v1/legal_entities/{id}/import_refusals | FDA import refusals
@@ -25,6 +27,7 @@ Method | HTTP request | Description
 [**LegalEntitiesOrgDisclosureTrend**](LegalEntitiesAPI.md#LegalEntitiesOrgDisclosureTrend) | **Get** /api/v1/legal_entities/{id}/org_disclosure_trend | Organization disclosure trend
 [**LegalEntitiesOrgDisclosures**](LegalEntitiesAPI.md#LegalEntitiesOrgDisclosures) | **Get** /api/v1/legal_entities/{id}/org_disclosures | Organization disclosures (climate and diversity)
 [**LegalEntitiesOrgRelationships**](LegalEntitiesAPI.md#LegalEntitiesOrgRelationships) | **Get** /api/v1/legal_entities/{id}/org_relationships | Organization relationships
+[**LegalEntitiesOwnershipObservations**](LegalEntitiesAPI.md#LegalEntitiesOwnershipObservations) | **Get** /api/v1/legal_entities/{id}/ownership_observations | Ownership and control observations (history)
 [**LegalEntitiesOwnershipPercentages**](LegalEntitiesAPI.md#LegalEntitiesOwnershipPercentages) | **Get** /api/v1/legal_entities/{id}/ownership_percentages | Ownership percentages
 [**LegalEntitiesOwnershipPositions**](LegalEntitiesAPI.md#LegalEntitiesOwnershipPositions) | **Get** /api/v1/legal_entities/{id}/ownership_positions | Ownership and control positions
 [**LegalEntitiesOwnershipSourceCoverage**](LegalEntitiesAPI.md#LegalEntitiesOwnershipSourceCoverage) | **Get** /api/v1/legal_entities/{id}/ownership_source_coverage | Ownership source coverage
@@ -46,6 +49,84 @@ Method | HTTP request | Description
 [**LegalEntitiesUntitledLetters**](LegalEntitiesAPI.md#LegalEntitiesUntitledLetters) | **Get** /api/v1/legal_entities/{id}/untitled_letters | FDA untitled letters
 [**LegalEntitiesWarningLetters**](LegalEntitiesAPI.md#LegalEntitiesWarningLetters) | **Get** /api/v1/legal_entities/{id}/warning_letters | FDA warning letters
 
+
+
+## LegalEntitiesAnimalWelfareAssurances
+
+> AnimalWelfareAssurancesResponse LegalEntitiesAnimalWelfareAssurances(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+
+Animal welfare assurances
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "edgar:0001114448" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesAnimalWelfareAssurances(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `LegalEntitiesAPI.LegalEntitiesAnimalWelfareAssurances``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `LegalEntitiesAnimalWelfareAssurances`: AnimalWelfareAssurancesResponse
+	fmt.Fprintf(os.Stdout, "Response from `LegalEntitiesAPI.LegalEntitiesAnimalWelfareAssurances`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiLegalEntitiesAnimalWelfareAssurancesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+
+### Return type
+
+[**AnimalWelfareAssurancesResponse**](AnimalWelfareAssurancesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## LegalEntitiesCatalysts
@@ -345,6 +426,84 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**CompanyBiomarkerCapabilityResponse**](CompanyBiomarkerCapabilityResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## LegalEntitiesCompanyFinancials
+
+> CompanyFinancialsResponse LegalEntitiesCompanyFinancials(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+
+Company SEC financials
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "edgar:0001114448" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesCompanyFinancials(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `LegalEntitiesAPI.LegalEntitiesCompanyFinancials``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `LegalEntitiesCompanyFinancials`: CompanyFinancialsResponse
+	fmt.Fprintf(os.Stdout, "Response from `LegalEntitiesAPI.LegalEntitiesCompanyFinancials`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiLegalEntitiesCompanyFinancialsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+
+### Return type
+
+[**CompanyFinancialsResponse**](CompanyFinancialsResponse.md)
 
 ### Authorization
 
@@ -676,7 +835,7 @@ Name | Type | Description  | Notes
 
 > EnforcementEventsResponse LegalEntitiesEnforcementEvents(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 
-FDA enforcement events
+Regulatory enforcement events
 
 ### Example
 
@@ -1655,6 +1814,84 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**OrgRelationshipsResponse**](OrgRelationshipsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## LegalEntitiesOwnershipObservations
+
+> OwnershipObservationsResponse LegalEntitiesOwnershipObservations(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+
+Ownership and control observations (history)
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "edgar:0001114448" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesOwnershipObservations(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `LegalEntitiesAPI.LegalEntitiesOwnershipObservations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `LegalEntitiesOwnershipObservations`: OwnershipObservationsResponse
+	fmt.Fprintf(os.Stdout, "Response from `LegalEntitiesAPI.LegalEntitiesOwnershipObservations`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiLegalEntitiesOwnershipObservationsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+
+### Return type
+
+[**OwnershipObservationsResponse**](OwnershipObservationsResponse.md)
 
 ### Authorization
 

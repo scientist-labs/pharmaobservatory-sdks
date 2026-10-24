@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **Grain** | Pointer to **string** |  | [optional] 
 **ObjectType** | Pointer to **NullableString** |  | [optional] 
 **Id** | Pointer to **NullableString** |  | [optional] 
-**Scope** | Pointer to [**NullableBiomarkerAssayEvidenceResponseScope**](BiomarkerAssayEvidenceResponseScope.md) |  | [optional] 
+**Scope** | Pointer to [**NullableAnimalWelfareAssurancesResponseScope**](AnimalWelfareAssurancesResponseScope.md) |  | [optional] 
 **Columns** | [**[]DatasetColumn**](DatasetColumn.md) |  | 
 **Rows** | [**[]InspectionsRow**](InspectionsRow.md) |  | 
 **Total** | Pointer to **NullableInt32** | The exact count of the filtered rows on an ungrouped read, carried by the cursor; null when grouped. | [optional] 
@@ -21,8 +21,8 @@ Name | Type | Description | Notes
 **SourceCredit** | Pointer to **string** |  | [optional] 
 **WithheldTiers** | Pointer to **[]string** |  | [optional] 
 **WithheldColumns** | Pointer to **[]string** |  | [optional] 
-**Freshness** | Pointer to [**BiomarkerAssayEvidenceResponseFreshness**](BiomarkerAssayEvidenceResponseFreshness.md) |  | [optional] 
-**Build** | Pointer to [**BiomarkerAssayEvidenceResponseBuild**](BiomarkerAssayEvidenceResponseBuild.md) |  | [optional] 
+**Freshness** | Pointer to [**AnimalWelfareAssurancesResponseFreshness**](AnimalWelfareAssurancesResponseFreshness.md) |  | [optional] 
+**Build** | Pointer to [**AnimalWelfareAssurancesResponseBuild**](AnimalWelfareAssurancesResponseBuild.md) |  | [optional] 
 **BuildState** | Pointer to [**DatasetBuildState**](DatasetBuildState.md) |  | [optional] 
 **Restriction** | Pointer to **map[string]interface{}** |  | [optional] 
 
@@ -162,20 +162,20 @@ HasId returns a boolean if a field has been set.
 UnsetId ensures that no value is present for Id, not even an explicit nil
 ### GetScope
 
-`func (o *InspectionsResponse) GetScope() BiomarkerAssayEvidenceResponseScope`
+`func (o *InspectionsResponse) GetScope() AnimalWelfareAssurancesResponseScope`
 
 GetScope returns the Scope field if non-nil, zero value otherwise.
 
 ### GetScopeOk
 
-`func (o *InspectionsResponse) GetScopeOk() (*BiomarkerAssayEvidenceResponseScope, bool)`
+`func (o *InspectionsResponse) GetScopeOk() (*AnimalWelfareAssurancesResponseScope, bool)`
 
 GetScopeOk returns a tuple with the Scope field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetScope
 
-`func (o *InspectionsResponse) SetScope(v BiomarkerAssayEvidenceResponseScope)`
+`func (o *InspectionsResponse) SetScope(v AnimalWelfareAssurancesResponseScope)`
 
 SetScope sets Scope field to given value.
 
@@ -507,20 +507,20 @@ HasWithheldColumns returns a boolean if a field has been set.
 
 ### GetFreshness
 
-`func (o *InspectionsResponse) GetFreshness() BiomarkerAssayEvidenceResponseFreshness`
+`func (o *InspectionsResponse) GetFreshness() AnimalWelfareAssurancesResponseFreshness`
 
 GetFreshness returns the Freshness field if non-nil, zero value otherwise.
 
 ### GetFreshnessOk
 
-`func (o *InspectionsResponse) GetFreshnessOk() (*BiomarkerAssayEvidenceResponseFreshness, bool)`
+`func (o *InspectionsResponse) GetFreshnessOk() (*AnimalWelfareAssurancesResponseFreshness, bool)`
 
 GetFreshnessOk returns a tuple with the Freshness field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFreshness
 
-`func (o *InspectionsResponse) SetFreshness(v BiomarkerAssayEvidenceResponseFreshness)`
+`func (o *InspectionsResponse) SetFreshness(v AnimalWelfareAssurancesResponseFreshness)`
 
 SetFreshness sets Freshness field to given value.
 
@@ -532,20 +532,20 @@ HasFreshness returns a boolean if a field has been set.
 
 ### GetBuild
 
-`func (o *InspectionsResponse) GetBuild() BiomarkerAssayEvidenceResponseBuild`
+`func (o *InspectionsResponse) GetBuild() AnimalWelfareAssurancesResponseBuild`
 
 GetBuild returns the Build field if non-nil, zero value otherwise.
 
 ### GetBuildOk
 
-`func (o *InspectionsResponse) GetBuildOk() (*BiomarkerAssayEvidenceResponseBuild, bool)`
+`func (o *InspectionsResponse) GetBuildOk() (*AnimalWelfareAssurancesResponseBuild, bool)`
 
 GetBuildOk returns a tuple with the Build field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBuild
 
-`func (o *InspectionsResponse) SetBuild(v BiomarkerAssayEvidenceResponseBuild)`
+`func (o *InspectionsResponse) SetBuild(v AnimalWelfareAssurancesResponseBuild)`
 
 SetBuild sets Build field to given value.
 

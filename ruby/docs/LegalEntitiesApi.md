@@ -4,15 +4,17 @@ All URIs are relative to *https://pharmaobservatory.com*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
+| [**legal_entities_animal_welfare_assurances**](LegalEntitiesApi.md#legal_entities_animal_welfare_assurances) | **GET** /api/v1/legal_entities/{id}/animal_welfare_assurances | Animal welfare assurances |
 | [**legal_entities_catalysts**](LegalEntitiesApi.md#legal_entities_catalysts) | **GET** /api/v1/legal_entities/{id}/catalysts | Catalysts: trial readouts, patent cliffs, FDA decision dates and press-release events |
 | [**legal_entities_clia_certificates**](LegalEntitiesApi.md#legal_entities_clia_certificates) | **GET** /api/v1/legal_entities/{id}/clia_certificates | CLIA laboratory certificates |
 | [**legal_entities_company_assets**](LegalEntitiesApi.md#legal_entities_company_assets) | **GET** /api/v1/legal_entities/{id}/company_assets | Company assets (approved and marketed drugs) |
 | [**legal_entities_company_biomarker_capability**](LegalEntitiesApi.md#legal_entities_company_biomarker_capability) | **GET** /api/v1/legal_entities/{id}/company_biomarker_capability | Company biomarker capability |
+| [**legal_entities_company_financials**](LegalEntitiesApi.md#legal_entities_company_financials) | **GET** /api/v1/legal_entities/{id}/company_financials | Company SEC financials |
 | [**legal_entities_company_programs**](LegalEntitiesApi.md#legal_entities_company_programs) | **GET** /api/v1/legal_entities/{id}/company_programs | Company programs |
 | [**legal_entities_company_rare_disease_declarations**](LegalEntitiesApi.md#legal_entities_company_rare_disease_declarations) | **GET** /api/v1/legal_entities/{id}/company_rare_disease_declarations | Organization-wide rare disease declarations |
 | [**legal_entities_debarments**](LegalEntitiesApi.md#legal_entities_debarments) | **GET** /api/v1/legal_entities/{id}/debarments | FDA firm debarments |
 | [**legal_entities_drug_patent_cliff**](LegalEntitiesApi.md#legal_entities_drug_patent_cliff) | **GET** /api/v1/legal_entities/{id}/drug_patent_cliff | Patent-cliff exposure |
-| [**legal_entities_enforcement_events**](LegalEntitiesApi.md#legal_entities_enforcement_events) | **GET** /api/v1/legal_entities/{id}/enforcement_events | FDA enforcement events |
+| [**legal_entities_enforcement_events**](LegalEntitiesApi.md#legal_entities_enforcement_events) | **GET** /api/v1/legal_entities/{id}/enforcement_events | Regulatory enforcement events |
 | [**legal_entities_get**](LegalEntitiesApi.md#legal_entities_get) | **GET** /api/v1/legal_entities/{id} | One legal entity |
 | [**legal_entities_gxp_facilities**](LegalEntitiesApi.md#legal_entities_gxp_facilities) | **GET** /api/v1/legal_entities/{id}/gxp_facilities | GxP facilities and quality signals |
 | [**legal_entities_import_refusals**](LegalEntitiesApi.md#legal_entities_import_refusals) | **GET** /api/v1/legal_entities/{id}/import_refusals | FDA import refusals |
@@ -25,6 +27,7 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**legal_entities_org_disclosure_trend**](LegalEntitiesApi.md#legal_entities_org_disclosure_trend) | **GET** /api/v1/legal_entities/{id}/org_disclosure_trend | Organization disclosure trend |
 | [**legal_entities_org_disclosures**](LegalEntitiesApi.md#legal_entities_org_disclosures) | **GET** /api/v1/legal_entities/{id}/org_disclosures | Organization disclosures (climate and diversity) |
 | [**legal_entities_org_relationships**](LegalEntitiesApi.md#legal_entities_org_relationships) | **GET** /api/v1/legal_entities/{id}/org_relationships | Organization relationships |
+| [**legal_entities_ownership_observations**](LegalEntitiesApi.md#legal_entities_ownership_observations) | **GET** /api/v1/legal_entities/{id}/ownership_observations | Ownership and control observations (history) |
 | [**legal_entities_ownership_percentages**](LegalEntitiesApi.md#legal_entities_ownership_percentages) | **GET** /api/v1/legal_entities/{id}/ownership_percentages | Ownership percentages |
 | [**legal_entities_ownership_positions**](LegalEntitiesApi.md#legal_entities_ownership_positions) | **GET** /api/v1/legal_entities/{id}/ownership_positions | Ownership and control positions |
 | [**legal_entities_ownership_source_coverage**](LegalEntitiesApi.md#legal_entities_ownership_source_coverage) | **GET** /api/v1/legal_entities/{id}/ownership_source_coverage | Ownership source coverage |
@@ -45,6 +48,85 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**legal_entities_unmatched_product_revenue**](LegalEntitiesApi.md#legal_entities_unmatched_product_revenue) | **GET** /api/v1/legal_entities/{id}/unmatched_product_revenue | Unmatched product revenue |
 | [**legal_entities_untitled_letters**](LegalEntitiesApi.md#legal_entities_untitled_letters) | **GET** /api/v1/legal_entities/{id}/untitled_letters | FDA untitled letters |
 | [**legal_entities_warning_letters**](LegalEntitiesApi.md#legal_entities_warning_letters) | **GET** /api/v1/legal_entities/{id}/warning_letters | FDA warning letters |
+
+
+## legal_entities_animal_welfare_assurances
+
+> <AnimalWelfareAssurancesResponse> legal_entities_animal_welfare_assurances(id, opts)
+
+Animal welfare assurances
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::LegalEntitiesApi.new
+id = 'edgar:0001114448' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Animal welfare assurances
+  result = api_instance.legal_entities_animal_welfare_assurances(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_animal_welfare_assurances: #{e}"
+end
+```
+
+#### Using the legal_entities_animal_welfare_assurances_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<AnimalWelfareAssurancesResponse>, Integer, Hash)> legal_entities_animal_welfare_assurances_with_http_info(id, opts)
+
+```ruby
+begin
+  # Animal welfare assurances
+  data, status_code, headers = api_instance.legal_entities_animal_welfare_assurances_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <AnimalWelfareAssurancesResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_animal_welfare_assurances_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**AnimalWelfareAssurancesResponse**](AnimalWelfareAssurancesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 
 ## legal_entities_catalysts
@@ -352,6 +434,85 @@ end
 ### Return type
 
 [**CompanyBiomarkerCapabilityResponse**](CompanyBiomarkerCapabilityResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## legal_entities_company_financials
+
+> <CompanyFinancialsResponse> legal_entities_company_financials(id, opts)
+
+Company SEC financials
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::LegalEntitiesApi.new
+id = 'edgar:0001114448' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Company SEC financials
+  result = api_instance.legal_entities_company_financials(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_company_financials: #{e}"
+end
+```
+
+#### Using the legal_entities_company_financials_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<CompanyFinancialsResponse>, Integer, Hash)> legal_entities_company_financials_with_http_info(id, opts)
+
+```ruby
+begin
+  # Company SEC financials
+  data, status_code, headers = api_instance.legal_entities_company_financials_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <CompanyFinancialsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_company_financials_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**CompanyFinancialsResponse**](CompanyFinancialsResponse.md)
 
 ### Authorization
 
@@ -683,7 +844,7 @@ end
 
 > <EnforcementEventsResponse> legal_entities_enforcement_events(id, opts)
 
-FDA enforcement events
+Regulatory enforcement events
 
 ### Examples
 
@@ -707,7 +868,7 @@ opts = {
 }
 
 begin
-  # FDA enforcement events
+  # Regulatory enforcement events
   result = api_instance.legal_entities_enforcement_events(id, opts)
   p result
 rescue PharmaObservatory::ApiError => e
@@ -723,7 +884,7 @@ This returns an Array which contains the response data, status code and headers.
 
 ```ruby
 begin
-  # FDA enforcement events
+  # Regulatory enforcement events
   data, status_code, headers = api_instance.legal_entities_enforcement_events_with_http_info(id, opts)
   p status_code # => 2xx
   p headers # => { ... }
@@ -1681,6 +1842,85 @@ end
 ### Return type
 
 [**OrgRelationshipsResponse**](OrgRelationshipsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## legal_entities_ownership_observations
+
+> <OwnershipObservationsResponse> legal_entities_ownership_observations(id, opts)
+
+Ownership and control observations (history)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::LegalEntitiesApi.new
+id = 'edgar:0001114448' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Ownership and control observations (history)
+  result = api_instance.legal_entities_ownership_observations(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_ownership_observations: #{e}"
+end
+```
+
+#### Using the legal_entities_ownership_observations_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<OwnershipObservationsResponse>, Integer, Hash)> legal_entities_ownership_observations_with_http_info(id, opts)
+
+```ruby
+begin
+  # Ownership and control observations (history)
+  data, status_code, headers = api_instance.legal_entities_ownership_observations_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <OwnershipObservationsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_ownership_observations_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**OwnershipObservationsResponse**](OwnershipObservationsResponse.md)
 
 ### Authorization
 

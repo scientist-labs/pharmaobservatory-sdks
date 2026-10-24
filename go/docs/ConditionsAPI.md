@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**ConditionsConditionBurden**](ConditionsAPI.md#ConditionsConditionBurden) | **Get** /api/v1/conditions/{id}/condition_burden | Condition burden
 [**ConditionsConditionDelivery**](ConditionsAPI.md#ConditionsConditionDelivery) | **Get** /api/v1/conditions/{id}/condition_delivery | Condition delivery
 [**ConditionsConditionDrugs**](ConditionsAPI.md#ConditionsConditionDrugs) | **Get** /api/v1/conditions/{id}/condition_drugs | Condition drugs
+[**ConditionsConditionInvestigatorOrganizations**](ConditionsAPI.md#ConditionsConditionInvestigatorOrganizations) | **Get** /api/v1/conditions/{id}/condition_investigator_organizations | Organizations of a condition&#39;s investigators
 [**ConditionsConditionPrevalence**](ConditionsAPI.md#ConditionsConditionPrevalence) | **Get** /api/v1/conditions/{id}/condition_prevalence | Condition prevalence
 [**ConditionsConditionPublications**](ConditionsAPI.md#ConditionsConditionPublications) | **Get** /api/v1/conditions/{id}/condition_publications | Condition publications
 [**ConditionsConditionRecruitmentByPhase**](ConditionsAPI.md#ConditionsConditionRecruitmentByPhase) | **Get** /api/v1/conditions/{id}/condition_recruitment_by_phase | Trial recruitment duration by condition and phase
@@ -17,6 +18,7 @@ Method | HTTP request | Description
 [**ConditionsConditionTrialStartForecast**](ConditionsAPI.md#ConditionsConditionTrialStartForecast) | **Get** /api/v1/conditions/{id}/condition_trial_start_forecast | Trial-start forecast by condition
 [**ConditionsConditionTrials**](ConditionsAPI.md#ConditionsConditionTrials) | **Get** /api/v1/conditions/{id}/condition_trials | Condition trials
 [**ConditionsGet**](ConditionsAPI.md#ConditionsGet) | **Get** /api/v1/conditions/{id} | One condition
+[**ConditionsInvestigatorConditions**](ConditionsAPI.md#ConditionsInvestigatorConditions) | **Get** /api/v1/conditions/{id}/investigator_conditions | Investigator conditions
 [**ConditionsList**](ConditionsAPI.md#ConditionsList) | **Get** /api/v1/conditions | List conditions
 [**ConditionsPdufaDates**](ConditionsAPI.md#ConditionsPdufaDates) | **Get** /api/v1/conditions/{id}/pdufa_dates | FDA decision dates (PDUFA) and catalysts
 [**ConditionsProgramLicensingCandidates**](ConditionsAPI.md#ConditionsProgramLicensingCandidates) | **Get** /api/v1/conditions/{id}/program_licensing_candidates | Program licensing candidates
@@ -401,6 +403,84 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ConditionDrugsResponse**](ConditionDrugsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ConditionsConditionInvestigatorOrganizations
+
+> ConditionInvestigatorOrganizationsResponse ConditionsConditionInvestigatorOrganizations(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+
+Organizations of a condition's investigators
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "D001523" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ConditionsAPI.ConditionsConditionInvestigatorOrganizations(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ConditionsAPI.ConditionsConditionInvestigatorOrganizations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ConditionsConditionInvestigatorOrganizations`: ConditionInvestigatorOrganizationsResponse
+	fmt.Fprintf(os.Stdout, "Response from `ConditionsAPI.ConditionsConditionInvestigatorOrganizations`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiConditionsConditionInvestigatorOrganizationsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+
+### Return type
+
+[**ConditionInvestigatorOrganizationsResponse**](ConditionInvestigatorOrganizationsResponse.md)
 
 ### Authorization
 
@@ -1015,6 +1095,84 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ConditionsRecord**](ConditionsRecord.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ConditionsInvestigatorConditions
+
+> InvestigatorConditionsResponse ConditionsInvestigatorConditions(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+
+Investigator conditions
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "D001523" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ConditionsAPI.ConditionsInvestigatorConditions(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ConditionsAPI.ConditionsInvestigatorConditions``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ConditionsInvestigatorConditions`: InvestigatorConditionsResponse
+	fmt.Fprintf(os.Stdout, "Response from `ConditionsAPI.ConditionsInvestigatorConditions`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiConditionsInvestigatorConditionsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+
+### Return type
+
+[**InvestigatorConditionsResponse**](InvestigatorConditionsResponse.md)
 
 ### Authorization
 

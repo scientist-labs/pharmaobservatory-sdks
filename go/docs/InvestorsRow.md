@@ -18,6 +18,9 @@ Name | Type | Description | Notes
 **TotalPrivateFundGav** | Pointer to **NullableFloat32** | The adviser&#39;s total private-fund gross asset value (GAV) in whole US dollars, a firm-level figure. | [optional] 
 **PortfolioCoCount** | Pointer to **NullableInt64** | Distinct portfolio companies named against the investor in S-1 and 424B offering holder tables. 0 usually means no named-holder link was observed. | [optional] 
 **HoldingsPositionCount** | Pointer to **NullableInt64** | Current Form 13F positions reported by the managers that resolve to this investor, summed over its manager keys. 0 when none resolves. | [optional] 
+**WebsiteUrl** | Pointer to **NullableString** | The adviser&#39;s own website from Form ADV Schedule D Section 1.I (scheme and host lower-cased, path kept). Null for an agency and for an adviser whose only listed pages are social-media pages. | [optional] 
+**WebsiteDomain** | Pointer to **NullableString** | The host of website_url with the scheme, any port and a leading www stripped, lower-cased. It is never a social-media host. | [optional] 
+**WebsiteSource** | Pointer to **NullableString** | Where website_url came from: adv (SEC Form ADV Schedule D Section 1.I). Null exactly when website_url is null. | [optional] 
 **OrgId** | Pointer to **NullableString** | Legal-entity level: the investor&#39;s organization record where the link resolves (null otherwise). An advfirm:&lt;CRD&gt; shell resolves to no legal-entity record and no company. | [optional] 
 **CompanyId** | Pointer to **NullableString** | Company level: the investor&#39;s company (null when unresolved). | [optional] 
 **CompanyName** | Pointer to **NullableString** | Display name of the investor&#39;s company. | [optional] 
@@ -533,6 +536,111 @@ HasHoldingsPositionCount returns a boolean if a field has been set.
 `func (o *InvestorsRow) UnsetHoldingsPositionCount()`
 
 UnsetHoldingsPositionCount ensures that no value is present for HoldingsPositionCount, not even an explicit nil
+### GetWebsiteUrl
+
+`func (o *InvestorsRow) GetWebsiteUrl() string`
+
+GetWebsiteUrl returns the WebsiteUrl field if non-nil, zero value otherwise.
+
+### GetWebsiteUrlOk
+
+`func (o *InvestorsRow) GetWebsiteUrlOk() (*string, bool)`
+
+GetWebsiteUrlOk returns a tuple with the WebsiteUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWebsiteUrl
+
+`func (o *InvestorsRow) SetWebsiteUrl(v string)`
+
+SetWebsiteUrl sets WebsiteUrl field to given value.
+
+### HasWebsiteUrl
+
+`func (o *InvestorsRow) HasWebsiteUrl() bool`
+
+HasWebsiteUrl returns a boolean if a field has been set.
+
+### SetWebsiteUrlNil
+
+`func (o *InvestorsRow) SetWebsiteUrlNil(b bool)`
+
+ SetWebsiteUrlNil sets the value for WebsiteUrl to be an explicit nil
+
+### UnsetWebsiteUrl
+`func (o *InvestorsRow) UnsetWebsiteUrl()`
+
+UnsetWebsiteUrl ensures that no value is present for WebsiteUrl, not even an explicit nil
+### GetWebsiteDomain
+
+`func (o *InvestorsRow) GetWebsiteDomain() string`
+
+GetWebsiteDomain returns the WebsiteDomain field if non-nil, zero value otherwise.
+
+### GetWebsiteDomainOk
+
+`func (o *InvestorsRow) GetWebsiteDomainOk() (*string, bool)`
+
+GetWebsiteDomainOk returns a tuple with the WebsiteDomain field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWebsiteDomain
+
+`func (o *InvestorsRow) SetWebsiteDomain(v string)`
+
+SetWebsiteDomain sets WebsiteDomain field to given value.
+
+### HasWebsiteDomain
+
+`func (o *InvestorsRow) HasWebsiteDomain() bool`
+
+HasWebsiteDomain returns a boolean if a field has been set.
+
+### SetWebsiteDomainNil
+
+`func (o *InvestorsRow) SetWebsiteDomainNil(b bool)`
+
+ SetWebsiteDomainNil sets the value for WebsiteDomain to be an explicit nil
+
+### UnsetWebsiteDomain
+`func (o *InvestorsRow) UnsetWebsiteDomain()`
+
+UnsetWebsiteDomain ensures that no value is present for WebsiteDomain, not even an explicit nil
+### GetWebsiteSource
+
+`func (o *InvestorsRow) GetWebsiteSource() string`
+
+GetWebsiteSource returns the WebsiteSource field if non-nil, zero value otherwise.
+
+### GetWebsiteSourceOk
+
+`func (o *InvestorsRow) GetWebsiteSourceOk() (*string, bool)`
+
+GetWebsiteSourceOk returns a tuple with the WebsiteSource field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWebsiteSource
+
+`func (o *InvestorsRow) SetWebsiteSource(v string)`
+
+SetWebsiteSource sets WebsiteSource field to given value.
+
+### HasWebsiteSource
+
+`func (o *InvestorsRow) HasWebsiteSource() bool`
+
+HasWebsiteSource returns a boolean if a field has been set.
+
+### SetWebsiteSourceNil
+
+`func (o *InvestorsRow) SetWebsiteSourceNil(b bool)`
+
+ SetWebsiteSourceNil sets the value for WebsiteSource to be an explicit nil
+
+### UnsetWebsiteSource
+`func (o *InvestorsRow) UnsetWebsiteSource()`
+
+UnsetWebsiteSource ensures that no value is present for WebsiteSource, not even an explicit nil
 ### GetOrgId
 
 `func (o *InvestorsRow) GetOrgId() string`

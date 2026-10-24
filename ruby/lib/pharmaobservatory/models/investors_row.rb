@@ -58,6 +58,15 @@ module PharmaObservatory
     # Current Form 13F positions reported by the managers that resolve to this investor, summed over its manager keys. 0 when none resolves.
     attr_accessor :holdings_position_count
 
+    # The adviser's own website from Form ADV Schedule D Section 1.I (scheme and host lower-cased, path kept). Null for an agency and for an adviser whose only listed pages are social-media pages.
+    attr_accessor :website_url
+
+    # The host of website_url with the scheme, any port and a leading www stripped, lower-cased. It is never a social-media host.
+    attr_accessor :website_domain
+
+    # Where website_url came from: adv (SEC Form ADV Schedule D Section 1.I). Null exactly when website_url is null.
+    attr_accessor :website_source
+
     # Legal-entity level: the investor's organization record where the link resolves (null otherwise). An advfirm:<CRD> shell resolves to no legal-entity record and no company.
     attr_accessor :org_id
 
@@ -90,6 +99,9 @@ module PharmaObservatory
         :'total_private_fund_gav' => :'total_private_fund_gav',
         :'portfolio_co_count' => :'portfolio_co_count',
         :'holdings_position_count' => :'holdings_position_count',
+        :'website_url' => :'website_url',
+        :'website_domain' => :'website_domain',
+        :'website_source' => :'website_source',
         :'org_id' => :'org_id',
         :'company_id' => :'company_id',
         :'company_name' => :'company_name',
@@ -125,6 +137,9 @@ module PharmaObservatory
         :'total_private_fund_gav' => :'Float',
         :'portfolio_co_count' => :'Integer',
         :'holdings_position_count' => :'Integer',
+        :'website_url' => :'String',
+        :'website_domain' => :'String',
+        :'website_source' => :'String',
         :'org_id' => :'String',
         :'company_id' => :'String',
         :'company_name' => :'String',
@@ -150,6 +165,9 @@ module PharmaObservatory
         :'total_private_fund_gav',
         :'portfolio_co_count',
         :'holdings_position_count',
+        :'website_url',
+        :'website_domain',
+        :'website_source',
         :'org_id',
         :'company_id',
         :'company_name',
@@ -230,6 +248,18 @@ module PharmaObservatory
         self.holdings_position_count = attributes[:'holdings_position_count']
       end
 
+      if attributes.key?(:'website_url')
+        self.website_url = attributes[:'website_url']
+      end
+
+      if attributes.key?(:'website_domain')
+        self.website_domain = attributes[:'website_domain']
+      end
+
+      if attributes.key?(:'website_source')
+        self.website_source = attributes[:'website_source']
+      end
+
       if attributes.key?(:'org_id')
         self.org_id = attributes[:'org_id']
       end
@@ -285,6 +315,9 @@ module PharmaObservatory
           total_private_fund_gav == o.total_private_fund_gav &&
           portfolio_co_count == o.portfolio_co_count &&
           holdings_position_count == o.holdings_position_count &&
+          website_url == o.website_url &&
+          website_domain == o.website_domain &&
+          website_source == o.website_source &&
           org_id == o.org_id &&
           company_id == o.company_id &&
           company_name == o.company_name &&
@@ -301,7 +334,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [investor_id, legal_name, investor_type, source, country, raum_usd, raum_band, is_era, is_life_sciences_focused, is_life_sciences_focused_basis, private_fund_count, total_private_fund_gav, portfolio_co_count, holdings_position_count, org_id, company_id, company_name, group_id, group_name].hash
+      [investor_id, legal_name, investor_type, source, country, raum_usd, raum_band, is_era, is_life_sciences_focused, is_life_sciences_focused_basis, private_fund_count, total_private_fund_gav, portfolio_co_count, holdings_position_count, website_url, website_domain, website_source, org_id, company_id, company_name, group_id, group_name].hash
     end
 
     # Builds the object from hash

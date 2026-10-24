@@ -102,7 +102,7 @@ module PharmaObservatory
         :'grain' => :'String',
         :'object_type' => :'String',
         :'id' => :'String',
-        :'scope' => :'BiomarkerAssayEvidenceResponseScope',
+        :'scope' => :'AnimalWelfareAssurancesResponseScope',
         :'columns' => :'Array<DatasetColumn>',
         :'rows' => :'Array<TargetCrowdingRow>',
         :'total' => :'Integer',
@@ -115,8 +115,8 @@ module PharmaObservatory
         :'source_credit' => :'String',
         :'withheld_tiers' => :'Array<String>',
         :'withheld_columns' => :'Array<String>',
-        :'freshness' => :'BiomarkerAssayEvidenceResponseFreshness',
-        :'build' => :'BiomarkerAssayEvidenceResponseBuild',
+        :'freshness' => :'AnimalWelfareAssurancesResponseFreshness',
+        :'build' => :'AnimalWelfareAssurancesResponseBuild',
         :'build_state' => :'DatasetBuildState',
         :'restriction' => :'Hash<String, Object>'
       }

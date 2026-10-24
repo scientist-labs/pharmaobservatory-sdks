@@ -19,16 +19,16 @@ module PharmaObservatory
     # The event id: a hash of the lane and the lane's own key, unique across lanes.
     attr_accessor :event_id
 
-    # The lane the event came from: inspection_483 (an FDA inspection), import_refusal, warning_letter, untitled_letter, debarment or recall.
+    # The lane the event came from: inspection_483 (an FDA inspection), import_refusal, warning_letter, untitled_letter, debarment, recall or aphis_inspection (a USDA APHIS Animal Welfare Act inspection report).
     attr_accessor :source
 
     # The event date: the inspection date, refusal date, letter issue date (posted date when there is none), debarment effective date or recall initiation date.
     attr_accessor :event_date
 
-    # The regulatory domain of the event, derived from the lane's own classifier: drug, biologic, device, veterinary, food, cosmetic, tobacco or other.
+    # The regulatory domain of the event, derived from the lane's own classifier: drug, biologic, device, animal_research (the APHIS lane), veterinary, food, cosmetic, tobacco or other.
     attr_accessor :domain
 
-    # True when domain is drug, biologic or device.
+    # True when domain is drug, biologic or device. The APHIS lane is false here on purpose; the page's default view adds domain animal_research to this set.
     attr_accessor :is_biomedical
 
     # A one-line description: the inspection product type, the refused product, the letter subject, the debarment type or the recalled product.
@@ -61,6 +61,33 @@ module PharmaObservatory
     # True for a device event the biomedical view hides by default (a low-signal commodity class).
     attr_accessor :is_low_signal_device
 
+    # The APHIS report's verdict, the strongest citation kind on it: direct, critical, non_critical, no_citations or no_citations_no_animals; null for every FDA lane.
+    attr_accessor :awa_outcome
+
+    # The inspection type as printed on the APHIS report (for example ROUTINE INSPECTION); null for every FDA lane.
+    attr_accessor :awa_inspection_type
+
+    # Citations on the APHIS report; null for every FDA lane. Read with awa_species_scope.
+    attr_accessor :awa_n_citations
+
+    # Of the report's citations, those cited as direct; null for every FDA lane.
+    attr_accessor :awa_n_direct
+
+    # Of the report's citations, those cited as critical; null for every FDA lane.
+    attr_accessor :awa_n_critical
+
+    # Of the report's citations, those cited as non-critical; null for every FDA lane.
+    attr_accessor :awa_n_non_critical
+
+    # Of the report's citations, those it marks as repeats; null for every FDA lane.
+    attr_accessor :awa_n_repeat_citations
+
+    # The species the APHIS report printed with their animal counts, as \"Common name count; ...\" in the report's order; null on an FDA lane or a report that printed none.
+    attr_accessor :awa_species_summary
+
+    # The label AWA-covered species on every APHIS row; null for every FDA lane. The awa_* counts describe the species the Animal Welfare Act covers; read them with this label.
+    attr_accessor :awa_species_scope
+
     # The firm's name as filed with the regulator (the party named on the record, an individual for an individual debarment).
     attr_accessor :firm_name
 
@@ -82,7 +109,7 @@ module PharmaObservatory
     # How well the firm name was attached to an organization: high, medium or low name-and-geography matches, registry (the operating firm of a registered facility), ambiguous or unresolved.
     attr_accessor :match_tier
 
-    # The route that attached the firm: fei_bridge (the FDA establishment identifier bridge), fei_firm_mint or fei_firm_fold (the operating firm's registry record), firm_name_geo (name and geography), firm_name_only (name alone) or unresolved.
+    # The route that attached the firm: fei_bridge (the FDA establishment identifier bridge), fei_firm_mint or fei_firm_fold (the operating firm's registry record), aphis_bridge, aphis_firm_mint or aphis_firm_fold (the APHIS registrant certificate bridge and its operating-firm record), firm_name_geo (name and geography), firm_name_only (name alone) or unresolved.
     attr_accessor :org_resolution_method
 
     # True when the firm was attached to an organization. A false row is kept with null firm ids and the name as filed, so an empty read for a company is not proof of no enforcement history.
@@ -106,6 +133,15 @@ module PharmaObservatory
         :'device_class' => :'device_class',
         :'device_specialty' => :'device_specialty',
         :'is_low_signal_device' => :'is_low_signal_device',
+        :'awa_outcome' => :'awa_outcome',
+        :'awa_inspection_type' => :'awa_inspection_type',
+        :'awa_n_citations' => :'awa_n_citations',
+        :'awa_n_direct' => :'awa_n_direct',
+        :'awa_n_critical' => :'awa_n_critical',
+        :'awa_n_non_critical' => :'awa_n_non_critical',
+        :'awa_n_repeat_citations' => :'awa_n_repeat_citations',
+        :'awa_species_summary' => :'awa_species_summary',
+        :'awa_species_scope' => :'awa_species_scope',
         :'firm_name' => :'firm_name',
         :'firm_org_id' => :'firm_org_id',
         :'firm_company_id' => :'firm_company_id',
@@ -146,6 +182,15 @@ module PharmaObservatory
         :'device_class' => :'String',
         :'device_specialty' => :'String',
         :'is_low_signal_device' => :'Boolean',
+        :'awa_outcome' => :'String',
+        :'awa_inspection_type' => :'String',
+        :'awa_n_citations' => :'Integer',
+        :'awa_n_direct' => :'Integer',
+        :'awa_n_critical' => :'Integer',
+        :'awa_n_non_critical' => :'Integer',
+        :'awa_n_repeat_citations' => :'Integer',
+        :'awa_species_summary' => :'String',
+        :'awa_species_scope' => :'String',
         :'firm_name' => :'String',
         :'firm_org_id' => :'String',
         :'firm_company_id' => :'String',
@@ -176,6 +221,15 @@ module PharmaObservatory
         :'device_class',
         :'device_specialty',
         :'is_low_signal_device',
+        :'awa_outcome',
+        :'awa_inspection_type',
+        :'awa_n_citations',
+        :'awa_n_direct',
+        :'awa_n_critical',
+        :'awa_n_non_critical',
+        :'awa_n_repeat_citations',
+        :'awa_species_summary',
+        :'awa_species_scope',
         :'firm_name',
         :'firm_org_id',
         :'firm_company_id',
@@ -264,6 +318,42 @@ module PharmaObservatory
         self.is_low_signal_device = attributes[:'is_low_signal_device']
       end
 
+      if attributes.key?(:'awa_outcome')
+        self.awa_outcome = attributes[:'awa_outcome']
+      end
+
+      if attributes.key?(:'awa_inspection_type')
+        self.awa_inspection_type = attributes[:'awa_inspection_type']
+      end
+
+      if attributes.key?(:'awa_n_citations')
+        self.awa_n_citations = attributes[:'awa_n_citations']
+      end
+
+      if attributes.key?(:'awa_n_direct')
+        self.awa_n_direct = attributes[:'awa_n_direct']
+      end
+
+      if attributes.key?(:'awa_n_critical')
+        self.awa_n_critical = attributes[:'awa_n_critical']
+      end
+
+      if attributes.key?(:'awa_n_non_critical')
+        self.awa_n_non_critical = attributes[:'awa_n_non_critical']
+      end
+
+      if attributes.key?(:'awa_n_repeat_citations')
+        self.awa_n_repeat_citations = attributes[:'awa_n_repeat_citations']
+      end
+
+      if attributes.key?(:'awa_species_summary')
+        self.awa_species_summary = attributes[:'awa_species_summary']
+      end
+
+      if attributes.key?(:'awa_species_scope')
+        self.awa_species_scope = attributes[:'awa_species_scope']
+      end
+
       if attributes.key?(:'firm_name')
         self.firm_name = attributes[:'firm_name']
       end
@@ -336,6 +426,15 @@ module PharmaObservatory
           device_class == o.device_class &&
           device_specialty == o.device_specialty &&
           is_low_signal_device == o.is_low_signal_device &&
+          awa_outcome == o.awa_outcome &&
+          awa_inspection_type == o.awa_inspection_type &&
+          awa_n_citations == o.awa_n_citations &&
+          awa_n_direct == o.awa_n_direct &&
+          awa_n_critical == o.awa_n_critical &&
+          awa_n_non_critical == o.awa_n_non_critical &&
+          awa_n_repeat_citations == o.awa_n_repeat_citations &&
+          awa_species_summary == o.awa_species_summary &&
+          awa_species_scope == o.awa_species_scope &&
           firm_name == o.firm_name &&
           firm_org_id == o.firm_org_id &&
           firm_company_id == o.firm_company_id &&
@@ -356,7 +455,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [event_id, source, event_date, domain, is_biomedical, headline, detail, classification, recall_class, had_483, source_url, source_ref, device_class, device_specialty, is_low_signal_device, firm_name, firm_org_id, firm_company_id, firm_company_name, firm_group_id, firm_group_name, match_tier, org_resolution_method, is_org_resolved].hash
+      [event_id, source, event_date, domain, is_biomedical, headline, detail, classification, recall_class, had_483, source_url, source_ref, device_class, device_specialty, is_low_signal_device, awa_outcome, awa_inspection_type, awa_n_citations, awa_n_direct, awa_n_critical, awa_n_non_critical, awa_n_repeat_citations, awa_species_summary, awa_species_scope, firm_name, firm_org_id, firm_company_id, firm_company_name, firm_group_id, firm_group_name, match_tier, org_resolution_method, is_org_resolved].hash
     end
 
     # Builds the object from hash

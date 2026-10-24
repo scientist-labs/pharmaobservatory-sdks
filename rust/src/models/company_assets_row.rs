@@ -38,15 +38,9 @@ pub struct CompanyAssetsRow {
     /// The drug's name.
     #[serde(rename = "drug_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub drug_name: Option<Option<String>>,
-    /// Highest phase the sponsor reached on the drug on the 0 to 4 scale: 0 not reported, 1 through 4 for phase 1 through phase 4 (4 is marketed); a split phase folds up to its higher phase.
+    /// Highest phase the sponsor reached on the drug: 0 early phase 1 through 6 for phase 4 (marketed); -1 when unstated.
     #[serde(rename = "max_phase", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub max_phase: Option<Option<i32>>,
-    /// The furthest phase reached with the split phases kept: Early 1, Phase 1, Phase 1/2, Phase 2, Phase 2/3, Phase 3, Phase 4, or Not reported. max_phase is the same value folded onto 0 to 4 (a split phase counts as its higher phase).
-    #[serde(rename = "max_phase_label", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub max_phase_label: Option<Option<String>>,
-    /// The finest phase rank behind max_phase_label: 6 Phase 4, 5 Phase 3, 4 Phase 2/3, 3 Phase 2, 2 Phase 1/2, 1 Phase 1, 0 Early 1, -1 not reported. Sort on it to order programs by furthest phase with the split phases kept; max_phase is the same value folded onto 0 to 4.
-    #[serde(rename = "max_phase_fine_rank", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub max_phase_fine_rank: Option<Option<i32>>,
     /// Distinct trials this sponsor leads on the drug. Counted once per trial within the sponsor organization, so it is not additive across a company's organizations.
     #[serde(rename = "n_trials", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_trials: Option<Option<i64>>,
@@ -74,8 +68,6 @@ impl CompanyAssetsRow {
             drug_id: None,
             drug_name: None,
             max_phase: None,
-            max_phase_label: None,
-            max_phase_fine_rank: None,
             n_trials: None,
             n_active: None,
             last_year: None,

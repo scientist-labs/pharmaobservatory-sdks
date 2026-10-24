@@ -47,6 +47,12 @@ type InvestorsRow struct {
 	PortfolioCoCount NullableInt64 `json:"portfolio_co_count,omitempty"`
 	// Current Form 13F positions reported by the managers that resolve to this investor, summed over its manager keys. 0 when none resolves.
 	HoldingsPositionCount NullableInt64 `json:"holdings_position_count,omitempty"`
+	// The adviser's own website from Form ADV Schedule D Section 1.I (scheme and host lower-cased, path kept). Null for an agency and for an adviser whose only listed pages are social-media pages.
+	WebsiteUrl NullableString `json:"website_url,omitempty"`
+	// The host of website_url with the scheme, any port and a leading www stripped, lower-cased. It is never a social-media host.
+	WebsiteDomain NullableString `json:"website_domain,omitempty"`
+	// Where website_url came from: adv (SEC Form ADV Schedule D Section 1.I). Null exactly when website_url is null.
+	WebsiteSource NullableString `json:"website_source,omitempty"`
 	// Legal-entity level: the investor's organization record where the link resolves (null otherwise). An advfirm:<CRD> shell resolves to no legal-entity record and no company.
 	OrgId NullableString `json:"org_id,omitempty"`
 	// Company level: the investor's company (null when unresolved).
@@ -667,6 +673,132 @@ func (o *InvestorsRow) UnsetHoldingsPositionCount() {
 	o.HoldingsPositionCount.Unset()
 }
 
+// GetWebsiteUrl returns the WebsiteUrl field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestorsRow) GetWebsiteUrl() string {
+	if o == nil || IsNil(o.WebsiteUrl.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.WebsiteUrl.Get()
+}
+
+// GetWebsiteUrlOk returns a tuple with the WebsiteUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestorsRow) GetWebsiteUrlOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.WebsiteUrl.Get(), o.WebsiteUrl.IsSet()
+}
+
+// HasWebsiteUrl returns a boolean if a field has been set.
+func (o *InvestorsRow) HasWebsiteUrl() bool {
+	if o != nil && o.WebsiteUrl.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetWebsiteUrl gets a reference to the given NullableString and assigns it to the WebsiteUrl field.
+func (o *InvestorsRow) SetWebsiteUrl(v string) {
+	o.WebsiteUrl.Set(&v)
+}
+// SetWebsiteUrlNil sets the value for WebsiteUrl to be an explicit nil
+func (o *InvestorsRow) SetWebsiteUrlNil() {
+	o.WebsiteUrl.Set(nil)
+}
+
+// UnsetWebsiteUrl ensures that no value is present for WebsiteUrl, not even an explicit nil
+func (o *InvestorsRow) UnsetWebsiteUrl() {
+	o.WebsiteUrl.Unset()
+}
+
+// GetWebsiteDomain returns the WebsiteDomain field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestorsRow) GetWebsiteDomain() string {
+	if o == nil || IsNil(o.WebsiteDomain.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.WebsiteDomain.Get()
+}
+
+// GetWebsiteDomainOk returns a tuple with the WebsiteDomain field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestorsRow) GetWebsiteDomainOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.WebsiteDomain.Get(), o.WebsiteDomain.IsSet()
+}
+
+// HasWebsiteDomain returns a boolean if a field has been set.
+func (o *InvestorsRow) HasWebsiteDomain() bool {
+	if o != nil && o.WebsiteDomain.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetWebsiteDomain gets a reference to the given NullableString and assigns it to the WebsiteDomain field.
+func (o *InvestorsRow) SetWebsiteDomain(v string) {
+	o.WebsiteDomain.Set(&v)
+}
+// SetWebsiteDomainNil sets the value for WebsiteDomain to be an explicit nil
+func (o *InvestorsRow) SetWebsiteDomainNil() {
+	o.WebsiteDomain.Set(nil)
+}
+
+// UnsetWebsiteDomain ensures that no value is present for WebsiteDomain, not even an explicit nil
+func (o *InvestorsRow) UnsetWebsiteDomain() {
+	o.WebsiteDomain.Unset()
+}
+
+// GetWebsiteSource returns the WebsiteSource field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestorsRow) GetWebsiteSource() string {
+	if o == nil || IsNil(o.WebsiteSource.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.WebsiteSource.Get()
+}
+
+// GetWebsiteSourceOk returns a tuple with the WebsiteSource field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestorsRow) GetWebsiteSourceOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.WebsiteSource.Get(), o.WebsiteSource.IsSet()
+}
+
+// HasWebsiteSource returns a boolean if a field has been set.
+func (o *InvestorsRow) HasWebsiteSource() bool {
+	if o != nil && o.WebsiteSource.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetWebsiteSource gets a reference to the given NullableString and assigns it to the WebsiteSource field.
+func (o *InvestorsRow) SetWebsiteSource(v string) {
+	o.WebsiteSource.Set(&v)
+}
+// SetWebsiteSourceNil sets the value for WebsiteSource to be an explicit nil
+func (o *InvestorsRow) SetWebsiteSourceNil() {
+	o.WebsiteSource.Set(nil)
+}
+
+// UnsetWebsiteSource ensures that no value is present for WebsiteSource, not even an explicit nil
+func (o *InvestorsRow) UnsetWebsiteSource() {
+	o.WebsiteSource.Unset()
+}
+
 // GetOrgId returns the OrgId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *InvestorsRow) GetOrgId() string {
 	if o == nil || IsNil(o.OrgId.Get()) {
@@ -929,6 +1061,15 @@ func (o InvestorsRow) ToMap() (map[string]interface{}, error) {
 	if o.HoldingsPositionCount.IsSet() {
 		toSerialize["holdings_position_count"] = o.HoldingsPositionCount.Get()
 	}
+	if o.WebsiteUrl.IsSet() {
+		toSerialize["website_url"] = o.WebsiteUrl.Get()
+	}
+	if o.WebsiteDomain.IsSet() {
+		toSerialize["website_domain"] = o.WebsiteDomain.Get()
+	}
+	if o.WebsiteSource.IsSet() {
+		toSerialize["website_source"] = o.WebsiteSource.Get()
+	}
 	if o.OrgId.IsSet() {
 		toSerialize["org_id"] = o.OrgId.Get()
 	}
@@ -980,6 +1121,9 @@ func (o *InvestorsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "total_private_fund_gav")
 		delete(additionalProperties, "portfolio_co_count")
 		delete(additionalProperties, "holdings_position_count")
+		delete(additionalProperties, "website_url")
+		delete(additionalProperties, "website_domain")
+		delete(additionalProperties, "website_source")
 		delete(additionalProperties, "org_id")
 		delete(additionalProperties, "company_id")
 		delete(additionalProperties, "company_name")

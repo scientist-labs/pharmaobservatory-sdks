@@ -9,6 +9,7 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**conditions_condition_burden**](ConditionsApi.md#conditions_condition_burden) | **GET** /api/v1/conditions/{id}/condition_burden | Condition burden |
 | [**conditions_condition_delivery**](ConditionsApi.md#conditions_condition_delivery) | **GET** /api/v1/conditions/{id}/condition_delivery | Condition delivery |
 | [**conditions_condition_drugs**](ConditionsApi.md#conditions_condition_drugs) | **GET** /api/v1/conditions/{id}/condition_drugs | Condition drugs |
+| [**conditions_condition_investigator_organizations**](ConditionsApi.md#conditions_condition_investigator_organizations) | **GET** /api/v1/conditions/{id}/condition_investigator_organizations | Organizations of a condition&#39;s investigators |
 | [**conditions_condition_prevalence**](ConditionsApi.md#conditions_condition_prevalence) | **GET** /api/v1/conditions/{id}/condition_prevalence | Condition prevalence |
 | [**conditions_condition_publications**](ConditionsApi.md#conditions_condition_publications) | **GET** /api/v1/conditions/{id}/condition_publications | Condition publications |
 | [**conditions_condition_recruitment_by_phase**](ConditionsApi.md#conditions_condition_recruitment_by_phase) | **GET** /api/v1/conditions/{id}/condition_recruitment_by_phase | Trial recruitment duration by condition and phase |
@@ -17,6 +18,7 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**conditions_condition_trial_start_forecast**](ConditionsApi.md#conditions_condition_trial_start_forecast) | **GET** /api/v1/conditions/{id}/condition_trial_start_forecast | Trial-start forecast by condition |
 | [**conditions_condition_trials**](ConditionsApi.md#conditions_condition_trials) | **GET** /api/v1/conditions/{id}/condition_trials | Condition trials |
 | [**conditions_get**](ConditionsApi.md#conditions_get) | **GET** /api/v1/conditions/{id} | One condition |
+| [**conditions_investigator_conditions**](ConditionsApi.md#conditions_investigator_conditions) | **GET** /api/v1/conditions/{id}/investigator_conditions | Investigator conditions |
 | [**conditions_list**](ConditionsApi.md#conditions_list) | **GET** /api/v1/conditions | List conditions |
 | [**conditions_pdufa_dates**](ConditionsApi.md#conditions_pdufa_dates) | **GET** /api/v1/conditions/{id}/pdufa_dates | FDA decision dates (PDUFA) and catalysts |
 | [**conditions_program_licensing_candidates**](ConditionsApi.md#conditions_program_licensing_candidates) | **GET** /api/v1/conditions/{id}/program_licensing_candidates | Program licensing candidates |
@@ -409,6 +411,85 @@ end
 ### Return type
 
 [**ConditionDrugsResponse**](ConditionDrugsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## conditions_condition_investigator_organizations
+
+> <ConditionInvestigatorOrganizationsResponse> conditions_condition_investigator_organizations(id, opts)
+
+Organizations of a condition's investigators
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::ConditionsApi.new
+id = 'D001523' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Organizations of a condition's investigators
+  result = api_instance.conditions_condition_investigator_organizations(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_condition_investigator_organizations: #{e}"
+end
+```
+
+#### Using the conditions_condition_investigator_organizations_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ConditionInvestigatorOrganizationsResponse>, Integer, Hash)> conditions_condition_investigator_organizations_with_http_info(id, opts)
+
+```ruby
+begin
+  # Organizations of a condition's investigators
+  data, status_code, headers = api_instance.conditions_condition_investigator_organizations_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ConditionInvestigatorOrganizationsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_condition_investigator_organizations_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**ConditionInvestigatorOrganizationsResponse**](ConditionInvestigatorOrganizationsResponse.md)
 
 ### Authorization
 
@@ -1029,6 +1110,85 @@ end
 ### Return type
 
 [**ConditionsRecord**](ConditionsRecord.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## conditions_investigator_conditions
+
+> <InvestigatorConditionsResponse> conditions_investigator_conditions(id, opts)
+
+Investigator conditions
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::ConditionsApi.new
+id = 'D001523' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Investigator conditions
+  result = api_instance.conditions_investigator_conditions(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_investigator_conditions: #{e}"
+end
+```
+
+#### Using the conditions_investigator_conditions_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<InvestigatorConditionsResponse>, Integer, Hash)> conditions_investigator_conditions_with_http_info(id, opts)
+
+```ruby
+begin
+  # Investigator conditions
+  data, status_code, headers = api_instance.conditions_investigator_conditions_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <InvestigatorConditionsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_investigator_conditions_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**InvestigatorConditionsResponse**](InvestigatorConditionsResponse.md)
 
 ### Authorization
 

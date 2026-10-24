@@ -35,12 +35,8 @@ type CompanyAssetsRow struct {
 	DrugId NullableString `json:"drug_id,omitempty"`
 	// The drug's name.
 	DrugName NullableString `json:"drug_name,omitempty"`
-	// Highest phase the sponsor reached on the drug on the 0 to 4 scale: 0 not reported, 1 through 4 for phase 1 through phase 4 (4 is marketed); a split phase folds up to its higher phase.
+	// Highest phase the sponsor reached on the drug: 0 early phase 1 through 6 for phase 4 (marketed); -1 when unstated.
 	MaxPhase NullableInt32 `json:"max_phase,omitempty"`
-	// The furthest phase reached with the split phases kept: Early 1, Phase 1, Phase 1/2, Phase 2, Phase 2/3, Phase 3, Phase 4, or Not reported. max_phase is the same value folded onto 0 to 4 (a split phase counts as its higher phase).
-	MaxPhaseLabel NullableString `json:"max_phase_label,omitempty"`
-	// The finest phase rank behind max_phase_label: 6 Phase 4, 5 Phase 3, 4 Phase 2/3, 3 Phase 2, 2 Phase 1/2, 1 Phase 1, 0 Early 1, -1 not reported. Sort on it to order programs by furthest phase with the split phases kept; max_phase is the same value folded onto 0 to 4.
-	MaxPhaseFineRank NullableInt32 `json:"max_phase_fine_rank,omitempty"`
 	// Distinct trials this sponsor leads on the drug. Counted once per trial within the sponsor organization, so it is not additive across a company's organizations.
 	NTrials NullableInt64 `json:"n_trials,omitempty"`
 	// Of those trials, the number recruiting, not yet recruiting, active or enrolling by invitation.
@@ -449,90 +445,6 @@ func (o *CompanyAssetsRow) UnsetMaxPhase() {
 	o.MaxPhase.Unset()
 }
 
-// GetMaxPhaseLabel returns the MaxPhaseLabel field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CompanyAssetsRow) GetMaxPhaseLabel() string {
-	if o == nil || IsNil(o.MaxPhaseLabel.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.MaxPhaseLabel.Get()
-}
-
-// GetMaxPhaseLabelOk returns a tuple with the MaxPhaseLabel field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CompanyAssetsRow) GetMaxPhaseLabelOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.MaxPhaseLabel.Get(), o.MaxPhaseLabel.IsSet()
-}
-
-// HasMaxPhaseLabel returns a boolean if a field has been set.
-func (o *CompanyAssetsRow) HasMaxPhaseLabel() bool {
-	if o != nil && o.MaxPhaseLabel.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetMaxPhaseLabel gets a reference to the given NullableString and assigns it to the MaxPhaseLabel field.
-func (o *CompanyAssetsRow) SetMaxPhaseLabel(v string) {
-	o.MaxPhaseLabel.Set(&v)
-}
-// SetMaxPhaseLabelNil sets the value for MaxPhaseLabel to be an explicit nil
-func (o *CompanyAssetsRow) SetMaxPhaseLabelNil() {
-	o.MaxPhaseLabel.Set(nil)
-}
-
-// UnsetMaxPhaseLabel ensures that no value is present for MaxPhaseLabel, not even an explicit nil
-func (o *CompanyAssetsRow) UnsetMaxPhaseLabel() {
-	o.MaxPhaseLabel.Unset()
-}
-
-// GetMaxPhaseFineRank returns the MaxPhaseFineRank field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CompanyAssetsRow) GetMaxPhaseFineRank() int32 {
-	if o == nil || IsNil(o.MaxPhaseFineRank.Get()) {
-		var ret int32
-		return ret
-	}
-	return *o.MaxPhaseFineRank.Get()
-}
-
-// GetMaxPhaseFineRankOk returns a tuple with the MaxPhaseFineRank field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CompanyAssetsRow) GetMaxPhaseFineRankOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.MaxPhaseFineRank.Get(), o.MaxPhaseFineRank.IsSet()
-}
-
-// HasMaxPhaseFineRank returns a boolean if a field has been set.
-func (o *CompanyAssetsRow) HasMaxPhaseFineRank() bool {
-	if o != nil && o.MaxPhaseFineRank.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetMaxPhaseFineRank gets a reference to the given NullableInt32 and assigns it to the MaxPhaseFineRank field.
-func (o *CompanyAssetsRow) SetMaxPhaseFineRank(v int32) {
-	o.MaxPhaseFineRank.Set(&v)
-}
-// SetMaxPhaseFineRankNil sets the value for MaxPhaseFineRank to be an explicit nil
-func (o *CompanyAssetsRow) SetMaxPhaseFineRankNil() {
-	o.MaxPhaseFineRank.Set(nil)
-}
-
-// UnsetMaxPhaseFineRank ensures that no value is present for MaxPhaseFineRank, not even an explicit nil
-func (o *CompanyAssetsRow) UnsetMaxPhaseFineRank() {
-	o.MaxPhaseFineRank.Unset()
-}
-
 // GetNTrials returns the NTrials field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *CompanyAssetsRow) GetNTrials() int64 {
 	if o == nil || IsNil(o.NTrials.Get()) {
@@ -738,12 +650,6 @@ func (o CompanyAssetsRow) ToMap() (map[string]interface{}, error) {
 	if o.MaxPhase.IsSet() {
 		toSerialize["max_phase"] = o.MaxPhase.Get()
 	}
-	if o.MaxPhaseLabel.IsSet() {
-		toSerialize["max_phase_label"] = o.MaxPhaseLabel.Get()
-	}
-	if o.MaxPhaseFineRank.IsSet() {
-		toSerialize["max_phase_fine_rank"] = o.MaxPhaseFineRank.Get()
-	}
 	if o.NTrials.IsSet() {
 		toSerialize["n_trials"] = o.NTrials.Get()
 	}
@@ -787,8 +693,6 @@ func (o *CompanyAssetsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "drug_id")
 		delete(additionalProperties, "drug_name")
 		delete(additionalProperties, "max_phase")
-		delete(additionalProperties, "max_phase_label")
-		delete(additionalProperties, "max_phase_fine_rank")
 		delete(additionalProperties, "n_trials")
 		delete(additionalProperties, "n_active")
 		delete(additionalProperties, "last_year")

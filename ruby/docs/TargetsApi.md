@@ -12,6 +12,7 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**targets_target_crowding**](TargetsApi.md#targets_target_crowding) | **GET** /api/v1/targets/{id}/target_crowding | Target crowding by phase |
 | [**targets_target_drugs**](TargetsApi.md#targets_target_drugs) | **GET** /api/v1/targets/{id}/target_drugs | Drugs acting on a target |
 | [**targets_target_evidence**](TargetsApi.md#targets_target_evidence) | **GET** /api/v1/targets/{id}/target_evidence | Target evidence |
+| [**targets_target_investigators**](TargetsApi.md#targets_target_investigators) | **GET** /api/v1/targets/{id}/target_investigators | Investigators on a target&#39;s trials |
 | [**targets_target_patent_mentions**](TargetsApi.md#targets_target_patent_mentions) | **GET** /api/v1/targets/{id}/target_patent_mentions | Target patent mentions |
 | [**targets_target_programs**](TargetsApi.md#targets_target_programs) | **GET** /api/v1/targets/{id}/target_programs | Target development programs |
 | [**targets_target_publications**](TargetsApi.md#targets_target_publications) | **GET** /api/v1/targets/{id}/target_publications | Target publications |
@@ -626,6 +627,85 @@ end
 ### Return type
 
 [**TargetEvidenceResponse**](TargetEvidenceResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## targets_target_investigators
+
+> <TargetInvestigatorsResponse> targets_target_investigators(id, opts)
+
+Investigators on a target's trials
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::TargetsApi.new
+id = 'ENSG00000171759' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Investigators on a target's trials
+  result = api_instance.targets_target_investigators(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling TargetsApi->targets_target_investigators: #{e}"
+end
+```
+
+#### Using the targets_target_investigators_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<TargetInvestigatorsResponse>, Integer, Hash)> targets_target_investigators_with_http_info(id, opts)
+
+```ruby
+begin
+  # Investigators on a target's trials
+  data, status_code, headers = api_instance.targets_target_investigators_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <TargetInvestigatorsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling TargetsApi->targets_target_investigators_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**TargetInvestigatorsResponse**](TargetInvestigatorsResponse.md)
 
 ### Authorization
 

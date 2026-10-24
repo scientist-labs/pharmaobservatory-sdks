@@ -103,6 +103,9 @@ module PharmaObservatory
     # How the supplier was linked to its organization record, so a caller can apply a confidence floor. The supplier pages on organization pages show only provider_ror_exact, provider_edgar_exact and supplier_curated.
     attr_accessor :org_link_method
 
+    # The NIH Office of Laboratory Animal Welfare (OLAW) Public Health Service Animal Welfare Assurance id the supplier page badges (#5286). Set only when the supplier is linked to its organization with confidence (provider_ror_exact, provider_edgar_exact or supplier_curated) and the OLAW institution matched that organization at a high or medium tier, the same rule as the page. Null means no badge, never 'not assured': OLAW's list is matched to the organizations we hold, and most institutions do not resolve. Full detail, with the raw status code, is the animal_welfare_assurances dataset.
+    attr_accessor :phs_animal_welfare_assurance_id
+
     # True when the supplier has a public page on the web (every row of this dataset does).
     attr_accessor :has_public_page
 
@@ -138,6 +141,7 @@ module PharmaObservatory
         :'supplier_group_id' => :'supplier_group_id',
         :'supplier_group_name' => :'supplier_group_name',
         :'org_link_method' => :'org_link_method',
+        :'phs_animal_welfare_assurance_id' => :'phs_animal_welfare_assurance_id',
         :'has_public_page' => :'has_public_page'
       }
     end
@@ -184,6 +188,7 @@ module PharmaObservatory
         :'supplier_group_id' => :'String',
         :'supplier_group_name' => :'String',
         :'org_link_method' => :'String',
+        :'phs_animal_welfare_assurance_id' => :'String',
         :'has_public_page' => :'Boolean'
       }
     end
@@ -220,6 +225,7 @@ module PharmaObservatory
         :'supplier_group_id',
         :'supplier_group_name',
         :'org_link_method',
+        :'phs_animal_welfare_assurance_id',
         :'has_public_page'
       ])
     end
@@ -358,6 +364,10 @@ module PharmaObservatory
         self.org_link_method = attributes[:'org_link_method']
       end
 
+      if attributes.key?(:'phs_animal_welfare_assurance_id')
+        self.phs_animal_welfare_assurance_id = attributes[:'phs_animal_welfare_assurance_id']
+      end
+
       if attributes.key?(:'has_public_page')
         self.has_public_page = attributes[:'has_public_page']
       end
@@ -412,6 +422,7 @@ module PharmaObservatory
           supplier_group_id == o.supplier_group_id &&
           supplier_group_name == o.supplier_group_name &&
           org_link_method == o.org_link_method &&
+          phs_animal_welfare_assurance_id == o.phs_animal_welfare_assurance_id &&
           has_public_page == o.has_public_page
     end
 
@@ -424,7 +435,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [provider_id, name, company_type, marketplace_tier, service_areas, hq_country, hq_region, hq_latitude, hq_longitude, n_sites, n_countries, is_cro, is_trial_sponsor, n_trials, n_lead_trials, website, profile_url, logo_path, has_description, is_veteran_owned, is_woman_owned, is_minority_owned, is_hubzone, supplier_org_id, supplier_company_id, supplier_company_name, supplier_group_id, supplier_group_name, org_link_method, has_public_page].hash
+      [provider_id, name, company_type, marketplace_tier, service_areas, hq_country, hq_region, hq_latitude, hq_longitude, n_sites, n_countries, is_cro, is_trial_sponsor, n_trials, n_lead_trials, website, profile_url, logo_path, has_description, is_veteran_owned, is_woman_owned, is_minority_owned, is_hubzone, supplier_org_id, supplier_company_id, supplier_company_name, supplier_group_id, supplier_group_name, org_link_method, phs_animal_welfare_assurance_id, has_public_page].hash
     end
 
     # Builds the object from hash

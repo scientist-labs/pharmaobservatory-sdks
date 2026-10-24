@@ -4,15 +4,17 @@ All URIs are relative to *https://pharmaobservatory.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**legal_entities_period_animal_welfare_assurances**](LegalEntitiesApi.md#legal_entities_period_animal_welfare_assurances) | **GET** /api/v1/legal_entities/{id}/animal_welfare_assurances | Animal welfare assurances
 [**legal_entities_period_catalysts**](LegalEntitiesApi.md#legal_entities_period_catalysts) | **GET** /api/v1/legal_entities/{id}/catalysts | Catalysts: trial readouts, patent cliffs, FDA decision dates and press-release events
 [**legal_entities_period_clia_certificates**](LegalEntitiesApi.md#legal_entities_period_clia_certificates) | **GET** /api/v1/legal_entities/{id}/clia_certificates | CLIA laboratory certificates
 [**legal_entities_period_company_assets**](LegalEntitiesApi.md#legal_entities_period_company_assets) | **GET** /api/v1/legal_entities/{id}/company_assets | Company assets (approved and marketed drugs)
 [**legal_entities_period_company_biomarker_capability**](LegalEntitiesApi.md#legal_entities_period_company_biomarker_capability) | **GET** /api/v1/legal_entities/{id}/company_biomarker_capability | Company biomarker capability
+[**legal_entities_period_company_financials**](LegalEntitiesApi.md#legal_entities_period_company_financials) | **GET** /api/v1/legal_entities/{id}/company_financials | Company SEC financials
 [**legal_entities_period_company_programs**](LegalEntitiesApi.md#legal_entities_period_company_programs) | **GET** /api/v1/legal_entities/{id}/company_programs | Company programs
 [**legal_entities_period_company_rare_disease_declarations**](LegalEntitiesApi.md#legal_entities_period_company_rare_disease_declarations) | **GET** /api/v1/legal_entities/{id}/company_rare_disease_declarations | Organization-wide rare disease declarations
 [**legal_entities_period_debarments**](LegalEntitiesApi.md#legal_entities_period_debarments) | **GET** /api/v1/legal_entities/{id}/debarments | FDA firm debarments
 [**legal_entities_period_drug_patent_cliff**](LegalEntitiesApi.md#legal_entities_period_drug_patent_cliff) | **GET** /api/v1/legal_entities/{id}/drug_patent_cliff | Patent-cliff exposure
-[**legal_entities_period_enforcement_events**](LegalEntitiesApi.md#legal_entities_period_enforcement_events) | **GET** /api/v1/legal_entities/{id}/enforcement_events | FDA enforcement events
+[**legal_entities_period_enforcement_events**](LegalEntitiesApi.md#legal_entities_period_enforcement_events) | **GET** /api/v1/legal_entities/{id}/enforcement_events | Regulatory enforcement events
 [**legal_entities_period_get**](LegalEntitiesApi.md#legal_entities_period_get) | **GET** /api/v1/legal_entities/{id} | One legal entity
 [**legal_entities_period_gxp_facilities**](LegalEntitiesApi.md#legal_entities_period_gxp_facilities) | **GET** /api/v1/legal_entities/{id}/gxp_facilities | GxP facilities and quality signals
 [**legal_entities_period_import_refusals**](LegalEntitiesApi.md#legal_entities_period_import_refusals) | **GET** /api/v1/legal_entities/{id}/import_refusals | FDA import refusals
@@ -25,6 +27,7 @@ Method | HTTP request | Description
 [**legal_entities_period_org_disclosure_trend**](LegalEntitiesApi.md#legal_entities_period_org_disclosure_trend) | **GET** /api/v1/legal_entities/{id}/org_disclosure_trend | Organization disclosure trend
 [**legal_entities_period_org_disclosures**](LegalEntitiesApi.md#legal_entities_period_org_disclosures) | **GET** /api/v1/legal_entities/{id}/org_disclosures | Organization disclosures (climate and diversity)
 [**legal_entities_period_org_relationships**](LegalEntitiesApi.md#legal_entities_period_org_relationships) | **GET** /api/v1/legal_entities/{id}/org_relationships | Organization relationships
+[**legal_entities_period_ownership_observations**](LegalEntitiesApi.md#legal_entities_period_ownership_observations) | **GET** /api/v1/legal_entities/{id}/ownership_observations | Ownership and control observations (history)
 [**legal_entities_period_ownership_percentages**](LegalEntitiesApi.md#legal_entities_period_ownership_percentages) | **GET** /api/v1/legal_entities/{id}/ownership_percentages | Ownership percentages
 [**legal_entities_period_ownership_positions**](LegalEntitiesApi.md#legal_entities_period_ownership_positions) | **GET** /api/v1/legal_entities/{id}/ownership_positions | Ownership and control positions
 [**legal_entities_period_ownership_source_coverage**](LegalEntitiesApi.md#legal_entities_period_ownership_source_coverage) | **GET** /api/v1/legal_entities/{id}/ownership_source_coverage | Ownership source coverage
@@ -46,6 +49,39 @@ Method | HTTP request | Description
 [**legal_entities_period_untitled_letters**](LegalEntitiesApi.md#legal_entities_period_untitled_letters) | **GET** /api/v1/legal_entities/{id}/untitled_letters | FDA untitled letters
 [**legal_entities_period_warning_letters**](LegalEntitiesApi.md#legal_entities_period_warning_letters) | **GET** /api/v1/legal_entities/{id}/warning_letters | FDA warning letters
 
+
+
+## legal_entities_period_animal_welfare_assurances
+
+> models::AnimalWelfareAssurancesResponse legal_entities_period_animal_welfare_assurances(id, cursor, limit, sort, group_by, measure)
+Animal welfare assurances
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::AnimalWelfareAssurancesResponse**](AnimalWelfareAssurancesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## legal_entities_period_catalysts
@@ -167,6 +203,39 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::CompanyBiomarkerCapabilityResponse**](CompanyBiomarkerCapabilityResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## legal_entities_period_company_financials
+
+> models::CompanyFinancialsResponse legal_entities_period_company_financials(id, cursor, limit, sort, group_by, measure)
+Company SEC financials
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::CompanyFinancialsResponse**](CompanyFinancialsResponse.md)
 
 ### Authorization
 
@@ -315,7 +384,7 @@ Name | Type | Description  | Required | Notes
 ## legal_entities_period_enforcement_events
 
 > models::EnforcementEventsResponse legal_entities_period_enforcement_events(id, cursor, limit, sort, group_by, measure)
-FDA enforcement events
+Regulatory enforcement events
 
 ### Parameters
 
@@ -722,6 +791,39 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::OrgRelationshipsResponse**](OrgRelationshipsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## legal_entities_period_ownership_observations
+
+> models::OwnershipObservationsResponse legal_entities_period_ownership_observations(id, cursor, limit, sort, group_by, measure)
+Ownership and control observations (history)
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::OwnershipObservationsResponse**](OwnershipObservationsResponse.md)
 
 ### Authorization
 

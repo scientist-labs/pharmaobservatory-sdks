@@ -35,7 +35,7 @@ pub struct ProgramsRow {
     /// True for a specific disease, false for a broad MeSH umbrella condition.
     #[serde(rename = "is_indication", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub is_indication: Option<Option<bool>>,
-    /// Highest phase reached across the program's trials: 0 not reported, 1 through 4 for phase 1 through phase 4 (the 0 to 4 scale shared with company_programs; see caveats).
+    /// Highest phase reached across the program's trials: 0 not reported, 1 through 4 for phase 1 through phase 4 (the 0 to 4 scale; see caveats).
     #[serde(rename = "max_phase", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub max_phase: Option<Option<i32>>,
     /// Distinct trials of the program, across all sponsors.
