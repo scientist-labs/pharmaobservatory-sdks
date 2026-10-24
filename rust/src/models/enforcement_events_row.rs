@@ -17,16 +17,16 @@ pub struct EnforcementEventsRow {
     /// The event id: a hash of the lane and the lane's own key, unique across lanes.
     #[serde(rename = "event_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub event_id: Option<Option<String>>,
-    /// The lane the event came from: inspection_483 (an FDA inspection), import_refusal, warning_letter, untitled_letter, debarment or recall.
+    /// The lane the event came from: inspection_483 (an FDA inspection), import_refusal, warning_letter, untitled_letter, debarment, recall or aphis_inspection (a USDA APHIS Animal Welfare Act inspection report).
     #[serde(rename = "source", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub source: Option<Option<String>>,
     /// The event date: the inspection date, refusal date, letter issue date (posted date when there is none), debarment effective date or recall initiation date.
     #[serde(rename = "event_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub event_date: Option<Option<String>>,
-    /// The regulatory domain of the event, derived from the lane's own classifier: drug, biologic, device, veterinary, food, cosmetic, tobacco or other.
+    /// The regulatory domain of the event, derived from the lane's own classifier: drug, biologic, device, animal_research (the APHIS lane), veterinary, food, cosmetic, tobacco or other.
     #[serde(rename = "domain", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub domain: Option<Option<String>>,
-    /// True when domain is drug, biologic or device.
+    /// True when domain is drug, biologic or device. The APHIS lane is false here on purpose; the page's default view adds domain animal_research to this set.
     #[serde(rename = "is_biomedical", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub is_biomedical: Option<Option<bool>>,
     /// A one-line description: the inspection product type, the refused product, the letter subject, the debarment type or the recalled product.
@@ -59,6 +59,33 @@ pub struct EnforcementEventsRow {
     /// True for a device event the biomedical view hides by default (a low-signal commodity class).
     #[serde(rename = "is_low_signal_device", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub is_low_signal_device: Option<Option<bool>>,
+    /// The APHIS report's verdict, the strongest citation kind on it: direct, critical, non_critical, no_citations or no_citations_no_animals; null for every FDA lane.
+    #[serde(rename = "awa_outcome", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub awa_outcome: Option<Option<String>>,
+    /// The inspection type as printed on the APHIS report (for example ROUTINE INSPECTION); null for every FDA lane.
+    #[serde(rename = "awa_inspection_type", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub awa_inspection_type: Option<Option<String>>,
+    /// Citations on the APHIS report; null for every FDA lane. Read with awa_species_scope.
+    #[serde(rename = "awa_n_citations", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub awa_n_citations: Option<Option<i32>>,
+    /// Of the report's citations, those cited as direct; null for every FDA lane.
+    #[serde(rename = "awa_n_direct", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub awa_n_direct: Option<Option<i32>>,
+    /// Of the report's citations, those cited as critical; null for every FDA lane.
+    #[serde(rename = "awa_n_critical", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub awa_n_critical: Option<Option<i32>>,
+    /// Of the report's citations, those cited as non-critical; null for every FDA lane.
+    #[serde(rename = "awa_n_non_critical", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub awa_n_non_critical: Option<Option<i32>>,
+    /// Of the report's citations, those it marks as repeats; null for every FDA lane.
+    #[serde(rename = "awa_n_repeat_citations", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub awa_n_repeat_citations: Option<Option<i32>>,
+    /// The species the APHIS report printed with their animal counts, as \"Common name count; ...\" in the report's order; null on an FDA lane or a report that printed none.
+    #[serde(rename = "awa_species_summary", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub awa_species_summary: Option<Option<String>>,
+    /// The label AWA-covered species on every APHIS row; null for every FDA lane. The awa_* counts describe the species the Animal Welfare Act covers; read them with this label.
+    #[serde(rename = "awa_species_scope", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub awa_species_scope: Option<Option<String>>,
     /// The firm's name as filed with the regulator (the party named on the record, an individual for an individual debarment).
     #[serde(rename = "firm_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub firm_name: Option<Option<String>>,
@@ -80,7 +107,7 @@ pub struct EnforcementEventsRow {
     /// How well the firm name was attached to an organization: high, medium or low name-and-geography matches, registry (the operating firm of a registered facility), ambiguous or unresolved.
     #[serde(rename = "match_tier", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub match_tier: Option<Option<String>>,
-    /// The route that attached the firm: fei_bridge (the FDA establishment identifier bridge), fei_firm_mint or fei_firm_fold (the operating firm's registry record), firm_name_geo (name and geography), firm_name_only (name alone) or unresolved.
+    /// The route that attached the firm: fei_bridge (the FDA establishment identifier bridge), fei_firm_mint or fei_firm_fold (the operating firm's registry record), aphis_bridge, aphis_firm_mint or aphis_firm_fold (the APHIS registrant certificate bridge and its operating-firm record), firm_name_geo (name and geography), firm_name_only (name alone) or unresolved.
     #[serde(rename = "org_resolution_method", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub org_resolution_method: Option<Option<String>>,
     /// True when the firm was attached to an organization. A false row is kept with null firm ids and the name as filed, so an empty read for a company is not proof of no enforcement history.
@@ -107,6 +134,15 @@ impl EnforcementEventsRow {
             device_class: None,
             device_specialty: None,
             is_low_signal_device: None,
+            awa_outcome: None,
+            awa_inspection_type: None,
+            awa_n_citations: None,
+            awa_n_direct: None,
+            awa_n_critical: None,
+            awa_n_non_critical: None,
+            awa_n_repeat_citations: None,
+            awa_species_summary: None,
+            awa_species_scope: None,
             firm_name: None,
             firm_org_id: None,
             firm_company_id: None,

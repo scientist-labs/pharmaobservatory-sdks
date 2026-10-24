@@ -31,7 +31,7 @@
 | **primary_domain** | **String** | The domain with the most signals. | [optional] |
 | **is_drug_facility** | **Boolean** | True when the registers say the site makes medicines (an FDA drug registration, or an EU or Canadian medicines register entry). | [optional] |
 | **is_device_facility** | **Boolean** | True when the registers say the site makes devices. | [optional] |
-| **register_domain** | **String** | The display bucket over the two flags: drug, device, drug_and_device or non_medicine. | [optional] |
+| **register_domain** | **String** | The display bucket over the register flags: drug, device, drug_and_device, animal_research (a USDA APHIS research facility that is neither a drug nor a device facility) or non_medicine. | [optional] |
 | **device_classification_status** | **String** | The registered-product rollup for a device facility: material, unresolved, low_signal or not_applicable. | [optional] |
 | **is_low_signal_device** | **Boolean** | True when the facility&#39;s device products are all low-signal commodity classes. | [optional] |
 | **regulators** | **Array&lt;String&gt;** | The regulators holding a registry record for the facility (fda, ema, health_canada), sorted. | [optional] |
@@ -74,6 +74,19 @@
 | **n_hc_inspections_non_compliant** | **Integer** | Health Canada inspections rated non-compliant. | [optional] |
 | **n_import_refusals** | **Integer** | FDA import refusals at the site. | [optional] |
 | **latest_import_refusal_date** | **Date** | The date of the latest import refusal. | [optional] |
+| **is_research_facility** | **Boolean** | True when the facility has a USDA APHIS Animal Welfare Act registrant site as a member (the animal_research register); a facility can also be a drug or device facility. | [optional] |
+| **n_aphis_inspections** | **Integer** | USDA APHIS inspection reports for the site, one per report and never per citation; zero where the facility has no APHIS member. Read with awa_species_scope. | [optional] |
+| **latest_aphis_inspection_date** | **Date** | The date of the latest APHIS inspection report; null when there is none. | [optional] |
+| **latest_aphis_inspection_outcome** | **String** | The latest APHIS report&#39;s verdict, the strongest citation kind on it: direct, critical, non_critical, no_citations or no_citations_no_animals; null when there is no APHIS report. | [optional] |
+| **n_aphis_inspections_cited** | **Integer** | APHIS reports at the site with at least one citation (direct, critical or non-critical). | [optional] |
+| **n_aphis_citations** | **Integer** | Citations across the site&#39;s APHIS reports. Read with awa_species_scope. | [optional] |
+| **n_aphis_repeat_citations** | **Integer** | Of those, the citations the report marks as repeats. | [optional] |
+| **awa_species_scope** | **String** | The label AWA-covered species on a facility with an APHIS member; null otherwise. The APHIS counts describe the species the Animal Welfare Act covers; read them with this label. | [optional] |
+| **org_olaw_assurance_id** | **String** | Organization scope, repeated onto every facility of the organization: the NIH OLAW Public Health Service Animal Welfare Assurance id, or null when the organization has no resolved row. Null is never evidence of no assurance. | [optional] |
+| **org_olaw_assurance_status** | **String** | OLAW&#39;s raw two-digit assurance status code as published, never decoded; null with org_olaw_assurance_id. | [optional] |
+| **org_olaw_match_tier** | **String** | How well the OLAW institution name resolved to the organization: high, medium or low; the web badge shows high and medium. | [optional] |
+| **org_olaw_source_asof** | **Time** | When OLAW&#39;s lookup tool says its list was last updated; the source does not state a timezone. | [optional] |
+| **has_org_olaw_assurance** | **Boolean** | True when org_olaw_assurance_id is not null. Organization scope, repeated per facility, not additive. | [optional] |
 | **n_gmp_certificates** | **Integer** | EU GMP certificates of the site. | [optional] |
 | **latest_gmp_certificate_date** | **Date** | The date of the latest EU GMP certificate. | [optional] |
 | **n_noncompliance_statements** | **Integer** | EU GMP non-compliance statements about the site. | [optional] |
@@ -160,6 +173,19 @@ instance = PharmaObservatory::GxpFacilitiesRow.new(
   n_hc_inspections_non_compliant: null,
   n_import_refusals: null,
   latest_import_refusal_date: null,
+  is_research_facility: null,
+  n_aphis_inspections: null,
+  latest_aphis_inspection_date: null,
+  latest_aphis_inspection_outcome: null,
+  n_aphis_inspections_cited: null,
+  n_aphis_citations: null,
+  n_aphis_repeat_citations: null,
+  awa_species_scope: null,
+  org_olaw_assurance_id: null,
+  org_olaw_assurance_status: null,
+  org_olaw_match_tier: null,
+  org_olaw_source_asof: null,
+  has_org_olaw_assurance: null,
   n_gmp_certificates: null,
   latest_gmp_certificate_date: null,
   n_noncompliance_statements: null,

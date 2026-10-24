@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**company_firmographics** | Option<[**models::CompanyFirmographicsRow**](CompanyFirmographicsRow.md)> |  | [optional]
 **company_funding_summary** | Option<[**models::CompanyFundingSummaryRow**](CompanyFundingSummaryRow.md)> |  | [optional]
 **company_trial_geography** | Option<[**models::CompanyTrialGeographyRow**](CompanyTrialGeographyRow.md)> |  | [optional]
 

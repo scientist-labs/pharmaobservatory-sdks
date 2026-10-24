@@ -19,6 +19,7 @@ var _ MappedNullable = &CompaniesRecordAttributes{}
 
 // CompaniesRecordAttributes struct for CompaniesRecordAttributes
 type CompaniesRecordAttributes struct {
+	CompanyFirmographics *CompanyFirmographicsRow `json:"company_firmographics,omitempty"`
 	CompanyFundingSummary *CompanyFundingSummaryRow `json:"company_funding_summary,omitempty"`
 	CompanyTrialGeography *CompanyTrialGeographyRow `json:"company_trial_geography,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -41,6 +42,38 @@ func NewCompaniesRecordAttributes() *CompaniesRecordAttributes {
 func NewCompaniesRecordAttributesWithDefaults() *CompaniesRecordAttributes {
 	this := CompaniesRecordAttributes{}
 	return &this
+}
+
+// GetCompanyFirmographics returns the CompanyFirmographics field value if set, zero value otherwise.
+func (o *CompaniesRecordAttributes) GetCompanyFirmographics() CompanyFirmographicsRow {
+	if o == nil || IsNil(o.CompanyFirmographics) {
+		var ret CompanyFirmographicsRow
+		return ret
+	}
+	return *o.CompanyFirmographics
+}
+
+// GetCompanyFirmographicsOk returns a tuple with the CompanyFirmographics field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CompaniesRecordAttributes) GetCompanyFirmographicsOk() (*CompanyFirmographicsRow, bool) {
+	if o == nil || IsNil(o.CompanyFirmographics) {
+		return nil, false
+	}
+	return o.CompanyFirmographics, true
+}
+
+// HasCompanyFirmographics returns a boolean if a field has been set.
+func (o *CompaniesRecordAttributes) HasCompanyFirmographics() bool {
+	if o != nil && !IsNil(o.CompanyFirmographics) {
+		return true
+	}
+
+	return false
+}
+
+// SetCompanyFirmographics gets a reference to the given CompanyFirmographicsRow and assigns it to the CompanyFirmographics field.
+func (o *CompaniesRecordAttributes) SetCompanyFirmographics(v CompanyFirmographicsRow) {
+	o.CompanyFirmographics = &v
 }
 
 // GetCompanyFundingSummary returns the CompanyFundingSummary field value if set, zero value otherwise.
@@ -117,6 +150,9 @@ func (o CompaniesRecordAttributes) MarshalJSON() ([]byte, error) {
 
 func (o CompaniesRecordAttributes) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.CompanyFirmographics) {
+		toSerialize["company_firmographics"] = o.CompanyFirmographics
+	}
 	if !IsNil(o.CompanyFundingSummary) {
 		toSerialize["company_funding_summary"] = o.CompanyFundingSummary
 	}
@@ -145,6 +181,7 @@ func (o *CompaniesRecordAttributes) UnmarshalJSON(data []byte) (err error) {
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "company_firmographics")
 		delete(additionalProperties, "company_funding_summary")
 		delete(additionalProperties, "company_trial_geography")
 		o.AdditionalProperties = additionalProperties

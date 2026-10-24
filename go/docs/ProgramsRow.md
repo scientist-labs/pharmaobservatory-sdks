@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **ConditionId** | Pointer to **NullableString** | The condition key, a MeSH (Medical Subject Headings) descriptor id (D followed by six to nine digits). | [optional] 
 **ConditionName** | Pointer to **NullableString** | The condition&#39;s name. | [optional] 
 **IsIndication** | Pointer to **NullableBool** | True for a specific disease, false for a broad MeSH umbrella condition. | [optional] 
-**MaxPhase** | Pointer to **NullableInt32** | Highest phase reached across the program&#39;s trials: 0 not reported, 1 through 4 for phase 1 through phase 4 (the 0 to 4 scale shared with company_programs; see caveats). | [optional] 
+**MaxPhase** | Pointer to **NullableInt32** | Highest phase reached across the program&#39;s trials: 0 not reported, 1 through 4 for phase 1 through phase 4 (the 0 to 4 scale; see caveats). | [optional] 
 **NTrials** | Pointer to **NullableInt64** | Distinct trials of the program, across all sponsors. | [optional] 
 **NCompleted** | Pointer to **NullableInt64** | Of those, trials with status completed. | [optional] 
 **NTerminated** | Pointer to **NullableInt64** | Of those, trials with status terminated. | [optional] 

@@ -33,6 +33,7 @@
 | **supplier_group_id** | **String** | Group level: the supplier&#39;s company&#39;s current ultimate parent company; a root company&#39;s group is itself. | [optional] |
 | **supplier_group_name** | **String** | Display name of the supplier&#39;s group. | [optional] |
 | **org_link_method** | **String** | How the supplier was linked to its organization record, so a caller can apply a confidence floor. The supplier pages on organization pages show only provider_ror_exact, provider_edgar_exact and supplier_curated. | [optional] |
+| **phs_animal_welfare_assurance_id** | **String** | The NIH Office of Laboratory Animal Welfare (OLAW) Public Health Service Animal Welfare Assurance id the supplier page badges (#5286). Set only when the supplier is linked to its organization with confidence (provider_ror_exact, provider_edgar_exact or supplier_curated) and the OLAW institution matched that organization at a high or medium tier, the same rule as the page. Null means no badge, never &#39;not assured&#39;: OLAW&#39;s list is matched to the organizations we hold, and most institutions do not resolve. Full detail, with the raw status code, is the animal_welfare_assurances dataset. | [optional] |
 | **has_public_page** | **Boolean** | True when the supplier has a public page on the web (every row of this dataset does). | [optional] |
 
 ## Example
@@ -70,6 +71,7 @@ instance = PharmaObservatory::SuppliersRow.new(
   supplier_group_id: null,
   supplier_group_name: null,
   org_link_method: null,
+  phs_animal_welfare_assurance_id: null,
   has_public_page: null
 )
 ```

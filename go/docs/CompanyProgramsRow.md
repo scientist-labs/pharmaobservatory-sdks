@@ -14,9 +14,7 @@ Name | Type | Description | Notes
 **DrugName** | Pointer to **NullableString** | The drug&#39;s name. | [optional] 
 **ConditionId** | Pointer to **NullableString** | The condition key, a MeSH (Medical Subject Headings) descriptor id (D followed by six to nine digits). | [optional] 
 **ConditionName** | Pointer to **NullableString** | The condition&#39;s name. | [optional] 
-**MaxPhase** | Pointer to **NullableInt32** | Highest phase reached on the 0 to 4 scale: 0 not reported, 1 through 4 for phase 1 through phase 4 (4 is marketed); a split phase folds up to its higher phase. | [optional] 
-**MaxPhaseLabel** | Pointer to **NullableString** | The furthest phase reached with the split phases kept: Early 1, Phase 1, Phase 1/2, Phase 2, Phase 2/3, Phase 3, Phase 4, or Not reported. max_phase is the same value folded onto 0 to 4 (a split phase counts as its higher phase). | [optional] 
-**MaxPhaseFineRank** | Pointer to **NullableInt32** | The finest phase rank behind max_phase_label: 6 Phase 4, 5 Phase 3, 4 Phase 2/3, 3 Phase 2, 2 Phase 1/2, 1 Phase 1, 0 Early 1, -1 not reported. Sort on it to order programs by furthest phase with the split phases kept; max_phase is the same value folded onto 0 to 4. | [optional] 
+**MaxPhase** | Pointer to **NullableInt32** | Highest phase reached: 0 early phase 1 through 6 for phase 4 (marketed); -1 when unstated. | [optional] 
 **NTrials** | Pointer to **NullableInt64** | Lead-sponsored trials in the program. | [optional] 
 **NActive** | Pointer to **NullableInt64** | Of those, trials in an active status. | [optional] 
 **LastYear** | Pointer to **NullableInt32** | Latest trial start year. | [optional] 
@@ -428,76 +426,6 @@ HasMaxPhase returns a boolean if a field has been set.
 `func (o *CompanyProgramsRow) UnsetMaxPhase()`
 
 UnsetMaxPhase ensures that no value is present for MaxPhase, not even an explicit nil
-### GetMaxPhaseLabel
-
-`func (o *CompanyProgramsRow) GetMaxPhaseLabel() string`
-
-GetMaxPhaseLabel returns the MaxPhaseLabel field if non-nil, zero value otherwise.
-
-### GetMaxPhaseLabelOk
-
-`func (o *CompanyProgramsRow) GetMaxPhaseLabelOk() (*string, bool)`
-
-GetMaxPhaseLabelOk returns a tuple with the MaxPhaseLabel field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetMaxPhaseLabel
-
-`func (o *CompanyProgramsRow) SetMaxPhaseLabel(v string)`
-
-SetMaxPhaseLabel sets MaxPhaseLabel field to given value.
-
-### HasMaxPhaseLabel
-
-`func (o *CompanyProgramsRow) HasMaxPhaseLabel() bool`
-
-HasMaxPhaseLabel returns a boolean if a field has been set.
-
-### SetMaxPhaseLabelNil
-
-`func (o *CompanyProgramsRow) SetMaxPhaseLabelNil(b bool)`
-
- SetMaxPhaseLabelNil sets the value for MaxPhaseLabel to be an explicit nil
-
-### UnsetMaxPhaseLabel
-`func (o *CompanyProgramsRow) UnsetMaxPhaseLabel()`
-
-UnsetMaxPhaseLabel ensures that no value is present for MaxPhaseLabel, not even an explicit nil
-### GetMaxPhaseFineRank
-
-`func (o *CompanyProgramsRow) GetMaxPhaseFineRank() int32`
-
-GetMaxPhaseFineRank returns the MaxPhaseFineRank field if non-nil, zero value otherwise.
-
-### GetMaxPhaseFineRankOk
-
-`func (o *CompanyProgramsRow) GetMaxPhaseFineRankOk() (*int32, bool)`
-
-GetMaxPhaseFineRankOk returns a tuple with the MaxPhaseFineRank field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetMaxPhaseFineRank
-
-`func (o *CompanyProgramsRow) SetMaxPhaseFineRank(v int32)`
-
-SetMaxPhaseFineRank sets MaxPhaseFineRank field to given value.
-
-### HasMaxPhaseFineRank
-
-`func (o *CompanyProgramsRow) HasMaxPhaseFineRank() bool`
-
-HasMaxPhaseFineRank returns a boolean if a field has been set.
-
-### SetMaxPhaseFineRankNil
-
-`func (o *CompanyProgramsRow) SetMaxPhaseFineRankNil(b bool)`
-
- SetMaxPhaseFineRankNil sets the value for MaxPhaseFineRank to be an explicit nil
-
-### UnsetMaxPhaseFineRank
-`func (o *CompanyProgramsRow) UnsetMaxPhaseFineRank()`
-
-UnsetMaxPhaseFineRank ensures that no value is present for MaxPhaseFineRank, not even an explicit nil
 ### GetNTrials
 
 `func (o *CompanyProgramsRow) GetNTrials() int64`

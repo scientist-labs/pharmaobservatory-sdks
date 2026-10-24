@@ -33,6 +33,7 @@ Name | Type | Description | Notes
 **SupplierGroupId** | Pointer to **NullableString** | Group level: the supplier&#39;s company&#39;s current ultimate parent company; a root company&#39;s group is itself. | [optional] 
 **SupplierGroupName** | Pointer to **NullableString** | Display name of the supplier&#39;s group. | [optional] 
 **OrgLinkMethod** | Pointer to **NullableString** | How the supplier was linked to its organization record, so a caller can apply a confidence floor. The supplier pages on organization pages show only provider_ror_exact, provider_edgar_exact and supplier_curated. | [optional] 
+**PhsAnimalWelfareAssuranceId** | Pointer to **NullableString** | The NIH Office of Laboratory Animal Welfare (OLAW) Public Health Service Animal Welfare Assurance id the supplier page badges (#5286). Set only when the supplier is linked to its organization with confidence (provider_ror_exact, provider_edgar_exact or supplier_curated) and the OLAW institution matched that organization at a high or medium tier, the same rule as the page. Null means no badge, never &#39;not assured&#39;: OLAW&#39;s list is matched to the organizations we hold, and most institutions do not resolve. Full detail, with the raw status code, is the animal_welfare_assurances dataset. | [optional] 
 **HasPublicPage** | Pointer to **NullableBool** | True when the supplier has a public page on the web (every row of this dataset does). | [optional] 
 
 ## Methods
@@ -1069,6 +1070,41 @@ HasOrgLinkMethod returns a boolean if a field has been set.
 `func (o *SuppliersRow) UnsetOrgLinkMethod()`
 
 UnsetOrgLinkMethod ensures that no value is present for OrgLinkMethod, not even an explicit nil
+### GetPhsAnimalWelfareAssuranceId
+
+`func (o *SuppliersRow) GetPhsAnimalWelfareAssuranceId() string`
+
+GetPhsAnimalWelfareAssuranceId returns the PhsAnimalWelfareAssuranceId field if non-nil, zero value otherwise.
+
+### GetPhsAnimalWelfareAssuranceIdOk
+
+`func (o *SuppliersRow) GetPhsAnimalWelfareAssuranceIdOk() (*string, bool)`
+
+GetPhsAnimalWelfareAssuranceIdOk returns a tuple with the PhsAnimalWelfareAssuranceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPhsAnimalWelfareAssuranceId
+
+`func (o *SuppliersRow) SetPhsAnimalWelfareAssuranceId(v string)`
+
+SetPhsAnimalWelfareAssuranceId sets PhsAnimalWelfareAssuranceId field to given value.
+
+### HasPhsAnimalWelfareAssuranceId
+
+`func (o *SuppliersRow) HasPhsAnimalWelfareAssuranceId() bool`
+
+HasPhsAnimalWelfareAssuranceId returns a boolean if a field has been set.
+
+### SetPhsAnimalWelfareAssuranceIdNil
+
+`func (o *SuppliersRow) SetPhsAnimalWelfareAssuranceIdNil(b bool)`
+
+ SetPhsAnimalWelfareAssuranceIdNil sets the value for PhsAnimalWelfareAssuranceId to be an explicit nil
+
+### UnsetPhsAnimalWelfareAssuranceId
+`func (o *SuppliersRow) UnsetPhsAnimalWelfareAssuranceId()`
+
+UnsetPhsAnimalWelfareAssuranceId ensures that no value is present for PhsAnimalWelfareAssuranceId, not even an explicit nil
 ### GetHasPublicPage
 
 `func (o *SuppliersRow) GetHasPublicPage() bool`

@@ -28,9 +28,9 @@ pub struct RwdSourcesRecord {
     #[serde(rename = "source_credit", skip_serializing_if = "Option::is_none")]
     pub source_credit: Option<String>,
     #[serde(rename = "freshness", skip_serializing_if = "Option::is_none")]
-    pub freshness: Option<Box<models::BiomarkerAssayEvidenceResponseFreshness>>,
+    pub freshness: Option<Box<models::AnimalWelfareAssurancesResponseFreshness>>,
     #[serde(rename = "build", skip_serializing_if = "Option::is_none")]
-    pub build: Option<Box<models::BiomarkerAssayEvidenceResponseBuild>>,
+    pub build: Option<Box<models::AnimalWelfareAssurancesResponseBuild>>,
     #[serde(rename = "build_state", skip_serializing_if = "Option::is_none")]
     pub build_state: Option<Box<models::DatasetBuildState>>,
     #[serde(rename = "restriction", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]

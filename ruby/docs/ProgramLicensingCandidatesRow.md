@@ -15,9 +15,7 @@
 | **condition_id** | **String** | The condition key, a MeSH (Medical Subject Headings) descriptor id (D followed by six to nine digits). | [optional] |
 | **condition_name** | **String** | The condition&#39;s name. | [optional] |
 | **condition_ancestor_ids** | **Array&lt;String&gt;** | Every MeSH descriptor id at or above the condition in the tree, the condition itself included. Filter a subtree with &#x3D; ANY. | [optional] |
-| **max_phase** | **Integer** | Highest phase reached on the 0 to 4 scale: 0 not reported, 1 through 4 for phase 1 through phase 4 (4 is marketed); a split phase folds up to its higher phase. | [optional] |
-| **max_phase_label** | **String** | The furthest phase reached with the split phases kept: Early 1, Phase 1, Phase 1/2, Phase 2, Phase 2/3, Phase 3, Phase 4, or Not reported. max_phase is the same value folded onto 0 to 4 (a split phase counts as its higher phase). | [optional] |
-| **max_phase_fine_rank** | **Integer** | The finest phase rank behind max_phase_label: 6 Phase 4, 5 Phase 3, 4 Phase 2/3, 3 Phase 2, 2 Phase 1/2, 1 Phase 1, 0 Early 1, -1 not reported. Sort on it to order programs by furthest phase with the split phases kept; max_phase is the same value folded onto 0 to 4. | [optional] |
+| **max_phase** | **Integer** | Highest phase reached: 0 early phase 1 through 6 for phase 4 (marketed); -1 when unstated. | [optional] |
 | **n_trials** | **Integer** | Lead-sponsored trials in the program. | [optional] |
 | **n_active** | **Integer** | Of those, trials in an active status. | [optional] |
 | **last_year** | **Integer** | Latest trial start year. | [optional] |
@@ -46,8 +44,6 @@ instance = PharmaObservatory::ProgramLicensingCandidatesRow.new(
   condition_name: null,
   condition_ancestor_ids: null,
   max_phase: null,
-  max_phase_label: null,
-  max_phase_fine_rank: null,
   n_trials: null,
   n_active: null,
   last_year: null,

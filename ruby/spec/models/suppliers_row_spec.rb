@@ -201,6 +201,12 @@ describe PharmaObservatory::SuppliersRow do
     end
   end
 
+  describe 'test attribute "phs_animal_welfare_assurance_id"' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   describe 'test attribute "has_public_page"' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/

@@ -12,6 +12,7 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**drugs_drug_brands**](DrugsApi.md#drugs_drug_brands) | **GET** /api/v1/drugs/{id}/drug_brands | Drug brands |
 | [**drugs_drug_combinations**](DrugsApi.md#drugs_drug_combinations) | **GET** /api/v1/drugs/{id}/drug_combinations | Drug combinations |
 | [**drugs_drug_declared_patents**](DrugsApi.md#drugs_drug_declared_patents) | **GET** /api/v1/drugs/{id}/drug_declared_patents | Drug declared patents |
+| [**drugs_drug_investigators**](DrugsApi.md#drugs_drug_investigators) | **GET** /api/v1/drugs/{id}/drug_investigators | Investigators on a drug&#39;s trials |
 | [**drugs_drug_label_safety**](DrugsApi.md#drugs_drug_label_safety) | **GET** /api/v1/drugs/{id}/drug_label_safety | Drug label safety |
 | [**drugs_drug_medicare_spend**](DrugsApi.md#drugs_drug_medicare_spend) | **GET** /api/v1/drugs/{id}/drug_medicare_spend | Drug Medicare spend |
 | [**drugs_drug_patent_cliff**](DrugsApi.md#drugs_drug_patent_cliff) | **GET** /api/v1/drugs/{id}/drug_patent_cliff | Patent-cliff exposure |
@@ -654,6 +655,85 @@ end
 ### Return type
 
 [**DrugDeclaredPatentsResponse**](DrugDeclaredPatentsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## drugs_drug_investigators
+
+> <DrugInvestigatorsResponse> drugs_drug_investigators(id, opts)
+
+Investigators on a drug's trials
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::DrugsApi.new
+id = 'unii:53AXN4NNHX' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Investigators on a drug's trials
+  result = api_instance.drugs_drug_investigators(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling DrugsApi->drugs_drug_investigators: #{e}"
+end
+```
+
+#### Using the drugs_drug_investigators_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<DrugInvestigatorsResponse>, Integer, Hash)> drugs_drug_investigators_with_http_info(id, opts)
+
+```ruby
+begin
+  # Investigators on a drug's trials
+  data, status_code, headers = api_instance.drugs_drug_investigators_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <DrugInvestigatorsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling DrugsApi->drugs_drug_investigators_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**DrugInvestigatorsResponse**](DrugInvestigatorsResponse.md)
 
 ### Authorization
 

@@ -101,6 +101,9 @@ pub struct SuppliersRow {
     /// How the supplier was linked to its organization record, so a caller can apply a confidence floor. The supplier pages on organization pages show only provider_ror_exact, provider_edgar_exact and supplier_curated.
     #[serde(rename = "org_link_method", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub org_link_method: Option<Option<String>>,
+    /// The NIH Office of Laboratory Animal Welfare (OLAW) Public Health Service Animal Welfare Assurance id the supplier page badges (#5286). Set only when the supplier is linked to its organization with confidence (provider_ror_exact, provider_edgar_exact or supplier_curated) and the OLAW institution matched that organization at a high or medium tier, the same rule as the page. Null means no badge, never 'not assured': OLAW's list is matched to the organizations we hold, and most institutions do not resolve. Full detail, with the raw status code, is the animal_welfare_assurances dataset.
+    #[serde(rename = "phs_animal_welfare_assurance_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub phs_animal_welfare_assurance_id: Option<Option<String>>,
     /// True when the supplier has a public page on the web (every row of this dataset does).
     #[serde(rename = "has_public_page", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub has_public_page: Option<Option<bool>>,
@@ -139,6 +142,7 @@ impl SuppliersRow {
             supplier_group_id: None,
             supplier_group_name: None,
             org_link_method: None,
+            phs_animal_welfare_assurance_id: None,
             has_public_page: None,
         }
     }

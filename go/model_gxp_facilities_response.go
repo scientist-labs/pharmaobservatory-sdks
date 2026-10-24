@@ -24,7 +24,7 @@ type GxpFacilitiesResponse struct {
 	Grain *string `json:"grain,omitempty"`
 	ObjectType NullableString `json:"object_type,omitempty"`
 	Id NullableString `json:"id,omitempty"`
-	Scope NullableBiomarkerAssayEvidenceResponseScope `json:"scope,omitempty"`
+	Scope NullableAnimalWelfareAssurancesResponseScope `json:"scope,omitempty"`
 	Columns []DatasetColumn `json:"columns"`
 	Rows []GxpFacilitiesRow `json:"rows"`
 	// The exact count of the filtered rows on an ungrouped read, carried by the cursor; null when grouped.
@@ -38,8 +38,8 @@ type GxpFacilitiesResponse struct {
 	SourceCredit *string `json:"source_credit,omitempty"`
 	WithheldTiers []string `json:"withheld_tiers,omitempty"`
 	WithheldColumns []string `json:"withheld_columns,omitempty"`
-	Freshness *BiomarkerAssayEvidenceResponseFreshness `json:"freshness,omitempty"`
-	Build *BiomarkerAssayEvidenceResponseBuild `json:"build,omitempty"`
+	Freshness *AnimalWelfareAssurancesResponseFreshness `json:"freshness,omitempty"`
+	Build *AnimalWelfareAssurancesResponseBuild `json:"build,omitempty"`
 	BuildState *DatasetBuildState `json:"build_state,omitempty"`
 	Restriction map[string]interface{} `json:"restriction,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -208,9 +208,9 @@ func (o *GxpFacilitiesResponse) UnsetId() {
 }
 
 // GetScope returns the Scope field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GxpFacilitiesResponse) GetScope() BiomarkerAssayEvidenceResponseScope {
+func (o *GxpFacilitiesResponse) GetScope() AnimalWelfareAssurancesResponseScope {
 	if o == nil || IsNil(o.Scope.Get()) {
-		var ret BiomarkerAssayEvidenceResponseScope
+		var ret AnimalWelfareAssurancesResponseScope
 		return ret
 	}
 	return *o.Scope.Get()
@@ -219,7 +219,7 @@ func (o *GxpFacilitiesResponse) GetScope() BiomarkerAssayEvidenceResponseScope {
 // GetScopeOk returns a tuple with the Scope field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GxpFacilitiesResponse) GetScopeOk() (*BiomarkerAssayEvidenceResponseScope, bool) {
+func (o *GxpFacilitiesResponse) GetScopeOk() (*AnimalWelfareAssurancesResponseScope, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -235,8 +235,8 @@ func (o *GxpFacilitiesResponse) HasScope() bool {
 	return false
 }
 
-// SetScope gets a reference to the given NullableBiomarkerAssayEvidenceResponseScope and assigns it to the Scope field.
-func (o *GxpFacilitiesResponse) SetScope(v BiomarkerAssayEvidenceResponseScope) {
+// SetScope gets a reference to the given NullableAnimalWelfareAssurancesResponseScope and assigns it to the Scope field.
+func (o *GxpFacilitiesResponse) SetScope(v AnimalWelfareAssurancesResponseScope) {
 	o.Scope.Set(&v)
 }
 // SetScopeNil sets the value for Scope to be an explicit nil
@@ -638,9 +638,9 @@ func (o *GxpFacilitiesResponse) SetWithheldColumns(v []string) {
 }
 
 // GetFreshness returns the Freshness field value if set, zero value otherwise.
-func (o *GxpFacilitiesResponse) GetFreshness() BiomarkerAssayEvidenceResponseFreshness {
+func (o *GxpFacilitiesResponse) GetFreshness() AnimalWelfareAssurancesResponseFreshness {
 	if o == nil || IsNil(o.Freshness) {
-		var ret BiomarkerAssayEvidenceResponseFreshness
+		var ret AnimalWelfareAssurancesResponseFreshness
 		return ret
 	}
 	return *o.Freshness
@@ -648,7 +648,7 @@ func (o *GxpFacilitiesResponse) GetFreshness() BiomarkerAssayEvidenceResponseFre
 
 // GetFreshnessOk returns a tuple with the Freshness field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GxpFacilitiesResponse) GetFreshnessOk() (*BiomarkerAssayEvidenceResponseFreshness, bool) {
+func (o *GxpFacilitiesResponse) GetFreshnessOk() (*AnimalWelfareAssurancesResponseFreshness, bool) {
 	if o == nil || IsNil(o.Freshness) {
 		return nil, false
 	}
@@ -664,15 +664,15 @@ func (o *GxpFacilitiesResponse) HasFreshness() bool {
 	return false
 }
 
-// SetFreshness gets a reference to the given BiomarkerAssayEvidenceResponseFreshness and assigns it to the Freshness field.
-func (o *GxpFacilitiesResponse) SetFreshness(v BiomarkerAssayEvidenceResponseFreshness) {
+// SetFreshness gets a reference to the given AnimalWelfareAssurancesResponseFreshness and assigns it to the Freshness field.
+func (o *GxpFacilitiesResponse) SetFreshness(v AnimalWelfareAssurancesResponseFreshness) {
 	o.Freshness = &v
 }
 
 // GetBuild returns the Build field value if set, zero value otherwise.
-func (o *GxpFacilitiesResponse) GetBuild() BiomarkerAssayEvidenceResponseBuild {
+func (o *GxpFacilitiesResponse) GetBuild() AnimalWelfareAssurancesResponseBuild {
 	if o == nil || IsNil(o.Build) {
-		var ret BiomarkerAssayEvidenceResponseBuild
+		var ret AnimalWelfareAssurancesResponseBuild
 		return ret
 	}
 	return *o.Build
@@ -680,7 +680,7 @@ func (o *GxpFacilitiesResponse) GetBuild() BiomarkerAssayEvidenceResponseBuild {
 
 // GetBuildOk returns a tuple with the Build field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GxpFacilitiesResponse) GetBuildOk() (*BiomarkerAssayEvidenceResponseBuild, bool) {
+func (o *GxpFacilitiesResponse) GetBuildOk() (*AnimalWelfareAssurancesResponseBuild, bool) {
 	if o == nil || IsNil(o.Build) {
 		return nil, false
 	}
@@ -696,8 +696,8 @@ func (o *GxpFacilitiesResponse) HasBuild() bool {
 	return false
 }
 
-// SetBuild gets a reference to the given BiomarkerAssayEvidenceResponseBuild and assigns it to the Build field.
-func (o *GxpFacilitiesResponse) SetBuild(v BiomarkerAssayEvidenceResponseBuild) {
+// SetBuild gets a reference to the given AnimalWelfareAssurancesResponseBuild and assigns it to the Build field.
+func (o *GxpFacilitiesResponse) SetBuild(v AnimalWelfareAssurancesResponseBuild) {
 	o.Build = &v
 }
 

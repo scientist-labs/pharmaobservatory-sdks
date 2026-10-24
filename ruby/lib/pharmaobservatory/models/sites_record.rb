@@ -74,8 +74,8 @@ module PharmaObservatory
         :'datasets' => :'Array<DatasetListing>',
         :'attribution' => :'Array<DatasetAttribution>',
         :'source_credit' => :'String',
-        :'freshness' => :'BiomarkerAssayEvidenceResponseFreshness',
-        :'build' => :'BiomarkerAssayEvidenceResponseBuild',
+        :'freshness' => :'AnimalWelfareAssurancesResponseFreshness',
+        :'build' => :'AnimalWelfareAssurancesResponseBuild',
         :'build_state' => :'DatasetBuildState',
         :'restriction' => :'Hash<String, Object>'
       }

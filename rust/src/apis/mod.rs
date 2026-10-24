@@ -119,6 +119,7 @@ pub mod conditions_api;
 pub mod datasets_api;
 pub mod drugs_api;
 pub mod hospitals_api;
+pub mod investigators_api;
 pub mod investors_api;
 pub mod legal_entities_api;
 pub mod managers_api;

@@ -439,6 +439,90 @@ module PharmaObservatory
       return data, status_code, headers
     end
 
+    # Organizations of a condition's investigators
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @return [ConditionInvestigatorOrganizationsResponse]
+    def conditions_condition_investigator_organizations(id, opts = {})
+      data, _status_code, _headers = conditions_condition_investigator_organizations_with_http_info(id, opts)
+      data
+    end
+
+    # Organizations of a condition&#39;s investigators
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @return [Array<(ConditionInvestigatorOrganizationsResponse, Integer, Hash)>] ConditionInvestigatorOrganizationsResponse data, response status code and response headers
+    def conditions_condition_investigator_organizations_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: ConditionsApi.conditions_condition_investigator_organizations ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling ConditionsApi.conditions_condition_investigator_organizations"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling ConditionsApi.conditions_condition_investigator_organizations, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling ConditionsApi.conditions_condition_investigator_organizations, must be greater than or equal to 1.'
+      end
+
+      # resource path
+      local_var_path = '/api/v1/conditions/{id}/condition_investigator_organizations'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'ConditionInvestigatorOrganizationsResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"ConditionsApi.conditions_condition_investigator_organizations",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: ConditionsApi#conditions_condition_investigator_organizations\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Condition prevalence
     # @param id [String] 
     # @param [Hash] opts the optional parameters
@@ -1084,6 +1168,90 @@ module PharmaObservatory
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: ConditionsApi#conditions_get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Investigator conditions
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @return [InvestigatorConditionsResponse]
+    def conditions_investigator_conditions(id, opts = {})
+      data, _status_code, _headers = conditions_investigator_conditions_with_http_info(id, opts)
+      data
+    end
+
+    # Investigator conditions
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @return [Array<(InvestigatorConditionsResponse, Integer, Hash)>] InvestigatorConditionsResponse data, response status code and response headers
+    def conditions_investigator_conditions_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: ConditionsApi.conditions_investigator_conditions ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling ConditionsApi.conditions_investigator_conditions"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling ConditionsApi.conditions_investigator_conditions, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling ConditionsApi.conditions_investigator_conditions, must be greater than or equal to 1.'
+      end
+
+      # resource path
+      local_var_path = '/api/v1/conditions/{id}/investigator_conditions'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'InvestigatorConditionsResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"ConditionsApi.conditions_investigator_conditions",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: ConditionsApi#conditions_investigator_conditions\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end

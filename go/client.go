@@ -65,6 +65,8 @@ type APIClient struct {
 
 	HospitalsAPI *HospitalsAPIService
 
+	InvestigatorsAPI *InvestigatorsAPIService
+
 	InvestorsAPI *InvestorsAPIService
 
 	LegalEntitiesAPI *LegalEntitiesAPIService
@@ -120,6 +122,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.DatasetsAPI = (*DatasetsAPIService)(&c.common)
 	c.DrugsAPI = (*DrugsAPIService)(&c.common)
 	c.HospitalsAPI = (*HospitalsAPIService)(&c.common)
+	c.InvestigatorsAPI = (*InvestigatorsAPIService)(&c.common)
 	c.InvestorsAPI = (*InvestorsAPIService)(&c.common)
 	c.LegalEntitiesAPI = (*LegalEntitiesAPIService)(&c.common)
 	c.ManagersAPI = (*ManagersAPIService)(&c.common)

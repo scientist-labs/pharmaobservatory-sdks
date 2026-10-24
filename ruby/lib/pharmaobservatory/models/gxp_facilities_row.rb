@@ -97,7 +97,7 @@ module PharmaObservatory
     # True when the registers say the site makes devices.
     attr_accessor :is_device_facility
 
-    # The display bucket over the two flags: drug, device, drug_and_device or non_medicine.
+    # The display bucket over the register flags: drug, device, drug_and_device, animal_research (a USDA APHIS research facility that is neither a drug nor a device facility) or non_medicine.
     attr_accessor :register_domain
 
     # The registered-product rollup for a device facility: material, unresolved, low_signal or not_applicable.
@@ -226,6 +226,45 @@ module PharmaObservatory
     # The date of the latest import refusal.
     attr_accessor :latest_import_refusal_date
 
+    # True when the facility has a USDA APHIS Animal Welfare Act registrant site as a member (the animal_research register); a facility can also be a drug or device facility.
+    attr_accessor :is_research_facility
+
+    # USDA APHIS inspection reports for the site, one per report and never per citation; zero where the facility has no APHIS member. Read with awa_species_scope.
+    attr_accessor :n_aphis_inspections
+
+    # The date of the latest APHIS inspection report; null when there is none.
+    attr_accessor :latest_aphis_inspection_date
+
+    # The latest APHIS report's verdict, the strongest citation kind on it: direct, critical, non_critical, no_citations or no_citations_no_animals; null when there is no APHIS report.
+    attr_accessor :latest_aphis_inspection_outcome
+
+    # APHIS reports at the site with at least one citation (direct, critical or non-critical).
+    attr_accessor :n_aphis_inspections_cited
+
+    # Citations across the site's APHIS reports. Read with awa_species_scope.
+    attr_accessor :n_aphis_citations
+
+    # Of those, the citations the report marks as repeats.
+    attr_accessor :n_aphis_repeat_citations
+
+    # The label AWA-covered species on a facility with an APHIS member; null otherwise. The APHIS counts describe the species the Animal Welfare Act covers; read them with this label.
+    attr_accessor :awa_species_scope
+
+    # Organization scope, repeated onto every facility of the organization: the NIH OLAW Public Health Service Animal Welfare Assurance id, or null when the organization has no resolved row. Null is never evidence of no assurance.
+    attr_accessor :org_olaw_assurance_id
+
+    # OLAW's raw two-digit assurance status code as published, never decoded; null with org_olaw_assurance_id.
+    attr_accessor :org_olaw_assurance_status
+
+    # How well the OLAW institution name resolved to the organization: high, medium or low; the web badge shows high and medium.
+    attr_accessor :org_olaw_match_tier
+
+    # When OLAW's lookup tool says its list was last updated; the source does not state a timezone.
+    attr_accessor :org_olaw_source_asof
+
+    # True when org_olaw_assurance_id is not null. Organization scope, repeated per facility, not additive.
+    attr_accessor :has_org_olaw_assurance
+
     # EU GMP certificates of the site.
     attr_accessor :n_gmp_certificates
 
@@ -326,6 +365,19 @@ module PharmaObservatory
         :'n_hc_inspections_non_compliant' => :'n_hc_inspections_non_compliant',
         :'n_import_refusals' => :'n_import_refusals',
         :'latest_import_refusal_date' => :'latest_import_refusal_date',
+        :'is_research_facility' => :'is_research_facility',
+        :'n_aphis_inspections' => :'n_aphis_inspections',
+        :'latest_aphis_inspection_date' => :'latest_aphis_inspection_date',
+        :'latest_aphis_inspection_outcome' => :'latest_aphis_inspection_outcome',
+        :'n_aphis_inspections_cited' => :'n_aphis_inspections_cited',
+        :'n_aphis_citations' => :'n_aphis_citations',
+        :'n_aphis_repeat_citations' => :'n_aphis_repeat_citations',
+        :'awa_species_scope' => :'awa_species_scope',
+        :'org_olaw_assurance_id' => :'org_olaw_assurance_id',
+        :'org_olaw_assurance_status' => :'org_olaw_assurance_status',
+        :'org_olaw_match_tier' => :'org_olaw_match_tier',
+        :'org_olaw_source_asof' => :'org_olaw_source_asof',
+        :'has_org_olaw_assurance' => :'has_org_olaw_assurance',
         :'n_gmp_certificates' => :'n_gmp_certificates',
         :'latest_gmp_certificate_date' => :'latest_gmp_certificate_date',
         :'n_noncompliance_statements' => :'n_noncompliance_statements',
@@ -421,6 +473,19 @@ module PharmaObservatory
         :'n_hc_inspections_non_compliant' => :'Integer',
         :'n_import_refusals' => :'Integer',
         :'latest_import_refusal_date' => :'Date',
+        :'is_research_facility' => :'Boolean',
+        :'n_aphis_inspections' => :'Integer',
+        :'latest_aphis_inspection_date' => :'Date',
+        :'latest_aphis_inspection_outcome' => :'String',
+        :'n_aphis_inspections_cited' => :'Integer',
+        :'n_aphis_citations' => :'Integer',
+        :'n_aphis_repeat_citations' => :'Integer',
+        :'awa_species_scope' => :'String',
+        :'org_olaw_assurance_id' => :'String',
+        :'org_olaw_assurance_status' => :'String',
+        :'org_olaw_match_tier' => :'String',
+        :'org_olaw_source_asof' => :'Time',
+        :'has_org_olaw_assurance' => :'Boolean',
         :'n_gmp_certificates' => :'Integer',
         :'latest_gmp_certificate_date' => :'Date',
         :'n_noncompliance_statements' => :'Integer',
@@ -506,6 +571,19 @@ module PharmaObservatory
         :'n_hc_inspections_non_compliant',
         :'n_import_refusals',
         :'latest_import_refusal_date',
+        :'is_research_facility',
+        :'n_aphis_inspections',
+        :'latest_aphis_inspection_date',
+        :'latest_aphis_inspection_outcome',
+        :'n_aphis_inspections_cited',
+        :'n_aphis_citations',
+        :'n_aphis_repeat_citations',
+        :'awa_species_scope',
+        :'org_olaw_assurance_id',
+        :'org_olaw_assurance_status',
+        :'org_olaw_match_tier',
+        :'org_olaw_source_asof',
+        :'has_org_olaw_assurance',
         :'n_gmp_certificates',
         :'latest_gmp_certificate_date',
         :'n_noncompliance_statements',
@@ -822,6 +900,58 @@ module PharmaObservatory
         self.latest_import_refusal_date = attributes[:'latest_import_refusal_date']
       end
 
+      if attributes.key?(:'is_research_facility')
+        self.is_research_facility = attributes[:'is_research_facility']
+      end
+
+      if attributes.key?(:'n_aphis_inspections')
+        self.n_aphis_inspections = attributes[:'n_aphis_inspections']
+      end
+
+      if attributes.key?(:'latest_aphis_inspection_date')
+        self.latest_aphis_inspection_date = attributes[:'latest_aphis_inspection_date']
+      end
+
+      if attributes.key?(:'latest_aphis_inspection_outcome')
+        self.latest_aphis_inspection_outcome = attributes[:'latest_aphis_inspection_outcome']
+      end
+
+      if attributes.key?(:'n_aphis_inspections_cited')
+        self.n_aphis_inspections_cited = attributes[:'n_aphis_inspections_cited']
+      end
+
+      if attributes.key?(:'n_aphis_citations')
+        self.n_aphis_citations = attributes[:'n_aphis_citations']
+      end
+
+      if attributes.key?(:'n_aphis_repeat_citations')
+        self.n_aphis_repeat_citations = attributes[:'n_aphis_repeat_citations']
+      end
+
+      if attributes.key?(:'awa_species_scope')
+        self.awa_species_scope = attributes[:'awa_species_scope']
+      end
+
+      if attributes.key?(:'org_olaw_assurance_id')
+        self.org_olaw_assurance_id = attributes[:'org_olaw_assurance_id']
+      end
+
+      if attributes.key?(:'org_olaw_assurance_status')
+        self.org_olaw_assurance_status = attributes[:'org_olaw_assurance_status']
+      end
+
+      if attributes.key?(:'org_olaw_match_tier')
+        self.org_olaw_match_tier = attributes[:'org_olaw_match_tier']
+      end
+
+      if attributes.key?(:'org_olaw_source_asof')
+        self.org_olaw_source_asof = attributes[:'org_olaw_source_asof']
+      end
+
+      if attributes.key?(:'has_org_olaw_assurance')
+        self.has_org_olaw_assurance = attributes[:'has_org_olaw_assurance']
+      end
+
       if attributes.key?(:'n_gmp_certificates')
         self.n_gmp_certificates = attributes[:'n_gmp_certificates']
       end
@@ -949,6 +1079,19 @@ module PharmaObservatory
           n_hc_inspections_non_compliant == o.n_hc_inspections_non_compliant &&
           n_import_refusals == o.n_import_refusals &&
           latest_import_refusal_date == o.latest_import_refusal_date &&
+          is_research_facility == o.is_research_facility &&
+          n_aphis_inspections == o.n_aphis_inspections &&
+          latest_aphis_inspection_date == o.latest_aphis_inspection_date &&
+          latest_aphis_inspection_outcome == o.latest_aphis_inspection_outcome &&
+          n_aphis_inspections_cited == o.n_aphis_inspections_cited &&
+          n_aphis_citations == o.n_aphis_citations &&
+          n_aphis_repeat_citations == o.n_aphis_repeat_citations &&
+          awa_species_scope == o.awa_species_scope &&
+          org_olaw_assurance_id == o.org_olaw_assurance_id &&
+          org_olaw_assurance_status == o.org_olaw_assurance_status &&
+          org_olaw_match_tier == o.org_olaw_match_tier &&
+          org_olaw_source_asof == o.org_olaw_source_asof &&
+          has_org_olaw_assurance == o.has_org_olaw_assurance &&
           n_gmp_certificates == o.n_gmp_certificates &&
           latest_gmp_certificate_date == o.latest_gmp_certificate_date &&
           n_noncompliance_statements == o.n_noncompliance_statements &&
@@ -969,7 +1112,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [facility_key, registry, registry_native_site_id, registry_facility_keys, facility_name, member_count, address_line, city, state_region, postal, country, latitude, longitude, geocode_precision, coord_source, firm_name, firm_org_id, firm_company_id, firm_company_name, firm_group_id, firm_group_name, is_org_resolved, match_tier, domains, primary_domain, is_drug_facility, is_device_facility, register_domain, device_classification_status, is_low_signal_device, regulators, n_regulators, is_multi_regulator, org_regulators, severity_rank, severity_level, severity_scope, severity_source, severity_signal_type, severity_raw_verdict, severity_signal_date, severity_source_url, worst_severity_rank_ever, worst_severity_level_ever, worst_severity_raw_verdict, worst_severity_signal_date, has_quality_signal, has_site_scope_signal, has_org_scope_signal, latest_signal_date, first_signal_date, n_signals_total, n_signals_365d, n_signals_1095d, n_signals_1825d, n_inspections, latest_inspection_date, n_fda_inspections, latest_fda_inspection_date, latest_inspection_classification, n_inspections_nai, n_inspections_vai, n_inspections_oai, n_483, n_hc_inspections, latest_hc_inspection_date, latest_hc_inspection_rating, n_hc_inspections_non_compliant, n_import_refusals, latest_import_refusal_date, n_gmp_certificates, latest_gmp_certificate_date, n_noncompliance_statements, latest_noncompliance_statement_date, n_licences, licence_status, org_n_licence_actions, org_latest_licence_action_date, as_of].hash
+      [facility_key, registry, registry_native_site_id, registry_facility_keys, facility_name, member_count, address_line, city, state_region, postal, country, latitude, longitude, geocode_precision, coord_source, firm_name, firm_org_id, firm_company_id, firm_company_name, firm_group_id, firm_group_name, is_org_resolved, match_tier, domains, primary_domain, is_drug_facility, is_device_facility, register_domain, device_classification_status, is_low_signal_device, regulators, n_regulators, is_multi_regulator, org_regulators, severity_rank, severity_level, severity_scope, severity_source, severity_signal_type, severity_raw_verdict, severity_signal_date, severity_source_url, worst_severity_rank_ever, worst_severity_level_ever, worst_severity_raw_verdict, worst_severity_signal_date, has_quality_signal, has_site_scope_signal, has_org_scope_signal, latest_signal_date, first_signal_date, n_signals_total, n_signals_365d, n_signals_1095d, n_signals_1825d, n_inspections, latest_inspection_date, n_fda_inspections, latest_fda_inspection_date, latest_inspection_classification, n_inspections_nai, n_inspections_vai, n_inspections_oai, n_483, n_hc_inspections, latest_hc_inspection_date, latest_hc_inspection_rating, n_hc_inspections_non_compliant, n_import_refusals, latest_import_refusal_date, is_research_facility, n_aphis_inspections, latest_aphis_inspection_date, latest_aphis_inspection_outcome, n_aphis_inspections_cited, n_aphis_citations, n_aphis_repeat_citations, awa_species_scope, org_olaw_assurance_id, org_olaw_assurance_status, org_olaw_match_tier, org_olaw_source_asof, has_org_olaw_assurance, n_gmp_certificates, latest_gmp_certificate_date, n_noncompliance_statements, latest_noncompliance_statement_date, n_licences, licence_status, org_n_licence_actions, org_latest_licence_action_date, as_of].hash
     end
 
     # Builds the object from hash

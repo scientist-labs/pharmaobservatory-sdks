@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**targets_period_target_crowding**](TargetsApi.md#targets_period_target_crowding) | **GET** /api/v1/targets/{id}/target_crowding | Target crowding by phase
 [**targets_period_target_drugs**](TargetsApi.md#targets_period_target_drugs) | **GET** /api/v1/targets/{id}/target_drugs | Drugs acting on a target
 [**targets_period_target_evidence**](TargetsApi.md#targets_period_target_evidence) | **GET** /api/v1/targets/{id}/target_evidence | Target evidence
+[**targets_period_target_investigators**](TargetsApi.md#targets_period_target_investigators) | **GET** /api/v1/targets/{id}/target_investigators | Investigators on a target's trials
 [**targets_period_target_patent_mentions**](TargetsApi.md#targets_period_target_patent_mentions) | **GET** /api/v1/targets/{id}/target_patent_mentions | Target patent mentions
 [**targets_period_target_programs**](TargetsApi.md#targets_period_target_programs) | **GET** /api/v1/targets/{id}/target_programs | Target development programs
 [**targets_period_target_publications**](TargetsApi.md#targets_period_target_publications) | **GET** /api/v1/targets/{id}/target_publications | Target publications
@@ -265,6 +266,39 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::TargetEvidenceResponse**](TargetEvidenceResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## targets_period_target_investigators
+
+> models::TargetInvestigatorsResponse targets_period_target_investigators(id, cursor, limit, sort, group_by, measure)
+Investigators on a target's trials
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::TargetInvestigatorsResponse**](TargetInvestigatorsResponse.md)
 
 ### Authorization
 

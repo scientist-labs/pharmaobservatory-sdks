@@ -19,6 +19,97 @@ module PharmaObservatory
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
+    # Animal welfare assurances
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [AnimalWelfareAssurancesResponse]
+    def companies_animal_welfare_assurances(id, opts = {})
+      data, _status_code, _headers = companies_animal_welfare_assurances_with_http_info(id, opts)
+      data
+    end
+
+    # Animal welfare assurances
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [Array<(AnimalWelfareAssurancesResponse, Integer, Hash)>] AnimalWelfareAssurancesResponse data, response status code and response headers
+    def companies_animal_welfare_assurances_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: CompaniesApi.companies_animal_welfare_assurances ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_animal_welfare_assurances"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_animal_welfare_assurances, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_animal_welfare_assurances, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
+      # resource path
+      local_var_path = '/api/v1/companies/{id}/animal_welfare_assurances'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'AnimalWelfareAssurancesResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"CompaniesApi.companies_animal_welfare_assurances",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: CompaniesApi#companies_animal_welfare_assurances\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # FDA biomarker qualification projects
     # @param id [String] 
     # @param [Hash] opts the optional parameters
@@ -747,6 +838,461 @@ module PharmaObservatory
       return data, status_code, headers
     end
 
+    # Company study collaborators by disease area
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [CompanyCollaboratorsResponse]
+    def companies_company_collaborators(id, opts = {})
+      data, _status_code, _headers = companies_company_collaborators_with_http_info(id, opts)
+      data
+    end
+
+    # Company study collaborators by disease area
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [Array<(CompanyCollaboratorsResponse, Integer, Hash)>] CompanyCollaboratorsResponse data, response status code and response headers
+    def companies_company_collaborators_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: CompaniesApi.companies_company_collaborators ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_company_collaborators"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_collaborators, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_collaborators, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
+      # resource path
+      local_var_path = '/api/v1/companies/{id}/company_collaborators'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CompanyCollaboratorsResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"CompaniesApi.companies_company_collaborators",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: CompaniesApi#companies_company_collaborators\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Company competitor activity by disease area
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [CompanyCompetitorActivityResponse]
+    def companies_company_competitor_activity(id, opts = {})
+      data, _status_code, _headers = companies_company_competitor_activity_with_http_info(id, opts)
+      data
+    end
+
+    # Company competitor activity by disease area
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [Array<(CompanyCompetitorActivityResponse, Integer, Hash)>] CompanyCompetitorActivityResponse data, response status code and response headers
+    def companies_company_competitor_activity_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: CompaniesApi.companies_company_competitor_activity ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_company_competitor_activity"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_competitor_activity, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_competitor_activity, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
+      # resource path
+      local_var_path = '/api/v1/companies/{id}/company_competitor_activity'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CompanyCompetitorActivityResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"CompaniesApi.companies_company_competitor_activity",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: CompaniesApi#companies_company_competitor_activity\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Company competitors
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [CompanyCompetitorsResponse]
+    def companies_company_competitors(id, opts = {})
+      data, _status_code, _headers = companies_company_competitors_with_http_info(id, opts)
+      data
+    end
+
+    # Company competitors
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [Array<(CompanyCompetitorsResponse, Integer, Hash)>] CompanyCompetitorsResponse data, response status code and response headers
+    def companies_company_competitors_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: CompaniesApi.companies_company_competitors ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_company_competitors"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_competitors, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_competitors, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
+      # resource path
+      local_var_path = '/api/v1/companies/{id}/company_competitors'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CompanyCompetitorsResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"CompaniesApi.companies_company_competitors",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: CompaniesApi#companies_company_competitors\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Company SEC financials
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [CompanyFinancialsResponse]
+    def companies_company_financials(id, opts = {})
+      data, _status_code, _headers = companies_company_financials_with_http_info(id, opts)
+      data
+    end
+
+    # Company SEC financials
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [Array<(CompanyFinancialsResponse, Integer, Hash)>] CompanyFinancialsResponse data, response status code and response headers
+    def companies_company_financials_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: CompaniesApi.companies_company_financials ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_company_financials"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_financials, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_financials, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
+      # resource path
+      local_var_path = '/api/v1/companies/{id}/company_financials'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CompanyFinancialsResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"CompaniesApi.companies_company_financials",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: CompaniesApi#companies_company_financials\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Company firmographics
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [CompanyFirmographicsResponse]
+    def companies_company_firmographics(id, opts = {})
+      data, _status_code, _headers = companies_company_firmographics_with_http_info(id, opts)
+      data
+    end
+
+    # Company firmographics
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [Array<(CompanyFirmographicsResponse, Integer, Hash)>] CompanyFirmographicsResponse data, response status code and response headers
+    def companies_company_firmographics_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: CompaniesApi.companies_company_firmographics ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_company_firmographics"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_firmographics, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_firmographics, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
+      # resource path
+      local_var_path = '/api/v1/companies/{id}/company_firmographics'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CompanyFirmographicsResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"CompaniesApi.companies_company_firmographics",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: CompaniesApi#companies_company_firmographics\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Company funding events
     # @param id [String] 
     # @param [Hash] opts the optional parameters
@@ -1293,6 +1839,97 @@ module PharmaObservatory
       return data, status_code, headers
     end
 
+    # Company timeline
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [CompanyTimelineResponse]
+    def companies_company_timeline(id, opts = {})
+      data, _status_code, _headers = companies_company_timeline_with_http_info(id, opts)
+      data
+    end
+
+    # Company timeline
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [Array<(CompanyTimelineResponse, Integer, Hash)>] CompanyTimelineResponse data, response status code and response headers
+    def companies_company_timeline_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: CompaniesApi.companies_company_timeline ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_company_timeline"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_timeline, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_timeline, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
+      # resource path
+      local_var_path = '/api/v1/companies/{id}/company_timeline'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CompanyTimelineResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"CompaniesApi.companies_company_timeline",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: CompaniesApi#companies_company_timeline\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Company trial geography
     # @param id [String] 
     # @param [Hash] opts the optional parameters
@@ -1471,6 +2108,97 @@ module PharmaObservatory
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: CompaniesApi#companies_company_trial_sites\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Company US patents
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [CompanyUsPatentsResponse]
+    def companies_company_us_patents(id, opts = {})
+      data, _status_code, _headers = companies_company_us_patents_with_http_info(id, opts)
+      data
+    end
+
+    # Company US patents
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [Array<(CompanyUsPatentsResponse, Integer, Hash)>] CompanyUsPatentsResponse data, response status code and response headers
+    def companies_company_us_patents_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: CompaniesApi.companies_company_us_patents ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_company_us_patents"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_us_patents, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_company_us_patents, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
+      # resource path
+      local_var_path = '/api/v1/companies/{id}/company_us_patents'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CompanyUsPatentsResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"CompaniesApi.companies_company_us_patents",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: CompaniesApi#companies_company_us_patents\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -1839,7 +2567,7 @@ module PharmaObservatory
       return data, status_code, headers
     end
 
-    # FDA enforcement events
+    # Regulatory enforcement events
     # @param id [String] 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
@@ -1854,7 +2582,7 @@ module PharmaObservatory
       data
     end
 
-    # FDA enforcement events
+    # Regulatory enforcement events
     # @param id [String] 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
@@ -3070,6 +3798,97 @@ module PharmaObservatory
       return data, status_code, headers
     end
 
+    # Ownership and control observations (history)
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [OwnershipObservationsResponse]
+    def companies_ownership_observations(id, opts = {})
+      data, _status_code, _headers = companies_ownership_observations_with_http_info(id, opts)
+      data
+    end
+
+    # Ownership and control observations (history)
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [Array<(OwnershipObservationsResponse, Integer, Hash)>] OwnershipObservationsResponse data, response status code and response headers
+    def companies_ownership_observations_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: CompaniesApi.companies_ownership_observations ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_ownership_observations"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_ownership_observations, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_ownership_observations, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
+      # resource path
+      local_var_path = '/api/v1/companies/{id}/ownership_observations'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'OwnershipObservationsResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"CompaniesApi.companies_ownership_observations",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: CompaniesApi#companies_ownership_observations\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Ownership percentages
     # @param id [String] 
     # @param [Hash] opts the optional parameters
@@ -3976,6 +4795,97 @@ module PharmaObservatory
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: CompaniesApi#companies_sponsor_patent_mentions\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Publications of a company's trials
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [SponsorPublicationsResponse]
+    def companies_sponsor_publications(id, opts = {})
+      data, _status_code, _headers = companies_sponsor_publications_with_http_info(id, opts)
+      data
+    end
+
+    # Publications of a company&#39;s trials
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [Array<(SponsorPublicationsResponse, Integer, Hash)>] SponsorPublicationsResponse data, response status code and response headers
+    def companies_sponsor_publications_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: CompaniesApi.companies_sponsor_publications ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_sponsor_publications"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_sponsor_publications, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_sponsor_publications, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
+      # resource path
+      local_var_path = '/api/v1/companies/{id}/sponsor_publications'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'SponsorPublicationsResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"CompaniesApi.companies_sponsor_publications",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: CompaniesApi#companies_sponsor_publications\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end

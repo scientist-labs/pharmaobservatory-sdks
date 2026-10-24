@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**CompanyFirmographics** | Pointer to [**CompanyFirmographicsRow**](CompanyFirmographicsRow.md) |  | [optional] 
 **CompanyFundingSummary** | Pointer to [**CompanyFundingSummaryRow**](CompanyFundingSummaryRow.md) |  | [optional] 
 **CompanyTrialGeography** | Pointer to [**CompanyTrialGeographyRow**](CompanyTrialGeographyRow.md) |  | [optional] 
 
@@ -25,6 +26,31 @@ will change when the set of required properties is changed
 NewCompaniesRecordAttributesWithDefaults instantiates a new CompaniesRecordAttributes object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetCompanyFirmographics
+
+`func (o *CompaniesRecordAttributes) GetCompanyFirmographics() CompanyFirmographicsRow`
+
+GetCompanyFirmographics returns the CompanyFirmographics field if non-nil, zero value otherwise.
+
+### GetCompanyFirmographicsOk
+
+`func (o *CompaniesRecordAttributes) GetCompanyFirmographicsOk() (*CompanyFirmographicsRow, bool)`
+
+GetCompanyFirmographicsOk returns a tuple with the CompanyFirmographics field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCompanyFirmographics
+
+`func (o *CompaniesRecordAttributes) SetCompanyFirmographics(v CompanyFirmographicsRow)`
+
+SetCompanyFirmographics sets CompanyFirmographics field to given value.
+
+### HasCompanyFirmographics
+
+`func (o *CompaniesRecordAttributes) HasCompanyFirmographics() bool`
+
+HasCompanyFirmographics returns a boolean if a field has been set.
 
 ### GetCompanyFundingSummary
 

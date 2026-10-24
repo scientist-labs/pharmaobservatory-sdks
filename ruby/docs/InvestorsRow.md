@@ -18,6 +18,9 @@
 | **total_private_fund_gav** | **Float** | The adviser&#39;s total private-fund gross asset value (GAV) in whole US dollars, a firm-level figure. | [optional] |
 | **portfolio_co_count** | **Integer** | Distinct portfolio companies named against the investor in S-1 and 424B offering holder tables. 0 usually means no named-holder link was observed. | [optional] |
 | **holdings_position_count** | **Integer** | Current Form 13F positions reported by the managers that resolve to this investor, summed over its manager keys. 0 when none resolves. | [optional] |
+| **website_url** | **String** | The adviser&#39;s own website from Form ADV Schedule D Section 1.I (scheme and host lower-cased, path kept). Null for an agency and for an adviser whose only listed pages are social-media pages. | [optional] |
+| **website_domain** | **String** | The host of website_url with the scheme, any port and a leading www stripped, lower-cased. It is never a social-media host. | [optional] |
+| **website_source** | **String** | Where website_url came from: adv (SEC Form ADV Schedule D Section 1.I). Null exactly when website_url is null. | [optional] |
 | **org_id** | **String** | Legal-entity level: the investor&#39;s organization record where the link resolves (null otherwise). An advfirm:&lt;CRD&gt; shell resolves to no legal-entity record and no company. | [optional] |
 | **company_id** | **String** | Company level: the investor&#39;s company (null when unresolved). | [optional] |
 | **company_name** | **String** | Display name of the investor&#39;s company. | [optional] |
@@ -44,6 +47,9 @@ instance = PharmaObservatory::InvestorsRow.new(
   total_private_fund_gav: null,
   portfolio_co_count: null,
   holdings_position_count: null,
+  website_url: null,
+  website_domain: null,
+  website_source: null,
   org_id: null,
   company_id: null,
   company_name: null,

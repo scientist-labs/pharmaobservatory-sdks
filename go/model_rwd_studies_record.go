@@ -27,8 +27,8 @@ type RwdStudiesRecord struct {
 	Datasets []DatasetListing `json:"datasets"`
 	Attribution []DatasetAttribution `json:"attribution,omitempty"`
 	SourceCredit *string `json:"source_credit,omitempty"`
-	Freshness *BiomarkerAssayEvidenceResponseFreshness `json:"freshness,omitempty"`
-	Build *BiomarkerAssayEvidenceResponseBuild `json:"build,omitempty"`
+	Freshness *AnimalWelfareAssurancesResponseFreshness `json:"freshness,omitempty"`
+	Build *AnimalWelfareAssurancesResponseBuild `json:"build,omitempty"`
 	BuildState *DatasetBuildState `json:"build_state,omitempty"`
 	Restriction map[string]interface{} `json:"restriction,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -250,9 +250,9 @@ func (o *RwdStudiesRecord) SetSourceCredit(v string) {
 }
 
 // GetFreshness returns the Freshness field value if set, zero value otherwise.
-func (o *RwdStudiesRecord) GetFreshness() BiomarkerAssayEvidenceResponseFreshness {
+func (o *RwdStudiesRecord) GetFreshness() AnimalWelfareAssurancesResponseFreshness {
 	if o == nil || IsNil(o.Freshness) {
-		var ret BiomarkerAssayEvidenceResponseFreshness
+		var ret AnimalWelfareAssurancesResponseFreshness
 		return ret
 	}
 	return *o.Freshness
@@ -260,7 +260,7 @@ func (o *RwdStudiesRecord) GetFreshness() BiomarkerAssayEvidenceResponseFreshnes
 
 // GetFreshnessOk returns a tuple with the Freshness field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RwdStudiesRecord) GetFreshnessOk() (*BiomarkerAssayEvidenceResponseFreshness, bool) {
+func (o *RwdStudiesRecord) GetFreshnessOk() (*AnimalWelfareAssurancesResponseFreshness, bool) {
 	if o == nil || IsNil(o.Freshness) {
 		return nil, false
 	}
@@ -276,15 +276,15 @@ func (o *RwdStudiesRecord) HasFreshness() bool {
 	return false
 }
 
-// SetFreshness gets a reference to the given BiomarkerAssayEvidenceResponseFreshness and assigns it to the Freshness field.
-func (o *RwdStudiesRecord) SetFreshness(v BiomarkerAssayEvidenceResponseFreshness) {
+// SetFreshness gets a reference to the given AnimalWelfareAssurancesResponseFreshness and assigns it to the Freshness field.
+func (o *RwdStudiesRecord) SetFreshness(v AnimalWelfareAssurancesResponseFreshness) {
 	o.Freshness = &v
 }
 
 // GetBuild returns the Build field value if set, zero value otherwise.
-func (o *RwdStudiesRecord) GetBuild() BiomarkerAssayEvidenceResponseBuild {
+func (o *RwdStudiesRecord) GetBuild() AnimalWelfareAssurancesResponseBuild {
 	if o == nil || IsNil(o.Build) {
-		var ret BiomarkerAssayEvidenceResponseBuild
+		var ret AnimalWelfareAssurancesResponseBuild
 		return ret
 	}
 	return *o.Build
@@ -292,7 +292,7 @@ func (o *RwdStudiesRecord) GetBuild() BiomarkerAssayEvidenceResponseBuild {
 
 // GetBuildOk returns a tuple with the Build field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RwdStudiesRecord) GetBuildOk() (*BiomarkerAssayEvidenceResponseBuild, bool) {
+func (o *RwdStudiesRecord) GetBuildOk() (*AnimalWelfareAssurancesResponseBuild, bool) {
 	if o == nil || IsNil(o.Build) {
 		return nil, false
 	}
@@ -308,8 +308,8 @@ func (o *RwdStudiesRecord) HasBuild() bool {
 	return false
 }
 
-// SetBuild gets a reference to the given BiomarkerAssayEvidenceResponseBuild and assigns it to the Build field.
-func (o *RwdStudiesRecord) SetBuild(v BiomarkerAssayEvidenceResponseBuild) {
+// SetBuild gets a reference to the given AnimalWelfareAssurancesResponseBuild and assigns it to the Build field.
+func (o *RwdStudiesRecord) SetBuild(v AnimalWelfareAssurancesResponseBuild) {
 	o.Build = &v
 }
 

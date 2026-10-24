@@ -95,7 +95,7 @@ pub struct GxpFacilitiesRow {
     /// True when the registers say the site makes devices.
     #[serde(rename = "is_device_facility", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub is_device_facility: Option<Option<bool>>,
-    /// The display bucket over the two flags: drug, device, drug_and_device or non_medicine.
+    /// The display bucket over the register flags: drug, device, drug_and_device, animal_research (a USDA APHIS research facility that is neither a drug nor a device facility) or non_medicine.
     #[serde(rename = "register_domain", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub register_domain: Option<Option<String>>,
     /// The registered-product rollup for a device facility: material, unresolved, low_signal or not_applicable.
@@ -224,6 +224,45 @@ pub struct GxpFacilitiesRow {
     /// The date of the latest import refusal.
     #[serde(rename = "latest_import_refusal_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub latest_import_refusal_date: Option<Option<String>>,
+    /// True when the facility has a USDA APHIS Animal Welfare Act registrant site as a member (the animal_research register); a facility can also be a drug or device facility.
+    #[serde(rename = "is_research_facility", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub is_research_facility: Option<Option<bool>>,
+    /// USDA APHIS inspection reports for the site, one per report and never per citation; zero where the facility has no APHIS member. Read with awa_species_scope.
+    #[serde(rename = "n_aphis_inspections", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_aphis_inspections: Option<Option<i32>>,
+    /// The date of the latest APHIS inspection report; null when there is none.
+    #[serde(rename = "latest_aphis_inspection_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub latest_aphis_inspection_date: Option<Option<String>>,
+    /// The latest APHIS report's verdict, the strongest citation kind on it: direct, critical, non_critical, no_citations or no_citations_no_animals; null when there is no APHIS report.
+    #[serde(rename = "latest_aphis_inspection_outcome", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub latest_aphis_inspection_outcome: Option<Option<String>>,
+    /// APHIS reports at the site with at least one citation (direct, critical or non-critical).
+    #[serde(rename = "n_aphis_inspections_cited", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_aphis_inspections_cited: Option<Option<i32>>,
+    /// Citations across the site's APHIS reports. Read with awa_species_scope.
+    #[serde(rename = "n_aphis_citations", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_aphis_citations: Option<Option<i32>>,
+    /// Of those, the citations the report marks as repeats.
+    #[serde(rename = "n_aphis_repeat_citations", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_aphis_repeat_citations: Option<Option<i32>>,
+    /// The label AWA-covered species on a facility with an APHIS member; null otherwise. The APHIS counts describe the species the Animal Welfare Act covers; read them with this label.
+    #[serde(rename = "awa_species_scope", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub awa_species_scope: Option<Option<String>>,
+    /// Organization scope, repeated onto every facility of the organization: the NIH OLAW Public Health Service Animal Welfare Assurance id, or null when the organization has no resolved row. Null is never evidence of no assurance.
+    #[serde(rename = "org_olaw_assurance_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub org_olaw_assurance_id: Option<Option<String>>,
+    /// OLAW's raw two-digit assurance status code as published, never decoded; null with org_olaw_assurance_id.
+    #[serde(rename = "org_olaw_assurance_status", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub org_olaw_assurance_status: Option<Option<String>>,
+    /// How well the OLAW institution name resolved to the organization: high, medium or low; the web badge shows high and medium.
+    #[serde(rename = "org_olaw_match_tier", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub org_olaw_match_tier: Option<Option<String>>,
+    /// When OLAW's lookup tool says its list was last updated; the source does not state a timezone.
+    #[serde(rename = "org_olaw_source_asof", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub org_olaw_source_asof: Option<Option<String>>,
+    /// True when org_olaw_assurance_id is not null. Organization scope, repeated per facility, not additive.
+    #[serde(rename = "has_org_olaw_assurance", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub has_org_olaw_assurance: Option<Option<bool>>,
     /// EU GMP certificates of the site.
     #[serde(rename = "n_gmp_certificates", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_gmp_certificates: Option<Option<i32>>,
@@ -327,6 +366,19 @@ impl GxpFacilitiesRow {
             n_hc_inspections_non_compliant: None,
             n_import_refusals: None,
             latest_import_refusal_date: None,
+            is_research_facility: None,
+            n_aphis_inspections: None,
+            latest_aphis_inspection_date: None,
+            latest_aphis_inspection_outcome: None,
+            n_aphis_inspections_cited: None,
+            n_aphis_citations: None,
+            n_aphis_repeat_citations: None,
+            awa_species_scope: None,
+            org_olaw_assurance_id: None,
+            org_olaw_assurance_status: None,
+            org_olaw_match_tier: None,
+            org_olaw_source_asof: None,
+            has_org_olaw_assurance: None,
             n_gmp_certificates: None,
             latest_gmp_certificate_date: None,
             n_noncompliance_statements: None,
