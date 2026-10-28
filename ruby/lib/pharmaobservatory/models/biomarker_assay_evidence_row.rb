@@ -64,7 +64,7 @@ module PharmaObservatory
     # What the paper claims about the validation type: a fact about the text, not a tier.
     attr_accessor :validation_type_mentioned
 
-    # Organization names as extracted that run or provide the assay. Not resolved to a company.
+    # The first extraction's flat list of organization names, as extracted, with no role. Not resolved to a company, and it names any company a paper mentions. Who makes or runs an assay for a biomarker, with the role, is the biomarker_assay_providers dataset.
     attr_accessor :assay_provider_company
 
     # Organization names as extracted that funded the study. Never merged with the assay provider.

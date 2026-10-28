@@ -14,7 +14,7 @@ require 'date'
 require 'time'
 
 module PharmaObservatory
-  # One row of the biomarker_assay_providers dataset: one row per biomarker key and assay-provider company name key. A grouped request returns the group columns and the measures instead, as additional properties.
+  # One row of the biomarker_assay_providers dataset: one row per biomarker key and provider key. A grouped request returns the group columns and the measures instead, as additional properties.
   class BiomarkerAssayProvidersRow
     # The route key of the gene the biomarker resolved to, the entry key for the biomarkers object type. Null when the extraction did not resolve a gene.
     attr_accessor :route_key
@@ -31,14 +31,23 @@ module PharmaObservatory
     # resolved: the gene resolved. unresolved: a gene symbol was extracted and matched nothing. not_applicable: no gene symbol was extracted.
     attr_accessor :gene_resolution_status
 
-    # The normalised company name the provider rows are grouped on.
-    attr_accessor :company_name_key
+    # The provider the rows are grouped on. org: followed by the organization key when the company resolves to an organization, otherwise name: followed by the normalised company name.
+    attr_accessor :provider_key
+
+    # What the papers name the provider as. assay_or_test_maker makes the assay or test; testing_service runs it as a service; both when the pair has papers of each kind.
+    attr_accessor :provider_role
 
     # The provider company name as it appears in the papers.
     attr_accessor :provider_name
 
     # The provider's legal entity key, where the marketplace match resolves one.
     attr_accessor :provider_org_id
+
+    # How the provider was resolved to an organization. rx_provider_link: through its marketplace supplier. unresolved: no organization, the provider stays a name. The remaining values are reserved for resolution rungs that have not shipped.
+    attr_accessor :provider_org_match_tier
+
+    # The ultimate parent organization of the provider's organization; null when the provider has no organization.
+    attr_accessor :provider_parent_org_id
 
     # The provider's company key.
     attr_accessor :provider_company_id
@@ -108,9 +117,12 @@ module PharmaObservatory
         :'biomarker_id' => :'biomarker_id',
         :'biomarker_display_name' => :'biomarker_display_name',
         :'gene_resolution_status' => :'gene_resolution_status',
-        :'company_name_key' => :'company_name_key',
+        :'provider_key' => :'provider_key',
+        :'provider_role' => :'provider_role',
         :'provider_name' => :'provider_name',
         :'provider_org_id' => :'provider_org_id',
+        :'provider_org_match_tier' => :'provider_org_match_tier',
+        :'provider_parent_org_id' => :'provider_parent_org_id',
         :'provider_company_id' => :'provider_company_id',
         :'provider_company_name' => :'provider_company_name',
         :'provider_group_id' => :'provider_group_id',
@@ -152,9 +164,12 @@ module PharmaObservatory
         :'biomarker_id' => :'String',
         :'biomarker_display_name' => :'String',
         :'gene_resolution_status' => :'String',
-        :'company_name_key' => :'String',
+        :'provider_key' => :'String',
+        :'provider_role' => :'String',
         :'provider_name' => :'String',
         :'provider_org_id' => :'String',
+        :'provider_org_match_tier' => :'String',
+        :'provider_parent_org_id' => :'String',
         :'provider_company_id' => :'String',
         :'provider_company_name' => :'String',
         :'provider_group_id' => :'String',
@@ -186,9 +201,12 @@ module PharmaObservatory
         :'biomarker_id',
         :'biomarker_display_name',
         :'gene_resolution_status',
-        :'company_name_key',
+        :'provider_key',
+        :'provider_role',
         :'provider_name',
         :'provider_org_id',
+        :'provider_org_match_tier',
+        :'provider_parent_org_id',
         :'provider_company_id',
         :'provider_company_name',
         :'provider_group_id',
@@ -248,8 +266,12 @@ module PharmaObservatory
         self.gene_resolution_status = attributes[:'gene_resolution_status']
       end
 
-      if attributes.key?(:'company_name_key')
-        self.company_name_key = attributes[:'company_name_key']
+      if attributes.key?(:'provider_key')
+        self.provider_key = attributes[:'provider_key']
+      end
+
+      if attributes.key?(:'provider_role')
+        self.provider_role = attributes[:'provider_role']
       end
 
       if attributes.key?(:'provider_name')
@@ -258,6 +280,14 @@ module PharmaObservatory
 
       if attributes.key?(:'provider_org_id')
         self.provider_org_id = attributes[:'provider_org_id']
+      end
+
+      if attributes.key?(:'provider_org_match_tier')
+        self.provider_org_match_tier = attributes[:'provider_org_match_tier']
+      end
+
+      if attributes.key?(:'provider_parent_org_id')
+        self.provider_parent_org_id = attributes[:'provider_parent_org_id']
       end
 
       if attributes.key?(:'provider_company_id')
@@ -366,9 +396,12 @@ module PharmaObservatory
           biomarker_id == o.biomarker_id &&
           biomarker_display_name == o.biomarker_display_name &&
           gene_resolution_status == o.gene_resolution_status &&
-          company_name_key == o.company_name_key &&
+          provider_key == o.provider_key &&
+          provider_role == o.provider_role &&
           provider_name == o.provider_name &&
           provider_org_id == o.provider_org_id &&
+          provider_org_match_tier == o.provider_org_match_tier &&
+          provider_parent_org_id == o.provider_parent_org_id &&
           provider_company_id == o.provider_company_id &&
           provider_company_name == o.provider_company_name &&
           provider_group_id == o.provider_group_id &&
@@ -400,7 +433,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [route_key, biomarker_key, biomarker_id, biomarker_display_name, gene_resolution_status, company_name_key, provider_name, provider_org_id, provider_company_id, provider_company_name, provider_group_id, provider_group_name, rx_matched, rx_provider_id, rx_provider_name, rx_provider_slug, has_clinical_validation, has_analytical_validation, n_papers, n_dated_papers, n_undated_papers, most_recent_published_at, most_recent_pmid, most_recent_title, meets_curated_threshold, assay_provider_class, assay_provider_class_source, assay_provider_class_decided_at].hash
+      [route_key, biomarker_key, biomarker_id, biomarker_display_name, gene_resolution_status, provider_key, provider_role, provider_name, provider_org_id, provider_org_match_tier, provider_parent_org_id, provider_company_id, provider_company_name, provider_group_id, provider_group_name, rx_matched, rx_provider_id, rx_provider_name, rx_provider_slug, has_clinical_validation, has_analytical_validation, n_papers, n_dated_papers, n_undated_papers, most_recent_published_at, most_recent_pmid, most_recent_title, meets_curated_threshold, assay_provider_class, assay_provider_class_source, assay_provider_class_decided_at].hash
     end
 
     # Builds the object from hash

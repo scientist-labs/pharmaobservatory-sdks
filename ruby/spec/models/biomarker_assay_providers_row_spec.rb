@@ -57,7 +57,13 @@ describe PharmaObservatory::BiomarkerAssayProvidersRow do
     end
   end
 
-  describe 'test attribute "company_name_key"' do
+  describe 'test attribute "provider_key"' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  describe 'test attribute "provider_role"' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end
@@ -70,6 +76,18 @@ describe PharmaObservatory::BiomarkerAssayProvidersRow do
   end
 
   describe 'test attribute "provider_org_id"' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  describe 'test attribute "provider_org_match_tier"' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  describe 'test attribute "provider_parent_org_id"' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end

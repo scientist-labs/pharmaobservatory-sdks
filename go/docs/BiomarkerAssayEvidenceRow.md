@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 **ComparatorMethod** | Pointer to **NullableString** | The reference method the performance was measured against, when reported. | [optional] 
 **ReportedPerformance** | Pointer to **NullableString** | The performance as the paper states it (sensitivity, specificity, area under the curve), as text and not computed. | [optional] 
 **ValidationTypeMentioned** | Pointer to **NullableString** | What the paper claims about the validation type: a fact about the text, not a tier. | [optional] 
-**AssayProviderCompany** | Pointer to **[]string** | Organization names as extracted that run or provide the assay. Not resolved to a company. | [optional] 
+**AssayProviderCompany** | Pointer to **[]string** | The first extraction&#39;s flat list of organization names, as extracted, with no role. Not resolved to a company, and it names any company a paper mentions. Who makes or runs an assay for a biomarker, with the role, is the biomarker_assay_providers dataset. | [optional] 
 **FundingOrganizations** | Pointer to **[]string** | Organization names as extracted that funded the study. Never merged with the assay provider. | [optional] 
 **EvidenceType** | Pointer to **NullableString** | Always literature_assay_validation, which tells these rows from the other evidence types. | [optional] 
 **EvidenceQuote** | Pointer to **[]string** | The sentences of the paper the facts were read from. Null when the extraction gave none. | [optional] 

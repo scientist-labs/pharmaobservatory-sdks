@@ -20,7 +20,7 @@
 | **comparator_method** | **String** | The reference method the performance was measured against, when reported. | [optional] |
 | **reported_performance** | **String** | The performance as the paper states it (sensitivity, specificity, area under the curve), as text and not computed. | [optional] |
 | **validation_type_mentioned** | **String** | What the paper claims about the validation type: a fact about the text, not a tier. | [optional] |
-| **assay_provider_company** | **Array&lt;String&gt;** | Organization names as extracted that run or provide the assay. Not resolved to a company. | [optional] |
+| **assay_provider_company** | **Array&lt;String&gt;** | The first extraction&#39;s flat list of organization names, as extracted, with no role. Not resolved to a company, and it names any company a paper mentions. Who makes or runs an assay for a biomarker, with the role, is the biomarker_assay_providers dataset. | [optional] |
 | **funding_organizations** | **Array&lt;String&gt;** | Organization names as extracted that funded the study. Never merged with the assay provider. | [optional] |
 | **evidence_type** | **String** | Always literature_assay_validation, which tells these rows from the other evidence types. | [optional] |
 | **evidence_quote** | **Array&lt;String&gt;** | The sentences of the paper the facts were read from. Null when the extraction gave none. | [optional] |

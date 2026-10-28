@@ -33724,8 +33724,10 @@ components:
           nullable: true
           type: string
         assay_provider_company:
-          description: Organization names as extracted that run or provide the assay.
-            Not resolved to a company.
+          description: "The first extraction's flat list of organization names, as\
+            \ extracted, with no role. Not resolved to a company, and it names any\
+            \ company a paper mentions. Who makes or runs an assay for a biomarker,\
+            \ with the role, is the biomarker_assay_providers dataset."
           items:
             type: string
           nullable: true
@@ -33995,12 +33997,13 @@ components:
     BiomarkerAssayProvidersRow:
       additionalProperties: true
       description: "One row of the biomarker_assay_providers dataset: one row per\
-        \ biomarker key and assay-provider company name key. A grouped request returns\
-        \ the group columns and the measures instead, as additional properties."
+        \ biomarker key and provider key. A grouped request returns the group columns\
+        \ and the measures instead, as additional properties."
       example:
         provider_company_id: provider_company_id
         rx_provider_name: rx_provider_name
         has_analytical_validation: true
+        provider_role: provider_role
         n_papers: 0
         biomarker_display_name: biomarker_display_name
         biomarker_id: biomarker_id
@@ -34008,12 +34011,13 @@ components:
         biomarker_key: biomarker_key
         n_dated_papers: 6
         most_recent_pmid: most_recent_pmid
-        company_name_key: company_name_key
+        provider_key: provider_key
         assay_provider_class_source: assay_provider_class_source
         provider_name: provider_name
         rx_provider_id: rx_provider_id
         assay_provider_class: assay_provider_class
         assay_provider_class_decided_at: 2000-01-23T04:56:07.000+00:00
+        provider_org_match_tier: provider_org_match_tier
         rx_matched: true
         provider_group_id: provider_group_id
         rx_provider_slug: rx_provider_slug
@@ -34023,6 +34027,7 @@ components:
         provider_company_name: provider_company_name
         provider_org_id: provider_org_id
         most_recent_title: most_recent_title
+        provider_parent_org_id: provider_parent_org_id
         provider_group_name: provider_group_name
         n_undated_papers: 1
         has_clinical_validation: true
@@ -34053,8 +34058,16 @@ components:
             \ extracted and matched nothing. not_applicable: no gene symbol was extracted."
           nullable: true
           type: string
-        company_name_key:
-          description: The normalised company name the provider rows are grouped on.
+        provider_key:
+          description: "The provider the rows are grouped on. org: followed by the\
+            \ organization key when the company resolves to an organization, otherwise\
+            \ name: followed by the normalised company name."
+          nullable: true
+          type: string
+        provider_role:
+          description: What the papers name the provider as. assay_or_test_maker makes
+            the assay or test; testing_service runs it as a service; both when the
+            pair has papers of each kind.
           nullable: true
           type: string
         provider_name:
@@ -34064,6 +34077,18 @@ components:
         provider_org_id:
           description: "The provider's legal entity key, where the marketplace match\
             \ resolves one."
+          nullable: true
+          type: string
+        provider_org_match_tier:
+          description: "How the provider was resolved to an organization. rx_provider_link:\
+            \ through its marketplace supplier. unresolved: no organization, the provider\
+            \ stays a name. The remaining values are reserved for resolution rungs\
+            \ that have not shipped."
+          nullable: true
+          type: string
+        provider_parent_org_id:
+          description: The ultimate parent organization of the provider's organization;
+            null when the provider has no organization.
           nullable: true
           type: string
         provider_company_id:
@@ -34197,6 +34222,7 @@ components:
         - provider_company_id: provider_company_id
           rx_provider_name: rx_provider_name
           has_analytical_validation: true
+          provider_role: provider_role
           n_papers: 0
           biomarker_display_name: biomarker_display_name
           biomarker_id: biomarker_id
@@ -34204,12 +34230,13 @@ components:
           biomarker_key: biomarker_key
           n_dated_papers: 6
           most_recent_pmid: most_recent_pmid
-          company_name_key: company_name_key
+          provider_key: provider_key
           assay_provider_class_source: assay_provider_class_source
           provider_name: provider_name
           rx_provider_id: rx_provider_id
           assay_provider_class: assay_provider_class
           assay_provider_class_decided_at: 2000-01-23T04:56:07.000+00:00
+          provider_org_match_tier: provider_org_match_tier
           rx_matched: true
           provider_group_id: provider_group_id
           rx_provider_slug: rx_provider_slug
@@ -34219,12 +34246,14 @@ components:
           provider_company_name: provider_company_name
           provider_org_id: provider_org_id
           most_recent_title: most_recent_title
+          provider_parent_org_id: provider_parent_org_id
           provider_group_name: provider_group_name
           n_undated_papers: 1
           has_clinical_validation: true
         - provider_company_id: provider_company_id
           rx_provider_name: rx_provider_name
           has_analytical_validation: true
+          provider_role: provider_role
           n_papers: 0
           biomarker_display_name: biomarker_display_name
           biomarker_id: biomarker_id
@@ -34232,12 +34261,13 @@ components:
           biomarker_key: biomarker_key
           n_dated_papers: 6
           most_recent_pmid: most_recent_pmid
-          company_name_key: company_name_key
+          provider_key: provider_key
           assay_provider_class_source: assay_provider_class_source
           provider_name: provider_name
           rx_provider_id: rx_provider_id
           assay_provider_class: assay_provider_class
           assay_provider_class_decided_at: 2000-01-23T04:56:07.000+00:00
+          provider_org_match_tier: provider_org_match_tier
           rx_matched: true
           provider_group_id: provider_group_id
           rx_provider_slug: rx_provider_slug
@@ -34247,6 +34277,7 @@ components:
           provider_company_name: provider_company_name
           provider_org_id: provider_org_id
           most_recent_title: most_recent_title
+          provider_parent_org_id: provider_parent_org_id
           provider_group_name: provider_group_name
           n_undated_papers: 1
           has_clinical_validation: true

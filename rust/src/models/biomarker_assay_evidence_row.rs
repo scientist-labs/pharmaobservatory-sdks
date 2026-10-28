@@ -62,7 +62,7 @@ pub struct BiomarkerAssayEvidenceRow {
     /// What the paper claims about the validation type: a fact about the text, not a tier.
     #[serde(rename = "validation_type_mentioned", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub validation_type_mentioned: Option<Option<String>>,
-    /// Organization names as extracted that run or provide the assay. Not resolved to a company.
+    /// The first extraction's flat list of organization names, as extracted, with no role. Not resolved to a company, and it names any company a paper mentions. Who makes or runs an assay for a biomarker, with the role, is the biomarker_assay_providers dataset.
     #[serde(rename = "assay_provider_company", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub assay_provider_company: Option<Option<Vec<String>>>,
     /// Organization names as extracted that funded the study. Never merged with the assay provider.

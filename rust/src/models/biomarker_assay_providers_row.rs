@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// BiomarkerAssayProvidersRow : One row of the biomarker_assay_providers dataset: one row per biomarker key and assay-provider company name key. A grouped request returns the group columns and the measures instead, as additional properties.
+/// BiomarkerAssayProvidersRow : One row of the biomarker_assay_providers dataset: one row per biomarker key and provider key. A grouped request returns the group columns and the measures instead, as additional properties.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct BiomarkerAssayProvidersRow {
     /// The route key of the gene the biomarker resolved to, the entry key for the biomarkers object type. Null when the extraction did not resolve a gene.
@@ -29,15 +29,24 @@ pub struct BiomarkerAssayProvidersRow {
     /// resolved: the gene resolved. unresolved: a gene symbol was extracted and matched nothing. not_applicable: no gene symbol was extracted.
     #[serde(rename = "gene_resolution_status", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub gene_resolution_status: Option<Option<String>>,
-    /// The normalised company name the provider rows are grouped on.
-    #[serde(rename = "company_name_key", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub company_name_key: Option<Option<String>>,
+    /// The provider the rows are grouped on. org: followed by the organization key when the company resolves to an organization, otherwise name: followed by the normalised company name.
+    #[serde(rename = "provider_key", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub provider_key: Option<Option<String>>,
+    /// What the papers name the provider as. assay_or_test_maker makes the assay or test; testing_service runs it as a service; both when the pair has papers of each kind.
+    #[serde(rename = "provider_role", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub provider_role: Option<Option<String>>,
     /// The provider company name as it appears in the papers.
     #[serde(rename = "provider_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub provider_name: Option<Option<String>>,
     /// The provider's legal entity key, where the marketplace match resolves one.
     #[serde(rename = "provider_org_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub provider_org_id: Option<Option<String>>,
+    /// How the provider was resolved to an organization. rx_provider_link: through its marketplace supplier. unresolved: no organization, the provider stays a name. The remaining values are reserved for resolution rungs that have not shipped.
+    #[serde(rename = "provider_org_match_tier", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub provider_org_match_tier: Option<Option<String>>,
+    /// The ultimate parent organization of the provider's organization; null when the provider has no organization.
+    #[serde(rename = "provider_parent_org_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub provider_parent_org_id: Option<Option<String>>,
     /// The provider's company key.
     #[serde(rename = "provider_company_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub provider_company_id: Option<Option<String>>,
@@ -101,7 +110,7 @@ pub struct BiomarkerAssayProvidersRow {
 }
 
 impl BiomarkerAssayProvidersRow {
-    /// One row of the biomarker_assay_providers dataset: one row per biomarker key and assay-provider company name key. A grouped request returns the group columns and the measures instead, as additional properties.
+    /// One row of the biomarker_assay_providers dataset: one row per biomarker key and provider key. A grouped request returns the group columns and the measures instead, as additional properties.
     pub fn new() -> BiomarkerAssayProvidersRow {
         BiomarkerAssayProvidersRow {
             route_key: None,
@@ -109,9 +118,12 @@ impl BiomarkerAssayProvidersRow {
             biomarker_id: None,
             biomarker_display_name: None,
             gene_resolution_status: None,
-            company_name_key: None,
+            provider_key: None,
+            provider_role: None,
             provider_name: None,
             provider_org_id: None,
+            provider_org_match_tier: None,
+            provider_parent_org_id: None,
             provider_company_id: None,
             provider_company_name: None,
             provider_group_id: None,
