@@ -9,9 +9,12 @@ Name | Type | Description | Notes
 **BiomarkerId** | Pointer to **NullableString** | The biomarker&#39;s own key; null for a pair whose gene did not resolve. | [optional] 
 **BiomarkerDisplayName** | Pointer to **NullableString** | The biomarker&#39;s name, as resolved or else as extracted. | [optional] 
 **GeneResolutionStatus** | Pointer to **NullableString** | resolved: the gene resolved. unresolved: a gene symbol was extracted and matched nothing. not_applicable: no gene symbol was extracted. | [optional] 
-**CompanyNameKey** | Pointer to **NullableString** | The normalised company name the provider rows are grouped on. | [optional] 
+**ProviderKey** | Pointer to **NullableString** | The provider the rows are grouped on. org: followed by the organization key when the company resolves to an organization, otherwise name: followed by the normalised company name. | [optional] 
+**ProviderRole** | Pointer to **NullableString** | What the papers name the provider as. assay_or_test_maker makes the assay or test; testing_service runs it as a service; both when the pair has papers of each kind. | [optional] 
 **ProviderName** | Pointer to **NullableString** | The provider company name as it appears in the papers. | [optional] 
 **ProviderOrgId** | Pointer to **NullableString** | The provider&#39;s legal entity key, where the marketplace match resolves one. | [optional] 
+**ProviderOrgMatchTier** | Pointer to **NullableString** | How the provider was resolved to an organization. rx_provider_link: through its marketplace supplier. unresolved: no organization, the provider stays a name. The remaining values are reserved for resolution rungs that have not shipped. | [optional] 
+**ProviderParentOrgId** | Pointer to **NullableString** | The ultimate parent organization of the provider&#39;s organization; null when the provider has no organization. | [optional] 
 **ProviderCompanyId** | Pointer to **NullableString** | The provider&#39;s company key. | [optional] 
 **ProviderCompanyName** | Pointer to **NullableString** | The provider&#39;s company name. | [optional] 
 **ProviderGroupId** | Pointer to **NullableString** | The provider&#39;s current ultimate parent group key. | [optional] 
@@ -227,41 +230,76 @@ HasGeneResolutionStatus returns a boolean if a field has been set.
 `func (o *BiomarkerAssayProvidersRow) UnsetGeneResolutionStatus()`
 
 UnsetGeneResolutionStatus ensures that no value is present for GeneResolutionStatus, not even an explicit nil
-### GetCompanyNameKey
+### GetProviderKey
 
-`func (o *BiomarkerAssayProvidersRow) GetCompanyNameKey() string`
+`func (o *BiomarkerAssayProvidersRow) GetProviderKey() string`
 
-GetCompanyNameKey returns the CompanyNameKey field if non-nil, zero value otherwise.
+GetProviderKey returns the ProviderKey field if non-nil, zero value otherwise.
 
-### GetCompanyNameKeyOk
+### GetProviderKeyOk
 
-`func (o *BiomarkerAssayProvidersRow) GetCompanyNameKeyOk() (*string, bool)`
+`func (o *BiomarkerAssayProvidersRow) GetProviderKeyOk() (*string, bool)`
 
-GetCompanyNameKeyOk returns a tuple with the CompanyNameKey field if it's non-nil, zero value otherwise
+GetProviderKeyOk returns a tuple with the ProviderKey field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCompanyNameKey
+### SetProviderKey
 
-`func (o *BiomarkerAssayProvidersRow) SetCompanyNameKey(v string)`
+`func (o *BiomarkerAssayProvidersRow) SetProviderKey(v string)`
 
-SetCompanyNameKey sets CompanyNameKey field to given value.
+SetProviderKey sets ProviderKey field to given value.
 
-### HasCompanyNameKey
+### HasProviderKey
 
-`func (o *BiomarkerAssayProvidersRow) HasCompanyNameKey() bool`
+`func (o *BiomarkerAssayProvidersRow) HasProviderKey() bool`
 
-HasCompanyNameKey returns a boolean if a field has been set.
+HasProviderKey returns a boolean if a field has been set.
 
-### SetCompanyNameKeyNil
+### SetProviderKeyNil
 
-`func (o *BiomarkerAssayProvidersRow) SetCompanyNameKeyNil(b bool)`
+`func (o *BiomarkerAssayProvidersRow) SetProviderKeyNil(b bool)`
 
- SetCompanyNameKeyNil sets the value for CompanyNameKey to be an explicit nil
+ SetProviderKeyNil sets the value for ProviderKey to be an explicit nil
 
-### UnsetCompanyNameKey
-`func (o *BiomarkerAssayProvidersRow) UnsetCompanyNameKey()`
+### UnsetProviderKey
+`func (o *BiomarkerAssayProvidersRow) UnsetProviderKey()`
 
-UnsetCompanyNameKey ensures that no value is present for CompanyNameKey, not even an explicit nil
+UnsetProviderKey ensures that no value is present for ProviderKey, not even an explicit nil
+### GetProviderRole
+
+`func (o *BiomarkerAssayProvidersRow) GetProviderRole() string`
+
+GetProviderRole returns the ProviderRole field if non-nil, zero value otherwise.
+
+### GetProviderRoleOk
+
+`func (o *BiomarkerAssayProvidersRow) GetProviderRoleOk() (*string, bool)`
+
+GetProviderRoleOk returns a tuple with the ProviderRole field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProviderRole
+
+`func (o *BiomarkerAssayProvidersRow) SetProviderRole(v string)`
+
+SetProviderRole sets ProviderRole field to given value.
+
+### HasProviderRole
+
+`func (o *BiomarkerAssayProvidersRow) HasProviderRole() bool`
+
+HasProviderRole returns a boolean if a field has been set.
+
+### SetProviderRoleNil
+
+`func (o *BiomarkerAssayProvidersRow) SetProviderRoleNil(b bool)`
+
+ SetProviderRoleNil sets the value for ProviderRole to be an explicit nil
+
+### UnsetProviderRole
+`func (o *BiomarkerAssayProvidersRow) UnsetProviderRole()`
+
+UnsetProviderRole ensures that no value is present for ProviderRole, not even an explicit nil
 ### GetProviderName
 
 `func (o *BiomarkerAssayProvidersRow) GetProviderName() string`
@@ -332,6 +370,76 @@ HasProviderOrgId returns a boolean if a field has been set.
 `func (o *BiomarkerAssayProvidersRow) UnsetProviderOrgId()`
 
 UnsetProviderOrgId ensures that no value is present for ProviderOrgId, not even an explicit nil
+### GetProviderOrgMatchTier
+
+`func (o *BiomarkerAssayProvidersRow) GetProviderOrgMatchTier() string`
+
+GetProviderOrgMatchTier returns the ProviderOrgMatchTier field if non-nil, zero value otherwise.
+
+### GetProviderOrgMatchTierOk
+
+`func (o *BiomarkerAssayProvidersRow) GetProviderOrgMatchTierOk() (*string, bool)`
+
+GetProviderOrgMatchTierOk returns a tuple with the ProviderOrgMatchTier field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProviderOrgMatchTier
+
+`func (o *BiomarkerAssayProvidersRow) SetProviderOrgMatchTier(v string)`
+
+SetProviderOrgMatchTier sets ProviderOrgMatchTier field to given value.
+
+### HasProviderOrgMatchTier
+
+`func (o *BiomarkerAssayProvidersRow) HasProviderOrgMatchTier() bool`
+
+HasProviderOrgMatchTier returns a boolean if a field has been set.
+
+### SetProviderOrgMatchTierNil
+
+`func (o *BiomarkerAssayProvidersRow) SetProviderOrgMatchTierNil(b bool)`
+
+ SetProviderOrgMatchTierNil sets the value for ProviderOrgMatchTier to be an explicit nil
+
+### UnsetProviderOrgMatchTier
+`func (o *BiomarkerAssayProvidersRow) UnsetProviderOrgMatchTier()`
+
+UnsetProviderOrgMatchTier ensures that no value is present for ProviderOrgMatchTier, not even an explicit nil
+### GetProviderParentOrgId
+
+`func (o *BiomarkerAssayProvidersRow) GetProviderParentOrgId() string`
+
+GetProviderParentOrgId returns the ProviderParentOrgId field if non-nil, zero value otherwise.
+
+### GetProviderParentOrgIdOk
+
+`func (o *BiomarkerAssayProvidersRow) GetProviderParentOrgIdOk() (*string, bool)`
+
+GetProviderParentOrgIdOk returns a tuple with the ProviderParentOrgId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProviderParentOrgId
+
+`func (o *BiomarkerAssayProvidersRow) SetProviderParentOrgId(v string)`
+
+SetProviderParentOrgId sets ProviderParentOrgId field to given value.
+
+### HasProviderParentOrgId
+
+`func (o *BiomarkerAssayProvidersRow) HasProviderParentOrgId() bool`
+
+HasProviderParentOrgId returns a boolean if a field has been set.
+
+### SetProviderParentOrgIdNil
+
+`func (o *BiomarkerAssayProvidersRow) SetProviderParentOrgIdNil(b bool)`
+
+ SetProviderParentOrgIdNil sets the value for ProviderParentOrgId to be an explicit nil
+
+### UnsetProviderParentOrgId
+`func (o *BiomarkerAssayProvidersRow) UnsetProviderParentOrgId()`
+
+UnsetProviderParentOrgId ensures that no value is present for ProviderParentOrgId, not even an explicit nil
 ### GetProviderCompanyId
 
 `func (o *BiomarkerAssayProvidersRow) GetProviderCompanyId() string`

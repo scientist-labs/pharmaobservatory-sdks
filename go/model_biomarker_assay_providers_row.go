@@ -18,7 +18,7 @@ import (
 // checks if the BiomarkerAssayProvidersRow type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &BiomarkerAssayProvidersRow{}
 
-// BiomarkerAssayProvidersRow One row of the biomarker_assay_providers dataset: one row per biomarker key and assay-provider company name key. A grouped request returns the group columns and the measures instead, as additional properties.
+// BiomarkerAssayProvidersRow One row of the biomarker_assay_providers dataset: one row per biomarker key and provider key. A grouped request returns the group columns and the measures instead, as additional properties.
 type BiomarkerAssayProvidersRow struct {
 	// The route key of the gene the biomarker resolved to, the entry key for the biomarkers object type. Null when the extraction did not resolve a gene.
 	RouteKey NullableString `json:"route_key,omitempty"`
@@ -30,12 +30,18 @@ type BiomarkerAssayProvidersRow struct {
 	BiomarkerDisplayName NullableString `json:"biomarker_display_name,omitempty"`
 	// resolved: the gene resolved. unresolved: a gene symbol was extracted and matched nothing. not_applicable: no gene symbol was extracted.
 	GeneResolutionStatus NullableString `json:"gene_resolution_status,omitempty"`
-	// The normalised company name the provider rows are grouped on.
-	CompanyNameKey NullableString `json:"company_name_key,omitempty"`
+	// The provider the rows are grouped on. org: followed by the organization key when the company resolves to an organization, otherwise name: followed by the normalised company name.
+	ProviderKey NullableString `json:"provider_key,omitempty"`
+	// What the papers name the provider as. assay_or_test_maker makes the assay or test; testing_service runs it as a service; both when the pair has papers of each kind.
+	ProviderRole NullableString `json:"provider_role,omitempty"`
 	// The provider company name as it appears in the papers.
 	ProviderName NullableString `json:"provider_name,omitempty"`
 	// The provider's legal entity key, where the marketplace match resolves one.
 	ProviderOrgId NullableString `json:"provider_org_id,omitempty"`
+	// How the provider was resolved to an organization. rx_provider_link: through its marketplace supplier. unresolved: no organization, the provider stays a name. The remaining values are reserved for resolution rungs that have not shipped.
+	ProviderOrgMatchTier NullableString `json:"provider_org_match_tier,omitempty"`
+	// The ultimate parent organization of the provider's organization; null when the provider has no organization.
+	ProviderParentOrgId NullableString `json:"provider_parent_org_id,omitempty"`
 	// The provider's company key.
 	ProviderCompanyId NullableString `json:"provider_company_id,omitempty"`
 	// The provider's company name.
@@ -308,46 +314,88 @@ func (o *BiomarkerAssayProvidersRow) UnsetGeneResolutionStatus() {
 	o.GeneResolutionStatus.Unset()
 }
 
-// GetCompanyNameKey returns the CompanyNameKey field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *BiomarkerAssayProvidersRow) GetCompanyNameKey() string {
-	if o == nil || IsNil(o.CompanyNameKey.Get()) {
+// GetProviderKey returns the ProviderKey field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetProviderKey() string {
+	if o == nil || IsNil(o.ProviderKey.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.CompanyNameKey.Get()
+	return *o.ProviderKey.Get()
 }
 
-// GetCompanyNameKeyOk returns a tuple with the CompanyNameKey field value if set, nil otherwise
+// GetProviderKeyOk returns a tuple with the ProviderKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *BiomarkerAssayProvidersRow) GetCompanyNameKeyOk() (*string, bool) {
+func (o *BiomarkerAssayProvidersRow) GetProviderKeyOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.CompanyNameKey.Get(), o.CompanyNameKey.IsSet()
+	return o.ProviderKey.Get(), o.ProviderKey.IsSet()
 }
 
-// HasCompanyNameKey returns a boolean if a field has been set.
-func (o *BiomarkerAssayProvidersRow) HasCompanyNameKey() bool {
-	if o != nil && o.CompanyNameKey.IsSet() {
+// HasProviderKey returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasProviderKey() bool {
+	if o != nil && o.ProviderKey.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetCompanyNameKey gets a reference to the given NullableString and assigns it to the CompanyNameKey field.
-func (o *BiomarkerAssayProvidersRow) SetCompanyNameKey(v string) {
-	o.CompanyNameKey.Set(&v)
+// SetProviderKey gets a reference to the given NullableString and assigns it to the ProviderKey field.
+func (o *BiomarkerAssayProvidersRow) SetProviderKey(v string) {
+	o.ProviderKey.Set(&v)
 }
-// SetCompanyNameKeyNil sets the value for CompanyNameKey to be an explicit nil
-func (o *BiomarkerAssayProvidersRow) SetCompanyNameKeyNil() {
-	o.CompanyNameKey.Set(nil)
+// SetProviderKeyNil sets the value for ProviderKey to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetProviderKeyNil() {
+	o.ProviderKey.Set(nil)
 }
 
-// UnsetCompanyNameKey ensures that no value is present for CompanyNameKey, not even an explicit nil
-func (o *BiomarkerAssayProvidersRow) UnsetCompanyNameKey() {
-	o.CompanyNameKey.Unset()
+// UnsetProviderKey ensures that no value is present for ProviderKey, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetProviderKey() {
+	o.ProviderKey.Unset()
+}
+
+// GetProviderRole returns the ProviderRole field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetProviderRole() string {
+	if o == nil || IsNil(o.ProviderRole.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ProviderRole.Get()
+}
+
+// GetProviderRoleOk returns a tuple with the ProviderRole field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetProviderRoleOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ProviderRole.Get(), o.ProviderRole.IsSet()
+}
+
+// HasProviderRole returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasProviderRole() bool {
+	if o != nil && o.ProviderRole.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetProviderRole gets a reference to the given NullableString and assigns it to the ProviderRole field.
+func (o *BiomarkerAssayProvidersRow) SetProviderRole(v string) {
+	o.ProviderRole.Set(&v)
+}
+// SetProviderRoleNil sets the value for ProviderRole to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetProviderRoleNil() {
+	o.ProviderRole.Set(nil)
+}
+
+// UnsetProviderRole ensures that no value is present for ProviderRole, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetProviderRole() {
+	o.ProviderRole.Unset()
 }
 
 // GetProviderName returns the ProviderName field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -432,6 +480,90 @@ func (o *BiomarkerAssayProvidersRow) SetProviderOrgIdNil() {
 // UnsetProviderOrgId ensures that no value is present for ProviderOrgId, not even an explicit nil
 func (o *BiomarkerAssayProvidersRow) UnsetProviderOrgId() {
 	o.ProviderOrgId.Unset()
+}
+
+// GetProviderOrgMatchTier returns the ProviderOrgMatchTier field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetProviderOrgMatchTier() string {
+	if o == nil || IsNil(o.ProviderOrgMatchTier.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ProviderOrgMatchTier.Get()
+}
+
+// GetProviderOrgMatchTierOk returns a tuple with the ProviderOrgMatchTier field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetProviderOrgMatchTierOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ProviderOrgMatchTier.Get(), o.ProviderOrgMatchTier.IsSet()
+}
+
+// HasProviderOrgMatchTier returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasProviderOrgMatchTier() bool {
+	if o != nil && o.ProviderOrgMatchTier.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetProviderOrgMatchTier gets a reference to the given NullableString and assigns it to the ProviderOrgMatchTier field.
+func (o *BiomarkerAssayProvidersRow) SetProviderOrgMatchTier(v string) {
+	o.ProviderOrgMatchTier.Set(&v)
+}
+// SetProviderOrgMatchTierNil sets the value for ProviderOrgMatchTier to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetProviderOrgMatchTierNil() {
+	o.ProviderOrgMatchTier.Set(nil)
+}
+
+// UnsetProviderOrgMatchTier ensures that no value is present for ProviderOrgMatchTier, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetProviderOrgMatchTier() {
+	o.ProviderOrgMatchTier.Unset()
+}
+
+// GetProviderParentOrgId returns the ProviderParentOrgId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetProviderParentOrgId() string {
+	if o == nil || IsNil(o.ProviderParentOrgId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ProviderParentOrgId.Get()
+}
+
+// GetProviderParentOrgIdOk returns a tuple with the ProviderParentOrgId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetProviderParentOrgIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ProviderParentOrgId.Get(), o.ProviderParentOrgId.IsSet()
+}
+
+// HasProviderParentOrgId returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasProviderParentOrgId() bool {
+	if o != nil && o.ProviderParentOrgId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetProviderParentOrgId gets a reference to the given NullableString and assigns it to the ProviderParentOrgId field.
+func (o *BiomarkerAssayProvidersRow) SetProviderParentOrgId(v string) {
+	o.ProviderParentOrgId.Set(&v)
+}
+// SetProviderParentOrgIdNil sets the value for ProviderParentOrgId to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetProviderParentOrgIdNil() {
+	o.ProviderParentOrgId.Set(nil)
+}
+
+// UnsetProviderParentOrgId ensures that no value is present for ProviderParentOrgId, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetProviderParentOrgId() {
+	o.ProviderParentOrgId.Unset()
 }
 
 // GetProviderCompanyId returns the ProviderCompanyId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1299,14 +1431,23 @@ func (o BiomarkerAssayProvidersRow) ToMap() (map[string]interface{}, error) {
 	if o.GeneResolutionStatus.IsSet() {
 		toSerialize["gene_resolution_status"] = o.GeneResolutionStatus.Get()
 	}
-	if o.CompanyNameKey.IsSet() {
-		toSerialize["company_name_key"] = o.CompanyNameKey.Get()
+	if o.ProviderKey.IsSet() {
+		toSerialize["provider_key"] = o.ProviderKey.Get()
+	}
+	if o.ProviderRole.IsSet() {
+		toSerialize["provider_role"] = o.ProviderRole.Get()
 	}
 	if o.ProviderName.IsSet() {
 		toSerialize["provider_name"] = o.ProviderName.Get()
 	}
 	if o.ProviderOrgId.IsSet() {
 		toSerialize["provider_org_id"] = o.ProviderOrgId.Get()
+	}
+	if o.ProviderOrgMatchTier.IsSet() {
+		toSerialize["provider_org_match_tier"] = o.ProviderOrgMatchTier.Get()
+	}
+	if o.ProviderParentOrgId.IsSet() {
+		toSerialize["provider_parent_org_id"] = o.ProviderParentOrgId.Get()
 	}
 	if o.ProviderCompanyId.IsSet() {
 		toSerialize["provider_company_id"] = o.ProviderCompanyId.Get()
@@ -1395,9 +1536,12 @@ func (o *BiomarkerAssayProvidersRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "biomarker_id")
 		delete(additionalProperties, "biomarker_display_name")
 		delete(additionalProperties, "gene_resolution_status")
-		delete(additionalProperties, "company_name_key")
+		delete(additionalProperties, "provider_key")
+		delete(additionalProperties, "provider_role")
 		delete(additionalProperties, "provider_name")
 		delete(additionalProperties, "provider_org_id")
+		delete(additionalProperties, "provider_org_match_tier")
+		delete(additionalProperties, "provider_parent_org_id")
 		delete(additionalProperties, "provider_company_id")
 		delete(additionalProperties, "provider_company_name")
 		delete(additionalProperties, "provider_group_id")

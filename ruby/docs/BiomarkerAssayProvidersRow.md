@@ -9,9 +9,12 @@
 | **biomarker_id** | **String** | The biomarker&#39;s own key; null for a pair whose gene did not resolve. | [optional] |
 | **biomarker_display_name** | **String** | The biomarker&#39;s name, as resolved or else as extracted. | [optional] |
 | **gene_resolution_status** | **String** | resolved: the gene resolved. unresolved: a gene symbol was extracted and matched nothing. not_applicable: no gene symbol was extracted. | [optional] |
-| **company_name_key** | **String** | The normalised company name the provider rows are grouped on. | [optional] |
+| **provider_key** | **String** | The provider the rows are grouped on. org: followed by the organization key when the company resolves to an organization, otherwise name: followed by the normalised company name. | [optional] |
+| **provider_role** | **String** | What the papers name the provider as. assay_or_test_maker makes the assay or test; testing_service runs it as a service; both when the pair has papers of each kind. | [optional] |
 | **provider_name** | **String** | The provider company name as it appears in the papers. | [optional] |
 | **provider_org_id** | **String** | The provider&#39;s legal entity key, where the marketplace match resolves one. | [optional] |
+| **provider_org_match_tier** | **String** | How the provider was resolved to an organization. rx_provider_link: through its marketplace supplier. unresolved: no organization, the provider stays a name. The remaining values are reserved for resolution rungs that have not shipped. | [optional] |
+| **provider_parent_org_id** | **String** | The ultimate parent organization of the provider&#39;s organization; null when the provider has no organization. | [optional] |
 | **provider_company_id** | **String** | The provider&#39;s company key. | [optional] |
 | **provider_company_name** | **String** | The provider&#39;s company name. | [optional] |
 | **provider_group_id** | **String** | The provider&#39;s current ultimate parent group key. | [optional] |
@@ -44,9 +47,12 @@ instance = PharmaObservatory::BiomarkerAssayProvidersRow.new(
   biomarker_id: null,
   biomarker_display_name: null,
   gene_resolution_status: null,
-  company_name_key: null,
+  provider_key: null,
+  provider_role: null,
   provider_name: null,
   provider_org_id: null,
+  provider_org_match_tier: null,
+  provider_parent_org_id: null,
   provider_company_id: null,
   provider_company_name: null,
   provider_group_id: null,
