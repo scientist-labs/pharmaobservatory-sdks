@@ -94,8 +94,8 @@ module PharmaObservatory
     # Assay-provider suppliers named.
     attr_accessor :n_assay_provider_suppliers
 
-    # Of those, diagnostic providers.
-    attr_accessor :n_diagnostic_provider_suppliers
+    # Of those, providers with an FDA record found for the biomarker (a companion diagnostic, a cleared or approved device the paper names, a cleared or approved IVD under the analyte's product code, or a CLIA-certified lab that ran the test). US only; no record found is not a statement about validation. Null when no assay provider is named for the biomarker.
+    attr_accessor :n_fda_evidence_providers
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -126,7 +126,7 @@ module PharmaObservatory
         :'has_analytical_validation_evidence' => :'has_analytical_validation_evidence',
         :'n_assay_provider_papers' => :'n_assay_provider_papers',
         :'n_assay_provider_suppliers' => :'n_assay_provider_suppliers',
-        :'n_diagnostic_provider_suppliers' => :'n_diagnostic_provider_suppliers'
+        :'n_fda_evidence_providers' => :'n_fda_evidence_providers'
       }
     end
 
@@ -169,7 +169,7 @@ module PharmaObservatory
         :'has_analytical_validation_evidence' => :'Boolean',
         :'n_assay_provider_papers' => :'Integer',
         :'n_assay_provider_suppliers' => :'Integer',
-        :'n_diagnostic_provider_suppliers' => :'Integer'
+        :'n_fda_evidence_providers' => :'Integer'
       }
     end
 
@@ -202,7 +202,7 @@ module PharmaObservatory
         :'has_analytical_validation_evidence',
         :'n_assay_provider_papers',
         :'n_assay_provider_suppliers',
-        :'n_diagnostic_provider_suppliers'
+        :'n_fda_evidence_providers'
       ])
     end
 
@@ -326,8 +326,8 @@ module PharmaObservatory
         self.n_assay_provider_suppliers = attributes[:'n_assay_provider_suppliers']
       end
 
-      if attributes.key?(:'n_diagnostic_provider_suppliers')
-        self.n_diagnostic_provider_suppliers = attributes[:'n_diagnostic_provider_suppliers']
+      if attributes.key?(:'n_fda_evidence_providers')
+        self.n_fda_evidence_providers = attributes[:'n_fda_evidence_providers']
       end
     end
 
@@ -377,7 +377,7 @@ module PharmaObservatory
           has_analytical_validation_evidence == o.has_analytical_validation_evidence &&
           n_assay_provider_papers == o.n_assay_provider_papers &&
           n_assay_provider_suppliers == o.n_assay_provider_suppliers &&
-          n_diagnostic_provider_suppliers == o.n_diagnostic_provider_suppliers
+          n_fda_evidence_providers == o.n_fda_evidence_providers
     end
 
     # @see the `==` method
@@ -389,7 +389,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [biomarker_id, route_key, biomarker_kind, identity_status, display_name, parent_biomarker_id, gene_symbol, amino_acid_change, target_id, hgnc_id, uniprot_accession, target_protein_name, feature_code, feature_type, evidence_tier, evidence_tier_label, n_fda_cdx_assertions, n_fda_bqp_assertions, n_cancer_actionable_cgi, n_ot_association, n_trial_mention, n_publication_variant_mentions, has_clinical_validation_evidence, has_analytical_validation_evidence, n_assay_provider_papers, n_assay_provider_suppliers, n_diagnostic_provider_suppliers].hash
+      [biomarker_id, route_key, biomarker_kind, identity_status, display_name, parent_biomarker_id, gene_symbol, amino_acid_change, target_id, hgnc_id, uniprot_accession, target_protein_name, feature_code, feature_type, evidence_tier, evidence_tier_label, n_fda_cdx_assertions, n_fda_bqp_assertions, n_cancer_actionable_cgi, n_ot_association, n_trial_mention, n_publication_variant_mentions, has_clinical_validation_evidence, has_analytical_validation_evidence, n_assay_provider_papers, n_assay_provider_suppliers, n_fda_evidence_providers].hash
     end
 
     # Builds the object from hash

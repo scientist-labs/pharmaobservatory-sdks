@@ -92,9 +92,9 @@ pub struct BiomarkersRow {
     /// Assay-provider suppliers named.
     #[serde(rename = "n_assay_provider_suppliers", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_assay_provider_suppliers: Option<Option<i32>>,
-    /// Of those, diagnostic providers.
-    #[serde(rename = "n_diagnostic_provider_suppliers", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub n_diagnostic_provider_suppliers: Option<Option<i32>>,
+    /// Of those, providers with an FDA record found for the biomarker (a companion diagnostic, a cleared or approved device the paper names, a cleared or approved IVD under the analyte's product code, or a CLIA-certified lab that ran the test). US only; no record found is not a statement about validation. Null when no assay provider is named for the biomarker.
+    #[serde(rename = "n_fda_evidence_providers", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_fda_evidence_providers: Option<Option<i32>>,
 }
 
 impl BiomarkersRow {
@@ -127,7 +127,7 @@ impl BiomarkersRow {
             has_analytical_validation_evidence: None,
             n_assay_provider_papers: None,
             n_assay_provider_suppliers: None,
-            n_diagnostic_provider_suppliers: None,
+            n_fda_evidence_providers: None,
         }
     }
 }

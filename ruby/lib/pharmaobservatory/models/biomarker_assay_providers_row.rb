@@ -40,13 +40,13 @@ module PharmaObservatory
     # The provider company name as it appears in the papers.
     attr_accessor :provider_name
 
-    # The provider's legal entity key, where the marketplace match resolves one.
+    # The organization the provider's company name resolved to (the member organization, not its parent); null when the provider is ambiguous or unresolved. Reached by the rung named in provider_org_match_tier.
     attr_accessor :provider_org_id
 
-    # How the provider was resolved to an organization. rx_provider_link: through its marketplace supplier. unresolved: no organization, the provider stays a name. The remaining values are reserved for resolution rungs that have not shipped.
+    # How the provider was resolved to an organization, first rung that yields one organization wins. alias_exact: a reviewed brand alias, then exactly one organization carries the name. name_exact: exactly one organization carries the name. parent_unanimous: several organizations carry the name and all roll up to one parent, which is the organization. sponsor_key: the name is a trial-sponsor key. rx_provider_link: through its marketplace supplier. ambiguous: organizations under more than one parent carry the name, so none is chosen. unresolved: no organization, the provider stays a name.
     attr_accessor :provider_org_match_tier
 
-    # The ultimate parent organization of the provider's organization; null when the provider has no organization.
+    # The resolved parent of provider_org_id in the organization hierarchy (the organization itself when it has none); null when the provider has no organization. The hierarchy is not guaranteed correct for every company, so read it with provider_org_match_tier.
     attr_accessor :provider_parent_org_id
 
     # The provider's company key.
@@ -100,14 +100,65 @@ module PharmaObservatory
     # True when the provider matches a marketplace supplier or at least two papers name the pair.
     attr_accessor :meets_curated_threshold
 
-    # The company-level class. diagnostic_provider makes or supplies the diagnostic assay; reagent_supplier is the vendor whose kit appears in a methods section; context_dependent, pharma_or_other and not_a_company are the other decisions; unclassified means no decision yet.
-    attr_accessor :assay_provider_class
+    # The strongest US FDA or CMS record found for the pair. companion_diagnostic: the provider holds an FDA companion diagnostic for the biomarker. fda_cleared_specific_assay: a cleared or approved device of the provider that the paper names and that measures the biomarker. fda_cleared_for_biomarker: the provider holds a cleared or approved IVD under a product code for the biomarker. clia_testing_service: the provider is named as a testing service and its own organization holds a CLIA certificate. fda_ivd_company_only: the provider holds some cleared or approved IVD, none matched to the biomarker. none: no FDA record found.
+    attr_accessor :regulatory_evidence_kind
 
-    # Where the class decision came from; null when unclassified.
-    attr_accessor :assay_provider_class_source
+    # True when regulatory_evidence_kind is one of the first four kinds, a record that concerns the biomarker rather than only the company.
+    attr_accessor :has_fda_record_for_biomarker
 
-    # When the class was decided, in UTC; null when unclassified.
-    attr_accessor :assay_provider_class_decided_at
+    # Every level that held for the pair, strongest first; empty when none did.
+    attr_accessor :regulatory_evidence_reasons
+
+    # The 510(k) clearances in the in-vitro diagnostic review panels held by the provider's organization (or, when it holds none, by organizations under its parent; fda_company_match_rung says which). Null for a provider that did not resolve to an organization.
+    attr_accessor :n_fda_ivd_510k
+
+    # The PMA approvals (distinct approval numbers) in the in-vitro diagnostic review panels held by the provider's organization or its parent family, on the same rung as n_fda_ivd_510k. Null for a provider that did not resolve to an organization.
+    attr_accessor :n_fda_ivd_pma
+
+    # org: the counted records are held by the provider's own organization. parent: by organizations under the same resolved parent. Null when the provider holds none.
+    attr_accessor :fda_company_match_rung
+
+    # The provider's 510(k) clearances under a product code mapped to this biomarker. Null when the provider or the biomarker did not resolve.
+    attr_accessor :n_fda_analyte_510k
+
+    # The provider's PMA approvals under a product code mapped to this biomarker. Null when the provider or the biomarker did not resolve.
+    attr_accessor :n_fda_analyte_pma
+
+    # The FDA product codes behind n_fda_analyte_510k and n_fda_analyte_pma.
+    attr_accessor :fda_analyte_product_codes
+
+    # The FDA database page of the provider's most recent record under a product code for this biomarker.
+    attr_accessor :fda_analyte_fda_url
+
+    # True when a paper names a cleared or approved device of this provider that measures this biomarker. The device name matches the paper's assay name, or the company's own quote, and the device's analyte agrees with the biomarker.
+    attr_accessor :specific_assay_matched
+
+    # The 510(k) device name or PMA trade name of the matched device; the best match when several matched. Null when no device matched.
+    attr_accessor :specific_assay_device_name
+
+    # The 510(k) number of the matched device; null when the match is a PMA or there is none.
+    attr_accessor :specific_assay_k_number
+
+    # The PMA number of the matched device; null when the match is a 510(k) or there is none.
+    attr_accessor :specific_assay_pma_number
+
+    # The FDA database page of the matched device.
+    attr_accessor :specific_assay_fda_url
+
+    # The trigram text similarity (0 to 1) of the larger of the two text clauses that matched the device, the paper's assay name or the company's quote against the device name.
+    attr_accessor :specific_assay_similarity
+
+    # The FDA companion diagnostic list entries for this biomarker from this provider's organization (or its parent family). Null when the provider or the biomarker did not resolve.
+    attr_accessor :n_cdx_entries
+
+    # The names of those companion diagnostics.
+    attr_accessor :cdx_diagnostic_names
+
+    # The CLIA (US clinical laboratory) certificates held by the provider's organization, or by organizations under its parent when it holds none (clia_match_rung says which). A certificate licenses a lab; it is not evidence that any named assay is run. Null for a provider that did not resolve to an organization.
+    attr_accessor :n_clia_certificates
+
+    # org: the counted certificates are held by the provider's own organization. parent: by organizations under the same resolved parent. Null when the provider holds none.
+    attr_accessor :clia_match_rung
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -140,9 +191,26 @@ module PharmaObservatory
         :'most_recent_pmid' => :'most_recent_pmid',
         :'most_recent_title' => :'most_recent_title',
         :'meets_curated_threshold' => :'meets_curated_threshold',
-        :'assay_provider_class' => :'assay_provider_class',
-        :'assay_provider_class_source' => :'assay_provider_class_source',
-        :'assay_provider_class_decided_at' => :'assay_provider_class_decided_at'
+        :'regulatory_evidence_kind' => :'regulatory_evidence_kind',
+        :'has_fda_record_for_biomarker' => :'has_fda_record_for_biomarker',
+        :'regulatory_evidence_reasons' => :'regulatory_evidence_reasons',
+        :'n_fda_ivd_510k' => :'n_fda_ivd_510k',
+        :'n_fda_ivd_pma' => :'n_fda_ivd_pma',
+        :'fda_company_match_rung' => :'fda_company_match_rung',
+        :'n_fda_analyte_510k' => :'n_fda_analyte_510k',
+        :'n_fda_analyte_pma' => :'n_fda_analyte_pma',
+        :'fda_analyte_product_codes' => :'fda_analyte_product_codes',
+        :'fda_analyte_fda_url' => :'fda_analyte_fda_url',
+        :'specific_assay_matched' => :'specific_assay_matched',
+        :'specific_assay_device_name' => :'specific_assay_device_name',
+        :'specific_assay_k_number' => :'specific_assay_k_number',
+        :'specific_assay_pma_number' => :'specific_assay_pma_number',
+        :'specific_assay_fda_url' => :'specific_assay_fda_url',
+        :'specific_assay_similarity' => :'specific_assay_similarity',
+        :'n_cdx_entries' => :'n_cdx_entries',
+        :'cdx_diagnostic_names' => :'cdx_diagnostic_names',
+        :'n_clia_certificates' => :'n_clia_certificates',
+        :'clia_match_rung' => :'clia_match_rung'
       }
     end
 
@@ -187,9 +255,26 @@ module PharmaObservatory
         :'most_recent_pmid' => :'String',
         :'most_recent_title' => :'String',
         :'meets_curated_threshold' => :'Boolean',
-        :'assay_provider_class' => :'String',
-        :'assay_provider_class_source' => :'String',
-        :'assay_provider_class_decided_at' => :'Time'
+        :'regulatory_evidence_kind' => :'String',
+        :'has_fda_record_for_biomarker' => :'Boolean',
+        :'regulatory_evidence_reasons' => :'Array<String>',
+        :'n_fda_ivd_510k' => :'Integer',
+        :'n_fda_ivd_pma' => :'Integer',
+        :'fda_company_match_rung' => :'String',
+        :'n_fda_analyte_510k' => :'Integer',
+        :'n_fda_analyte_pma' => :'Integer',
+        :'fda_analyte_product_codes' => :'Array<String>',
+        :'fda_analyte_fda_url' => :'String',
+        :'specific_assay_matched' => :'Boolean',
+        :'specific_assay_device_name' => :'String',
+        :'specific_assay_k_number' => :'String',
+        :'specific_assay_pma_number' => :'String',
+        :'specific_assay_fda_url' => :'String',
+        :'specific_assay_similarity' => :'Float',
+        :'n_cdx_entries' => :'Integer',
+        :'cdx_diagnostic_names' => :'Array<String>',
+        :'n_clia_certificates' => :'Integer',
+        :'clia_match_rung' => :'String'
       }
     end
 
@@ -224,9 +309,26 @@ module PharmaObservatory
         :'most_recent_pmid',
         :'most_recent_title',
         :'meets_curated_threshold',
-        :'assay_provider_class',
-        :'assay_provider_class_source',
-        :'assay_provider_class_decided_at'
+        :'regulatory_evidence_kind',
+        :'has_fda_record_for_biomarker',
+        :'regulatory_evidence_reasons',
+        :'n_fda_ivd_510k',
+        :'n_fda_ivd_pma',
+        :'fda_company_match_rung',
+        :'n_fda_analyte_510k',
+        :'n_fda_analyte_pma',
+        :'fda_analyte_product_codes',
+        :'fda_analyte_fda_url',
+        :'specific_assay_matched',
+        :'specific_assay_device_name',
+        :'specific_assay_k_number',
+        :'specific_assay_pma_number',
+        :'specific_assay_fda_url',
+        :'specific_assay_similarity',
+        :'n_cdx_entries',
+        :'cdx_diagnostic_names',
+        :'n_clia_certificates',
+        :'clia_match_rung'
       ])
     end
 
@@ -358,16 +460,90 @@ module PharmaObservatory
         self.meets_curated_threshold = attributes[:'meets_curated_threshold']
       end
 
-      if attributes.key?(:'assay_provider_class')
-        self.assay_provider_class = attributes[:'assay_provider_class']
+      if attributes.key?(:'regulatory_evidence_kind')
+        self.regulatory_evidence_kind = attributes[:'regulatory_evidence_kind']
       end
 
-      if attributes.key?(:'assay_provider_class_source')
-        self.assay_provider_class_source = attributes[:'assay_provider_class_source']
+      if attributes.key?(:'has_fda_record_for_biomarker')
+        self.has_fda_record_for_biomarker = attributes[:'has_fda_record_for_biomarker']
       end
 
-      if attributes.key?(:'assay_provider_class_decided_at')
-        self.assay_provider_class_decided_at = attributes[:'assay_provider_class_decided_at']
+      if attributes.key?(:'regulatory_evidence_reasons')
+        if (value = attributes[:'regulatory_evidence_reasons']).is_a?(Array)
+          self.regulatory_evidence_reasons = value
+        end
+      end
+
+      if attributes.key?(:'n_fda_ivd_510k')
+        self.n_fda_ivd_510k = attributes[:'n_fda_ivd_510k']
+      end
+
+      if attributes.key?(:'n_fda_ivd_pma')
+        self.n_fda_ivd_pma = attributes[:'n_fda_ivd_pma']
+      end
+
+      if attributes.key?(:'fda_company_match_rung')
+        self.fda_company_match_rung = attributes[:'fda_company_match_rung']
+      end
+
+      if attributes.key?(:'n_fda_analyte_510k')
+        self.n_fda_analyte_510k = attributes[:'n_fda_analyte_510k']
+      end
+
+      if attributes.key?(:'n_fda_analyte_pma')
+        self.n_fda_analyte_pma = attributes[:'n_fda_analyte_pma']
+      end
+
+      if attributes.key?(:'fda_analyte_product_codes')
+        if (value = attributes[:'fda_analyte_product_codes']).is_a?(Array)
+          self.fda_analyte_product_codes = value
+        end
+      end
+
+      if attributes.key?(:'fda_analyte_fda_url')
+        self.fda_analyte_fda_url = attributes[:'fda_analyte_fda_url']
+      end
+
+      if attributes.key?(:'specific_assay_matched')
+        self.specific_assay_matched = attributes[:'specific_assay_matched']
+      end
+
+      if attributes.key?(:'specific_assay_device_name')
+        self.specific_assay_device_name = attributes[:'specific_assay_device_name']
+      end
+
+      if attributes.key?(:'specific_assay_k_number')
+        self.specific_assay_k_number = attributes[:'specific_assay_k_number']
+      end
+
+      if attributes.key?(:'specific_assay_pma_number')
+        self.specific_assay_pma_number = attributes[:'specific_assay_pma_number']
+      end
+
+      if attributes.key?(:'specific_assay_fda_url')
+        self.specific_assay_fda_url = attributes[:'specific_assay_fda_url']
+      end
+
+      if attributes.key?(:'specific_assay_similarity')
+        self.specific_assay_similarity = attributes[:'specific_assay_similarity']
+      end
+
+      if attributes.key?(:'n_cdx_entries')
+        self.n_cdx_entries = attributes[:'n_cdx_entries']
+      end
+
+      if attributes.key?(:'cdx_diagnostic_names')
+        if (value = attributes[:'cdx_diagnostic_names']).is_a?(Array)
+          self.cdx_diagnostic_names = value
+        end
+      end
+
+      if attributes.key?(:'n_clia_certificates')
+        self.n_clia_certificates = attributes[:'n_clia_certificates']
+      end
+
+      if attributes.key?(:'clia_match_rung')
+        self.clia_match_rung = attributes[:'clia_match_rung']
       end
     end
 
@@ -419,9 +595,26 @@ module PharmaObservatory
           most_recent_pmid == o.most_recent_pmid &&
           most_recent_title == o.most_recent_title &&
           meets_curated_threshold == o.meets_curated_threshold &&
-          assay_provider_class == o.assay_provider_class &&
-          assay_provider_class_source == o.assay_provider_class_source &&
-          assay_provider_class_decided_at == o.assay_provider_class_decided_at
+          regulatory_evidence_kind == o.regulatory_evidence_kind &&
+          has_fda_record_for_biomarker == o.has_fda_record_for_biomarker &&
+          regulatory_evidence_reasons == o.regulatory_evidence_reasons &&
+          n_fda_ivd_510k == o.n_fda_ivd_510k &&
+          n_fda_ivd_pma == o.n_fda_ivd_pma &&
+          fda_company_match_rung == o.fda_company_match_rung &&
+          n_fda_analyte_510k == o.n_fda_analyte_510k &&
+          n_fda_analyte_pma == o.n_fda_analyte_pma &&
+          fda_analyte_product_codes == o.fda_analyte_product_codes &&
+          fda_analyte_fda_url == o.fda_analyte_fda_url &&
+          specific_assay_matched == o.specific_assay_matched &&
+          specific_assay_device_name == o.specific_assay_device_name &&
+          specific_assay_k_number == o.specific_assay_k_number &&
+          specific_assay_pma_number == o.specific_assay_pma_number &&
+          specific_assay_fda_url == o.specific_assay_fda_url &&
+          specific_assay_similarity == o.specific_assay_similarity &&
+          n_cdx_entries == o.n_cdx_entries &&
+          cdx_diagnostic_names == o.cdx_diagnostic_names &&
+          n_clia_certificates == o.n_clia_certificates &&
+          clia_match_rung == o.clia_match_rung
     end
 
     # @see the `==` method
@@ -433,7 +626,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [route_key, biomarker_key, biomarker_id, biomarker_display_name, gene_resolution_status, provider_key, provider_role, provider_name, provider_org_id, provider_org_match_tier, provider_parent_org_id, provider_company_id, provider_company_name, provider_group_id, provider_group_name, rx_matched, rx_provider_id, rx_provider_name, rx_provider_slug, has_clinical_validation, has_analytical_validation, n_papers, n_dated_papers, n_undated_papers, most_recent_published_at, most_recent_pmid, most_recent_title, meets_curated_threshold, assay_provider_class, assay_provider_class_source, assay_provider_class_decided_at].hash
+      [route_key, biomarker_key, biomarker_id, biomarker_display_name, gene_resolution_status, provider_key, provider_role, provider_name, provider_org_id, provider_org_match_tier, provider_parent_org_id, provider_company_id, provider_company_name, provider_group_id, provider_group_name, rx_matched, rx_provider_id, rx_provider_name, rx_provider_slug, has_clinical_validation, has_analytical_validation, n_papers, n_dated_papers, n_undated_papers, most_recent_published_at, most_recent_pmid, most_recent_title, meets_curated_threshold, regulatory_evidence_kind, has_fda_record_for_biomarker, regulatory_evidence_reasons, n_fda_ivd_510k, n_fda_ivd_pma, fda_company_match_rung, n_fda_analyte_510k, n_fda_analyte_pma, fda_analyte_product_codes, fda_analyte_fda_url, specific_assay_matched, specific_assay_device_name, specific_assay_k_number, specific_assay_pma_number, specific_assay_fda_url, specific_assay_similarity, n_cdx_entries, cdx_diagnostic_names, n_clia_certificates, clia_match_rung].hash
     end
 
     # Builds the object from hash

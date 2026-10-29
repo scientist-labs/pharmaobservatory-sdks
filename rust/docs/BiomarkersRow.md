@@ -30,7 +30,7 @@ Name | Type | Description | Notes
 **has_analytical_validation_evidence** | Option<**bool**> | Whether analytical validation evidence exists. | [optional]
 **n_assay_provider_papers** | Option<**i32**> | Papers naming an assay provider for the biomarker. | [optional]
 **n_assay_provider_suppliers** | Option<**i32**> | Assay-provider suppliers named. | [optional]
-**n_diagnostic_provider_suppliers** | Option<**i32**> | Of those, diagnostic providers. | [optional]
+**n_fda_evidence_providers** | Option<**i32**> | Of those, providers with an FDA record found for the biomarker (a companion diagnostic, a cleared or approved device the paper names, a cleared or approved IVD under the analyte's product code, or a CLIA-certified lab that ran the test). US only; no record found is not a statement about validation. Null when no assay provider is named for the biomarker. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
