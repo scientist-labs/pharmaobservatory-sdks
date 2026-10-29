@@ -38,13 +38,13 @@ pub struct BiomarkerAssayProvidersRow {
     /// The provider company name as it appears in the papers.
     #[serde(rename = "provider_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub provider_name: Option<Option<String>>,
-    /// The provider's legal entity key, where the marketplace match resolves one.
+    /// The organization the provider's company name resolved to (the member organization, not its parent); null when the provider is ambiguous or unresolved. Reached by the rung named in provider_org_match_tier.
     #[serde(rename = "provider_org_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub provider_org_id: Option<Option<String>>,
-    /// How the provider was resolved to an organization. rx_provider_link: through its marketplace supplier. unresolved: no organization, the provider stays a name. The remaining values are reserved for resolution rungs that have not shipped.
+    /// How the provider was resolved to an organization, first rung that yields one organization wins. alias_exact: a reviewed brand alias, then exactly one organization carries the name. name_exact: exactly one organization carries the name. parent_unanimous: several organizations carry the name and all roll up to one parent, which is the organization. sponsor_key: the name is a trial-sponsor key. rx_provider_link: through its marketplace supplier. ambiguous: organizations under more than one parent carry the name, so none is chosen. unresolved: no organization, the provider stays a name.
     #[serde(rename = "provider_org_match_tier", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub provider_org_match_tier: Option<Option<String>>,
-    /// The ultimate parent organization of the provider's organization; null when the provider has no organization.
+    /// The resolved parent of provider_org_id in the organization hierarchy (the organization itself when it has none); null when the provider has no organization. The hierarchy is not guaranteed correct for every company, so read it with provider_org_match_tier.
     #[serde(rename = "provider_parent_org_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub provider_parent_org_id: Option<Option<String>>,
     /// The provider's company key.
@@ -98,15 +98,66 @@ pub struct BiomarkerAssayProvidersRow {
     /// True when the provider matches a marketplace supplier or at least two papers name the pair.
     #[serde(rename = "meets_curated_threshold", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub meets_curated_threshold: Option<Option<bool>>,
-    /// The company-level class. diagnostic_provider makes or supplies the diagnostic assay; reagent_supplier is the vendor whose kit appears in a methods section; context_dependent, pharma_or_other and not_a_company are the other decisions; unclassified means no decision yet.
-    #[serde(rename = "assay_provider_class", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub assay_provider_class: Option<Option<String>>,
-    /// Where the class decision came from; null when unclassified.
-    #[serde(rename = "assay_provider_class_source", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub assay_provider_class_source: Option<Option<String>>,
-    /// When the class was decided, in UTC; null when unclassified.
-    #[serde(rename = "assay_provider_class_decided_at", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub assay_provider_class_decided_at: Option<Option<String>>,
+    /// The strongest US FDA or CMS record found for the pair. companion_diagnostic: the provider holds an FDA companion diagnostic for the biomarker. fda_cleared_specific_assay: a cleared or approved device of the provider that the paper names and that measures the biomarker. fda_cleared_for_biomarker: the provider holds a cleared or approved IVD under a product code for the biomarker. clia_testing_service: the provider is named as a testing service and its own organization holds a CLIA certificate. fda_ivd_company_only: the provider holds some cleared or approved IVD, none matched to the biomarker. none: no FDA record found.
+    #[serde(rename = "regulatory_evidence_kind", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub regulatory_evidence_kind: Option<Option<String>>,
+    /// True when regulatory_evidence_kind is one of the first four kinds, a record that concerns the biomarker rather than only the company.
+    #[serde(rename = "has_fda_record_for_biomarker", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub has_fda_record_for_biomarker: Option<Option<bool>>,
+    /// Every level that held for the pair, strongest first; empty when none did.
+    #[serde(rename = "regulatory_evidence_reasons", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub regulatory_evidence_reasons: Option<Option<Vec<String>>>,
+    /// The 510(k) clearances in the in-vitro diagnostic review panels held by the provider's organization (or, when it holds none, by organizations under its parent; fda_company_match_rung says which). Null for a provider that did not resolve to an organization.
+    #[serde(rename = "n_fda_ivd_510k", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_fda_ivd_510k: Option<Option<i64>>,
+    /// The PMA approvals (distinct approval numbers) in the in-vitro diagnostic review panels held by the provider's organization or its parent family, on the same rung as n_fda_ivd_510k. Null for a provider that did not resolve to an organization.
+    #[serde(rename = "n_fda_ivd_pma", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_fda_ivd_pma: Option<Option<i64>>,
+    /// org: the counted records are held by the provider's own organization. parent: by organizations under the same resolved parent. Null when the provider holds none.
+    #[serde(rename = "fda_company_match_rung", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub fda_company_match_rung: Option<Option<String>>,
+    /// The provider's 510(k) clearances under a product code mapped to this biomarker. Null when the provider or the biomarker did not resolve.
+    #[serde(rename = "n_fda_analyte_510k", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_fda_analyte_510k: Option<Option<i64>>,
+    /// The provider's PMA approvals under a product code mapped to this biomarker. Null when the provider or the biomarker did not resolve.
+    #[serde(rename = "n_fda_analyte_pma", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_fda_analyte_pma: Option<Option<i64>>,
+    /// The FDA product codes behind n_fda_analyte_510k and n_fda_analyte_pma.
+    #[serde(rename = "fda_analyte_product_codes", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub fda_analyte_product_codes: Option<Option<Vec<String>>>,
+    /// The FDA database page of the provider's most recent record under a product code for this biomarker.
+    #[serde(rename = "fda_analyte_fda_url", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub fda_analyte_fda_url: Option<Option<String>>,
+    /// True when a paper names a cleared or approved device of this provider that measures this biomarker. The device name matches the paper's assay name, or the company's own quote, and the device's analyte agrees with the biomarker.
+    #[serde(rename = "specific_assay_matched", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub specific_assay_matched: Option<Option<bool>>,
+    /// The 510(k) device name or PMA trade name of the matched device; the best match when several matched. Null when no device matched.
+    #[serde(rename = "specific_assay_device_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub specific_assay_device_name: Option<Option<String>>,
+    /// The 510(k) number of the matched device; null when the match is a PMA or there is none.
+    #[serde(rename = "specific_assay_k_number", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub specific_assay_k_number: Option<Option<String>>,
+    /// The PMA number of the matched device; null when the match is a 510(k) or there is none.
+    #[serde(rename = "specific_assay_pma_number", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub specific_assay_pma_number: Option<Option<String>>,
+    /// The FDA database page of the matched device.
+    #[serde(rename = "specific_assay_fda_url", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub specific_assay_fda_url: Option<Option<String>>,
+    /// The trigram text similarity (0 to 1) of the larger of the two text clauses that matched the device, the paper's assay name or the company's quote against the device name.
+    #[serde(rename = "specific_assay_similarity", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub specific_assay_similarity: Option<Option<f64>>,
+    /// The FDA companion diagnostic list entries for this biomarker from this provider's organization (or its parent family). Null when the provider or the biomarker did not resolve.
+    #[serde(rename = "n_cdx_entries", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_cdx_entries: Option<Option<i32>>,
+    /// The names of those companion diagnostics.
+    #[serde(rename = "cdx_diagnostic_names", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub cdx_diagnostic_names: Option<Option<Vec<String>>>,
+    /// The CLIA (US clinical laboratory) certificates held by the provider's organization, or by organizations under its parent when it holds none (clia_match_rung says which). A certificate licenses a lab; it is not evidence that any named assay is run. Null for a provider that did not resolve to an organization.
+    #[serde(rename = "n_clia_certificates", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_clia_certificates: Option<Option<i64>>,
+    /// org: the counted certificates are held by the provider's own organization. parent: by organizations under the same resolved parent. Null when the provider holds none.
+    #[serde(rename = "clia_match_rung", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub clia_match_rung: Option<Option<String>>,
 }
 
 impl BiomarkerAssayProvidersRow {
@@ -141,9 +192,26 @@ impl BiomarkerAssayProvidersRow {
             most_recent_pmid: None,
             most_recent_title: None,
             meets_curated_threshold: None,
-            assay_provider_class: None,
-            assay_provider_class_source: None,
-            assay_provider_class_decided_at: None,
+            regulatory_evidence_kind: None,
+            has_fda_record_for_biomarker: None,
+            regulatory_evidence_reasons: None,
+            n_fda_ivd_510k: None,
+            n_fda_ivd_pma: None,
+            fda_company_match_rung: None,
+            n_fda_analyte_510k: None,
+            n_fda_analyte_pma: None,
+            fda_analyte_product_codes: None,
+            fda_analyte_fda_url: None,
+            specific_assay_matched: None,
+            specific_assay_device_name: None,
+            specific_assay_k_number: None,
+            specific_assay_pma_number: None,
+            specific_assay_fda_url: None,
+            specific_assay_similarity: None,
+            n_cdx_entries: None,
+            cdx_diagnostic_names: None,
+            n_clia_certificates: None,
+            clia_match_rung: None,
         }
     }
 }

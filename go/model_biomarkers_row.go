@@ -71,8 +71,8 @@ type BiomarkersRow struct {
 	NAssayProviderPapers NullableInt32 `json:"n_assay_provider_papers,omitempty"`
 	// Assay-provider suppliers named.
 	NAssayProviderSuppliers NullableInt32 `json:"n_assay_provider_suppliers,omitempty"`
-	// Of those, diagnostic providers.
-	NDiagnosticProviderSuppliers NullableInt32 `json:"n_diagnostic_provider_suppliers,omitempty"`
+	// Of those, providers with an FDA record found for the biomarker (a companion diagnostic, a cleared or approved device the paper names, a cleared or approved IVD under the analyte's product code, or a CLIA-certified lab that ran the test). US only; no record found is not a statement about validation. Null when no assay provider is named for the biomarker.
+	NFdaEvidenceProviders NullableInt32 `json:"n_fda_evidence_providers,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -1187,46 +1187,46 @@ func (o *BiomarkersRow) UnsetNAssayProviderSuppliers() {
 	o.NAssayProviderSuppliers.Unset()
 }
 
-// GetNDiagnosticProviderSuppliers returns the NDiagnosticProviderSuppliers field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *BiomarkersRow) GetNDiagnosticProviderSuppliers() int32 {
-	if o == nil || IsNil(o.NDiagnosticProviderSuppliers.Get()) {
+// GetNFdaEvidenceProviders returns the NFdaEvidenceProviders field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkersRow) GetNFdaEvidenceProviders() int32 {
+	if o == nil || IsNil(o.NFdaEvidenceProviders.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.NDiagnosticProviderSuppliers.Get()
+	return *o.NFdaEvidenceProviders.Get()
 }
 
-// GetNDiagnosticProviderSuppliersOk returns a tuple with the NDiagnosticProviderSuppliers field value if set, nil otherwise
+// GetNFdaEvidenceProvidersOk returns a tuple with the NFdaEvidenceProviders field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *BiomarkersRow) GetNDiagnosticProviderSuppliersOk() (*int32, bool) {
+func (o *BiomarkersRow) GetNFdaEvidenceProvidersOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.NDiagnosticProviderSuppliers.Get(), o.NDiagnosticProviderSuppliers.IsSet()
+	return o.NFdaEvidenceProviders.Get(), o.NFdaEvidenceProviders.IsSet()
 }
 
-// HasNDiagnosticProviderSuppliers returns a boolean if a field has been set.
-func (o *BiomarkersRow) HasNDiagnosticProviderSuppliers() bool {
-	if o != nil && o.NDiagnosticProviderSuppliers.IsSet() {
+// HasNFdaEvidenceProviders returns a boolean if a field has been set.
+func (o *BiomarkersRow) HasNFdaEvidenceProviders() bool {
+	if o != nil && o.NFdaEvidenceProviders.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetNDiagnosticProviderSuppliers gets a reference to the given NullableInt32 and assigns it to the NDiagnosticProviderSuppliers field.
-func (o *BiomarkersRow) SetNDiagnosticProviderSuppliers(v int32) {
-	o.NDiagnosticProviderSuppliers.Set(&v)
+// SetNFdaEvidenceProviders gets a reference to the given NullableInt32 and assigns it to the NFdaEvidenceProviders field.
+func (o *BiomarkersRow) SetNFdaEvidenceProviders(v int32) {
+	o.NFdaEvidenceProviders.Set(&v)
 }
-// SetNDiagnosticProviderSuppliersNil sets the value for NDiagnosticProviderSuppliers to be an explicit nil
-func (o *BiomarkersRow) SetNDiagnosticProviderSuppliersNil() {
-	o.NDiagnosticProviderSuppliers.Set(nil)
+// SetNFdaEvidenceProvidersNil sets the value for NFdaEvidenceProviders to be an explicit nil
+func (o *BiomarkersRow) SetNFdaEvidenceProvidersNil() {
+	o.NFdaEvidenceProviders.Set(nil)
 }
 
-// UnsetNDiagnosticProviderSuppliers ensures that no value is present for NDiagnosticProviderSuppliers, not even an explicit nil
-func (o *BiomarkersRow) UnsetNDiagnosticProviderSuppliers() {
-	o.NDiagnosticProviderSuppliers.Unset()
+// UnsetNFdaEvidenceProviders ensures that no value is present for NFdaEvidenceProviders, not even an explicit nil
+func (o *BiomarkersRow) UnsetNFdaEvidenceProviders() {
+	o.NFdaEvidenceProviders.Unset()
 }
 
 func (o BiomarkersRow) MarshalJSON() ([]byte, error) {
@@ -1317,8 +1317,8 @@ func (o BiomarkersRow) ToMap() (map[string]interface{}, error) {
 	if o.NAssayProviderSuppliers.IsSet() {
 		toSerialize["n_assay_provider_suppliers"] = o.NAssayProviderSuppliers.Get()
 	}
-	if o.NDiagnosticProviderSuppliers.IsSet() {
-		toSerialize["n_diagnostic_provider_suppliers"] = o.NDiagnosticProviderSuppliers.Get()
+	if o.NFdaEvidenceProviders.IsSet() {
+		toSerialize["n_fda_evidence_providers"] = o.NFdaEvidenceProviders.Get()
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -1368,7 +1368,7 @@ func (o *BiomarkersRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "has_analytical_validation_evidence")
 		delete(additionalProperties, "n_assay_provider_papers")
 		delete(additionalProperties, "n_assay_provider_suppliers")
-		delete(additionalProperties, "n_diagnostic_provider_suppliers")
+		delete(additionalProperties, "n_fda_evidence_providers")
 		o.AdditionalProperties = additionalProperties
 	}
 

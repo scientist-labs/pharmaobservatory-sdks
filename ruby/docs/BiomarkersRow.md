@@ -30,7 +30,7 @@
 | **has_analytical_validation_evidence** | **Boolean** | Whether analytical validation evidence exists. | [optional] |
 | **n_assay_provider_papers** | **Integer** | Papers naming an assay provider for the biomarker. | [optional] |
 | **n_assay_provider_suppliers** | **Integer** | Assay-provider suppliers named. | [optional] |
-| **n_diagnostic_provider_suppliers** | **Integer** | Of those, diagnostic providers. | [optional] |
+| **n_fda_evidence_providers** | **Integer** | Of those, providers with an FDA record found for the biomarker (a companion diagnostic, a cleared or approved device the paper names, a cleared or approved IVD under the analyte&#39;s product code, or a CLIA-certified lab that ran the test). US only; no record found is not a statement about validation. Null when no assay provider is named for the biomarker. | [optional] |
 
 ## Example
 
@@ -64,7 +64,7 @@ instance = PharmaObservatory::BiomarkersRow.new(
   has_analytical_validation_evidence: null,
   n_assay_provider_papers: null,
   n_assay_provider_suppliers: null,
-  n_diagnostic_provider_suppliers: null
+  n_fda_evidence_providers: null
 )
 ```
 

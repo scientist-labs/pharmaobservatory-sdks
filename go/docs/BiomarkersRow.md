@@ -30,7 +30,7 @@ Name | Type | Description | Notes
 **HasAnalyticalValidationEvidence** | Pointer to **NullableBool** | Whether analytical validation evidence exists. | [optional] 
 **NAssayProviderPapers** | Pointer to **NullableInt32** | Papers naming an assay provider for the biomarker. | [optional] 
 **NAssayProviderSuppliers** | Pointer to **NullableInt32** | Assay-provider suppliers named. | [optional] 
-**NDiagnosticProviderSuppliers** | Pointer to **NullableInt32** | Of those, diagnostic providers. | [optional] 
+**NFdaEvidenceProviders** | Pointer to **NullableInt32** | Of those, providers with an FDA record found for the biomarker (a companion diagnostic, a cleared or approved device the paper names, a cleared or approved IVD under the analyte&#39;s product code, or a CLIA-certified lab that ran the test). US only; no record found is not a statement about validation. Null when no assay provider is named for the biomarker. | [optional] 
 
 ## Methods
 
@@ -961,41 +961,41 @@ HasNAssayProviderSuppliers returns a boolean if a field has been set.
 `func (o *BiomarkersRow) UnsetNAssayProviderSuppliers()`
 
 UnsetNAssayProviderSuppliers ensures that no value is present for NAssayProviderSuppliers, not even an explicit nil
-### GetNDiagnosticProviderSuppliers
+### GetNFdaEvidenceProviders
 
-`func (o *BiomarkersRow) GetNDiagnosticProviderSuppliers() int32`
+`func (o *BiomarkersRow) GetNFdaEvidenceProviders() int32`
 
-GetNDiagnosticProviderSuppliers returns the NDiagnosticProviderSuppliers field if non-nil, zero value otherwise.
+GetNFdaEvidenceProviders returns the NFdaEvidenceProviders field if non-nil, zero value otherwise.
 
-### GetNDiagnosticProviderSuppliersOk
+### GetNFdaEvidenceProvidersOk
 
-`func (o *BiomarkersRow) GetNDiagnosticProviderSuppliersOk() (*int32, bool)`
+`func (o *BiomarkersRow) GetNFdaEvidenceProvidersOk() (*int32, bool)`
 
-GetNDiagnosticProviderSuppliersOk returns a tuple with the NDiagnosticProviderSuppliers field if it's non-nil, zero value otherwise
+GetNFdaEvidenceProvidersOk returns a tuple with the NFdaEvidenceProviders field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetNDiagnosticProviderSuppliers
+### SetNFdaEvidenceProviders
 
-`func (o *BiomarkersRow) SetNDiagnosticProviderSuppliers(v int32)`
+`func (o *BiomarkersRow) SetNFdaEvidenceProviders(v int32)`
 
-SetNDiagnosticProviderSuppliers sets NDiagnosticProviderSuppliers field to given value.
+SetNFdaEvidenceProviders sets NFdaEvidenceProviders field to given value.
 
-### HasNDiagnosticProviderSuppliers
+### HasNFdaEvidenceProviders
 
-`func (o *BiomarkersRow) HasNDiagnosticProviderSuppliers() bool`
+`func (o *BiomarkersRow) HasNFdaEvidenceProviders() bool`
 
-HasNDiagnosticProviderSuppliers returns a boolean if a field has been set.
+HasNFdaEvidenceProviders returns a boolean if a field has been set.
 
-### SetNDiagnosticProviderSuppliersNil
+### SetNFdaEvidenceProvidersNil
 
-`func (o *BiomarkersRow) SetNDiagnosticProviderSuppliersNil(b bool)`
+`func (o *BiomarkersRow) SetNFdaEvidenceProvidersNil(b bool)`
 
- SetNDiagnosticProviderSuppliersNil sets the value for NDiagnosticProviderSuppliers to be an explicit nil
+ SetNFdaEvidenceProvidersNil sets the value for NFdaEvidenceProviders to be an explicit nil
 
-### UnsetNDiagnosticProviderSuppliers
-`func (o *BiomarkersRow) UnsetNDiagnosticProviderSuppliers()`
+### UnsetNFdaEvidenceProviders
+`func (o *BiomarkersRow) UnsetNFdaEvidenceProviders()`
 
-UnsetNDiagnosticProviderSuppliers ensures that no value is present for NDiagnosticProviderSuppliers, not even an explicit nil
+UnsetNFdaEvidenceProviders ensures that no value is present for NFdaEvidenceProviders, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

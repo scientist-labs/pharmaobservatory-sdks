@@ -36,11 +36,11 @@ type BiomarkerAssayProvidersRow struct {
 	ProviderRole NullableString `json:"provider_role,omitempty"`
 	// The provider company name as it appears in the papers.
 	ProviderName NullableString `json:"provider_name,omitempty"`
-	// The provider's legal entity key, where the marketplace match resolves one.
+	// The organization the provider's company name resolved to (the member organization, not its parent); null when the provider is ambiguous or unresolved. Reached by the rung named in provider_org_match_tier.
 	ProviderOrgId NullableString `json:"provider_org_id,omitempty"`
-	// How the provider was resolved to an organization. rx_provider_link: through its marketplace supplier. unresolved: no organization, the provider stays a name. The remaining values are reserved for resolution rungs that have not shipped.
+	// How the provider was resolved to an organization, first rung that yields one organization wins. alias_exact: a reviewed brand alias, then exactly one organization carries the name. name_exact: exactly one organization carries the name. parent_unanimous: several organizations carry the name and all roll up to one parent, which is the organization. sponsor_key: the name is a trial-sponsor key. rx_provider_link: through its marketplace supplier. ambiguous: organizations under more than one parent carry the name, so none is chosen. unresolved: no organization, the provider stays a name.
 	ProviderOrgMatchTier NullableString `json:"provider_org_match_tier,omitempty"`
-	// The ultimate parent organization of the provider's organization; null when the provider has no organization.
+	// The resolved parent of provider_org_id in the organization hierarchy (the organization itself when it has none); null when the provider has no organization. The hierarchy is not guaranteed correct for every company, so read it with provider_org_match_tier.
 	ProviderParentOrgId NullableString `json:"provider_parent_org_id,omitempty"`
 	// The provider's company key.
 	ProviderCompanyId NullableString `json:"provider_company_id,omitempty"`
@@ -76,12 +76,46 @@ type BiomarkerAssayProvidersRow struct {
 	MostRecentTitle NullableString `json:"most_recent_title,omitempty"`
 	// True when the provider matches a marketplace supplier or at least two papers name the pair.
 	MeetsCuratedThreshold NullableBool `json:"meets_curated_threshold,omitempty"`
-	// The company-level class. diagnostic_provider makes or supplies the diagnostic assay; reagent_supplier is the vendor whose kit appears in a methods section; context_dependent, pharma_or_other and not_a_company are the other decisions; unclassified means no decision yet.
-	AssayProviderClass NullableString `json:"assay_provider_class,omitempty"`
-	// Where the class decision came from; null when unclassified.
-	AssayProviderClassSource NullableString `json:"assay_provider_class_source,omitempty"`
-	// When the class was decided, in UTC; null when unclassified.
-	AssayProviderClassDecidedAt NullableTime `json:"assay_provider_class_decided_at,omitempty"`
+	// The strongest US FDA or CMS record found for the pair. companion_diagnostic: the provider holds an FDA companion diagnostic for the biomarker. fda_cleared_specific_assay: a cleared or approved device of the provider that the paper names and that measures the biomarker. fda_cleared_for_biomarker: the provider holds a cleared or approved IVD under a product code for the biomarker. clia_testing_service: the provider is named as a testing service and its own organization holds a CLIA certificate. fda_ivd_company_only: the provider holds some cleared or approved IVD, none matched to the biomarker. none: no FDA record found.
+	RegulatoryEvidenceKind NullableString `json:"regulatory_evidence_kind,omitempty"`
+	// True when regulatory_evidence_kind is one of the first four kinds, a record that concerns the biomarker rather than only the company.
+	HasFdaRecordForBiomarker NullableBool `json:"has_fda_record_for_biomarker,omitempty"`
+	// Every level that held for the pair, strongest first; empty when none did.
+	RegulatoryEvidenceReasons []string `json:"regulatory_evidence_reasons,omitempty"`
+	// The 510(k) clearances in the in-vitro diagnostic review panels held by the provider's organization (or, when it holds none, by organizations under its parent; fda_company_match_rung says which). Null for a provider that did not resolve to an organization.
+	NFdaIvd510k NullableInt64 `json:"n_fda_ivd_510k,omitempty"`
+	// The PMA approvals (distinct approval numbers) in the in-vitro diagnostic review panels held by the provider's organization or its parent family, on the same rung as n_fda_ivd_510k. Null for a provider that did not resolve to an organization.
+	NFdaIvdPma NullableInt64 `json:"n_fda_ivd_pma,omitempty"`
+	// org: the counted records are held by the provider's own organization. parent: by organizations under the same resolved parent. Null when the provider holds none.
+	FdaCompanyMatchRung NullableString `json:"fda_company_match_rung,omitempty"`
+	// The provider's 510(k) clearances under a product code mapped to this biomarker. Null when the provider or the biomarker did not resolve.
+	NFdaAnalyte510k NullableInt64 `json:"n_fda_analyte_510k,omitempty"`
+	// The provider's PMA approvals under a product code mapped to this biomarker. Null when the provider or the biomarker did not resolve.
+	NFdaAnalytePma NullableInt64 `json:"n_fda_analyte_pma,omitempty"`
+	// The FDA product codes behind n_fda_analyte_510k and n_fda_analyte_pma.
+	FdaAnalyteProductCodes []string `json:"fda_analyte_product_codes,omitempty"`
+	// The FDA database page of the provider's most recent record under a product code for this biomarker.
+	FdaAnalyteFdaUrl NullableString `json:"fda_analyte_fda_url,omitempty"`
+	// True when a paper names a cleared or approved device of this provider that measures this biomarker. The device name matches the paper's assay name, or the company's own quote, and the device's analyte agrees with the biomarker.
+	SpecificAssayMatched NullableBool `json:"specific_assay_matched,omitempty"`
+	// The 510(k) device name or PMA trade name of the matched device; the best match when several matched. Null when no device matched.
+	SpecificAssayDeviceName NullableString `json:"specific_assay_device_name,omitempty"`
+	// The 510(k) number of the matched device; null when the match is a PMA or there is none.
+	SpecificAssayKNumber NullableString `json:"specific_assay_k_number,omitempty"`
+	// The PMA number of the matched device; null when the match is a 510(k) or there is none.
+	SpecificAssayPmaNumber NullableString `json:"specific_assay_pma_number,omitempty"`
+	// The FDA database page of the matched device.
+	SpecificAssayFdaUrl NullableString `json:"specific_assay_fda_url,omitempty"`
+	// The trigram text similarity (0 to 1) of the larger of the two text clauses that matched the device, the paper's assay name or the company's quote against the device name.
+	SpecificAssaySimilarity NullableFloat32 `json:"specific_assay_similarity,omitempty"`
+	// The FDA companion diagnostic list entries for this biomarker from this provider's organization (or its parent family). Null when the provider or the biomarker did not resolve.
+	NCdxEntries NullableInt32 `json:"n_cdx_entries,omitempty"`
+	// The names of those companion diagnostics.
+	CdxDiagnosticNames []string `json:"cdx_diagnostic_names,omitempty"`
+	// The CLIA (US clinical laboratory) certificates held by the provider's organization, or by organizations under its parent when it holds none (clia_match_rung says which). A certificate licenses a lab; it is not evidence that any named assay is run. Null for a provider that did not resolve to an organization.
+	NCliaCertificates NullableInt64 `json:"n_clia_certificates,omitempty"`
+	// org: the counted certificates are held by the provider's own organization. parent: by organizations under the same resolved parent. Null when the provider holds none.
+	CliaMatchRung NullableString `json:"clia_match_rung,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -1280,130 +1314,817 @@ func (o *BiomarkerAssayProvidersRow) UnsetMeetsCuratedThreshold() {
 	o.MeetsCuratedThreshold.Unset()
 }
 
-// GetAssayProviderClass returns the AssayProviderClass field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *BiomarkerAssayProvidersRow) GetAssayProviderClass() string {
-	if o == nil || IsNil(o.AssayProviderClass.Get()) {
+// GetRegulatoryEvidenceKind returns the RegulatoryEvidenceKind field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetRegulatoryEvidenceKind() string {
+	if o == nil || IsNil(o.RegulatoryEvidenceKind.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.AssayProviderClass.Get()
+	return *o.RegulatoryEvidenceKind.Get()
 }
 
-// GetAssayProviderClassOk returns a tuple with the AssayProviderClass field value if set, nil otherwise
+// GetRegulatoryEvidenceKindOk returns a tuple with the RegulatoryEvidenceKind field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *BiomarkerAssayProvidersRow) GetAssayProviderClassOk() (*string, bool) {
+func (o *BiomarkerAssayProvidersRow) GetRegulatoryEvidenceKindOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.AssayProviderClass.Get(), o.AssayProviderClass.IsSet()
+	return o.RegulatoryEvidenceKind.Get(), o.RegulatoryEvidenceKind.IsSet()
 }
 
-// HasAssayProviderClass returns a boolean if a field has been set.
-func (o *BiomarkerAssayProvidersRow) HasAssayProviderClass() bool {
-	if o != nil && o.AssayProviderClass.IsSet() {
+// HasRegulatoryEvidenceKind returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasRegulatoryEvidenceKind() bool {
+	if o != nil && o.RegulatoryEvidenceKind.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAssayProviderClass gets a reference to the given NullableString and assigns it to the AssayProviderClass field.
-func (o *BiomarkerAssayProvidersRow) SetAssayProviderClass(v string) {
-	o.AssayProviderClass.Set(&v)
+// SetRegulatoryEvidenceKind gets a reference to the given NullableString and assigns it to the RegulatoryEvidenceKind field.
+func (o *BiomarkerAssayProvidersRow) SetRegulatoryEvidenceKind(v string) {
+	o.RegulatoryEvidenceKind.Set(&v)
 }
-// SetAssayProviderClassNil sets the value for AssayProviderClass to be an explicit nil
-func (o *BiomarkerAssayProvidersRow) SetAssayProviderClassNil() {
-	o.AssayProviderClass.Set(nil)
-}
-
-// UnsetAssayProviderClass ensures that no value is present for AssayProviderClass, not even an explicit nil
-func (o *BiomarkerAssayProvidersRow) UnsetAssayProviderClass() {
-	o.AssayProviderClass.Unset()
+// SetRegulatoryEvidenceKindNil sets the value for RegulatoryEvidenceKind to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetRegulatoryEvidenceKindNil() {
+	o.RegulatoryEvidenceKind.Set(nil)
 }
 
-// GetAssayProviderClassSource returns the AssayProviderClassSource field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *BiomarkerAssayProvidersRow) GetAssayProviderClassSource() string {
-	if o == nil || IsNil(o.AssayProviderClassSource.Get()) {
+// UnsetRegulatoryEvidenceKind ensures that no value is present for RegulatoryEvidenceKind, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetRegulatoryEvidenceKind() {
+	o.RegulatoryEvidenceKind.Unset()
+}
+
+// GetHasFdaRecordForBiomarker returns the HasFdaRecordForBiomarker field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetHasFdaRecordForBiomarker() bool {
+	if o == nil || IsNil(o.HasFdaRecordForBiomarker.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.HasFdaRecordForBiomarker.Get()
+}
+
+// GetHasFdaRecordForBiomarkerOk returns a tuple with the HasFdaRecordForBiomarker field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetHasFdaRecordForBiomarkerOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HasFdaRecordForBiomarker.Get(), o.HasFdaRecordForBiomarker.IsSet()
+}
+
+// HasHasFdaRecordForBiomarker returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasHasFdaRecordForBiomarker() bool {
+	if o != nil && o.HasFdaRecordForBiomarker.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHasFdaRecordForBiomarker gets a reference to the given NullableBool and assigns it to the HasFdaRecordForBiomarker field.
+func (o *BiomarkerAssayProvidersRow) SetHasFdaRecordForBiomarker(v bool) {
+	o.HasFdaRecordForBiomarker.Set(&v)
+}
+// SetHasFdaRecordForBiomarkerNil sets the value for HasFdaRecordForBiomarker to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetHasFdaRecordForBiomarkerNil() {
+	o.HasFdaRecordForBiomarker.Set(nil)
+}
+
+// UnsetHasFdaRecordForBiomarker ensures that no value is present for HasFdaRecordForBiomarker, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetHasFdaRecordForBiomarker() {
+	o.HasFdaRecordForBiomarker.Unset()
+}
+
+// GetRegulatoryEvidenceReasons returns the RegulatoryEvidenceReasons field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetRegulatoryEvidenceReasons() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.RegulatoryEvidenceReasons
+}
+
+// GetRegulatoryEvidenceReasonsOk returns a tuple with the RegulatoryEvidenceReasons field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetRegulatoryEvidenceReasonsOk() ([]string, bool) {
+	if o == nil || IsNil(o.RegulatoryEvidenceReasons) {
+		return nil, false
+	}
+	return o.RegulatoryEvidenceReasons, true
+}
+
+// HasRegulatoryEvidenceReasons returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasRegulatoryEvidenceReasons() bool {
+	if o != nil && !IsNil(o.RegulatoryEvidenceReasons) {
+		return true
+	}
+
+	return false
+}
+
+// SetRegulatoryEvidenceReasons gets a reference to the given []string and assigns it to the RegulatoryEvidenceReasons field.
+func (o *BiomarkerAssayProvidersRow) SetRegulatoryEvidenceReasons(v []string) {
+	o.RegulatoryEvidenceReasons = v
+}
+
+// GetNFdaIvd510k returns the NFdaIvd510k field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetNFdaIvd510k() int64 {
+	if o == nil || IsNil(o.NFdaIvd510k.Get()) {
+		var ret int64
+		return ret
+	}
+	return *o.NFdaIvd510k.Get()
+}
+
+// GetNFdaIvd510kOk returns a tuple with the NFdaIvd510k field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetNFdaIvd510kOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NFdaIvd510k.Get(), o.NFdaIvd510k.IsSet()
+}
+
+// HasNFdaIvd510k returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasNFdaIvd510k() bool {
+	if o != nil && o.NFdaIvd510k.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNFdaIvd510k gets a reference to the given NullableInt64 and assigns it to the NFdaIvd510k field.
+func (o *BiomarkerAssayProvidersRow) SetNFdaIvd510k(v int64) {
+	o.NFdaIvd510k.Set(&v)
+}
+// SetNFdaIvd510kNil sets the value for NFdaIvd510k to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetNFdaIvd510kNil() {
+	o.NFdaIvd510k.Set(nil)
+}
+
+// UnsetNFdaIvd510k ensures that no value is present for NFdaIvd510k, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetNFdaIvd510k() {
+	o.NFdaIvd510k.Unset()
+}
+
+// GetNFdaIvdPma returns the NFdaIvdPma field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetNFdaIvdPma() int64 {
+	if o == nil || IsNil(o.NFdaIvdPma.Get()) {
+		var ret int64
+		return ret
+	}
+	return *o.NFdaIvdPma.Get()
+}
+
+// GetNFdaIvdPmaOk returns a tuple with the NFdaIvdPma field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetNFdaIvdPmaOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NFdaIvdPma.Get(), o.NFdaIvdPma.IsSet()
+}
+
+// HasNFdaIvdPma returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasNFdaIvdPma() bool {
+	if o != nil && o.NFdaIvdPma.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNFdaIvdPma gets a reference to the given NullableInt64 and assigns it to the NFdaIvdPma field.
+func (o *BiomarkerAssayProvidersRow) SetNFdaIvdPma(v int64) {
+	o.NFdaIvdPma.Set(&v)
+}
+// SetNFdaIvdPmaNil sets the value for NFdaIvdPma to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetNFdaIvdPmaNil() {
+	o.NFdaIvdPma.Set(nil)
+}
+
+// UnsetNFdaIvdPma ensures that no value is present for NFdaIvdPma, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetNFdaIvdPma() {
+	o.NFdaIvdPma.Unset()
+}
+
+// GetFdaCompanyMatchRung returns the FdaCompanyMatchRung field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetFdaCompanyMatchRung() string {
+	if o == nil || IsNil(o.FdaCompanyMatchRung.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.AssayProviderClassSource.Get()
+	return *o.FdaCompanyMatchRung.Get()
 }
 
-// GetAssayProviderClassSourceOk returns a tuple with the AssayProviderClassSource field value if set, nil otherwise
+// GetFdaCompanyMatchRungOk returns a tuple with the FdaCompanyMatchRung field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *BiomarkerAssayProvidersRow) GetAssayProviderClassSourceOk() (*string, bool) {
+func (o *BiomarkerAssayProvidersRow) GetFdaCompanyMatchRungOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.AssayProviderClassSource.Get(), o.AssayProviderClassSource.IsSet()
+	return o.FdaCompanyMatchRung.Get(), o.FdaCompanyMatchRung.IsSet()
 }
 
-// HasAssayProviderClassSource returns a boolean if a field has been set.
-func (o *BiomarkerAssayProvidersRow) HasAssayProviderClassSource() bool {
-	if o != nil && o.AssayProviderClassSource.IsSet() {
+// HasFdaCompanyMatchRung returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasFdaCompanyMatchRung() bool {
+	if o != nil && o.FdaCompanyMatchRung.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAssayProviderClassSource gets a reference to the given NullableString and assigns it to the AssayProviderClassSource field.
-func (o *BiomarkerAssayProvidersRow) SetAssayProviderClassSource(v string) {
-	o.AssayProviderClassSource.Set(&v)
+// SetFdaCompanyMatchRung gets a reference to the given NullableString and assigns it to the FdaCompanyMatchRung field.
+func (o *BiomarkerAssayProvidersRow) SetFdaCompanyMatchRung(v string) {
+	o.FdaCompanyMatchRung.Set(&v)
 }
-// SetAssayProviderClassSourceNil sets the value for AssayProviderClassSource to be an explicit nil
-func (o *BiomarkerAssayProvidersRow) SetAssayProviderClassSourceNil() {
-	o.AssayProviderClassSource.Set(nil)
-}
-
-// UnsetAssayProviderClassSource ensures that no value is present for AssayProviderClassSource, not even an explicit nil
-func (o *BiomarkerAssayProvidersRow) UnsetAssayProviderClassSource() {
-	o.AssayProviderClassSource.Unset()
+// SetFdaCompanyMatchRungNil sets the value for FdaCompanyMatchRung to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetFdaCompanyMatchRungNil() {
+	o.FdaCompanyMatchRung.Set(nil)
 }
 
-// GetAssayProviderClassDecidedAt returns the AssayProviderClassDecidedAt field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *BiomarkerAssayProvidersRow) GetAssayProviderClassDecidedAt() time.Time {
-	if o == nil || IsNil(o.AssayProviderClassDecidedAt.Get()) {
-		var ret time.Time
+// UnsetFdaCompanyMatchRung ensures that no value is present for FdaCompanyMatchRung, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetFdaCompanyMatchRung() {
+	o.FdaCompanyMatchRung.Unset()
+}
+
+// GetNFdaAnalyte510k returns the NFdaAnalyte510k field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetNFdaAnalyte510k() int64 {
+	if o == nil || IsNil(o.NFdaAnalyte510k.Get()) {
+		var ret int64
 		return ret
 	}
-	return *o.AssayProviderClassDecidedAt.Get()
+	return *o.NFdaAnalyte510k.Get()
 }
 
-// GetAssayProviderClassDecidedAtOk returns a tuple with the AssayProviderClassDecidedAt field value if set, nil otherwise
+// GetNFdaAnalyte510kOk returns a tuple with the NFdaAnalyte510k field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *BiomarkerAssayProvidersRow) GetAssayProviderClassDecidedAtOk() (*time.Time, bool) {
+func (o *BiomarkerAssayProvidersRow) GetNFdaAnalyte510kOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.AssayProviderClassDecidedAt.Get(), o.AssayProviderClassDecidedAt.IsSet()
+	return o.NFdaAnalyte510k.Get(), o.NFdaAnalyte510k.IsSet()
 }
 
-// HasAssayProviderClassDecidedAt returns a boolean if a field has been set.
-func (o *BiomarkerAssayProvidersRow) HasAssayProviderClassDecidedAt() bool {
-	if o != nil && o.AssayProviderClassDecidedAt.IsSet() {
+// HasNFdaAnalyte510k returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasNFdaAnalyte510k() bool {
+	if o != nil && o.NFdaAnalyte510k.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetAssayProviderClassDecidedAt gets a reference to the given NullableTime and assigns it to the AssayProviderClassDecidedAt field.
-func (o *BiomarkerAssayProvidersRow) SetAssayProviderClassDecidedAt(v time.Time) {
-	o.AssayProviderClassDecidedAt.Set(&v)
+// SetNFdaAnalyte510k gets a reference to the given NullableInt64 and assigns it to the NFdaAnalyte510k field.
+func (o *BiomarkerAssayProvidersRow) SetNFdaAnalyte510k(v int64) {
+	o.NFdaAnalyte510k.Set(&v)
 }
-// SetAssayProviderClassDecidedAtNil sets the value for AssayProviderClassDecidedAt to be an explicit nil
-func (o *BiomarkerAssayProvidersRow) SetAssayProviderClassDecidedAtNil() {
-	o.AssayProviderClassDecidedAt.Set(nil)
+// SetNFdaAnalyte510kNil sets the value for NFdaAnalyte510k to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetNFdaAnalyte510kNil() {
+	o.NFdaAnalyte510k.Set(nil)
 }
 
-// UnsetAssayProviderClassDecidedAt ensures that no value is present for AssayProviderClassDecidedAt, not even an explicit nil
-func (o *BiomarkerAssayProvidersRow) UnsetAssayProviderClassDecidedAt() {
-	o.AssayProviderClassDecidedAt.Unset()
+// UnsetNFdaAnalyte510k ensures that no value is present for NFdaAnalyte510k, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetNFdaAnalyte510k() {
+	o.NFdaAnalyte510k.Unset()
+}
+
+// GetNFdaAnalytePma returns the NFdaAnalytePma field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetNFdaAnalytePma() int64 {
+	if o == nil || IsNil(o.NFdaAnalytePma.Get()) {
+		var ret int64
+		return ret
+	}
+	return *o.NFdaAnalytePma.Get()
+}
+
+// GetNFdaAnalytePmaOk returns a tuple with the NFdaAnalytePma field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetNFdaAnalytePmaOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NFdaAnalytePma.Get(), o.NFdaAnalytePma.IsSet()
+}
+
+// HasNFdaAnalytePma returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasNFdaAnalytePma() bool {
+	if o != nil && o.NFdaAnalytePma.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNFdaAnalytePma gets a reference to the given NullableInt64 and assigns it to the NFdaAnalytePma field.
+func (o *BiomarkerAssayProvidersRow) SetNFdaAnalytePma(v int64) {
+	o.NFdaAnalytePma.Set(&v)
+}
+// SetNFdaAnalytePmaNil sets the value for NFdaAnalytePma to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetNFdaAnalytePmaNil() {
+	o.NFdaAnalytePma.Set(nil)
+}
+
+// UnsetNFdaAnalytePma ensures that no value is present for NFdaAnalytePma, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetNFdaAnalytePma() {
+	o.NFdaAnalytePma.Unset()
+}
+
+// GetFdaAnalyteProductCodes returns the FdaAnalyteProductCodes field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetFdaAnalyteProductCodes() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.FdaAnalyteProductCodes
+}
+
+// GetFdaAnalyteProductCodesOk returns a tuple with the FdaAnalyteProductCodes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetFdaAnalyteProductCodesOk() ([]string, bool) {
+	if o == nil || IsNil(o.FdaAnalyteProductCodes) {
+		return nil, false
+	}
+	return o.FdaAnalyteProductCodes, true
+}
+
+// HasFdaAnalyteProductCodes returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasFdaAnalyteProductCodes() bool {
+	if o != nil && !IsNil(o.FdaAnalyteProductCodes) {
+		return true
+	}
+
+	return false
+}
+
+// SetFdaAnalyteProductCodes gets a reference to the given []string and assigns it to the FdaAnalyteProductCodes field.
+func (o *BiomarkerAssayProvidersRow) SetFdaAnalyteProductCodes(v []string) {
+	o.FdaAnalyteProductCodes = v
+}
+
+// GetFdaAnalyteFdaUrl returns the FdaAnalyteFdaUrl field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetFdaAnalyteFdaUrl() string {
+	if o == nil || IsNil(o.FdaAnalyteFdaUrl.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.FdaAnalyteFdaUrl.Get()
+}
+
+// GetFdaAnalyteFdaUrlOk returns a tuple with the FdaAnalyteFdaUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetFdaAnalyteFdaUrlOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.FdaAnalyteFdaUrl.Get(), o.FdaAnalyteFdaUrl.IsSet()
+}
+
+// HasFdaAnalyteFdaUrl returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasFdaAnalyteFdaUrl() bool {
+	if o != nil && o.FdaAnalyteFdaUrl.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetFdaAnalyteFdaUrl gets a reference to the given NullableString and assigns it to the FdaAnalyteFdaUrl field.
+func (o *BiomarkerAssayProvidersRow) SetFdaAnalyteFdaUrl(v string) {
+	o.FdaAnalyteFdaUrl.Set(&v)
+}
+// SetFdaAnalyteFdaUrlNil sets the value for FdaAnalyteFdaUrl to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetFdaAnalyteFdaUrlNil() {
+	o.FdaAnalyteFdaUrl.Set(nil)
+}
+
+// UnsetFdaAnalyteFdaUrl ensures that no value is present for FdaAnalyteFdaUrl, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetFdaAnalyteFdaUrl() {
+	o.FdaAnalyteFdaUrl.Unset()
+}
+
+// GetSpecificAssayMatched returns the SpecificAssayMatched field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetSpecificAssayMatched() bool {
+	if o == nil || IsNil(o.SpecificAssayMatched.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.SpecificAssayMatched.Get()
+}
+
+// GetSpecificAssayMatchedOk returns a tuple with the SpecificAssayMatched field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetSpecificAssayMatchedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SpecificAssayMatched.Get(), o.SpecificAssayMatched.IsSet()
+}
+
+// HasSpecificAssayMatched returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasSpecificAssayMatched() bool {
+	if o != nil && o.SpecificAssayMatched.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSpecificAssayMatched gets a reference to the given NullableBool and assigns it to the SpecificAssayMatched field.
+func (o *BiomarkerAssayProvidersRow) SetSpecificAssayMatched(v bool) {
+	o.SpecificAssayMatched.Set(&v)
+}
+// SetSpecificAssayMatchedNil sets the value for SpecificAssayMatched to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetSpecificAssayMatchedNil() {
+	o.SpecificAssayMatched.Set(nil)
+}
+
+// UnsetSpecificAssayMatched ensures that no value is present for SpecificAssayMatched, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetSpecificAssayMatched() {
+	o.SpecificAssayMatched.Unset()
+}
+
+// GetSpecificAssayDeviceName returns the SpecificAssayDeviceName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetSpecificAssayDeviceName() string {
+	if o == nil || IsNil(o.SpecificAssayDeviceName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.SpecificAssayDeviceName.Get()
+}
+
+// GetSpecificAssayDeviceNameOk returns a tuple with the SpecificAssayDeviceName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetSpecificAssayDeviceNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SpecificAssayDeviceName.Get(), o.SpecificAssayDeviceName.IsSet()
+}
+
+// HasSpecificAssayDeviceName returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasSpecificAssayDeviceName() bool {
+	if o != nil && o.SpecificAssayDeviceName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSpecificAssayDeviceName gets a reference to the given NullableString and assigns it to the SpecificAssayDeviceName field.
+func (o *BiomarkerAssayProvidersRow) SetSpecificAssayDeviceName(v string) {
+	o.SpecificAssayDeviceName.Set(&v)
+}
+// SetSpecificAssayDeviceNameNil sets the value for SpecificAssayDeviceName to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetSpecificAssayDeviceNameNil() {
+	o.SpecificAssayDeviceName.Set(nil)
+}
+
+// UnsetSpecificAssayDeviceName ensures that no value is present for SpecificAssayDeviceName, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetSpecificAssayDeviceName() {
+	o.SpecificAssayDeviceName.Unset()
+}
+
+// GetSpecificAssayKNumber returns the SpecificAssayKNumber field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetSpecificAssayKNumber() string {
+	if o == nil || IsNil(o.SpecificAssayKNumber.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.SpecificAssayKNumber.Get()
+}
+
+// GetSpecificAssayKNumberOk returns a tuple with the SpecificAssayKNumber field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetSpecificAssayKNumberOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SpecificAssayKNumber.Get(), o.SpecificAssayKNumber.IsSet()
+}
+
+// HasSpecificAssayKNumber returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasSpecificAssayKNumber() bool {
+	if o != nil && o.SpecificAssayKNumber.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSpecificAssayKNumber gets a reference to the given NullableString and assigns it to the SpecificAssayKNumber field.
+func (o *BiomarkerAssayProvidersRow) SetSpecificAssayKNumber(v string) {
+	o.SpecificAssayKNumber.Set(&v)
+}
+// SetSpecificAssayKNumberNil sets the value for SpecificAssayKNumber to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetSpecificAssayKNumberNil() {
+	o.SpecificAssayKNumber.Set(nil)
+}
+
+// UnsetSpecificAssayKNumber ensures that no value is present for SpecificAssayKNumber, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetSpecificAssayKNumber() {
+	o.SpecificAssayKNumber.Unset()
+}
+
+// GetSpecificAssayPmaNumber returns the SpecificAssayPmaNumber field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetSpecificAssayPmaNumber() string {
+	if o == nil || IsNil(o.SpecificAssayPmaNumber.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.SpecificAssayPmaNumber.Get()
+}
+
+// GetSpecificAssayPmaNumberOk returns a tuple with the SpecificAssayPmaNumber field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetSpecificAssayPmaNumberOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SpecificAssayPmaNumber.Get(), o.SpecificAssayPmaNumber.IsSet()
+}
+
+// HasSpecificAssayPmaNumber returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasSpecificAssayPmaNumber() bool {
+	if o != nil && o.SpecificAssayPmaNumber.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSpecificAssayPmaNumber gets a reference to the given NullableString and assigns it to the SpecificAssayPmaNumber field.
+func (o *BiomarkerAssayProvidersRow) SetSpecificAssayPmaNumber(v string) {
+	o.SpecificAssayPmaNumber.Set(&v)
+}
+// SetSpecificAssayPmaNumberNil sets the value for SpecificAssayPmaNumber to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetSpecificAssayPmaNumberNil() {
+	o.SpecificAssayPmaNumber.Set(nil)
+}
+
+// UnsetSpecificAssayPmaNumber ensures that no value is present for SpecificAssayPmaNumber, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetSpecificAssayPmaNumber() {
+	o.SpecificAssayPmaNumber.Unset()
+}
+
+// GetSpecificAssayFdaUrl returns the SpecificAssayFdaUrl field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetSpecificAssayFdaUrl() string {
+	if o == nil || IsNil(o.SpecificAssayFdaUrl.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.SpecificAssayFdaUrl.Get()
+}
+
+// GetSpecificAssayFdaUrlOk returns a tuple with the SpecificAssayFdaUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetSpecificAssayFdaUrlOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SpecificAssayFdaUrl.Get(), o.SpecificAssayFdaUrl.IsSet()
+}
+
+// HasSpecificAssayFdaUrl returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasSpecificAssayFdaUrl() bool {
+	if o != nil && o.SpecificAssayFdaUrl.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSpecificAssayFdaUrl gets a reference to the given NullableString and assigns it to the SpecificAssayFdaUrl field.
+func (o *BiomarkerAssayProvidersRow) SetSpecificAssayFdaUrl(v string) {
+	o.SpecificAssayFdaUrl.Set(&v)
+}
+// SetSpecificAssayFdaUrlNil sets the value for SpecificAssayFdaUrl to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetSpecificAssayFdaUrlNil() {
+	o.SpecificAssayFdaUrl.Set(nil)
+}
+
+// UnsetSpecificAssayFdaUrl ensures that no value is present for SpecificAssayFdaUrl, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetSpecificAssayFdaUrl() {
+	o.SpecificAssayFdaUrl.Unset()
+}
+
+// GetSpecificAssaySimilarity returns the SpecificAssaySimilarity field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetSpecificAssaySimilarity() float32 {
+	if o == nil || IsNil(o.SpecificAssaySimilarity.Get()) {
+		var ret float32
+		return ret
+	}
+	return *o.SpecificAssaySimilarity.Get()
+}
+
+// GetSpecificAssaySimilarityOk returns a tuple with the SpecificAssaySimilarity field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetSpecificAssaySimilarityOk() (*float32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SpecificAssaySimilarity.Get(), o.SpecificAssaySimilarity.IsSet()
+}
+
+// HasSpecificAssaySimilarity returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasSpecificAssaySimilarity() bool {
+	if o != nil && o.SpecificAssaySimilarity.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSpecificAssaySimilarity gets a reference to the given NullableFloat32 and assigns it to the SpecificAssaySimilarity field.
+func (o *BiomarkerAssayProvidersRow) SetSpecificAssaySimilarity(v float32) {
+	o.SpecificAssaySimilarity.Set(&v)
+}
+// SetSpecificAssaySimilarityNil sets the value for SpecificAssaySimilarity to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetSpecificAssaySimilarityNil() {
+	o.SpecificAssaySimilarity.Set(nil)
+}
+
+// UnsetSpecificAssaySimilarity ensures that no value is present for SpecificAssaySimilarity, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetSpecificAssaySimilarity() {
+	o.SpecificAssaySimilarity.Unset()
+}
+
+// GetNCdxEntries returns the NCdxEntries field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetNCdxEntries() int32 {
+	if o == nil || IsNil(o.NCdxEntries.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.NCdxEntries.Get()
+}
+
+// GetNCdxEntriesOk returns a tuple with the NCdxEntries field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetNCdxEntriesOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NCdxEntries.Get(), o.NCdxEntries.IsSet()
+}
+
+// HasNCdxEntries returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasNCdxEntries() bool {
+	if o != nil && o.NCdxEntries.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNCdxEntries gets a reference to the given NullableInt32 and assigns it to the NCdxEntries field.
+func (o *BiomarkerAssayProvidersRow) SetNCdxEntries(v int32) {
+	o.NCdxEntries.Set(&v)
+}
+// SetNCdxEntriesNil sets the value for NCdxEntries to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetNCdxEntriesNil() {
+	o.NCdxEntries.Set(nil)
+}
+
+// UnsetNCdxEntries ensures that no value is present for NCdxEntries, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetNCdxEntries() {
+	o.NCdxEntries.Unset()
+}
+
+// GetCdxDiagnosticNames returns the CdxDiagnosticNames field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetCdxDiagnosticNames() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.CdxDiagnosticNames
+}
+
+// GetCdxDiagnosticNamesOk returns a tuple with the CdxDiagnosticNames field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetCdxDiagnosticNamesOk() ([]string, bool) {
+	if o == nil || IsNil(o.CdxDiagnosticNames) {
+		return nil, false
+	}
+	return o.CdxDiagnosticNames, true
+}
+
+// HasCdxDiagnosticNames returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasCdxDiagnosticNames() bool {
+	if o != nil && !IsNil(o.CdxDiagnosticNames) {
+		return true
+	}
+
+	return false
+}
+
+// SetCdxDiagnosticNames gets a reference to the given []string and assigns it to the CdxDiagnosticNames field.
+func (o *BiomarkerAssayProvidersRow) SetCdxDiagnosticNames(v []string) {
+	o.CdxDiagnosticNames = v
+}
+
+// GetNCliaCertificates returns the NCliaCertificates field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetNCliaCertificates() int64 {
+	if o == nil || IsNil(o.NCliaCertificates.Get()) {
+		var ret int64
+		return ret
+	}
+	return *o.NCliaCertificates.Get()
+}
+
+// GetNCliaCertificatesOk returns a tuple with the NCliaCertificates field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetNCliaCertificatesOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NCliaCertificates.Get(), o.NCliaCertificates.IsSet()
+}
+
+// HasNCliaCertificates returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasNCliaCertificates() bool {
+	if o != nil && o.NCliaCertificates.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNCliaCertificates gets a reference to the given NullableInt64 and assigns it to the NCliaCertificates field.
+func (o *BiomarkerAssayProvidersRow) SetNCliaCertificates(v int64) {
+	o.NCliaCertificates.Set(&v)
+}
+// SetNCliaCertificatesNil sets the value for NCliaCertificates to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetNCliaCertificatesNil() {
+	o.NCliaCertificates.Set(nil)
+}
+
+// UnsetNCliaCertificates ensures that no value is present for NCliaCertificates, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetNCliaCertificates() {
+	o.NCliaCertificates.Unset()
+}
+
+// GetCliaMatchRung returns the CliaMatchRung field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *BiomarkerAssayProvidersRow) GetCliaMatchRung() string {
+	if o == nil || IsNil(o.CliaMatchRung.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CliaMatchRung.Get()
+}
+
+// GetCliaMatchRungOk returns a tuple with the CliaMatchRung field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *BiomarkerAssayProvidersRow) GetCliaMatchRungOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CliaMatchRung.Get(), o.CliaMatchRung.IsSet()
+}
+
+// HasCliaMatchRung returns a boolean if a field has been set.
+func (o *BiomarkerAssayProvidersRow) HasCliaMatchRung() bool {
+	if o != nil && o.CliaMatchRung.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCliaMatchRung gets a reference to the given NullableString and assigns it to the CliaMatchRung field.
+func (o *BiomarkerAssayProvidersRow) SetCliaMatchRung(v string) {
+	o.CliaMatchRung.Set(&v)
+}
+// SetCliaMatchRungNil sets the value for CliaMatchRung to be an explicit nil
+func (o *BiomarkerAssayProvidersRow) SetCliaMatchRungNil() {
+	o.CliaMatchRung.Set(nil)
+}
+
+// UnsetCliaMatchRung ensures that no value is present for CliaMatchRung, not even an explicit nil
+func (o *BiomarkerAssayProvidersRow) UnsetCliaMatchRung() {
+	o.CliaMatchRung.Unset()
 }
 
 func (o BiomarkerAssayProvidersRow) MarshalJSON() ([]byte, error) {
@@ -1500,14 +2221,65 @@ func (o BiomarkerAssayProvidersRow) ToMap() (map[string]interface{}, error) {
 	if o.MeetsCuratedThreshold.IsSet() {
 		toSerialize["meets_curated_threshold"] = o.MeetsCuratedThreshold.Get()
 	}
-	if o.AssayProviderClass.IsSet() {
-		toSerialize["assay_provider_class"] = o.AssayProviderClass.Get()
+	if o.RegulatoryEvidenceKind.IsSet() {
+		toSerialize["regulatory_evidence_kind"] = o.RegulatoryEvidenceKind.Get()
 	}
-	if o.AssayProviderClassSource.IsSet() {
-		toSerialize["assay_provider_class_source"] = o.AssayProviderClassSource.Get()
+	if o.HasFdaRecordForBiomarker.IsSet() {
+		toSerialize["has_fda_record_for_biomarker"] = o.HasFdaRecordForBiomarker.Get()
 	}
-	if o.AssayProviderClassDecidedAt.IsSet() {
-		toSerialize["assay_provider_class_decided_at"] = o.AssayProviderClassDecidedAt.Get()
+	if o.RegulatoryEvidenceReasons != nil {
+		toSerialize["regulatory_evidence_reasons"] = o.RegulatoryEvidenceReasons
+	}
+	if o.NFdaIvd510k.IsSet() {
+		toSerialize["n_fda_ivd_510k"] = o.NFdaIvd510k.Get()
+	}
+	if o.NFdaIvdPma.IsSet() {
+		toSerialize["n_fda_ivd_pma"] = o.NFdaIvdPma.Get()
+	}
+	if o.FdaCompanyMatchRung.IsSet() {
+		toSerialize["fda_company_match_rung"] = o.FdaCompanyMatchRung.Get()
+	}
+	if o.NFdaAnalyte510k.IsSet() {
+		toSerialize["n_fda_analyte_510k"] = o.NFdaAnalyte510k.Get()
+	}
+	if o.NFdaAnalytePma.IsSet() {
+		toSerialize["n_fda_analyte_pma"] = o.NFdaAnalytePma.Get()
+	}
+	if o.FdaAnalyteProductCodes != nil {
+		toSerialize["fda_analyte_product_codes"] = o.FdaAnalyteProductCodes
+	}
+	if o.FdaAnalyteFdaUrl.IsSet() {
+		toSerialize["fda_analyte_fda_url"] = o.FdaAnalyteFdaUrl.Get()
+	}
+	if o.SpecificAssayMatched.IsSet() {
+		toSerialize["specific_assay_matched"] = o.SpecificAssayMatched.Get()
+	}
+	if o.SpecificAssayDeviceName.IsSet() {
+		toSerialize["specific_assay_device_name"] = o.SpecificAssayDeviceName.Get()
+	}
+	if o.SpecificAssayKNumber.IsSet() {
+		toSerialize["specific_assay_k_number"] = o.SpecificAssayKNumber.Get()
+	}
+	if o.SpecificAssayPmaNumber.IsSet() {
+		toSerialize["specific_assay_pma_number"] = o.SpecificAssayPmaNumber.Get()
+	}
+	if o.SpecificAssayFdaUrl.IsSet() {
+		toSerialize["specific_assay_fda_url"] = o.SpecificAssayFdaUrl.Get()
+	}
+	if o.SpecificAssaySimilarity.IsSet() {
+		toSerialize["specific_assay_similarity"] = o.SpecificAssaySimilarity.Get()
+	}
+	if o.NCdxEntries.IsSet() {
+		toSerialize["n_cdx_entries"] = o.NCdxEntries.Get()
+	}
+	if o.CdxDiagnosticNames != nil {
+		toSerialize["cdx_diagnostic_names"] = o.CdxDiagnosticNames
+	}
+	if o.NCliaCertificates.IsSet() {
+		toSerialize["n_clia_certificates"] = o.NCliaCertificates.Get()
+	}
+	if o.CliaMatchRung.IsSet() {
+		toSerialize["clia_match_rung"] = o.CliaMatchRung.Get()
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -1559,9 +2331,26 @@ func (o *BiomarkerAssayProvidersRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "most_recent_pmid")
 		delete(additionalProperties, "most_recent_title")
 		delete(additionalProperties, "meets_curated_threshold")
-		delete(additionalProperties, "assay_provider_class")
-		delete(additionalProperties, "assay_provider_class_source")
-		delete(additionalProperties, "assay_provider_class_decided_at")
+		delete(additionalProperties, "regulatory_evidence_kind")
+		delete(additionalProperties, "has_fda_record_for_biomarker")
+		delete(additionalProperties, "regulatory_evidence_reasons")
+		delete(additionalProperties, "n_fda_ivd_510k")
+		delete(additionalProperties, "n_fda_ivd_pma")
+		delete(additionalProperties, "fda_company_match_rung")
+		delete(additionalProperties, "n_fda_analyte_510k")
+		delete(additionalProperties, "n_fda_analyte_pma")
+		delete(additionalProperties, "fda_analyte_product_codes")
+		delete(additionalProperties, "fda_analyte_fda_url")
+		delete(additionalProperties, "specific_assay_matched")
+		delete(additionalProperties, "specific_assay_device_name")
+		delete(additionalProperties, "specific_assay_k_number")
+		delete(additionalProperties, "specific_assay_pma_number")
+		delete(additionalProperties, "specific_assay_fda_url")
+		delete(additionalProperties, "specific_assay_similarity")
+		delete(additionalProperties, "n_cdx_entries")
+		delete(additionalProperties, "cdx_diagnostic_names")
+		delete(additionalProperties, "n_clia_certificates")
+		delete(additionalProperties, "clia_match_rung")
 		o.AdditionalProperties = additionalProperties
 	}
 

@@ -34008,29 +34008,52 @@ components:
         biomarker_display_name: biomarker_display_name
         biomarker_id: biomarker_id
         meets_curated_threshold: true
+        specific_assay_k_number: specific_assay_k_number
+        n_fda_analyte_pma: 7
+        specific_assay_similarity: 9.301444243932576
+        specific_assay_fda_url: specific_assay_fda_url
+        fda_company_match_rung: fda_company_match_rung
         biomarker_key: biomarker_key
+        has_fda_record_for_biomarker: true
         n_dated_papers: 6
+        regulatory_evidence_reasons:
+        - regulatory_evidence_reasons
+        - regulatory_evidence_reasons
+        n_fda_ivd_pma: 5
+        specific_assay_matched: true
+        fda_analyte_product_codes:
+        - fda_analyte_product_codes
+        - fda_analyte_product_codes
+        n_cdx_entries: 3
         most_recent_pmid: most_recent_pmid
         provider_key: provider_key
-        assay_provider_class_source: assay_provider_class_source
+        n_fda_analyte_510k: 2
         provider_name: provider_name
         rx_provider_id: rx_provider_id
-        assay_provider_class: assay_provider_class
-        assay_provider_class_decided_at: 2000-01-23T04:56:07.000+00:00
         provider_org_match_tier: provider_org_match_tier
         rx_matched: true
+        specific_assay_device_name: specific_assay_device_name
+        specific_assay_pma_number: specific_assay_pma_number
         provider_group_id: provider_group_id
         rx_provider_slug: rx_provider_slug
         gene_resolution_status: gene_resolution_status
         most_recent_published_at: 2000-01-23T04:56:07.000+00:00
         route_key: route_key
+        n_clia_certificates: 2
         provider_company_name: provider_company_name
         provider_org_id: provider_org_id
+        fda_analyte_fda_url: fda_analyte_fda_url
         most_recent_title: most_recent_title
         provider_parent_org_id: provider_parent_org_id
+        clia_match_rung: clia_match_rung
         provider_group_name: provider_group_name
+        n_fda_ivd_510k: 5
         n_undated_papers: 1
+        cdx_diagnostic_names:
+        - cdx_diagnostic_names
+        - cdx_diagnostic_names
         has_clinical_validation: true
+        regulatory_evidence_kind: regulatory_evidence_kind
       properties:
         route_key:
           description: "The route key of the gene the biomarker resolved to, the entry\
@@ -34075,20 +34098,28 @@ components:
           nullable: true
           type: string
         provider_org_id:
-          description: "The provider's legal entity key, where the marketplace match\
-            \ resolves one."
+          description: "The organization the provider's company name resolved to (the\
+            \ member organization, not its parent); null when the provider is ambiguous\
+            \ or unresolved. Reached by the rung named in provider_org_match_tier."
           nullable: true
           type: string
         provider_org_match_tier:
-          description: "How the provider was resolved to an organization. rx_provider_link:\
-            \ through its marketplace supplier. unresolved: no organization, the provider\
-            \ stays a name. The remaining values are reserved for resolution rungs\
-            \ that have not shipped."
+          description: "How the provider was resolved to an organization, first rung\
+            \ that yields one organization wins. alias_exact: a reviewed brand alias,\
+            \ then exactly one organization carries the name. name_exact: exactly\
+            \ one organization carries the name. parent_unanimous: several organizations\
+            \ carry the name and all roll up to one parent, which is the organization.\
+            \ sponsor_key: the name is a trial-sponsor key. rx_provider_link: through\
+            \ its marketplace supplier. ambiguous: organizations under more than one\
+            \ parent carry the name, so none is chosen. unresolved: no organization,\
+            \ the provider stays a name."
           nullable: true
           type: string
         provider_parent_org_id:
-          description: The ultimate parent organization of the provider's organization;
-            null when the provider has no organization.
+          description: "The resolved parent of provider_org_id in the organization\
+            \ hierarchy (the organization itself when it has none); null when the\
+            \ provider has no organization. The hierarchy is not guaranteed correct\
+            \ for every company, so read it with provider_org_match_tier."
           nullable: true
           type: string
         provider_company_id:
@@ -34171,20 +34202,133 @@ components:
             least two papers name the pair.
           nullable: true
           type: boolean
-        assay_provider_class:
-          description: "The company-level class. diagnostic_provider makes or supplies\
-            \ the diagnostic assay; reagent_supplier is the vendor whose kit appears\
-            \ in a methods section; context_dependent, pharma_or_other and not_a_company\
-            \ are the other decisions; unclassified means no decision yet."
+        regulatory_evidence_kind:
+          description: "The strongest US FDA or CMS record found for the pair. companion_diagnostic:\
+            \ the provider holds an FDA companion diagnostic for the biomarker. fda_cleared_specific_assay:\
+            \ a cleared or approved device of the provider that the paper names and\
+            \ that measures the biomarker. fda_cleared_for_biomarker: the provider\
+            \ holds a cleared or approved IVD under a product code for the biomarker.\
+            \ clia_testing_service: the provider is named as a testing service and\
+            \ its own organization holds a CLIA certificate. fda_ivd_company_only:\
+            \ the provider holds some cleared or approved IVD, none matched to the\
+            \ biomarker. none: no FDA record found."
           nullable: true
           type: string
-        assay_provider_class_source:
-          description: Where the class decision came from; null when unclassified.
+        has_fda_record_for_biomarker:
+          description: "True when regulatory_evidence_kind is one of the first four\
+            \ kinds, a record that concerns the biomarker rather than only the company."
+          nullable: true
+          type: boolean
+        regulatory_evidence_reasons:
+          description: "Every level that held for the pair, strongest first; empty\
+            \ when none did."
+          items:
+            type: string
+          nullable: true
+          type: array
+        n_fda_ivd_510k:
+          description: "The 510(k) clearances in the in-vitro diagnostic review panels\
+            \ held by the provider's organization (or, when it holds none, by organizations\
+            \ under its parent; fda_company_match_rung says which). Null for a provider\
+            \ that did not resolve to an organization."
+          format: int64
+          nullable: true
+          type: integer
+        n_fda_ivd_pma:
+          description: "The PMA approvals (distinct approval numbers) in the in-vitro\
+            \ diagnostic review panels held by the provider's organization or its\
+            \ parent family, on the same rung as n_fda_ivd_510k. Null for a provider\
+            \ that did not resolve to an organization."
+          format: int64
+          nullable: true
+          type: integer
+        fda_company_match_rung:
+          description: "org: the counted records are held by the provider's own organization.\
+            \ parent: by organizations under the same resolved parent. Null when the\
+            \ provider holds none."
           nullable: true
           type: string
-        assay_provider_class_decided_at:
-          description: "When the class was decided, in UTC; null when unclassified."
-          format: date-time
+        n_fda_analyte_510k:
+          description: The provider's 510(k) clearances under a product code mapped
+            to this biomarker. Null when the provider or the biomarker did not resolve.
+          format: int64
+          nullable: true
+          type: integer
+        n_fda_analyte_pma:
+          description: The provider's PMA approvals under a product code mapped to
+            this biomarker. Null when the provider or the biomarker did not resolve.
+          format: int64
+          nullable: true
+          type: integer
+        fda_analyte_product_codes:
+          description: The FDA product codes behind n_fda_analyte_510k and n_fda_analyte_pma.
+          items:
+            type: string
+          nullable: true
+          type: array
+        fda_analyte_fda_url:
+          description: The FDA database page of the provider's most recent record
+            under a product code for this biomarker.
+          nullable: true
+          type: string
+        specific_assay_matched:
+          description: "True when a paper names a cleared or approved device of this\
+            \ provider that measures this biomarker. The device name matches the paper's\
+            \ assay name, or the company's own quote, and the device's analyte agrees\
+            \ with the biomarker."
+          nullable: true
+          type: boolean
+        specific_assay_device_name:
+          description: The 510(k) device name or PMA trade name of the matched device;
+            the best match when several matched. Null when no device matched.
+          nullable: true
+          type: string
+        specific_assay_k_number:
+          description: The 510(k) number of the matched device; null when the match
+            is a PMA or there is none.
+          nullable: true
+          type: string
+        specific_assay_pma_number:
+          description: The PMA number of the matched device; null when the match is
+            a 510(k) or there is none.
+          nullable: true
+          type: string
+        specific_assay_fda_url:
+          description: The FDA database page of the matched device.
+          nullable: true
+          type: string
+        specific_assay_similarity:
+          description: "The trigram text similarity (0 to 1) of the larger of the\
+            \ two text clauses that matched the device, the paper's assay name or\
+            \ the company's quote against the device name."
+          nullable: true
+          type: number
+        n_cdx_entries:
+          description: The FDA companion diagnostic list entries for this biomarker
+            from this provider's organization (or its parent family). Null when the
+            provider or the biomarker did not resolve.
+          format: int32
+          nullable: true
+          type: integer
+        cdx_diagnostic_names:
+          description: The names of those companion diagnostics.
+          items:
+            type: string
+          nullable: true
+          type: array
+        n_clia_certificates:
+          description: "The CLIA (US clinical laboratory) certificates held by the\
+            \ provider's organization, or by organizations under its parent when it\
+            \ holds none (clia_match_rung says which). A certificate licenses a lab;\
+            \ it is not evidence that any named assay is run. Null for a provider\
+            \ that did not resolve to an organization."
+          format: int64
+          nullable: true
+          type: integer
+        clia_match_rung:
+          description: "org: the counted certificates are held by the provider's own\
+            \ organization. parent: by organizations under the same resolved parent.\
+            \ Null when the provider holds none."
           nullable: true
           type: string
       type: object
@@ -34227,29 +34371,52 @@ components:
           biomarker_display_name: biomarker_display_name
           biomarker_id: biomarker_id
           meets_curated_threshold: true
+          specific_assay_k_number: specific_assay_k_number
+          n_fda_analyte_pma: 7
+          specific_assay_similarity: 9.301444243932576
+          specific_assay_fda_url: specific_assay_fda_url
+          fda_company_match_rung: fda_company_match_rung
           biomarker_key: biomarker_key
+          has_fda_record_for_biomarker: true
           n_dated_papers: 6
+          regulatory_evidence_reasons:
+          - regulatory_evidence_reasons
+          - regulatory_evidence_reasons
+          n_fda_ivd_pma: 5
+          specific_assay_matched: true
+          fda_analyte_product_codes:
+          - fda_analyte_product_codes
+          - fda_analyte_product_codes
+          n_cdx_entries: 3
           most_recent_pmid: most_recent_pmid
           provider_key: provider_key
-          assay_provider_class_source: assay_provider_class_source
+          n_fda_analyte_510k: 2
           provider_name: provider_name
           rx_provider_id: rx_provider_id
-          assay_provider_class: assay_provider_class
-          assay_provider_class_decided_at: 2000-01-23T04:56:07.000+00:00
           provider_org_match_tier: provider_org_match_tier
           rx_matched: true
+          specific_assay_device_name: specific_assay_device_name
+          specific_assay_pma_number: specific_assay_pma_number
           provider_group_id: provider_group_id
           rx_provider_slug: rx_provider_slug
           gene_resolution_status: gene_resolution_status
           most_recent_published_at: 2000-01-23T04:56:07.000+00:00
           route_key: route_key
+          n_clia_certificates: 2
           provider_company_name: provider_company_name
           provider_org_id: provider_org_id
+          fda_analyte_fda_url: fda_analyte_fda_url
           most_recent_title: most_recent_title
           provider_parent_org_id: provider_parent_org_id
+          clia_match_rung: clia_match_rung
           provider_group_name: provider_group_name
+          n_fda_ivd_510k: 5
           n_undated_papers: 1
+          cdx_diagnostic_names:
+          - cdx_diagnostic_names
+          - cdx_diagnostic_names
           has_clinical_validation: true
+          regulatory_evidence_kind: regulatory_evidence_kind
         - provider_company_id: provider_company_id
           rx_provider_name: rx_provider_name
           has_analytical_validation: true
@@ -34258,33 +34425,56 @@ components:
           biomarker_display_name: biomarker_display_name
           biomarker_id: biomarker_id
           meets_curated_threshold: true
+          specific_assay_k_number: specific_assay_k_number
+          n_fda_analyte_pma: 7
+          specific_assay_similarity: 9.301444243932576
+          specific_assay_fda_url: specific_assay_fda_url
+          fda_company_match_rung: fda_company_match_rung
           biomarker_key: biomarker_key
+          has_fda_record_for_biomarker: true
           n_dated_papers: 6
+          regulatory_evidence_reasons:
+          - regulatory_evidence_reasons
+          - regulatory_evidence_reasons
+          n_fda_ivd_pma: 5
+          specific_assay_matched: true
+          fda_analyte_product_codes:
+          - fda_analyte_product_codes
+          - fda_analyte_product_codes
+          n_cdx_entries: 3
           most_recent_pmid: most_recent_pmid
           provider_key: provider_key
-          assay_provider_class_source: assay_provider_class_source
+          n_fda_analyte_510k: 2
           provider_name: provider_name
           rx_provider_id: rx_provider_id
-          assay_provider_class: assay_provider_class
-          assay_provider_class_decided_at: 2000-01-23T04:56:07.000+00:00
           provider_org_match_tier: provider_org_match_tier
           rx_matched: true
+          specific_assay_device_name: specific_assay_device_name
+          specific_assay_pma_number: specific_assay_pma_number
           provider_group_id: provider_group_id
           rx_provider_slug: rx_provider_slug
           gene_resolution_status: gene_resolution_status
           most_recent_published_at: 2000-01-23T04:56:07.000+00:00
           route_key: route_key
+          n_clia_certificates: 2
           provider_company_name: provider_company_name
           provider_org_id: provider_org_id
+          fda_analyte_fda_url: fda_analyte_fda_url
           most_recent_title: most_recent_title
           provider_parent_org_id: provider_parent_org_id
+          clia_match_rung: clia_match_rung
           provider_group_name: provider_group_name
+          n_fda_ivd_510k: 5
           n_undated_papers: 1
+          cdx_diagnostic_names:
+          - cdx_diagnostic_names
+          - cdx_diagnostic_names
           has_clinical_validation: true
+          regulatory_evidence_kind: regulatory_evidence_kind
         freshness:
           last_loaded: last_loaded
           source: source
-        total: 5
+        total: 4
         measures:
         - measures
         - measures
@@ -38180,7 +38370,6 @@ components:
         \ and the measures instead, as additional properties."
       example:
         n_ot_association: 5
-        n_diagnostic_provider_suppliers: 2
         hgnc_id: hgnc_id
         biomarker_id: biomarker_id
         identity_status: identity_status
@@ -38192,6 +38381,7 @@ components:
         n_fda_bqp_assertions: 1
         feature_code: feature_code
         has_analytical_validation_evidence: true
+        n_fda_evidence_providers: 2
         target_protein_name: target_protein_name
         route_key: route_key
         target_id: target_id
@@ -38326,8 +38516,12 @@ components:
           format: int32
           nullable: true
           type: integer
-        n_diagnostic_provider_suppliers:
-          description: "Of those, diagnostic providers."
+        n_fda_evidence_providers:
+          description: "Of those, providers with an FDA record found for the biomarker\
+            \ (a companion diagnostic, a cleared or approved device the paper names,\
+            \ a cleared or approved IVD under the analyte's product code, or a CLIA-certified\
+            \ lab that ran the test). US only; no record found is not a statement\
+            \ about validation. Null when no assay provider is named for the biomarker."
           format: int32
           nullable: true
           type: integer
@@ -38364,7 +38558,6 @@ components:
         - key: ""
         rows:
         - n_ot_association: 5
-          n_diagnostic_provider_suppliers: 2
           hgnc_id: hgnc_id
           biomarker_id: biomarker_id
           identity_status: identity_status
@@ -38376,6 +38569,7 @@ components:
           n_fda_bqp_assertions: 1
           feature_code: feature_code
           has_analytical_validation_evidence: true
+          n_fda_evidence_providers: 2
           target_protein_name: target_protein_name
           route_key: route_key
           target_id: target_id
@@ -38391,7 +38585,6 @@ components:
           uniprot_accession: uniprot_accession
           n_assay_provider_papers: 9
         - n_ot_association: 5
-          n_diagnostic_provider_suppliers: 2
           hgnc_id: hgnc_id
           biomarker_id: biomarker_id
           identity_status: identity_status
@@ -38403,6 +38596,7 @@ components:
           n_fda_bqp_assertions: 1
           feature_code: feature_code
           has_analytical_validation_evidence: true
+          n_fda_evidence_providers: 2
           target_protein_name: target_protein_name
           route_key: route_key
           target_id: target_id
@@ -95446,7 +95640,6 @@ components:
           fingerprint: fingerprint
         record:
           n_ot_association: 5
-          n_diagnostic_provider_suppliers: 2
           hgnc_id: hgnc_id
           biomarker_id: biomarker_id
           identity_status: identity_status
@@ -95458,6 +95651,7 @@ components:
           n_fda_bqp_assertions: 1
           feature_code: feature_code
           has_analytical_validation_evidence: true
+          n_fda_evidence_providers: 2
           target_protein_name: target_protein_name
           route_key: route_key
           target_id: target_id

@@ -183,7 +183,7 @@ describe PharmaObservatory::BiomarkersRow do
     end
   end
 
-  describe 'test attribute "n_diagnostic_provider_suppliers"' do
+  describe 'test attribute "n_fda_evidence_providers"' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end
