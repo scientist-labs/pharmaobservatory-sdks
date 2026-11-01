@@ -21,6 +21,8 @@ Name | Type | Description | Notes
 **LastYear** | Pointer to **NullableInt32** | Latest trial start year. | [optional] 
 **LastUpdateYear** | Pointer to **NullableInt32** | Year the program&#39;s most recently updated trial record was posted. | [optional] 
 **Withdrawn** | Pointer to **NullableBool** | True when the drug has been withdrawn. | [optional] 
+**Owned** | Pointer to **NullableBool** | True when the sponsor is judged to develop the drug (an experimental arm, a regulatory holder, or an inferred lead); false when it is the backbone or comparator of a combination, one of many leads of a crowded drug, or not the holder of a generic. Every row is kept; this column labels it. | [optional] 
+**OwnershipBasis** | Pointer to **NullableString** | Why owned is what it is: experimental_arm, regulatory_holder or inferred_lead (owned), or backbone, comparator, crowded_not_lead or generic_not_holder (not owned). inferred_lead is an inference made where the trials give no arm evidence either way. | [optional] 
 **CauseName** | Pointer to **NullableString** | The Global Burden of Disease cause matched to the condition. | [optional] 
 **DalysMillions** | Pointer to **NullableFloat64** | Global disability-adjusted life years for the matched cause, in millions. | [optional] 
 **DeathsMillions** | Pointer to **NullableFloat64** | Global deaths for the matched cause, in millions. | [optional] 
@@ -640,6 +642,76 @@ HasWithdrawn returns a boolean if a field has been set.
 `func (o *ProgramLicensingCandidatesRow) UnsetWithdrawn()`
 
 UnsetWithdrawn ensures that no value is present for Withdrawn, not even an explicit nil
+### GetOwned
+
+`func (o *ProgramLicensingCandidatesRow) GetOwned() bool`
+
+GetOwned returns the Owned field if non-nil, zero value otherwise.
+
+### GetOwnedOk
+
+`func (o *ProgramLicensingCandidatesRow) GetOwnedOk() (*bool, bool)`
+
+GetOwnedOk returns a tuple with the Owned field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOwned
+
+`func (o *ProgramLicensingCandidatesRow) SetOwned(v bool)`
+
+SetOwned sets Owned field to given value.
+
+### HasOwned
+
+`func (o *ProgramLicensingCandidatesRow) HasOwned() bool`
+
+HasOwned returns a boolean if a field has been set.
+
+### SetOwnedNil
+
+`func (o *ProgramLicensingCandidatesRow) SetOwnedNil(b bool)`
+
+ SetOwnedNil sets the value for Owned to be an explicit nil
+
+### UnsetOwned
+`func (o *ProgramLicensingCandidatesRow) UnsetOwned()`
+
+UnsetOwned ensures that no value is present for Owned, not even an explicit nil
+### GetOwnershipBasis
+
+`func (o *ProgramLicensingCandidatesRow) GetOwnershipBasis() string`
+
+GetOwnershipBasis returns the OwnershipBasis field if non-nil, zero value otherwise.
+
+### GetOwnershipBasisOk
+
+`func (o *ProgramLicensingCandidatesRow) GetOwnershipBasisOk() (*string, bool)`
+
+GetOwnershipBasisOk returns a tuple with the OwnershipBasis field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOwnershipBasis
+
+`func (o *ProgramLicensingCandidatesRow) SetOwnershipBasis(v string)`
+
+SetOwnershipBasis sets OwnershipBasis field to given value.
+
+### HasOwnershipBasis
+
+`func (o *ProgramLicensingCandidatesRow) HasOwnershipBasis() bool`
+
+HasOwnershipBasis returns a boolean if a field has been set.
+
+### SetOwnershipBasisNil
+
+`func (o *ProgramLicensingCandidatesRow) SetOwnershipBasisNil(b bool)`
+
+ SetOwnershipBasisNil sets the value for OwnershipBasis to be an explicit nil
+
+### UnsetOwnershipBasis
+`func (o *ProgramLicensingCandidatesRow) UnsetOwnershipBasis()`
+
+UnsetOwnershipBasis ensures that no value is present for OwnershipBasis, not even an explicit nil
 ### GetCauseName
 
 `func (o *ProgramLicensingCandidatesRow) GetCauseName() string`

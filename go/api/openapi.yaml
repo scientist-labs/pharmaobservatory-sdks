@@ -3705,7 +3705,7 @@ paths:
             was issued (GENERATION_CHANGED)
       security:
       - ApiBearerJwt: []
-      summary: Company competitors
+      summary: Company program overlap
       tags:
       - companies
   /api/v1/companies/{id}/company_financials:
@@ -17762,7 +17762,7 @@ paths:
             was issued (GENERATION_CHANGED)
       security:
       - ApiBearerJwt: []
-      summary: Investor portfolio (offering filings)
+      summary: Investor portfolio (offering filings and investor websites)
       tags:
       - investors
   /api/v1/investors/{id}/investor_private_funds:
@@ -40568,7 +40568,7 @@ components:
           type: string
         name_basis:
           description: "Which source supplied the name: gleif_legal_name, edgar_registrant,\
-            \ ror or sponsor_display_name."
+            \ ror, edgar_current_name or sponsor_display_name."
           nullable: true
           type: string
         country:
@@ -40901,8 +40901,10 @@ components:
         sponsor_company_id: sponsor_company_id
         withdrawn: true
         sponsor_group_name: sponsor_group_name
+        ownership_basis: ownership_basis
         sponsor_company_name: sponsor_company_name
         n_trials: 6
+        owned: true
         n_active: 1
         max_phase: 0
         sponsor_org_id: sponsor_org_id
@@ -40970,6 +40972,21 @@ components:
           description: True when the drug has been withdrawn from the market.
           nullable: true
           type: boolean
+        owned:
+          description: "True when the sponsor is judged to develop the drug (an experimental\
+            \ arm, a regulatory holder, or an inferred lead); false when it is the\
+            \ backbone or comparator of a combination, one of many leads of a crowded\
+            \ drug, or not the holder of a generic. Every row is kept; this column\
+            \ labels it."
+          nullable: true
+          type: boolean
+        ownership_basis:
+          description: "Why owned is what it is: experimental_arm, regulatory_holder\
+            \ or inferred_lead (owned), or backbone, comparator, crowded_not_lead\
+            \ or generic_not_holder (not owned). inferred_lead is an inference made\
+            \ where the trials give no arm evidence either way."
+          nullable: true
+          type: string
       type: object
     CompanyAssetsResponse:
       example:
@@ -41008,8 +41025,10 @@ components:
           sponsor_company_id: sponsor_company_id
           withdrawn: true
           sponsor_group_name: sponsor_group_name
+          ownership_basis: ownership_basis
           sponsor_company_name: sponsor_company_name
           n_trials: 6
+          owned: true
           n_active: 1
           max_phase: 0
           sponsor_org_id: sponsor_org_id
@@ -41021,8 +41040,10 @@ components:
           sponsor_company_id: sponsor_company_id
           withdrawn: true
           sponsor_group_name: sponsor_group_name
+          ownership_basis: ownership_basis
           sponsor_company_name: sponsor_company_name
           n_trials: 6
+          owned: true
           n_active: 1
           max_phase: 0
           sponsor_org_id: sponsor_org_id
@@ -42002,39 +42023,42 @@ components:
     CompanyCompetitorsRow:
       additionalProperties: true
       description: "One row of the company_competitors dataset: one row per ordered\
-        \ company pair: a company and one of its top 25 competitors. A grouped request\
-        \ returns the group columns and the measures instead, as additional properties."
+        \ company pair: a company and one of the top 25 companies of each competitor_class\
+        \ by program overlap. A grouped request returns the group columns and the\
+        \ measures instead, as additional properties."
       example:
         top_shared_targets:
         - top_shared_targets
         - top_shared_targets
         n_competitor_indications: 1
+        n_class_candidates: 0
         top_shared_indications:
         - top_shared_indications
         - top_shared_indications
         competitor_company_name: competitor_company_name
-        competitor_rank: 0
-        indication_sim: 5.637376656633329
-        n_shared_indications: 3
+        competitor_rank: 6
+        indication_sim: 2.3021358869347655
+        competitor_class: competitor_class
+        n_shared_indications: 2
         top_shared_mechanisms:
         - top_shared_mechanisms
         - top_shared_mechanisms
-        n_phase_overlap_targets: 2
+        n_phase_overlap_targets: 4
         competitor_group_name: competitor_group_name
-        mechanism_sim: 5.962133916683182
+        mechanism_sim: 5.637376656633329
         company_id: company_id
         group_name: group_name
-        n_shared_targets: 7
+        n_shared_targets: 9
         competitor_group_id: competitor_group_id
-        target_sim: 1.4658129805029452
-        n_shared_mechanisms: 9
-        competitor_score: 6.027456183070403
-        phase_sim: 2.3021358869347655
+        target_sim: 5.962133916683182
+        n_shared_mechanisms: 3
+        competitor_score: 1.4658129805029452
+        phase_sim: 7.061401241503109
         group_id: group_id
         n_company_indications: 1
         company_name: company_name
-        n_company_targets: 4
-        n_competitor_targets: 7
+        n_company_targets: 7
+        n_competitor_targets: 1
         competitor_company_id: competitor_company_id
       properties:
         company_id:
@@ -42072,9 +42096,24 @@ components:
           description: Display name of the competitor's group.
           nullable: true
           type: string
+        competitor_class:
+          description: "The competitor's class: industry, or non_industry (not classed\
+            \ as industry by the sponsor-class rule: academic, hospital, government,\
+            \ nonprofit, and any record the rule does not reach). competitor_rank\
+            \ restarts at 1 within each class, so filter or sort on this column first."
+          nullable: true
+          type: string
+        n_class_candidates:
+          description: "How many companies of this competitor_class were candidates\
+            \ (a shared target, or an indication overlap above the similarity floor)\
+            \ before the top 25 were kept. The same value on every row of one company\
+            \ and class."
+          format: int32
+          nullable: true
+          type: integer
         competitor_rank:
-          description: The competitor's rank for the company by competitor_score (1
-            is the highest).
+          description: The competitor's rank within its competitor_class for the company
+            by competitor_score (1 is the highest).
           format: int32
           nullable: true
           type: integer
@@ -42201,68 +42240,72 @@ components:
           - top_shared_targets
           - top_shared_targets
           n_competitor_indications: 1
+          n_class_candidates: 0
           top_shared_indications:
           - top_shared_indications
           - top_shared_indications
           competitor_company_name: competitor_company_name
-          competitor_rank: 0
-          indication_sim: 5.637376656633329
-          n_shared_indications: 3
+          competitor_rank: 6
+          indication_sim: 2.3021358869347655
+          competitor_class: competitor_class
+          n_shared_indications: 2
           top_shared_mechanisms:
           - top_shared_mechanisms
           - top_shared_mechanisms
-          n_phase_overlap_targets: 2
+          n_phase_overlap_targets: 4
           competitor_group_name: competitor_group_name
-          mechanism_sim: 5.962133916683182
+          mechanism_sim: 5.637376656633329
           company_id: company_id
           group_name: group_name
-          n_shared_targets: 7
+          n_shared_targets: 9
           competitor_group_id: competitor_group_id
-          target_sim: 1.4658129805029452
-          n_shared_mechanisms: 9
-          competitor_score: 6.027456183070403
-          phase_sim: 2.3021358869347655
+          target_sim: 5.962133916683182
+          n_shared_mechanisms: 3
+          competitor_score: 1.4658129805029452
+          phase_sim: 7.061401241503109
           group_id: group_id
           n_company_indications: 1
           company_name: company_name
-          n_company_targets: 4
-          n_competitor_targets: 7
+          n_company_targets: 7
+          n_competitor_targets: 1
           competitor_company_id: competitor_company_id
         - top_shared_targets:
           - top_shared_targets
           - top_shared_targets
           n_competitor_indications: 1
+          n_class_candidates: 0
           top_shared_indications:
           - top_shared_indications
           - top_shared_indications
           competitor_company_name: competitor_company_name
-          competitor_rank: 0
-          indication_sim: 5.637376656633329
-          n_shared_indications: 3
+          competitor_rank: 6
+          indication_sim: 2.3021358869347655
+          competitor_class: competitor_class
+          n_shared_indications: 2
           top_shared_mechanisms:
           - top_shared_mechanisms
           - top_shared_mechanisms
-          n_phase_overlap_targets: 2
+          n_phase_overlap_targets: 4
           competitor_group_name: competitor_group_name
-          mechanism_sim: 5.962133916683182
+          mechanism_sim: 5.637376656633329
           company_id: company_id
           group_name: group_name
-          n_shared_targets: 7
+          n_shared_targets: 9
           competitor_group_id: competitor_group_id
-          target_sim: 1.4658129805029452
-          n_shared_mechanisms: 9
-          competitor_score: 6.027456183070403
-          phase_sim: 2.3021358869347655
+          target_sim: 5.962133916683182
+          n_shared_mechanisms: 3
+          competitor_score: 1.4658129805029452
+          phase_sim: 7.061401241503109
           group_id: group_id
           n_company_indications: 1
           company_name: company_name
-          n_company_targets: 4
-          n_competitor_targets: 7
+          n_company_targets: 7
+          n_competitor_targets: 1
           competitor_company_id: competitor_company_id
         freshness:
           last_loaded: last_loaded
           source: source
-        total: 1
+        total: 6
         measures:
         - measures
         - measures
@@ -44152,11 +44195,13 @@ components:
         sponsor_company_id: sponsor_company_id
         withdrawn: true
         sponsor_group_name: sponsor_group_name
+        ownership_basis: ownership_basis
         condition_id: condition_id
         dalys_millions: 5.637376656633329
         lifecycle: lifecycle
         sponsor_company_name: sponsor_company_name
         n_trials: 6
+        owned: true
         n_active: 1
         max_phase: 0
         sponsor_org_id: sponsor_org_id
@@ -44235,6 +44280,21 @@ components:
           description: "approved, active or abandoned."
           nullable: true
           type: string
+        owned:
+          description: "True when the sponsor is judged to develop the drug (an experimental\
+            \ arm, a regulatory holder, or an inferred lead); false when it is the\
+            \ backbone or comparator of a combination, one of many leads of a crowded\
+            \ drug, or not the holder of a generic. Every row is kept; this column\
+            \ labels it."
+          nullable: true
+          type: boolean
+        ownership_basis:
+          description: "Why owned is what it is: experimental_arm, regulatory_holder\
+            \ or inferred_lead (owned), or backbone, comparator, crowded_not_lead\
+            \ or generic_not_holder (not owned). inferred_lead is an inference made\
+            \ where the trials give no arm evidence either way."
+          nullable: true
+          type: string
         dalys_millions:
           description: "Disability-adjusted life years (DALYs, millions) of the condition's\
             \ global burden, from the Global Burden of Disease (GBD) 2021 study of\
@@ -44281,11 +44341,13 @@ components:
           sponsor_company_id: sponsor_company_id
           withdrawn: true
           sponsor_group_name: sponsor_group_name
+          ownership_basis: ownership_basis
           condition_id: condition_id
           dalys_millions: 5.637376656633329
           lifecycle: lifecycle
           sponsor_company_name: sponsor_company_name
           n_trials: 6
+          owned: true
           n_active: 1
           max_phase: 0
           sponsor_org_id: sponsor_org_id
@@ -44298,11 +44360,13 @@ components:
           sponsor_company_id: sponsor_company_id
           withdrawn: true
           sponsor_group_name: sponsor_group_name
+          ownership_basis: ownership_basis
           condition_id: condition_id
           dalys_millions: 5.637376656633329
           lifecycle: lifecycle
           sponsor_company_name: sponsor_company_name
           n_trials: 6
+          owned: true
           n_active: 1
           max_phase: 0
           sponsor_org_id: sponsor_org_id
@@ -61329,17 +61393,34 @@ components:
     InvestorPortfolioRow:
       additionalProperties: true
       description: "One row of the investor_portfolio dataset: one row per investor\
-        \ and issuer CIK (the SEC's Central Index Key). A grouped request returns\
-        \ the group columns and the measures instead, as additional properties."
+        \ and company key (the organization id where the company resolves, else the\
+        \ SEC Central Index Key, else the name as printed on the investor's page).\
+        \ A grouped request returns the group columns and the measures instead, as\
+        \ additional properties."
       example:
         issuer_company_name: issuer_company_name
-        is_life_sciences_issuer: true
-        issuer_company_id: issuer_company_id
-        edge_count: 0
-        issuer_group_name: issuer_group_name
+        status_date: status_date
+        sources:
+        - sources
+        - sources
+        status_first_observed_at: 2000-01-23
+        company_name_as_listed: company_name_as_listed
+        removal_reason: removal_reason
+        is_removed: true
         last_observed_date: 2000-01-23
         investor_id: investor_id
         issuer_group_id: issuer_group_id
+        source_url: source_url
+        company_website_url: company_website_url
+        is_life_sciences_issuer: true
+        status_on_page: status_on_page
+        issuer_company_id: issuer_company_id
+        listed_from: 2000-01-23
+        company_key: company_key
+        edge_count: 0
+        listed_to: 2000-01-23
+        issuer_group_name: issuer_group_name
+        company_key_kind: company_key_kind
         issuer_name: issuer_name
         issuer_org_id: issuer_org_id
         issuer_cik: issuer_cik
@@ -61347,64 +61428,149 @@ components:
         - relationship_types
         - relationship_types
         first_observed_date: 2000-01-23
+        site_last_retrieved_at: 2000-01-23T04:56:07.000+00:00
       properties:
         investor_id:
           description: The investor key.
           nullable: true
           type: string
+        company_key:
+          description: "The company's key on this dataset: its organization id where\
+            \ it resolves, else the SEC CIK, else investor_site: followed by the normalized\
+            \ name as printed on the investor's page."
+          nullable: true
+          type: string
+        company_key_kind:
+          description: "What company_key is: org, cik or investor_site."
+          nullable: true
+          type: string
+        sources:
+          description: "Where the row comes from: sec_edgar (S-1 and 424B holder tables),\
+            \ investor_site (the investor's own portfolio page), or both."
+          items:
+            type: string
+          nullable: true
+          type: array
         issuer_cik:
-          description: "The issuer's SEC Central Index Key (CIK), ten digits."
+          description: "The issuer's SEC Central Index Key (CIK), ten digits. Null\
+            \ for a row only the investor's website names."
           nullable: true
           type: string
         issuer_name:
-          description: "The issuer's name: its organization record's name, else the\
-            \ SEC company name."
+          description: "The company's name: its organization record's name, else the\
+            \ SEC company name, else the name as printed on the investor's page."
+          nullable: true
+          type: string
+        company_name_as_listed:
+          description: The company's name as printed on the investor's own portfolio
+            page. Null for a row only SEC filings name.
+          nullable: true
+          type: string
+        company_website_url:
+          description: The company's website as linked on the investor's own portfolio
+            page. Null when the page gave none.
           nullable: true
           type: string
         issuer_org_id:
-          description: "Legal-entity level: the issuer's organization record (null\
+          description: "Legal-entity level: the company's organization record (null\
             \ when unresolved)."
           nullable: true
           type: string
         issuer_company_id:
-          description: "Company level: the issuer's company (null when unresolved)."
+          description: "Company level: the company's record (null when unresolved)."
           nullable: true
           type: string
         issuer_company_name:
-          description: Display name of the issuer's company.
+          description: Display name of the company.
           nullable: true
           type: string
         issuer_group_id:
-          description: "Group level: the issuer's current ultimate parent; a root's\
+          description: "Group level: the company's current ultimate parent; a root's\
             \ group is itself."
           nullable: true
           type: string
         issuer_group_name:
-          description: Display name of the issuer's group.
+          description: Display name of the company's group.
           nullable: true
           type: string
         relationship_types:
-          description: "How the investor is named against the issuer: holder_5pct\
-            \ (a 5 percent holder) or selling_stockholder."
+          description: "How the investor is tied to the company: holder_5pct (a 5\
+            \ percent holder) or selling_stockholder from filings, and portfolio_listed_current,\
+            \ portfolio_listed_realized, portfolio_listed_exited or portfolio_listed\
+            \ (no status printed) from the investor's own page."
           items:
             type: string
           nullable: true
           type: array
         edge_count:
           description: "Filing mentions behind the row, across every filing and relationship\
-            \ type."
+            \ type. 0 for a row only the investor's website names."
           format: int64
           nullable: true
           type: integer
         first_observed_date:
           description: The earliest filing date the investor was named against the
-            issuer.
+            issuer. Null for a row only the investor's website names.
           format: date
           nullable: true
           type: string
         last_observed_date:
           description: The latest filing date the investor was named against the issuer.
+            Null for a row only the investor's website names.
           format: date
+          nullable: true
+          type: string
+        listed_from:
+          description: "The retrieval date of the first crawl of the investor's own\
+            \ portfolio page that listed the company (a crawl date, not an investment\
+            \ date). Null for a row only SEC filings name."
+          format: date
+          nullable: true
+          type: string
+        listed_to:
+          description: "The retrieval date of the first later crawl that did not list\
+            \ the company, or the date the page went away. Null while the company\
+            \ is still listed, and for a row only SEC filings name."
+          format: date
+          nullable: true
+          type: string
+        removal_reason:
+          description: "Why listed_to is set: absent_from_later_version (a later crawl\
+            \ of the page omitted the company) or page_gone (the page went away).\
+            \ Null exactly when listed_to is null."
+          nullable: true
+          type: string
+        is_removed:
+          description: True when the investor's own page no longer lists the company
+            (listed_to is set). SEC filings do not reopen it.
+          nullable: true
+          type: boolean
+        status_on_page:
+          description: "The status the investor's page states for the company, verbatim:\
+            \ current, realized, exited or unknown (the page listed it with no status).\
+            \ Null for a row only SEC filings name."
+          nullable: true
+          type: string
+        status_date:
+          description: "The date the page itself prints for the status, as printed\
+            \ (for example 2024 or March 2024). Null unless the page printed one."
+          nullable: true
+          type: string
+        status_first_observed_at:
+          description: "The date we first saw this status for the company on the investor's\
+            \ page: an observation date, never the date the event happened."
+          format: date
+          nullable: true
+          type: string
+        source_url:
+          description: The address of the investor's portfolio page the listing was
+            read from. Null for a row only SEC filings name.
+          nullable: true
+          type: string
+        site_last_retrieved_at:
+          description: "When the investor's portfolio page was last retrieved with\
+            \ the company listed on it, in UTC."
+          format: date-time
           nullable: true
           type: string
         is_life_sciences_issuer:
@@ -61446,13 +61612,28 @@ components:
         - key: ""
         rows:
         - issuer_company_name: issuer_company_name
-          is_life_sciences_issuer: true
-          issuer_company_id: issuer_company_id
-          edge_count: 0
-          issuer_group_name: issuer_group_name
+          status_date: status_date
+          sources:
+          - sources
+          - sources
+          status_first_observed_at: 2000-01-23
+          company_name_as_listed: company_name_as_listed
+          removal_reason: removal_reason
+          is_removed: true
           last_observed_date: 2000-01-23
           investor_id: investor_id
           issuer_group_id: issuer_group_id
+          source_url: source_url
+          company_website_url: company_website_url
+          is_life_sciences_issuer: true
+          status_on_page: status_on_page
+          issuer_company_id: issuer_company_id
+          listed_from: 2000-01-23
+          company_key: company_key
+          edge_count: 0
+          listed_to: 2000-01-23
+          issuer_group_name: issuer_group_name
+          company_key_kind: company_key_kind
           issuer_name: issuer_name
           issuer_org_id: issuer_org_id
           issuer_cik: issuer_cik
@@ -61460,14 +61641,30 @@ components:
           - relationship_types
           - relationship_types
           first_observed_date: 2000-01-23
+          site_last_retrieved_at: 2000-01-23T04:56:07.000+00:00
         - issuer_company_name: issuer_company_name
-          is_life_sciences_issuer: true
-          issuer_company_id: issuer_company_id
-          edge_count: 0
-          issuer_group_name: issuer_group_name
+          status_date: status_date
+          sources:
+          - sources
+          - sources
+          status_first_observed_at: 2000-01-23
+          company_name_as_listed: company_name_as_listed
+          removal_reason: removal_reason
+          is_removed: true
           last_observed_date: 2000-01-23
           investor_id: investor_id
           issuer_group_id: issuer_group_id
+          source_url: source_url
+          company_website_url: company_website_url
+          is_life_sciences_issuer: true
+          status_on_page: status_on_page
+          issuer_company_id: issuer_company_id
+          listed_from: 2000-01-23
+          company_key: company_key
+          edge_count: 0
+          listed_to: 2000-01-23
+          issuer_group_name: issuer_group_name
+          company_key_kind: company_key_kind
           issuer_name: issuer_name
           issuer_org_id: issuer_org_id
           issuer_cik: issuer_cik
@@ -61475,6 +61672,7 @@ components:
           - relationship_types
           - relationship_types
           first_observed_date: 2000-01-23
+          site_last_retrieved_at: 2000-01-23T04:56:07.000+00:00
         freshness:
           last_loaded: last_loaded
           source: source
@@ -61877,6 +62075,7 @@ components:
         rows:
         - raum_band: raum_band
           is_life_sciences_focused: true
+          portfolio_co_removed_count: 5
           country: country
           portfolio_co_count: 5
           is_life_sciences_focused_basis: is_life_sciences_focused_basis
@@ -61889,7 +62088,7 @@ components:
           is_era: true
           total_private_fund_gav: 1.4658129805029452
           website_url: website_url
-          holdings_position_count: 5
+          holdings_position_count: 2
           group_id: group_id
           org_id: org_id
           company_name: company_name
@@ -61899,6 +62098,7 @@ components:
           website_source: website_source
         - raum_band: raum_band
           is_life_sciences_focused: true
+          portfolio_co_removed_count: 5
           country: country
           portfolio_co_count: 5
           is_life_sciences_focused_basis: is_life_sciences_focused_basis
@@ -61911,7 +62111,7 @@ components:
           is_era: true
           total_private_fund_gav: 1.4658129805029452
           website_url: website_url
-          holdings_position_count: 5
+          holdings_position_count: 2
           group_id: group_id
           org_id: org_id
           company_name: company_name
@@ -61922,7 +62122,7 @@ components:
         freshness:
           last_loaded: last_loaded
           source: source
-        total: 2
+        total: 7
         measures:
         - measures
         - measures
@@ -66235,6 +66435,7 @@ components:
         last_update_year: 5
         withdrawn: true
         sponsor_group_name: sponsor_group_name
+        ownership_basis: ownership_basis
         condition_id: condition_id
         dalys_millions: 2.3021358869347655
         sponsor_company_name: sponsor_company_name
@@ -66243,6 +66444,7 @@ components:
         - condition_ancestor_ids
         - condition_ancestor_ids
         n_trials: 6
+        owned: true
         n_active: 1
         max_phase: 0
         sponsor_org_id: sponsor_org_id
@@ -66329,6 +66531,21 @@ components:
           description: True when the drug has been withdrawn.
           nullable: true
           type: boolean
+        owned:
+          description: "True when the sponsor is judged to develop the drug (an experimental\
+            \ arm, a regulatory holder, or an inferred lead); false when it is the\
+            \ backbone or comparator of a combination, one of many leads of a crowded\
+            \ drug, or not the holder of a generic. Every row is kept; this column\
+            \ labels it."
+          nullable: true
+          type: boolean
+        ownership_basis:
+          description: "Why owned is what it is: experimental_arm, regulatory_holder\
+            \ or inferred_lead (owned), or backbone, comparator, crowded_not_lead\
+            \ or generic_not_holder (not owned). inferred_lead is an inference made\
+            \ where the trials give no arm evidence either way."
+          nullable: true
+          type: string
         cause_name:
           description: The Global Burden of Disease cause matched to the condition.
           nullable: true
@@ -66391,6 +66608,7 @@ components:
           last_update_year: 5
           withdrawn: true
           sponsor_group_name: sponsor_group_name
+          ownership_basis: ownership_basis
           condition_id: condition_id
           dalys_millions: 2.3021358869347655
           sponsor_company_name: sponsor_company_name
@@ -66399,6 +66617,7 @@ components:
           - condition_ancestor_ids
           - condition_ancestor_ids
           n_trials: 6
+          owned: true
           n_active: 1
           max_phase: 0
           sponsor_org_id: sponsor_org_id
@@ -66414,6 +66633,7 @@ components:
           last_update_year: 5
           withdrawn: true
           sponsor_group_name: sponsor_group_name
+          ownership_basis: ownership_basis
           condition_id: condition_id
           dalys_millions: 2.3021358869347655
           sponsor_company_name: sponsor_company_name
@@ -66422,6 +66642,7 @@ components:
           - condition_ancestor_ids
           - condition_ancestor_ids
           n_trials: 6
+          owned: true
           n_active: 1
           max_phase: 0
           sponsor_org_id: sponsor_org_id
@@ -96580,6 +96801,7 @@ components:
         record:
           raum_band: raum_band
           is_life_sciences_focused: true
+          portfolio_co_removed_count: 5
           country: country
           portfolio_co_count: 5
           is_life_sciences_focused_basis: is_life_sciences_focused_basis
@@ -96592,7 +96814,7 @@ components:
           is_era: true
           total_private_fund_gav: 1.4658129805029452
           website_url: website_url
-          holdings_position_count: 5
+          holdings_position_count: 2
           group_id: group_id
           org_id: org_id
           company_name: company_name
@@ -98235,6 +98457,7 @@ components:
       example:
         raum_band: raum_band
         is_life_sciences_focused: true
+        portfolio_co_removed_count: 5
         country: country
         portfolio_co_count: 5
         is_life_sciences_focused_basis: is_life_sciences_focused_basis
@@ -98247,7 +98470,7 @@ components:
         is_era: true
         total_private_fund_gav: 1.4658129805029452
         website_url: website_url
-        holdings_position_count: 5
+        holdings_position_count: 2
         group_id: group_id
         org_id: org_id
         company_name: company_name
@@ -98322,9 +98545,17 @@ components:
           nullable: true
           type: number
         portfolio_co_count:
-          description: Distinct portfolio companies named against the investor in
-            S-1 and 424B offering holder tables. 0 usually means no named-holder link
-            was observed.
+          description: "Distinct portfolio companies named against the investor in\
+            \ S-1 and 424B offering holder tables or listed on the investor's own\
+            \ portfolio page, not marked removed there. 0 usually means no named-holder\
+            \ link or website listing was observed."
+          format: int64
+          nullable: true
+          type: integer
+        portfolio_co_removed_count:
+          description: Distinct portfolio companies the investor's own portfolio page
+            listed in an earlier crawl and no longer lists. portfolio_co_count and
+            this count sum to the investor's rows in investor_portfolio.
           format: int64
           nullable: true
           type: integer

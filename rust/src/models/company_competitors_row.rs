@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// CompanyCompetitorsRow : One row of the company_competitors dataset: one row per ordered company pair: a company and one of its top 25 competitors. A grouped request returns the group columns and the measures instead, as additional properties.
+/// CompanyCompetitorsRow : One row of the company_competitors dataset: one row per ordered company pair: a company and one of the top 25 companies of each competitor_class by program overlap. A grouped request returns the group columns and the measures instead, as additional properties.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CompanyCompetitorsRow {
     /// Company level: the company the row is about; the entry key for the companies object type.
@@ -38,7 +38,13 @@ pub struct CompanyCompetitorsRow {
     /// Display name of the competitor's group.
     #[serde(rename = "competitor_group_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub competitor_group_name: Option<Option<String>>,
-    /// The competitor's rank for the company by competitor_score (1 is the highest).
+    /// The competitor's class: industry, or non_industry (not classed as industry by the sponsor-class rule: academic, hospital, government, nonprofit, and any record the rule does not reach). competitor_rank restarts at 1 within each class, so filter or sort on this column first.
+    #[serde(rename = "competitor_class", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub competitor_class: Option<Option<String>>,
+    /// How many companies of this competitor_class were candidates (a shared target, or an indication overlap above the similarity floor) before the top 25 were kept. The same value on every row of one company and class.
+    #[serde(rename = "n_class_candidates", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_class_candidates: Option<Option<i32>>,
+    /// The competitor's rank within its competitor_class for the company by competitor_score (1 is the highest).
     #[serde(rename = "competitor_rank", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub competitor_rank: Option<Option<i32>>,
     /// 100 times the weighted mean of the four similarities below, rounded to four places.
@@ -92,7 +98,7 @@ pub struct CompanyCompetitorsRow {
 }
 
 impl CompanyCompetitorsRow {
-    /// One row of the company_competitors dataset: one row per ordered company pair: a company and one of its top 25 competitors. A grouped request returns the group columns and the measures instead, as additional properties.
+    /// One row of the company_competitors dataset: one row per ordered company pair: a company and one of the top 25 companies of each competitor_class by program overlap. A grouped request returns the group columns and the measures instead, as additional properties.
     pub fn new() -> CompanyCompetitorsRow {
         CompanyCompetitorsRow {
             company_id: None,
@@ -103,6 +109,8 @@ impl CompanyCompetitorsRow {
             competitor_company_name: None,
             competitor_group_id: None,
             competitor_group_name: None,
+            competitor_class: None,
+            n_class_candidates: None,
             competitor_rank: None,
             competitor_score: None,
             target_sim: None,

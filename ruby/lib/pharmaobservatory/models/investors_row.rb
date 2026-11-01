@@ -52,8 +52,11 @@ module PharmaObservatory
     # The adviser's total private-fund gross asset value (GAV) in whole US dollars, a firm-level figure.
     attr_accessor :total_private_fund_gav
 
-    # Distinct portfolio companies named against the investor in S-1 and 424B offering holder tables. 0 usually means no named-holder link was observed.
+    # Distinct portfolio companies named against the investor in S-1 and 424B offering holder tables or listed on the investor's own portfolio page, not marked removed there. 0 usually means no named-holder link or website listing was observed.
     attr_accessor :portfolio_co_count
+
+    # Distinct portfolio companies the investor's own portfolio page listed in an earlier crawl and no longer lists. portfolio_co_count and this count sum to the investor's rows in investor_portfolio.
+    attr_accessor :portfolio_co_removed_count
 
     # Current Form 13F positions reported by the managers that resolve to this investor, summed over its manager keys. 0 when none resolves.
     attr_accessor :holdings_position_count
@@ -98,6 +101,7 @@ module PharmaObservatory
         :'private_fund_count' => :'private_fund_count',
         :'total_private_fund_gav' => :'total_private_fund_gav',
         :'portfolio_co_count' => :'portfolio_co_count',
+        :'portfolio_co_removed_count' => :'portfolio_co_removed_count',
         :'holdings_position_count' => :'holdings_position_count',
         :'website_url' => :'website_url',
         :'website_domain' => :'website_domain',
@@ -136,6 +140,7 @@ module PharmaObservatory
         :'private_fund_count' => :'Integer',
         :'total_private_fund_gav' => :'Float',
         :'portfolio_co_count' => :'Integer',
+        :'portfolio_co_removed_count' => :'Integer',
         :'holdings_position_count' => :'Integer',
         :'website_url' => :'String',
         :'website_domain' => :'String',
@@ -164,6 +169,7 @@ module PharmaObservatory
         :'private_fund_count',
         :'total_private_fund_gav',
         :'portfolio_co_count',
+        :'portfolio_co_removed_count',
         :'holdings_position_count',
         :'website_url',
         :'website_domain',
@@ -244,6 +250,10 @@ module PharmaObservatory
         self.portfolio_co_count = attributes[:'portfolio_co_count']
       end
 
+      if attributes.key?(:'portfolio_co_removed_count')
+        self.portfolio_co_removed_count = attributes[:'portfolio_co_removed_count']
+      end
+
       if attributes.key?(:'holdings_position_count')
         self.holdings_position_count = attributes[:'holdings_position_count']
       end
@@ -314,6 +324,7 @@ module PharmaObservatory
           private_fund_count == o.private_fund_count &&
           total_private_fund_gav == o.total_private_fund_gav &&
           portfolio_co_count == o.portfolio_co_count &&
+          portfolio_co_removed_count == o.portfolio_co_removed_count &&
           holdings_position_count == o.holdings_position_count &&
           website_url == o.website_url &&
           website_domain == o.website_domain &&
@@ -334,7 +345,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [investor_id, legal_name, investor_type, source, country, raum_usd, raum_band, is_era, is_life_sciences_focused, is_life_sciences_focused_basis, private_fund_count, total_private_fund_gav, portfolio_co_count, holdings_position_count, website_url, website_domain, website_source, org_id, company_id, company_name, group_id, group_name].hash
+      [investor_id, legal_name, investor_type, source, country, raum_usd, raum_band, is_era, is_life_sciences_focused, is_life_sciences_focused_basis, private_fund_count, total_private_fund_gav, portfolio_co_count, portfolio_co_removed_count, holdings_position_count, website_url, website_domain, website_source, org_id, company_id, company_name, group_id, group_name].hash
     end
 
     # Builds the object from hash

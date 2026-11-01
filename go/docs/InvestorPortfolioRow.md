@@ -5,17 +5,31 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **InvestorId** | Pointer to **NullableString** | The investor key. | [optional] 
-**IssuerCik** | Pointer to **NullableString** | The issuer&#39;s SEC Central Index Key (CIK), ten digits. | [optional] 
-**IssuerName** | Pointer to **NullableString** | The issuer&#39;s name: its organization record&#39;s name, else the SEC company name. | [optional] 
-**IssuerOrgId** | Pointer to **NullableString** | Legal-entity level: the issuer&#39;s organization record (null when unresolved). | [optional] 
-**IssuerCompanyId** | Pointer to **NullableString** | Company level: the issuer&#39;s company (null when unresolved). | [optional] 
-**IssuerCompanyName** | Pointer to **NullableString** | Display name of the issuer&#39;s company. | [optional] 
-**IssuerGroupId** | Pointer to **NullableString** | Group level: the issuer&#39;s current ultimate parent; a root&#39;s group is itself. | [optional] 
-**IssuerGroupName** | Pointer to **NullableString** | Display name of the issuer&#39;s group. | [optional] 
-**RelationshipTypes** | Pointer to **[]string** | How the investor is named against the issuer: holder_5pct (a 5 percent holder) or selling_stockholder. | [optional] 
-**EdgeCount** | Pointer to **NullableInt64** | Filing mentions behind the row, across every filing and relationship type. | [optional] 
-**FirstObservedDate** | Pointer to **NullableString** | The earliest filing date the investor was named against the issuer. | [optional] 
-**LastObservedDate** | Pointer to **NullableString** | The latest filing date the investor was named against the issuer. | [optional] 
+**CompanyKey** | Pointer to **NullableString** | The company&#39;s key on this dataset: its organization id where it resolves, else the SEC CIK, else investor_site: followed by the normalized name as printed on the investor&#39;s page. | [optional] 
+**CompanyKeyKind** | Pointer to **NullableString** | What company_key is: org, cik or investor_site. | [optional] 
+**Sources** | Pointer to **[]string** | Where the row comes from: sec_edgar (S-1 and 424B holder tables), investor_site (the investor&#39;s own portfolio page), or both. | [optional] 
+**IssuerCik** | Pointer to **NullableString** | The issuer&#39;s SEC Central Index Key (CIK), ten digits. Null for a row only the investor&#39;s website names. | [optional] 
+**IssuerName** | Pointer to **NullableString** | The company&#39;s name: its organization record&#39;s name, else the SEC company name, else the name as printed on the investor&#39;s page. | [optional] 
+**CompanyNameAsListed** | Pointer to **NullableString** | The company&#39;s name as printed on the investor&#39;s own portfolio page. Null for a row only SEC filings name. | [optional] 
+**CompanyWebsiteUrl** | Pointer to **NullableString** | The company&#39;s website as linked on the investor&#39;s own portfolio page. Null when the page gave none. | [optional] 
+**IssuerOrgId** | Pointer to **NullableString** | Legal-entity level: the company&#39;s organization record (null when unresolved). | [optional] 
+**IssuerCompanyId** | Pointer to **NullableString** | Company level: the company&#39;s record (null when unresolved). | [optional] 
+**IssuerCompanyName** | Pointer to **NullableString** | Display name of the company. | [optional] 
+**IssuerGroupId** | Pointer to **NullableString** | Group level: the company&#39;s current ultimate parent; a root&#39;s group is itself. | [optional] 
+**IssuerGroupName** | Pointer to **NullableString** | Display name of the company&#39;s group. | [optional] 
+**RelationshipTypes** | Pointer to **[]string** | How the investor is tied to the company: holder_5pct (a 5 percent holder) or selling_stockholder from filings, and portfolio_listed_current, portfolio_listed_realized, portfolio_listed_exited or portfolio_listed (no status printed) from the investor&#39;s own page. | [optional] 
+**EdgeCount** | Pointer to **NullableInt64** | Filing mentions behind the row, across every filing and relationship type. 0 for a row only the investor&#39;s website names. | [optional] 
+**FirstObservedDate** | Pointer to **NullableString** | The earliest filing date the investor was named against the issuer. Null for a row only the investor&#39;s website names. | [optional] 
+**LastObservedDate** | Pointer to **NullableString** | The latest filing date the investor was named against the issuer. Null for a row only the investor&#39;s website names. | [optional] 
+**ListedFrom** | Pointer to **NullableString** | The retrieval date of the first crawl of the investor&#39;s own portfolio page that listed the company (a crawl date, not an investment date). Null for a row only SEC filings name. | [optional] 
+**ListedTo** | Pointer to **NullableString** | The retrieval date of the first later crawl that did not list the company, or the date the page went away. Null while the company is still listed, and for a row only SEC filings name. | [optional] 
+**RemovalReason** | Pointer to **NullableString** | Why listed_to is set: absent_from_later_version (a later crawl of the page omitted the company) or page_gone (the page went away). Null exactly when listed_to is null. | [optional] 
+**IsRemoved** | Pointer to **NullableBool** | True when the investor&#39;s own page no longer lists the company (listed_to is set). SEC filings do not reopen it. | [optional] 
+**StatusOnPage** | Pointer to **NullableString** | The status the investor&#39;s page states for the company, verbatim: current, realized, exited or unknown (the page listed it with no status). Null for a row only SEC filings name. | [optional] 
+**StatusDate** | Pointer to **NullableString** | The date the page itself prints for the status, as printed (for example 2024 or March 2024). Null unless the page printed one. | [optional] 
+**StatusFirstObservedAt** | Pointer to **NullableString** | The date we first saw this status for the company on the investor&#39;s page: an observation date, never the date the event happened. | [optional] 
+**SourceUrl** | Pointer to **NullableString** | The address of the investor&#39;s portfolio page the listing was read from. Null for a row only SEC filings name. | [optional] 
+**SiteLastRetrievedAt** | Pointer to **NullableTime** | When the investor&#39;s portfolio page was last retrieved with the company listed on it, in UTC. | [optional] 
 **IsLifeSciencesIssuer** | Pointer to **NullableBool** | True when the issuer&#39;s SIC (Standard Industrial Classification) code is a life-sciences code, false when it is another code, null when the issuer has no SIC evidence. | [optional] 
 
 ## Methods
@@ -72,6 +86,111 @@ HasInvestorId returns a boolean if a field has been set.
 `func (o *InvestorPortfolioRow) UnsetInvestorId()`
 
 UnsetInvestorId ensures that no value is present for InvestorId, not even an explicit nil
+### GetCompanyKey
+
+`func (o *InvestorPortfolioRow) GetCompanyKey() string`
+
+GetCompanyKey returns the CompanyKey field if non-nil, zero value otherwise.
+
+### GetCompanyKeyOk
+
+`func (o *InvestorPortfolioRow) GetCompanyKeyOk() (*string, bool)`
+
+GetCompanyKeyOk returns a tuple with the CompanyKey field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCompanyKey
+
+`func (o *InvestorPortfolioRow) SetCompanyKey(v string)`
+
+SetCompanyKey sets CompanyKey field to given value.
+
+### HasCompanyKey
+
+`func (o *InvestorPortfolioRow) HasCompanyKey() bool`
+
+HasCompanyKey returns a boolean if a field has been set.
+
+### SetCompanyKeyNil
+
+`func (o *InvestorPortfolioRow) SetCompanyKeyNil(b bool)`
+
+ SetCompanyKeyNil sets the value for CompanyKey to be an explicit nil
+
+### UnsetCompanyKey
+`func (o *InvestorPortfolioRow) UnsetCompanyKey()`
+
+UnsetCompanyKey ensures that no value is present for CompanyKey, not even an explicit nil
+### GetCompanyKeyKind
+
+`func (o *InvestorPortfolioRow) GetCompanyKeyKind() string`
+
+GetCompanyKeyKind returns the CompanyKeyKind field if non-nil, zero value otherwise.
+
+### GetCompanyKeyKindOk
+
+`func (o *InvestorPortfolioRow) GetCompanyKeyKindOk() (*string, bool)`
+
+GetCompanyKeyKindOk returns a tuple with the CompanyKeyKind field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCompanyKeyKind
+
+`func (o *InvestorPortfolioRow) SetCompanyKeyKind(v string)`
+
+SetCompanyKeyKind sets CompanyKeyKind field to given value.
+
+### HasCompanyKeyKind
+
+`func (o *InvestorPortfolioRow) HasCompanyKeyKind() bool`
+
+HasCompanyKeyKind returns a boolean if a field has been set.
+
+### SetCompanyKeyKindNil
+
+`func (o *InvestorPortfolioRow) SetCompanyKeyKindNil(b bool)`
+
+ SetCompanyKeyKindNil sets the value for CompanyKeyKind to be an explicit nil
+
+### UnsetCompanyKeyKind
+`func (o *InvestorPortfolioRow) UnsetCompanyKeyKind()`
+
+UnsetCompanyKeyKind ensures that no value is present for CompanyKeyKind, not even an explicit nil
+### GetSources
+
+`func (o *InvestorPortfolioRow) GetSources() []string`
+
+GetSources returns the Sources field if non-nil, zero value otherwise.
+
+### GetSourcesOk
+
+`func (o *InvestorPortfolioRow) GetSourcesOk() (*[]string, bool)`
+
+GetSourcesOk returns a tuple with the Sources field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSources
+
+`func (o *InvestorPortfolioRow) SetSources(v []string)`
+
+SetSources sets Sources field to given value.
+
+### HasSources
+
+`func (o *InvestorPortfolioRow) HasSources() bool`
+
+HasSources returns a boolean if a field has been set.
+
+### SetSourcesNil
+
+`func (o *InvestorPortfolioRow) SetSourcesNil(b bool)`
+
+ SetSourcesNil sets the value for Sources to be an explicit nil
+
+### UnsetSources
+`func (o *InvestorPortfolioRow) UnsetSources()`
+
+UnsetSources ensures that no value is present for Sources, not even an explicit nil
 ### GetIssuerCik
 
 `func (o *InvestorPortfolioRow) GetIssuerCik() string`
@@ -142,6 +261,76 @@ HasIssuerName returns a boolean if a field has been set.
 `func (o *InvestorPortfolioRow) UnsetIssuerName()`
 
 UnsetIssuerName ensures that no value is present for IssuerName, not even an explicit nil
+### GetCompanyNameAsListed
+
+`func (o *InvestorPortfolioRow) GetCompanyNameAsListed() string`
+
+GetCompanyNameAsListed returns the CompanyNameAsListed field if non-nil, zero value otherwise.
+
+### GetCompanyNameAsListedOk
+
+`func (o *InvestorPortfolioRow) GetCompanyNameAsListedOk() (*string, bool)`
+
+GetCompanyNameAsListedOk returns a tuple with the CompanyNameAsListed field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCompanyNameAsListed
+
+`func (o *InvestorPortfolioRow) SetCompanyNameAsListed(v string)`
+
+SetCompanyNameAsListed sets CompanyNameAsListed field to given value.
+
+### HasCompanyNameAsListed
+
+`func (o *InvestorPortfolioRow) HasCompanyNameAsListed() bool`
+
+HasCompanyNameAsListed returns a boolean if a field has been set.
+
+### SetCompanyNameAsListedNil
+
+`func (o *InvestorPortfolioRow) SetCompanyNameAsListedNil(b bool)`
+
+ SetCompanyNameAsListedNil sets the value for CompanyNameAsListed to be an explicit nil
+
+### UnsetCompanyNameAsListed
+`func (o *InvestorPortfolioRow) UnsetCompanyNameAsListed()`
+
+UnsetCompanyNameAsListed ensures that no value is present for CompanyNameAsListed, not even an explicit nil
+### GetCompanyWebsiteUrl
+
+`func (o *InvestorPortfolioRow) GetCompanyWebsiteUrl() string`
+
+GetCompanyWebsiteUrl returns the CompanyWebsiteUrl field if non-nil, zero value otherwise.
+
+### GetCompanyWebsiteUrlOk
+
+`func (o *InvestorPortfolioRow) GetCompanyWebsiteUrlOk() (*string, bool)`
+
+GetCompanyWebsiteUrlOk returns a tuple with the CompanyWebsiteUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCompanyWebsiteUrl
+
+`func (o *InvestorPortfolioRow) SetCompanyWebsiteUrl(v string)`
+
+SetCompanyWebsiteUrl sets CompanyWebsiteUrl field to given value.
+
+### HasCompanyWebsiteUrl
+
+`func (o *InvestorPortfolioRow) HasCompanyWebsiteUrl() bool`
+
+HasCompanyWebsiteUrl returns a boolean if a field has been set.
+
+### SetCompanyWebsiteUrlNil
+
+`func (o *InvestorPortfolioRow) SetCompanyWebsiteUrlNil(b bool)`
+
+ SetCompanyWebsiteUrlNil sets the value for CompanyWebsiteUrl to be an explicit nil
+
+### UnsetCompanyWebsiteUrl
+`func (o *InvestorPortfolioRow) UnsetCompanyWebsiteUrl()`
+
+UnsetCompanyWebsiteUrl ensures that no value is present for CompanyWebsiteUrl, not even an explicit nil
 ### GetIssuerOrgId
 
 `func (o *InvestorPortfolioRow) GetIssuerOrgId() string`
@@ -457,6 +646,321 @@ HasLastObservedDate returns a boolean if a field has been set.
 `func (o *InvestorPortfolioRow) UnsetLastObservedDate()`
 
 UnsetLastObservedDate ensures that no value is present for LastObservedDate, not even an explicit nil
+### GetListedFrom
+
+`func (o *InvestorPortfolioRow) GetListedFrom() string`
+
+GetListedFrom returns the ListedFrom field if non-nil, zero value otherwise.
+
+### GetListedFromOk
+
+`func (o *InvestorPortfolioRow) GetListedFromOk() (*string, bool)`
+
+GetListedFromOk returns a tuple with the ListedFrom field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetListedFrom
+
+`func (o *InvestorPortfolioRow) SetListedFrom(v string)`
+
+SetListedFrom sets ListedFrom field to given value.
+
+### HasListedFrom
+
+`func (o *InvestorPortfolioRow) HasListedFrom() bool`
+
+HasListedFrom returns a boolean if a field has been set.
+
+### SetListedFromNil
+
+`func (o *InvestorPortfolioRow) SetListedFromNil(b bool)`
+
+ SetListedFromNil sets the value for ListedFrom to be an explicit nil
+
+### UnsetListedFrom
+`func (o *InvestorPortfolioRow) UnsetListedFrom()`
+
+UnsetListedFrom ensures that no value is present for ListedFrom, not even an explicit nil
+### GetListedTo
+
+`func (o *InvestorPortfolioRow) GetListedTo() string`
+
+GetListedTo returns the ListedTo field if non-nil, zero value otherwise.
+
+### GetListedToOk
+
+`func (o *InvestorPortfolioRow) GetListedToOk() (*string, bool)`
+
+GetListedToOk returns a tuple with the ListedTo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetListedTo
+
+`func (o *InvestorPortfolioRow) SetListedTo(v string)`
+
+SetListedTo sets ListedTo field to given value.
+
+### HasListedTo
+
+`func (o *InvestorPortfolioRow) HasListedTo() bool`
+
+HasListedTo returns a boolean if a field has been set.
+
+### SetListedToNil
+
+`func (o *InvestorPortfolioRow) SetListedToNil(b bool)`
+
+ SetListedToNil sets the value for ListedTo to be an explicit nil
+
+### UnsetListedTo
+`func (o *InvestorPortfolioRow) UnsetListedTo()`
+
+UnsetListedTo ensures that no value is present for ListedTo, not even an explicit nil
+### GetRemovalReason
+
+`func (o *InvestorPortfolioRow) GetRemovalReason() string`
+
+GetRemovalReason returns the RemovalReason field if non-nil, zero value otherwise.
+
+### GetRemovalReasonOk
+
+`func (o *InvestorPortfolioRow) GetRemovalReasonOk() (*string, bool)`
+
+GetRemovalReasonOk returns a tuple with the RemovalReason field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRemovalReason
+
+`func (o *InvestorPortfolioRow) SetRemovalReason(v string)`
+
+SetRemovalReason sets RemovalReason field to given value.
+
+### HasRemovalReason
+
+`func (o *InvestorPortfolioRow) HasRemovalReason() bool`
+
+HasRemovalReason returns a boolean if a field has been set.
+
+### SetRemovalReasonNil
+
+`func (o *InvestorPortfolioRow) SetRemovalReasonNil(b bool)`
+
+ SetRemovalReasonNil sets the value for RemovalReason to be an explicit nil
+
+### UnsetRemovalReason
+`func (o *InvestorPortfolioRow) UnsetRemovalReason()`
+
+UnsetRemovalReason ensures that no value is present for RemovalReason, not even an explicit nil
+### GetIsRemoved
+
+`func (o *InvestorPortfolioRow) GetIsRemoved() bool`
+
+GetIsRemoved returns the IsRemoved field if non-nil, zero value otherwise.
+
+### GetIsRemovedOk
+
+`func (o *InvestorPortfolioRow) GetIsRemovedOk() (*bool, bool)`
+
+GetIsRemovedOk returns a tuple with the IsRemoved field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsRemoved
+
+`func (o *InvestorPortfolioRow) SetIsRemoved(v bool)`
+
+SetIsRemoved sets IsRemoved field to given value.
+
+### HasIsRemoved
+
+`func (o *InvestorPortfolioRow) HasIsRemoved() bool`
+
+HasIsRemoved returns a boolean if a field has been set.
+
+### SetIsRemovedNil
+
+`func (o *InvestorPortfolioRow) SetIsRemovedNil(b bool)`
+
+ SetIsRemovedNil sets the value for IsRemoved to be an explicit nil
+
+### UnsetIsRemoved
+`func (o *InvestorPortfolioRow) UnsetIsRemoved()`
+
+UnsetIsRemoved ensures that no value is present for IsRemoved, not even an explicit nil
+### GetStatusOnPage
+
+`func (o *InvestorPortfolioRow) GetStatusOnPage() string`
+
+GetStatusOnPage returns the StatusOnPage field if non-nil, zero value otherwise.
+
+### GetStatusOnPageOk
+
+`func (o *InvestorPortfolioRow) GetStatusOnPageOk() (*string, bool)`
+
+GetStatusOnPageOk returns a tuple with the StatusOnPage field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStatusOnPage
+
+`func (o *InvestorPortfolioRow) SetStatusOnPage(v string)`
+
+SetStatusOnPage sets StatusOnPage field to given value.
+
+### HasStatusOnPage
+
+`func (o *InvestorPortfolioRow) HasStatusOnPage() bool`
+
+HasStatusOnPage returns a boolean if a field has been set.
+
+### SetStatusOnPageNil
+
+`func (o *InvestorPortfolioRow) SetStatusOnPageNil(b bool)`
+
+ SetStatusOnPageNil sets the value for StatusOnPage to be an explicit nil
+
+### UnsetStatusOnPage
+`func (o *InvestorPortfolioRow) UnsetStatusOnPage()`
+
+UnsetStatusOnPage ensures that no value is present for StatusOnPage, not even an explicit nil
+### GetStatusDate
+
+`func (o *InvestorPortfolioRow) GetStatusDate() string`
+
+GetStatusDate returns the StatusDate field if non-nil, zero value otherwise.
+
+### GetStatusDateOk
+
+`func (o *InvestorPortfolioRow) GetStatusDateOk() (*string, bool)`
+
+GetStatusDateOk returns a tuple with the StatusDate field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStatusDate
+
+`func (o *InvestorPortfolioRow) SetStatusDate(v string)`
+
+SetStatusDate sets StatusDate field to given value.
+
+### HasStatusDate
+
+`func (o *InvestorPortfolioRow) HasStatusDate() bool`
+
+HasStatusDate returns a boolean if a field has been set.
+
+### SetStatusDateNil
+
+`func (o *InvestorPortfolioRow) SetStatusDateNil(b bool)`
+
+ SetStatusDateNil sets the value for StatusDate to be an explicit nil
+
+### UnsetStatusDate
+`func (o *InvestorPortfolioRow) UnsetStatusDate()`
+
+UnsetStatusDate ensures that no value is present for StatusDate, not even an explicit nil
+### GetStatusFirstObservedAt
+
+`func (o *InvestorPortfolioRow) GetStatusFirstObservedAt() string`
+
+GetStatusFirstObservedAt returns the StatusFirstObservedAt field if non-nil, zero value otherwise.
+
+### GetStatusFirstObservedAtOk
+
+`func (o *InvestorPortfolioRow) GetStatusFirstObservedAtOk() (*string, bool)`
+
+GetStatusFirstObservedAtOk returns a tuple with the StatusFirstObservedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStatusFirstObservedAt
+
+`func (o *InvestorPortfolioRow) SetStatusFirstObservedAt(v string)`
+
+SetStatusFirstObservedAt sets StatusFirstObservedAt field to given value.
+
+### HasStatusFirstObservedAt
+
+`func (o *InvestorPortfolioRow) HasStatusFirstObservedAt() bool`
+
+HasStatusFirstObservedAt returns a boolean if a field has been set.
+
+### SetStatusFirstObservedAtNil
+
+`func (o *InvestorPortfolioRow) SetStatusFirstObservedAtNil(b bool)`
+
+ SetStatusFirstObservedAtNil sets the value for StatusFirstObservedAt to be an explicit nil
+
+### UnsetStatusFirstObservedAt
+`func (o *InvestorPortfolioRow) UnsetStatusFirstObservedAt()`
+
+UnsetStatusFirstObservedAt ensures that no value is present for StatusFirstObservedAt, not even an explicit nil
+### GetSourceUrl
+
+`func (o *InvestorPortfolioRow) GetSourceUrl() string`
+
+GetSourceUrl returns the SourceUrl field if non-nil, zero value otherwise.
+
+### GetSourceUrlOk
+
+`func (o *InvestorPortfolioRow) GetSourceUrlOk() (*string, bool)`
+
+GetSourceUrlOk returns a tuple with the SourceUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSourceUrl
+
+`func (o *InvestorPortfolioRow) SetSourceUrl(v string)`
+
+SetSourceUrl sets SourceUrl field to given value.
+
+### HasSourceUrl
+
+`func (o *InvestorPortfolioRow) HasSourceUrl() bool`
+
+HasSourceUrl returns a boolean if a field has been set.
+
+### SetSourceUrlNil
+
+`func (o *InvestorPortfolioRow) SetSourceUrlNil(b bool)`
+
+ SetSourceUrlNil sets the value for SourceUrl to be an explicit nil
+
+### UnsetSourceUrl
+`func (o *InvestorPortfolioRow) UnsetSourceUrl()`
+
+UnsetSourceUrl ensures that no value is present for SourceUrl, not even an explicit nil
+### GetSiteLastRetrievedAt
+
+`func (o *InvestorPortfolioRow) GetSiteLastRetrievedAt() time.Time`
+
+GetSiteLastRetrievedAt returns the SiteLastRetrievedAt field if non-nil, zero value otherwise.
+
+### GetSiteLastRetrievedAtOk
+
+`func (o *InvestorPortfolioRow) GetSiteLastRetrievedAtOk() (*time.Time, bool)`
+
+GetSiteLastRetrievedAtOk returns a tuple with the SiteLastRetrievedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSiteLastRetrievedAt
+
+`func (o *InvestorPortfolioRow) SetSiteLastRetrievedAt(v time.Time)`
+
+SetSiteLastRetrievedAt sets SiteLastRetrievedAt field to given value.
+
+### HasSiteLastRetrievedAt
+
+`func (o *InvestorPortfolioRow) HasSiteLastRetrievedAt() bool`
+
+HasSiteLastRetrievedAt returns a boolean if a field has been set.
+
+### SetSiteLastRetrievedAtNil
+
+`func (o *InvestorPortfolioRow) SetSiteLastRetrievedAtNil(b bool)`
+
+ SetSiteLastRetrievedAtNil sets the value for SiteLastRetrievedAt to be an explicit nil
+
+### UnsetSiteLastRetrievedAt
+`func (o *InvestorPortfolioRow) UnsetSiteLastRetrievedAt()`
+
+UnsetSiteLastRetrievedAt ensures that no value is present for SiteLastRetrievedAt, not even an explicit nil
 ### GetIsLifeSciencesIssuer
 
 `func (o *InvestorPortfolioRow) GetIsLifeSciencesIssuer() bool`

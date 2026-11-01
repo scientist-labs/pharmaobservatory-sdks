@@ -76,7 +76,7 @@ describe 'InvestorsApi' do
   end
 
   # unit tests for investors_investor_portfolio
-  # Investor portfolio (offering filings)
+  # Investor portfolio (offering filings and investor websites)
   # @param id 
   # @param [Hash] opts the optional parameters
   # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.

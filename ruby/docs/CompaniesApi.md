@@ -15,7 +15,7 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**companies_company_biomarker_capability**](CompaniesApi.md#companies_company_biomarker_capability) | **GET** /api/v1/companies/{id}/company_biomarker_capability | Company biomarker capability |
 | [**companies_company_collaborators**](CompaniesApi.md#companies_company_collaborators) | **GET** /api/v1/companies/{id}/company_collaborators | Company study collaborators by disease area |
 | [**companies_company_competitor_activity**](CompaniesApi.md#companies_company_competitor_activity) | **GET** /api/v1/companies/{id}/company_competitor_activity | Company competitor activity by disease area |
-| [**companies_company_competitors**](CompaniesApi.md#companies_company_competitors) | **GET** /api/v1/companies/{id}/company_competitors | Company competitors |
+| [**companies_company_competitors**](CompaniesApi.md#companies_company_competitors) | **GET** /api/v1/companies/{id}/company_competitors | Company program overlap |
 | [**companies_company_financials**](CompaniesApi.md#companies_company_financials) | **GET** /api/v1/companies/{id}/company_financials | Company SEC financials |
 | [**companies_company_firmographics**](CompaniesApi.md#companies_company_firmographics) | **GET** /api/v1/companies/{id}/company_firmographics | Company firmographics |
 | [**companies_company_funding_events**](CompaniesApi.md#companies_company_funding_events) | **GET** /api/v1/companies/{id}/company_funding_events | Company funding events |
@@ -965,7 +965,7 @@ end
 
 > <CompanyCompetitorsResponse> companies_company_competitors(id, opts)
 
-Company competitors
+Company program overlap
 
 ### Examples
 
@@ -990,7 +990,7 @@ opts = {
 }
 
 begin
-  # Company competitors
+  # Company program overlap
   result = api_instance.companies_company_competitors(id, opts)
   p result
 rescue PharmaObservatory::ApiError => e
@@ -1006,7 +1006,7 @@ This returns an Array which contains the response data, status code and headers.
 
 ```ruby
 begin
-  # Company competitors
+  # Company program overlap
   data, status_code, headers = api_instance.companies_company_competitors_with_http_info(id, opts)
   p status_code # => 2xx
   p headers # => { ... }

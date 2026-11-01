@@ -220,7 +220,7 @@ describe 'CompaniesApi' do
   end
 
   # unit tests for companies_company_competitors
-  # Company competitors
+  # Company program overlap
   # @param id 
   # @param [Hash] opts the optional parameters
   # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.

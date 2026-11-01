@@ -16,7 +16,8 @@
 | **is_life_sciences_focused_basis** | **String** | Where is_life_sciences_focused came from: human or agent (a recorded classification), override (a curator&#39;s call), edge_share (the share of its portfolio edges in life-sciences issuers) or classifier (the Form 13F biomedical value share). Null exactly when the flag is null. | [optional] |
 | **private_fund_count** | **Integer** | Private funds the adviser reports on Form ADV Item 7.B. | [optional] |
 | **total_private_fund_gav** | **Float** | The adviser&#39;s total private-fund gross asset value (GAV) in whole US dollars, a firm-level figure. | [optional] |
-| **portfolio_co_count** | **Integer** | Distinct portfolio companies named against the investor in S-1 and 424B offering holder tables. 0 usually means no named-holder link was observed. | [optional] |
+| **portfolio_co_count** | **Integer** | Distinct portfolio companies named against the investor in S-1 and 424B offering holder tables or listed on the investor&#39;s own portfolio page, not marked removed there. 0 usually means no named-holder link or website listing was observed. | [optional] |
+| **portfolio_co_removed_count** | **Integer** | Distinct portfolio companies the investor&#39;s own portfolio page listed in an earlier crawl and no longer lists. portfolio_co_count and this count sum to the investor&#39;s rows in investor_portfolio. | [optional] |
 | **holdings_position_count** | **Integer** | Current Form 13F positions reported by the managers that resolve to this investor, summed over its manager keys. 0 when none resolves. | [optional] |
 | **website_url** | **String** | The adviser&#39;s own website from Form ADV Schedule D Section 1.I (scheme and host lower-cased, path kept). Null for an agency and for an adviser whose only listed pages are social-media pages. | [optional] |
 | **website_domain** | **String** | The host of website_url with the scheme, any port and a leading www stripped, lower-cased. It is never a social-media host. | [optional] |
@@ -46,6 +47,7 @@ instance = PharmaObservatory::InvestorsRow.new(
   private_fund_count: null,
   total_private_fund_gav: null,
   portfolio_co_count: null,
+  portfolio_co_removed_count: null,
   holdings_position_count: null,
   website_url: null,
   website_domain: null,

@@ -6,7 +6,7 @@
 | ---- | ---- | ----------- | ----- |
 | **company_id** | **String** | The company key (company:&lt;key&gt;). | [optional] |
 | **company_name** | **String** | The company&#39;s display name: its own legal entity&#39;s name where one is known. | [optional] |
-| **name_basis** | **String** | Which source supplied the name: gleif_legal_name, edgar_registrant, ror or sponsor_display_name. | [optional] |
+| **name_basis** | **String** | Which source supplied the name: gleif_legal_name, edgar_registrant, ror, edgar_current_name or sponsor_display_name. | [optional] |
 | **country** | **String** | Country of the company&#39;s own legal entity, as the source states it. | [optional] |
 | **org_type** | **String** | The organization type of the company&#39;s representative record: Academic, Government, Hospital, Industry, Nonprofit or Other (from the Research Organization Registry (ROR) record or the filing), or the lowercase tags investor and manufacturer that mark a minted adviser or manufacturer record. | [optional] |
 | **org_kinds** | **Array&lt;String&gt;** | The roles the company&#39;s organizations play (Manufacturer, Sponsor and so on). | [optional] |

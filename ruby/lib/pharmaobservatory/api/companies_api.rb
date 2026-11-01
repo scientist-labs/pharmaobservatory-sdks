@@ -1020,7 +1020,7 @@ module PharmaObservatory
       return data, status_code, headers
     end
 
-    # Company competitors
+    # Company program overlap
     # @param id [String] 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
@@ -1035,7 +1035,7 @@ module PharmaObservatory
       data
     end
 
-    # Company competitors
+    # Company program overlap
     # @param id [String] 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.

@@ -16,7 +16,8 @@ Name | Type | Description | Notes
 **IsLifeSciencesFocusedBasis** | Pointer to **NullableString** | Where is_life_sciences_focused came from: human or agent (a recorded classification), override (a curator&#39;s call), edge_share (the share of its portfolio edges in life-sciences issuers) or classifier (the Form 13F biomedical value share). Null exactly when the flag is null. | [optional] 
 **PrivateFundCount** | Pointer to **NullableInt32** | Private funds the adviser reports on Form ADV Item 7.B. | [optional] 
 **TotalPrivateFundGav** | Pointer to **NullableFloat32** | The adviser&#39;s total private-fund gross asset value (GAV) in whole US dollars, a firm-level figure. | [optional] 
-**PortfolioCoCount** | Pointer to **NullableInt64** | Distinct portfolio companies named against the investor in S-1 and 424B offering holder tables. 0 usually means no named-holder link was observed. | [optional] 
+**PortfolioCoCount** | Pointer to **NullableInt64** | Distinct portfolio companies named against the investor in S-1 and 424B offering holder tables or listed on the investor&#39;s own portfolio page, not marked removed there. 0 usually means no named-holder link or website listing was observed. | [optional] 
+**PortfolioCoRemovedCount** | Pointer to **NullableInt64** | Distinct portfolio companies the investor&#39;s own portfolio page listed in an earlier crawl and no longer lists. portfolio_co_count and this count sum to the investor&#39;s rows in investor_portfolio. | [optional] 
 **HoldingsPositionCount** | Pointer to **NullableInt64** | Current Form 13F positions reported by the managers that resolve to this investor, summed over its manager keys. 0 when none resolves. | [optional] 
 **WebsiteUrl** | Pointer to **NullableString** | The adviser&#39;s own website from Form ADV Schedule D Section 1.I (scheme and host lower-cased, path kept). Null for an agency and for an adviser whose only listed pages are social-media pages. | [optional] 
 **WebsiteDomain** | Pointer to **NullableString** | The host of website_url with the scheme, any port and a leading www stripped, lower-cased. It is never a social-media host. | [optional] 
@@ -501,6 +502,41 @@ HasPortfolioCoCount returns a boolean if a field has been set.
 `func (o *InvestorsRow) UnsetPortfolioCoCount()`
 
 UnsetPortfolioCoCount ensures that no value is present for PortfolioCoCount, not even an explicit nil
+### GetPortfolioCoRemovedCount
+
+`func (o *InvestorsRow) GetPortfolioCoRemovedCount() int64`
+
+GetPortfolioCoRemovedCount returns the PortfolioCoRemovedCount field if non-nil, zero value otherwise.
+
+### GetPortfolioCoRemovedCountOk
+
+`func (o *InvestorsRow) GetPortfolioCoRemovedCountOk() (*int64, bool)`
+
+GetPortfolioCoRemovedCountOk returns a tuple with the PortfolioCoRemovedCount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPortfolioCoRemovedCount
+
+`func (o *InvestorsRow) SetPortfolioCoRemovedCount(v int64)`
+
+SetPortfolioCoRemovedCount sets PortfolioCoRemovedCount field to given value.
+
+### HasPortfolioCoRemovedCount
+
+`func (o *InvestorsRow) HasPortfolioCoRemovedCount() bool`
+
+HasPortfolioCoRemovedCount returns a boolean if a field has been set.
+
+### SetPortfolioCoRemovedCountNil
+
+`func (o *InvestorsRow) SetPortfolioCoRemovedCountNil(b bool)`
+
+ SetPortfolioCoRemovedCountNil sets the value for PortfolioCoRemovedCount to be an explicit nil
+
+### UnsetPortfolioCoRemovedCount
+`func (o *InvestorsRow) UnsetPortfolioCoRemovedCount()`
+
+UnsetPortfolioCoRemovedCount ensures that no value is present for PortfolioCoRemovedCount, not even an explicit nil
 ### GetHoldingsPositionCount
 
 `func (o *InvestorsRow) GetHoldingsPositionCount() int64`

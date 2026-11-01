@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**InvestorsGet**](InvestorsAPI.md#InvestorsGet) | **Get** /api/v1/investors/{id} | One investor
 [**InvestorsInstitutionalHoldings**](InvestorsAPI.md#InvestorsInstitutionalHoldings) | **Get** /api/v1/investors/{id}/institutional_holdings | Institutional holdings (SEC Form 13F)
 [**InvestorsInvestorFunds**](InvestorsAPI.md#InvestorsInvestorFunds) | **Get** /api/v1/investors/{id}/investor_funds | Investor private funds by type
-[**InvestorsInvestorPortfolio**](InvestorsAPI.md#InvestorsInvestorPortfolio) | **Get** /api/v1/investors/{id}/investor_portfolio | Investor portfolio (offering filings)
+[**InvestorsInvestorPortfolio**](InvestorsAPI.md#InvestorsInvestorPortfolio) | **Get** /api/v1/investors/{id}/investor_portfolio | Investor portfolio (offering filings and investor websites)
 [**InvestorsInvestorPrivateFunds**](InvestorsAPI.md#InvestorsInvestorPrivateFunds) | **Get** /api/v1/investors/{id}/investor_private_funds | Investor private funds
 [**InvestorsList**](InvestorsAPI.md#InvestorsList) | **Get** /api/v1/investors | List investors
 [**InvestorsManagers**](InvestorsAPI.md#InvestorsManagers) | **Get** /api/v1/investors/{id}/managers | Institutional managers (SEC Form 13F)
@@ -243,7 +243,7 @@ Name | Type | Description  | Notes
 
 > InvestorPortfolioResponse InvestorsInvestorPortfolio(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
 
-Investor portfolio (offering filings)
+Investor portfolio (offering filings and investor websites)
 
 ### Example
 

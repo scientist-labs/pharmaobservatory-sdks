@@ -20,6 +20,8 @@
 | **last_year** | **Integer** | Latest trial start year. | [optional] |
 | **withdrawn** | **Boolean** | True when the drug has been withdrawn. | [optional] |
 | **lifecycle** | **String** | approved, active or abandoned. | [optional] |
+| **owned** | **Boolean** | True when the sponsor is judged to develop the drug (an experimental arm, a regulatory holder, or an inferred lead); false when it is the backbone or comparator of a combination, one of many leads of a crowded drug, or not the holder of a generic. Every row is kept; this column labels it. | [optional] |
+| **ownership_basis** | **String** | Why owned is what it is: experimental_arm, regulatory_holder or inferred_lead (owned), or backbone, comparator, crowded_not_lead or generic_not_holder (not owned). inferred_lead is an inference made where the trials give no arm evidence either way. | [optional] |
 | **dalys_millions** | **Float** | Disability-adjusted life years (DALYs, millions) of the condition&#39;s global burden, from the Global Burden of Disease (GBD) 2021 study of the Institute for Health Metrics and Evaluation (IHME). Null for a caller without the licence for this column; see withheld_columns. | [optional] |
 
 ## Example
@@ -44,6 +46,8 @@ instance = PharmaObservatory::CompanyProgramsRow.new(
   last_year: null,
   withdrawn: null,
   lifecycle: null,
+  owned: null,
+  ownership_basis: null,
   dalys_millions: null
 )
 ```

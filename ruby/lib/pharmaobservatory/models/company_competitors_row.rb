@@ -14,7 +14,7 @@ require 'date'
 require 'time'
 
 module PharmaObservatory
-  # One row of the company_competitors dataset: one row per ordered company pair: a company and one of its top 25 competitors. A grouped request returns the group columns and the measures instead, as additional properties.
+  # One row of the company_competitors dataset: one row per ordered company pair: a company and one of the top 25 companies of each competitor_class by program overlap. A grouped request returns the group columns and the measures instead, as additional properties.
   class CompanyCompetitorsRow
     # Company level: the company the row is about; the entry key for the companies object type.
     attr_accessor :company_id
@@ -40,7 +40,13 @@ module PharmaObservatory
     # Display name of the competitor's group.
     attr_accessor :competitor_group_name
 
-    # The competitor's rank for the company by competitor_score (1 is the highest).
+    # The competitor's class: industry, or non_industry (not classed as industry by the sponsor-class rule: academic, hospital, government, nonprofit, and any record the rule does not reach). competitor_rank restarts at 1 within each class, so filter or sort on this column first.
+    attr_accessor :competitor_class
+
+    # How many companies of this competitor_class were candidates (a shared target, or an indication overlap above the similarity floor) before the top 25 were kept. The same value on every row of one company and class.
+    attr_accessor :n_class_candidates
+
+    # The competitor's rank within its competitor_class for the company by competitor_score (1 is the highest).
     attr_accessor :competitor_rank
 
     # 100 times the weighted mean of the four similarities below, rounded to four places.
@@ -102,6 +108,8 @@ module PharmaObservatory
         :'competitor_company_name' => :'competitor_company_name',
         :'competitor_group_id' => :'competitor_group_id',
         :'competitor_group_name' => :'competitor_group_name',
+        :'competitor_class' => :'competitor_class',
+        :'n_class_candidates' => :'n_class_candidates',
         :'competitor_rank' => :'competitor_rank',
         :'competitor_score' => :'competitor_score',
         :'target_sim' => :'target_sim',
@@ -143,6 +151,8 @@ module PharmaObservatory
         :'competitor_company_name' => :'String',
         :'competitor_group_id' => :'String',
         :'competitor_group_name' => :'String',
+        :'competitor_class' => :'String',
+        :'n_class_candidates' => :'Integer',
         :'competitor_rank' => :'Integer',
         :'competitor_score' => :'Float',
         :'target_sim' => :'Float',
@@ -174,6 +184,8 @@ module PharmaObservatory
         :'competitor_company_name',
         :'competitor_group_id',
         :'competitor_group_name',
+        :'competitor_class',
+        :'n_class_candidates',
         :'competitor_rank',
         :'competitor_score',
         :'target_sim',
@@ -240,6 +252,14 @@ module PharmaObservatory
 
       if attributes.key?(:'competitor_group_name')
         self.competitor_group_name = attributes[:'competitor_group_name']
+      end
+
+      if attributes.key?(:'competitor_class')
+        self.competitor_class = attributes[:'competitor_class']
+      end
+
+      if attributes.key?(:'n_class_candidates')
+        self.n_class_candidates = attributes[:'n_class_candidates']
       end
 
       if attributes.key?(:'competitor_rank')
@@ -345,6 +365,8 @@ module PharmaObservatory
           competitor_company_name == o.competitor_company_name &&
           competitor_group_id == o.competitor_group_id &&
           competitor_group_name == o.competitor_group_name &&
+          competitor_class == o.competitor_class &&
+          n_class_candidates == o.n_class_candidates &&
           competitor_rank == o.competitor_rank &&
           competitor_score == o.competitor_score &&
           target_sim == o.target_sim &&
@@ -373,7 +395,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [company_id, company_name, group_id, group_name, competitor_company_id, competitor_company_name, competitor_group_id, competitor_group_name, competitor_rank, competitor_score, target_sim, mechanism_sim, indication_sim, phase_sim, n_shared_targets, n_shared_mechanisms, n_shared_indications, n_phase_overlap_targets, n_company_targets, n_competitor_targets, n_company_indications, n_competitor_indications, top_shared_targets, top_shared_indications, top_shared_mechanisms].hash
+      [company_id, company_name, group_id, group_name, competitor_company_id, competitor_company_name, competitor_group_id, competitor_group_name, competitor_class, n_class_candidates, competitor_rank, competitor_score, target_sim, mechanism_sim, indication_sim, phase_sim, n_shared_targets, n_shared_mechanisms, n_shared_indications, n_phase_overlap_targets, n_company_targets, n_competitor_targets, n_company_indications, n_competitor_indications, top_shared_targets, top_shared_indications, top_shared_mechanisms].hash
     end
 
     # Builds the object from hash

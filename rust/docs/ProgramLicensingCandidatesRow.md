@@ -21,6 +21,8 @@ Name | Type | Description | Notes
 **last_year** | Option<**i32**> | Latest trial start year. | [optional]
 **last_update_year** | Option<**i32**> | Year the program's most recently updated trial record was posted. | [optional]
 **withdrawn** | Option<**bool**> | True when the drug has been withdrawn. | [optional]
+**owned** | Option<**bool**> | True when the sponsor is judged to develop the drug (an experimental arm, a regulatory holder, or an inferred lead); false when it is the backbone or comparator of a combination, one of many leads of a crowded drug, or not the holder of a generic. Every row is kept; this column labels it. | [optional]
+**ownership_basis** | Option<**String**> | Why owned is what it is: experimental_arm, regulatory_holder or inferred_lead (owned), or backbone, comparator, crowded_not_lead or generic_not_holder (not owned). inferred_lead is an inference made where the trials give no arm evidence either way. | [optional]
 **cause_name** | Option<**String**> | The Global Burden of Disease cause matched to the condition. | [optional]
 **dalys_millions** | Option<**f64**> | Global disability-adjusted life years for the matched cause, in millions. | [optional]
 **deaths_millions** | Option<**f64**> | Global deaths for the matched cause, in millions. | [optional]

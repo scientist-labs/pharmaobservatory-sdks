@@ -17,7 +17,7 @@ import (
 // checks if the CompanyCompetitorsRow type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CompanyCompetitorsRow{}
 
-// CompanyCompetitorsRow One row of the company_competitors dataset: one row per ordered company pair: a company and one of its top 25 competitors. A grouped request returns the group columns and the measures instead, as additional properties.
+// CompanyCompetitorsRow One row of the company_competitors dataset: one row per ordered company pair: a company and one of the top 25 companies of each competitor_class by program overlap. A grouped request returns the group columns and the measures instead, as additional properties.
 type CompanyCompetitorsRow struct {
 	// Company level: the company the row is about; the entry key for the companies object type.
 	CompanyId NullableString `json:"company_id,omitempty"`
@@ -35,7 +35,11 @@ type CompanyCompetitorsRow struct {
 	CompetitorGroupId NullableString `json:"competitor_group_id,omitempty"`
 	// Display name of the competitor's group.
 	CompetitorGroupName NullableString `json:"competitor_group_name,omitempty"`
-	// The competitor's rank for the company by competitor_score (1 is the highest).
+	// The competitor's class: industry, or non_industry (not classed as industry by the sponsor-class rule: academic, hospital, government, nonprofit, and any record the rule does not reach). competitor_rank restarts at 1 within each class, so filter or sort on this column first.
+	CompetitorClass NullableString `json:"competitor_class,omitempty"`
+	// How many companies of this competitor_class were candidates (a shared target, or an indication overlap above the similarity floor) before the top 25 were kept. The same value on every row of one company and class.
+	NClassCandidates NullableInt32 `json:"n_class_candidates,omitempty"`
+	// The competitor's rank within its competitor_class for the company by competitor_score (1 is the highest).
 	CompetitorRank NullableInt32 `json:"competitor_rank,omitempty"`
 	// 100 times the weighted mean of the four similarities below, rounded to four places.
 	CompetitorScore NullableFloat32 `json:"competitor_score,omitempty"`
@@ -425,6 +429,90 @@ func (o *CompanyCompetitorsRow) SetCompetitorGroupNameNil() {
 // UnsetCompetitorGroupName ensures that no value is present for CompetitorGroupName, not even an explicit nil
 func (o *CompanyCompetitorsRow) UnsetCompetitorGroupName() {
 	o.CompetitorGroupName.Unset()
+}
+
+// GetCompetitorClass returns the CompetitorClass field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetCompetitorClass() string {
+	if o == nil || IsNil(o.CompetitorClass.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CompetitorClass.Get()
+}
+
+// GetCompetitorClassOk returns a tuple with the CompetitorClass field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyCompetitorsRow) GetCompetitorClassOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CompetitorClass.Get(), o.CompetitorClass.IsSet()
+}
+
+// HasCompetitorClass returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasCompetitorClass() bool {
+	if o != nil && o.CompetitorClass.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCompetitorClass gets a reference to the given NullableString and assigns it to the CompetitorClass field.
+func (o *CompanyCompetitorsRow) SetCompetitorClass(v string) {
+	o.CompetitorClass.Set(&v)
+}
+// SetCompetitorClassNil sets the value for CompetitorClass to be an explicit nil
+func (o *CompanyCompetitorsRow) SetCompetitorClassNil() {
+	o.CompetitorClass.Set(nil)
+}
+
+// UnsetCompetitorClass ensures that no value is present for CompetitorClass, not even an explicit nil
+func (o *CompanyCompetitorsRow) UnsetCompetitorClass() {
+	o.CompetitorClass.Unset()
+}
+
+// GetNClassCandidates returns the NClassCandidates field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetNClassCandidates() int32 {
+	if o == nil || IsNil(o.NClassCandidates.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.NClassCandidates.Get()
+}
+
+// GetNClassCandidatesOk returns a tuple with the NClassCandidates field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyCompetitorsRow) GetNClassCandidatesOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NClassCandidates.Get(), o.NClassCandidates.IsSet()
+}
+
+// HasNClassCandidates returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasNClassCandidates() bool {
+	if o != nil && o.NClassCandidates.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNClassCandidates gets a reference to the given NullableInt32 and assigns it to the NClassCandidates field.
+func (o *CompanyCompetitorsRow) SetNClassCandidates(v int32) {
+	o.NClassCandidates.Set(&v)
+}
+// SetNClassCandidatesNil sets the value for NClassCandidates to be an explicit nil
+func (o *CompanyCompetitorsRow) SetNClassCandidatesNil() {
+	o.NClassCandidates.Set(nil)
+}
+
+// UnsetNClassCandidates ensures that no value is present for NClassCandidates, not even an explicit nil
+func (o *CompanyCompetitorsRow) UnsetNClassCandidates() {
+	o.NClassCandidates.Unset()
 }
 
 // GetCompetitorRank returns the CompetitorRank field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1148,6 +1236,12 @@ func (o CompanyCompetitorsRow) ToMap() (map[string]interface{}, error) {
 	if o.CompetitorGroupName.IsSet() {
 		toSerialize["competitor_group_name"] = o.CompetitorGroupName.Get()
 	}
+	if o.CompetitorClass.IsSet() {
+		toSerialize["competitor_class"] = o.CompetitorClass.Get()
+	}
+	if o.NClassCandidates.IsSet() {
+		toSerialize["n_class_candidates"] = o.NClassCandidates.Get()
+	}
 	if o.CompetitorRank.IsSet() {
 		toSerialize["competitor_rank"] = o.CompetitorRank.Get()
 	}
@@ -1229,6 +1323,8 @@ func (o *CompanyCompetitorsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "competitor_company_name")
 		delete(additionalProperties, "competitor_group_id")
 		delete(additionalProperties, "competitor_group_name")
+		delete(additionalProperties, "competitor_class")
+		delete(additionalProperties, "n_class_candidates")
 		delete(additionalProperties, "competitor_rank")
 		delete(additionalProperties, "competitor_score")
 		delete(additionalProperties, "target_sim")
