@@ -64,6 +64,12 @@ module PharmaObservatory
     # approved, active or abandoned.
     attr_accessor :lifecycle
 
+    # True when the sponsor is judged to develop the drug (an experimental arm, a regulatory holder, or an inferred lead); false when it is the backbone or comparator of a combination, one of many leads of a crowded drug, or not the holder of a generic. Every row is kept; this column labels it.
+    attr_accessor :owned
+
+    # Why owned is what it is: experimental_arm, regulatory_holder or inferred_lead (owned), or backbone, comparator, crowded_not_lead or generic_not_holder (not owned). inferred_lead is an inference made where the trials give no arm evidence either way.
+    attr_accessor :ownership_basis
+
     # Disability-adjusted life years (DALYs, millions) of the condition's global burden, from the Global Burden of Disease (GBD) 2021 study of the Institute for Health Metrics and Evaluation (IHME). Null for a caller without the licence for this column; see withheld_columns.
     attr_accessor :dalys_millions
 
@@ -86,6 +92,8 @@ module PharmaObservatory
         :'last_year' => :'last_year',
         :'withdrawn' => :'withdrawn',
         :'lifecycle' => :'lifecycle',
+        :'owned' => :'owned',
+        :'ownership_basis' => :'ownership_basis',
         :'dalys_millions' => :'dalys_millions'
       }
     end
@@ -119,6 +127,8 @@ module PharmaObservatory
         :'last_year' => :'Integer',
         :'withdrawn' => :'Boolean',
         :'lifecycle' => :'String',
+        :'owned' => :'Boolean',
+        :'ownership_basis' => :'String',
         :'dalys_millions' => :'Float'
       }
     end
@@ -142,6 +152,8 @@ module PharmaObservatory
         :'last_year',
         :'withdrawn',
         :'lifecycle',
+        :'owned',
+        :'ownership_basis',
         :'dalys_millions'
       ])
     end
@@ -226,6 +238,14 @@ module PharmaObservatory
         self.lifecycle = attributes[:'lifecycle']
       end
 
+      if attributes.key?(:'owned')
+        self.owned = attributes[:'owned']
+      end
+
+      if attributes.key?(:'ownership_basis')
+        self.ownership_basis = attributes[:'ownership_basis']
+      end
+
       if attributes.key?(:'dalys_millions')
         self.dalys_millions = attributes[:'dalys_millions']
       end
@@ -267,6 +287,8 @@ module PharmaObservatory
           last_year == o.last_year &&
           withdrawn == o.withdrawn &&
           lifecycle == o.lifecycle &&
+          owned == o.owned &&
+          ownership_basis == o.ownership_basis &&
           dalys_millions == o.dalys_millions
     end
 
@@ -279,7 +301,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [sponsor_org_id, sponsor_name, sponsor_company_id, sponsor_company_name, sponsor_group_id, sponsor_group_name, drug_id, drug_name, condition_id, condition_name, max_phase, n_trials, n_active, last_year, withdrawn, lifecycle, dalys_millions].hash
+      [sponsor_org_id, sponsor_name, sponsor_company_id, sponsor_company_name, sponsor_group_id, sponsor_group_name, drug_id, drug_name, condition_id, condition_name, max_phase, n_trials, n_active, last_year, withdrawn, lifecycle, owned, ownership_basis, dalys_millions].hash
     end
 
     # Builds the object from hash

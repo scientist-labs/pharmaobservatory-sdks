@@ -45,6 +45,10 @@ type CompanyAssetsRow struct {
 	LastYear NullableInt32 `json:"last_year,omitempty"`
 	// True when the drug has been withdrawn from the market.
 	Withdrawn NullableBool `json:"withdrawn,omitempty"`
+	// True when the sponsor is judged to develop the drug (an experimental arm, a regulatory holder, or an inferred lead); false when it is the backbone or comparator of a combination, one of many leads of a crowded drug, or not the holder of a generic. Every row is kept; this column labels it.
+	Owned NullableBool `json:"owned,omitempty"`
+	// Why owned is what it is: experimental_arm, regulatory_holder or inferred_lead (owned), or backbone, comparator, crowded_not_lead or generic_not_holder (not owned). inferred_lead is an inference made where the trials give no arm evidence either way.
+	OwnershipBasis NullableString `json:"ownership_basis,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -613,6 +617,90 @@ func (o *CompanyAssetsRow) UnsetWithdrawn() {
 	o.Withdrawn.Unset()
 }
 
+// GetOwned returns the Owned field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyAssetsRow) GetOwned() bool {
+	if o == nil || IsNil(o.Owned.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.Owned.Get()
+}
+
+// GetOwnedOk returns a tuple with the Owned field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyAssetsRow) GetOwnedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Owned.Get(), o.Owned.IsSet()
+}
+
+// HasOwned returns a boolean if a field has been set.
+func (o *CompanyAssetsRow) HasOwned() bool {
+	if o != nil && o.Owned.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOwned gets a reference to the given NullableBool and assigns it to the Owned field.
+func (o *CompanyAssetsRow) SetOwned(v bool) {
+	o.Owned.Set(&v)
+}
+// SetOwnedNil sets the value for Owned to be an explicit nil
+func (o *CompanyAssetsRow) SetOwnedNil() {
+	o.Owned.Set(nil)
+}
+
+// UnsetOwned ensures that no value is present for Owned, not even an explicit nil
+func (o *CompanyAssetsRow) UnsetOwned() {
+	o.Owned.Unset()
+}
+
+// GetOwnershipBasis returns the OwnershipBasis field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyAssetsRow) GetOwnershipBasis() string {
+	if o == nil || IsNil(o.OwnershipBasis.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.OwnershipBasis.Get()
+}
+
+// GetOwnershipBasisOk returns a tuple with the OwnershipBasis field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyAssetsRow) GetOwnershipBasisOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.OwnershipBasis.Get(), o.OwnershipBasis.IsSet()
+}
+
+// HasOwnershipBasis returns a boolean if a field has been set.
+func (o *CompanyAssetsRow) HasOwnershipBasis() bool {
+	if o != nil && o.OwnershipBasis.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOwnershipBasis gets a reference to the given NullableString and assigns it to the OwnershipBasis field.
+func (o *CompanyAssetsRow) SetOwnershipBasis(v string) {
+	o.OwnershipBasis.Set(&v)
+}
+// SetOwnershipBasisNil sets the value for OwnershipBasis to be an explicit nil
+func (o *CompanyAssetsRow) SetOwnershipBasisNil() {
+	o.OwnershipBasis.Set(nil)
+}
+
+// UnsetOwnershipBasis ensures that no value is present for OwnershipBasis, not even an explicit nil
+func (o *CompanyAssetsRow) UnsetOwnershipBasis() {
+	o.OwnershipBasis.Unset()
+}
+
 func (o CompanyAssetsRow) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -662,6 +750,12 @@ func (o CompanyAssetsRow) ToMap() (map[string]interface{}, error) {
 	if o.Withdrawn.IsSet() {
 		toSerialize["withdrawn"] = o.Withdrawn.Get()
 	}
+	if o.Owned.IsSet() {
+		toSerialize["owned"] = o.Owned.Get()
+	}
+	if o.OwnershipBasis.IsSet() {
+		toSerialize["ownership_basis"] = o.OwnershipBasis.Get()
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -697,6 +791,8 @@ func (o *CompanyAssetsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "n_active")
 		delete(additionalProperties, "last_year")
 		delete(additionalProperties, "withdrawn")
+		delete(additionalProperties, "owned")
+		delete(additionalProperties, "ownership_basis")
 		o.AdditionalProperties = additionalProperties
 	}
 

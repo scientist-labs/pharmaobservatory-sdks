@@ -623,7 +623,7 @@ func (r ApiInvestorsInvestorPortfolioRequest) Execute() (*InvestorPortfolioRespo
 }
 
 /*
-InvestorsInvestorPortfolio Investor portfolio (offering filings)
+InvestorsInvestorPortfolio Investor portfolio (offering filings and investor websites)
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id

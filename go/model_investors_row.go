@@ -43,8 +43,10 @@ type InvestorsRow struct {
 	PrivateFundCount NullableInt32 `json:"private_fund_count,omitempty"`
 	// The adviser's total private-fund gross asset value (GAV) in whole US dollars, a firm-level figure.
 	TotalPrivateFundGav NullableFloat32 `json:"total_private_fund_gav,omitempty"`
-	// Distinct portfolio companies named against the investor in S-1 and 424B offering holder tables. 0 usually means no named-holder link was observed.
+	// Distinct portfolio companies named against the investor in S-1 and 424B offering holder tables or listed on the investor's own portfolio page, not marked removed there. 0 usually means no named-holder link or website listing was observed.
 	PortfolioCoCount NullableInt64 `json:"portfolio_co_count,omitempty"`
+	// Distinct portfolio companies the investor's own portfolio page listed in an earlier crawl and no longer lists. portfolio_co_count and this count sum to the investor's rows in investor_portfolio.
+	PortfolioCoRemovedCount NullableInt64 `json:"portfolio_co_removed_count,omitempty"`
 	// Current Form 13F positions reported by the managers that resolve to this investor, summed over its manager keys. 0 when none resolves.
 	HoldingsPositionCount NullableInt64 `json:"holdings_position_count,omitempty"`
 	// The adviser's own website from Form ADV Schedule D Section 1.I (scheme and host lower-cased, path kept). Null for an agency and for an adviser whose only listed pages are social-media pages.
@@ -631,6 +633,48 @@ func (o *InvestorsRow) UnsetPortfolioCoCount() {
 	o.PortfolioCoCount.Unset()
 }
 
+// GetPortfolioCoRemovedCount returns the PortfolioCoRemovedCount field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestorsRow) GetPortfolioCoRemovedCount() int64 {
+	if o == nil || IsNil(o.PortfolioCoRemovedCount.Get()) {
+		var ret int64
+		return ret
+	}
+	return *o.PortfolioCoRemovedCount.Get()
+}
+
+// GetPortfolioCoRemovedCountOk returns a tuple with the PortfolioCoRemovedCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestorsRow) GetPortfolioCoRemovedCountOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.PortfolioCoRemovedCount.Get(), o.PortfolioCoRemovedCount.IsSet()
+}
+
+// HasPortfolioCoRemovedCount returns a boolean if a field has been set.
+func (o *InvestorsRow) HasPortfolioCoRemovedCount() bool {
+	if o != nil && o.PortfolioCoRemovedCount.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPortfolioCoRemovedCount gets a reference to the given NullableInt64 and assigns it to the PortfolioCoRemovedCount field.
+func (o *InvestorsRow) SetPortfolioCoRemovedCount(v int64) {
+	o.PortfolioCoRemovedCount.Set(&v)
+}
+// SetPortfolioCoRemovedCountNil sets the value for PortfolioCoRemovedCount to be an explicit nil
+func (o *InvestorsRow) SetPortfolioCoRemovedCountNil() {
+	o.PortfolioCoRemovedCount.Set(nil)
+}
+
+// UnsetPortfolioCoRemovedCount ensures that no value is present for PortfolioCoRemovedCount, not even an explicit nil
+func (o *InvestorsRow) UnsetPortfolioCoRemovedCount() {
+	o.PortfolioCoRemovedCount.Unset()
+}
+
 // GetHoldingsPositionCount returns the HoldingsPositionCount field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *InvestorsRow) GetHoldingsPositionCount() int64 {
 	if o == nil || IsNil(o.HoldingsPositionCount.Get()) {
@@ -1058,6 +1102,9 @@ func (o InvestorsRow) ToMap() (map[string]interface{}, error) {
 	if o.PortfolioCoCount.IsSet() {
 		toSerialize["portfolio_co_count"] = o.PortfolioCoCount.Get()
 	}
+	if o.PortfolioCoRemovedCount.IsSet() {
+		toSerialize["portfolio_co_removed_count"] = o.PortfolioCoRemovedCount.Get()
+	}
 	if o.HoldingsPositionCount.IsSet() {
 		toSerialize["holdings_position_count"] = o.HoldingsPositionCount.Get()
 	}
@@ -1120,6 +1167,7 @@ func (o *InvestorsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "private_fund_count")
 		delete(additionalProperties, "total_private_fund_gav")
 		delete(additionalProperties, "portfolio_co_count")
+		delete(additionalProperties, "portfolio_co_removed_count")
 		delete(additionalProperties, "holdings_position_count")
 		delete(additionalProperties, "website_url")
 		delete(additionalProperties, "website_domain")

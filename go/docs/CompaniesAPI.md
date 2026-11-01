@@ -15,7 +15,7 @@ Method | HTTP request | Description
 [**CompaniesCompanyBiomarkerCapability**](CompaniesAPI.md#CompaniesCompanyBiomarkerCapability) | **Get** /api/v1/companies/{id}/company_biomarker_capability | Company biomarker capability
 [**CompaniesCompanyCollaborators**](CompaniesAPI.md#CompaniesCompanyCollaborators) | **Get** /api/v1/companies/{id}/company_collaborators | Company study collaborators by disease area
 [**CompaniesCompanyCompetitorActivity**](CompaniesAPI.md#CompaniesCompanyCompetitorActivity) | **Get** /api/v1/companies/{id}/company_competitor_activity | Company competitor activity by disease area
-[**CompaniesCompanyCompetitors**](CompaniesAPI.md#CompaniesCompanyCompetitors) | **Get** /api/v1/companies/{id}/company_competitors | Company competitors
+[**CompaniesCompanyCompetitors**](CompaniesAPI.md#CompaniesCompanyCompetitors) | **Get** /api/v1/companies/{id}/company_competitors | Company program overlap
 [**CompaniesCompanyFinancials**](CompaniesAPI.md#CompaniesCompanyFinancials) | **Get** /api/v1/companies/{id}/company_financials | Company SEC financials
 [**CompaniesCompanyFirmographics**](CompaniesAPI.md#CompaniesCompanyFirmographics) | **Get** /api/v1/companies/{id}/company_firmographics | Company firmographics
 [**CompaniesCompanyFundingEvents**](CompaniesAPI.md#CompaniesCompanyFundingEvents) | **Get** /api/v1/companies/{id}/company_funding_events | Company funding events
@@ -955,7 +955,7 @@ Name | Type | Description  | Notes
 
 > CompanyCompetitorsResponse CompaniesCompanyCompetitors(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 
-Company competitors
+Company program overlap
 
 ### Example
 

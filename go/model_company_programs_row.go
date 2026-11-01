@@ -51,6 +51,10 @@ type CompanyProgramsRow struct {
 	Withdrawn NullableBool `json:"withdrawn,omitempty"`
 	// approved, active or abandoned.
 	Lifecycle NullableString `json:"lifecycle,omitempty"`
+	// True when the sponsor is judged to develop the drug (an experimental arm, a regulatory holder, or an inferred lead); false when it is the backbone or comparator of a combination, one of many leads of a crowded drug, or not the holder of a generic. Every row is kept; this column labels it.
+	Owned NullableBool `json:"owned,omitempty"`
+	// Why owned is what it is: experimental_arm, regulatory_holder or inferred_lead (owned), or backbone, comparator, crowded_not_lead or generic_not_holder (not owned). inferred_lead is an inference made where the trials give no arm evidence either way.
+	OwnershipBasis NullableString `json:"ownership_basis,omitempty"`
 	// Disability-adjusted life years (DALYs, millions) of the condition's global burden, from the Global Burden of Disease (GBD) 2021 study of the Institute for Health Metrics and Evaluation (IHME). Null for a caller without the licence for this column; see withheld_columns.
 	DalysMillions NullableFloat64 `json:"dalys_millions,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -747,6 +751,90 @@ func (o *CompanyProgramsRow) UnsetLifecycle() {
 	o.Lifecycle.Unset()
 }
 
+// GetOwned returns the Owned field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyProgramsRow) GetOwned() bool {
+	if o == nil || IsNil(o.Owned.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.Owned.Get()
+}
+
+// GetOwnedOk returns a tuple with the Owned field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyProgramsRow) GetOwnedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Owned.Get(), o.Owned.IsSet()
+}
+
+// HasOwned returns a boolean if a field has been set.
+func (o *CompanyProgramsRow) HasOwned() bool {
+	if o != nil && o.Owned.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOwned gets a reference to the given NullableBool and assigns it to the Owned field.
+func (o *CompanyProgramsRow) SetOwned(v bool) {
+	o.Owned.Set(&v)
+}
+// SetOwnedNil sets the value for Owned to be an explicit nil
+func (o *CompanyProgramsRow) SetOwnedNil() {
+	o.Owned.Set(nil)
+}
+
+// UnsetOwned ensures that no value is present for Owned, not even an explicit nil
+func (o *CompanyProgramsRow) UnsetOwned() {
+	o.Owned.Unset()
+}
+
+// GetOwnershipBasis returns the OwnershipBasis field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyProgramsRow) GetOwnershipBasis() string {
+	if o == nil || IsNil(o.OwnershipBasis.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.OwnershipBasis.Get()
+}
+
+// GetOwnershipBasisOk returns a tuple with the OwnershipBasis field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyProgramsRow) GetOwnershipBasisOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.OwnershipBasis.Get(), o.OwnershipBasis.IsSet()
+}
+
+// HasOwnershipBasis returns a boolean if a field has been set.
+func (o *CompanyProgramsRow) HasOwnershipBasis() bool {
+	if o != nil && o.OwnershipBasis.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOwnershipBasis gets a reference to the given NullableString and assigns it to the OwnershipBasis field.
+func (o *CompanyProgramsRow) SetOwnershipBasis(v string) {
+	o.OwnershipBasis.Set(&v)
+}
+// SetOwnershipBasisNil sets the value for OwnershipBasis to be an explicit nil
+func (o *CompanyProgramsRow) SetOwnershipBasisNil() {
+	o.OwnershipBasis.Set(nil)
+}
+
+// UnsetOwnershipBasis ensures that no value is present for OwnershipBasis, not even an explicit nil
+func (o *CompanyProgramsRow) UnsetOwnershipBasis() {
+	o.OwnershipBasis.Unset()
+}
+
 // GetDalysMillions returns the DalysMillions field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *CompanyProgramsRow) GetDalysMillions() float64 {
 	if o == nil || IsNil(o.DalysMillions.Get()) {
@@ -847,6 +935,12 @@ func (o CompanyProgramsRow) ToMap() (map[string]interface{}, error) {
 	if o.Lifecycle.IsSet() {
 		toSerialize["lifecycle"] = o.Lifecycle.Get()
 	}
+	if o.Owned.IsSet() {
+		toSerialize["owned"] = o.Owned.Get()
+	}
+	if o.OwnershipBasis.IsSet() {
+		toSerialize["ownership_basis"] = o.OwnershipBasis.Get()
+	}
 	if o.DalysMillions.IsSet() {
 		toSerialize["dalys_millions"] = o.DalysMillions.Get()
 	}
@@ -888,6 +982,8 @@ func (o *CompanyProgramsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "last_year")
 		delete(additionalProperties, "withdrawn")
 		delete(additionalProperties, "lifecycle")
+		delete(additionalProperties, "owned")
+		delete(additionalProperties, "ownership_basis")
 		delete(additionalProperties, "dalys_millions")
 		o.AdditionalProperties = additionalProperties
 	}

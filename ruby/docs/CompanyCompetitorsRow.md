@@ -12,7 +12,9 @@
 | **competitor_company_name** | **String** | Display name of the competitor&#39;s company. | [optional] |
 | **competitor_group_id** | **String** | Group level: the competitor&#39;s current ultimate parent; a root&#39;s group is itself. | [optional] |
 | **competitor_group_name** | **String** | Display name of the competitor&#39;s group. | [optional] |
-| **competitor_rank** | **Integer** | The competitor&#39;s rank for the company by competitor_score (1 is the highest). | [optional] |
+| **competitor_class** | **String** | The competitor&#39;s class: industry, or non_industry (not classed as industry by the sponsor-class rule: academic, hospital, government, nonprofit, and any record the rule does not reach). competitor_rank restarts at 1 within each class, so filter or sort on this column first. | [optional] |
+| **n_class_candidates** | **Integer** | How many companies of this competitor_class were candidates (a shared target, or an indication overlap above the similarity floor) before the top 25 were kept. The same value on every row of one company and class. | [optional] |
+| **competitor_rank** | **Integer** | The competitor&#39;s rank within its competitor_class for the company by competitor_score (1 is the highest). | [optional] |
 | **competitor_score** | **Float** | 100 times the weighted mean of the four similarities below, rounded to four places. | [optional] |
 | **target_sim** | **Float** | Jaccard similarity, 0 to 1, of the two companies&#39; molecular target sets. | [optional] |
 | **mechanism_sim** | **Float** | Jaccard similarity, 0 to 1, of their mechanism sets (a target and its action). | [optional] |
@@ -44,6 +46,8 @@ instance = PharmaObservatory::CompanyCompetitorsRow.new(
   competitor_company_name: null,
   competitor_group_id: null,
   competitor_group_name: null,
+  competitor_class: null,
+  n_class_candidates: null,
   competitor_rank: null,
   competitor_score: null,
   target_sim: null,

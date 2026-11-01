@@ -53,6 +53,12 @@ pub struct CompanyAssetsRow {
     /// True when the drug has been withdrawn from the market.
     #[serde(rename = "withdrawn", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub withdrawn: Option<Option<bool>>,
+    /// True when the sponsor is judged to develop the drug (an experimental arm, a regulatory holder, or an inferred lead); false when it is the backbone or comparator of a combination, one of many leads of a crowded drug, or not the holder of a generic. Every row is kept; this column labels it.
+    #[serde(rename = "owned", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub owned: Option<Option<bool>>,
+    /// Why owned is what it is: experimental_arm, regulatory_holder or inferred_lead (owned), or backbone, comparator, crowded_not_lead or generic_not_holder (not owned). inferred_lead is an inference made where the trials give no arm evidence either way.
+    #[serde(rename = "ownership_basis", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub ownership_basis: Option<Option<String>>,
 }
 
 impl CompanyAssetsRow {
@@ -72,6 +78,8 @@ impl CompanyAssetsRow {
             n_active: None,
             last_year: None,
             withdrawn: None,
+            owned: None,
+            ownership_basis: None,
         }
     }
 }

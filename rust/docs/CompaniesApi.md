@@ -15,7 +15,7 @@ Method | HTTP request | Description
 [**companies_period_company_biomarker_capability**](CompaniesApi.md#companies_period_company_biomarker_capability) | **GET** /api/v1/companies/{id}/company_biomarker_capability | Company biomarker capability
 [**companies_period_company_collaborators**](CompaniesApi.md#companies_period_company_collaborators) | **GET** /api/v1/companies/{id}/company_collaborators | Company study collaborators by disease area
 [**companies_period_company_competitor_activity**](CompaniesApi.md#companies_period_company_competitor_activity) | **GET** /api/v1/companies/{id}/company_competitor_activity | Company competitor activity by disease area
-[**companies_period_company_competitors**](CompaniesApi.md#companies_period_company_competitors) | **GET** /api/v1/companies/{id}/company_competitors | Company competitors
+[**companies_period_company_competitors**](CompaniesApi.md#companies_period_company_competitors) | **GET** /api/v1/companies/{id}/company_competitors | Company program overlap
 [**companies_period_company_financials**](CompaniesApi.md#companies_period_company_financials) | **GET** /api/v1/companies/{id}/company_financials | Company SEC financials
 [**companies_period_company_firmographics**](CompaniesApi.md#companies_period_company_firmographics) | **GET** /api/v1/companies/{id}/company_firmographics | Company firmographics
 [**companies_period_company_funding_events**](CompaniesApi.md#companies_period_company_funding_events) | **GET** /api/v1/companies/{id}/company_funding_events | Company funding events
@@ -448,7 +448,7 @@ Name | Type | Description  | Required | Notes
 ## companies_period_company_competitors
 
 > models::CompanyCompetitorsResponse companies_period_company_competitors(id, cursor, limit, sort, group_by, measure, scope)
-Company competitors
+Company program overlap
 
 ### Parameters
 

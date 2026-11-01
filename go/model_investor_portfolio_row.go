@@ -12,37 +12,66 @@ package pharmaobservatory
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the InvestorPortfolioRow type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &InvestorPortfolioRow{}
 
-// InvestorPortfolioRow One row of the investor_portfolio dataset: one row per investor and issuer CIK (the SEC's Central Index Key). A grouped request returns the group columns and the measures instead, as additional properties.
+// InvestorPortfolioRow One row of the investor_portfolio dataset: one row per investor and company key (the organization id where the company resolves, else the SEC Central Index Key, else the name as printed on the investor's page). A grouped request returns the group columns and the measures instead, as additional properties.
 type InvestorPortfolioRow struct {
 	// The investor key.
 	InvestorId NullableString `json:"investor_id,omitempty"`
-	// The issuer's SEC Central Index Key (CIK), ten digits.
+	// The company's key on this dataset: its organization id where it resolves, else the SEC CIK, else investor_site: followed by the normalized name as printed on the investor's page.
+	CompanyKey NullableString `json:"company_key,omitempty"`
+	// What company_key is: org, cik or investor_site.
+	CompanyKeyKind NullableString `json:"company_key_kind,omitempty"`
+	// Where the row comes from: sec_edgar (S-1 and 424B holder tables), investor_site (the investor's own portfolio page), or both.
+	Sources []string `json:"sources,omitempty"`
+	// The issuer's SEC Central Index Key (CIK), ten digits. Null for a row only the investor's website names.
 	IssuerCik NullableString `json:"issuer_cik,omitempty"`
-	// The issuer's name: its organization record's name, else the SEC company name.
+	// The company's name: its organization record's name, else the SEC company name, else the name as printed on the investor's page.
 	IssuerName NullableString `json:"issuer_name,omitempty"`
-	// Legal-entity level: the issuer's organization record (null when unresolved).
+	// The company's name as printed on the investor's own portfolio page. Null for a row only SEC filings name.
+	CompanyNameAsListed NullableString `json:"company_name_as_listed,omitempty"`
+	// The company's website as linked on the investor's own portfolio page. Null when the page gave none.
+	CompanyWebsiteUrl NullableString `json:"company_website_url,omitempty"`
+	// Legal-entity level: the company's organization record (null when unresolved).
 	IssuerOrgId NullableString `json:"issuer_org_id,omitempty"`
-	// Company level: the issuer's company (null when unresolved).
+	// Company level: the company's record (null when unresolved).
 	IssuerCompanyId NullableString `json:"issuer_company_id,omitempty"`
-	// Display name of the issuer's company.
+	// Display name of the company.
 	IssuerCompanyName NullableString `json:"issuer_company_name,omitempty"`
-	// Group level: the issuer's current ultimate parent; a root's group is itself.
+	// Group level: the company's current ultimate parent; a root's group is itself.
 	IssuerGroupId NullableString `json:"issuer_group_id,omitempty"`
-	// Display name of the issuer's group.
+	// Display name of the company's group.
 	IssuerGroupName NullableString `json:"issuer_group_name,omitempty"`
-	// How the investor is named against the issuer: holder_5pct (a 5 percent holder) or selling_stockholder.
+	// How the investor is tied to the company: holder_5pct (a 5 percent holder) or selling_stockholder from filings, and portfolio_listed_current, portfolio_listed_realized, portfolio_listed_exited or portfolio_listed (no status printed) from the investor's own page.
 	RelationshipTypes []string `json:"relationship_types,omitempty"`
-	// Filing mentions behind the row, across every filing and relationship type.
+	// Filing mentions behind the row, across every filing and relationship type. 0 for a row only the investor's website names.
 	EdgeCount NullableInt64 `json:"edge_count,omitempty"`
-	// The earliest filing date the investor was named against the issuer.
+	// The earliest filing date the investor was named against the issuer. Null for a row only the investor's website names.
 	FirstObservedDate NullableString `json:"first_observed_date,omitempty"`
-	// The latest filing date the investor was named against the issuer.
+	// The latest filing date the investor was named against the issuer. Null for a row only the investor's website names.
 	LastObservedDate NullableString `json:"last_observed_date,omitempty"`
+	// The retrieval date of the first crawl of the investor's own portfolio page that listed the company (a crawl date, not an investment date). Null for a row only SEC filings name.
+	ListedFrom NullableString `json:"listed_from,omitempty"`
+	// The retrieval date of the first later crawl that did not list the company, or the date the page went away. Null while the company is still listed, and for a row only SEC filings name.
+	ListedTo NullableString `json:"listed_to,omitempty"`
+	// Why listed_to is set: absent_from_later_version (a later crawl of the page omitted the company) or page_gone (the page went away). Null exactly when listed_to is null.
+	RemovalReason NullableString `json:"removal_reason,omitempty"`
+	// True when the investor's own page no longer lists the company (listed_to is set). SEC filings do not reopen it.
+	IsRemoved NullableBool `json:"is_removed,omitempty"`
+	// The status the investor's page states for the company, verbatim: current, realized, exited or unknown (the page listed it with no status). Null for a row only SEC filings name.
+	StatusOnPage NullableString `json:"status_on_page,omitempty"`
+	// The date the page itself prints for the status, as printed (for example 2024 or March 2024). Null unless the page printed one.
+	StatusDate NullableString `json:"status_date,omitempty"`
+	// The date we first saw this status for the company on the investor's page: an observation date, never the date the event happened.
+	StatusFirstObservedAt NullableString `json:"status_first_observed_at,omitempty"`
+	// The address of the investor's portfolio page the listing was read from. Null for a row only SEC filings name.
+	SourceUrl NullableString `json:"source_url,omitempty"`
+	// When the investor's portfolio page was last retrieved with the company listed on it, in UTC.
+	SiteLastRetrievedAt NullableTime `json:"site_last_retrieved_at,omitempty"`
 	// True when the issuer's SIC (Standard Industrial Classification) code is a life-sciences code, false when it is another code, null when the issuer has no SIC evidence.
 	IsLifeSciencesIssuer NullableBool `json:"is_life_sciences_issuer,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -107,6 +136,123 @@ func (o *InvestorPortfolioRow) SetInvestorIdNil() {
 // UnsetInvestorId ensures that no value is present for InvestorId, not even an explicit nil
 func (o *InvestorPortfolioRow) UnsetInvestorId() {
 	o.InvestorId.Unset()
+}
+
+// GetCompanyKey returns the CompanyKey field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestorPortfolioRow) GetCompanyKey() string {
+	if o == nil || IsNil(o.CompanyKey.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CompanyKey.Get()
+}
+
+// GetCompanyKeyOk returns a tuple with the CompanyKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestorPortfolioRow) GetCompanyKeyOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CompanyKey.Get(), o.CompanyKey.IsSet()
+}
+
+// HasCompanyKey returns a boolean if a field has been set.
+func (o *InvestorPortfolioRow) HasCompanyKey() bool {
+	if o != nil && o.CompanyKey.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCompanyKey gets a reference to the given NullableString and assigns it to the CompanyKey field.
+func (o *InvestorPortfolioRow) SetCompanyKey(v string) {
+	o.CompanyKey.Set(&v)
+}
+// SetCompanyKeyNil sets the value for CompanyKey to be an explicit nil
+func (o *InvestorPortfolioRow) SetCompanyKeyNil() {
+	o.CompanyKey.Set(nil)
+}
+
+// UnsetCompanyKey ensures that no value is present for CompanyKey, not even an explicit nil
+func (o *InvestorPortfolioRow) UnsetCompanyKey() {
+	o.CompanyKey.Unset()
+}
+
+// GetCompanyKeyKind returns the CompanyKeyKind field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestorPortfolioRow) GetCompanyKeyKind() string {
+	if o == nil || IsNil(o.CompanyKeyKind.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CompanyKeyKind.Get()
+}
+
+// GetCompanyKeyKindOk returns a tuple with the CompanyKeyKind field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestorPortfolioRow) GetCompanyKeyKindOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CompanyKeyKind.Get(), o.CompanyKeyKind.IsSet()
+}
+
+// HasCompanyKeyKind returns a boolean if a field has been set.
+func (o *InvestorPortfolioRow) HasCompanyKeyKind() bool {
+	if o != nil && o.CompanyKeyKind.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCompanyKeyKind gets a reference to the given NullableString and assigns it to the CompanyKeyKind field.
+func (o *InvestorPortfolioRow) SetCompanyKeyKind(v string) {
+	o.CompanyKeyKind.Set(&v)
+}
+// SetCompanyKeyKindNil sets the value for CompanyKeyKind to be an explicit nil
+func (o *InvestorPortfolioRow) SetCompanyKeyKindNil() {
+	o.CompanyKeyKind.Set(nil)
+}
+
+// UnsetCompanyKeyKind ensures that no value is present for CompanyKeyKind, not even an explicit nil
+func (o *InvestorPortfolioRow) UnsetCompanyKeyKind() {
+	o.CompanyKeyKind.Unset()
+}
+
+// GetSources returns the Sources field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestorPortfolioRow) GetSources() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.Sources
+}
+
+// GetSourcesOk returns a tuple with the Sources field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestorPortfolioRow) GetSourcesOk() ([]string, bool) {
+	if o == nil || IsNil(o.Sources) {
+		return nil, false
+	}
+	return o.Sources, true
+}
+
+// HasSources returns a boolean if a field has been set.
+func (o *InvestorPortfolioRow) HasSources() bool {
+	if o != nil && !IsNil(o.Sources) {
+		return true
+	}
+
+	return false
+}
+
+// SetSources gets a reference to the given []string and assigns it to the Sources field.
+func (o *InvestorPortfolioRow) SetSources(v []string) {
+	o.Sources = v
 }
 
 // GetIssuerCik returns the IssuerCik field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -191,6 +337,90 @@ func (o *InvestorPortfolioRow) SetIssuerNameNil() {
 // UnsetIssuerName ensures that no value is present for IssuerName, not even an explicit nil
 func (o *InvestorPortfolioRow) UnsetIssuerName() {
 	o.IssuerName.Unset()
+}
+
+// GetCompanyNameAsListed returns the CompanyNameAsListed field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestorPortfolioRow) GetCompanyNameAsListed() string {
+	if o == nil || IsNil(o.CompanyNameAsListed.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CompanyNameAsListed.Get()
+}
+
+// GetCompanyNameAsListedOk returns a tuple with the CompanyNameAsListed field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestorPortfolioRow) GetCompanyNameAsListedOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CompanyNameAsListed.Get(), o.CompanyNameAsListed.IsSet()
+}
+
+// HasCompanyNameAsListed returns a boolean if a field has been set.
+func (o *InvestorPortfolioRow) HasCompanyNameAsListed() bool {
+	if o != nil && o.CompanyNameAsListed.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCompanyNameAsListed gets a reference to the given NullableString and assigns it to the CompanyNameAsListed field.
+func (o *InvestorPortfolioRow) SetCompanyNameAsListed(v string) {
+	o.CompanyNameAsListed.Set(&v)
+}
+// SetCompanyNameAsListedNil sets the value for CompanyNameAsListed to be an explicit nil
+func (o *InvestorPortfolioRow) SetCompanyNameAsListedNil() {
+	o.CompanyNameAsListed.Set(nil)
+}
+
+// UnsetCompanyNameAsListed ensures that no value is present for CompanyNameAsListed, not even an explicit nil
+func (o *InvestorPortfolioRow) UnsetCompanyNameAsListed() {
+	o.CompanyNameAsListed.Unset()
+}
+
+// GetCompanyWebsiteUrl returns the CompanyWebsiteUrl field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestorPortfolioRow) GetCompanyWebsiteUrl() string {
+	if o == nil || IsNil(o.CompanyWebsiteUrl.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CompanyWebsiteUrl.Get()
+}
+
+// GetCompanyWebsiteUrlOk returns a tuple with the CompanyWebsiteUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestorPortfolioRow) GetCompanyWebsiteUrlOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CompanyWebsiteUrl.Get(), o.CompanyWebsiteUrl.IsSet()
+}
+
+// HasCompanyWebsiteUrl returns a boolean if a field has been set.
+func (o *InvestorPortfolioRow) HasCompanyWebsiteUrl() bool {
+	if o != nil && o.CompanyWebsiteUrl.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCompanyWebsiteUrl gets a reference to the given NullableString and assigns it to the CompanyWebsiteUrl field.
+func (o *InvestorPortfolioRow) SetCompanyWebsiteUrl(v string) {
+	o.CompanyWebsiteUrl.Set(&v)
+}
+// SetCompanyWebsiteUrlNil sets the value for CompanyWebsiteUrl to be an explicit nil
+func (o *InvestorPortfolioRow) SetCompanyWebsiteUrlNil() {
+	o.CompanyWebsiteUrl.Set(nil)
+}
+
+// UnsetCompanyWebsiteUrl ensures that no value is present for CompanyWebsiteUrl, not even an explicit nil
+func (o *InvestorPortfolioRow) UnsetCompanyWebsiteUrl() {
+	o.CompanyWebsiteUrl.Unset()
 }
 
 // GetIssuerOrgId returns the IssuerOrgId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -562,6 +792,384 @@ func (o *InvestorPortfolioRow) UnsetLastObservedDate() {
 	o.LastObservedDate.Unset()
 }
 
+// GetListedFrom returns the ListedFrom field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestorPortfolioRow) GetListedFrom() string {
+	if o == nil || IsNil(o.ListedFrom.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ListedFrom.Get()
+}
+
+// GetListedFromOk returns a tuple with the ListedFrom field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestorPortfolioRow) GetListedFromOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ListedFrom.Get(), o.ListedFrom.IsSet()
+}
+
+// HasListedFrom returns a boolean if a field has been set.
+func (o *InvestorPortfolioRow) HasListedFrom() bool {
+	if o != nil && o.ListedFrom.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetListedFrom gets a reference to the given NullableString and assigns it to the ListedFrom field.
+func (o *InvestorPortfolioRow) SetListedFrom(v string) {
+	o.ListedFrom.Set(&v)
+}
+// SetListedFromNil sets the value for ListedFrom to be an explicit nil
+func (o *InvestorPortfolioRow) SetListedFromNil() {
+	o.ListedFrom.Set(nil)
+}
+
+// UnsetListedFrom ensures that no value is present for ListedFrom, not even an explicit nil
+func (o *InvestorPortfolioRow) UnsetListedFrom() {
+	o.ListedFrom.Unset()
+}
+
+// GetListedTo returns the ListedTo field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestorPortfolioRow) GetListedTo() string {
+	if o == nil || IsNil(o.ListedTo.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ListedTo.Get()
+}
+
+// GetListedToOk returns a tuple with the ListedTo field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestorPortfolioRow) GetListedToOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ListedTo.Get(), o.ListedTo.IsSet()
+}
+
+// HasListedTo returns a boolean if a field has been set.
+func (o *InvestorPortfolioRow) HasListedTo() bool {
+	if o != nil && o.ListedTo.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetListedTo gets a reference to the given NullableString and assigns it to the ListedTo field.
+func (o *InvestorPortfolioRow) SetListedTo(v string) {
+	o.ListedTo.Set(&v)
+}
+// SetListedToNil sets the value for ListedTo to be an explicit nil
+func (o *InvestorPortfolioRow) SetListedToNil() {
+	o.ListedTo.Set(nil)
+}
+
+// UnsetListedTo ensures that no value is present for ListedTo, not even an explicit nil
+func (o *InvestorPortfolioRow) UnsetListedTo() {
+	o.ListedTo.Unset()
+}
+
+// GetRemovalReason returns the RemovalReason field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestorPortfolioRow) GetRemovalReason() string {
+	if o == nil || IsNil(o.RemovalReason.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.RemovalReason.Get()
+}
+
+// GetRemovalReasonOk returns a tuple with the RemovalReason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestorPortfolioRow) GetRemovalReasonOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.RemovalReason.Get(), o.RemovalReason.IsSet()
+}
+
+// HasRemovalReason returns a boolean if a field has been set.
+func (o *InvestorPortfolioRow) HasRemovalReason() bool {
+	if o != nil && o.RemovalReason.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetRemovalReason gets a reference to the given NullableString and assigns it to the RemovalReason field.
+func (o *InvestorPortfolioRow) SetRemovalReason(v string) {
+	o.RemovalReason.Set(&v)
+}
+// SetRemovalReasonNil sets the value for RemovalReason to be an explicit nil
+func (o *InvestorPortfolioRow) SetRemovalReasonNil() {
+	o.RemovalReason.Set(nil)
+}
+
+// UnsetRemovalReason ensures that no value is present for RemovalReason, not even an explicit nil
+func (o *InvestorPortfolioRow) UnsetRemovalReason() {
+	o.RemovalReason.Unset()
+}
+
+// GetIsRemoved returns the IsRemoved field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestorPortfolioRow) GetIsRemoved() bool {
+	if o == nil || IsNil(o.IsRemoved.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.IsRemoved.Get()
+}
+
+// GetIsRemovedOk returns a tuple with the IsRemoved field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestorPortfolioRow) GetIsRemovedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IsRemoved.Get(), o.IsRemoved.IsSet()
+}
+
+// HasIsRemoved returns a boolean if a field has been set.
+func (o *InvestorPortfolioRow) HasIsRemoved() bool {
+	if o != nil && o.IsRemoved.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetIsRemoved gets a reference to the given NullableBool and assigns it to the IsRemoved field.
+func (o *InvestorPortfolioRow) SetIsRemoved(v bool) {
+	o.IsRemoved.Set(&v)
+}
+// SetIsRemovedNil sets the value for IsRemoved to be an explicit nil
+func (o *InvestorPortfolioRow) SetIsRemovedNil() {
+	o.IsRemoved.Set(nil)
+}
+
+// UnsetIsRemoved ensures that no value is present for IsRemoved, not even an explicit nil
+func (o *InvestorPortfolioRow) UnsetIsRemoved() {
+	o.IsRemoved.Unset()
+}
+
+// GetStatusOnPage returns the StatusOnPage field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestorPortfolioRow) GetStatusOnPage() string {
+	if o == nil || IsNil(o.StatusOnPage.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.StatusOnPage.Get()
+}
+
+// GetStatusOnPageOk returns a tuple with the StatusOnPage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestorPortfolioRow) GetStatusOnPageOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.StatusOnPage.Get(), o.StatusOnPage.IsSet()
+}
+
+// HasStatusOnPage returns a boolean if a field has been set.
+func (o *InvestorPortfolioRow) HasStatusOnPage() bool {
+	if o != nil && o.StatusOnPage.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetStatusOnPage gets a reference to the given NullableString and assigns it to the StatusOnPage field.
+func (o *InvestorPortfolioRow) SetStatusOnPage(v string) {
+	o.StatusOnPage.Set(&v)
+}
+// SetStatusOnPageNil sets the value for StatusOnPage to be an explicit nil
+func (o *InvestorPortfolioRow) SetStatusOnPageNil() {
+	o.StatusOnPage.Set(nil)
+}
+
+// UnsetStatusOnPage ensures that no value is present for StatusOnPage, not even an explicit nil
+func (o *InvestorPortfolioRow) UnsetStatusOnPage() {
+	o.StatusOnPage.Unset()
+}
+
+// GetStatusDate returns the StatusDate field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestorPortfolioRow) GetStatusDate() string {
+	if o == nil || IsNil(o.StatusDate.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.StatusDate.Get()
+}
+
+// GetStatusDateOk returns a tuple with the StatusDate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestorPortfolioRow) GetStatusDateOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.StatusDate.Get(), o.StatusDate.IsSet()
+}
+
+// HasStatusDate returns a boolean if a field has been set.
+func (o *InvestorPortfolioRow) HasStatusDate() bool {
+	if o != nil && o.StatusDate.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetStatusDate gets a reference to the given NullableString and assigns it to the StatusDate field.
+func (o *InvestorPortfolioRow) SetStatusDate(v string) {
+	o.StatusDate.Set(&v)
+}
+// SetStatusDateNil sets the value for StatusDate to be an explicit nil
+func (o *InvestorPortfolioRow) SetStatusDateNil() {
+	o.StatusDate.Set(nil)
+}
+
+// UnsetStatusDate ensures that no value is present for StatusDate, not even an explicit nil
+func (o *InvestorPortfolioRow) UnsetStatusDate() {
+	o.StatusDate.Unset()
+}
+
+// GetStatusFirstObservedAt returns the StatusFirstObservedAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestorPortfolioRow) GetStatusFirstObservedAt() string {
+	if o == nil || IsNil(o.StatusFirstObservedAt.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.StatusFirstObservedAt.Get()
+}
+
+// GetStatusFirstObservedAtOk returns a tuple with the StatusFirstObservedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestorPortfolioRow) GetStatusFirstObservedAtOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.StatusFirstObservedAt.Get(), o.StatusFirstObservedAt.IsSet()
+}
+
+// HasStatusFirstObservedAt returns a boolean if a field has been set.
+func (o *InvestorPortfolioRow) HasStatusFirstObservedAt() bool {
+	if o != nil && o.StatusFirstObservedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetStatusFirstObservedAt gets a reference to the given NullableString and assigns it to the StatusFirstObservedAt field.
+func (o *InvestorPortfolioRow) SetStatusFirstObservedAt(v string) {
+	o.StatusFirstObservedAt.Set(&v)
+}
+// SetStatusFirstObservedAtNil sets the value for StatusFirstObservedAt to be an explicit nil
+func (o *InvestorPortfolioRow) SetStatusFirstObservedAtNil() {
+	o.StatusFirstObservedAt.Set(nil)
+}
+
+// UnsetStatusFirstObservedAt ensures that no value is present for StatusFirstObservedAt, not even an explicit nil
+func (o *InvestorPortfolioRow) UnsetStatusFirstObservedAt() {
+	o.StatusFirstObservedAt.Unset()
+}
+
+// GetSourceUrl returns the SourceUrl field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestorPortfolioRow) GetSourceUrl() string {
+	if o == nil || IsNil(o.SourceUrl.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.SourceUrl.Get()
+}
+
+// GetSourceUrlOk returns a tuple with the SourceUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestorPortfolioRow) GetSourceUrlOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SourceUrl.Get(), o.SourceUrl.IsSet()
+}
+
+// HasSourceUrl returns a boolean if a field has been set.
+func (o *InvestorPortfolioRow) HasSourceUrl() bool {
+	if o != nil && o.SourceUrl.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSourceUrl gets a reference to the given NullableString and assigns it to the SourceUrl field.
+func (o *InvestorPortfolioRow) SetSourceUrl(v string) {
+	o.SourceUrl.Set(&v)
+}
+// SetSourceUrlNil sets the value for SourceUrl to be an explicit nil
+func (o *InvestorPortfolioRow) SetSourceUrlNil() {
+	o.SourceUrl.Set(nil)
+}
+
+// UnsetSourceUrl ensures that no value is present for SourceUrl, not even an explicit nil
+func (o *InvestorPortfolioRow) UnsetSourceUrl() {
+	o.SourceUrl.Unset()
+}
+
+// GetSiteLastRetrievedAt returns the SiteLastRetrievedAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestorPortfolioRow) GetSiteLastRetrievedAt() time.Time {
+	if o == nil || IsNil(o.SiteLastRetrievedAt.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.SiteLastRetrievedAt.Get()
+}
+
+// GetSiteLastRetrievedAtOk returns a tuple with the SiteLastRetrievedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestorPortfolioRow) GetSiteLastRetrievedAtOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SiteLastRetrievedAt.Get(), o.SiteLastRetrievedAt.IsSet()
+}
+
+// HasSiteLastRetrievedAt returns a boolean if a field has been set.
+func (o *InvestorPortfolioRow) HasSiteLastRetrievedAt() bool {
+	if o != nil && o.SiteLastRetrievedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSiteLastRetrievedAt gets a reference to the given NullableTime and assigns it to the SiteLastRetrievedAt field.
+func (o *InvestorPortfolioRow) SetSiteLastRetrievedAt(v time.Time) {
+	o.SiteLastRetrievedAt.Set(&v)
+}
+// SetSiteLastRetrievedAtNil sets the value for SiteLastRetrievedAt to be an explicit nil
+func (o *InvestorPortfolioRow) SetSiteLastRetrievedAtNil() {
+	o.SiteLastRetrievedAt.Set(nil)
+}
+
+// UnsetSiteLastRetrievedAt ensures that no value is present for SiteLastRetrievedAt, not even an explicit nil
+func (o *InvestorPortfolioRow) UnsetSiteLastRetrievedAt() {
+	o.SiteLastRetrievedAt.Unset()
+}
+
 // GetIsLifeSciencesIssuer returns the IsLifeSciencesIssuer field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *InvestorPortfolioRow) GetIsLifeSciencesIssuer() bool {
 	if o == nil || IsNil(o.IsLifeSciencesIssuer.Get()) {
@@ -617,11 +1225,26 @@ func (o InvestorPortfolioRow) ToMap() (map[string]interface{}, error) {
 	if o.InvestorId.IsSet() {
 		toSerialize["investor_id"] = o.InvestorId.Get()
 	}
+	if o.CompanyKey.IsSet() {
+		toSerialize["company_key"] = o.CompanyKey.Get()
+	}
+	if o.CompanyKeyKind.IsSet() {
+		toSerialize["company_key_kind"] = o.CompanyKeyKind.Get()
+	}
+	if o.Sources != nil {
+		toSerialize["sources"] = o.Sources
+	}
 	if o.IssuerCik.IsSet() {
 		toSerialize["issuer_cik"] = o.IssuerCik.Get()
 	}
 	if o.IssuerName.IsSet() {
 		toSerialize["issuer_name"] = o.IssuerName.Get()
+	}
+	if o.CompanyNameAsListed.IsSet() {
+		toSerialize["company_name_as_listed"] = o.CompanyNameAsListed.Get()
+	}
+	if o.CompanyWebsiteUrl.IsSet() {
+		toSerialize["company_website_url"] = o.CompanyWebsiteUrl.Get()
 	}
 	if o.IssuerOrgId.IsSet() {
 		toSerialize["issuer_org_id"] = o.IssuerOrgId.Get()
@@ -650,6 +1273,33 @@ func (o InvestorPortfolioRow) ToMap() (map[string]interface{}, error) {
 	if o.LastObservedDate.IsSet() {
 		toSerialize["last_observed_date"] = o.LastObservedDate.Get()
 	}
+	if o.ListedFrom.IsSet() {
+		toSerialize["listed_from"] = o.ListedFrom.Get()
+	}
+	if o.ListedTo.IsSet() {
+		toSerialize["listed_to"] = o.ListedTo.Get()
+	}
+	if o.RemovalReason.IsSet() {
+		toSerialize["removal_reason"] = o.RemovalReason.Get()
+	}
+	if o.IsRemoved.IsSet() {
+		toSerialize["is_removed"] = o.IsRemoved.Get()
+	}
+	if o.StatusOnPage.IsSet() {
+		toSerialize["status_on_page"] = o.StatusOnPage.Get()
+	}
+	if o.StatusDate.IsSet() {
+		toSerialize["status_date"] = o.StatusDate.Get()
+	}
+	if o.StatusFirstObservedAt.IsSet() {
+		toSerialize["status_first_observed_at"] = o.StatusFirstObservedAt.Get()
+	}
+	if o.SourceUrl.IsSet() {
+		toSerialize["source_url"] = o.SourceUrl.Get()
+	}
+	if o.SiteLastRetrievedAt.IsSet() {
+		toSerialize["site_last_retrieved_at"] = o.SiteLastRetrievedAt.Get()
+	}
 	if o.IsLifeSciencesIssuer.IsSet() {
 		toSerialize["is_life_sciences_issuer"] = o.IsLifeSciencesIssuer.Get()
 	}
@@ -676,8 +1326,13 @@ func (o *InvestorPortfolioRow) UnmarshalJSON(data []byte) (err error) {
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "investor_id")
+		delete(additionalProperties, "company_key")
+		delete(additionalProperties, "company_key_kind")
+		delete(additionalProperties, "sources")
 		delete(additionalProperties, "issuer_cik")
 		delete(additionalProperties, "issuer_name")
+		delete(additionalProperties, "company_name_as_listed")
+		delete(additionalProperties, "company_website_url")
 		delete(additionalProperties, "issuer_org_id")
 		delete(additionalProperties, "issuer_company_id")
 		delete(additionalProperties, "issuer_company_name")
@@ -687,6 +1342,15 @@ func (o *InvestorPortfolioRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "edge_count")
 		delete(additionalProperties, "first_observed_date")
 		delete(additionalProperties, "last_observed_date")
+		delete(additionalProperties, "listed_from")
+		delete(additionalProperties, "listed_to")
+		delete(additionalProperties, "removal_reason")
+		delete(additionalProperties, "is_removed")
+		delete(additionalProperties, "status_on_page")
+		delete(additionalProperties, "status_date")
+		delete(additionalProperties, "status_first_observed_at")
+		delete(additionalProperties, "source_url")
+		delete(additionalProperties, "site_last_retrieved_at")
 		delete(additionalProperties, "is_life_sciences_issuer")
 		o.AdditionalProperties = additionalProperties
 	}

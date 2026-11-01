@@ -7,7 +7,7 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**investors_get**](InvestorsApi.md#investors_get) | **GET** /api/v1/investors/{id} | One investor |
 | [**investors_institutional_holdings**](InvestorsApi.md#investors_institutional_holdings) | **GET** /api/v1/investors/{id}/institutional_holdings | Institutional holdings (SEC Form 13F) |
 | [**investors_investor_funds**](InvestorsApi.md#investors_investor_funds) | **GET** /api/v1/investors/{id}/investor_funds | Investor private funds by type |
-| [**investors_investor_portfolio**](InvestorsApi.md#investors_investor_portfolio) | **GET** /api/v1/investors/{id}/investor_portfolio | Investor portfolio (offering filings) |
+| [**investors_investor_portfolio**](InvestorsApi.md#investors_investor_portfolio) | **GET** /api/v1/investors/{id}/investor_portfolio | Investor portfolio (offering filings and investor websites) |
 | [**investors_investor_private_funds**](InvestorsApi.md#investors_investor_private_funds) | **GET** /api/v1/investors/{id}/investor_private_funds | Investor private funds |
 | [**investors_list**](InvestorsApi.md#investors_list) | **GET** /api/v1/investors | List investors |
 | [**investors_managers**](InvestorsApi.md#investors_managers) | **GET** /api/v1/investors/{id}/managers | Institutional managers (SEC Form 13F) |
@@ -243,7 +243,7 @@ end
 
 > <InvestorPortfolioResponse> investors_investor_portfolio(id, opts)
 
-Investor portfolio (offering filings)
+Investor portfolio (offering filings and investor websites)
 
 ### Examples
 
@@ -267,7 +267,7 @@ opts = {
 }
 
 begin
-  # Investor portfolio (offering filings)
+  # Investor portfolio (offering filings and investor websites)
   result = api_instance.investors_investor_portfolio(id, opts)
   p result
 rescue PharmaObservatory::ApiError => e
@@ -283,7 +283,7 @@ This returns an Array which contains the response data, status code and headers.
 
 ```ruby
 begin
-  # Investor portfolio (offering filings)
+  # Investor portfolio (offering filings and investor websites)
   data, status_code, headers = api_instance.investors_investor_portfolio_with_http_info(id, opts)
   p status_code # => 2xx
   p headers # => { ... }

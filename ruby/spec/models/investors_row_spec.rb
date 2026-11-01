@@ -105,6 +105,12 @@ describe PharmaObservatory::InvestorsRow do
     end
   end
 
+  describe 'test attribute "portfolio_co_removed_count"' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   describe 'test attribute "holdings_position_count"' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/

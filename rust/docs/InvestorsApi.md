@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**investors_period_get**](InvestorsApi.md#investors_period_get) | **GET** /api/v1/investors/{id} | One investor
 [**investors_period_institutional_holdings**](InvestorsApi.md#investors_period_institutional_holdings) | **GET** /api/v1/investors/{id}/institutional_holdings | Institutional holdings (SEC Form 13F)
 [**investors_period_investor_funds**](InvestorsApi.md#investors_period_investor_funds) | **GET** /api/v1/investors/{id}/investor_funds | Investor private funds by type
-[**investors_period_investor_portfolio**](InvestorsApi.md#investors_period_investor_portfolio) | **GET** /api/v1/investors/{id}/investor_portfolio | Investor portfolio (offering filings)
+[**investors_period_investor_portfolio**](InvestorsApi.md#investors_period_investor_portfolio) | **GET** /api/v1/investors/{id}/investor_portfolio | Investor portfolio (offering filings and investor websites)
 [**investors_period_investor_private_funds**](InvestorsApi.md#investors_period_investor_private_funds) | **GET** /api/v1/investors/{id}/investor_private_funds | Investor private funds
 [**investors_period_list**](InvestorsApi.md#investors_period_list) | **GET** /api/v1/investors | List investors
 [**investors_period_managers**](InvestorsApi.md#investors_period_managers) | **GET** /api/v1/investors/{id}/managers | Institutional managers (SEC Form 13F)
@@ -112,7 +112,7 @@ Name | Type | Description  | Required | Notes
 ## investors_period_investor_portfolio
 
 > models::InvestorPortfolioResponse investors_period_investor_portfolio(id, cursor, limit, sort, group_by, measure)
-Investor portfolio (offering filings)
+Investor portfolio (offering filings and investor websites)
 
 ### Parameters
 

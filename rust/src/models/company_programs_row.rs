@@ -62,6 +62,12 @@ pub struct CompanyProgramsRow {
     /// approved, active or abandoned.
     #[serde(rename = "lifecycle", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub lifecycle: Option<Option<String>>,
+    /// True when the sponsor is judged to develop the drug (an experimental arm, a regulatory holder, or an inferred lead); false when it is the backbone or comparator of a combination, one of many leads of a crowded drug, or not the holder of a generic. Every row is kept; this column labels it.
+    #[serde(rename = "owned", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub owned: Option<Option<bool>>,
+    /// Why owned is what it is: experimental_arm, regulatory_holder or inferred_lead (owned), or backbone, comparator, crowded_not_lead or generic_not_holder (not owned). inferred_lead is an inference made where the trials give no arm evidence either way.
+    #[serde(rename = "ownership_basis", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub ownership_basis: Option<Option<String>>,
     /// Disability-adjusted life years (DALYs, millions) of the condition's global burden, from the Global Burden of Disease (GBD) 2021 study of the Institute for Health Metrics and Evaluation (IHME). Null for a caller without the licence for this column; see withheld_columns.
     #[serde(rename = "dalys_millions", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub dalys_millions: Option<Option<f64>>,
@@ -87,6 +93,8 @@ impl CompanyProgramsRow {
             last_year: None,
             withdrawn: None,
             lifecycle: None,
+            owned: None,
+            ownership_basis: None,
             dalys_millions: None,
         }
     }

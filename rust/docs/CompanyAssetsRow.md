@@ -17,6 +17,8 @@ Name | Type | Description | Notes
 **n_active** | Option<**i64**> | Of those trials, the number recruiting, not yet recruiting, active or enrolling by invitation. | [optional]
 **last_year** | Option<**i32**> | Latest start year among those trials. | [optional]
 **withdrawn** | Option<**bool**> | True when the drug has been withdrawn from the market. | [optional]
+**owned** | Option<**bool**> | True when the sponsor is judged to develop the drug (an experimental arm, a regulatory holder, or an inferred lead); false when it is the backbone or comparator of a combination, one of many leads of a crowded drug, or not the holder of a generic. Every row is kept; this column labels it. | [optional]
+**ownership_basis** | Option<**String**> | Why owned is what it is: experimental_arm, regulatory_holder or inferred_lead (owned), or backbone, comparator, crowded_not_lead or generic_not_holder (not owned). inferred_lead is an inference made where the trials give no arm evidence either way. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -20,7 +20,7 @@ pub struct CompaniesRow {
     /// The company's display name: its own legal entity's name where one is known.
     #[serde(rename = "company_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub company_name: Option<Option<String>>,
-    /// Which source supplied the name: gleif_legal_name, edgar_registrant, ror or sponsor_display_name.
+    /// Which source supplied the name: gleif_legal_name, edgar_registrant, ror, edgar_current_name or sponsor_display_name.
     #[serde(rename = "name_basis", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub name_basis: Option<Option<String>>,
     /// Country of the company's own legal entity, as the source states it.

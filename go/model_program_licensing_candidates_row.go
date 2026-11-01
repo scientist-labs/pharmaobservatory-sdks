@@ -53,6 +53,10 @@ type ProgramLicensingCandidatesRow struct {
 	LastUpdateYear NullableInt32 `json:"last_update_year,omitempty"`
 	// True when the drug has been withdrawn.
 	Withdrawn NullableBool `json:"withdrawn,omitempty"`
+	// True when the sponsor is judged to develop the drug (an experimental arm, a regulatory holder, or an inferred lead); false when it is the backbone or comparator of a combination, one of many leads of a crowded drug, or not the holder of a generic. Every row is kept; this column labels it.
+	Owned NullableBool `json:"owned,omitempty"`
+	// Why owned is what it is: experimental_arm, regulatory_holder or inferred_lead (owned), or backbone, comparator, crowded_not_lead or generic_not_holder (not owned). inferred_lead is an inference made where the trials give no arm evidence either way.
+	OwnershipBasis NullableString `json:"ownership_basis,omitempty"`
 	// The Global Burden of Disease cause matched to the condition.
 	CauseName NullableString `json:"cause_name,omitempty"`
 	// Global disability-adjusted life years for the matched cause, in millions.
@@ -788,6 +792,90 @@ func (o *ProgramLicensingCandidatesRow) UnsetWithdrawn() {
 	o.Withdrawn.Unset()
 }
 
+// GetOwned returns the Owned field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ProgramLicensingCandidatesRow) GetOwned() bool {
+	if o == nil || IsNil(o.Owned.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.Owned.Get()
+}
+
+// GetOwnedOk returns a tuple with the Owned field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ProgramLicensingCandidatesRow) GetOwnedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Owned.Get(), o.Owned.IsSet()
+}
+
+// HasOwned returns a boolean if a field has been set.
+func (o *ProgramLicensingCandidatesRow) HasOwned() bool {
+	if o != nil && o.Owned.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOwned gets a reference to the given NullableBool and assigns it to the Owned field.
+func (o *ProgramLicensingCandidatesRow) SetOwned(v bool) {
+	o.Owned.Set(&v)
+}
+// SetOwnedNil sets the value for Owned to be an explicit nil
+func (o *ProgramLicensingCandidatesRow) SetOwnedNil() {
+	o.Owned.Set(nil)
+}
+
+// UnsetOwned ensures that no value is present for Owned, not even an explicit nil
+func (o *ProgramLicensingCandidatesRow) UnsetOwned() {
+	o.Owned.Unset()
+}
+
+// GetOwnershipBasis returns the OwnershipBasis field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ProgramLicensingCandidatesRow) GetOwnershipBasis() string {
+	if o == nil || IsNil(o.OwnershipBasis.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.OwnershipBasis.Get()
+}
+
+// GetOwnershipBasisOk returns a tuple with the OwnershipBasis field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ProgramLicensingCandidatesRow) GetOwnershipBasisOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.OwnershipBasis.Get(), o.OwnershipBasis.IsSet()
+}
+
+// HasOwnershipBasis returns a boolean if a field has been set.
+func (o *ProgramLicensingCandidatesRow) HasOwnershipBasis() bool {
+	if o != nil && o.OwnershipBasis.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOwnershipBasis gets a reference to the given NullableString and assigns it to the OwnershipBasis field.
+func (o *ProgramLicensingCandidatesRow) SetOwnershipBasis(v string) {
+	o.OwnershipBasis.Set(&v)
+}
+// SetOwnershipBasisNil sets the value for OwnershipBasis to be an explicit nil
+func (o *ProgramLicensingCandidatesRow) SetOwnershipBasisNil() {
+	o.OwnershipBasis.Set(nil)
+}
+
+// UnsetOwnershipBasis ensures that no value is present for OwnershipBasis, not even an explicit nil
+func (o *ProgramLicensingCandidatesRow) UnsetOwnershipBasis() {
+	o.OwnershipBasis.Unset()
+}
+
 // GetCauseName returns the CauseName field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *ProgramLicensingCandidatesRow) GetCauseName() string {
 	if o == nil || IsNil(o.CauseName.Get()) {
@@ -1017,6 +1105,12 @@ func (o ProgramLicensingCandidatesRow) ToMap() (map[string]interface{}, error) {
 	if o.Withdrawn.IsSet() {
 		toSerialize["withdrawn"] = o.Withdrawn.Get()
 	}
+	if o.Owned.IsSet() {
+		toSerialize["owned"] = o.Owned.Get()
+	}
+	if o.OwnershipBasis.IsSet() {
+		toSerialize["ownership_basis"] = o.OwnershipBasis.Get()
+	}
 	if o.CauseName.IsSet() {
 		toSerialize["cause_name"] = o.CauseName.Get()
 	}
@@ -1068,6 +1162,8 @@ func (o *ProgramLicensingCandidatesRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "last_year")
 		delete(additionalProperties, "last_update_year")
 		delete(additionalProperties, "withdrawn")
+		delete(additionalProperties, "owned")
+		delete(additionalProperties, "ownership_basis")
 		delete(additionalProperties, "cause_name")
 		delete(additionalProperties, "dalys_millions")
 		delete(additionalProperties, "deaths_millions")

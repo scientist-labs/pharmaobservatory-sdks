@@ -11,57 +11,104 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// InvestorPortfolioRow : One row of the investor_portfolio dataset: one row per investor and issuer CIK (the SEC's Central Index Key). A grouped request returns the group columns and the measures instead, as additional properties.
+/// InvestorPortfolioRow : One row of the investor_portfolio dataset: one row per investor and company key (the organization id where the company resolves, else the SEC Central Index Key, else the name as printed on the investor's page). A grouped request returns the group columns and the measures instead, as additional properties.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct InvestorPortfolioRow {
     /// The investor key.
     #[serde(rename = "investor_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub investor_id: Option<Option<String>>,
-    /// The issuer's SEC Central Index Key (CIK), ten digits.
+    /// The company's key on this dataset: its organization id where it resolves, else the SEC CIK, else investor_site: followed by the normalized name as printed on the investor's page.
+    #[serde(rename = "company_key", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub company_key: Option<Option<String>>,
+    /// What company_key is: org, cik or investor_site.
+    #[serde(rename = "company_key_kind", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub company_key_kind: Option<Option<String>>,
+    /// Where the row comes from: sec_edgar (S-1 and 424B holder tables), investor_site (the investor's own portfolio page), or both.
+    #[serde(rename = "sources", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub sources: Option<Option<Vec<String>>>,
+    /// The issuer's SEC Central Index Key (CIK), ten digits. Null for a row only the investor's website names.
     #[serde(rename = "issuer_cik", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub issuer_cik: Option<Option<String>>,
-    /// The issuer's name: its organization record's name, else the SEC company name.
+    /// The company's name: its organization record's name, else the SEC company name, else the name as printed on the investor's page.
     #[serde(rename = "issuer_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub issuer_name: Option<Option<String>>,
-    /// Legal-entity level: the issuer's organization record (null when unresolved).
+    /// The company's name as printed on the investor's own portfolio page. Null for a row only SEC filings name.
+    #[serde(rename = "company_name_as_listed", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub company_name_as_listed: Option<Option<String>>,
+    /// The company's website as linked on the investor's own portfolio page. Null when the page gave none.
+    #[serde(rename = "company_website_url", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub company_website_url: Option<Option<String>>,
+    /// Legal-entity level: the company's organization record (null when unresolved).
     #[serde(rename = "issuer_org_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub issuer_org_id: Option<Option<String>>,
-    /// Company level: the issuer's company (null when unresolved).
+    /// Company level: the company's record (null when unresolved).
     #[serde(rename = "issuer_company_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub issuer_company_id: Option<Option<String>>,
-    /// Display name of the issuer's company.
+    /// Display name of the company.
     #[serde(rename = "issuer_company_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub issuer_company_name: Option<Option<String>>,
-    /// Group level: the issuer's current ultimate parent; a root's group is itself.
+    /// Group level: the company's current ultimate parent; a root's group is itself.
     #[serde(rename = "issuer_group_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub issuer_group_id: Option<Option<String>>,
-    /// Display name of the issuer's group.
+    /// Display name of the company's group.
     #[serde(rename = "issuer_group_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub issuer_group_name: Option<Option<String>>,
-    /// How the investor is named against the issuer: holder_5pct (a 5 percent holder) or selling_stockholder.
+    /// How the investor is tied to the company: holder_5pct (a 5 percent holder) or selling_stockholder from filings, and portfolio_listed_current, portfolio_listed_realized, portfolio_listed_exited or portfolio_listed (no status printed) from the investor's own page.
     #[serde(rename = "relationship_types", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub relationship_types: Option<Option<Vec<String>>>,
-    /// Filing mentions behind the row, across every filing and relationship type.
+    /// Filing mentions behind the row, across every filing and relationship type. 0 for a row only the investor's website names.
     #[serde(rename = "edge_count", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub edge_count: Option<Option<i64>>,
-    /// The earliest filing date the investor was named against the issuer.
+    /// The earliest filing date the investor was named against the issuer. Null for a row only the investor's website names.
     #[serde(rename = "first_observed_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub first_observed_date: Option<Option<String>>,
-    /// The latest filing date the investor was named against the issuer.
+    /// The latest filing date the investor was named against the issuer. Null for a row only the investor's website names.
     #[serde(rename = "last_observed_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub last_observed_date: Option<Option<String>>,
+    /// The retrieval date of the first crawl of the investor's own portfolio page that listed the company (a crawl date, not an investment date). Null for a row only SEC filings name.
+    #[serde(rename = "listed_from", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub listed_from: Option<Option<String>>,
+    /// The retrieval date of the first later crawl that did not list the company, or the date the page went away. Null while the company is still listed, and for a row only SEC filings name.
+    #[serde(rename = "listed_to", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub listed_to: Option<Option<String>>,
+    /// Why listed_to is set: absent_from_later_version (a later crawl of the page omitted the company) or page_gone (the page went away). Null exactly when listed_to is null.
+    #[serde(rename = "removal_reason", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub removal_reason: Option<Option<String>>,
+    /// True when the investor's own page no longer lists the company (listed_to is set). SEC filings do not reopen it.
+    #[serde(rename = "is_removed", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub is_removed: Option<Option<bool>>,
+    /// The status the investor's page states for the company, verbatim: current, realized, exited or unknown (the page listed it with no status). Null for a row only SEC filings name.
+    #[serde(rename = "status_on_page", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub status_on_page: Option<Option<String>>,
+    /// The date the page itself prints for the status, as printed (for example 2024 or March 2024). Null unless the page printed one.
+    #[serde(rename = "status_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub status_date: Option<Option<String>>,
+    /// The date we first saw this status for the company on the investor's page: an observation date, never the date the event happened.
+    #[serde(rename = "status_first_observed_at", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub status_first_observed_at: Option<Option<String>>,
+    /// The address of the investor's portfolio page the listing was read from. Null for a row only SEC filings name.
+    #[serde(rename = "source_url", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub source_url: Option<Option<String>>,
+    /// When the investor's portfolio page was last retrieved with the company listed on it, in UTC.
+    #[serde(rename = "site_last_retrieved_at", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub site_last_retrieved_at: Option<Option<String>>,
     /// True when the issuer's SIC (Standard Industrial Classification) code is a life-sciences code, false when it is another code, null when the issuer has no SIC evidence.
     #[serde(rename = "is_life_sciences_issuer", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub is_life_sciences_issuer: Option<Option<bool>>,
 }
 
 impl InvestorPortfolioRow {
-    /// One row of the investor_portfolio dataset: one row per investor and issuer CIK (the SEC's Central Index Key). A grouped request returns the group columns and the measures instead, as additional properties.
+    /// One row of the investor_portfolio dataset: one row per investor and company key (the organization id where the company resolves, else the SEC Central Index Key, else the name as printed on the investor's page). A grouped request returns the group columns and the measures instead, as additional properties.
     pub fn new() -> InvestorPortfolioRow {
         InvestorPortfolioRow {
             investor_id: None,
+            company_key: None,
+            company_key_kind: None,
+            sources: None,
             issuer_cik: None,
             issuer_name: None,
+            company_name_as_listed: None,
+            company_website_url: None,
             issuer_org_id: None,
             issuer_company_id: None,
             issuer_company_name: None,
@@ -71,6 +118,15 @@ impl InvestorPortfolioRow {
             edge_count: None,
             first_observed_date: None,
             last_observed_date: None,
+            listed_from: None,
+            listed_to: None,
+            removal_reason: None,
+            is_removed: None,
+            status_on_page: None,
+            status_date: None,
+            status_first_observed_at: None,
+            source_url: None,
+            site_last_retrieved_at: None,
             is_life_sciences_issuer: None,
         }
     }

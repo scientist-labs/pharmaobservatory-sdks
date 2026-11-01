@@ -17,6 +17,8 @@ Name | Type | Description | Notes
 **NActive** | Pointer to **NullableInt64** | Of those trials, the number recruiting, not yet recruiting, active or enrolling by invitation. | [optional] 
 **LastYear** | Pointer to **NullableInt32** | Latest start year among those trials. | [optional] 
 **Withdrawn** | Pointer to **NullableBool** | True when the drug has been withdrawn from the market. | [optional] 
+**Owned** | Pointer to **NullableBool** | True when the sponsor is judged to develop the drug (an experimental arm, a regulatory holder, or an inferred lead); false when it is the backbone or comparator of a combination, one of many leads of a crowded drug, or not the holder of a generic. Every row is kept; this column labels it. | [optional] 
+**OwnershipBasis** | Pointer to **NullableString** | Why owned is what it is: experimental_arm, regulatory_holder or inferred_lead (owned), or backbone, comparator, crowded_not_lead or generic_not_holder (not owned). inferred_lead is an inference made where the trials give no arm evidence either way. | [optional] 
 
 ## Methods
 
@@ -492,6 +494,76 @@ HasWithdrawn returns a boolean if a field has been set.
 `func (o *CompanyAssetsRow) UnsetWithdrawn()`
 
 UnsetWithdrawn ensures that no value is present for Withdrawn, not even an explicit nil
+### GetOwned
+
+`func (o *CompanyAssetsRow) GetOwned() bool`
+
+GetOwned returns the Owned field if non-nil, zero value otherwise.
+
+### GetOwnedOk
+
+`func (o *CompanyAssetsRow) GetOwnedOk() (*bool, bool)`
+
+GetOwnedOk returns a tuple with the Owned field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOwned
+
+`func (o *CompanyAssetsRow) SetOwned(v bool)`
+
+SetOwned sets Owned field to given value.
+
+### HasOwned
+
+`func (o *CompanyAssetsRow) HasOwned() bool`
+
+HasOwned returns a boolean if a field has been set.
+
+### SetOwnedNil
+
+`func (o *CompanyAssetsRow) SetOwnedNil(b bool)`
+
+ SetOwnedNil sets the value for Owned to be an explicit nil
+
+### UnsetOwned
+`func (o *CompanyAssetsRow) UnsetOwned()`
+
+UnsetOwned ensures that no value is present for Owned, not even an explicit nil
+### GetOwnershipBasis
+
+`func (o *CompanyAssetsRow) GetOwnershipBasis() string`
+
+GetOwnershipBasis returns the OwnershipBasis field if non-nil, zero value otherwise.
+
+### GetOwnershipBasisOk
+
+`func (o *CompanyAssetsRow) GetOwnershipBasisOk() (*string, bool)`
+
+GetOwnershipBasisOk returns a tuple with the OwnershipBasis field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOwnershipBasis
+
+`func (o *CompanyAssetsRow) SetOwnershipBasis(v string)`
+
+SetOwnershipBasis sets OwnershipBasis field to given value.
+
+### HasOwnershipBasis
+
+`func (o *CompanyAssetsRow) HasOwnershipBasis() bool`
+
+HasOwnershipBasis returns a boolean if a field has been set.
+
+### SetOwnershipBasisNil
+
+`func (o *CompanyAssetsRow) SetOwnershipBasisNil(b bool)`
+
+ SetOwnershipBasisNil sets the value for OwnershipBasis to be an explicit nil
+
+### UnsetOwnershipBasis
+`func (o *CompanyAssetsRow) UnsetOwnershipBasis()`
+
+UnsetOwnershipBasis ensures that no value is present for OwnershipBasis, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

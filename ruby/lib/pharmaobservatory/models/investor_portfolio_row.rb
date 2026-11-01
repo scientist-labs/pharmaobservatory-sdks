@@ -14,43 +14,85 @@ require 'date'
 require 'time'
 
 module PharmaObservatory
-  # One row of the investor_portfolio dataset: one row per investor and issuer CIK (the SEC's Central Index Key). A grouped request returns the group columns and the measures instead, as additional properties.
+  # One row of the investor_portfolio dataset: one row per investor and company key (the organization id where the company resolves, else the SEC Central Index Key, else the name as printed on the investor's page). A grouped request returns the group columns and the measures instead, as additional properties.
   class InvestorPortfolioRow
     # The investor key.
     attr_accessor :investor_id
 
-    # The issuer's SEC Central Index Key (CIK), ten digits.
+    # The company's key on this dataset: its organization id where it resolves, else the SEC CIK, else investor_site: followed by the normalized name as printed on the investor's page.
+    attr_accessor :company_key
+
+    # What company_key is: org, cik or investor_site.
+    attr_accessor :company_key_kind
+
+    # Where the row comes from: sec_edgar (S-1 and 424B holder tables), investor_site (the investor's own portfolio page), or both.
+    attr_accessor :sources
+
+    # The issuer's SEC Central Index Key (CIK), ten digits. Null for a row only the investor's website names.
     attr_accessor :issuer_cik
 
-    # The issuer's name: its organization record's name, else the SEC company name.
+    # The company's name: its organization record's name, else the SEC company name, else the name as printed on the investor's page.
     attr_accessor :issuer_name
 
-    # Legal-entity level: the issuer's organization record (null when unresolved).
+    # The company's name as printed on the investor's own portfolio page. Null for a row only SEC filings name.
+    attr_accessor :company_name_as_listed
+
+    # The company's website as linked on the investor's own portfolio page. Null when the page gave none.
+    attr_accessor :company_website_url
+
+    # Legal-entity level: the company's organization record (null when unresolved).
     attr_accessor :issuer_org_id
 
-    # Company level: the issuer's company (null when unresolved).
+    # Company level: the company's record (null when unresolved).
     attr_accessor :issuer_company_id
 
-    # Display name of the issuer's company.
+    # Display name of the company.
     attr_accessor :issuer_company_name
 
-    # Group level: the issuer's current ultimate parent; a root's group is itself.
+    # Group level: the company's current ultimate parent; a root's group is itself.
     attr_accessor :issuer_group_id
 
-    # Display name of the issuer's group.
+    # Display name of the company's group.
     attr_accessor :issuer_group_name
 
-    # How the investor is named against the issuer: holder_5pct (a 5 percent holder) or selling_stockholder.
+    # How the investor is tied to the company: holder_5pct (a 5 percent holder) or selling_stockholder from filings, and portfolio_listed_current, portfolio_listed_realized, portfolio_listed_exited or portfolio_listed (no status printed) from the investor's own page.
     attr_accessor :relationship_types
 
-    # Filing mentions behind the row, across every filing and relationship type.
+    # Filing mentions behind the row, across every filing and relationship type. 0 for a row only the investor's website names.
     attr_accessor :edge_count
 
-    # The earliest filing date the investor was named against the issuer.
+    # The earliest filing date the investor was named against the issuer. Null for a row only the investor's website names.
     attr_accessor :first_observed_date
 
-    # The latest filing date the investor was named against the issuer.
+    # The latest filing date the investor was named against the issuer. Null for a row only the investor's website names.
     attr_accessor :last_observed_date
+
+    # The retrieval date of the first crawl of the investor's own portfolio page that listed the company (a crawl date, not an investment date). Null for a row only SEC filings name.
+    attr_accessor :listed_from
+
+    # The retrieval date of the first later crawl that did not list the company, or the date the page went away. Null while the company is still listed, and for a row only SEC filings name.
+    attr_accessor :listed_to
+
+    # Why listed_to is set: absent_from_later_version (a later crawl of the page omitted the company) or page_gone (the page went away). Null exactly when listed_to is null.
+    attr_accessor :removal_reason
+
+    # True when the investor's own page no longer lists the company (listed_to is set). SEC filings do not reopen it.
+    attr_accessor :is_removed
+
+    # The status the investor's page states for the company, verbatim: current, realized, exited or unknown (the page listed it with no status). Null for a row only SEC filings name.
+    attr_accessor :status_on_page
+
+    # The date the page itself prints for the status, as printed (for example 2024 or March 2024). Null unless the page printed one.
+    attr_accessor :status_date
+
+    # The date we first saw this status for the company on the investor's page: an observation date, never the date the event happened.
+    attr_accessor :status_first_observed_at
+
+    # The address of the investor's portfolio page the listing was read from. Null for a row only SEC filings name.
+    attr_accessor :source_url
+
+    # When the investor's portfolio page was last retrieved with the company listed on it, in UTC.
+    attr_accessor :site_last_retrieved_at
 
     # True when the issuer's SIC (Standard Industrial Classification) code is a life-sciences code, false when it is another code, null when the issuer has no SIC evidence.
     attr_accessor :is_life_sciences_issuer
@@ -59,8 +101,13 @@ module PharmaObservatory
     def self.attribute_map
       {
         :'investor_id' => :'investor_id',
+        :'company_key' => :'company_key',
+        :'company_key_kind' => :'company_key_kind',
+        :'sources' => :'sources',
         :'issuer_cik' => :'issuer_cik',
         :'issuer_name' => :'issuer_name',
+        :'company_name_as_listed' => :'company_name_as_listed',
+        :'company_website_url' => :'company_website_url',
         :'issuer_org_id' => :'issuer_org_id',
         :'issuer_company_id' => :'issuer_company_id',
         :'issuer_company_name' => :'issuer_company_name',
@@ -70,6 +117,15 @@ module PharmaObservatory
         :'edge_count' => :'edge_count',
         :'first_observed_date' => :'first_observed_date',
         :'last_observed_date' => :'last_observed_date',
+        :'listed_from' => :'listed_from',
+        :'listed_to' => :'listed_to',
+        :'removal_reason' => :'removal_reason',
+        :'is_removed' => :'is_removed',
+        :'status_on_page' => :'status_on_page',
+        :'status_date' => :'status_date',
+        :'status_first_observed_at' => :'status_first_observed_at',
+        :'source_url' => :'source_url',
+        :'site_last_retrieved_at' => :'site_last_retrieved_at',
         :'is_life_sciences_issuer' => :'is_life_sciences_issuer'
       }
     end
@@ -88,8 +144,13 @@ module PharmaObservatory
     def self.openapi_types
       {
         :'investor_id' => :'String',
+        :'company_key' => :'String',
+        :'company_key_kind' => :'String',
+        :'sources' => :'Array<String>',
         :'issuer_cik' => :'String',
         :'issuer_name' => :'String',
+        :'company_name_as_listed' => :'String',
+        :'company_website_url' => :'String',
         :'issuer_org_id' => :'String',
         :'issuer_company_id' => :'String',
         :'issuer_company_name' => :'String',
@@ -99,6 +160,15 @@ module PharmaObservatory
         :'edge_count' => :'Integer',
         :'first_observed_date' => :'Date',
         :'last_observed_date' => :'Date',
+        :'listed_from' => :'Date',
+        :'listed_to' => :'Date',
+        :'removal_reason' => :'String',
+        :'is_removed' => :'Boolean',
+        :'status_on_page' => :'String',
+        :'status_date' => :'String',
+        :'status_first_observed_at' => :'Date',
+        :'source_url' => :'String',
+        :'site_last_retrieved_at' => :'Time',
         :'is_life_sciences_issuer' => :'Boolean'
       }
     end
@@ -107,8 +177,13 @@ module PharmaObservatory
     def self.openapi_nullable
       Set.new([
         :'investor_id',
+        :'company_key',
+        :'company_key_kind',
+        :'sources',
         :'issuer_cik',
         :'issuer_name',
+        :'company_name_as_listed',
+        :'company_website_url',
         :'issuer_org_id',
         :'issuer_company_id',
         :'issuer_company_name',
@@ -118,6 +193,15 @@ module PharmaObservatory
         :'edge_count',
         :'first_observed_date',
         :'last_observed_date',
+        :'listed_from',
+        :'listed_to',
+        :'removal_reason',
+        :'is_removed',
+        :'status_on_page',
+        :'status_date',
+        :'status_first_observed_at',
+        :'source_url',
+        :'site_last_retrieved_at',
         :'is_life_sciences_issuer'
       ])
     end
@@ -142,12 +226,34 @@ module PharmaObservatory
         self.investor_id = attributes[:'investor_id']
       end
 
+      if attributes.key?(:'company_key')
+        self.company_key = attributes[:'company_key']
+      end
+
+      if attributes.key?(:'company_key_kind')
+        self.company_key_kind = attributes[:'company_key_kind']
+      end
+
+      if attributes.key?(:'sources')
+        if (value = attributes[:'sources']).is_a?(Array)
+          self.sources = value
+        end
+      end
+
       if attributes.key?(:'issuer_cik')
         self.issuer_cik = attributes[:'issuer_cik']
       end
 
       if attributes.key?(:'issuer_name')
         self.issuer_name = attributes[:'issuer_name']
+      end
+
+      if attributes.key?(:'company_name_as_listed')
+        self.company_name_as_listed = attributes[:'company_name_as_listed']
+      end
+
+      if attributes.key?(:'company_website_url')
+        self.company_website_url = attributes[:'company_website_url']
       end
 
       if attributes.key?(:'issuer_org_id')
@@ -188,6 +294,42 @@ module PharmaObservatory
         self.last_observed_date = attributes[:'last_observed_date']
       end
 
+      if attributes.key?(:'listed_from')
+        self.listed_from = attributes[:'listed_from']
+      end
+
+      if attributes.key?(:'listed_to')
+        self.listed_to = attributes[:'listed_to']
+      end
+
+      if attributes.key?(:'removal_reason')
+        self.removal_reason = attributes[:'removal_reason']
+      end
+
+      if attributes.key?(:'is_removed')
+        self.is_removed = attributes[:'is_removed']
+      end
+
+      if attributes.key?(:'status_on_page')
+        self.status_on_page = attributes[:'status_on_page']
+      end
+
+      if attributes.key?(:'status_date')
+        self.status_date = attributes[:'status_date']
+      end
+
+      if attributes.key?(:'status_first_observed_at')
+        self.status_first_observed_at = attributes[:'status_first_observed_at']
+      end
+
+      if attributes.key?(:'source_url')
+        self.source_url = attributes[:'source_url']
+      end
+
+      if attributes.key?(:'site_last_retrieved_at')
+        self.site_last_retrieved_at = attributes[:'site_last_retrieved_at']
+      end
+
       if attributes.key?(:'is_life_sciences_issuer')
         self.is_life_sciences_issuer = attributes[:'is_life_sciences_issuer']
       end
@@ -214,8 +356,13 @@ module PharmaObservatory
       return true if self.equal?(o)
       self.class == o.class &&
           investor_id == o.investor_id &&
+          company_key == o.company_key &&
+          company_key_kind == o.company_key_kind &&
+          sources == o.sources &&
           issuer_cik == o.issuer_cik &&
           issuer_name == o.issuer_name &&
+          company_name_as_listed == o.company_name_as_listed &&
+          company_website_url == o.company_website_url &&
           issuer_org_id == o.issuer_org_id &&
           issuer_company_id == o.issuer_company_id &&
           issuer_company_name == o.issuer_company_name &&
@@ -225,6 +372,15 @@ module PharmaObservatory
           edge_count == o.edge_count &&
           first_observed_date == o.first_observed_date &&
           last_observed_date == o.last_observed_date &&
+          listed_from == o.listed_from &&
+          listed_to == o.listed_to &&
+          removal_reason == o.removal_reason &&
+          is_removed == o.is_removed &&
+          status_on_page == o.status_on_page &&
+          status_date == o.status_date &&
+          status_first_observed_at == o.status_first_observed_at &&
+          source_url == o.source_url &&
+          site_last_retrieved_at == o.site_last_retrieved_at &&
           is_life_sciences_issuer == o.is_life_sciences_issuer
     end
 
@@ -237,7 +393,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [investor_id, issuer_cik, issuer_name, issuer_org_id, issuer_company_id, issuer_company_name, issuer_group_id, issuer_group_name, relationship_types, edge_count, first_observed_date, last_observed_date, is_life_sciences_issuer].hash
+      [investor_id, company_key, company_key_kind, sources, issuer_cik, issuer_name, company_name_as_listed, company_website_url, issuer_org_id, issuer_company_id, issuer_company_name, issuer_group_id, issuer_group_name, relationship_types, edge_count, first_observed_date, last_observed_date, listed_from, listed_to, removal_reason, is_removed, status_on_page, status_date, status_first_observed_at, source_url, site_last_retrieved_at, is_life_sciences_issuer].hash
     end
 
     # Builds the object from hash

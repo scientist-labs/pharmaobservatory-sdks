@@ -12,7 +12,9 @@ Name | Type | Description | Notes
 **CompetitorCompanyName** | Pointer to **NullableString** | Display name of the competitor&#39;s company. | [optional] 
 **CompetitorGroupId** | Pointer to **NullableString** | Group level: the competitor&#39;s current ultimate parent; a root&#39;s group is itself. | [optional] 
 **CompetitorGroupName** | Pointer to **NullableString** | Display name of the competitor&#39;s group. | [optional] 
-**CompetitorRank** | Pointer to **NullableInt32** | The competitor&#39;s rank for the company by competitor_score (1 is the highest). | [optional] 
+**CompetitorClass** | Pointer to **NullableString** | The competitor&#39;s class: industry, or non_industry (not classed as industry by the sponsor-class rule: academic, hospital, government, nonprofit, and any record the rule does not reach). competitor_rank restarts at 1 within each class, so filter or sort on this column first. | [optional] 
+**NClassCandidates** | Pointer to **NullableInt32** | How many companies of this competitor_class were candidates (a shared target, or an indication overlap above the similarity floor) before the top 25 were kept. The same value on every row of one company and class. | [optional] 
+**CompetitorRank** | Pointer to **NullableInt32** | The competitor&#39;s rank within its competitor_class for the company by competitor_score (1 is the highest). | [optional] 
 **CompetitorScore** | Pointer to **NullableFloat32** | 100 times the weighted mean of the four similarities below, rounded to four places. | [optional] 
 **TargetSim** | Pointer to **NullableFloat32** | Jaccard similarity, 0 to 1, of the two companies&#39; molecular target sets. | [optional] 
 **MechanismSim** | Pointer to **NullableFloat32** | Jaccard similarity, 0 to 1, of their mechanism sets (a target and its action). | [optional] 
@@ -329,6 +331,76 @@ HasCompetitorGroupName returns a boolean if a field has been set.
 `func (o *CompanyCompetitorsRow) UnsetCompetitorGroupName()`
 
 UnsetCompetitorGroupName ensures that no value is present for CompetitorGroupName, not even an explicit nil
+### GetCompetitorClass
+
+`func (o *CompanyCompetitorsRow) GetCompetitorClass() string`
+
+GetCompetitorClass returns the CompetitorClass field if non-nil, zero value otherwise.
+
+### GetCompetitorClassOk
+
+`func (o *CompanyCompetitorsRow) GetCompetitorClassOk() (*string, bool)`
+
+GetCompetitorClassOk returns a tuple with the CompetitorClass field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCompetitorClass
+
+`func (o *CompanyCompetitorsRow) SetCompetitorClass(v string)`
+
+SetCompetitorClass sets CompetitorClass field to given value.
+
+### HasCompetitorClass
+
+`func (o *CompanyCompetitorsRow) HasCompetitorClass() bool`
+
+HasCompetitorClass returns a boolean if a field has been set.
+
+### SetCompetitorClassNil
+
+`func (o *CompanyCompetitorsRow) SetCompetitorClassNil(b bool)`
+
+ SetCompetitorClassNil sets the value for CompetitorClass to be an explicit nil
+
+### UnsetCompetitorClass
+`func (o *CompanyCompetitorsRow) UnsetCompetitorClass()`
+
+UnsetCompetitorClass ensures that no value is present for CompetitorClass, not even an explicit nil
+### GetNClassCandidates
+
+`func (o *CompanyCompetitorsRow) GetNClassCandidates() int32`
+
+GetNClassCandidates returns the NClassCandidates field if non-nil, zero value otherwise.
+
+### GetNClassCandidatesOk
+
+`func (o *CompanyCompetitorsRow) GetNClassCandidatesOk() (*int32, bool)`
+
+GetNClassCandidatesOk returns a tuple with the NClassCandidates field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNClassCandidates
+
+`func (o *CompanyCompetitorsRow) SetNClassCandidates(v int32)`
+
+SetNClassCandidates sets NClassCandidates field to given value.
+
+### HasNClassCandidates
+
+`func (o *CompanyCompetitorsRow) HasNClassCandidates() bool`
+
+HasNClassCandidates returns a boolean if a field has been set.
+
+### SetNClassCandidatesNil
+
+`func (o *CompanyCompetitorsRow) SetNClassCandidatesNil(b bool)`
+
+ SetNClassCandidatesNil sets the value for NClassCandidates to be an explicit nil
+
+### UnsetNClassCandidates
+`func (o *CompanyCompetitorsRow) UnsetNClassCandidates()`
+
+UnsetNClassCandidates ensures that no value is present for NClassCandidates, not even an explicit nil
 ### GetCompetitorRank
 
 `func (o *CompanyCompetitorsRow) GetCompetitorRank() int32`

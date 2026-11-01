@@ -17,6 +17,8 @@
 | **n_active** | **Integer** | Of those trials, the number recruiting, not yet recruiting, active or enrolling by invitation. | [optional] |
 | **last_year** | **Integer** | Latest start year among those trials. | [optional] |
 | **withdrawn** | **Boolean** | True when the drug has been withdrawn from the market. | [optional] |
+| **owned** | **Boolean** | True when the sponsor is judged to develop the drug (an experimental arm, a regulatory holder, or an inferred lead); false when it is the backbone or comparator of a combination, one of many leads of a crowded drug, or not the holder of a generic. Every row is kept; this column labels it. | [optional] |
+| **ownership_basis** | **String** | Why owned is what it is: experimental_arm, regulatory_holder or inferred_lead (owned), or backbone, comparator, crowded_not_lead or generic_not_holder (not owned). inferred_lead is an inference made where the trials give no arm evidence either way. | [optional] |
 
 ## Example
 
@@ -36,7 +38,9 @@ instance = PharmaObservatory::CompanyAssetsRow.new(
   n_trials: null,
   n_active: null,
   last_year: null,
-  withdrawn: null
+  withdrawn: null,
+  owned: null,
+  ownership_basis: null
 )
 ```
 

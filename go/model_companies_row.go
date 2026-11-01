@@ -23,7 +23,7 @@ type CompaniesRow struct {
 	CompanyId NullableString `json:"company_id,omitempty"`
 	// The company's display name: its own legal entity's name where one is known.
 	CompanyName NullableString `json:"company_name,omitempty"`
-	// Which source supplied the name: gleif_legal_name, edgar_registrant, ror or sponsor_display_name.
+	// Which source supplied the name: gleif_legal_name, edgar_registrant, ror, edgar_current_name or sponsor_display_name.
 	NameBasis NullableString `json:"name_basis,omitempty"`
 	// Country of the company's own legal entity, as the source states it.
 	Country NullableString `json:"country,omitempty"`

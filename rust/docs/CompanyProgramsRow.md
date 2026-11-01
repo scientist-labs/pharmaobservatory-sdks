@@ -20,6 +20,8 @@ Name | Type | Description | Notes
 **last_year** | Option<**i32**> | Latest trial start year. | [optional]
 **withdrawn** | Option<**bool**> | True when the drug has been withdrawn. | [optional]
 **lifecycle** | Option<**String**> | approved, active or abandoned. | [optional]
+**owned** | Option<**bool**> | True when the sponsor is judged to develop the drug (an experimental arm, a regulatory holder, or an inferred lead); false when it is the backbone or comparator of a combination, one of many leads of a crowded drug, or not the holder of a generic. Every row is kept; this column labels it. | [optional]
+**ownership_basis** | Option<**String**> | Why owned is what it is: experimental_arm, regulatory_holder or inferred_lead (owned), or backbone, comparator, crowded_not_lead or generic_not_holder (not owned). inferred_lead is an inference made where the trials give no arm evidence either way. | [optional]
 **dalys_millions** | Option<**f64**> | Disability-adjusted life years (DALYs, millions) of the condition's global burden, from the Global Burden of Disease (GBD) 2021 study of the Institute for Health Metrics and Evaluation (IHME). Null for a caller without the licence for this column; see withheld_columns. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

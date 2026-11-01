@@ -2441,7 +2441,7 @@ func (r ApiCompaniesCompanyCompetitorsRequest) Execute() (*CompanyCompetitorsRes
 }
 
 /*
-CompaniesCompanyCompetitors Company competitors
+CompaniesCompanyCompetitors Company program overlap
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
