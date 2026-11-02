@@ -28,6 +28,7 @@ Name | Type | Description | Notes
 **status_on_page** | Option<**String**> | The status the investor's page states for the company, verbatim: current, realized, exited or unknown (the page listed it with no status). Null for a row only SEC filings name. | [optional]
 **status_date** | Option<**String**> | The date the page itself prints for the status, as printed (for example 2024 or March 2024). Null unless the page printed one. | [optional]
 **status_first_observed_at** | Option<[**String**](string.md)> | The date we first saw this status for the company on the investor's page: an observation date, never the date the event happened. | [optional]
+**site_evidence_verified** | Option<**bool**> | True when the quote behind a website listing was found on the investor's page, false when it was not, null when no verification flag was recorded and for a row only SEC filings name. | [optional]
 **source_url** | Option<**String**> | The address of the investor's portfolio page the listing was read from. Null for a row only SEC filings name. | [optional]
 **site_last_retrieved_at** | Option<**String**> | When the investor's portfolio page was last retrieved with the company listed on it, in UTC. | [optional]
 **is_life_sciences_issuer** | Option<**bool**> | True when the issuer's SIC (Standard Industrial Classification) code is a life-sciences code, false when it is another code, null when the issuer has no SIC evidence. | [optional]

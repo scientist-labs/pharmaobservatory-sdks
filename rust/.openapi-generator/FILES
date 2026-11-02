@@ -76,6 +76,8 @@ docs/CompanyCompetitorActivityResponse.md
 docs/CompanyCompetitorActivityRow.md
 docs/CompanyCompetitorsResponse.md
 docs/CompanyCompetitorsRow.md
+docs/CompanyCosponsorsResponse.md
+docs/CompanyCosponsorsRow.md
 docs/CompanyFinancialsResponse.md
 docs/CompanyFinancialsRow.md
 docs/CompanyFirmographicsResponse.md
@@ -86,6 +88,10 @@ docs/CompanyFundingSummaryResponse.md
 docs/CompanyFundingSummaryRow.md
 docs/CompanyMembersResponse.md
 docs/CompanyMembersRow.md
+docs/CompanyPeerProfileResponse.md
+docs/CompanyPeerProfileRow.md
+docs/CompanyPeersResponse.md
+docs/CompanyPeersRow.md
 docs/CompanyProgramsResponse.md
 docs/CompanyProgramsRow.md
 docs/CompanyRareDiseaseDeclarationsResponse.md
@@ -575,6 +581,8 @@ src/models/company_competitor_activity_response.rs
 src/models/company_competitor_activity_row.rs
 src/models/company_competitors_response.rs
 src/models/company_competitors_row.rs
+src/models/company_cosponsors_response.rs
+src/models/company_cosponsors_row.rs
 src/models/company_financials_response.rs
 src/models/company_financials_row.rs
 src/models/company_firmographics_response.rs
@@ -585,6 +593,10 @@ src/models/company_funding_summary_response.rs
 src/models/company_funding_summary_row.rs
 src/models/company_members_response.rs
 src/models/company_members_row.rs
+src/models/company_peer_profile_response.rs
+src/models/company_peer_profile_row.rs
+src/models/company_peers_response.rs
+src/models/company_peers_row.rs
 src/models/company_programs_response.rs
 src/models/company_programs_row.rs
 src/models/company_rare_disease_declarations_response.rs

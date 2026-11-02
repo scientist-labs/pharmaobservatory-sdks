@@ -28,6 +28,7 @@ Name | Type | Description | Notes
 **StatusOnPage** | Pointer to **NullableString** | The status the investor&#39;s page states for the company, verbatim: current, realized, exited or unknown (the page listed it with no status). Null for a row only SEC filings name. | [optional] 
 **StatusDate** | Pointer to **NullableString** | The date the page itself prints for the status, as printed (for example 2024 or March 2024). Null unless the page printed one. | [optional] 
 **StatusFirstObservedAt** | Pointer to **NullableString** | The date we first saw this status for the company on the investor&#39;s page: an observation date, never the date the event happened. | [optional] 
+**SiteEvidenceVerified** | Pointer to **NullableBool** | True when the quote behind a website listing was found on the investor&#39;s page, false when it was not, null when no verification flag was recorded and for a row only SEC filings name. | [optional] 
 **SourceUrl** | Pointer to **NullableString** | The address of the investor&#39;s portfolio page the listing was read from. Null for a row only SEC filings name. | [optional] 
 **SiteLastRetrievedAt** | Pointer to **NullableTime** | When the investor&#39;s portfolio page was last retrieved with the company listed on it, in UTC. | [optional] 
 **IsLifeSciencesIssuer** | Pointer to **NullableBool** | True when the issuer&#39;s SIC (Standard Industrial Classification) code is a life-sciences code, false when it is another code, null when the issuer has no SIC evidence. | [optional] 
@@ -891,6 +892,41 @@ HasStatusFirstObservedAt returns a boolean if a field has been set.
 `func (o *InvestorPortfolioRow) UnsetStatusFirstObservedAt()`
 
 UnsetStatusFirstObservedAt ensures that no value is present for StatusFirstObservedAt, not even an explicit nil
+### GetSiteEvidenceVerified
+
+`func (o *InvestorPortfolioRow) GetSiteEvidenceVerified() bool`
+
+GetSiteEvidenceVerified returns the SiteEvidenceVerified field if non-nil, zero value otherwise.
+
+### GetSiteEvidenceVerifiedOk
+
+`func (o *InvestorPortfolioRow) GetSiteEvidenceVerifiedOk() (*bool, bool)`
+
+GetSiteEvidenceVerifiedOk returns a tuple with the SiteEvidenceVerified field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSiteEvidenceVerified
+
+`func (o *InvestorPortfolioRow) SetSiteEvidenceVerified(v bool)`
+
+SetSiteEvidenceVerified sets SiteEvidenceVerified field to given value.
+
+### HasSiteEvidenceVerified
+
+`func (o *InvestorPortfolioRow) HasSiteEvidenceVerified() bool`
+
+HasSiteEvidenceVerified returns a boolean if a field has been set.
+
+### SetSiteEvidenceVerifiedNil
+
+`func (o *InvestorPortfolioRow) SetSiteEvidenceVerifiedNil(b bool)`
+
+ SetSiteEvidenceVerifiedNil sets the value for SiteEvidenceVerified to be an explicit nil
+
+### UnsetSiteEvidenceVerified
+`func (o *InvestorPortfolioRow) UnsetSiteEvidenceVerified()`
+
+UnsetSiteEvidenceVerified ensures that no value is present for SiteEvidenceVerified, not even an explicit nil
 ### GetSourceUrl
 
 `func (o *InvestorPortfolioRow) GetSourceUrl() string`

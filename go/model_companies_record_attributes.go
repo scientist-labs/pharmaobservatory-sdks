@@ -21,6 +21,7 @@ var _ MappedNullable = &CompaniesRecordAttributes{}
 type CompaniesRecordAttributes struct {
 	CompanyFirmographics *CompanyFirmographicsRow `json:"company_firmographics,omitempty"`
 	CompanyFundingSummary *CompanyFundingSummaryRow `json:"company_funding_summary,omitempty"`
+	CompanyPeerProfile *CompanyPeerProfileRow `json:"company_peer_profile,omitempty"`
 	CompanyTrialGeography *CompanyTrialGeographyRow `json:"company_trial_geography,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -108,6 +109,38 @@ func (o *CompaniesRecordAttributes) SetCompanyFundingSummary(v CompanyFundingSum
 	o.CompanyFundingSummary = &v
 }
 
+// GetCompanyPeerProfile returns the CompanyPeerProfile field value if set, zero value otherwise.
+func (o *CompaniesRecordAttributes) GetCompanyPeerProfile() CompanyPeerProfileRow {
+	if o == nil || IsNil(o.CompanyPeerProfile) {
+		var ret CompanyPeerProfileRow
+		return ret
+	}
+	return *o.CompanyPeerProfile
+}
+
+// GetCompanyPeerProfileOk returns a tuple with the CompanyPeerProfile field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CompaniesRecordAttributes) GetCompanyPeerProfileOk() (*CompanyPeerProfileRow, bool) {
+	if o == nil || IsNil(o.CompanyPeerProfile) {
+		return nil, false
+	}
+	return o.CompanyPeerProfile, true
+}
+
+// HasCompanyPeerProfile returns a boolean if a field has been set.
+func (o *CompaniesRecordAttributes) HasCompanyPeerProfile() bool {
+	if o != nil && !IsNil(o.CompanyPeerProfile) {
+		return true
+	}
+
+	return false
+}
+
+// SetCompanyPeerProfile gets a reference to the given CompanyPeerProfileRow and assigns it to the CompanyPeerProfile field.
+func (o *CompaniesRecordAttributes) SetCompanyPeerProfile(v CompanyPeerProfileRow) {
+	o.CompanyPeerProfile = &v
+}
+
 // GetCompanyTrialGeography returns the CompanyTrialGeography field value if set, zero value otherwise.
 func (o *CompaniesRecordAttributes) GetCompanyTrialGeography() CompanyTrialGeographyRow {
 	if o == nil || IsNil(o.CompanyTrialGeography) {
@@ -156,6 +189,9 @@ func (o CompaniesRecordAttributes) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.CompanyFundingSummary) {
 		toSerialize["company_funding_summary"] = o.CompanyFundingSummary
 	}
+	if !IsNil(o.CompanyPeerProfile) {
+		toSerialize["company_peer_profile"] = o.CompanyPeerProfile
+	}
 	if !IsNil(o.CompanyTrialGeography) {
 		toSerialize["company_trial_geography"] = o.CompanyTrialGeography
 	}
@@ -183,6 +219,7 @@ func (o *CompaniesRecordAttributes) UnmarshalJSON(data []byte) (err error) {
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
 		delete(additionalProperties, "company_firmographics")
 		delete(additionalProperties, "company_funding_summary")
+		delete(additionalProperties, "company_peer_profile")
 		delete(additionalProperties, "company_trial_geography")
 		o.AdditionalProperties = additionalProperties
 	}

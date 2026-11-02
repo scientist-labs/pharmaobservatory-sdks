@@ -16,11 +16,14 @@ Method | HTTP request | Description
 [**companies_period_company_collaborators**](CompaniesApi.md#companies_period_company_collaborators) | **GET** /api/v1/companies/{id}/company_collaborators | Company study collaborators by disease area
 [**companies_period_company_competitor_activity**](CompaniesApi.md#companies_period_company_competitor_activity) | **GET** /api/v1/companies/{id}/company_competitor_activity | Company competitor activity by disease area
 [**companies_period_company_competitors**](CompaniesApi.md#companies_period_company_competitors) | **GET** /api/v1/companies/{id}/company_competitors | Company program overlap
+[**companies_period_company_cosponsors**](CompaniesApi.md#companies_period_company_cosponsors) | **GET** /api/v1/companies/{id}/company_cosponsors | Company co-sponsors
 [**companies_period_company_financials**](CompaniesApi.md#companies_period_company_financials) | **GET** /api/v1/companies/{id}/company_financials | Company SEC financials
 [**companies_period_company_firmographics**](CompaniesApi.md#companies_period_company_firmographics) | **GET** /api/v1/companies/{id}/company_firmographics | Company firmographics
 [**companies_period_company_funding_events**](CompaniesApi.md#companies_period_company_funding_events) | **GET** /api/v1/companies/{id}/company_funding_events | Company funding events
 [**companies_period_company_funding_summary**](CompaniesApi.md#companies_period_company_funding_summary) | **GET** /api/v1/companies/{id}/company_funding_summary | Company funding summary
 [**companies_period_company_members**](CompaniesApi.md#companies_period_company_members) | **GET** /api/v1/companies/{id}/company_members | Company members
+[**companies_period_company_peer_profile**](CompaniesApi.md#companies_period_company_peer_profile) | **GET** /api/v1/companies/{id}/company_peer_profile | Company peer profile
+[**companies_period_company_peers**](CompaniesApi.md#companies_period_company_peers) | **GET** /api/v1/companies/{id}/company_peers | Company peers
 [**companies_period_company_programs**](CompaniesApi.md#companies_period_company_programs) | **GET** /api/v1/companies/{id}/company_programs | Company programs
 [**companies_period_company_rare_disease_declarations**](CompaniesApi.md#companies_period_company_rare_disease_declarations) | **GET** /api/v1/companies/{id}/company_rare_disease_declarations | Organization-wide rare disease declarations
 [**companies_period_company_targets**](CompaniesApi.md#companies_period_company_targets) | **GET** /api/v1/companies/{id}/company_targets | Targets a company pursues
@@ -40,6 +43,7 @@ Method | HTTP request | Description
 [**companies_period_inspections**](CompaniesApi.md#companies_period_inspections) | **GET** /api/v1/companies/{id}/inspections | FDA inspections
 [**companies_period_institutional_holdings**](CompaniesApi.md#companies_period_institutional_holdings) | **GET** /api/v1/companies/{id}/institutional_holdings | Institutional holdings (SEC Form 13F)
 [**companies_period_institutional_quarter_totals**](CompaniesApi.md#companies_period_institutional_quarter_totals) | **GET** /api/v1/companies/{id}/institutional_quarter_totals | Institutional quarter totals (SEC Form 13F)
+[**companies_period_investor_portfolio**](CompaniesApi.md#companies_period_investor_portfolio) | **GET** /api/v1/companies/{id}/investor_portfolio | Investor portfolio (offering filings and investor websites)
 [**companies_period_legal_entities**](CompaniesApi.md#companies_period_legal_entities) | **GET** /api/v1/companies/{id}/legal_entities | Legal entities
 [**companies_period_legal_entity_sec_filings**](CompaniesApi.md#companies_period_legal_entity_sec_filings) | **GET** /api/v1/companies/{id}/legal_entity_sec_filings | SEC filer records
 [**companies_period_list**](CompaniesApi.md#companies_period_list) | **GET** /api/v1/companies | List companies
@@ -479,6 +483,40 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## companies_period_company_cosponsors
+
+> models::CompanyCosponsorsResponse companies_period_company_cosponsors(id, cursor, limit, sort, group_by, measure, scope)
+Company co-sponsors
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
+
+### Return type
+
+[**models::CompanyCosponsorsResponse**](CompanyCosponsorsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## companies_period_company_financials
 
 > models::CompanyFinancialsResponse companies_period_company_financials(id, cursor, limit, sort, group_by, measure, scope)
@@ -636,6 +674,74 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::CompanyMembersResponse**](CompanyMembersResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## companies_period_company_peer_profile
+
+> models::CompanyPeerProfileResponse companies_period_company_peer_profile(id, cursor, limit, sort, group_by, measure, scope)
+Company peer profile
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
+
+### Return type
+
+[**models::CompanyPeerProfileResponse**](CompanyPeerProfileResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## companies_period_company_peers
+
+> models::CompanyPeersResponse companies_period_company_peers(id, cursor, limit, sort, group_by, measure, scope)
+Company peers
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
+
+### Return type
+
+[**models::CompanyPeersResponse**](CompanyPeersResponse.md)
 
 ### Authorization
 
@@ -1276,6 +1382,40 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::InstitutionalQuarterTotalsResponse**](InstitutionalQuarterTotalsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## companies_period_investor_portfolio
+
+> models::InvestorPortfolioResponse companies_period_investor_portfolio(id, cursor, limit, sort, group_by, measure, scope)
+Investor portfolio (offering filings and investor websites)
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
+
+### Return type
+
+[**models::InvestorPortfolioResponse**](InvestorPortfolioResponse.md)
 
 ### Authorization
 

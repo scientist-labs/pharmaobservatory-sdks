@@ -22,6 +22,7 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**legal_entities_inspections**](LegalEntitiesApi.md#legal_entities_inspections) | **GET** /api/v1/legal_entities/{id}/inspections | FDA inspections |
 | [**legal_entities_institutional_holdings**](LegalEntitiesApi.md#legal_entities_institutional_holdings) | **GET** /api/v1/legal_entities/{id}/institutional_holdings | Institutional holdings (SEC Form 13F) |
 | [**legal_entities_institutional_quarter_totals**](LegalEntitiesApi.md#legal_entities_institutional_quarter_totals) | **GET** /api/v1/legal_entities/{id}/institutional_quarter_totals | Institutional quarter totals (SEC Form 13F) |
+| [**legal_entities_investor_portfolio**](LegalEntitiesApi.md#legal_entities_investor_portfolio) | **GET** /api/v1/legal_entities/{id}/investor_portfolio | Investor portfolio (offering filings and investor websites) |
 | [**legal_entities_legal_entity_sec_filings**](LegalEntitiesApi.md#legal_entities_legal_entity_sec_filings) | **GET** /api/v1/legal_entities/{id}/legal_entity_sec_filings | SEC filer records |
 | [**legal_entities_list**](LegalEntitiesApi.md#legal_entities_list) | **GET** /api/v1/legal_entities | List legal entities |
 | [**legal_entities_org_disclosure_trend**](LegalEntitiesApi.md#legal_entities_org_disclosure_trend) | **GET** /api/v1/legal_entities/{id}/org_disclosure_trend | Organization disclosure trend |
@@ -1449,6 +1450,85 @@ end
 ### Return type
 
 [**InstitutionalQuarterTotalsResponse**](InstitutionalQuarterTotalsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## legal_entities_investor_portfolio
+
+> <InvestorPortfolioResponse> legal_entities_investor_portfolio(id, opts)
+
+Investor portfolio (offering filings and investor websites)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::LegalEntitiesApi.new
+id = 'edgar:0001114448' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Investor portfolio (offering filings and investor websites)
+  result = api_instance.legal_entities_investor_portfolio(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_investor_portfolio: #{e}"
+end
+```
+
+#### Using the legal_entities_investor_portfolio_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<InvestorPortfolioResponse>, Integer, Hash)> legal_entities_investor_portfolio_with_http_info(id, opts)
+
+```ruby
+begin
+  # Investor portfolio (offering filings and investor websites)
+  data, status_code, headers = api_instance.legal_entities_investor_portfolio_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <InvestorPortfolioResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_investor_portfolio_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**InvestorPortfolioResponse**](InvestorPortfolioResponse.md)
 
 ### Authorization
 

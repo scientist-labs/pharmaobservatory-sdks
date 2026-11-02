@@ -73,6 +73,8 @@ type CompanyCompetitorsRow struct {
 	TopSharedIndications []string `json:"top_shared_indications,omitempty"`
 	// Up to 3 shared mechanisms written as a gene symbol and an action, by combined phase then combined trials. An empty list when none.
 	TopSharedMechanisms []string `json:"top_shared_mechanisms,omitempty"`
+	// Distinct trials on which the company and the competitor are both named as sponsors, counted over their subtrees; 0 when none. A consortium trial (more than 25 sponsor companies) is left out.
+	NCosponsoredTrials NullableInt32 `json:"n_cosponsored_trials,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -1202,6 +1204,48 @@ func (o *CompanyCompetitorsRow) SetTopSharedMechanisms(v []string) {
 	o.TopSharedMechanisms = v
 }
 
+// GetNCosponsoredTrials returns the NCosponsoredTrials field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetNCosponsoredTrials() int32 {
+	if o == nil || IsNil(o.NCosponsoredTrials.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.NCosponsoredTrials.Get()
+}
+
+// GetNCosponsoredTrialsOk returns a tuple with the NCosponsoredTrials field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyCompetitorsRow) GetNCosponsoredTrialsOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NCosponsoredTrials.Get(), o.NCosponsoredTrials.IsSet()
+}
+
+// HasNCosponsoredTrials returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasNCosponsoredTrials() bool {
+	if o != nil && o.NCosponsoredTrials.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNCosponsoredTrials gets a reference to the given NullableInt32 and assigns it to the NCosponsoredTrials field.
+func (o *CompanyCompetitorsRow) SetNCosponsoredTrials(v int32) {
+	o.NCosponsoredTrials.Set(&v)
+}
+// SetNCosponsoredTrialsNil sets the value for NCosponsoredTrials to be an explicit nil
+func (o *CompanyCompetitorsRow) SetNCosponsoredTrialsNil() {
+	o.NCosponsoredTrials.Set(nil)
+}
+
+// UnsetNCosponsoredTrials ensures that no value is present for NCosponsoredTrials, not even an explicit nil
+func (o *CompanyCompetitorsRow) UnsetNCosponsoredTrials() {
+	o.NCosponsoredTrials.Unset()
+}
+
 func (o CompanyCompetitorsRow) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -1293,6 +1337,9 @@ func (o CompanyCompetitorsRow) ToMap() (map[string]interface{}, error) {
 	if o.TopSharedMechanisms != nil {
 		toSerialize["top_shared_mechanisms"] = o.TopSharedMechanisms
 	}
+	if o.NCosponsoredTrials.IsSet() {
+		toSerialize["n_cosponsored_trials"] = o.NCosponsoredTrials.Get()
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -1342,6 +1389,7 @@ func (o *CompanyCompetitorsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "top_shared_targets")
 		delete(additionalProperties, "top_shared_indications")
 		delete(additionalProperties, "top_shared_mechanisms")
+		delete(additionalProperties, "n_cosponsored_trials")
 		o.AdditionalProperties = additionalProperties
 	}
 

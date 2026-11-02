@@ -78,6 +78,8 @@ docs/CompanyCompetitorActivityResponse.md
 docs/CompanyCompetitorActivityRow.md
 docs/CompanyCompetitorsResponse.md
 docs/CompanyCompetitorsRow.md
+docs/CompanyCosponsorsResponse.md
+docs/CompanyCosponsorsRow.md
 docs/CompanyFinancialsResponse.md
 docs/CompanyFinancialsRow.md
 docs/CompanyFirmographicsResponse.md
@@ -88,6 +90,10 @@ docs/CompanyFundingSummaryResponse.md
 docs/CompanyFundingSummaryRow.md
 docs/CompanyMembersResponse.md
 docs/CompanyMembersRow.md
+docs/CompanyPeerProfileResponse.md
+docs/CompanyPeerProfileRow.md
+docs/CompanyPeersResponse.md
+docs/CompanyPeersRow.md
 docs/CompanyProgramsResponse.md
 docs/CompanyProgramsRow.md
 docs/CompanyRareDiseaseDeclarationsResponse.md
@@ -578,6 +584,8 @@ lib/pharmaobservatory/models/company_competitor_activity_response.rb
 lib/pharmaobservatory/models/company_competitor_activity_row.rb
 lib/pharmaobservatory/models/company_competitors_response.rb
 lib/pharmaobservatory/models/company_competitors_row.rb
+lib/pharmaobservatory/models/company_cosponsors_response.rb
+lib/pharmaobservatory/models/company_cosponsors_row.rb
 lib/pharmaobservatory/models/company_financials_response.rb
 lib/pharmaobservatory/models/company_financials_row.rb
 lib/pharmaobservatory/models/company_firmographics_response.rb
@@ -588,6 +596,10 @@ lib/pharmaobservatory/models/company_funding_summary_response.rb
 lib/pharmaobservatory/models/company_funding_summary_row.rb
 lib/pharmaobservatory/models/company_members_response.rb
 lib/pharmaobservatory/models/company_members_row.rb
+lib/pharmaobservatory/models/company_peer_profile_response.rb
+lib/pharmaobservatory/models/company_peer_profile_row.rb
+lib/pharmaobservatory/models/company_peers_response.rb
+lib/pharmaobservatory/models/company_peers_row.rb
 lib/pharmaobservatory/models/company_programs_response.rb
 lib/pharmaobservatory/models/company_programs_row.rb
 lib/pharmaobservatory/models/company_rare_disease_declarations_response.rb
@@ -1056,6 +1068,8 @@ spec/models/company_competitor_activity_response_spec.rb
 spec/models/company_competitor_activity_row_spec.rb
 spec/models/company_competitors_response_spec.rb
 spec/models/company_competitors_row_spec.rb
+spec/models/company_cosponsors_response_spec.rb
+spec/models/company_cosponsors_row_spec.rb
 spec/models/company_financials_response_spec.rb
 spec/models/company_financials_row_spec.rb
 spec/models/company_firmographics_response_spec.rb
@@ -1066,6 +1080,10 @@ spec/models/company_funding_summary_response_spec.rb
 spec/models/company_funding_summary_row_spec.rb
 spec/models/company_members_response_spec.rb
 spec/models/company_members_row_spec.rb
+spec/models/company_peer_profile_response_spec.rb
+spec/models/company_peer_profile_row_spec.rb
+spec/models/company_peers_response_spec.rb
+spec/models/company_peers_row_spec.rb
 spec/models/company_programs_response_spec.rb
 spec/models/company_programs_row_spec.rb
 spec/models/company_rare_disease_declarations_response_spec.rb

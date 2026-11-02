@@ -31,6 +31,7 @@
 | **top_shared_targets** | **Array&lt;String&gt;** | Up to 5 shared target gene symbols, by combined phase then combined trials. An empty list when none. | [optional] |
 | **top_shared_indications** | **Array&lt;String&gt;** | Up to 5 shared disease area names, by combined trial count. An empty list when none. | [optional] |
 | **top_shared_mechanisms** | **Array&lt;String&gt;** | Up to 3 shared mechanisms written as a gene symbol and an action, by combined phase then combined trials. An empty list when none. | [optional] |
+| **n_cosponsored_trials** | **Integer** | Distinct trials on which the company and the competitor are both named as sponsors, counted over their subtrees; 0 when none. A consortium trial (more than 25 sponsor companies) is left out. | [optional] |
 
 ## Example
 
@@ -64,7 +65,8 @@ instance = PharmaObservatory::CompanyCompetitorsRow.new(
   n_competitor_indications: null,
   top_shared_targets: null,
   top_shared_indications: null,
-  top_shared_mechanisms: null
+  top_shared_mechanisms: null,
+  n_cosponsored_trials: null
 )
 ```
 

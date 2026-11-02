@@ -19,6 +19,8 @@ module PharmaObservatory
 
     attr_accessor :company_funding_summary
 
+    attr_accessor :company_peer_profile
+
     attr_accessor :company_trial_geography
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -26,6 +28,7 @@ module PharmaObservatory
       {
         :'company_firmographics' => :'company_firmographics',
         :'company_funding_summary' => :'company_funding_summary',
+        :'company_peer_profile' => :'company_peer_profile',
         :'company_trial_geography' => :'company_trial_geography'
       }
     end
@@ -45,6 +48,7 @@ module PharmaObservatory
       {
         :'company_firmographics' => :'CompanyFirmographicsRow',
         :'company_funding_summary' => :'CompanyFundingSummaryRow',
+        :'company_peer_profile' => :'CompanyPeerProfileRow',
         :'company_trial_geography' => :'CompanyTrialGeographyRow'
       }
     end
@@ -79,6 +83,10 @@ module PharmaObservatory
         self.company_funding_summary = attributes[:'company_funding_summary']
       end
 
+      if attributes.key?(:'company_peer_profile')
+        self.company_peer_profile = attributes[:'company_peer_profile']
+      end
+
       if attributes.key?(:'company_trial_geography')
         self.company_trial_geography = attributes[:'company_trial_geography']
       end
@@ -106,6 +114,7 @@ module PharmaObservatory
       self.class == o.class &&
           company_firmographics == o.company_firmographics &&
           company_funding_summary == o.company_funding_summary &&
+          company_peer_profile == o.company_peer_profile &&
           company_trial_geography == o.company_trial_geography
     end
 
@@ -118,7 +127,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [company_firmographics, company_funding_summary, company_trial_geography].hash
+      [company_firmographics, company_funding_summary, company_peer_profile, company_trial_geography].hash
     end
 
     # Builds the object from hash

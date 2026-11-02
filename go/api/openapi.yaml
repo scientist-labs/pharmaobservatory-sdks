@@ -3708,6 +3708,129 @@ paths:
       summary: Company program overlap
       tags:
       - companies
+  /api/v1/companies/{id}/company_cosponsors:
+    get:
+      operationId: companies.company_cosponsors
+      parameters:
+      - example: company:c0185cf6c39a2536ad436cf6255494c0
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: company (this company only) or group (its corporate group).
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - company
+          - group
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyCosponsorsResponse'
+          description: "Company co-sponsors: one row per company and co-sponsor, at\
+            \ the root level (the co-sponsor's ultimate parent) and at the member\
+            \ level (a company under that root). Filters: {column}=v (repeat a key\
+            \ for IN), {column}.gt, .gte, .lt, .lte, .ne, .contains (text), .null=true|false.\
+            \ sort=a,-b. group_by=dimension (a date takes :year, :quarter or :month).\
+            \ measure=count, sum(col), avg(col), min(col), max(col), median(col),\
+            \ count_distinct(col). cursor=next_cursor of the previous page. limit\
+            \ up to 500, default 50. On company routes scope=company|group. The columns,\
+            \ dimensions and measures of a dataset are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: Company co-sponsors
+      tags:
+      - companies
   /api/v1/companies/{id}/company_financials:
     get:
       operationId: companies.company_financials
@@ -4316,6 +4439,250 @@ paths:
       security:
       - ApiBearerJwt: []
       summary: Company members
+      tags:
+      - companies
+  /api/v1/companies/{id}/company_peer_profile:
+    get:
+      operationId: companies.company_peer_profile
+      parameters:
+      - example: company:c0185cf6c39a2536ad436cf6255494c0
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: company (this company only) or group (its corporate group).
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - company
+          - group
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyPeerProfileResponse'
+          description: "Company peer profile: one row per industry company with at\
+            \ least one program row. Filters: {column}=v (repeat a key for IN), {column}.gt,\
+            \ .gte, .lt, .lte, .ne, .contains (text), .null=true|false. sort=a,-b.\
+            \ group_by=dimension (a date takes :year, :quarter or :month). measure=count,\
+            \ sum(col), avg(col), min(col), max(col), median(col), count_distinct(col).\
+            \ cursor=next_cursor of the previous page. limit up to 500, default 50.\
+            \ On company routes scope=company|group. The columns, dimensions and measures\
+            \ of a dataset are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: Company peer profile
+      tags:
+      - companies
+  /api/v1/companies/{id}/company_peers:
+    get:
+      operationId: companies.company_peers
+      parameters:
+      - example: company:c0185cf6c39a2536ad436cf6255494c0
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: company (this company only) or group (its corporate group).
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - company
+          - group
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyPeersResponse'
+          description: "Company peers: one row per ordered company pair: an industry\
+            \ company and one of its top 10 peers by the match ladder. Filters: {column}=v\
+            \ (repeat a key for IN), {column}.gt, .gte, .lt, .lte, .ne, .contains\
+            \ (text), .null=true|false. sort=a,-b. group_by=dimension (a date takes\
+            \ :year, :quarter or :month). measure=count, sum(col), avg(col), min(col),\
+            \ max(col), median(col), count_distinct(col). cursor=next_cursor of the\
+            \ previous page. limit up to 500, default 50. On company routes scope=company|group.\
+            \ The columns, dimensions and measures of a dataset are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: Company peers
       tags:
       - companies
   /api/v1/companies/{id}/company_programs:
@@ -6511,6 +6878,130 @@ paths:
       security:
       - ApiBearerJwt: []
       summary: Institutional quarter totals (SEC Form 13F)
+      tags:
+      - companies
+  /api/v1/companies/{id}/investor_portfolio:
+    get:
+      operationId: companies.investor_portfolio
+      parameters:
+      - example: company:c0185cf6c39a2536ad436cf6255494c0
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: company (this company only) or group (its corporate group).
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - company
+          - group
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvestorPortfolioResponse'
+          description: "Investor portfolio (offering filings and investor websites):\
+            \ one row per investor and company key (the organization id where the\
+            \ company resolves, else the SEC Central Index Key, else the name as printed\
+            \ on the investor's page). Filters: {column}=v (repeat a key for IN),\
+            \ {column}.gt, .gte, .lt, .lte, .ne, .contains (text), .null=true|false.\
+            \ sort=a,-b. group_by=dimension (a date takes :year, :quarter or :month).\
+            \ measure=count, sum(col), avg(col), min(col), max(col), median(col),\
+            \ count_distinct(col). cursor=next_cursor of the previous page. limit\
+            \ up to 500, default 50. On company routes scope=company|group. The columns,\
+            \ dimensions and measures of a dataset are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: Investor portfolio (offering filings and investor websites)
       tags:
       - companies
   /api/v1/companies/{id}/legal_entities:
@@ -20137,6 +20628,119 @@ paths:
       security:
       - ApiBearerJwt: []
       summary: Institutional quarter totals (SEC Form 13F)
+      tags:
+      - legal_entities
+  /api/v1/legal_entities/{id}/investor_portfolio:
+    get:
+      operationId: legal_entities.investor_portfolio
+      parameters:
+      - example: edgar:0001114448
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvestorPortfolioResponse'
+          description: "Investor portfolio (offering filings and investor websites):\
+            \ one row per investor and company key (the organization id where the\
+            \ company resolves, else the SEC Central Index Key, else the name as printed\
+            \ on the investor's page). Filters: {column}=v (repeat a key for IN),\
+            \ {column}.gt, .gte, .lt, .lte, .ne, .contains (text), .null=true|false.\
+            \ sort=a,-b. group_by=dimension (a date takes :year, :quarter or :month).\
+            \ measure=count, sum(col), avg(col), min(col), max(col), median(col),\
+            \ count_distinct(col). cursor=next_cursor of the previous page. limit\
+            \ up to 500, default 50. On company routes scope=company|group. The columns,\
+            \ dimensions and measures of a dataset are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: Investor portfolio (offering filings and investor websites)
       tags:
       - legal_entities
   /api/v1/legal_entities/{id}/legal_entity_sec_filings:
@@ -42032,6 +42636,7 @@ components:
         - top_shared_targets
         n_competitor_indications: 1
         n_class_candidates: 0
+        n_cosponsored_trials: 6
         top_shared_indications:
         - top_shared_indications
         - top_shared_indications
@@ -42204,6 +42809,13 @@ components:
             type: string
           nullable: true
           type: array
+        n_cosponsored_trials:
+          description: "Distinct trials on which the company and the competitor are\
+            \ both named as sponsors, counted over their subtrees; 0 when none. A\
+            \ consortium trial (more than 25 sponsor companies) is left out."
+          format: int32
+          nullable: true
+          type: integer
       type: object
     CompanyCompetitorsResponse:
       example:
@@ -42241,6 +42853,7 @@ components:
           - top_shared_targets
           n_competitor_indications: 1
           n_class_candidates: 0
+          n_cosponsored_trials: 6
           top_shared_indications:
           - top_shared_indications
           - top_shared_indications
@@ -42274,6 +42887,7 @@ components:
           - top_shared_targets
           n_competitor_indications: 1
           n_class_candidates: 0
+          n_cosponsored_trials: 6
           top_shared_indications:
           - top_shared_indications
           - top_shared_indications
@@ -42305,7 +42919,7 @@ components:
         freshness:
           last_loaded: last_loaded
           source: source
-        total: 6
+        total: 7
         measures:
         - measures
         - measures
@@ -45397,21 +46011,21 @@ components:
         roster_root_id: roster_root_id
         company_id: company_id
         group_name: group_name
-        roster_lead_trials: 3
+        roster_lead_trials: 5
         map_country_basis: map_country_basis
-        n_unresolved_sites: 1
+        n_unresolved_sites: 8
         is_public_roster_root: true
         domicile_country: domicile_country
-        roster_n_located_sites: 1
+        roster_n_located_sites: 9
         group_id: group_id
         site_country: site_country
         company_name: company_name
         map_country: map_country
         roster_map_country_basis: roster_map_country_basis
-        n_unlocated_sites: 4
-        n_located_sites: 2
+        n_unlocated_sites: 9
+        n_located_sites: 9
         roster_map_country: roster_map_country
-        n_site_countries: 7
+        n_site_countries: 6
       properties:
         company_id:
           description: The company key (company:<key>).
@@ -45543,39 +46157,39 @@ components:
         - roster_root_id: roster_root_id
           company_id: company_id
           group_name: group_name
-          roster_lead_trials: 3
+          roster_lead_trials: 5
           map_country_basis: map_country_basis
-          n_unresolved_sites: 1
+          n_unresolved_sites: 8
           is_public_roster_root: true
           domicile_country: domicile_country
-          roster_n_located_sites: 1
+          roster_n_located_sites: 9
           group_id: group_id
           site_country: site_country
           company_name: company_name
           map_country: map_country
           roster_map_country_basis: roster_map_country_basis
-          n_unlocated_sites: 4
-          n_located_sites: 2
+          n_unlocated_sites: 9
+          n_located_sites: 9
           roster_map_country: roster_map_country
-          n_site_countries: 7
+          n_site_countries: 6
         - roster_root_id: roster_root_id
           company_id: company_id
           group_name: group_name
-          roster_lead_trials: 3
+          roster_lead_trials: 5
           map_country_basis: map_country_basis
-          n_unresolved_sites: 1
+          n_unresolved_sites: 8
           is_public_roster_root: true
           domicile_country: domicile_country
-          roster_n_located_sites: 1
+          roster_n_located_sites: 9
           group_id: group_id
           site_country: site_country
           company_name: company_name
           map_country: map_country
           roster_map_country_basis: roster_map_country_basis
-          n_unlocated_sites: 4
-          n_located_sites: 2
+          n_unlocated_sites: 9
+          n_located_sites: 9
           roster_map_country: roster_map_country
-          n_site_countries: 7
+          n_site_countries: 6
         freshness:
           last_loaded: last_loaded
           source: source
@@ -61412,6 +62026,7 @@ components:
         issuer_group_id: issuer_group_id
         source_url: source_url
         company_website_url: company_website_url
+        site_evidence_verified: true
         is_life_sciences_issuer: true
         status_on_page: status_on_page
         issuer_company_id: issuer_company_id
@@ -61562,6 +62177,12 @@ components:
           format: date
           nullable: true
           type: string
+        site_evidence_verified:
+          description: "True when the quote behind a website listing was found on\
+            \ the investor's page, false when it was not, null when no verification\
+            \ flag was recorded and for a row only SEC filings name."
+          nullable: true
+          type: boolean
         source_url:
           description: The address of the investor's portfolio page the listing was
             read from. Null for a row only SEC filings name.
@@ -61625,6 +62246,7 @@ components:
           issuer_group_id: issuer_group_id
           source_url: source_url
           company_website_url: company_website_url
+          site_evidence_verified: true
           is_life_sciences_issuer: true
           status_on_page: status_on_page
           issuer_company_id: issuer_company_id
@@ -61656,6 +62278,7 @@ components:
           issuer_group_id: issuer_group_id
           source_url: source_url
           company_website_url: company_website_url
+          site_evidence_verified: true
           is_life_sciences_issuer: true
           status_on_page: status_on_page
           issuer_company_id: issuer_company_id
@@ -95546,25 +96169,48 @@ components:
             company_name: company_name
             total_raised_usd: 9.301444243932576
             n_rounds: 1
+          company_peer_profile:
+            primary_area_trials: 1
+            size_band: size_band
+            n_biologic_drugs: 7
+            n_peers: 7
+            company_id: company_id
+            group_name: group_name
+            primary_area: primary_area
+            num_lead_trials: 1
+            n_cell_candidates: 6
+            n_live_owned_drugs: 2
+            peer_state: peer_state
+            lead_drug_name: lead_drug_name
+            lead_drug_id: lead_drug_id
+            group_id: group_id
+            company_name: company_name
+            lead_stage: lead_stage
+            coverage_measured: 1
+            coverage_total: 4
+            modality_band: modality_band
+            n_live_owned_programs: 3
+            biologic_share: 1.2315135367772556
+            lead_max_phase: 4
           company_trial_geography:
             roster_root_id: roster_root_id
             company_id: company_id
             group_name: group_name
-            roster_lead_trials: 3
+            roster_lead_trials: 5
             map_country_basis: map_country_basis
-            n_unresolved_sites: 1
+            n_unresolved_sites: 8
             is_public_roster_root: true
             domicile_country: domicile_country
-            roster_n_located_sites: 1
+            roster_n_located_sites: 9
             group_id: group_id
             site_country: site_country
             company_name: company_name
             map_country: map_country
             roster_map_country_basis: roster_map_country_basis
-            n_unlocated_sites: 4
-            n_located_sites: 2
+            n_unlocated_sites: 9
+            n_located_sites: 9
             roster_map_country: roster_map_country
-            n_site_countries: 7
+            n_site_countries: 6
         id: id
         datasets:
         - entitled: true
@@ -98605,6 +99251,986 @@ components:
           nullable: true
           type: string
       type: object
+    CompanyPeerProfileRow:
+      additionalProperties: true
+      description: "One row of the company_peer_profile dataset: one row per industry\
+        \ company with at least one program row. A grouped request returns the group\
+        \ columns and the measures instead, as additional properties."
+      example:
+        primary_area_trials: 1
+        size_band: size_band
+        n_biologic_drugs: 7
+        n_peers: 7
+        company_id: company_id
+        group_name: group_name
+        primary_area: primary_area
+        num_lead_trials: 1
+        n_cell_candidates: 6
+        n_live_owned_drugs: 2
+        peer_state: peer_state
+        lead_drug_name: lead_drug_name
+        lead_drug_id: lead_drug_id
+        group_id: group_id
+        company_name: company_name
+        lead_stage: lead_stage
+        coverage_measured: 1
+        coverage_total: 4
+        modality_band: modality_band
+        n_live_owned_programs: 3
+        biologic_share: 1.2315135367772556
+        lead_max_phase: 4
+      properties:
+        company_id:
+          description: "Company level: the company the row is about; the entry key\
+            \ for the companies object type."
+          nullable: true
+          type: string
+        company_name:
+          description: Display name of the company.
+          nullable: true
+          type: string
+        group_id:
+          description: "Group level: the company's current ultimate parent; a root's\
+            \ group is itself."
+          nullable: true
+          type: string
+        group_name:
+          description: Display name of the group.
+          nullable: true
+          type: string
+        peer_state:
+          description: measured when the company has at least one peer; no_live_owned_program
+            when it has no live owned program; phase_not_reported when its live owned
+            programs carry no phase; no_candidates when stage and modality are known
+            and no other company shares them.
+          nullable: true
+          type: string
+        n_live_owned_programs:
+          description: "Distinct live owned (drug, condition) programs of the company's\
+            \ subtree."
+          format: int32
+          nullable: true
+          type: integer
+        n_live_owned_drugs:
+          description: Distinct live owned drugs of the company's subtree.
+          format: int32
+          nullable: true
+          type: integer
+        lead_stage:
+          description: "Furthest phase of the live owned programs: approved, phase3,\
+            \ phase2 (Phase 2/3 included), phase1 (Phase 1/2 included) or early_phase1.\
+            \ Null when no program carries a phase."
+          nullable: true
+          type: string
+        lead_max_phase:
+          description: "The phase code behind lead_stage: 6 Phase 4 or approved, 5\
+            \ Phase 3, 4 Phase 2/3, 3 Phase 2, 2 Phase 1/2, 1 Phase 1, 0 Early Phase\
+            \ 1."
+          format: int32
+          nullable: true
+          type: integer
+        lead_drug_id:
+          description: "The canonical drug id of the lead drug, the highest-phase\
+            \ live owned drug (ties: most trials, then drug id)."
+          nullable: true
+          type: string
+        lead_drug_name:
+          description: Name of the lead drug.
+          nullable: true
+          type: string
+        n_biologic_drugs:
+          description: Live owned drugs whose GSRS substance type is protein or nucleic
+            acid.
+          format: int32
+          nullable: true
+          type: integer
+        biologic_share:
+          description: "n_biologic_drugs over n_live_owned_drugs, 0 to 1. Null when\
+            \ the company has no live owned drug."
+          nullable: true
+          type: number
+        modality_band:
+          description: "biologic when biologic_share is at least 0.5, else non_biologic."
+          nullable: true
+          type: string
+        primary_area:
+          description: MeSH top-level category with the most live owned program trials.
+          nullable: true
+          type: string
+        primary_area_trials:
+          description: Live owned program trials in primary_area.
+          format: int32
+          nullable: true
+          type: integer
+        num_lead_trials:
+          description: Distinct lead-sponsored trials of the company's subtree.
+          format: int32
+          nullable: true
+          type: integer
+        size_band:
+          description: "Band of num_lead_trials: 1-4, 5-19, 20-99 or 100+."
+          nullable: true
+          type: string
+        n_cell_candidates:
+          description: "Other measured companies outside the company's group that\
+            \ share stage, modality, area and size (match level 1), before the top\
+            \ 10 are kept."
+          format: int32
+          nullable: true
+          type: integer
+        n_peers:
+          description: "Peer rows kept for the company, at most 10."
+          format: int32
+          nullable: true
+          type: integer
+        coverage_measured:
+          description: Companies in this dataset with peer_state measured. The same
+            value on every row.
+          format: int32
+          nullable: true
+          type: integer
+        coverage_total:
+          description: Companies in this dataset. The same value on every row.
+          format: int32
+          nullable: true
+          type: integer
+      type: object
+    CompanyPeerProfileResponse:
+      example:
+        next_cursor: next_cursor
+        source_credit: source_credit
+        build_state:
+          generation: generation
+          last_loaded: last_loaded
+          built: true
+        object_type: object_type
+        columns:
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        sort:
+        - sort
+        - sort
+        filters:
+        - key: ""
+        - key: ""
+        rows:
+        - primary_area_trials: 1
+          size_band: size_band
+          n_biologic_drugs: 7
+          n_peers: 7
+          company_id: company_id
+          group_name: group_name
+          primary_area: primary_area
+          num_lead_trials: 1
+          n_cell_candidates: 6
+          n_live_owned_drugs: 2
+          peer_state: peer_state
+          lead_drug_name: lead_drug_name
+          lead_drug_id: lead_drug_id
+          group_id: group_id
+          company_name: company_name
+          lead_stage: lead_stage
+          coverage_measured: 1
+          coverage_total: 4
+          modality_band: modality_band
+          n_live_owned_programs: 3
+          biologic_share: 1.2315135367772556
+          lead_max_phase: 4
+        - primary_area_trials: 1
+          size_band: size_band
+          n_biologic_drugs: 7
+          n_peers: 7
+          company_id: company_id
+          group_name: group_name
+          primary_area: primary_area
+          num_lead_trials: 1
+          n_cell_candidates: 6
+          n_live_owned_drugs: 2
+          peer_state: peer_state
+          lead_drug_name: lead_drug_name
+          lead_drug_id: lead_drug_id
+          group_id: group_id
+          company_name: company_name
+          lead_stage: lead_stage
+          coverage_measured: 1
+          coverage_total: 4
+          modality_band: modality_band
+          n_live_owned_programs: 3
+          biologic_share: 1.2315135367772556
+          lead_max_phase: 4
+        freshness:
+          last_loaded: last_loaded
+          source: source
+        total: 0
+        measures:
+        - measures
+        - measures
+        build:
+          generation: generation
+          fingerprint: fingerprint
+        scope:
+          group_id: group_id
+          group_name: group_name
+          kind: company
+        withheld_columns:
+        - withheld_columns
+        - withheld_columns
+        attribution:
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        restriction:
+          key: ""
+        group_by:
+        - group_by
+        - group_by
+        grain: grain
+        id: id
+        dataset: dataset
+        withheld_tiers:
+        - withheld_tiers
+        - withheld_tiers
+      properties:
+        dataset:
+          type: string
+        grain:
+          type: string
+        object_type:
+          nullable: true
+          type: string
+        id:
+          nullable: true
+          type: string
+        scope:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_scope'
+        columns:
+          items:
+            $ref: '#/components/schemas/DatasetColumn'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/CompanyPeerProfileRow'
+          type: array
+        total:
+          description: "The exact count of the filtered rows on an ungrouped read,\
+            \ carried by the cursor; null when grouped."
+          nullable: true
+          type: integer
+        next_cursor:
+          nullable: true
+          type: string
+        sort:
+          items:
+            type: string
+          type: array
+        filters:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        group_by:
+          items:
+            type: string
+          type: array
+        measures:
+          items:
+            type: string
+          type: array
+        attribution:
+          items:
+            $ref: '#/components/schemas/DatasetAttribution'
+          type: array
+        source_credit:
+          type: string
+        withheld_tiers:
+          items:
+            type: string
+          type: array
+        withheld_columns:
+          items:
+            type: string
+          type: array
+        freshness:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_freshness'
+        build:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_build'
+        build_state:
+          $ref: '#/components/schemas/DatasetBuildState'
+        restriction:
+          additionalProperties: true
+          nullable: true
+          type: object
+      required:
+      - columns
+      - dataset
+      - rows
+      type: object
+    CompanyPeersRow:
+      additionalProperties: true
+      description: "One row of the company_peers dataset: one row per ordered company\
+        \ pair: an industry company and one of its top 10 peers by the match ladder.\
+        \ A grouped request returns the group columns and the measures instead, as\
+        \ additional properties."
+      example:
+        size_band: size_band
+        company_id: company_id
+        group_name: group_name
+        peer_company_name: peer_company_name
+        primary_area: primary_area
+        num_lead_trials: 5
+        matched_area: true
+        peer_group_name: peer_group_name
+        matched_size: true
+        peer_group_id: peer_group_id
+        lead_drug_name: lead_drug_name
+        group_id: group_id
+        company_name: company_name
+        lead_stage: lead_stage
+        modality_band: modality_band
+        match_level: 6
+        biologic_share: 1.4658129805029452
+        peer_rank: 0
+        peer_company_id: peer_company_id
+      properties:
+        company_id:
+          description: "Company level: the company the row is about; the entry key\
+            \ for the companies object type."
+          nullable: true
+          type: string
+        company_name:
+          description: Display name of the company.
+          nullable: true
+          type: string
+        group_id:
+          description: "Group level: the company's current ultimate parent; a root's\
+            \ group is itself."
+          nullable: true
+          type: string
+        group_name:
+          description: Display name of the group.
+          nullable: true
+          type: string
+        peer_company_id:
+          description: "Company level: the peer company."
+          nullable: true
+          type: string
+        peer_company_name:
+          description: Display name of the peer company.
+          nullable: true
+          type: string
+        peer_group_id:
+          description: "Group level: the peer's current ultimate parent; a root's\
+            \ group is itself."
+          nullable: true
+          type: string
+        peer_group_name:
+          description: Display name of the peer's group.
+          nullable: true
+          type: string
+        peer_rank:
+          description: "The peer's rank for the company, 1 is the closest match: match_level\
+            \ first, then the closeness of lead-trial counts, then of biologic share.\
+            \ Dense 1 to N."
+          format: int32
+          nullable: true
+          type: integer
+        match_level:
+          description: "What the peer matched the company on. 1 stage, modality, area\
+            \ and size; 2 stage, modality and area; 3 stage, modality and size; 4\
+            \ stage and modality. Stage and modality always match."
+          format: int32
+          nullable: true
+          type: integer
+        matched_area:
+          description: True when the peer shares the company's primary therapeutic
+            area.
+          nullable: true
+          type: boolean
+        matched_size:
+          description: True when the peer shares the company's size band.
+          nullable: true
+          type: boolean
+        lead_stage:
+          description: "The peer's lead stage, the furthest phase of its live owned\
+            \ programs. Equal to the company's lead stage on every row."
+          nullable: true
+          type: string
+        lead_drug_name:
+          description: "The peer's lead drug, the highest-phase live owned drug (ties:\
+            \ most trials)."
+          nullable: true
+          type: string
+        biologic_share:
+          description: "Share, 0 to 1, of the peer's live owned drugs that are biologic\
+            \ (GSRS protein or nucleic acid substance type)."
+          nullable: true
+          type: number
+        modality_band:
+          description: "biologic when biologic_share is at least 0.5, else non_biologic.\
+            \ Equal to the company's band on every row."
+          nullable: true
+          type: string
+        primary_area:
+          description: "The peer's primary therapeutic area: the MeSH top-level category\
+            \ with the most live owned program trials."
+          nullable: true
+          type: string
+        num_lead_trials:
+          description: Distinct lead-sponsored trials of the peer's subtree.
+          format: int32
+          nullable: true
+          type: integer
+        size_band:
+          description: "Band of num_lead_trials: 1-4, 5-19, 20-99 or 100+."
+          nullable: true
+          type: string
+      type: object
+    CompanyPeersResponse:
+      example:
+        next_cursor: next_cursor
+        source_credit: source_credit
+        build_state:
+          generation: generation
+          last_loaded: last_loaded
+          built: true
+        object_type: object_type
+        columns:
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        sort:
+        - sort
+        - sort
+        filters:
+        - key: ""
+        - key: ""
+        rows:
+        - size_band: size_band
+          company_id: company_id
+          group_name: group_name
+          peer_company_name: peer_company_name
+          primary_area: primary_area
+          num_lead_trials: 5
+          matched_area: true
+          peer_group_name: peer_group_name
+          matched_size: true
+          peer_group_id: peer_group_id
+          lead_drug_name: lead_drug_name
+          group_id: group_id
+          company_name: company_name
+          lead_stage: lead_stage
+          modality_band: modality_band
+          match_level: 6
+          biologic_share: 1.4658129805029452
+          peer_rank: 0
+          peer_company_id: peer_company_id
+        - size_band: size_band
+          company_id: company_id
+          group_name: group_name
+          peer_company_name: peer_company_name
+          primary_area: primary_area
+          num_lead_trials: 5
+          matched_area: true
+          peer_group_name: peer_group_name
+          matched_size: true
+          peer_group_id: peer_group_id
+          lead_drug_name: lead_drug_name
+          group_id: group_id
+          company_name: company_name
+          lead_stage: lead_stage
+          modality_band: modality_band
+          match_level: 6
+          biologic_share: 1.4658129805029452
+          peer_rank: 0
+          peer_company_id: peer_company_id
+        freshness:
+          last_loaded: last_loaded
+          source: source
+        total: 5
+        measures:
+        - measures
+        - measures
+        build:
+          generation: generation
+          fingerprint: fingerprint
+        scope:
+          group_id: group_id
+          group_name: group_name
+          kind: company
+        withheld_columns:
+        - withheld_columns
+        - withheld_columns
+        attribution:
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        restriction:
+          key: ""
+        group_by:
+        - group_by
+        - group_by
+        grain: grain
+        id: id
+        dataset: dataset
+        withheld_tiers:
+        - withheld_tiers
+        - withheld_tiers
+      properties:
+        dataset:
+          type: string
+        grain:
+          type: string
+        object_type:
+          nullable: true
+          type: string
+        id:
+          nullable: true
+          type: string
+        scope:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_scope'
+        columns:
+          items:
+            $ref: '#/components/schemas/DatasetColumn'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/CompanyPeersRow'
+          type: array
+        total:
+          description: "The exact count of the filtered rows on an ungrouped read,\
+            \ carried by the cursor; null when grouped."
+          nullable: true
+          type: integer
+        next_cursor:
+          nullable: true
+          type: string
+        sort:
+          items:
+            type: string
+          type: array
+        filters:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        group_by:
+          items:
+            type: string
+          type: array
+        measures:
+          items:
+            type: string
+          type: array
+        attribution:
+          items:
+            $ref: '#/components/schemas/DatasetAttribution'
+          type: array
+        source_credit:
+          type: string
+        withheld_tiers:
+          items:
+            type: string
+          type: array
+        withheld_columns:
+          items:
+            type: string
+          type: array
+        freshness:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_freshness'
+        build:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_build'
+        build_state:
+          $ref: '#/components/schemas/DatasetBuildState'
+        restriction:
+          additionalProperties: true
+          nullable: true
+          type: object
+      required:
+      - columns
+      - dataset
+      - rows
+      type: object
+    CompanyCosponsorsRow:
+      additionalProperties: true
+      description: "One row of the company_cosponsors dataset: one row per company\
+        \ and co-sponsor, at the root level (the co-sponsor's ultimate parent) and\
+        \ at the member level (a company under that root). A grouped request returns\
+        \ the group columns and the measures instead, as additional properties."
+      example:
+        row_level: row_level
+        cosponsor_group_id: cosponsor_group_id
+        n_trials_company_lead: 2
+        n_shared_trials: 5
+        company_id: company_id
+        group_name: group_name
+        n_shared_conditions: 2
+        n_trials_cosponsor_lead: 7
+        cosponsor_root_id: cosponsor_root_id
+        first_shared_start_year: 9
+        cosponsor_group_name: cosponsor_group_name
+        n_members: 1
+        member_rank: 6
+        top_shared_conditions:
+        - top_shared_conditions
+        - top_shared_conditions
+        cosponsor_company_name: cosponsor_company_name
+        group_id: group_id
+        cosponsor_company_id: cosponsor_company_id
+        n_candidates: 5
+        company_name: company_name
+        cosponsor_rank: 0
+        last_shared_start_year: 3
+      properties:
+        company_id:
+          description: "Company level: the company the row is about; the entry key\
+            \ for the companies object type."
+          nullable: true
+          type: string
+        company_name:
+          description: Display name of the company.
+          nullable: true
+          type: string
+        group_id:
+          description: "Group level: the company's current ultimate parent; a root's\
+            \ group is itself."
+          nullable: true
+          type: string
+        group_name:
+          description: Display name of the group.
+          nullable: true
+          type: string
+        row_level:
+          description: "root: the co-sponsor's ultimate parent company, with the distinct\
+            \ trials any company of that root shares with this company. member: a\
+            \ company under that root that itself co-sponsored, with its own count.\
+            \ Filter on one level; the two do not add."
+          nullable: true
+          type: string
+        cosponsor_company_id:
+          description: "Company level: the co-sponsoring company. At row_level root\
+            \ this is the root company; at member it is the member company itself."
+          nullable: true
+          type: string
+        cosponsor_company_name:
+          description: Display name of the co-sponsoring company.
+          nullable: true
+          type: string
+        cosponsor_group_id:
+          description: "Group level: the co-sponsor's current ultimate parent; a root's\
+            \ group is itself."
+          nullable: true
+          type: string
+        cosponsor_group_name:
+          description: Display name of the co-sponsor's group.
+          nullable: true
+          type: string
+        cosponsor_root_id:
+          description: "The ultimate parent company of the co-sponsor, the ladder\
+            \ company's `coalesce(ultimate_parent_company_id, company_id)`. Equal\
+            \ to cosponsor_company_id at row_level root, and the root a member row\
+            \ sits under."
+          nullable: true
+          type: string
+        cosponsor_rank:
+          description: The rank of the ROOT among this company's co-sponsor roots
+            by distinct shared trials (1 is the most; ties broken by root id). The
+            same on a root row and on each of its member rows.
+          format: int32
+          nullable: true
+          type: integer
+        member_rank:
+          description: "0 on a root row; 1 and up on the member rows of that root,\
+            \ by the member's own shared trials. Order by cosponsor_rank then member_rank\
+            \ to list each root followed by its members."
+          format: int32
+          nullable: true
+          type: integer
+        n_members:
+          description: "Member companies of this root that co-sponsored with this\
+            \ company, before the member cut. The same on a root row and its member\
+            \ rows."
+          format: int32
+          nullable: true
+          type: integer
+        n_candidates:
+          description: Distinct co-sponsor roots for this company before the top-25
+            cut; the same on every row of a company.
+          format: int32
+          nullable: true
+          type: integer
+        n_shared_trials:
+          description: "Distinct trials that name both. At row_level root, the distinct\
+            \ trials of any company under the root (never a sum over members); at\
+            \ member, that company's own trials."
+          format: int32
+          nullable: true
+          type: integer
+        n_trials_company_lead:
+          description: "Of the shared trials, those where an organization record of\
+            \ this company holds the ClinicalTrials.gov lead sponsor role. At most\
+            \ n_shared_trials; it may overlap n_trials_cosponsor_lead."
+          format: int32
+          nullable: true
+          type: integer
+        n_trials_cosponsor_lead:
+          description: "Of the shared trials, those where the co-sponsor's organization\
+            \ record holds the lead sponsor role. At most n_shared_trials."
+          format: int32
+          nullable: true
+          type: integer
+        first_shared_start_year:
+          description: The earliest registered start year over the shared trials;
+            null when none has a plausible year.
+          format: int32
+          nullable: true
+          type: integer
+        last_shared_start_year:
+          description: The latest registered start year over the shared trials; null
+            when none has a plausible year.
+          format: int32
+          nullable: true
+          type: integer
+        n_shared_conditions:
+          description: Distinct specific MeSH disease areas over the shared trials.
+          format: int32
+          nullable: true
+          type: integer
+        top_shared_conditions:
+          description: Up to 5 MeSH disease names by shared-trial count then name.
+            An empty list when none.
+          items:
+            type: string
+          nullable: true
+          type: array
+      type: object
+    CompanyCosponsorsResponse:
+      example:
+        next_cursor: next_cursor
+        source_credit: source_credit
+        build_state:
+          generation: generation
+          last_loaded: last_loaded
+          built: true
+        object_type: object_type
+        columns:
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        sort:
+        - sort
+        - sort
+        filters:
+        - key: ""
+        - key: ""
+        rows:
+        - row_level: row_level
+          cosponsor_group_id: cosponsor_group_id
+          n_trials_company_lead: 2
+          n_shared_trials: 5
+          company_id: company_id
+          group_name: group_name
+          n_shared_conditions: 2
+          n_trials_cosponsor_lead: 7
+          cosponsor_root_id: cosponsor_root_id
+          first_shared_start_year: 9
+          cosponsor_group_name: cosponsor_group_name
+          n_members: 1
+          member_rank: 6
+          top_shared_conditions:
+          - top_shared_conditions
+          - top_shared_conditions
+          cosponsor_company_name: cosponsor_company_name
+          group_id: group_id
+          cosponsor_company_id: cosponsor_company_id
+          n_candidates: 5
+          company_name: company_name
+          cosponsor_rank: 0
+          last_shared_start_year: 3
+        - row_level: row_level
+          cosponsor_group_id: cosponsor_group_id
+          n_trials_company_lead: 2
+          n_shared_trials: 5
+          company_id: company_id
+          group_name: group_name
+          n_shared_conditions: 2
+          n_trials_cosponsor_lead: 7
+          cosponsor_root_id: cosponsor_root_id
+          first_shared_start_year: 9
+          cosponsor_group_name: cosponsor_group_name
+          n_members: 1
+          member_rank: 6
+          top_shared_conditions:
+          - top_shared_conditions
+          - top_shared_conditions
+          cosponsor_company_name: cosponsor_company_name
+          group_id: group_id
+          cosponsor_company_id: cosponsor_company_id
+          n_candidates: 5
+          company_name: company_name
+          cosponsor_rank: 0
+          last_shared_start_year: 3
+        freshness:
+          last_loaded: last_loaded
+          source: source
+        total: 4
+        measures:
+        - measures
+        - measures
+        build:
+          generation: generation
+          fingerprint: fingerprint
+        scope:
+          group_id: group_id
+          group_name: group_name
+          kind: company
+        withheld_columns:
+        - withheld_columns
+        - withheld_columns
+        attribution:
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        restriction:
+          key: ""
+        group_by:
+        - group_by
+        - group_by
+        grain: grain
+        id: id
+        dataset: dataset
+        withheld_tiers:
+        - withheld_tiers
+        - withheld_tiers
+      properties:
+        dataset:
+          type: string
+        grain:
+          type: string
+        object_type:
+          nullable: true
+          type: string
+        id:
+          nullable: true
+          type: string
+        scope:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_scope'
+        columns:
+          items:
+            $ref: '#/components/schemas/DatasetColumn'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/CompanyCosponsorsRow'
+          type: array
+        total:
+          description: "The exact count of the filtered rows on an ungrouped read,\
+            \ carried by the cursor; null when grouped."
+          nullable: true
+          type: integer
+        next_cursor:
+          nullable: true
+          type: string
+        sort:
+          items:
+            type: string
+          type: array
+        filters:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        group_by:
+          items:
+            type: string
+          type: array
+        measures:
+          items:
+            type: string
+          type: array
+        attribution:
+          items:
+            $ref: '#/components/schemas/DatasetAttribution'
+          type: array
+        source_credit:
+          type: string
+        withheld_tiers:
+          items:
+            type: string
+          type: array
+        withheld_columns:
+          items:
+            type: string
+          type: array
+        freshness:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_freshness'
+        build:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_build'
+        build_state:
+          $ref: '#/components/schemas/DatasetBuildState'
+        restriction:
+          additionalProperties: true
+          nullable: true
+          type: object
+      required:
+      - columns
+      - dataset
+      - rows
+      type: object
     query_run_request:
       properties:
         sql:
@@ -99028,30 +100654,55 @@ components:
           company_name: company_name
           total_raised_usd: 9.301444243932576
           n_rounds: 1
+        company_peer_profile:
+          primary_area_trials: 1
+          size_band: size_band
+          n_biologic_drugs: 7
+          n_peers: 7
+          company_id: company_id
+          group_name: group_name
+          primary_area: primary_area
+          num_lead_trials: 1
+          n_cell_candidates: 6
+          n_live_owned_drugs: 2
+          peer_state: peer_state
+          lead_drug_name: lead_drug_name
+          lead_drug_id: lead_drug_id
+          group_id: group_id
+          company_name: company_name
+          lead_stage: lead_stage
+          coverage_measured: 1
+          coverage_total: 4
+          modality_band: modality_band
+          n_live_owned_programs: 3
+          biologic_share: 1.2315135367772556
+          lead_max_phase: 4
         company_trial_geography:
           roster_root_id: roster_root_id
           company_id: company_id
           group_name: group_name
-          roster_lead_trials: 3
+          roster_lead_trials: 5
           map_country_basis: map_country_basis
-          n_unresolved_sites: 1
+          n_unresolved_sites: 8
           is_public_roster_root: true
           domicile_country: domicile_country
-          roster_n_located_sites: 1
+          roster_n_located_sites: 9
           group_id: group_id
           site_country: site_country
           company_name: company_name
           map_country: map_country
           roster_map_country_basis: roster_map_country_basis
-          n_unlocated_sites: 4
-          n_located_sites: 2
+          n_unlocated_sites: 9
+          n_located_sites: 9
           roster_map_country: roster_map_country
-          n_site_countries: 7
+          n_site_countries: 6
       properties:
         company_firmographics:
           $ref: '#/components/schemas/CompanyFirmographicsRow'
         company_funding_summary:
           $ref: '#/components/schemas/CompanyFundingSummaryRow'
+        company_peer_profile:
+          $ref: '#/components/schemas/CompanyPeerProfileRow'
         company_trial_geography:
           $ref: '#/components/schemas/CompanyTrialGeographyRow'
       type: object

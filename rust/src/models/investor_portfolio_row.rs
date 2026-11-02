@@ -86,6 +86,9 @@ pub struct InvestorPortfolioRow {
     /// The date we first saw this status for the company on the investor's page: an observation date, never the date the event happened.
     #[serde(rename = "status_first_observed_at", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub status_first_observed_at: Option<Option<String>>,
+    /// True when the quote behind a website listing was found on the investor's page, false when it was not, null when no verification flag was recorded and for a row only SEC filings name.
+    #[serde(rename = "site_evidence_verified", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub site_evidence_verified: Option<Option<bool>>,
     /// The address of the investor's portfolio page the listing was read from. Null for a row only SEC filings name.
     #[serde(rename = "source_url", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub source_url: Option<Option<String>>,
@@ -125,6 +128,7 @@ impl InvestorPortfolioRow {
             status_on_page: None,
             status_date: None,
             status_first_observed_at: None,
+            site_evidence_verified: None,
             source_url: None,
             site_last_retrieved_at: None,
             is_life_sciences_issuer: None,

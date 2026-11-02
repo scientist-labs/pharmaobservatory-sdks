@@ -95,6 +95,9 @@ pub struct CompanyCompetitorsRow {
     /// Up to 3 shared mechanisms written as a gene symbol and an action, by combined phase then combined trials. An empty list when none.
     #[serde(rename = "top_shared_mechanisms", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub top_shared_mechanisms: Option<Option<Vec<String>>>,
+    /// Distinct trials on which the company and the competitor are both named as sponsors, counted over their subtrees; 0 when none. A consortium trial (more than 25 sponsor companies) is left out.
+    #[serde(rename = "n_cosponsored_trials", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_cosponsored_trials: Option<Option<i32>>,
 }
 
 impl CompanyCompetitorsRow {
@@ -128,6 +131,7 @@ impl CompanyCompetitorsRow {
             top_shared_targets: None,
             top_shared_indications: None,
             top_shared_mechanisms: None,
+            n_cosponsored_trials: None,
         }
     }
 }
