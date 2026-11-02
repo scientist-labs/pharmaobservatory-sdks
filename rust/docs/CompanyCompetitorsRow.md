@@ -31,6 +31,7 @@ Name | Type | Description | Notes
 **top_shared_targets** | Option<**Vec<String>**> | Up to 5 shared target gene symbols, by combined phase then combined trials. An empty list when none. | [optional]
 **top_shared_indications** | Option<**Vec<String>**> | Up to 5 shared disease area names, by combined trial count. An empty list when none. | [optional]
 **top_shared_mechanisms** | Option<**Vec<String>**> | Up to 3 shared mechanisms written as a gene symbol and an action, by combined phase then combined trials. An empty list when none. | [optional]
+**n_cosponsored_trials** | Option<**i32**> | Distinct trials on which the company and the competitor are both named as sponsors, counted over their subtrees; 0 when none. A consortium trial (more than 25 sponsor companies) is left out. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

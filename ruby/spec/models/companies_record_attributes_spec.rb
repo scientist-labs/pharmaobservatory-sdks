@@ -39,6 +39,12 @@ describe PharmaObservatory::CompaniesRecordAttributes do
     end
   end
 
+  describe 'test attribute "company_peer_profile"' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   describe 'test attribute "company_trial_geography"' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/

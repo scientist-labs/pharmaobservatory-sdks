@@ -97,6 +97,9 @@ module PharmaObservatory
     # Up to 3 shared mechanisms written as a gene symbol and an action, by combined phase then combined trials. An empty list when none.
     attr_accessor :top_shared_mechanisms
 
+    # Distinct trials on which the company and the competitor are both named as sponsors, counted over their subtrees; 0 when none. A consortium trial (more than 25 sponsor companies) is left out.
+    attr_accessor :n_cosponsored_trials
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -126,7 +129,8 @@ module PharmaObservatory
         :'n_competitor_indications' => :'n_competitor_indications',
         :'top_shared_targets' => :'top_shared_targets',
         :'top_shared_indications' => :'top_shared_indications',
-        :'top_shared_mechanisms' => :'top_shared_mechanisms'
+        :'top_shared_mechanisms' => :'top_shared_mechanisms',
+        :'n_cosponsored_trials' => :'n_cosponsored_trials'
       }
     end
 
@@ -169,7 +173,8 @@ module PharmaObservatory
         :'n_competitor_indications' => :'Integer',
         :'top_shared_targets' => :'Array<String>',
         :'top_shared_indications' => :'Array<String>',
-        :'top_shared_mechanisms' => :'Array<String>'
+        :'top_shared_mechanisms' => :'Array<String>',
+        :'n_cosponsored_trials' => :'Integer'
       }
     end
 
@@ -202,7 +207,8 @@ module PharmaObservatory
         :'n_competitor_indications',
         :'top_shared_targets',
         :'top_shared_indications',
-        :'top_shared_mechanisms'
+        :'top_shared_mechanisms',
+        :'n_cosponsored_trials'
       ])
     end
 
@@ -335,6 +341,10 @@ module PharmaObservatory
           self.top_shared_mechanisms = value
         end
       end
+
+      if attributes.key?(:'n_cosponsored_trials')
+        self.n_cosponsored_trials = attributes[:'n_cosponsored_trials']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -383,7 +393,8 @@ module PharmaObservatory
           n_competitor_indications == o.n_competitor_indications &&
           top_shared_targets == o.top_shared_targets &&
           top_shared_indications == o.top_shared_indications &&
-          top_shared_mechanisms == o.top_shared_mechanisms
+          top_shared_mechanisms == o.top_shared_mechanisms &&
+          n_cosponsored_trials == o.n_cosponsored_trials
     end
 
     # @see the `==` method
@@ -395,7 +406,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [company_id, company_name, group_id, group_name, competitor_company_id, competitor_company_name, competitor_group_id, competitor_group_name, competitor_class, n_class_candidates, competitor_rank, competitor_score, target_sim, mechanism_sim, indication_sim, phase_sim, n_shared_targets, n_shared_mechanisms, n_shared_indications, n_phase_overlap_targets, n_company_targets, n_competitor_targets, n_company_indications, n_competitor_indications, top_shared_targets, top_shared_indications, top_shared_mechanisms].hash
+      [company_id, company_name, group_id, group_name, competitor_company_id, competitor_company_name, competitor_group_id, competitor_group_name, competitor_class, n_class_candidates, competitor_rank, competitor_score, target_sim, mechanism_sim, indication_sim, phase_sim, n_shared_targets, n_shared_mechanisms, n_shared_indications, n_phase_overlap_targets, n_company_targets, n_competitor_targets, n_company_indications, n_competitor_indications, top_shared_targets, top_shared_indications, top_shared_mechanisms, n_cosponsored_trials].hash
     end
 
     # Builds the object from hash

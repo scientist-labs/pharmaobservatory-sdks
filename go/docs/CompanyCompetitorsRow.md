@@ -31,6 +31,7 @@ Name | Type | Description | Notes
 **TopSharedTargets** | Pointer to **[]string** | Up to 5 shared target gene symbols, by combined phase then combined trials. An empty list when none. | [optional] 
 **TopSharedIndications** | Pointer to **[]string** | Up to 5 shared disease area names, by combined trial count. An empty list when none. | [optional] 
 **TopSharedMechanisms** | Pointer to **[]string** | Up to 3 shared mechanisms written as a gene symbol and an action, by combined phase then combined trials. An empty list when none. | [optional] 
+**NCosponsoredTrials** | Pointer to **NullableInt32** | Distinct trials on which the company and the competitor are both named as sponsors, counted over their subtrees; 0 when none. A consortium trial (more than 25 sponsor companies) is left out. | [optional] 
 
 ## Methods
 
@@ -996,6 +997,41 @@ HasTopSharedMechanisms returns a boolean if a field has been set.
 `func (o *CompanyCompetitorsRow) UnsetTopSharedMechanisms()`
 
 UnsetTopSharedMechanisms ensures that no value is present for TopSharedMechanisms, not even an explicit nil
+### GetNCosponsoredTrials
+
+`func (o *CompanyCompetitorsRow) GetNCosponsoredTrials() int32`
+
+GetNCosponsoredTrials returns the NCosponsoredTrials field if non-nil, zero value otherwise.
+
+### GetNCosponsoredTrialsOk
+
+`func (o *CompanyCompetitorsRow) GetNCosponsoredTrialsOk() (*int32, bool)`
+
+GetNCosponsoredTrialsOk returns a tuple with the NCosponsoredTrials field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNCosponsoredTrials
+
+`func (o *CompanyCompetitorsRow) SetNCosponsoredTrials(v int32)`
+
+SetNCosponsoredTrials sets NCosponsoredTrials field to given value.
+
+### HasNCosponsoredTrials
+
+`func (o *CompanyCompetitorsRow) HasNCosponsoredTrials() bool`
+
+HasNCosponsoredTrials returns a boolean if a field has been set.
+
+### SetNCosponsoredTrialsNil
+
+`func (o *CompanyCompetitorsRow) SetNCosponsoredTrialsNil(b bool)`
+
+ SetNCosponsoredTrialsNil sets the value for NCosponsoredTrials to be an explicit nil
+
+### UnsetNCosponsoredTrials
+`func (o *CompanyCompetitorsRow) UnsetNCosponsoredTrials()`
+
+UnsetNCosponsoredTrials ensures that no value is present for NCosponsoredTrials, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

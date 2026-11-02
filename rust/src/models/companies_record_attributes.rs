@@ -17,6 +17,8 @@ pub struct CompaniesRecordAttributes {
     pub company_firmographics: Option<models::CompanyFirmographicsRow>,
     #[serde(rename = "company_funding_summary", skip_serializing_if = "Option::is_none")]
     pub company_funding_summary: Option<models::CompanyFundingSummaryRow>,
+    #[serde(rename = "company_peer_profile", skip_serializing_if = "Option::is_none")]
+    pub company_peer_profile: Option<models::CompanyPeerProfileRow>,
     #[serde(rename = "company_trial_geography", skip_serializing_if = "Option::is_none")]
     pub company_trial_geography: Option<models::CompanyTrialGeographyRow>,
 }
@@ -26,6 +28,7 @@ impl CompaniesRecordAttributes {
         CompaniesRecordAttributes {
             company_firmographics: None,
             company_funding_summary: None,
+            company_peer_profile: None,
             company_trial_geography: None,
         }
     }

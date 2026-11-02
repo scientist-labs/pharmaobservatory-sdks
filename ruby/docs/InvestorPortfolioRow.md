@@ -28,6 +28,7 @@
 | **status_on_page** | **String** | The status the investor&#39;s page states for the company, verbatim: current, realized, exited or unknown (the page listed it with no status). Null for a row only SEC filings name. | [optional] |
 | **status_date** | **String** | The date the page itself prints for the status, as printed (for example 2024 or March 2024). Null unless the page printed one. | [optional] |
 | **status_first_observed_at** | **Date** | The date we first saw this status for the company on the investor&#39;s page: an observation date, never the date the event happened. | [optional] |
+| **site_evidence_verified** | **Boolean** | True when the quote behind a website listing was found on the investor&#39;s page, false when it was not, null when no verification flag was recorded and for a row only SEC filings name. | [optional] |
 | **source_url** | **String** | The address of the investor&#39;s portfolio page the listing was read from. Null for a row only SEC filings name. | [optional] |
 | **site_last_retrieved_at** | **Time** | When the investor&#39;s portfolio page was last retrieved with the company listed on it, in UTC. | [optional] |
 | **is_life_sciences_issuer** | **Boolean** | True when the issuer&#39;s SIC (Standard Industrial Classification) code is a life-sciences code, false when it is another code, null when the issuer has no SIC evidence. | [optional] |
@@ -62,6 +63,7 @@ instance = PharmaObservatory::InvestorPortfolioRow.new(
   status_on_page: null,
   status_date: null,
   status_first_observed_at: null,
+  site_evidence_verified: null,
   source_url: null,
   site_last_retrieved_at: null,
   is_life_sciences_issuer: null

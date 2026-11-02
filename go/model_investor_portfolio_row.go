@@ -68,6 +68,8 @@ type InvestorPortfolioRow struct {
 	StatusDate NullableString `json:"status_date,omitempty"`
 	// The date we first saw this status for the company on the investor's page: an observation date, never the date the event happened.
 	StatusFirstObservedAt NullableString `json:"status_first_observed_at,omitempty"`
+	// True when the quote behind a website listing was found on the investor's page, false when it was not, null when no verification flag was recorded and for a row only SEC filings name.
+	SiteEvidenceVerified NullableBool `json:"site_evidence_verified,omitempty"`
 	// The address of the investor's portfolio page the listing was read from. Null for a row only SEC filings name.
 	SourceUrl NullableString `json:"source_url,omitempty"`
 	// When the investor's portfolio page was last retrieved with the company listed on it, in UTC.
@@ -1086,6 +1088,48 @@ func (o *InvestorPortfolioRow) UnsetStatusFirstObservedAt() {
 	o.StatusFirstObservedAt.Unset()
 }
 
+// GetSiteEvidenceVerified returns the SiteEvidenceVerified field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestorPortfolioRow) GetSiteEvidenceVerified() bool {
+	if o == nil || IsNil(o.SiteEvidenceVerified.Get()) {
+		var ret bool
+		return ret
+	}
+	return *o.SiteEvidenceVerified.Get()
+}
+
+// GetSiteEvidenceVerifiedOk returns a tuple with the SiteEvidenceVerified field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestorPortfolioRow) GetSiteEvidenceVerifiedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.SiteEvidenceVerified.Get(), o.SiteEvidenceVerified.IsSet()
+}
+
+// HasSiteEvidenceVerified returns a boolean if a field has been set.
+func (o *InvestorPortfolioRow) HasSiteEvidenceVerified() bool {
+	if o != nil && o.SiteEvidenceVerified.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSiteEvidenceVerified gets a reference to the given NullableBool and assigns it to the SiteEvidenceVerified field.
+func (o *InvestorPortfolioRow) SetSiteEvidenceVerified(v bool) {
+	o.SiteEvidenceVerified.Set(&v)
+}
+// SetSiteEvidenceVerifiedNil sets the value for SiteEvidenceVerified to be an explicit nil
+func (o *InvestorPortfolioRow) SetSiteEvidenceVerifiedNil() {
+	o.SiteEvidenceVerified.Set(nil)
+}
+
+// UnsetSiteEvidenceVerified ensures that no value is present for SiteEvidenceVerified, not even an explicit nil
+func (o *InvestorPortfolioRow) UnsetSiteEvidenceVerified() {
+	o.SiteEvidenceVerified.Unset()
+}
+
 // GetSourceUrl returns the SourceUrl field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *InvestorPortfolioRow) GetSourceUrl() string {
 	if o == nil || IsNil(o.SourceUrl.Get()) {
@@ -1294,6 +1338,9 @@ func (o InvestorPortfolioRow) ToMap() (map[string]interface{}, error) {
 	if o.StatusFirstObservedAt.IsSet() {
 		toSerialize["status_first_observed_at"] = o.StatusFirstObservedAt.Get()
 	}
+	if o.SiteEvidenceVerified.IsSet() {
+		toSerialize["site_evidence_verified"] = o.SiteEvidenceVerified.Get()
+	}
 	if o.SourceUrl.IsSet() {
 		toSerialize["source_url"] = o.SourceUrl.Get()
 	}
@@ -1349,6 +1396,7 @@ func (o *InvestorPortfolioRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "status_on_page")
 		delete(additionalProperties, "status_date")
 		delete(additionalProperties, "status_first_observed_at")
+		delete(additionalProperties, "site_evidence_verified")
 		delete(additionalProperties, "source_url")
 		delete(additionalProperties, "site_last_retrieved_at")
 		delete(additionalProperties, "is_life_sciences_issuer")

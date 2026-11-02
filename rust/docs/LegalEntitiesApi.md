@@ -22,6 +22,7 @@ Method | HTTP request | Description
 [**legal_entities_period_inspections**](LegalEntitiesApi.md#legal_entities_period_inspections) | **GET** /api/v1/legal_entities/{id}/inspections | FDA inspections
 [**legal_entities_period_institutional_holdings**](LegalEntitiesApi.md#legal_entities_period_institutional_holdings) | **GET** /api/v1/legal_entities/{id}/institutional_holdings | Institutional holdings (SEC Form 13F)
 [**legal_entities_period_institutional_quarter_totals**](LegalEntitiesApi.md#legal_entities_period_institutional_quarter_totals) | **GET** /api/v1/legal_entities/{id}/institutional_quarter_totals | Institutional quarter totals (SEC Form 13F)
+[**legal_entities_period_investor_portfolio**](LegalEntitiesApi.md#legal_entities_period_investor_portfolio) | **GET** /api/v1/legal_entities/{id}/investor_portfolio | Investor portfolio (offering filings and investor websites)
 [**legal_entities_period_legal_entity_sec_filings**](LegalEntitiesApi.md#legal_entities_period_legal_entity_sec_filings) | **GET** /api/v1/legal_entities/{id}/legal_entity_sec_filings | SEC filer records
 [**legal_entities_period_list**](LegalEntitiesApi.md#legal_entities_period_list) | **GET** /api/v1/legal_entities | List legal entities
 [**legal_entities_period_org_disclosure_trend**](LegalEntitiesApi.md#legal_entities_period_org_disclosure_trend) | **GET** /api/v1/legal_entities/{id}/org_disclosure_trend | Organization disclosure trend
@@ -627,6 +628,39 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::InstitutionalQuarterTotalsResponse**](InstitutionalQuarterTotalsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## legal_entities_period_investor_portfolio
+
+> models::InvestorPortfolioResponse legal_entities_period_investor_portfolio(id, cursor, limit, sort, group_by, measure)
+Investor portfolio (offering filings and investor websites)
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::InvestorPortfolioResponse**](InvestorPortfolioResponse.md)
 
 ### Authorization
 

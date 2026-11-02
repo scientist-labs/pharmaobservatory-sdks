@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **CompanyFirmographics** | Pointer to [**CompanyFirmographicsRow**](CompanyFirmographicsRow.md) |  | [optional] 
 **CompanyFundingSummary** | Pointer to [**CompanyFundingSummaryRow**](CompanyFundingSummaryRow.md) |  | [optional] 
+**CompanyPeerProfile** | Pointer to [**CompanyPeerProfileRow**](CompanyPeerProfileRow.md) |  | [optional] 
 **CompanyTrialGeography** | Pointer to [**CompanyTrialGeographyRow**](CompanyTrialGeographyRow.md) |  | [optional] 
 
 ## Methods
@@ -76,6 +77,31 @@ SetCompanyFundingSummary sets CompanyFundingSummary field to given value.
 `func (o *CompaniesRecordAttributes) HasCompanyFundingSummary() bool`
 
 HasCompanyFundingSummary returns a boolean if a field has been set.
+
+### GetCompanyPeerProfile
+
+`func (o *CompaniesRecordAttributes) GetCompanyPeerProfile() CompanyPeerProfileRow`
+
+GetCompanyPeerProfile returns the CompanyPeerProfile field if non-nil, zero value otherwise.
+
+### GetCompanyPeerProfileOk
+
+`func (o *CompaniesRecordAttributes) GetCompanyPeerProfileOk() (*CompanyPeerProfileRow, bool)`
+
+GetCompanyPeerProfileOk returns a tuple with the CompanyPeerProfile field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCompanyPeerProfile
+
+`func (o *CompaniesRecordAttributes) SetCompanyPeerProfile(v CompanyPeerProfileRow)`
+
+SetCompanyPeerProfile sets CompanyPeerProfile field to given value.
+
+### HasCompanyPeerProfile
+
+`func (o *CompaniesRecordAttributes) HasCompanyPeerProfile() bool`
+
+HasCompanyPeerProfile returns a boolean if a field has been set.
 
 ### GetCompanyTrialGeography
 

@@ -1,6 +1,6 @@
 {
   "packageName": "pharmaobservatory",
-  "packageVersion": "0.1.11",
+  "packageVersion": "0.1.12",
   "library": "reqwest",
   "supportAsync": true,
   "inlineSchemaNameMappings": {
