@@ -82,7 +82,7 @@ module PharmaObservatory
     # A link to the cited record.
     attr_accessor :citation_url
 
-    # False for the FDA Biomarker Qualification Program arm, whose captured links are known to go stale; true otherwise. A link marked false may not resolve.
+    # True on every row. Kept for contract stability; the FDA Biomarker Qualification Program links were rebuilt on the current FDA host (#5778).
     attr_accessor :citation_verified
 
     # The text span the evidence rests on, where the source gives one.

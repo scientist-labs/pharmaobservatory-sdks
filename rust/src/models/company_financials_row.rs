@@ -59,6 +59,33 @@ pub struct CompanyFinancialsRow {
     /// The latest fiscal year the filer reported any line item.
     #[serde(rename = "latest_financial_fy", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub latest_financial_fy: Option<Option<i32>>,
+    /// The end of the latest reported quarter of the filer that has an operating cash flow figure (a 10-Q, or the Q4 derived from a 10-K); the date of the cash figure below. Repeated on every year row of the filer; null for a company with no quarterly SEC filings.
+    #[serde(rename = "quarter_end_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub quarter_end_date: Option<Option<String>>,
+    /// The date SEC received the filing of that latest quarter.
+    #[serde(rename = "quarter_filed_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub quarter_filed_date: Option<Option<String>>,
+    /// Cash plus short-term investments at quarter_end_date, in USD (non-current investments are not counted).
+    #[serde(rename = "cash_and_investments_latest_q", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub cash_and_investments_latest_q: Option<Option<f64>>,
+    /// Net cash from operating activities of that latest quarter alone (year-to-date figures differenced; Q4 is the full year less nine months), in USD; negative means burning.
+    #[serde(rename = "operating_cash_flow_latest_q", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub operating_cash_flow_latest_q: Option<Option<f64>>,
+    /// How many contiguous quarters burn_basis_quarterly_usd averages over, 1 or 2.
+    #[serde(rename = "burn_basis_quarters", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub burn_basis_quarters: Option<Option<i32>>,
+    /// The mean quarterly operating cash flow over the latest two contiguous quarters (the latest alone when no contiguous earlier quarter has a figure), in USD; negative means burning.
+    #[serde(rename = "burn_basis_quarterly_usd", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub burn_basis_quarterly_usd: Option<Option<f64>>,
+    /// An estimate, derived not reported: cash_and_investments_latest_q divided by the monthly burn (burn_basis_quarterly_usd over 3), in months at quarter_end_date, rounded to 0.1. Null whenever runway_quarterly_null_reason is set.
+    #[serde(rename = "runway_months_quarterly", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub runway_months_quarterly: Option<Option<f64>>,
+    /// The version of the derivation behind runway_months_quarterly; trailing_quarter_mean_v1 is the mean of the latest two contiguous discrete quarters.
+    #[serde(rename = "runway_quarterly_method", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub runway_quarterly_method: Option<Option<String>>,
+    /// Why runway_months_quarterly is null, in precedence order: no_quarterly_facts (no 10-Q cash-flow facts: a private company or a 20-F/40-F filer), stale (the latest quarter ended over a year before the newest SEC filing loaded), no_fx_rate, no_cash_at_quarter_end, or positive_cash_flow (no burn to run out of). Null when the runway is published.
+    #[serde(rename = "runway_quarterly_null_reason", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub runway_quarterly_null_reason: Option<Option<String>>,
     /// Total revenue for the fiscal year, in USD (a non-USD filer is converted at the calendar-year average rate; null when no rate exists).
     #[serde(rename = "revenue", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub revenue: Option<Option<f64>>,
@@ -173,6 +200,15 @@ impl CompanyFinancialsRow {
             latest_shares_outstanding: None,
             latest_shares_outstanding_fy: None,
             latest_financial_fy: None,
+            quarter_end_date: None,
+            quarter_filed_date: None,
+            cash_and_investments_latest_q: None,
+            operating_cash_flow_latest_q: None,
+            burn_basis_quarters: None,
+            burn_basis_quarterly_usd: None,
+            runway_months_quarterly: None,
+            runway_quarterly_method: None,
+            runway_quarterly_null_reason: None,
             revenue: None,
             net_income: None,
             rnd: None,

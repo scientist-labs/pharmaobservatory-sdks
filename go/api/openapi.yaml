@@ -2089,6 +2089,64 @@ paths:
       summary: One cell line
       tags:
       - cell_lines
+  /api/v1/changes:
+    get:
+      operationId: changes.list
+      parameters:
+      - example: eyJ2IjoxLCJvIjoiMjAyNi0xMS0wMlQwNjowMjowMC4wMDAwMDBaIiwiaSI6OTAwMn0
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - example: 2
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/changes_list_200_response'
+          description: "Feed items for the caller's subscriptions after `cursor`,\
+            \ oldest first, with the next_cursor to keep. Keep next_cursor and send\
+            \ it next time; has_more says another page follows now. limit is 1 to\
+            \ 200, default 50."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: "answers 400 INVALID_CURSOR for a cursor list_changes did not\
+            \ issue, or INVALID_LIMIT"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the token is valid but the account has no\
+            \ product access yet (AuthError), or NOT_ENTITLED (QueryError shape) when\
+            \ the caller has no seat in an organization with an active plan"
+      security:
+      - ApiBearerJwt: []
+      summary: Changes since a cursor
+      tags:
+      - subscriptions
   /api/v1/companies:
     get:
       operationId: companies.list
@@ -29426,6 +29484,130 @@ paths:
       summary: Site trials
       tags:
       - sites
+  /api/v1/subscriptions:
+    get:
+      operationId: subscriptions.list
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/subscriptions_list_200_response'
+          description: "The caller's own follows, the same list /app/alerts shows."
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the token is valid but the account has no\
+            \ product access yet (AuthError), or NOT_ENTITLED (QueryError shape) when\
+            \ the caller has no seat in an organization with an active plan"
+      security:
+      - ApiBearerJwt: []
+      summary: List your subscriptions
+      tags:
+      - subscriptions
+    post:
+      operationId: subscriptions.create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/subscriptions_create_request'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/subscriptions_create_201_response'
+          description: "Name ONE target: object_type 'trials' with entity_id, or dataset\
+            \ 'trials' with filters in the dataset query grammar. Following the same\
+            \ target again returns the existing subscription (200)."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: "answers 400 INVALID_SUBSCRIPTION when the target is missing,\
+            \ names both kinds, cannot be followed, or does not exist (a trial id\
+            \ is checked against the warehouse; an unreadable warehouse refuses too)"
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the token is valid but the account has no\
+            \ product access yet (AuthError), or NOT_ENTITLED (QueryError shape) when\
+            \ the caller has no seat in an organization with an active plan"
+      security:
+      - ApiBearerJwt: []
+      summary: Follow an entity or a dataset query
+      tags:
+      - subscriptions
+  /api/v1/subscriptions/{id}:
+    delete:
+      operationId: subscriptions.delete
+      parameters:
+      - example: 4242
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/subscriptions_delete_200_response'
+          description: Deletes one of the caller's subscriptions and its matched change
+            items.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 UNKNOWN_RECORD when the caller has no subscription
+            with that id
+      security:
+      - ApiBearerJwt: []
+      summary: Stop following
+      tags:
+      - subscriptions
   /api/v1/suppliers:
     get:
       operationId: suppliers.list
@@ -38469,9 +38651,8 @@ components:
           nullable: true
           type: string
         citation_verified:
-          description: "False for the FDA Biomarker Qualification Program arm, whose\
-            \ captured links are known to go stale; true otherwise. A link marked\
-            \ false may not resolve."
+          description: True on every row. Kept for contract stability; the FDA Biomarker
+            Qualification Program links were rebuilt on the current FDA host (#5778).
           nullable: true
           type: boolean
         evidence_snippet:
@@ -43036,52 +43217,61 @@ components:
         \ organization record and fiscal year. A grouped request returns the group\
         \ columns and the measures instead, as additional properties."
       example:
-        eps_diluted: 9.369310271410669
-        goodwill: 6.965117697638846
-        runway_months: 3.0937452626664474
-        operating_cash_flow: 6.84685269835264
-        long_term_debt_noncurrent: 8.762042012749001
-        short_term_investments: 1.0246457001441578
-        latest_shares_outstanding: 5.962133916683182
-        shares_outstanding: 7.457744773683766
-        eps_basic: 9.965781217890562
-        long_term_debt_total: 9.018348186070783
+        eps_diluted: 3.5571952270680973
+        goodwill: 5.944895607614016
+        runway_months: 0.10263654006109402
+        operating_cash_flow_latest_q: 9.301444243932576
+        operating_cash_flow: 9.965781217890562
+        long_term_debt_noncurrent: 1.284659006116532
+        shares_outstanding: 9.369310271410669
+        long_term_debt_total: 2.8841621266687802
         reporting_org_id: reporting_org_id
-        inventory: 1.284659006116532
-        weighted_average_shares_basic: 6.878052220127876
+        equity: 6.84685269835264
+        public_float: 7.457744773683766
+        intangible_assets: 6.778324963048013
+        revenue: 7.386281948385884
+        assets: 1.4894159098541704
+        fiscal_year: 0
+        cash: 1.1730742509559433
+        burn_basis_usd: 7.058770351582356
+        cash_and_investments: 5.025004791520295
+        total_liabilities: 6.965117697638846
+        group_name: group_name
+        rnd: 1.0246457001441578
+        operating_expenses: 8.762042012749001
+        property_plant_equipment: 6.878052220127876
+        runway_quarterly_method: runway_quarterly_method
+        burn_basis_quarterly_usd: 2.027123023002322
+        company_name: company_name
+        exchange: exchange
+        short_term_investments: 4.965218492984954
+        latest_shares_outstanding: 5.962133916683182
+        eps_basic: 6.438423552598547
+        runway_quarterly_null_reason: runway_quarterly_null_reason
+        inventory: 6.704019297950036
+        weighted_average_shares_basic: 7.143538047012306
         latest_shares_outstanding_fy: 5
-        equity: 4.145608029883936
-        public_float: 7.386281948385884
         edgar_cik: edgar_cik
         public_float_usd: 6.027456183070403
-        intangible_assets: 6.438423552598547
-        revenue: 7.061401241503109
-        assets: 2.027123023002322
-        burn_basis_years: 3
-        fiscal_year: 0
-        sec_total_revenue_usd_millions: 7.143538047012306
-        dividends_paid: 5.025004791520295
-        cash: 1.2315135367772556
-        burn_basis_usd: 6.704019297950036
+        burn_basis_years: 6
+        cash_and_investments_latest_q: 7.061401241503109
+        burn_basis_quarters: 3
+        sec_total_revenue_usd_millions: 4.652396432933246
+        dividends_paid: 9.018348186070783
         ticker: ticker
         company_id: company_id
-        cash_and_investments: 1.4894159098541704
-        total_liabilities: 6.683562403749608
-        group_name: group_name
-        rnd: 3.616076749251911
-        operating_expenses: 4.965218492984954
-        accounts_receivable: 6.778324963048013
-        property_plant_equipment: 3.5571952270680973
+        accounts_receivable: 3.0937452626664474
         latest_financial_fy: 2
-        stock_based_compensation: 1.1730742509559433
+        stock_based_compensation: 6.683562403749608
         public_float_fy: 1
         group_id: group_id
-        company_name: company_name
+        runway_months_quarterly: 4.145608029883936
+        quarter_end_date: 2000-01-23
         is_public: true
-        exchange: exchange
-        net_income: 9.301444243932576
-        accounts_payable: 2.8841621266687802
-        weighted_average_shares_diluted: 5.944895607614016
+        quarter_filed_date: 2000-01-23
+        net_income: 1.2315135367772556
+        accounts_payable: 3.353193347011243
+        weighted_average_shares_diluted: 0.8851374739011653
       properties:
         company_id:
           description: "Company level: the company the row is about; the entry key\
@@ -43154,6 +43344,64 @@ components:
           format: int32
           nullable: true
           type: integer
+        quarter_end_date:
+          description: "The end of the latest reported quarter of the filer that has\
+            \ an operating cash flow figure (a 10-Q, or the Q4 derived from a 10-K);\
+            \ the date of the cash figure below. Repeated on every year row of the\
+            \ filer; null for a company with no quarterly SEC filings."
+          format: date
+          nullable: true
+          type: string
+        quarter_filed_date:
+          description: The date SEC received the filing of that latest quarter.
+          format: date
+          nullable: true
+          type: string
+        cash_and_investments_latest_q:
+          description: "Cash plus short-term investments at quarter_end_date, in USD\
+            \ (non-current investments are not counted)."
+          nullable: true
+          type: number
+        operating_cash_flow_latest_q:
+          description: "Net cash from operating activities of that latest quarter\
+            \ alone (year-to-date figures differenced; Q4 is the full year less nine\
+            \ months), in USD; negative means burning."
+          nullable: true
+          type: number
+        burn_basis_quarters:
+          description: "How many contiguous quarters burn_basis_quarterly_usd averages\
+            \ over, 1 or 2."
+          format: int32
+          nullable: true
+          type: integer
+        burn_basis_quarterly_usd:
+          description: "The mean quarterly operating cash flow over the latest two\
+            \ contiguous quarters (the latest alone when no contiguous earlier quarter\
+            \ has a figure), in USD; negative means burning."
+          nullable: true
+          type: number
+        runway_months_quarterly:
+          description: "An estimate, derived not reported: cash_and_investments_latest_q\
+            \ divided by the monthly burn (burn_basis_quarterly_usd over 3), in months\
+            \ at quarter_end_date, rounded to 0.1. Null whenever runway_quarterly_null_reason\
+            \ is set."
+          nullable: true
+          type: number
+        runway_quarterly_method:
+          description: The version of the derivation behind runway_months_quarterly;
+            trailing_quarter_mean_v1 is the mean of the latest two contiguous discrete
+            quarters.
+          nullable: true
+          type: string
+        runway_quarterly_null_reason:
+          description: "Why runway_months_quarterly is null, in precedence order:\
+            \ no_quarterly_facts (no 10-Q cash-flow facts: a private company or a\
+            \ 20-F/40-F filer), stale (the latest quarter ended over a year before\
+            \ the newest SEC filing loaded), no_fx_rate, no_cash_at_quarter_end, or\
+            \ positive_cash_flow (no burn to run out of). Null when the runway is\
+            \ published."
+          nullable: true
+          type: string
         revenue:
           description: "Total revenue for the fiscal year, in USD (a non-USD filer\
             \ is converted at the calendar-year average rate; null when no rate exists)."
@@ -43327,102 +43575,120 @@ components:
         - key: ""
         - key: ""
         rows:
-        - eps_diluted: 9.369310271410669
-          goodwill: 6.965117697638846
-          runway_months: 3.0937452626664474
-          operating_cash_flow: 6.84685269835264
-          long_term_debt_noncurrent: 8.762042012749001
-          short_term_investments: 1.0246457001441578
-          latest_shares_outstanding: 5.962133916683182
-          shares_outstanding: 7.457744773683766
-          eps_basic: 9.965781217890562
-          long_term_debt_total: 9.018348186070783
+        - eps_diluted: 3.5571952270680973
+          goodwill: 5.944895607614016
+          runway_months: 0.10263654006109402
+          operating_cash_flow_latest_q: 9.301444243932576
+          operating_cash_flow: 9.965781217890562
+          long_term_debt_noncurrent: 1.284659006116532
+          shares_outstanding: 9.369310271410669
+          long_term_debt_total: 2.8841621266687802
           reporting_org_id: reporting_org_id
-          inventory: 1.284659006116532
-          weighted_average_shares_basic: 6.878052220127876
+          equity: 6.84685269835264
+          public_float: 7.457744773683766
+          intangible_assets: 6.778324963048013
+          revenue: 7.386281948385884
+          assets: 1.4894159098541704
+          fiscal_year: 0
+          cash: 1.1730742509559433
+          burn_basis_usd: 7.058770351582356
+          cash_and_investments: 5.025004791520295
+          total_liabilities: 6.965117697638846
+          group_name: group_name
+          rnd: 1.0246457001441578
+          operating_expenses: 8.762042012749001
+          property_plant_equipment: 6.878052220127876
+          runway_quarterly_method: runway_quarterly_method
+          burn_basis_quarterly_usd: 2.027123023002322
+          company_name: company_name
+          exchange: exchange
+          short_term_investments: 4.965218492984954
+          latest_shares_outstanding: 5.962133916683182
+          eps_basic: 6.438423552598547
+          runway_quarterly_null_reason: runway_quarterly_null_reason
+          inventory: 6.704019297950036
+          weighted_average_shares_basic: 7.143538047012306
           latest_shares_outstanding_fy: 5
-          equity: 4.145608029883936
-          public_float: 7.386281948385884
           edgar_cik: edgar_cik
           public_float_usd: 6.027456183070403
-          intangible_assets: 6.438423552598547
-          revenue: 7.061401241503109
-          assets: 2.027123023002322
-          burn_basis_years: 3
-          fiscal_year: 0
-          sec_total_revenue_usd_millions: 7.143538047012306
-          dividends_paid: 5.025004791520295
-          cash: 1.2315135367772556
-          burn_basis_usd: 6.704019297950036
+          burn_basis_years: 6
+          cash_and_investments_latest_q: 7.061401241503109
+          burn_basis_quarters: 3
+          sec_total_revenue_usd_millions: 4.652396432933246
+          dividends_paid: 9.018348186070783
           ticker: ticker
           company_id: company_id
-          cash_and_investments: 1.4894159098541704
-          total_liabilities: 6.683562403749608
-          group_name: group_name
-          rnd: 3.616076749251911
-          operating_expenses: 4.965218492984954
-          accounts_receivable: 6.778324963048013
-          property_plant_equipment: 3.5571952270680973
+          accounts_receivable: 3.0937452626664474
           latest_financial_fy: 2
-          stock_based_compensation: 1.1730742509559433
+          stock_based_compensation: 6.683562403749608
           public_float_fy: 1
           group_id: group_id
-          company_name: company_name
+          runway_months_quarterly: 4.145608029883936
+          quarter_end_date: 2000-01-23
           is_public: true
-          exchange: exchange
-          net_income: 9.301444243932576
-          accounts_payable: 2.8841621266687802
-          weighted_average_shares_diluted: 5.944895607614016
-        - eps_diluted: 9.369310271410669
-          goodwill: 6.965117697638846
-          runway_months: 3.0937452626664474
-          operating_cash_flow: 6.84685269835264
-          long_term_debt_noncurrent: 8.762042012749001
-          short_term_investments: 1.0246457001441578
-          latest_shares_outstanding: 5.962133916683182
-          shares_outstanding: 7.457744773683766
-          eps_basic: 9.965781217890562
-          long_term_debt_total: 9.018348186070783
+          quarter_filed_date: 2000-01-23
+          net_income: 1.2315135367772556
+          accounts_payable: 3.353193347011243
+          weighted_average_shares_diluted: 0.8851374739011653
+        - eps_diluted: 3.5571952270680973
+          goodwill: 5.944895607614016
+          runway_months: 0.10263654006109402
+          operating_cash_flow_latest_q: 9.301444243932576
+          operating_cash_flow: 9.965781217890562
+          long_term_debt_noncurrent: 1.284659006116532
+          shares_outstanding: 9.369310271410669
+          long_term_debt_total: 2.8841621266687802
           reporting_org_id: reporting_org_id
-          inventory: 1.284659006116532
-          weighted_average_shares_basic: 6.878052220127876
+          equity: 6.84685269835264
+          public_float: 7.457744773683766
+          intangible_assets: 6.778324963048013
+          revenue: 7.386281948385884
+          assets: 1.4894159098541704
+          fiscal_year: 0
+          cash: 1.1730742509559433
+          burn_basis_usd: 7.058770351582356
+          cash_and_investments: 5.025004791520295
+          total_liabilities: 6.965117697638846
+          group_name: group_name
+          rnd: 1.0246457001441578
+          operating_expenses: 8.762042012749001
+          property_plant_equipment: 6.878052220127876
+          runway_quarterly_method: runway_quarterly_method
+          burn_basis_quarterly_usd: 2.027123023002322
+          company_name: company_name
+          exchange: exchange
+          short_term_investments: 4.965218492984954
+          latest_shares_outstanding: 5.962133916683182
+          eps_basic: 6.438423552598547
+          runway_quarterly_null_reason: runway_quarterly_null_reason
+          inventory: 6.704019297950036
+          weighted_average_shares_basic: 7.143538047012306
           latest_shares_outstanding_fy: 5
-          equity: 4.145608029883936
-          public_float: 7.386281948385884
           edgar_cik: edgar_cik
           public_float_usd: 6.027456183070403
-          intangible_assets: 6.438423552598547
-          revenue: 7.061401241503109
-          assets: 2.027123023002322
-          burn_basis_years: 3
-          fiscal_year: 0
-          sec_total_revenue_usd_millions: 7.143538047012306
-          dividends_paid: 5.025004791520295
-          cash: 1.2315135367772556
-          burn_basis_usd: 6.704019297950036
+          burn_basis_years: 6
+          cash_and_investments_latest_q: 7.061401241503109
+          burn_basis_quarters: 3
+          sec_total_revenue_usd_millions: 4.652396432933246
+          dividends_paid: 9.018348186070783
           ticker: ticker
           company_id: company_id
-          cash_and_investments: 1.4894159098541704
-          total_liabilities: 6.683562403749608
-          group_name: group_name
-          rnd: 3.616076749251911
-          operating_expenses: 4.965218492984954
-          accounts_receivable: 6.778324963048013
-          property_plant_equipment: 3.5571952270680973
+          accounts_receivable: 3.0937452626664474
           latest_financial_fy: 2
-          stock_based_compensation: 1.1730742509559433
+          stock_based_compensation: 6.683562403749608
           public_float_fy: 1
           group_id: group_id
-          company_name: company_name
+          runway_months_quarterly: 4.145608029883936
+          quarter_end_date: 2000-01-23
           is_public: true
-          exchange: exchange
-          net_income: 9.301444243932576
-          accounts_payable: 2.8841621266687802
-          weighted_average_shares_diluted: 5.944895607614016
+          quarter_filed_date: 2000-01-23
+          net_income: 1.2315135367772556
+          accounts_payable: 3.353193347011243
+          weighted_average_shares_diluted: 0.8851374739011653
         freshness:
           last_loaded: last_loaded
           source: source
-        total: 0
+        total: 8
         measures:
         - measures
         - measures
@@ -46824,6 +47090,8 @@ components:
         adverse_event_term: adverse_event_term
         subjects_affected: 0.8008281904610115
         n_trials: 6
+        n_terms_total: 1
+        n_trials_total: 5
         condition_id: condition_id
       properties:
         condition_id:
@@ -46841,6 +47109,19 @@ components:
           type: number
         n_trials:
           description: Trials for this condition that report the term.
+          format: int64
+          nullable: true
+          type: integer
+        n_terms_total:
+          description: "Distinct serious adverse event terms across the condition's\
+            \ trials. The rows are only the top 10 of these, so a row count is not\
+            \ the term count; use this."
+          format: int64
+          nullable: true
+          type: integer
+        n_trials_total:
+          description: Results-posting trials of the condition that report at least
+            one serious adverse event term.
           format: int64
           nullable: true
           type: integer
@@ -46879,15 +47160,19 @@ components:
         - adverse_event_term: adverse_event_term
           subjects_affected: 0.8008281904610115
           n_trials: 6
+          n_terms_total: 1
+          n_trials_total: 5
           condition_id: condition_id
         - adverse_event_term: adverse_event_term
           subjects_affected: 0.8008281904610115
           n_trials: 6
+          n_terms_total: 1
+          n_trials_total: 5
           condition_id: condition_id
         freshness:
           last_loaded: last_loaded
           source: source
-        total: 1
+        total: 5
         measures:
         - measures
         - measures
@@ -100231,12 +100516,406 @@ components:
       - dataset
       - rows
       type: object
+    changes_list_200_response_items_inner_entry_keys:
+      example:
+        trials: trials
+      properties:
+        trials:
+          type: string
+      required:
+      - trials
+      type: object
+    changes_list_200_response_items_inner:
+      example:
+        source_credit: source_credit
+        match_kind: match_kind
+        event_label: event_label
+        title: title
+        subscription_id: 6
+        observed_at: observed_at
+        event_id: event_id
+        event_type: event_type
+        field: field
+        entry_keys:
+          trials: trials
+        old_value: old_value
+        id: 0
+        dataset: dataset
+        key: key
+        new_value: new_value
+        source_date: source_date
+      properties:
+        id:
+          type: integer
+        subscription_id:
+          type: integer
+        event_id:
+          type: string
+        dataset:
+          type: string
+        key:
+          type: string
+        title:
+          type: string
+        event_type:
+          type: string
+        event_label:
+          type: string
+        field:
+          type: string
+        old_value:
+          type: string
+        new_value:
+          type: string
+        source_date:
+          type: string
+        observed_at:
+          type: string
+        match_kind:
+          type: string
+        entry_keys:
+          $ref: '#/components/schemas/changes_list_200_response_items_inner_entry_keys'
+        source_credit:
+          type: string
+      required:
+      - dataset
+      - entry_keys
+      - event_id
+      - event_label
+      - event_type
+      - field
+      - id
+      - key
+      - match_kind
+      - new_value
+      - observed_at
+      - old_value
+      - source_credit
+      - source_date
+      - subscription_id
+      - title
+      type: object
+    changes_list_200_response_build_state:
+      example:
+        generation: generation
+        built: true
+      properties:
+        built:
+          type: boolean
+        generation:
+          type: string
+      required:
+      - built
+      - generation
+      type: object
+    changes_list_200_response:
+      example:
+        next_cursor: next_cursor
+        build_state:
+          generation: generation
+          built: true
+        count: 1
+        has_more: true
+        items:
+        - source_credit: source_credit
+          match_kind: match_kind
+          event_label: event_label
+          title: title
+          subscription_id: 6
+          observed_at: observed_at
+          event_id: event_id
+          event_type: event_type
+          field: field
+          entry_keys:
+            trials: trials
+          old_value: old_value
+          id: 0
+          dataset: dataset
+          key: key
+          new_value: new_value
+          source_date: source_date
+        - source_credit: source_credit
+          match_kind: match_kind
+          event_label: event_label
+          title: title
+          subscription_id: 6
+          observed_at: observed_at
+          event_id: event_id
+          event_type: event_type
+          field: field
+          entry_keys:
+            trials: trials
+          old_value: old_value
+          id: 0
+          dataset: dataset
+          key: key
+          new_value: new_value
+          source_date: source_date
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/changes_list_200_response_items_inner'
+          type: array
+        count:
+          type: integer
+        next_cursor:
+          type: string
+        has_more:
+          type: boolean
+        build_state:
+          $ref: '#/components/schemas/changes_list_200_response_build_state'
+      required:
+      - build_state
+      - count
+      - has_more
+      - items
+      - next_cursor
+      type: object
     query_run_request:
       properties:
         sql:
           type: string
       required:
       - sql
+      type: object
+    subscriptions_list_200_response_subscriptions_inner_target_filters:
+      example:
+        phase: phase
+      nullable: true
+      properties:
+        phase:
+          type: string
+      required:
+      - phase
+      type: object
+    subscriptions_list_200_response_subscriptions_inner_target:
+      example:
+        object_type: object_type
+        kind: kind
+        filters:
+          phase: phase
+        entity_id: entity_id
+        dataset: dataset
+      properties:
+        kind:
+          type: string
+        dataset:
+          nullable: true
+          type: string
+        filters:
+          $ref: '#/components/schemas/subscriptions_list_200_response_subscriptions_inner_target_filters'
+        object_type:
+          nullable: true
+          type: string
+        entity_id:
+          nullable: true
+          type: string
+      required:
+      - kind
+      type: object
+    subscriptions_list_200_response_subscriptions_inner:
+      example:
+        paused: true
+        event_types:
+        - event_types
+        - event_types
+        created_at: created_at
+        id: 0
+        label: label
+        target:
+          object_type: object_type
+          kind: kind
+          filters:
+            phase: phase
+          entity_id: entity_id
+          dataset: dataset
+      properties:
+        id:
+          type: integer
+        label:
+          type: string
+        target:
+          $ref: '#/components/schemas/subscriptions_list_200_response_subscriptions_inner_target'
+        event_types:
+          items:
+            type: string
+          type: array
+        paused:
+          type: boolean
+        created_at:
+          type: string
+      required:
+      - created_at
+      - event_types
+      - id
+      - label
+      - paused
+      - target
+      type: object
+    subscriptions_list_200_response:
+      example:
+        subscriptions:
+        - paused: true
+          event_types:
+          - event_types
+          - event_types
+          created_at: created_at
+          id: 0
+          label: label
+          target:
+            object_type: object_type
+            kind: kind
+            filters:
+              phase: phase
+            entity_id: entity_id
+            dataset: dataset
+        - paused: true
+          event_types:
+          - event_types
+          - event_types
+          created_at: created_at
+          id: 0
+          label: label
+          target:
+            object_type: object_type
+            kind: kind
+            filters:
+              phase: phase
+            entity_id: entity_id
+            dataset: dataset
+        build_state:
+          generation: generation
+          built: true
+        count: 6
+      properties:
+        subscriptions:
+          items:
+            $ref: '#/components/schemas/subscriptions_list_200_response_subscriptions_inner'
+          type: array
+        count:
+          type: integer
+        build_state:
+          $ref: '#/components/schemas/changes_list_200_response_build_state'
+      required:
+      - build_state
+      - count
+      - subscriptions
+      type: object
+    subscriptions_create_request:
+      properties:
+        object_type:
+          type: string
+        entity_id:
+          type: string
+      required:
+      - entity_id
+      - object_type
+      type: object
+    subscriptions_create_201_response_subscription_target:
+      example:
+        object_type: object_type
+        kind: kind
+        entity_id: entity_id
+      properties:
+        kind:
+          type: string
+        object_type:
+          type: string
+        entity_id:
+          type: string
+      required:
+      - entity_id
+      - kind
+      - object_type
+      type: object
+    subscriptions_create_201_response_subscription:
+      example:
+        paused: true
+        event_types:
+        - event_types
+        - event_types
+        created_at: created_at
+        id: 0
+        label: label
+        target:
+          object_type: object_type
+          kind: kind
+          entity_id: entity_id
+      properties:
+        id:
+          type: integer
+        label:
+          type: string
+        target:
+          $ref: '#/components/schemas/subscriptions_create_201_response_subscription_target'
+        event_types:
+          items:
+            type: string
+          type: array
+        paused:
+          type: boolean
+        created_at:
+          type: string
+      required:
+      - created_at
+      - event_types
+      - id
+      - label
+      - paused
+      - target
+      type: object
+    subscriptions_create_201_response:
+      example:
+        build_state:
+          generation: generation
+          built: true
+        created: true
+        subscription:
+          paused: true
+          event_types:
+          - event_types
+          - event_types
+          created_at: created_at
+          id: 0
+          label: label
+          target:
+            object_type: object_type
+            kind: kind
+            entity_id: entity_id
+      properties:
+        subscription:
+          $ref: '#/components/schemas/subscriptions_create_201_response_subscription'
+        created:
+          type: boolean
+        build_state:
+          $ref: '#/components/schemas/changes_list_200_response_build_state'
+      required:
+      - build_state
+      - created
+      - subscription
+      type: object
+    subscriptions_delete_200_response:
+      example:
+        deleted: true
+        build_state:
+          generation: generation
+          built: true
+        id: 0
+        label: label
+      properties:
+        deleted:
+          type: boolean
+        id:
+          type: integer
+        label:
+          type: string
+        build_state:
+          $ref: '#/components/schemas/changes_list_200_response_build_state'
+      required:
+      - build_state
+      - deleted
+      - id
+      - label
       type: object
     _api_v1_whoami_get_200_response_limits:
       example:

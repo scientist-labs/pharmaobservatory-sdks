@@ -49,6 +49,24 @@ type CompanyFinancialsRow struct {
 	LatestSharesOutstandingFy NullableInt32 `json:"latest_shares_outstanding_fy,omitempty"`
 	// The latest fiscal year the filer reported any line item.
 	LatestFinancialFy NullableInt32 `json:"latest_financial_fy,omitempty"`
+	// The end of the latest reported quarter of the filer that has an operating cash flow figure (a 10-Q, or the Q4 derived from a 10-K); the date of the cash figure below. Repeated on every year row of the filer; null for a company with no quarterly SEC filings.
+	QuarterEndDate NullableString `json:"quarter_end_date,omitempty"`
+	// The date SEC received the filing of that latest quarter.
+	QuarterFiledDate NullableString `json:"quarter_filed_date,omitempty"`
+	// Cash plus short-term investments at quarter_end_date, in USD (non-current investments are not counted).
+	CashAndInvestmentsLatestQ NullableFloat32 `json:"cash_and_investments_latest_q,omitempty"`
+	// Net cash from operating activities of that latest quarter alone (year-to-date figures differenced; Q4 is the full year less nine months), in USD; negative means burning.
+	OperatingCashFlowLatestQ NullableFloat32 `json:"operating_cash_flow_latest_q,omitempty"`
+	// How many contiguous quarters burn_basis_quarterly_usd averages over, 1 or 2.
+	BurnBasisQuarters NullableInt32 `json:"burn_basis_quarters,omitempty"`
+	// The mean quarterly operating cash flow over the latest two contiguous quarters (the latest alone when no contiguous earlier quarter has a figure), in USD; negative means burning.
+	BurnBasisQuarterlyUsd NullableFloat32 `json:"burn_basis_quarterly_usd,omitempty"`
+	// An estimate, derived not reported: cash_and_investments_latest_q divided by the monthly burn (burn_basis_quarterly_usd over 3), in months at quarter_end_date, rounded to 0.1. Null whenever runway_quarterly_null_reason is set.
+	RunwayMonthsQuarterly NullableFloat32 `json:"runway_months_quarterly,omitempty"`
+	// The version of the derivation behind runway_months_quarterly; trailing_quarter_mean_v1 is the mean of the latest two contiguous discrete quarters.
+	RunwayQuarterlyMethod NullableString `json:"runway_quarterly_method,omitempty"`
+	// Why runway_months_quarterly is null, in precedence order: no_quarterly_facts (no 10-Q cash-flow facts: a private company or a 20-F/40-F filer), stale (the latest quarter ended over a year before the newest SEC filing loaded), no_fx_rate, no_cash_at_quarter_end, or positive_cash_flow (no burn to run out of). Null when the runway is published.
+	RunwayQuarterlyNullReason NullableString `json:"runway_quarterly_null_reason,omitempty"`
 	// Total revenue for the fiscal year, in USD (a non-USD filer is converted at the calendar-year average rate; null when no rate exists).
 	Revenue NullableFloat32 `json:"revenue,omitempty"`
 	// Net income for the fiscal year, in USD.
@@ -761,6 +779,384 @@ func (o *CompanyFinancialsRow) SetLatestFinancialFyNil() {
 // UnsetLatestFinancialFy ensures that no value is present for LatestFinancialFy, not even an explicit nil
 func (o *CompanyFinancialsRow) UnsetLatestFinancialFy() {
 	o.LatestFinancialFy.Unset()
+}
+
+// GetQuarterEndDate returns the QuarterEndDate field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyFinancialsRow) GetQuarterEndDate() string {
+	if o == nil || IsNil(o.QuarterEndDate.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.QuarterEndDate.Get()
+}
+
+// GetQuarterEndDateOk returns a tuple with the QuarterEndDate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyFinancialsRow) GetQuarterEndDateOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.QuarterEndDate.Get(), o.QuarterEndDate.IsSet()
+}
+
+// HasQuarterEndDate returns a boolean if a field has been set.
+func (o *CompanyFinancialsRow) HasQuarterEndDate() bool {
+	if o != nil && o.QuarterEndDate.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetQuarterEndDate gets a reference to the given NullableString and assigns it to the QuarterEndDate field.
+func (o *CompanyFinancialsRow) SetQuarterEndDate(v string) {
+	o.QuarterEndDate.Set(&v)
+}
+// SetQuarterEndDateNil sets the value for QuarterEndDate to be an explicit nil
+func (o *CompanyFinancialsRow) SetQuarterEndDateNil() {
+	o.QuarterEndDate.Set(nil)
+}
+
+// UnsetQuarterEndDate ensures that no value is present for QuarterEndDate, not even an explicit nil
+func (o *CompanyFinancialsRow) UnsetQuarterEndDate() {
+	o.QuarterEndDate.Unset()
+}
+
+// GetQuarterFiledDate returns the QuarterFiledDate field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyFinancialsRow) GetQuarterFiledDate() string {
+	if o == nil || IsNil(o.QuarterFiledDate.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.QuarterFiledDate.Get()
+}
+
+// GetQuarterFiledDateOk returns a tuple with the QuarterFiledDate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyFinancialsRow) GetQuarterFiledDateOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.QuarterFiledDate.Get(), o.QuarterFiledDate.IsSet()
+}
+
+// HasQuarterFiledDate returns a boolean if a field has been set.
+func (o *CompanyFinancialsRow) HasQuarterFiledDate() bool {
+	if o != nil && o.QuarterFiledDate.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetQuarterFiledDate gets a reference to the given NullableString and assigns it to the QuarterFiledDate field.
+func (o *CompanyFinancialsRow) SetQuarterFiledDate(v string) {
+	o.QuarterFiledDate.Set(&v)
+}
+// SetQuarterFiledDateNil sets the value for QuarterFiledDate to be an explicit nil
+func (o *CompanyFinancialsRow) SetQuarterFiledDateNil() {
+	o.QuarterFiledDate.Set(nil)
+}
+
+// UnsetQuarterFiledDate ensures that no value is present for QuarterFiledDate, not even an explicit nil
+func (o *CompanyFinancialsRow) UnsetQuarterFiledDate() {
+	o.QuarterFiledDate.Unset()
+}
+
+// GetCashAndInvestmentsLatestQ returns the CashAndInvestmentsLatestQ field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyFinancialsRow) GetCashAndInvestmentsLatestQ() float32 {
+	if o == nil || IsNil(o.CashAndInvestmentsLatestQ.Get()) {
+		var ret float32
+		return ret
+	}
+	return *o.CashAndInvestmentsLatestQ.Get()
+}
+
+// GetCashAndInvestmentsLatestQOk returns a tuple with the CashAndInvestmentsLatestQ field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyFinancialsRow) GetCashAndInvestmentsLatestQOk() (*float32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CashAndInvestmentsLatestQ.Get(), o.CashAndInvestmentsLatestQ.IsSet()
+}
+
+// HasCashAndInvestmentsLatestQ returns a boolean if a field has been set.
+func (o *CompanyFinancialsRow) HasCashAndInvestmentsLatestQ() bool {
+	if o != nil && o.CashAndInvestmentsLatestQ.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCashAndInvestmentsLatestQ gets a reference to the given NullableFloat32 and assigns it to the CashAndInvestmentsLatestQ field.
+func (o *CompanyFinancialsRow) SetCashAndInvestmentsLatestQ(v float32) {
+	o.CashAndInvestmentsLatestQ.Set(&v)
+}
+// SetCashAndInvestmentsLatestQNil sets the value for CashAndInvestmentsLatestQ to be an explicit nil
+func (o *CompanyFinancialsRow) SetCashAndInvestmentsLatestQNil() {
+	o.CashAndInvestmentsLatestQ.Set(nil)
+}
+
+// UnsetCashAndInvestmentsLatestQ ensures that no value is present for CashAndInvestmentsLatestQ, not even an explicit nil
+func (o *CompanyFinancialsRow) UnsetCashAndInvestmentsLatestQ() {
+	o.CashAndInvestmentsLatestQ.Unset()
+}
+
+// GetOperatingCashFlowLatestQ returns the OperatingCashFlowLatestQ field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyFinancialsRow) GetOperatingCashFlowLatestQ() float32 {
+	if o == nil || IsNil(o.OperatingCashFlowLatestQ.Get()) {
+		var ret float32
+		return ret
+	}
+	return *o.OperatingCashFlowLatestQ.Get()
+}
+
+// GetOperatingCashFlowLatestQOk returns a tuple with the OperatingCashFlowLatestQ field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyFinancialsRow) GetOperatingCashFlowLatestQOk() (*float32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.OperatingCashFlowLatestQ.Get(), o.OperatingCashFlowLatestQ.IsSet()
+}
+
+// HasOperatingCashFlowLatestQ returns a boolean if a field has been set.
+func (o *CompanyFinancialsRow) HasOperatingCashFlowLatestQ() bool {
+	if o != nil && o.OperatingCashFlowLatestQ.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOperatingCashFlowLatestQ gets a reference to the given NullableFloat32 and assigns it to the OperatingCashFlowLatestQ field.
+func (o *CompanyFinancialsRow) SetOperatingCashFlowLatestQ(v float32) {
+	o.OperatingCashFlowLatestQ.Set(&v)
+}
+// SetOperatingCashFlowLatestQNil sets the value for OperatingCashFlowLatestQ to be an explicit nil
+func (o *CompanyFinancialsRow) SetOperatingCashFlowLatestQNil() {
+	o.OperatingCashFlowLatestQ.Set(nil)
+}
+
+// UnsetOperatingCashFlowLatestQ ensures that no value is present for OperatingCashFlowLatestQ, not even an explicit nil
+func (o *CompanyFinancialsRow) UnsetOperatingCashFlowLatestQ() {
+	o.OperatingCashFlowLatestQ.Unset()
+}
+
+// GetBurnBasisQuarters returns the BurnBasisQuarters field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyFinancialsRow) GetBurnBasisQuarters() int32 {
+	if o == nil || IsNil(o.BurnBasisQuarters.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.BurnBasisQuarters.Get()
+}
+
+// GetBurnBasisQuartersOk returns a tuple with the BurnBasisQuarters field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyFinancialsRow) GetBurnBasisQuartersOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BurnBasisQuarters.Get(), o.BurnBasisQuarters.IsSet()
+}
+
+// HasBurnBasisQuarters returns a boolean if a field has been set.
+func (o *CompanyFinancialsRow) HasBurnBasisQuarters() bool {
+	if o != nil && o.BurnBasisQuarters.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBurnBasisQuarters gets a reference to the given NullableInt32 and assigns it to the BurnBasisQuarters field.
+func (o *CompanyFinancialsRow) SetBurnBasisQuarters(v int32) {
+	o.BurnBasisQuarters.Set(&v)
+}
+// SetBurnBasisQuartersNil sets the value for BurnBasisQuarters to be an explicit nil
+func (o *CompanyFinancialsRow) SetBurnBasisQuartersNil() {
+	o.BurnBasisQuarters.Set(nil)
+}
+
+// UnsetBurnBasisQuarters ensures that no value is present for BurnBasisQuarters, not even an explicit nil
+func (o *CompanyFinancialsRow) UnsetBurnBasisQuarters() {
+	o.BurnBasisQuarters.Unset()
+}
+
+// GetBurnBasisQuarterlyUsd returns the BurnBasisQuarterlyUsd field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyFinancialsRow) GetBurnBasisQuarterlyUsd() float32 {
+	if o == nil || IsNil(o.BurnBasisQuarterlyUsd.Get()) {
+		var ret float32
+		return ret
+	}
+	return *o.BurnBasisQuarterlyUsd.Get()
+}
+
+// GetBurnBasisQuarterlyUsdOk returns a tuple with the BurnBasisQuarterlyUsd field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyFinancialsRow) GetBurnBasisQuarterlyUsdOk() (*float32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BurnBasisQuarterlyUsd.Get(), o.BurnBasisQuarterlyUsd.IsSet()
+}
+
+// HasBurnBasisQuarterlyUsd returns a boolean if a field has been set.
+func (o *CompanyFinancialsRow) HasBurnBasisQuarterlyUsd() bool {
+	if o != nil && o.BurnBasisQuarterlyUsd.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBurnBasisQuarterlyUsd gets a reference to the given NullableFloat32 and assigns it to the BurnBasisQuarterlyUsd field.
+func (o *CompanyFinancialsRow) SetBurnBasisQuarterlyUsd(v float32) {
+	o.BurnBasisQuarterlyUsd.Set(&v)
+}
+// SetBurnBasisQuarterlyUsdNil sets the value for BurnBasisQuarterlyUsd to be an explicit nil
+func (o *CompanyFinancialsRow) SetBurnBasisQuarterlyUsdNil() {
+	o.BurnBasisQuarterlyUsd.Set(nil)
+}
+
+// UnsetBurnBasisQuarterlyUsd ensures that no value is present for BurnBasisQuarterlyUsd, not even an explicit nil
+func (o *CompanyFinancialsRow) UnsetBurnBasisQuarterlyUsd() {
+	o.BurnBasisQuarterlyUsd.Unset()
+}
+
+// GetRunwayMonthsQuarterly returns the RunwayMonthsQuarterly field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyFinancialsRow) GetRunwayMonthsQuarterly() float32 {
+	if o == nil || IsNil(o.RunwayMonthsQuarterly.Get()) {
+		var ret float32
+		return ret
+	}
+	return *o.RunwayMonthsQuarterly.Get()
+}
+
+// GetRunwayMonthsQuarterlyOk returns a tuple with the RunwayMonthsQuarterly field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyFinancialsRow) GetRunwayMonthsQuarterlyOk() (*float32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.RunwayMonthsQuarterly.Get(), o.RunwayMonthsQuarterly.IsSet()
+}
+
+// HasRunwayMonthsQuarterly returns a boolean if a field has been set.
+func (o *CompanyFinancialsRow) HasRunwayMonthsQuarterly() bool {
+	if o != nil && o.RunwayMonthsQuarterly.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetRunwayMonthsQuarterly gets a reference to the given NullableFloat32 and assigns it to the RunwayMonthsQuarterly field.
+func (o *CompanyFinancialsRow) SetRunwayMonthsQuarterly(v float32) {
+	o.RunwayMonthsQuarterly.Set(&v)
+}
+// SetRunwayMonthsQuarterlyNil sets the value for RunwayMonthsQuarterly to be an explicit nil
+func (o *CompanyFinancialsRow) SetRunwayMonthsQuarterlyNil() {
+	o.RunwayMonthsQuarterly.Set(nil)
+}
+
+// UnsetRunwayMonthsQuarterly ensures that no value is present for RunwayMonthsQuarterly, not even an explicit nil
+func (o *CompanyFinancialsRow) UnsetRunwayMonthsQuarterly() {
+	o.RunwayMonthsQuarterly.Unset()
+}
+
+// GetRunwayQuarterlyMethod returns the RunwayQuarterlyMethod field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyFinancialsRow) GetRunwayQuarterlyMethod() string {
+	if o == nil || IsNil(o.RunwayQuarterlyMethod.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.RunwayQuarterlyMethod.Get()
+}
+
+// GetRunwayQuarterlyMethodOk returns a tuple with the RunwayQuarterlyMethod field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyFinancialsRow) GetRunwayQuarterlyMethodOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.RunwayQuarterlyMethod.Get(), o.RunwayQuarterlyMethod.IsSet()
+}
+
+// HasRunwayQuarterlyMethod returns a boolean if a field has been set.
+func (o *CompanyFinancialsRow) HasRunwayQuarterlyMethod() bool {
+	if o != nil && o.RunwayQuarterlyMethod.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetRunwayQuarterlyMethod gets a reference to the given NullableString and assigns it to the RunwayQuarterlyMethod field.
+func (o *CompanyFinancialsRow) SetRunwayQuarterlyMethod(v string) {
+	o.RunwayQuarterlyMethod.Set(&v)
+}
+// SetRunwayQuarterlyMethodNil sets the value for RunwayQuarterlyMethod to be an explicit nil
+func (o *CompanyFinancialsRow) SetRunwayQuarterlyMethodNil() {
+	o.RunwayQuarterlyMethod.Set(nil)
+}
+
+// UnsetRunwayQuarterlyMethod ensures that no value is present for RunwayQuarterlyMethod, not even an explicit nil
+func (o *CompanyFinancialsRow) UnsetRunwayQuarterlyMethod() {
+	o.RunwayQuarterlyMethod.Unset()
+}
+
+// GetRunwayQuarterlyNullReason returns the RunwayQuarterlyNullReason field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyFinancialsRow) GetRunwayQuarterlyNullReason() string {
+	if o == nil || IsNil(o.RunwayQuarterlyNullReason.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.RunwayQuarterlyNullReason.Get()
+}
+
+// GetRunwayQuarterlyNullReasonOk returns a tuple with the RunwayQuarterlyNullReason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyFinancialsRow) GetRunwayQuarterlyNullReasonOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.RunwayQuarterlyNullReason.Get(), o.RunwayQuarterlyNullReason.IsSet()
+}
+
+// HasRunwayQuarterlyNullReason returns a boolean if a field has been set.
+func (o *CompanyFinancialsRow) HasRunwayQuarterlyNullReason() bool {
+	if o != nil && o.RunwayQuarterlyNullReason.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetRunwayQuarterlyNullReason gets a reference to the given NullableString and assigns it to the RunwayQuarterlyNullReason field.
+func (o *CompanyFinancialsRow) SetRunwayQuarterlyNullReason(v string) {
+	o.RunwayQuarterlyNullReason.Set(&v)
+}
+// SetRunwayQuarterlyNullReasonNil sets the value for RunwayQuarterlyNullReason to be an explicit nil
+func (o *CompanyFinancialsRow) SetRunwayQuarterlyNullReasonNil() {
+	o.RunwayQuarterlyNullReason.Set(nil)
+}
+
+// UnsetRunwayQuarterlyNullReason ensures that no value is present for RunwayQuarterlyNullReason, not even an explicit nil
+func (o *CompanyFinancialsRow) UnsetRunwayQuarterlyNullReason() {
+	o.RunwayQuarterlyNullReason.Unset()
 }
 
 // GetRevenue returns the Revenue field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -2120,6 +2516,33 @@ func (o CompanyFinancialsRow) ToMap() (map[string]interface{}, error) {
 	if o.LatestFinancialFy.IsSet() {
 		toSerialize["latest_financial_fy"] = o.LatestFinancialFy.Get()
 	}
+	if o.QuarterEndDate.IsSet() {
+		toSerialize["quarter_end_date"] = o.QuarterEndDate.Get()
+	}
+	if o.QuarterFiledDate.IsSet() {
+		toSerialize["quarter_filed_date"] = o.QuarterFiledDate.Get()
+	}
+	if o.CashAndInvestmentsLatestQ.IsSet() {
+		toSerialize["cash_and_investments_latest_q"] = o.CashAndInvestmentsLatestQ.Get()
+	}
+	if o.OperatingCashFlowLatestQ.IsSet() {
+		toSerialize["operating_cash_flow_latest_q"] = o.OperatingCashFlowLatestQ.Get()
+	}
+	if o.BurnBasisQuarters.IsSet() {
+		toSerialize["burn_basis_quarters"] = o.BurnBasisQuarters.Get()
+	}
+	if o.BurnBasisQuarterlyUsd.IsSet() {
+		toSerialize["burn_basis_quarterly_usd"] = o.BurnBasisQuarterlyUsd.Get()
+	}
+	if o.RunwayMonthsQuarterly.IsSet() {
+		toSerialize["runway_months_quarterly"] = o.RunwayMonthsQuarterly.Get()
+	}
+	if o.RunwayQuarterlyMethod.IsSet() {
+		toSerialize["runway_quarterly_method"] = o.RunwayQuarterlyMethod.Get()
+	}
+	if o.RunwayQuarterlyNullReason.IsSet() {
+		toSerialize["runway_quarterly_null_reason"] = o.RunwayQuarterlyNullReason.Get()
+	}
 	if o.Revenue.IsSet() {
 		toSerialize["revenue"] = o.Revenue.Get()
 	}
@@ -2250,6 +2673,15 @@ func (o *CompanyFinancialsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "latest_shares_outstanding")
 		delete(additionalProperties, "latest_shares_outstanding_fy")
 		delete(additionalProperties, "latest_financial_fy")
+		delete(additionalProperties, "quarter_end_date")
+		delete(additionalProperties, "quarter_filed_date")
+		delete(additionalProperties, "cash_and_investments_latest_q")
+		delete(additionalProperties, "operating_cash_flow_latest_q")
+		delete(additionalProperties, "burn_basis_quarters")
+		delete(additionalProperties, "burn_basis_quarterly_usd")
+		delete(additionalProperties, "runway_months_quarterly")
+		delete(additionalProperties, "runway_quarterly_method")
+		delete(additionalProperties, "runway_quarterly_null_reason")
 		delete(additionalProperties, "revenue")
 		delete(additionalProperties, "net_income")
 		delete(additionalProperties, "rnd")

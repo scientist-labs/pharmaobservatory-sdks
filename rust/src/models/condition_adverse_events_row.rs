@@ -26,6 +26,12 @@ pub struct ConditionAdverseEventsRow {
     /// Trials for this condition that report the term.
     #[serde(rename = "n_trials", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_trials: Option<Option<i64>>,
+    /// Distinct serious adverse event terms across the condition's trials. The rows are only the top 10 of these, so a row count is not the term count; use this.
+    #[serde(rename = "n_terms_total", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_terms_total: Option<Option<i64>>,
+    /// Results-posting trials of the condition that report at least one serious adverse event term.
+    #[serde(rename = "n_trials_total", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_trials_total: Option<Option<i64>>,
 }
 
 impl ConditionAdverseEventsRow {
@@ -36,6 +42,8 @@ impl ConditionAdverseEventsRow {
             adverse_event_term: None,
             subjects_affected: None,
             n_trials: None,
+            n_terms_total: None,
+            n_trials_total: None,
         }
     }
 }

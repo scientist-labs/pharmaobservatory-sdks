@@ -27,6 +27,10 @@ type ConditionAdverseEventsRow struct {
 	SubjectsAffected NullableFloat32 `json:"subjects_affected,omitempty"`
 	// Trials for this condition that report the term.
 	NTrials NullableInt64 `json:"n_trials,omitempty"`
+	// Distinct serious adverse event terms across the condition's trials. The rows are only the top 10 of these, so a row count is not the term count; use this.
+	NTermsTotal NullableInt64 `json:"n_terms_total,omitempty"`
+	// Results-posting trials of the condition that report at least one serious adverse event term.
+	NTrialsTotal NullableInt64 `json:"n_trials_total,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -217,6 +221,90 @@ func (o *ConditionAdverseEventsRow) UnsetNTrials() {
 	o.NTrials.Unset()
 }
 
+// GetNTermsTotal returns the NTermsTotal field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ConditionAdverseEventsRow) GetNTermsTotal() int64 {
+	if o == nil || IsNil(o.NTermsTotal.Get()) {
+		var ret int64
+		return ret
+	}
+	return *o.NTermsTotal.Get()
+}
+
+// GetNTermsTotalOk returns a tuple with the NTermsTotal field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ConditionAdverseEventsRow) GetNTermsTotalOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NTermsTotal.Get(), o.NTermsTotal.IsSet()
+}
+
+// HasNTermsTotal returns a boolean if a field has been set.
+func (o *ConditionAdverseEventsRow) HasNTermsTotal() bool {
+	if o != nil && o.NTermsTotal.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNTermsTotal gets a reference to the given NullableInt64 and assigns it to the NTermsTotal field.
+func (o *ConditionAdverseEventsRow) SetNTermsTotal(v int64) {
+	o.NTermsTotal.Set(&v)
+}
+// SetNTermsTotalNil sets the value for NTermsTotal to be an explicit nil
+func (o *ConditionAdverseEventsRow) SetNTermsTotalNil() {
+	o.NTermsTotal.Set(nil)
+}
+
+// UnsetNTermsTotal ensures that no value is present for NTermsTotal, not even an explicit nil
+func (o *ConditionAdverseEventsRow) UnsetNTermsTotal() {
+	o.NTermsTotal.Unset()
+}
+
+// GetNTrialsTotal returns the NTrialsTotal field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ConditionAdverseEventsRow) GetNTrialsTotal() int64 {
+	if o == nil || IsNil(o.NTrialsTotal.Get()) {
+		var ret int64
+		return ret
+	}
+	return *o.NTrialsTotal.Get()
+}
+
+// GetNTrialsTotalOk returns a tuple with the NTrialsTotal field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ConditionAdverseEventsRow) GetNTrialsTotalOk() (*int64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NTrialsTotal.Get(), o.NTrialsTotal.IsSet()
+}
+
+// HasNTrialsTotal returns a boolean if a field has been set.
+func (o *ConditionAdverseEventsRow) HasNTrialsTotal() bool {
+	if o != nil && o.NTrialsTotal.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNTrialsTotal gets a reference to the given NullableInt64 and assigns it to the NTrialsTotal field.
+func (o *ConditionAdverseEventsRow) SetNTrialsTotal(v int64) {
+	o.NTrialsTotal.Set(&v)
+}
+// SetNTrialsTotalNil sets the value for NTrialsTotal to be an explicit nil
+func (o *ConditionAdverseEventsRow) SetNTrialsTotalNil() {
+	o.NTrialsTotal.Set(nil)
+}
+
+// UnsetNTrialsTotal ensures that no value is present for NTrialsTotal, not even an explicit nil
+func (o *ConditionAdverseEventsRow) UnsetNTrialsTotal() {
+	o.NTrialsTotal.Unset()
+}
+
 func (o ConditionAdverseEventsRow) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -238,6 +326,12 @@ func (o ConditionAdverseEventsRow) ToMap() (map[string]interface{}, error) {
 	}
 	if o.NTrials.IsSet() {
 		toSerialize["n_trials"] = o.NTrials.Get()
+	}
+	if o.NTermsTotal.IsSet() {
+		toSerialize["n_terms_total"] = o.NTermsTotal.Get()
+	}
+	if o.NTrialsTotal.IsSet() {
+		toSerialize["n_trials_total"] = o.NTrialsTotal.Get()
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -265,6 +359,8 @@ func (o *ConditionAdverseEventsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "adverse_event_term")
 		delete(additionalProperties, "subjects_affected")
 		delete(additionalProperties, "n_trials")
+		delete(additionalProperties, "n_terms_total")
+		delete(additionalProperties, "n_trials_total")
 		o.AdditionalProperties = additionalProperties
 	}
 

@@ -26,7 +26,7 @@
 | **evidence_ref_kind** | **String** | What kind of reference evidence_ref is. | [optional] |
 | **trial_id** | **String** | The trial key (an NCT id) when the evidence is a trial; null otherwise. | [optional] |
 | **citation_url** | **String** | A link to the cited record. | [optional] |
-| **citation_verified** | **Boolean** | False for the FDA Biomarker Qualification Program arm, whose captured links are known to go stale; true otherwise. A link marked false may not resolve. | [optional] |
+| **citation_verified** | **Boolean** | True on every row. Kept for contract stability; the FDA Biomarker Qualification Program links were rebuilt on the current FDA host (#5778). | [optional] |
 | **evidence_snippet** | **String** | The text span the evidence rests on, where the source gives one. | [optional] |
 | **biomarker_role** | **String** | The biomarker&#39;s role in the evidence, where the source states it. | [optional] |
 | **is_surrogate_endpoint_claim** | **Boolean** | True when the evidence is a claim that the biomarker is a surrogate endpoint. | [optional] |

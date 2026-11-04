@@ -19,6 +19,15 @@
 | **latest_shares_outstanding** | **Float** | The latest reported cover-page share count of the filer, repeated on every year row (the denominator of an ownership percentage). | [optional] |
 | **latest_shares_outstanding_fy** | **Integer** | The fiscal year of latest_shares_outstanding. | [optional] |
 | **latest_financial_fy** | **Integer** | The latest fiscal year the filer reported any line item. | [optional] |
+| **quarter_end_date** | **Date** | The end of the latest reported quarter of the filer that has an operating cash flow figure (a 10-Q, or the Q4 derived from a 10-K); the date of the cash figure below. Repeated on every year row of the filer; null for a company with no quarterly SEC filings. | [optional] |
+| **quarter_filed_date** | **Date** | The date SEC received the filing of that latest quarter. | [optional] |
+| **cash_and_investments_latest_q** | **Float** | Cash plus short-term investments at quarter_end_date, in USD (non-current investments are not counted). | [optional] |
+| **operating_cash_flow_latest_q** | **Float** | Net cash from operating activities of that latest quarter alone (year-to-date figures differenced; Q4 is the full year less nine months), in USD; negative means burning. | [optional] |
+| **burn_basis_quarters** | **Integer** | How many contiguous quarters burn_basis_quarterly_usd averages over, 1 or 2. | [optional] |
+| **burn_basis_quarterly_usd** | **Float** | The mean quarterly operating cash flow over the latest two contiguous quarters (the latest alone when no contiguous earlier quarter has a figure), in USD; negative means burning. | [optional] |
+| **runway_months_quarterly** | **Float** | An estimate, derived not reported: cash_and_investments_latest_q divided by the monthly burn (burn_basis_quarterly_usd over 3), in months at quarter_end_date, rounded to 0.1. Null whenever runway_quarterly_null_reason is set. | [optional] |
+| **runway_quarterly_method** | **String** | The version of the derivation behind runway_months_quarterly; trailing_quarter_mean_v1 is the mean of the latest two contiguous discrete quarters. | [optional] |
+| **runway_quarterly_null_reason** | **String** | Why runway_months_quarterly is null, in precedence order: no_quarterly_facts (no 10-Q cash-flow facts: a private company or a 20-F/40-F filer), stale (the latest quarter ended over a year before the newest SEC filing loaded), no_fx_rate, no_cash_at_quarter_end, or positive_cash_flow (no burn to run out of). Null when the runway is published. | [optional] |
 | **revenue** | **Float** | Total revenue for the fiscal year, in USD (a non-USD filer is converted at the calendar-year average rate; null when no rate exists). | [optional] |
 | **net_income** | **Float** | Net income for the fiscal year, in USD. | [optional] |
 | **rnd** | **Float** | Research and development expense for the fiscal year, in USD. | [optional] |
@@ -72,6 +81,15 @@ instance = PharmaObservatory::CompanyFinancialsRow.new(
   latest_shares_outstanding: null,
   latest_shares_outstanding_fy: null,
   latest_financial_fy: null,
+  quarter_end_date: null,
+  quarter_filed_date: null,
+  cash_and_investments_latest_q: null,
+  operating_cash_flow_latest_q: null,
+  burn_basis_quarters: null,
+  burn_basis_quarterly_usd: null,
+  runway_months_quarterly: null,
+  runway_quarterly_method: null,
+  runway_quarterly_null_reason: null,
   revenue: null,
   net_income: null,
   rnd: null,

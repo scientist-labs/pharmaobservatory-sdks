@@ -91,6 +91,8 @@ type APIClient struct {
 
 	SitesAPI *SitesAPIService
 
+	SubscriptionsAPI *SubscriptionsAPIService
+
 	SuppliersAPI *SuppliersAPIService
 
 	TargetsAPI *TargetsAPIService
@@ -135,6 +137,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.RwdSourcesAPI = (*RwdSourcesAPIService)(&c.common)
 	c.RwdStudiesAPI = (*RwdStudiesAPIService)(&c.common)
 	c.SitesAPI = (*SitesAPIService)(&c.common)
+	c.SubscriptionsAPI = (*SubscriptionsAPIService)(&c.common)
 	c.SuppliersAPI = (*SuppliersAPIService)(&c.common)
 	c.TargetsAPI = (*TargetsAPIService)(&c.common)
 	c.TrialsAPI = (*TrialsAPIService)(&c.common)

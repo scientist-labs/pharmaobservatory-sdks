@@ -8,6 +8,8 @@ Name | Type | Description | Notes
 **AdverseEventTerm** | Pointer to **NullableString** | The adverse event term as the trials report it. | [optional] 
 **SubjectsAffected** | Pointer to **NullableFloat32** | Subjects affected, summed across the condition&#39;s trials. | [optional] 
 **NTrials** | Pointer to **NullableInt64** | Trials for this condition that report the term. | [optional] 
+**NTermsTotal** | Pointer to **NullableInt64** | Distinct serious adverse event terms across the condition&#39;s trials. The rows are only the top 10 of these, so a row count is not the term count; use this. | [optional] 
+**NTrialsTotal** | Pointer to **NullableInt64** | Results-posting trials of the condition that report at least one serious adverse event term. | [optional] 
 
 ## Methods
 
@@ -168,6 +170,76 @@ HasNTrials returns a boolean if a field has been set.
 `func (o *ConditionAdverseEventsRow) UnsetNTrials()`
 
 UnsetNTrials ensures that no value is present for NTrials, not even an explicit nil
+### GetNTermsTotal
+
+`func (o *ConditionAdverseEventsRow) GetNTermsTotal() int64`
+
+GetNTermsTotal returns the NTermsTotal field if non-nil, zero value otherwise.
+
+### GetNTermsTotalOk
+
+`func (o *ConditionAdverseEventsRow) GetNTermsTotalOk() (*int64, bool)`
+
+GetNTermsTotalOk returns a tuple with the NTermsTotal field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNTermsTotal
+
+`func (o *ConditionAdverseEventsRow) SetNTermsTotal(v int64)`
+
+SetNTermsTotal sets NTermsTotal field to given value.
+
+### HasNTermsTotal
+
+`func (o *ConditionAdverseEventsRow) HasNTermsTotal() bool`
+
+HasNTermsTotal returns a boolean if a field has been set.
+
+### SetNTermsTotalNil
+
+`func (o *ConditionAdverseEventsRow) SetNTermsTotalNil(b bool)`
+
+ SetNTermsTotalNil sets the value for NTermsTotal to be an explicit nil
+
+### UnsetNTermsTotal
+`func (o *ConditionAdverseEventsRow) UnsetNTermsTotal()`
+
+UnsetNTermsTotal ensures that no value is present for NTermsTotal, not even an explicit nil
+### GetNTrialsTotal
+
+`func (o *ConditionAdverseEventsRow) GetNTrialsTotal() int64`
+
+GetNTrialsTotal returns the NTrialsTotal field if non-nil, zero value otherwise.
+
+### GetNTrialsTotalOk
+
+`func (o *ConditionAdverseEventsRow) GetNTrialsTotalOk() (*int64, bool)`
+
+GetNTrialsTotalOk returns a tuple with the NTrialsTotal field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNTrialsTotal
+
+`func (o *ConditionAdverseEventsRow) SetNTrialsTotal(v int64)`
+
+SetNTrialsTotal sets NTrialsTotal field to given value.
+
+### HasNTrialsTotal
+
+`func (o *ConditionAdverseEventsRow) HasNTrialsTotal() bool`
+
+HasNTrialsTotal returns a boolean if a field has been set.
+
+### SetNTrialsTotalNil
+
+`func (o *ConditionAdverseEventsRow) SetNTrialsTotalNil(b bool)`
+
+ SetNTrialsTotalNil sets the value for NTrialsTotal to be an explicit nil
+
+### UnsetNTrialsTotal
+`func (o *ConditionAdverseEventsRow) UnsetNTrialsTotal()`
+
+UnsetNTrialsTotal ensures that no value is present for NTrialsTotal, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
