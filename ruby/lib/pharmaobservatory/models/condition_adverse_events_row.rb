@@ -28,13 +28,21 @@ module PharmaObservatory
     # Trials for this condition that report the term.
     attr_accessor :n_trials
 
+    # Distinct serious adverse event terms across the condition's trials. The rows are only the top 10 of these, so a row count is not the term count; use this.
+    attr_accessor :n_terms_total
+
+    # Results-posting trials of the condition that report at least one serious adverse event term.
+    attr_accessor :n_trials_total
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'condition_id' => :'condition_id',
         :'adverse_event_term' => :'adverse_event_term',
         :'subjects_affected' => :'subjects_affected',
-        :'n_trials' => :'n_trials'
+        :'n_trials' => :'n_trials',
+        :'n_terms_total' => :'n_terms_total',
+        :'n_trials_total' => :'n_trials_total'
       }
     end
 
@@ -54,7 +62,9 @@ module PharmaObservatory
         :'condition_id' => :'String',
         :'adverse_event_term' => :'String',
         :'subjects_affected' => :'Float',
-        :'n_trials' => :'Integer'
+        :'n_trials' => :'Integer',
+        :'n_terms_total' => :'Integer',
+        :'n_trials_total' => :'Integer'
       }
     end
 
@@ -64,7 +74,9 @@ module PharmaObservatory
         :'condition_id',
         :'adverse_event_term',
         :'subjects_affected',
-        :'n_trials'
+        :'n_trials',
+        :'n_terms_total',
+        :'n_trials_total'
       ])
     end
 
@@ -99,6 +111,14 @@ module PharmaObservatory
       if attributes.key?(:'n_trials')
         self.n_trials = attributes[:'n_trials']
       end
+
+      if attributes.key?(:'n_terms_total')
+        self.n_terms_total = attributes[:'n_terms_total']
+      end
+
+      if attributes.key?(:'n_trials_total')
+        self.n_trials_total = attributes[:'n_trials_total']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -124,7 +144,9 @@ module PharmaObservatory
           condition_id == o.condition_id &&
           adverse_event_term == o.adverse_event_term &&
           subjects_affected == o.subjects_affected &&
-          n_trials == o.n_trials
+          n_trials == o.n_trials &&
+          n_terms_total == o.n_terms_total &&
+          n_trials_total == o.n_trials_total
     end
 
     # @see the `==` method
@@ -136,7 +158,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [condition_id, adverse_event_term, subjects_affected, n_trials].hash
+      [condition_id, adverse_event_term, subjects_affected, n_trials, n_terms_total, n_trials_total].hash
     end
 
     # Builds the object from hash

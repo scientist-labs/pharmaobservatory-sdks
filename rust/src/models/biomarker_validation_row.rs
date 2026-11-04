@@ -80,7 +80,7 @@ pub struct BiomarkerValidationRow {
     /// A link to the cited record.
     #[serde(rename = "citation_url", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub citation_url: Option<Option<String>>,
-    /// False for the FDA Biomarker Qualification Program arm, whose captured links are known to go stale; true otherwise. A link marked false may not resolve.
+    /// True on every row. Kept for contract stability; the FDA Biomarker Qualification Program links were rebuilt on the current FDA host (#5778).
     #[serde(rename = "citation_verified", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub citation_verified: Option<Option<bool>>,
     /// The text span the evidence rests on, where the source gives one.

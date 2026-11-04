@@ -63,7 +63,7 @@ type BiomarkerValidationRow struct {
 	TrialId NullableString `json:"trial_id,omitempty"`
 	// A link to the cited record.
 	CitationUrl NullableString `json:"citation_url,omitempty"`
-	// False for the FDA Biomarker Qualification Program arm, whose captured links are known to go stale; true otherwise. A link marked false may not resolve.
+	// True on every row. Kept for contract stability; the FDA Biomarker Qualification Program links were rebuilt on the current FDA host (#5778).
 	CitationVerified NullableBool `json:"citation_verified,omitempty"`
 	// The text span the evidence rests on, where the source gives one.
 	EvidenceSnippet NullableString `json:"evidence_snippet,omitempty"`

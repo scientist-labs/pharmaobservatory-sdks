@@ -61,6 +61,33 @@ module PharmaObservatory
     # The latest fiscal year the filer reported any line item.
     attr_accessor :latest_financial_fy
 
+    # The end of the latest reported quarter of the filer that has an operating cash flow figure (a 10-Q, or the Q4 derived from a 10-K); the date of the cash figure below. Repeated on every year row of the filer; null for a company with no quarterly SEC filings.
+    attr_accessor :quarter_end_date
+
+    # The date SEC received the filing of that latest quarter.
+    attr_accessor :quarter_filed_date
+
+    # Cash plus short-term investments at quarter_end_date, in USD (non-current investments are not counted).
+    attr_accessor :cash_and_investments_latest_q
+
+    # Net cash from operating activities of that latest quarter alone (year-to-date figures differenced; Q4 is the full year less nine months), in USD; negative means burning.
+    attr_accessor :operating_cash_flow_latest_q
+
+    # How many contiguous quarters burn_basis_quarterly_usd averages over, 1 or 2.
+    attr_accessor :burn_basis_quarters
+
+    # The mean quarterly operating cash flow over the latest two contiguous quarters (the latest alone when no contiguous earlier quarter has a figure), in USD; negative means burning.
+    attr_accessor :burn_basis_quarterly_usd
+
+    # An estimate, derived not reported: cash_and_investments_latest_q divided by the monthly burn (burn_basis_quarterly_usd over 3), in months at quarter_end_date, rounded to 0.1. Null whenever runway_quarterly_null_reason is set.
+    attr_accessor :runway_months_quarterly
+
+    # The version of the derivation behind runway_months_quarterly; trailing_quarter_mean_v1 is the mean of the latest two contiguous discrete quarters.
+    attr_accessor :runway_quarterly_method
+
+    # Why runway_months_quarterly is null, in precedence order: no_quarterly_facts (no 10-Q cash-flow facts: a private company or a 20-F/40-F filer), stale (the latest quarter ended over a year before the newest SEC filing loaded), no_fx_rate, no_cash_at_quarter_end, or positive_cash_flow (no burn to run out of). Null when the runway is published.
+    attr_accessor :runway_quarterly_null_reason
+
     # Total revenue for the fiscal year, in USD (a non-USD filer is converted at the calendar-year average rate; null when no rate exists).
     attr_accessor :revenue
 
@@ -172,6 +199,15 @@ module PharmaObservatory
         :'latest_shares_outstanding' => :'latest_shares_outstanding',
         :'latest_shares_outstanding_fy' => :'latest_shares_outstanding_fy',
         :'latest_financial_fy' => :'latest_financial_fy',
+        :'quarter_end_date' => :'quarter_end_date',
+        :'quarter_filed_date' => :'quarter_filed_date',
+        :'cash_and_investments_latest_q' => :'cash_and_investments_latest_q',
+        :'operating_cash_flow_latest_q' => :'operating_cash_flow_latest_q',
+        :'burn_basis_quarters' => :'burn_basis_quarters',
+        :'burn_basis_quarterly_usd' => :'burn_basis_quarterly_usd',
+        :'runway_months_quarterly' => :'runway_months_quarterly',
+        :'runway_quarterly_method' => :'runway_quarterly_method',
+        :'runway_quarterly_null_reason' => :'runway_quarterly_null_reason',
         :'revenue' => :'revenue',
         :'net_income' => :'net_income',
         :'rnd' => :'rnd',
@@ -234,6 +270,15 @@ module PharmaObservatory
         :'latest_shares_outstanding' => :'Float',
         :'latest_shares_outstanding_fy' => :'Integer',
         :'latest_financial_fy' => :'Integer',
+        :'quarter_end_date' => :'Date',
+        :'quarter_filed_date' => :'Date',
+        :'cash_and_investments_latest_q' => :'Float',
+        :'operating_cash_flow_latest_q' => :'Float',
+        :'burn_basis_quarters' => :'Integer',
+        :'burn_basis_quarterly_usd' => :'Float',
+        :'runway_months_quarterly' => :'Float',
+        :'runway_quarterly_method' => :'String',
+        :'runway_quarterly_null_reason' => :'String',
         :'revenue' => :'Float',
         :'net_income' => :'Float',
         :'rnd' => :'Float',
@@ -286,6 +331,15 @@ module PharmaObservatory
         :'latest_shares_outstanding',
         :'latest_shares_outstanding_fy',
         :'latest_financial_fy',
+        :'quarter_end_date',
+        :'quarter_filed_date',
+        :'cash_and_investments_latest_q',
+        :'operating_cash_flow_latest_q',
+        :'burn_basis_quarters',
+        :'burn_basis_quarterly_usd',
+        :'runway_months_quarterly',
+        :'runway_quarterly_method',
+        :'runway_quarterly_null_reason',
         :'revenue',
         :'net_income',
         :'rnd',
@@ -394,6 +448,42 @@ module PharmaObservatory
 
       if attributes.key?(:'latest_financial_fy')
         self.latest_financial_fy = attributes[:'latest_financial_fy']
+      end
+
+      if attributes.key?(:'quarter_end_date')
+        self.quarter_end_date = attributes[:'quarter_end_date']
+      end
+
+      if attributes.key?(:'quarter_filed_date')
+        self.quarter_filed_date = attributes[:'quarter_filed_date']
+      end
+
+      if attributes.key?(:'cash_and_investments_latest_q')
+        self.cash_and_investments_latest_q = attributes[:'cash_and_investments_latest_q']
+      end
+
+      if attributes.key?(:'operating_cash_flow_latest_q')
+        self.operating_cash_flow_latest_q = attributes[:'operating_cash_flow_latest_q']
+      end
+
+      if attributes.key?(:'burn_basis_quarters')
+        self.burn_basis_quarters = attributes[:'burn_basis_quarters']
+      end
+
+      if attributes.key?(:'burn_basis_quarterly_usd')
+        self.burn_basis_quarterly_usd = attributes[:'burn_basis_quarterly_usd']
+      end
+
+      if attributes.key?(:'runway_months_quarterly')
+        self.runway_months_quarterly = attributes[:'runway_months_quarterly']
+      end
+
+      if attributes.key?(:'runway_quarterly_method')
+        self.runway_quarterly_method = attributes[:'runway_quarterly_method']
+      end
+
+      if attributes.key?(:'runway_quarterly_null_reason')
+        self.runway_quarterly_null_reason = attributes[:'runway_quarterly_null_reason']
       end
 
       if attributes.key?(:'revenue')
@@ -556,6 +646,15 @@ module PharmaObservatory
           latest_shares_outstanding == o.latest_shares_outstanding &&
           latest_shares_outstanding_fy == o.latest_shares_outstanding_fy &&
           latest_financial_fy == o.latest_financial_fy &&
+          quarter_end_date == o.quarter_end_date &&
+          quarter_filed_date == o.quarter_filed_date &&
+          cash_and_investments_latest_q == o.cash_and_investments_latest_q &&
+          operating_cash_flow_latest_q == o.operating_cash_flow_latest_q &&
+          burn_basis_quarters == o.burn_basis_quarters &&
+          burn_basis_quarterly_usd == o.burn_basis_quarterly_usd &&
+          runway_months_quarterly == o.runway_months_quarterly &&
+          runway_quarterly_method == o.runway_quarterly_method &&
+          runway_quarterly_null_reason == o.runway_quarterly_null_reason &&
           revenue == o.revenue &&
           net_income == o.net_income &&
           rnd == o.rnd &&
@@ -598,7 +697,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [company_id, company_name, group_id, group_name, reporting_org_id, fiscal_year, is_public, edgar_cik, ticker, exchange, public_float_usd, public_float_fy, latest_shares_outstanding, latest_shares_outstanding_fy, latest_financial_fy, revenue, net_income, rnd, assets, equity, public_float, cash, short_term_investments, cash_and_investments, operating_cash_flow, shares_outstanding, stock_based_compensation, operating_expenses, dividends_paid, eps_basic, eps_diluted, total_liabilities, long_term_debt_noncurrent, long_term_debt_total, intangible_assets, property_plant_equipment, goodwill, inventory, accounts_payable, accounts_receivable, weighted_average_shares_basic, weighted_average_shares_diluted, burn_basis_usd, burn_basis_years, runway_months, sec_total_revenue_usd_millions].hash
+      [company_id, company_name, group_id, group_name, reporting_org_id, fiscal_year, is_public, edgar_cik, ticker, exchange, public_float_usd, public_float_fy, latest_shares_outstanding, latest_shares_outstanding_fy, latest_financial_fy, quarter_end_date, quarter_filed_date, cash_and_investments_latest_q, operating_cash_flow_latest_q, burn_basis_quarters, burn_basis_quarterly_usd, runway_months_quarterly, runway_quarterly_method, runway_quarterly_null_reason, revenue, net_income, rnd, assets, equity, public_float, cash, short_term_investments, cash_and_investments, operating_cash_flow, shares_outstanding, stock_based_compensation, operating_expenses, dividends_paid, eps_basic, eps_diluted, total_liabilities, long_term_debt_noncurrent, long_term_debt_total, intangible_assets, property_plant_equipment, goodwill, inventory, accounts_payable, accounts_receivable, weighted_average_shares_basic, weighted_average_shares_diluted, burn_basis_usd, burn_basis_years, runway_months, sec_total_revenue_usd_millions].hash
     end
 
     # Builds the object from hash
