@@ -3154,6 +3154,129 @@ paths:
       summary: CLIA laboratory certificates
       tags:
       - companies
+  /api/v1/companies/{id}/company_asset_collisions:
+    get:
+      operationId: companies.company_asset_collisions
+      parameters:
+      - example: company:c0185cf6c39a2536ad436cf6255494c0
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: company (this company only) or group (its corporate group).
+        explode: true
+        in: query
+        name: scope
+        required: false
+        schema:
+          enum:
+          - company
+          - group
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyAssetCollisionsResponse'
+          description: "Company asset collisions: one row per company asset, competitor\
+            \ asset and target family: a live, owned asset of the company and one\
+            \ of another company on a common target family. Filters: {column}=v (repeat\
+            \ a key for IN), {column}.gt, .gte, .lt, .lte, .ne, .contains (text),\
+            \ .null=true|false. sort=a,-b. group_by=dimension (a date takes :year,\
+            \ :quarter or :month). measure=count, sum(col), avg(col), min(col), max(col),\
+            \ median(col), count_distinct(col). cursor=next_cursor of the previous\
+            \ page. limit up to 500, default 50. On company routes scope=company|group.\
+            \ The columns, dimensions and measures of a dataset are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: Company asset collisions
+      tags:
+      - companies
   /api/v1/companies/{id}/company_assets:
     get:
       operationId: companies.company_assets
@@ -3763,7 +3886,7 @@ paths:
             was issued (GENERATION_CHANGED)
       security:
       - ApiBearerJwt: []
-      summary: Company program overlap
+      summary: Company competitors by asset collision
       tags:
       - companies
   /api/v1/companies/{id}/company_cosponsors:
@@ -42809,42 +42932,30 @@ components:
       additionalProperties: true
       description: "One row of the company_competitors dataset: one row per ordered\
         \ company pair: a company and one of the top 25 companies of each competitor_class\
-        \ by program overlap. A grouped request returns the group columns and the\
+        \ by asset collision. A grouped request returns the group columns and the\
         \ measures instead, as additional properties."
       example:
-        top_shared_targets:
-        - top_shared_targets
-        - top_shared_targets
-        n_competitor_indications: 1
-        n_class_candidates: 0
-        n_cosponsored_trials: 6
-        top_shared_indications:
-        - top_shared_indications
-        - top_shared_indications
-        competitor_company_name: competitor_company_name
-        competitor_rank: 6
-        indication_sim: 2.3021358869347655
-        competitor_class: competitor_class
-        n_shared_indications: 2
-        top_shared_mechanisms:
-        - top_shared_mechanisms
-        - top_shared_mechanisms
-        n_phase_overlap_targets: 4
-        competitor_group_name: competitor_group_name
-        mechanism_sim: 5.637376656633329
+        top_collisions:
+        - top_collisions
+        - top_collisions
         company_id: company_id
         group_name: group_name
-        n_shared_targets: 9
         competitor_group_id: competitor_group_id
-        target_sim: 5.962133916683182
-        n_shared_mechanisms: 3
+        n_collisions: 5
+        n_head_to_head_trials: 3
+        n_class_candidates: 0
+        n_cosponsored_trials: 2
+        n_colliding_families: 5
+        competitor_company_name: competitor_company_name
+        competitor_rank: 6
         competitor_score: 1.4658129805029452
-        phase_sim: 7.061401241503109
+        competitor_class: competitor_class
         group_id: group_id
-        n_company_indications: 1
+        n_shared_indication_pairs: 9
         company_name: company_name
-        n_company_targets: 7
-        n_competitor_targets: 1
+        n_subject_families: 2
+        competitor_group_name: competitor_group_name
+        n_same_action: 7
         competitor_company_id: competitor_company_id
       properties:
         company_id:
@@ -42890,10 +43001,9 @@ components:
           nullable: true
           type: string
         n_class_candidates:
-          description: "How many companies of this competitor_class were candidates\
-            \ (a shared target, or an indication overlap above the similarity floor)\
-            \ before the top 25 were kept. The same value on every row of one company\
-            \ and class."
+          description: How many companies of this competitor_class had at least one
+            asset collision with the company before the top 25 were kept. The same
+            value on every row of one company and class.
           format: int32
           nullable: true
           type: integer
@@ -42904,88 +43014,55 @@ components:
           nullable: true
           type: integer
         competitor_score:
-          description: "100 times the weighted mean of the four similarities below,\
-            \ rounded to four places."
+          description: "The weighted share of the company's live target families that\
+            \ the competitor's live assets collide with, 0 to 100, rounded to four\
+            \ places. Each colliding family counts its best collision weight (rarity\
+            \ of the family across companies, times factors for same action, a shared\
+            \ indication, the least advanced stage, recency and a head-to-head trial),\
+            \ capped at the family's rarity weight; the sum is divided by the rarity\
+            \ weights of ALL the company's families."
           nullable: true
           type: number
-        target_sim:
-          description: "Jaccard similarity, 0 to 1, of the two companies' molecular\
-            \ target sets."
-          nullable: true
-          type: number
-        mechanism_sim:
-          description: "Jaccard similarity, 0 to 1, of their mechanism sets (a target\
-            \ and its action)."
-          nullable: true
-          type: number
-        indication_sim:
-          description: "Jaccard similarity, 0 to 1, of their top-25 disease area sets."
-          nullable: true
-          type: number
-        phase_sim:
-          description: "The fraction, 0 to 1, of the shared targets that both companies\
-            \ have taken to phase 2 or later."
-          nullable: true
-          type: number
-        n_shared_targets:
-          description: Molecular targets both companies pursue.
+        n_collisions:
+          description: "Asset pairs (a drug of the company, a drug of the competitor)\
+            \ that act on a common target."
           format: int32
           nullable: true
           type: integer
-        n_shared_mechanisms:
-          description: Mechanisms (target and action) both companies pursue.
+        n_colliding_families:
+          description: Target families of the company's live assets that the competitor
+            collides with.
           format: int32
           nullable: true
           type: integer
-        n_shared_indications:
-          description: "Disease areas both companies are in, within each one's top\
-            \ 25."
+        n_subject_families:
+          description: "Target families of the company's own live, owned assets; the\
+            \ denominator of competitor_score is their rarity weights."
           format: int32
           nullable: true
           type: integer
-        n_phase_overlap_targets:
-          description: Shared targets that both companies have taken to phase 2 or
-            later.
+        n_same_action:
+          description: Asset pairs whose drugs act on the shared target with the same
+            action type.
           format: int32
           nullable: true
           type: integer
-        n_company_targets:
-          description: Targets the company pursues (the Jaccard denominator).
+        n_shared_indication_pairs:
+          description: Asset pairs whose programs share at least one disease area.
           format: int32
           nullable: true
           type: integer
-        n_competitor_targets:
-          description: Targets the competitor pursues.
+        n_head_to_head_trials:
+          description: Distinct trials led by either company in which one drug of
+            a pair is experimental and the other an active comparator.
           format: int32
           nullable: true
           type: integer
-        n_company_indications:
-          description: Disease areas in the company's top 25.
-          format: int32
-          nullable: true
-          type: integer
-        n_competitor_indications:
-          description: Disease areas in the competitor's top 25.
-          format: int32
-          nullable: true
-          type: integer
-        top_shared_targets:
-          description: "Up to 5 shared target gene symbols, by combined phase then\
-            \ combined trials. An empty list when none."
-          items:
-            type: string
-          nullable: true
-          type: array
-        top_shared_indications:
-          description: "Up to 5 shared disease area names, by combined trial count.\
-            \ An empty list when none."
-          items:
-            type: string
-          nullable: true
-          type: array
-        top_shared_mechanisms:
-          description: "Up to 3 shared mechanisms written as a gene symbol and an\
-            \ action, by combined phase then combined trials. An empty list when none."
+        top_collisions:
+          description: "Up to 3 strongest asset pairs as text: \"drug A / drug B:\
+            \ target family, stage, N shared indications\". The stage is the less\
+            \ advanced of the two programs. An ownership_basis of inferred_lead on\
+            \ the underlying pair (see company_asset_collisions) is an inference."
           items:
             type: string
           nullable: true
@@ -43029,78 +43106,54 @@ components:
         - key: ""
         - key: ""
         rows:
-        - top_shared_targets:
-          - top_shared_targets
-          - top_shared_targets
-          n_competitor_indications: 1
-          n_class_candidates: 0
-          n_cosponsored_trials: 6
-          top_shared_indications:
-          - top_shared_indications
-          - top_shared_indications
-          competitor_company_name: competitor_company_name
-          competitor_rank: 6
-          indication_sim: 2.3021358869347655
-          competitor_class: competitor_class
-          n_shared_indications: 2
-          top_shared_mechanisms:
-          - top_shared_mechanisms
-          - top_shared_mechanisms
-          n_phase_overlap_targets: 4
-          competitor_group_name: competitor_group_name
-          mechanism_sim: 5.637376656633329
+        - top_collisions:
+          - top_collisions
+          - top_collisions
           company_id: company_id
           group_name: group_name
-          n_shared_targets: 9
           competitor_group_id: competitor_group_id
-          target_sim: 5.962133916683182
-          n_shared_mechanisms: 3
+          n_collisions: 5
+          n_head_to_head_trials: 3
+          n_class_candidates: 0
+          n_cosponsored_trials: 2
+          n_colliding_families: 5
+          competitor_company_name: competitor_company_name
+          competitor_rank: 6
           competitor_score: 1.4658129805029452
-          phase_sim: 7.061401241503109
+          competitor_class: competitor_class
           group_id: group_id
-          n_company_indications: 1
+          n_shared_indication_pairs: 9
           company_name: company_name
-          n_company_targets: 7
-          n_competitor_targets: 1
+          n_subject_families: 2
+          competitor_group_name: competitor_group_name
+          n_same_action: 7
           competitor_company_id: competitor_company_id
-        - top_shared_targets:
-          - top_shared_targets
-          - top_shared_targets
-          n_competitor_indications: 1
-          n_class_candidates: 0
-          n_cosponsored_trials: 6
-          top_shared_indications:
-          - top_shared_indications
-          - top_shared_indications
-          competitor_company_name: competitor_company_name
-          competitor_rank: 6
-          indication_sim: 2.3021358869347655
-          competitor_class: competitor_class
-          n_shared_indications: 2
-          top_shared_mechanisms:
-          - top_shared_mechanisms
-          - top_shared_mechanisms
-          n_phase_overlap_targets: 4
-          competitor_group_name: competitor_group_name
-          mechanism_sim: 5.637376656633329
+        - top_collisions:
+          - top_collisions
+          - top_collisions
           company_id: company_id
           group_name: group_name
-          n_shared_targets: 9
           competitor_group_id: competitor_group_id
-          target_sim: 5.962133916683182
-          n_shared_mechanisms: 3
+          n_collisions: 5
+          n_head_to_head_trials: 3
+          n_class_candidates: 0
+          n_cosponsored_trials: 2
+          n_colliding_families: 5
+          competitor_company_name: competitor_company_name
+          competitor_rank: 6
           competitor_score: 1.4658129805029452
-          phase_sim: 7.061401241503109
+          competitor_class: competitor_class
           group_id: group_id
-          n_company_indications: 1
+          n_shared_indication_pairs: 9
           company_name: company_name
-          n_company_targets: 7
-          n_competitor_targets: 1
+          n_subject_families: 2
+          competitor_group_name: competitor_group_name
+          n_same_action: 7
           competitor_company_id: competitor_company_id
         freshness:
           last_loaded: last_loaded
           source: source
-        total: 7
+        total: 4
         measures:
         - measures
         - measures
@@ -100461,6 +100514,381 @@ components:
         rows:
           items:
             $ref: '#/components/schemas/CompanyCosponsorsRow'
+          type: array
+        total:
+          description: "The exact count of the filtered rows on an ungrouped read,\
+            \ carried by the cursor; null when grouped."
+          nullable: true
+          type: integer
+        next_cursor:
+          nullable: true
+          type: string
+        sort:
+          items:
+            type: string
+          type: array
+        filters:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        group_by:
+          items:
+            type: string
+          type: array
+        measures:
+          items:
+            type: string
+          type: array
+        attribution:
+          items:
+            $ref: '#/components/schemas/DatasetAttribution'
+          type: array
+        source_credit:
+          type: string
+        withheld_tiers:
+          items:
+            type: string
+          type: array
+        withheld_columns:
+          items:
+            type: string
+          type: array
+        freshness:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_freshness'
+        build:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_build'
+        build_state:
+          $ref: '#/components/schemas/DatasetBuildState'
+        restriction:
+          additionalProperties: true
+          nullable: true
+          type: object
+      required:
+      - columns
+      - dataset
+      - rows
+      type: object
+    CompanyAssetCollisionsRow:
+      additionalProperties: true
+      description: "One row of the company_asset_collisions dataset: one row per company\
+        \ asset, competitor asset and target family: a live, owned asset of the company\
+        \ and one of another company on a common target family. A grouped request\
+        \ returns the group columns and the measures instead, as additional properties."
+      example:
+        last_year: 1
+        action_type: action_type
+        same_action: true
+        molecule_id: molecule_id
+        top_shared_indications:
+        - top_shared_indications
+        - top_shared_indications
+        competitor_company_name: competitor_company_name
+        n_shared_indications: 0
+        competitor_molecule_name: competitor_molecule_name
+        competitor_group_name: competitor_group_name
+        shared_symbols:
+        - shared_symbols
+        - shared_symbols
+        company_id: company_id
+        group_name: group_name
+        competitor_group_id: competitor_group_id
+        competitor_action_type: competitor_action_type
+        molecule_name: molecule_name
+        n_head_to_head_trials: 5
+        ownership_basis: ownership_basis
+        collision_weight: 2.3021358869347655
+        family_idf: 5.637376656633329
+        target_family: target_family
+        competitor_molecule_id: competitor_molecule_id
+        stage: 6
+        group_id: group_id
+        competitor_ownership_basis: competitor_ownership_basis
+        company_name: company_name
+        competitor_company_id: competitor_company_id
+      properties:
+        company_id:
+          description: "Company level: the company the row is about; the entry key\
+            \ for the companies object type."
+          nullable: true
+          type: string
+        company_name:
+          description: Display name of the company.
+          nullable: true
+          type: string
+        group_id:
+          description: "Group level: the company's current ultimate parent; a root's\
+            \ group is itself."
+          nullable: true
+          type: string
+        group_name:
+          description: Display name of the group.
+          nullable: true
+          type: string
+        molecule_id:
+          description: "Molecule level: the company's asset, the resolved drug (a\
+            \ drug with two canonical ids is one asset)."
+          nullable: true
+          type: string
+        molecule_name:
+          description: "The asset's display name, from the company's most-trialled\
+            \ record of it."
+          nullable: true
+          type: string
+        competitor_company_id:
+          description: "Company level: the company whose asset collides."
+          nullable: true
+          type: string
+        competitor_company_name:
+          description: Display name of the competitor's company.
+          nullable: true
+          type: string
+        competitor_group_id:
+          description: "Group level: the competitor's current ultimate parent; a root's\
+            \ group is itself."
+          nullable: true
+          type: string
+        competitor_group_name:
+          description: Display name of the competitor's group.
+          nullable: true
+          type: string
+        competitor_molecule_id:
+          description: "Molecule level: the competitor's asset, the resolved drug."
+          nullable: true
+          type: string
+        competitor_molecule_name:
+          description: The competitor asset's display name.
+          nullable: true
+          type: string
+        target_family:
+          description: "The company drug's target family of the shared gene (the Open\
+            \ Targets target name, so a taxane's tubulin isotypes are one family;\
+            \ the ChEMBL mechanism text for a drug Open Targets lacks; the gene symbol\
+            \ for a curated investigational asset)."
+          nullable: true
+          type: string
+        shared_symbols:
+          description: Gene symbols of the shared genes within the family.
+          items:
+            type: string
+          nullable: true
+          type: array
+        action_type:
+          description: The company drug's action on the family (Open Targets or ChEMBL
+            vocabulary); null when no source states one.
+          nullable: true
+          type: string
+        competitor_action_type:
+          description: The competitor drug's action on the shared genes; null when
+            no source states one.
+          nullable: true
+          type: string
+        same_action:
+          description: True when the two drugs have the same action type on a shared
+            gene of the family.
+          nullable: true
+          type: boolean
+        n_shared_indications:
+          description: "Disease areas both programs are in, among live programs."
+          format: int32
+          nullable: true
+          type: integer
+        top_shared_indications:
+          description: "Up to 3 shared disease area names, by the pair's combined\
+            \ trial count. An empty list when none."
+          items:
+            type: string
+          nullable: true
+          type: array
+        stage:
+          description: "The less advanced of the two programs' furthest phase: 6 Phase\
+            \ 4, 5 Phase 3, 4 Phase 2/3, 3 Phase 2, 2 Phase 1/2, 1 Phase 1, 0 Early\
+            \ Phase 1, -1 phase not applicable."
+          format: int32
+          nullable: true
+          type: integer
+        last_year:
+          description: The later of the two programs' last trial start year.
+          format: int32
+          nullable: true
+          type: integer
+        n_head_to_head_trials:
+          description: Trials led by either company in which one drug is experimental
+            and the other an active comparator.
+          format: int32
+          nullable: true
+          type: integer
+        ownership_basis:
+          description: Why the company owns the drug. experimental_arm and regulatory_holder
+            rest on evidence; inferred_lead is an inference (no arm data says otherwise).
+          nullable: true
+          type: string
+        competitor_ownership_basis:
+          description: "Why the competitor owns its drug, same vocabulary as ownership_basis."
+          nullable: true
+          type: string
+        family_idf:
+          description: "The rarity weight of the family: the natural log of (companies\
+            \ holding any live, owned target family) over (companies holding this\
+            \ one)."
+          nullable: true
+          type: number
+        collision_weight:
+          description: "The weight of the pair, family_idf times a factor for same\
+            \ action, a shared indication, the stage, recency and a head-to-head trial."
+          nullable: true
+          type: number
+      type: object
+    CompanyAssetCollisionsResponse:
+      example:
+        next_cursor: next_cursor
+        source_credit: source_credit
+        build_state:
+          generation: generation
+          last_loaded: last_loaded
+          built: true
+        object_type: object_type
+        columns:
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        sort:
+        - sort
+        - sort
+        filters:
+        - key: ""
+        - key: ""
+        rows:
+        - last_year: 1
+          action_type: action_type
+          same_action: true
+          molecule_id: molecule_id
+          top_shared_indications:
+          - top_shared_indications
+          - top_shared_indications
+          competitor_company_name: competitor_company_name
+          n_shared_indications: 0
+          competitor_molecule_name: competitor_molecule_name
+          competitor_group_name: competitor_group_name
+          shared_symbols:
+          - shared_symbols
+          - shared_symbols
+          company_id: company_id
+          group_name: group_name
+          competitor_group_id: competitor_group_id
+          competitor_action_type: competitor_action_type
+          molecule_name: molecule_name
+          n_head_to_head_trials: 5
+          ownership_basis: ownership_basis
+          collision_weight: 2.3021358869347655
+          family_idf: 5.637376656633329
+          target_family: target_family
+          competitor_molecule_id: competitor_molecule_id
+          stage: 6
+          group_id: group_id
+          competitor_ownership_basis: competitor_ownership_basis
+          company_name: company_name
+          competitor_company_id: competitor_company_id
+        - last_year: 1
+          action_type: action_type
+          same_action: true
+          molecule_id: molecule_id
+          top_shared_indications:
+          - top_shared_indications
+          - top_shared_indications
+          competitor_company_name: competitor_company_name
+          n_shared_indications: 0
+          competitor_molecule_name: competitor_molecule_name
+          competitor_group_name: competitor_group_name
+          shared_symbols:
+          - shared_symbols
+          - shared_symbols
+          company_id: company_id
+          group_name: group_name
+          competitor_group_id: competitor_group_id
+          competitor_action_type: competitor_action_type
+          molecule_name: molecule_name
+          n_head_to_head_trials: 5
+          ownership_basis: ownership_basis
+          collision_weight: 2.3021358869347655
+          family_idf: 5.637376656633329
+          target_family: target_family
+          competitor_molecule_id: competitor_molecule_id
+          stage: 6
+          group_id: group_id
+          competitor_ownership_basis: competitor_ownership_basis
+          company_name: company_name
+          competitor_company_id: competitor_company_id
+        freshness:
+          last_loaded: last_loaded
+          source: source
+        total: 7
+        measures:
+        - measures
+        - measures
+        build:
+          generation: generation
+          fingerprint: fingerprint
+        scope:
+          group_id: group_id
+          group_name: group_name
+          kind: company
+        withheld_columns:
+        - withheld_columns
+        - withheld_columns
+        attribution:
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        restriction:
+          key: ""
+        group_by:
+        - group_by
+        - group_by
+        grain: grain
+        id: id
+        dataset: dataset
+        withheld_tiers:
+        - withheld_tiers
+        - withheld_tiers
+      properties:
+        dataset:
+          type: string
+        grain:
+          type: string
+        object_type:
+          nullable: true
+          type: string
+        id:
+          nullable: true
+          type: string
+        scope:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_scope'
+        columns:
+          items:
+            $ref: '#/components/schemas/DatasetColumn'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/CompanyAssetCollisionsRow'
           type: array
         total:
           description: "The exact count of the filtered rows on an ungrouped read,\

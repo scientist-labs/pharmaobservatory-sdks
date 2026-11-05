@@ -11,11 +11,12 @@ Method | HTTP request | Description
 [**CompaniesBiomarkerValidation**](CompaniesAPI.md#CompaniesBiomarkerValidation) | **Get** /api/v1/companies/{id}/biomarker_validation | Biomarker validation ladder
 [**CompaniesCatalysts**](CompaniesAPI.md#CompaniesCatalysts) | **Get** /api/v1/companies/{id}/catalysts | Catalysts: trial readouts, patent cliffs, FDA decision dates and press-release events
 [**CompaniesCliaCertificates**](CompaniesAPI.md#CompaniesCliaCertificates) | **Get** /api/v1/companies/{id}/clia_certificates | CLIA laboratory certificates
+[**CompaniesCompanyAssetCollisions**](CompaniesAPI.md#CompaniesCompanyAssetCollisions) | **Get** /api/v1/companies/{id}/company_asset_collisions | Company asset collisions
 [**CompaniesCompanyAssets**](CompaniesAPI.md#CompaniesCompanyAssets) | **Get** /api/v1/companies/{id}/company_assets | Company assets (approved and marketed drugs)
 [**CompaniesCompanyBiomarkerCapability**](CompaniesAPI.md#CompaniesCompanyBiomarkerCapability) | **Get** /api/v1/companies/{id}/company_biomarker_capability | Company biomarker capability
 [**CompaniesCompanyCollaborators**](CompaniesAPI.md#CompaniesCompanyCollaborators) | **Get** /api/v1/companies/{id}/company_collaborators | Company study collaborators by disease area
 [**CompaniesCompanyCompetitorActivity**](CompaniesAPI.md#CompaniesCompanyCompetitorActivity) | **Get** /api/v1/companies/{id}/company_competitor_activity | Company competitor activity by disease area
-[**CompaniesCompanyCompetitors**](CompaniesAPI.md#CompaniesCompanyCompetitors) | **Get** /api/v1/companies/{id}/company_competitors | Company program overlap
+[**CompaniesCompanyCompetitors**](CompaniesAPI.md#CompaniesCompanyCompetitors) | **Get** /api/v1/companies/{id}/company_competitors | Company competitors by asset collision
 [**CompaniesCompanyCosponsors**](CompaniesAPI.md#CompaniesCompanyCosponsors) | **Get** /api/v1/companies/{id}/company_cosponsors | Company co-sponsors
 [**CompaniesCompanyFinancials**](CompaniesAPI.md#CompaniesCompanyFinancials) | **Get** /api/v1/companies/{id}/company_financials | Company SEC financials
 [**CompaniesCompanyFirmographics**](CompaniesAPI.md#CompaniesCompanyFirmographics) | **Get** /api/v1/companies/{id}/company_firmographics | Company firmographics
@@ -635,6 +636,86 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## CompaniesCompanyAssetCollisions
+
+> CompanyAssetCollisionsResponse CompaniesCompanyAssetCollisions(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
+
+Company asset collisions
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.CompaniesAPI.CompaniesCompanyAssetCollisions(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesCompanyAssetCollisions``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CompaniesCompanyAssetCollisions`: CompanyAssetCollisionsResponse
+	fmt.Fprintf(os.Stdout, "Response from `CompaniesAPI.CompaniesCompanyAssetCollisions`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCompaniesCompanyAssetCollisionsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
+
+### Return type
+
+[**CompanyAssetCollisionsResponse**](CompanyAssetCollisionsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## CompaniesCompanyAssets
 
 > CompanyAssetsResponse CompaniesCompanyAssets(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
@@ -959,7 +1040,7 @@ Name | Type | Description  | Notes
 
 > CompanyCompetitorsResponse CompaniesCompanyCompetitors(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
 
-Company program overlap
+Company competitors by asset collision
 
 ### Example
 

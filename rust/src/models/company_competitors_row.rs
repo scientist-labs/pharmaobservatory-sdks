@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// CompanyCompetitorsRow : One row of the company_competitors dataset: one row per ordered company pair: a company and one of the top 25 companies of each competitor_class by program overlap. A grouped request returns the group columns and the measures instead, as additional properties.
+/// CompanyCompetitorsRow : One row of the company_competitors dataset: one row per ordered company pair: a company and one of the top 25 companies of each competitor_class by asset collision. A grouped request returns the group columns and the measures instead, as additional properties.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CompanyCompetitorsRow {
     /// Company level: the company the row is about; the entry key for the companies object type.
@@ -41,67 +41,43 @@ pub struct CompanyCompetitorsRow {
     /// The competitor's class: industry, or non_industry (not classed as industry by the sponsor-class rule: academic, hospital, government, nonprofit, and any record the rule does not reach). competitor_rank restarts at 1 within each class, so filter or sort on this column first.
     #[serde(rename = "competitor_class", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub competitor_class: Option<Option<String>>,
-    /// How many companies of this competitor_class were candidates (a shared target, or an indication overlap above the similarity floor) before the top 25 were kept. The same value on every row of one company and class.
+    /// How many companies of this competitor_class had at least one asset collision with the company before the top 25 were kept. The same value on every row of one company and class.
     #[serde(rename = "n_class_candidates", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_class_candidates: Option<Option<i32>>,
     /// The competitor's rank within its competitor_class for the company by competitor_score (1 is the highest).
     #[serde(rename = "competitor_rank", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub competitor_rank: Option<Option<i32>>,
-    /// 100 times the weighted mean of the four similarities below, rounded to four places.
+    /// The weighted share of the company's live target families that the competitor's live assets collide with, 0 to 100, rounded to four places. Each colliding family counts its best collision weight (rarity of the family across companies, times factors for same action, a shared indication, the least advanced stage, recency and a head-to-head trial), capped at the family's rarity weight; the sum is divided by the rarity weights of ALL the company's families.
     #[serde(rename = "competitor_score", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub competitor_score: Option<Option<f64>>,
-    /// Jaccard similarity, 0 to 1, of the two companies' molecular target sets.
-    #[serde(rename = "target_sim", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub target_sim: Option<Option<f64>>,
-    /// Jaccard similarity, 0 to 1, of their mechanism sets (a target and its action).
-    #[serde(rename = "mechanism_sim", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub mechanism_sim: Option<Option<f64>>,
-    /// Jaccard similarity, 0 to 1, of their top-25 disease area sets.
-    #[serde(rename = "indication_sim", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub indication_sim: Option<Option<f64>>,
-    /// The fraction, 0 to 1, of the shared targets that both companies have taken to phase 2 or later.
-    #[serde(rename = "phase_sim", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub phase_sim: Option<Option<f64>>,
-    /// Molecular targets both companies pursue.
-    #[serde(rename = "n_shared_targets", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub n_shared_targets: Option<Option<i32>>,
-    /// Mechanisms (target and action) both companies pursue.
-    #[serde(rename = "n_shared_mechanisms", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub n_shared_mechanisms: Option<Option<i32>>,
-    /// Disease areas both companies are in, within each one's top 25.
-    #[serde(rename = "n_shared_indications", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub n_shared_indications: Option<Option<i32>>,
-    /// Shared targets that both companies have taken to phase 2 or later.
-    #[serde(rename = "n_phase_overlap_targets", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub n_phase_overlap_targets: Option<Option<i32>>,
-    /// Targets the company pursues (the Jaccard denominator).
-    #[serde(rename = "n_company_targets", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub n_company_targets: Option<Option<i32>>,
-    /// Targets the competitor pursues.
-    #[serde(rename = "n_competitor_targets", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub n_competitor_targets: Option<Option<i32>>,
-    /// Disease areas in the company's top 25.
-    #[serde(rename = "n_company_indications", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub n_company_indications: Option<Option<i32>>,
-    /// Disease areas in the competitor's top 25.
-    #[serde(rename = "n_competitor_indications", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub n_competitor_indications: Option<Option<i32>>,
-    /// Up to 5 shared target gene symbols, by combined phase then combined trials. An empty list when none.
-    #[serde(rename = "top_shared_targets", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub top_shared_targets: Option<Option<Vec<String>>>,
-    /// Up to 5 shared disease area names, by combined trial count. An empty list when none.
-    #[serde(rename = "top_shared_indications", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub top_shared_indications: Option<Option<Vec<String>>>,
-    /// Up to 3 shared mechanisms written as a gene symbol and an action, by combined phase then combined trials. An empty list when none.
-    #[serde(rename = "top_shared_mechanisms", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
-    pub top_shared_mechanisms: Option<Option<Vec<String>>>,
+    /// Asset pairs (a drug of the company, a drug of the competitor) that act on a common target.
+    #[serde(rename = "n_collisions", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_collisions: Option<Option<i32>>,
+    /// Target families of the company's live assets that the competitor collides with.
+    #[serde(rename = "n_colliding_families", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_colliding_families: Option<Option<i32>>,
+    /// Target families of the company's own live, owned assets; the denominator of competitor_score is their rarity weights.
+    #[serde(rename = "n_subject_families", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_subject_families: Option<Option<i32>>,
+    /// Asset pairs whose drugs act on the shared target with the same action type.
+    #[serde(rename = "n_same_action", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_same_action: Option<Option<i32>>,
+    /// Asset pairs whose programs share at least one disease area.
+    #[serde(rename = "n_shared_indication_pairs", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_shared_indication_pairs: Option<Option<i32>>,
+    /// Distinct trials led by either company in which one drug of a pair is experimental and the other an active comparator.
+    #[serde(rename = "n_head_to_head_trials", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_head_to_head_trials: Option<Option<i32>>,
+    /// Up to 3 strongest asset pairs as text: \"drug A / drug B: target family, stage, N shared indications\". The stage is the less advanced of the two programs. An ownership_basis of inferred_lead on the underlying pair (see company_asset_collisions) is an inference.
+    #[serde(rename = "top_collisions", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub top_collisions: Option<Option<Vec<String>>>,
     /// Distinct trials on which the company and the competitor are both named as sponsors, counted over their subtrees; 0 when none. A consortium trial (more than 25 sponsor companies) is left out.
     #[serde(rename = "n_cosponsored_trials", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_cosponsored_trials: Option<Option<i32>>,
 }
 
 impl CompanyCompetitorsRow {
-    /// One row of the company_competitors dataset: one row per ordered company pair: a company and one of the top 25 companies of each competitor_class by program overlap. A grouped request returns the group columns and the measures instead, as additional properties.
+    /// One row of the company_competitors dataset: one row per ordered company pair: a company and one of the top 25 companies of each competitor_class by asset collision. A grouped request returns the group columns and the measures instead, as additional properties.
     pub fn new() -> CompanyCompetitorsRow {
         CompanyCompetitorsRow {
             company_id: None,
@@ -116,21 +92,13 @@ impl CompanyCompetitorsRow {
             n_class_candidates: None,
             competitor_rank: None,
             competitor_score: None,
-            target_sim: None,
-            mechanism_sim: None,
-            indication_sim: None,
-            phase_sim: None,
-            n_shared_targets: None,
-            n_shared_mechanisms: None,
-            n_shared_indications: None,
-            n_phase_overlap_targets: None,
-            n_company_targets: None,
-            n_competitor_targets: None,
-            n_company_indications: None,
-            n_competitor_indications: None,
-            top_shared_targets: None,
-            top_shared_indications: None,
-            top_shared_mechanisms: None,
+            n_collisions: None,
+            n_colliding_families: None,
+            n_subject_families: None,
+            n_same_action: None,
+            n_shared_indication_pairs: None,
+            n_head_to_head_trials: None,
+            top_collisions: None,
             n_cosponsored_trials: None,
         }
     }

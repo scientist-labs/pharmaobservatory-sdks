@@ -11,11 +11,12 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**companies_biomarker_validation**](CompaniesApi.md#companies_biomarker_validation) | **GET** /api/v1/companies/{id}/biomarker_validation | Biomarker validation ladder |
 | [**companies_catalysts**](CompaniesApi.md#companies_catalysts) | **GET** /api/v1/companies/{id}/catalysts | Catalysts: trial readouts, patent cliffs, FDA decision dates and press-release events |
 | [**companies_clia_certificates**](CompaniesApi.md#companies_clia_certificates) | **GET** /api/v1/companies/{id}/clia_certificates | CLIA laboratory certificates |
+| [**companies_company_asset_collisions**](CompaniesApi.md#companies_company_asset_collisions) | **GET** /api/v1/companies/{id}/company_asset_collisions | Company asset collisions |
 | [**companies_company_assets**](CompaniesApi.md#companies_company_assets) | **GET** /api/v1/companies/{id}/company_assets | Company assets (approved and marketed drugs) |
 | [**companies_company_biomarker_capability**](CompaniesApi.md#companies_company_biomarker_capability) | **GET** /api/v1/companies/{id}/company_biomarker_capability | Company biomarker capability |
 | [**companies_company_collaborators**](CompaniesApi.md#companies_company_collaborators) | **GET** /api/v1/companies/{id}/company_collaborators | Company study collaborators by disease area |
 | [**companies_company_competitor_activity**](CompaniesApi.md#companies_company_competitor_activity) | **GET** /api/v1/companies/{id}/company_competitor_activity | Company competitor activity by disease area |
-| [**companies_company_competitors**](CompaniesApi.md#companies_company_competitors) | **GET** /api/v1/companies/{id}/company_competitors | Company program overlap |
+| [**companies_company_competitors**](CompaniesApi.md#companies_company_competitors) | **GET** /api/v1/companies/{id}/company_competitors | Company competitors by asset collision |
 | [**companies_company_cosponsors**](CompaniesApi.md#companies_company_cosponsors) | **GET** /api/v1/companies/{id}/company_cosponsors | Company co-sponsors |
 | [**companies_company_financials**](CompaniesApi.md#companies_company_financials) | **GET** /api/v1/companies/{id}/company_financials | Company SEC financials |
 | [**companies_company_firmographics**](CompaniesApi.md#companies_company_firmographics) | **GET** /api/v1/companies/{id}/company_firmographics | Company firmographics |
@@ -641,6 +642,87 @@ end
 - **Accept**: application/json
 
 
+## companies_company_asset_collisions
+
+> <CompanyAssetCollisionsResponse> companies_company_asset_collisions(id, opts)
+
+Company asset collisions
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::CompaniesApi.new
+id = 'company:c0185cf6c39a2536ad436cf6255494c0' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example', # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  scope: 'company' # String | company (this company only) or group (its corporate group).
+}
+
+begin
+  # Company asset collisions
+  result = api_instance.companies_company_asset_collisions(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_company_asset_collisions: #{e}"
+end
+```
+
+#### Using the companies_company_asset_collisions_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<CompanyAssetCollisionsResponse>, Integer, Hash)> companies_company_asset_collisions_with_http_info(id, opts)
+
+```ruby
+begin
+  # Company asset collisions
+  data, status_code, headers = api_instance.companies_company_asset_collisions_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <CompanyAssetCollisionsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_company_asset_collisions_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+| **scope** | **String** | company (this company only) or group (its corporate group). | [optional] |
+
+### Return type
+
+[**CompanyAssetCollisionsResponse**](CompanyAssetCollisionsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
 ## companies_company_assets
 
 > <CompanyAssetsResponse> companies_company_assets(id, opts)
@@ -969,7 +1051,7 @@ end
 
 > <CompanyCompetitorsResponse> companies_company_competitors(id, opts)
 
-Company program overlap
+Company competitors by asset collision
 
 ### Examples
 
@@ -994,7 +1076,7 @@ opts = {
 }
 
 begin
-  # Company program overlap
+  # Company competitors by asset collision
   result = api_instance.companies_company_competitors(id, opts)
   p result
 rescue PharmaObservatory::ApiError => e
@@ -1010,7 +1092,7 @@ This returns an Array which contains the response data, status code and headers.
 
 ```ruby
 begin
-  # Company program overlap
+  # Company competitors by asset collision
   data, status_code, headers = api_instance.companies_company_competitors_with_http_info(id, opts)
   p status_code # => 2xx
   p headers # => { ... }

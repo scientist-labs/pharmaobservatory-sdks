@@ -72,6 +72,8 @@ docs/CompaniesRecord.md
 docs/CompaniesRecordAttributes.md
 docs/CompaniesResponse.md
 docs/CompaniesRow.md
+docs/CompanyAssetCollisionsResponse.md
+docs/CompanyAssetCollisionsRow.md
 docs/CompanyAssetsResponse.md
 docs/CompanyAssetsRow.md
 docs/CompanyBiomarkerCapabilityResponse.md
@@ -593,6 +595,8 @@ lib/pharmaobservatory/models/companies_record.rb
 lib/pharmaobservatory/models/companies_record_attributes.rb
 lib/pharmaobservatory/models/companies_response.rb
 lib/pharmaobservatory/models/companies_row.rb
+lib/pharmaobservatory/models/company_asset_collisions_response.rb
+lib/pharmaobservatory/models/company_asset_collisions_row.rb
 lib/pharmaobservatory/models/company_assets_response.rb
 lib/pharmaobservatory/models/company_assets_row.rb
 lib/pharmaobservatory/models/company_biomarker_capability_response.rb
@@ -1091,6 +1095,8 @@ spec/models/companies_record_attributes_spec.rb
 spec/models/companies_record_spec.rb
 spec/models/companies_response_spec.rb
 spec/models/companies_row_spec.rb
+spec/models/company_asset_collisions_response_spec.rb
+spec/models/company_asset_collisions_row_spec.rb
 spec/models/company_assets_response_spec.rb
 spec/models/company_assets_row_spec.rb
 spec/models/company_biomarker_capability_response_spec.rb

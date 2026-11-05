@@ -17,7 +17,7 @@ import (
 // checks if the CompanyCompetitorsRow type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CompanyCompetitorsRow{}
 
-// CompanyCompetitorsRow One row of the company_competitors dataset: one row per ordered company pair: a company and one of the top 25 companies of each competitor_class by program overlap. A grouped request returns the group columns and the measures instead, as additional properties.
+// CompanyCompetitorsRow One row of the company_competitors dataset: one row per ordered company pair: a company and one of the top 25 companies of each competitor_class by asset collision. A grouped request returns the group columns and the measures instead, as additional properties.
 type CompanyCompetitorsRow struct {
 	// Company level: the company the row is about; the entry key for the companies object type.
 	CompanyId NullableString `json:"company_id,omitempty"`
@@ -37,42 +37,26 @@ type CompanyCompetitorsRow struct {
 	CompetitorGroupName NullableString `json:"competitor_group_name,omitempty"`
 	// The competitor's class: industry, or non_industry (not classed as industry by the sponsor-class rule: academic, hospital, government, nonprofit, and any record the rule does not reach). competitor_rank restarts at 1 within each class, so filter or sort on this column first.
 	CompetitorClass NullableString `json:"competitor_class,omitempty"`
-	// How many companies of this competitor_class were candidates (a shared target, or an indication overlap above the similarity floor) before the top 25 were kept. The same value on every row of one company and class.
+	// How many companies of this competitor_class had at least one asset collision with the company before the top 25 were kept. The same value on every row of one company and class.
 	NClassCandidates NullableInt32 `json:"n_class_candidates,omitempty"`
 	// The competitor's rank within its competitor_class for the company by competitor_score (1 is the highest).
 	CompetitorRank NullableInt32 `json:"competitor_rank,omitempty"`
-	// 100 times the weighted mean of the four similarities below, rounded to four places.
+	// The weighted share of the company's live target families that the competitor's live assets collide with, 0 to 100, rounded to four places. Each colliding family counts its best collision weight (rarity of the family across companies, times factors for same action, a shared indication, the least advanced stage, recency and a head-to-head trial), capped at the family's rarity weight; the sum is divided by the rarity weights of ALL the company's families.
 	CompetitorScore NullableFloat32 `json:"competitor_score,omitempty"`
-	// Jaccard similarity, 0 to 1, of the two companies' molecular target sets.
-	TargetSim NullableFloat32 `json:"target_sim,omitempty"`
-	// Jaccard similarity, 0 to 1, of their mechanism sets (a target and its action).
-	MechanismSim NullableFloat32 `json:"mechanism_sim,omitempty"`
-	// Jaccard similarity, 0 to 1, of their top-25 disease area sets.
-	IndicationSim NullableFloat32 `json:"indication_sim,omitempty"`
-	// The fraction, 0 to 1, of the shared targets that both companies have taken to phase 2 or later.
-	PhaseSim NullableFloat32 `json:"phase_sim,omitempty"`
-	// Molecular targets both companies pursue.
-	NSharedTargets NullableInt32 `json:"n_shared_targets,omitempty"`
-	// Mechanisms (target and action) both companies pursue.
-	NSharedMechanisms NullableInt32 `json:"n_shared_mechanisms,omitempty"`
-	// Disease areas both companies are in, within each one's top 25.
-	NSharedIndications NullableInt32 `json:"n_shared_indications,omitempty"`
-	// Shared targets that both companies have taken to phase 2 or later.
-	NPhaseOverlapTargets NullableInt32 `json:"n_phase_overlap_targets,omitempty"`
-	// Targets the company pursues (the Jaccard denominator).
-	NCompanyTargets NullableInt32 `json:"n_company_targets,omitempty"`
-	// Targets the competitor pursues.
-	NCompetitorTargets NullableInt32 `json:"n_competitor_targets,omitempty"`
-	// Disease areas in the company's top 25.
-	NCompanyIndications NullableInt32 `json:"n_company_indications,omitempty"`
-	// Disease areas in the competitor's top 25.
-	NCompetitorIndications NullableInt32 `json:"n_competitor_indications,omitempty"`
-	// Up to 5 shared target gene symbols, by combined phase then combined trials. An empty list when none.
-	TopSharedTargets []string `json:"top_shared_targets,omitempty"`
-	// Up to 5 shared disease area names, by combined trial count. An empty list when none.
-	TopSharedIndications []string `json:"top_shared_indications,omitempty"`
-	// Up to 3 shared mechanisms written as a gene symbol and an action, by combined phase then combined trials. An empty list when none.
-	TopSharedMechanisms []string `json:"top_shared_mechanisms,omitempty"`
+	// Asset pairs (a drug of the company, a drug of the competitor) that act on a common target.
+	NCollisions NullableInt32 `json:"n_collisions,omitempty"`
+	// Target families of the company's live assets that the competitor collides with.
+	NCollidingFamilies NullableInt32 `json:"n_colliding_families,omitempty"`
+	// Target families of the company's own live, owned assets; the denominator of competitor_score is their rarity weights.
+	NSubjectFamilies NullableInt32 `json:"n_subject_families,omitempty"`
+	// Asset pairs whose drugs act on the shared target with the same action type.
+	NSameAction NullableInt32 `json:"n_same_action,omitempty"`
+	// Asset pairs whose programs share at least one disease area.
+	NSharedIndicationPairs NullableInt32 `json:"n_shared_indication_pairs,omitempty"`
+	// Distinct trials led by either company in which one drug of a pair is experimental and the other an active comparator.
+	NHeadToHeadTrials NullableInt32 `json:"n_head_to_head_trials,omitempty"`
+	// Up to 3 strongest asset pairs as text: \"drug A / drug B: target family, stage, N shared indications\". The stage is the less advanced of the two programs. An ownership_basis of inferred_lead on the underlying pair (see company_asset_collisions) is an inference.
+	TopCollisions []string `json:"top_collisions,omitempty"`
 	// Distinct trials on which the company and the competitor are both named as sponsors, counted over their subtrees; 0 when none. A consortium trial (more than 25 sponsor companies) is left out.
 	NCosponsoredTrials NullableInt32 `json:"n_cosponsored_trials,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -601,607 +585,289 @@ func (o *CompanyCompetitorsRow) UnsetCompetitorScore() {
 	o.CompetitorScore.Unset()
 }
 
-// GetTargetSim returns the TargetSim field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CompanyCompetitorsRow) GetTargetSim() float32 {
-	if o == nil || IsNil(o.TargetSim.Get()) {
-		var ret float32
-		return ret
-	}
-	return *o.TargetSim.Get()
-}
-
-// GetTargetSimOk returns a tuple with the TargetSim field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CompanyCompetitorsRow) GetTargetSimOk() (*float32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.TargetSim.Get(), o.TargetSim.IsSet()
-}
-
-// HasTargetSim returns a boolean if a field has been set.
-func (o *CompanyCompetitorsRow) HasTargetSim() bool {
-	if o != nil && o.TargetSim.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetTargetSim gets a reference to the given NullableFloat32 and assigns it to the TargetSim field.
-func (o *CompanyCompetitorsRow) SetTargetSim(v float32) {
-	o.TargetSim.Set(&v)
-}
-// SetTargetSimNil sets the value for TargetSim to be an explicit nil
-func (o *CompanyCompetitorsRow) SetTargetSimNil() {
-	o.TargetSim.Set(nil)
-}
-
-// UnsetTargetSim ensures that no value is present for TargetSim, not even an explicit nil
-func (o *CompanyCompetitorsRow) UnsetTargetSim() {
-	o.TargetSim.Unset()
-}
-
-// GetMechanismSim returns the MechanismSim field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CompanyCompetitorsRow) GetMechanismSim() float32 {
-	if o == nil || IsNil(o.MechanismSim.Get()) {
-		var ret float32
-		return ret
-	}
-	return *o.MechanismSim.Get()
-}
-
-// GetMechanismSimOk returns a tuple with the MechanismSim field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CompanyCompetitorsRow) GetMechanismSimOk() (*float32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.MechanismSim.Get(), o.MechanismSim.IsSet()
-}
-
-// HasMechanismSim returns a boolean if a field has been set.
-func (o *CompanyCompetitorsRow) HasMechanismSim() bool {
-	if o != nil && o.MechanismSim.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetMechanismSim gets a reference to the given NullableFloat32 and assigns it to the MechanismSim field.
-func (o *CompanyCompetitorsRow) SetMechanismSim(v float32) {
-	o.MechanismSim.Set(&v)
-}
-// SetMechanismSimNil sets the value for MechanismSim to be an explicit nil
-func (o *CompanyCompetitorsRow) SetMechanismSimNil() {
-	o.MechanismSim.Set(nil)
-}
-
-// UnsetMechanismSim ensures that no value is present for MechanismSim, not even an explicit nil
-func (o *CompanyCompetitorsRow) UnsetMechanismSim() {
-	o.MechanismSim.Unset()
-}
-
-// GetIndicationSim returns the IndicationSim field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CompanyCompetitorsRow) GetIndicationSim() float32 {
-	if o == nil || IsNil(o.IndicationSim.Get()) {
-		var ret float32
-		return ret
-	}
-	return *o.IndicationSim.Get()
-}
-
-// GetIndicationSimOk returns a tuple with the IndicationSim field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CompanyCompetitorsRow) GetIndicationSimOk() (*float32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.IndicationSim.Get(), o.IndicationSim.IsSet()
-}
-
-// HasIndicationSim returns a boolean if a field has been set.
-func (o *CompanyCompetitorsRow) HasIndicationSim() bool {
-	if o != nil && o.IndicationSim.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetIndicationSim gets a reference to the given NullableFloat32 and assigns it to the IndicationSim field.
-func (o *CompanyCompetitorsRow) SetIndicationSim(v float32) {
-	o.IndicationSim.Set(&v)
-}
-// SetIndicationSimNil sets the value for IndicationSim to be an explicit nil
-func (o *CompanyCompetitorsRow) SetIndicationSimNil() {
-	o.IndicationSim.Set(nil)
-}
-
-// UnsetIndicationSim ensures that no value is present for IndicationSim, not even an explicit nil
-func (o *CompanyCompetitorsRow) UnsetIndicationSim() {
-	o.IndicationSim.Unset()
-}
-
-// GetPhaseSim returns the PhaseSim field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CompanyCompetitorsRow) GetPhaseSim() float32 {
-	if o == nil || IsNil(o.PhaseSim.Get()) {
-		var ret float32
-		return ret
-	}
-	return *o.PhaseSim.Get()
-}
-
-// GetPhaseSimOk returns a tuple with the PhaseSim field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CompanyCompetitorsRow) GetPhaseSimOk() (*float32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.PhaseSim.Get(), o.PhaseSim.IsSet()
-}
-
-// HasPhaseSim returns a boolean if a field has been set.
-func (o *CompanyCompetitorsRow) HasPhaseSim() bool {
-	if o != nil && o.PhaseSim.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetPhaseSim gets a reference to the given NullableFloat32 and assigns it to the PhaseSim field.
-func (o *CompanyCompetitorsRow) SetPhaseSim(v float32) {
-	o.PhaseSim.Set(&v)
-}
-// SetPhaseSimNil sets the value for PhaseSim to be an explicit nil
-func (o *CompanyCompetitorsRow) SetPhaseSimNil() {
-	o.PhaseSim.Set(nil)
-}
-
-// UnsetPhaseSim ensures that no value is present for PhaseSim, not even an explicit nil
-func (o *CompanyCompetitorsRow) UnsetPhaseSim() {
-	o.PhaseSim.Unset()
-}
-
-// GetNSharedTargets returns the NSharedTargets field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CompanyCompetitorsRow) GetNSharedTargets() int32 {
-	if o == nil || IsNil(o.NSharedTargets.Get()) {
+// GetNCollisions returns the NCollisions field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetNCollisions() int32 {
+	if o == nil || IsNil(o.NCollisions.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.NSharedTargets.Get()
+	return *o.NCollisions.Get()
 }
 
-// GetNSharedTargetsOk returns a tuple with the NSharedTargets field value if set, nil otherwise
+// GetNCollisionsOk returns a tuple with the NCollisions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CompanyCompetitorsRow) GetNSharedTargetsOk() (*int32, bool) {
+func (o *CompanyCompetitorsRow) GetNCollisionsOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.NSharedTargets.Get(), o.NSharedTargets.IsSet()
+	return o.NCollisions.Get(), o.NCollisions.IsSet()
 }
 
-// HasNSharedTargets returns a boolean if a field has been set.
-func (o *CompanyCompetitorsRow) HasNSharedTargets() bool {
-	if o != nil && o.NSharedTargets.IsSet() {
+// HasNCollisions returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasNCollisions() bool {
+	if o != nil && o.NCollisions.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetNSharedTargets gets a reference to the given NullableInt32 and assigns it to the NSharedTargets field.
-func (o *CompanyCompetitorsRow) SetNSharedTargets(v int32) {
-	o.NSharedTargets.Set(&v)
+// SetNCollisions gets a reference to the given NullableInt32 and assigns it to the NCollisions field.
+func (o *CompanyCompetitorsRow) SetNCollisions(v int32) {
+	o.NCollisions.Set(&v)
 }
-// SetNSharedTargetsNil sets the value for NSharedTargets to be an explicit nil
-func (o *CompanyCompetitorsRow) SetNSharedTargetsNil() {
-	o.NSharedTargets.Set(nil)
-}
-
-// UnsetNSharedTargets ensures that no value is present for NSharedTargets, not even an explicit nil
-func (o *CompanyCompetitorsRow) UnsetNSharedTargets() {
-	o.NSharedTargets.Unset()
+// SetNCollisionsNil sets the value for NCollisions to be an explicit nil
+func (o *CompanyCompetitorsRow) SetNCollisionsNil() {
+	o.NCollisions.Set(nil)
 }
 
-// GetNSharedMechanisms returns the NSharedMechanisms field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CompanyCompetitorsRow) GetNSharedMechanisms() int32 {
-	if o == nil || IsNil(o.NSharedMechanisms.Get()) {
+// UnsetNCollisions ensures that no value is present for NCollisions, not even an explicit nil
+func (o *CompanyCompetitorsRow) UnsetNCollisions() {
+	o.NCollisions.Unset()
+}
+
+// GetNCollidingFamilies returns the NCollidingFamilies field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetNCollidingFamilies() int32 {
+	if o == nil || IsNil(o.NCollidingFamilies.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.NSharedMechanisms.Get()
+	return *o.NCollidingFamilies.Get()
 }
 
-// GetNSharedMechanismsOk returns a tuple with the NSharedMechanisms field value if set, nil otherwise
+// GetNCollidingFamiliesOk returns a tuple with the NCollidingFamilies field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CompanyCompetitorsRow) GetNSharedMechanismsOk() (*int32, bool) {
+func (o *CompanyCompetitorsRow) GetNCollidingFamiliesOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.NSharedMechanisms.Get(), o.NSharedMechanisms.IsSet()
+	return o.NCollidingFamilies.Get(), o.NCollidingFamilies.IsSet()
 }
 
-// HasNSharedMechanisms returns a boolean if a field has been set.
-func (o *CompanyCompetitorsRow) HasNSharedMechanisms() bool {
-	if o != nil && o.NSharedMechanisms.IsSet() {
+// HasNCollidingFamilies returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasNCollidingFamilies() bool {
+	if o != nil && o.NCollidingFamilies.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetNSharedMechanisms gets a reference to the given NullableInt32 and assigns it to the NSharedMechanisms field.
-func (o *CompanyCompetitorsRow) SetNSharedMechanisms(v int32) {
-	o.NSharedMechanisms.Set(&v)
+// SetNCollidingFamilies gets a reference to the given NullableInt32 and assigns it to the NCollidingFamilies field.
+func (o *CompanyCompetitorsRow) SetNCollidingFamilies(v int32) {
+	o.NCollidingFamilies.Set(&v)
 }
-// SetNSharedMechanismsNil sets the value for NSharedMechanisms to be an explicit nil
-func (o *CompanyCompetitorsRow) SetNSharedMechanismsNil() {
-	o.NSharedMechanisms.Set(nil)
-}
-
-// UnsetNSharedMechanisms ensures that no value is present for NSharedMechanisms, not even an explicit nil
-func (o *CompanyCompetitorsRow) UnsetNSharedMechanisms() {
-	o.NSharedMechanisms.Unset()
+// SetNCollidingFamiliesNil sets the value for NCollidingFamilies to be an explicit nil
+func (o *CompanyCompetitorsRow) SetNCollidingFamiliesNil() {
+	o.NCollidingFamilies.Set(nil)
 }
 
-// GetNSharedIndications returns the NSharedIndications field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CompanyCompetitorsRow) GetNSharedIndications() int32 {
-	if o == nil || IsNil(o.NSharedIndications.Get()) {
+// UnsetNCollidingFamilies ensures that no value is present for NCollidingFamilies, not even an explicit nil
+func (o *CompanyCompetitorsRow) UnsetNCollidingFamilies() {
+	o.NCollidingFamilies.Unset()
+}
+
+// GetNSubjectFamilies returns the NSubjectFamilies field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetNSubjectFamilies() int32 {
+	if o == nil || IsNil(o.NSubjectFamilies.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.NSharedIndications.Get()
+	return *o.NSubjectFamilies.Get()
 }
 
-// GetNSharedIndicationsOk returns a tuple with the NSharedIndications field value if set, nil otherwise
+// GetNSubjectFamiliesOk returns a tuple with the NSubjectFamilies field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CompanyCompetitorsRow) GetNSharedIndicationsOk() (*int32, bool) {
+func (o *CompanyCompetitorsRow) GetNSubjectFamiliesOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.NSharedIndications.Get(), o.NSharedIndications.IsSet()
+	return o.NSubjectFamilies.Get(), o.NSubjectFamilies.IsSet()
 }
 
-// HasNSharedIndications returns a boolean if a field has been set.
-func (o *CompanyCompetitorsRow) HasNSharedIndications() bool {
-	if o != nil && o.NSharedIndications.IsSet() {
+// HasNSubjectFamilies returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasNSubjectFamilies() bool {
+	if o != nil && o.NSubjectFamilies.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetNSharedIndications gets a reference to the given NullableInt32 and assigns it to the NSharedIndications field.
-func (o *CompanyCompetitorsRow) SetNSharedIndications(v int32) {
-	o.NSharedIndications.Set(&v)
+// SetNSubjectFamilies gets a reference to the given NullableInt32 and assigns it to the NSubjectFamilies field.
+func (o *CompanyCompetitorsRow) SetNSubjectFamilies(v int32) {
+	o.NSubjectFamilies.Set(&v)
 }
-// SetNSharedIndicationsNil sets the value for NSharedIndications to be an explicit nil
-func (o *CompanyCompetitorsRow) SetNSharedIndicationsNil() {
-	o.NSharedIndications.Set(nil)
-}
-
-// UnsetNSharedIndications ensures that no value is present for NSharedIndications, not even an explicit nil
-func (o *CompanyCompetitorsRow) UnsetNSharedIndications() {
-	o.NSharedIndications.Unset()
+// SetNSubjectFamiliesNil sets the value for NSubjectFamilies to be an explicit nil
+func (o *CompanyCompetitorsRow) SetNSubjectFamiliesNil() {
+	o.NSubjectFamilies.Set(nil)
 }
 
-// GetNPhaseOverlapTargets returns the NPhaseOverlapTargets field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CompanyCompetitorsRow) GetNPhaseOverlapTargets() int32 {
-	if o == nil || IsNil(o.NPhaseOverlapTargets.Get()) {
+// UnsetNSubjectFamilies ensures that no value is present for NSubjectFamilies, not even an explicit nil
+func (o *CompanyCompetitorsRow) UnsetNSubjectFamilies() {
+	o.NSubjectFamilies.Unset()
+}
+
+// GetNSameAction returns the NSameAction field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetNSameAction() int32 {
+	if o == nil || IsNil(o.NSameAction.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.NPhaseOverlapTargets.Get()
+	return *o.NSameAction.Get()
 }
 
-// GetNPhaseOverlapTargetsOk returns a tuple with the NPhaseOverlapTargets field value if set, nil otherwise
+// GetNSameActionOk returns a tuple with the NSameAction field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CompanyCompetitorsRow) GetNPhaseOverlapTargetsOk() (*int32, bool) {
+func (o *CompanyCompetitorsRow) GetNSameActionOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.NPhaseOverlapTargets.Get(), o.NPhaseOverlapTargets.IsSet()
+	return o.NSameAction.Get(), o.NSameAction.IsSet()
 }
 
-// HasNPhaseOverlapTargets returns a boolean if a field has been set.
-func (o *CompanyCompetitorsRow) HasNPhaseOverlapTargets() bool {
-	if o != nil && o.NPhaseOverlapTargets.IsSet() {
+// HasNSameAction returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasNSameAction() bool {
+	if o != nil && o.NSameAction.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetNPhaseOverlapTargets gets a reference to the given NullableInt32 and assigns it to the NPhaseOverlapTargets field.
-func (o *CompanyCompetitorsRow) SetNPhaseOverlapTargets(v int32) {
-	o.NPhaseOverlapTargets.Set(&v)
+// SetNSameAction gets a reference to the given NullableInt32 and assigns it to the NSameAction field.
+func (o *CompanyCompetitorsRow) SetNSameAction(v int32) {
+	o.NSameAction.Set(&v)
 }
-// SetNPhaseOverlapTargetsNil sets the value for NPhaseOverlapTargets to be an explicit nil
-func (o *CompanyCompetitorsRow) SetNPhaseOverlapTargetsNil() {
-	o.NPhaseOverlapTargets.Set(nil)
-}
-
-// UnsetNPhaseOverlapTargets ensures that no value is present for NPhaseOverlapTargets, not even an explicit nil
-func (o *CompanyCompetitorsRow) UnsetNPhaseOverlapTargets() {
-	o.NPhaseOverlapTargets.Unset()
+// SetNSameActionNil sets the value for NSameAction to be an explicit nil
+func (o *CompanyCompetitorsRow) SetNSameActionNil() {
+	o.NSameAction.Set(nil)
 }
 
-// GetNCompanyTargets returns the NCompanyTargets field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CompanyCompetitorsRow) GetNCompanyTargets() int32 {
-	if o == nil || IsNil(o.NCompanyTargets.Get()) {
+// UnsetNSameAction ensures that no value is present for NSameAction, not even an explicit nil
+func (o *CompanyCompetitorsRow) UnsetNSameAction() {
+	o.NSameAction.Unset()
+}
+
+// GetNSharedIndicationPairs returns the NSharedIndicationPairs field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetNSharedIndicationPairs() int32 {
+	if o == nil || IsNil(o.NSharedIndicationPairs.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.NCompanyTargets.Get()
+	return *o.NSharedIndicationPairs.Get()
 }
 
-// GetNCompanyTargetsOk returns a tuple with the NCompanyTargets field value if set, nil otherwise
+// GetNSharedIndicationPairsOk returns a tuple with the NSharedIndicationPairs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CompanyCompetitorsRow) GetNCompanyTargetsOk() (*int32, bool) {
+func (o *CompanyCompetitorsRow) GetNSharedIndicationPairsOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.NCompanyTargets.Get(), o.NCompanyTargets.IsSet()
+	return o.NSharedIndicationPairs.Get(), o.NSharedIndicationPairs.IsSet()
 }
 
-// HasNCompanyTargets returns a boolean if a field has been set.
-func (o *CompanyCompetitorsRow) HasNCompanyTargets() bool {
-	if o != nil && o.NCompanyTargets.IsSet() {
+// HasNSharedIndicationPairs returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasNSharedIndicationPairs() bool {
+	if o != nil && o.NSharedIndicationPairs.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetNCompanyTargets gets a reference to the given NullableInt32 and assigns it to the NCompanyTargets field.
-func (o *CompanyCompetitorsRow) SetNCompanyTargets(v int32) {
-	o.NCompanyTargets.Set(&v)
+// SetNSharedIndicationPairs gets a reference to the given NullableInt32 and assigns it to the NSharedIndicationPairs field.
+func (o *CompanyCompetitorsRow) SetNSharedIndicationPairs(v int32) {
+	o.NSharedIndicationPairs.Set(&v)
 }
-// SetNCompanyTargetsNil sets the value for NCompanyTargets to be an explicit nil
-func (o *CompanyCompetitorsRow) SetNCompanyTargetsNil() {
-	o.NCompanyTargets.Set(nil)
-}
-
-// UnsetNCompanyTargets ensures that no value is present for NCompanyTargets, not even an explicit nil
-func (o *CompanyCompetitorsRow) UnsetNCompanyTargets() {
-	o.NCompanyTargets.Unset()
+// SetNSharedIndicationPairsNil sets the value for NSharedIndicationPairs to be an explicit nil
+func (o *CompanyCompetitorsRow) SetNSharedIndicationPairsNil() {
+	o.NSharedIndicationPairs.Set(nil)
 }
 
-// GetNCompetitorTargets returns the NCompetitorTargets field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CompanyCompetitorsRow) GetNCompetitorTargets() int32 {
-	if o == nil || IsNil(o.NCompetitorTargets.Get()) {
+// UnsetNSharedIndicationPairs ensures that no value is present for NSharedIndicationPairs, not even an explicit nil
+func (o *CompanyCompetitorsRow) UnsetNSharedIndicationPairs() {
+	o.NSharedIndicationPairs.Unset()
+}
+
+// GetNHeadToHeadTrials returns the NHeadToHeadTrials field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetNHeadToHeadTrials() int32 {
+	if o == nil || IsNil(o.NHeadToHeadTrials.Get()) {
 		var ret int32
 		return ret
 	}
-	return *o.NCompetitorTargets.Get()
+	return *o.NHeadToHeadTrials.Get()
 }
 
-// GetNCompetitorTargetsOk returns a tuple with the NCompetitorTargets field value if set, nil otherwise
+// GetNHeadToHeadTrialsOk returns a tuple with the NHeadToHeadTrials field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CompanyCompetitorsRow) GetNCompetitorTargetsOk() (*int32, bool) {
+func (o *CompanyCompetitorsRow) GetNHeadToHeadTrialsOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.NCompetitorTargets.Get(), o.NCompetitorTargets.IsSet()
+	return o.NHeadToHeadTrials.Get(), o.NHeadToHeadTrials.IsSet()
 }
 
-// HasNCompetitorTargets returns a boolean if a field has been set.
-func (o *CompanyCompetitorsRow) HasNCompetitorTargets() bool {
-	if o != nil && o.NCompetitorTargets.IsSet() {
+// HasNHeadToHeadTrials returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasNHeadToHeadTrials() bool {
+	if o != nil && o.NHeadToHeadTrials.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetNCompetitorTargets gets a reference to the given NullableInt32 and assigns it to the NCompetitorTargets field.
-func (o *CompanyCompetitorsRow) SetNCompetitorTargets(v int32) {
-	o.NCompetitorTargets.Set(&v)
+// SetNHeadToHeadTrials gets a reference to the given NullableInt32 and assigns it to the NHeadToHeadTrials field.
+func (o *CompanyCompetitorsRow) SetNHeadToHeadTrials(v int32) {
+	o.NHeadToHeadTrials.Set(&v)
 }
-// SetNCompetitorTargetsNil sets the value for NCompetitorTargets to be an explicit nil
-func (o *CompanyCompetitorsRow) SetNCompetitorTargetsNil() {
-	o.NCompetitorTargets.Set(nil)
-}
-
-// UnsetNCompetitorTargets ensures that no value is present for NCompetitorTargets, not even an explicit nil
-func (o *CompanyCompetitorsRow) UnsetNCompetitorTargets() {
-	o.NCompetitorTargets.Unset()
+// SetNHeadToHeadTrialsNil sets the value for NHeadToHeadTrials to be an explicit nil
+func (o *CompanyCompetitorsRow) SetNHeadToHeadTrialsNil() {
+	o.NHeadToHeadTrials.Set(nil)
 }
 
-// GetNCompanyIndications returns the NCompanyIndications field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CompanyCompetitorsRow) GetNCompanyIndications() int32 {
-	if o == nil || IsNil(o.NCompanyIndications.Get()) {
-		var ret int32
-		return ret
-	}
-	return *o.NCompanyIndications.Get()
+// UnsetNHeadToHeadTrials ensures that no value is present for NHeadToHeadTrials, not even an explicit nil
+func (o *CompanyCompetitorsRow) UnsetNHeadToHeadTrials() {
+	o.NHeadToHeadTrials.Unset()
 }
 
-// GetNCompanyIndicationsOk returns a tuple with the NCompanyIndications field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CompanyCompetitorsRow) GetNCompanyIndicationsOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.NCompanyIndications.Get(), o.NCompanyIndications.IsSet()
-}
-
-// HasNCompanyIndications returns a boolean if a field has been set.
-func (o *CompanyCompetitorsRow) HasNCompanyIndications() bool {
-	if o != nil && o.NCompanyIndications.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetNCompanyIndications gets a reference to the given NullableInt32 and assigns it to the NCompanyIndications field.
-func (o *CompanyCompetitorsRow) SetNCompanyIndications(v int32) {
-	o.NCompanyIndications.Set(&v)
-}
-// SetNCompanyIndicationsNil sets the value for NCompanyIndications to be an explicit nil
-func (o *CompanyCompetitorsRow) SetNCompanyIndicationsNil() {
-	o.NCompanyIndications.Set(nil)
-}
-
-// UnsetNCompanyIndications ensures that no value is present for NCompanyIndications, not even an explicit nil
-func (o *CompanyCompetitorsRow) UnsetNCompanyIndications() {
-	o.NCompanyIndications.Unset()
-}
-
-// GetNCompetitorIndications returns the NCompetitorIndications field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CompanyCompetitorsRow) GetNCompetitorIndications() int32 {
-	if o == nil || IsNil(o.NCompetitorIndications.Get()) {
-		var ret int32
-		return ret
-	}
-	return *o.NCompetitorIndications.Get()
-}
-
-// GetNCompetitorIndicationsOk returns a tuple with the NCompetitorIndications field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CompanyCompetitorsRow) GetNCompetitorIndicationsOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.NCompetitorIndications.Get(), o.NCompetitorIndications.IsSet()
-}
-
-// HasNCompetitorIndications returns a boolean if a field has been set.
-func (o *CompanyCompetitorsRow) HasNCompetitorIndications() bool {
-	if o != nil && o.NCompetitorIndications.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetNCompetitorIndications gets a reference to the given NullableInt32 and assigns it to the NCompetitorIndications field.
-func (o *CompanyCompetitorsRow) SetNCompetitorIndications(v int32) {
-	o.NCompetitorIndications.Set(&v)
-}
-// SetNCompetitorIndicationsNil sets the value for NCompetitorIndications to be an explicit nil
-func (o *CompanyCompetitorsRow) SetNCompetitorIndicationsNil() {
-	o.NCompetitorIndications.Set(nil)
-}
-
-// UnsetNCompetitorIndications ensures that no value is present for NCompetitorIndications, not even an explicit nil
-func (o *CompanyCompetitorsRow) UnsetNCompetitorIndications() {
-	o.NCompetitorIndications.Unset()
-}
-
-// GetTopSharedTargets returns the TopSharedTargets field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CompanyCompetitorsRow) GetTopSharedTargets() []string {
+// GetTopCollisions returns the TopCollisions field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetTopCollisions() []string {
 	if o == nil {
 		var ret []string
 		return ret
 	}
-	return o.TopSharedTargets
+	return o.TopCollisions
 }
 
-// GetTopSharedTargetsOk returns a tuple with the TopSharedTargets field value if set, nil otherwise
+// GetTopCollisionsOk returns a tuple with the TopCollisions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CompanyCompetitorsRow) GetTopSharedTargetsOk() ([]string, bool) {
-	if o == nil || IsNil(o.TopSharedTargets) {
+func (o *CompanyCompetitorsRow) GetTopCollisionsOk() ([]string, bool) {
+	if o == nil || IsNil(o.TopCollisions) {
 		return nil, false
 	}
-	return o.TopSharedTargets, true
+	return o.TopCollisions, true
 }
 
-// HasTopSharedTargets returns a boolean if a field has been set.
-func (o *CompanyCompetitorsRow) HasTopSharedTargets() bool {
-	if o != nil && !IsNil(o.TopSharedTargets) {
+// HasTopCollisions returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasTopCollisions() bool {
+	if o != nil && !IsNil(o.TopCollisions) {
 		return true
 	}
 
 	return false
 }
 
-// SetTopSharedTargets gets a reference to the given []string and assigns it to the TopSharedTargets field.
-func (o *CompanyCompetitorsRow) SetTopSharedTargets(v []string) {
-	o.TopSharedTargets = v
-}
-
-// GetTopSharedIndications returns the TopSharedIndications field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CompanyCompetitorsRow) GetTopSharedIndications() []string {
-	if o == nil {
-		var ret []string
-		return ret
-	}
-	return o.TopSharedIndications
-}
-
-// GetTopSharedIndicationsOk returns a tuple with the TopSharedIndications field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CompanyCompetitorsRow) GetTopSharedIndicationsOk() ([]string, bool) {
-	if o == nil || IsNil(o.TopSharedIndications) {
-		return nil, false
-	}
-	return o.TopSharedIndications, true
-}
-
-// HasTopSharedIndications returns a boolean if a field has been set.
-func (o *CompanyCompetitorsRow) HasTopSharedIndications() bool {
-	if o != nil && !IsNil(o.TopSharedIndications) {
-		return true
-	}
-
-	return false
-}
-
-// SetTopSharedIndications gets a reference to the given []string and assigns it to the TopSharedIndications field.
-func (o *CompanyCompetitorsRow) SetTopSharedIndications(v []string) {
-	o.TopSharedIndications = v
-}
-
-// GetTopSharedMechanisms returns the TopSharedMechanisms field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *CompanyCompetitorsRow) GetTopSharedMechanisms() []string {
-	if o == nil {
-		var ret []string
-		return ret
-	}
-	return o.TopSharedMechanisms
-}
-
-// GetTopSharedMechanismsOk returns a tuple with the TopSharedMechanisms field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *CompanyCompetitorsRow) GetTopSharedMechanismsOk() ([]string, bool) {
-	if o == nil || IsNil(o.TopSharedMechanisms) {
-		return nil, false
-	}
-	return o.TopSharedMechanisms, true
-}
-
-// HasTopSharedMechanisms returns a boolean if a field has been set.
-func (o *CompanyCompetitorsRow) HasTopSharedMechanisms() bool {
-	if o != nil && !IsNil(o.TopSharedMechanisms) {
-		return true
-	}
-
-	return false
-}
-
-// SetTopSharedMechanisms gets a reference to the given []string and assigns it to the TopSharedMechanisms field.
-func (o *CompanyCompetitorsRow) SetTopSharedMechanisms(v []string) {
-	o.TopSharedMechanisms = v
+// SetTopCollisions gets a reference to the given []string and assigns it to the TopCollisions field.
+func (o *CompanyCompetitorsRow) SetTopCollisions(v []string) {
+	o.TopCollisions = v
 }
 
 // GetNCosponsoredTrials returns the NCosponsoredTrials field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1292,50 +958,26 @@ func (o CompanyCompetitorsRow) ToMap() (map[string]interface{}, error) {
 	if o.CompetitorScore.IsSet() {
 		toSerialize["competitor_score"] = o.CompetitorScore.Get()
 	}
-	if o.TargetSim.IsSet() {
-		toSerialize["target_sim"] = o.TargetSim.Get()
+	if o.NCollisions.IsSet() {
+		toSerialize["n_collisions"] = o.NCollisions.Get()
 	}
-	if o.MechanismSim.IsSet() {
-		toSerialize["mechanism_sim"] = o.MechanismSim.Get()
+	if o.NCollidingFamilies.IsSet() {
+		toSerialize["n_colliding_families"] = o.NCollidingFamilies.Get()
 	}
-	if o.IndicationSim.IsSet() {
-		toSerialize["indication_sim"] = o.IndicationSim.Get()
+	if o.NSubjectFamilies.IsSet() {
+		toSerialize["n_subject_families"] = o.NSubjectFamilies.Get()
 	}
-	if o.PhaseSim.IsSet() {
-		toSerialize["phase_sim"] = o.PhaseSim.Get()
+	if o.NSameAction.IsSet() {
+		toSerialize["n_same_action"] = o.NSameAction.Get()
 	}
-	if o.NSharedTargets.IsSet() {
-		toSerialize["n_shared_targets"] = o.NSharedTargets.Get()
+	if o.NSharedIndicationPairs.IsSet() {
+		toSerialize["n_shared_indication_pairs"] = o.NSharedIndicationPairs.Get()
 	}
-	if o.NSharedMechanisms.IsSet() {
-		toSerialize["n_shared_mechanisms"] = o.NSharedMechanisms.Get()
+	if o.NHeadToHeadTrials.IsSet() {
+		toSerialize["n_head_to_head_trials"] = o.NHeadToHeadTrials.Get()
 	}
-	if o.NSharedIndications.IsSet() {
-		toSerialize["n_shared_indications"] = o.NSharedIndications.Get()
-	}
-	if o.NPhaseOverlapTargets.IsSet() {
-		toSerialize["n_phase_overlap_targets"] = o.NPhaseOverlapTargets.Get()
-	}
-	if o.NCompanyTargets.IsSet() {
-		toSerialize["n_company_targets"] = o.NCompanyTargets.Get()
-	}
-	if o.NCompetitorTargets.IsSet() {
-		toSerialize["n_competitor_targets"] = o.NCompetitorTargets.Get()
-	}
-	if o.NCompanyIndications.IsSet() {
-		toSerialize["n_company_indications"] = o.NCompanyIndications.Get()
-	}
-	if o.NCompetitorIndications.IsSet() {
-		toSerialize["n_competitor_indications"] = o.NCompetitorIndications.Get()
-	}
-	if o.TopSharedTargets != nil {
-		toSerialize["top_shared_targets"] = o.TopSharedTargets
-	}
-	if o.TopSharedIndications != nil {
-		toSerialize["top_shared_indications"] = o.TopSharedIndications
-	}
-	if o.TopSharedMechanisms != nil {
-		toSerialize["top_shared_mechanisms"] = o.TopSharedMechanisms
+	if o.TopCollisions != nil {
+		toSerialize["top_collisions"] = o.TopCollisions
 	}
 	if o.NCosponsoredTrials.IsSet() {
 		toSerialize["n_cosponsored_trials"] = o.NCosponsoredTrials.Get()
@@ -1374,21 +1016,13 @@ func (o *CompanyCompetitorsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "n_class_candidates")
 		delete(additionalProperties, "competitor_rank")
 		delete(additionalProperties, "competitor_score")
-		delete(additionalProperties, "target_sim")
-		delete(additionalProperties, "mechanism_sim")
-		delete(additionalProperties, "indication_sim")
-		delete(additionalProperties, "phase_sim")
-		delete(additionalProperties, "n_shared_targets")
-		delete(additionalProperties, "n_shared_mechanisms")
-		delete(additionalProperties, "n_shared_indications")
-		delete(additionalProperties, "n_phase_overlap_targets")
-		delete(additionalProperties, "n_company_targets")
-		delete(additionalProperties, "n_competitor_targets")
-		delete(additionalProperties, "n_company_indications")
-		delete(additionalProperties, "n_competitor_indications")
-		delete(additionalProperties, "top_shared_targets")
-		delete(additionalProperties, "top_shared_indications")
-		delete(additionalProperties, "top_shared_mechanisms")
+		delete(additionalProperties, "n_collisions")
+		delete(additionalProperties, "n_colliding_families")
+		delete(additionalProperties, "n_subject_families")
+		delete(additionalProperties, "n_same_action")
+		delete(additionalProperties, "n_shared_indication_pairs")
+		delete(additionalProperties, "n_head_to_head_trials")
+		delete(additionalProperties, "top_collisions")
 		delete(additionalProperties, "n_cosponsored_trials")
 		o.AdditionalProperties = additionalProperties
 	}
