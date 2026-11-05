@@ -14,7 +14,7 @@ require 'date'
 require 'time'
 
 module PharmaObservatory
-  # One row of the company_competitors dataset: one row per ordered company pair: a company and one of the top 25 companies of each competitor_class by program overlap. A grouped request returns the group columns and the measures instead, as additional properties.
+  # One row of the company_competitors dataset: one row per ordered company pair: a company and one of the top 25 companies of each competitor_class by asset collision. A grouped request returns the group columns and the measures instead, as additional properties.
   class CompanyCompetitorsRow
     # Company level: the company the row is about; the entry key for the companies object type.
     attr_accessor :company_id
@@ -43,59 +43,35 @@ module PharmaObservatory
     # The competitor's class: industry, or non_industry (not classed as industry by the sponsor-class rule: academic, hospital, government, nonprofit, and any record the rule does not reach). competitor_rank restarts at 1 within each class, so filter or sort on this column first.
     attr_accessor :competitor_class
 
-    # How many companies of this competitor_class were candidates (a shared target, or an indication overlap above the similarity floor) before the top 25 were kept. The same value on every row of one company and class.
+    # How many companies of this competitor_class had at least one asset collision with the company before the top 25 were kept. The same value on every row of one company and class.
     attr_accessor :n_class_candidates
 
     # The competitor's rank within its competitor_class for the company by competitor_score (1 is the highest).
     attr_accessor :competitor_rank
 
-    # 100 times the weighted mean of the four similarities below, rounded to four places.
+    # The weighted share of the company's live target families that the competitor's live assets collide with, 0 to 100, rounded to four places. Each colliding family counts its best collision weight (rarity of the family across companies, times factors for same action, a shared indication, the least advanced stage, recency and a head-to-head trial), capped at the family's rarity weight; the sum is divided by the rarity weights of ALL the company's families.
     attr_accessor :competitor_score
 
-    # Jaccard similarity, 0 to 1, of the two companies' molecular target sets.
-    attr_accessor :target_sim
+    # Asset pairs (a drug of the company, a drug of the competitor) that act on a common target.
+    attr_accessor :n_collisions
 
-    # Jaccard similarity, 0 to 1, of their mechanism sets (a target and its action).
-    attr_accessor :mechanism_sim
+    # Target families of the company's live assets that the competitor collides with.
+    attr_accessor :n_colliding_families
 
-    # Jaccard similarity, 0 to 1, of their top-25 disease area sets.
-    attr_accessor :indication_sim
+    # Target families of the company's own live, owned assets; the denominator of competitor_score is their rarity weights.
+    attr_accessor :n_subject_families
 
-    # The fraction, 0 to 1, of the shared targets that both companies have taken to phase 2 or later.
-    attr_accessor :phase_sim
+    # Asset pairs whose drugs act on the shared target with the same action type.
+    attr_accessor :n_same_action
 
-    # Molecular targets both companies pursue.
-    attr_accessor :n_shared_targets
+    # Asset pairs whose programs share at least one disease area.
+    attr_accessor :n_shared_indication_pairs
 
-    # Mechanisms (target and action) both companies pursue.
-    attr_accessor :n_shared_mechanisms
+    # Distinct trials led by either company in which one drug of a pair is experimental and the other an active comparator.
+    attr_accessor :n_head_to_head_trials
 
-    # Disease areas both companies are in, within each one's top 25.
-    attr_accessor :n_shared_indications
-
-    # Shared targets that both companies have taken to phase 2 or later.
-    attr_accessor :n_phase_overlap_targets
-
-    # Targets the company pursues (the Jaccard denominator).
-    attr_accessor :n_company_targets
-
-    # Targets the competitor pursues.
-    attr_accessor :n_competitor_targets
-
-    # Disease areas in the company's top 25.
-    attr_accessor :n_company_indications
-
-    # Disease areas in the competitor's top 25.
-    attr_accessor :n_competitor_indications
-
-    # Up to 5 shared target gene symbols, by combined phase then combined trials. An empty list when none.
-    attr_accessor :top_shared_targets
-
-    # Up to 5 shared disease area names, by combined trial count. An empty list when none.
-    attr_accessor :top_shared_indications
-
-    # Up to 3 shared mechanisms written as a gene symbol and an action, by combined phase then combined trials. An empty list when none.
-    attr_accessor :top_shared_mechanisms
+    # Up to 3 strongest asset pairs as text: \"drug A / drug B: target family, stage, N shared indications\". The stage is the less advanced of the two programs. An ownership_basis of inferred_lead on the underlying pair (see company_asset_collisions) is an inference.
+    attr_accessor :top_collisions
 
     # Distinct trials on which the company and the competitor are both named as sponsors, counted over their subtrees; 0 when none. A consortium trial (more than 25 sponsor companies) is left out.
     attr_accessor :n_cosponsored_trials
@@ -115,21 +91,13 @@ module PharmaObservatory
         :'n_class_candidates' => :'n_class_candidates',
         :'competitor_rank' => :'competitor_rank',
         :'competitor_score' => :'competitor_score',
-        :'target_sim' => :'target_sim',
-        :'mechanism_sim' => :'mechanism_sim',
-        :'indication_sim' => :'indication_sim',
-        :'phase_sim' => :'phase_sim',
-        :'n_shared_targets' => :'n_shared_targets',
-        :'n_shared_mechanisms' => :'n_shared_mechanisms',
-        :'n_shared_indications' => :'n_shared_indications',
-        :'n_phase_overlap_targets' => :'n_phase_overlap_targets',
-        :'n_company_targets' => :'n_company_targets',
-        :'n_competitor_targets' => :'n_competitor_targets',
-        :'n_company_indications' => :'n_company_indications',
-        :'n_competitor_indications' => :'n_competitor_indications',
-        :'top_shared_targets' => :'top_shared_targets',
-        :'top_shared_indications' => :'top_shared_indications',
-        :'top_shared_mechanisms' => :'top_shared_mechanisms',
+        :'n_collisions' => :'n_collisions',
+        :'n_colliding_families' => :'n_colliding_families',
+        :'n_subject_families' => :'n_subject_families',
+        :'n_same_action' => :'n_same_action',
+        :'n_shared_indication_pairs' => :'n_shared_indication_pairs',
+        :'n_head_to_head_trials' => :'n_head_to_head_trials',
+        :'top_collisions' => :'top_collisions',
         :'n_cosponsored_trials' => :'n_cosponsored_trials'
       }
     end
@@ -159,21 +127,13 @@ module PharmaObservatory
         :'n_class_candidates' => :'Integer',
         :'competitor_rank' => :'Integer',
         :'competitor_score' => :'Float',
-        :'target_sim' => :'Float',
-        :'mechanism_sim' => :'Float',
-        :'indication_sim' => :'Float',
-        :'phase_sim' => :'Float',
-        :'n_shared_targets' => :'Integer',
-        :'n_shared_mechanisms' => :'Integer',
-        :'n_shared_indications' => :'Integer',
-        :'n_phase_overlap_targets' => :'Integer',
-        :'n_company_targets' => :'Integer',
-        :'n_competitor_targets' => :'Integer',
-        :'n_company_indications' => :'Integer',
-        :'n_competitor_indications' => :'Integer',
-        :'top_shared_targets' => :'Array<String>',
-        :'top_shared_indications' => :'Array<String>',
-        :'top_shared_mechanisms' => :'Array<String>',
+        :'n_collisions' => :'Integer',
+        :'n_colliding_families' => :'Integer',
+        :'n_subject_families' => :'Integer',
+        :'n_same_action' => :'Integer',
+        :'n_shared_indication_pairs' => :'Integer',
+        :'n_head_to_head_trials' => :'Integer',
+        :'top_collisions' => :'Array<String>',
         :'n_cosponsored_trials' => :'Integer'
       }
     end
@@ -193,21 +153,13 @@ module PharmaObservatory
         :'n_class_candidates',
         :'competitor_rank',
         :'competitor_score',
-        :'target_sim',
-        :'mechanism_sim',
-        :'indication_sim',
-        :'phase_sim',
-        :'n_shared_targets',
-        :'n_shared_mechanisms',
-        :'n_shared_indications',
-        :'n_phase_overlap_targets',
-        :'n_company_targets',
-        :'n_competitor_targets',
-        :'n_company_indications',
-        :'n_competitor_indications',
-        :'top_shared_targets',
-        :'top_shared_indications',
-        :'top_shared_mechanisms',
+        :'n_collisions',
+        :'n_colliding_families',
+        :'n_subject_families',
+        :'n_same_action',
+        :'n_shared_indication_pairs',
+        :'n_head_to_head_trials',
+        :'top_collisions',
         :'n_cosponsored_trials'
       ])
     end
@@ -276,69 +228,33 @@ module PharmaObservatory
         self.competitor_score = attributes[:'competitor_score']
       end
 
-      if attributes.key?(:'target_sim')
-        self.target_sim = attributes[:'target_sim']
+      if attributes.key?(:'n_collisions')
+        self.n_collisions = attributes[:'n_collisions']
       end
 
-      if attributes.key?(:'mechanism_sim')
-        self.mechanism_sim = attributes[:'mechanism_sim']
+      if attributes.key?(:'n_colliding_families')
+        self.n_colliding_families = attributes[:'n_colliding_families']
       end
 
-      if attributes.key?(:'indication_sim')
-        self.indication_sim = attributes[:'indication_sim']
+      if attributes.key?(:'n_subject_families')
+        self.n_subject_families = attributes[:'n_subject_families']
       end
 
-      if attributes.key?(:'phase_sim')
-        self.phase_sim = attributes[:'phase_sim']
+      if attributes.key?(:'n_same_action')
+        self.n_same_action = attributes[:'n_same_action']
       end
 
-      if attributes.key?(:'n_shared_targets')
-        self.n_shared_targets = attributes[:'n_shared_targets']
+      if attributes.key?(:'n_shared_indication_pairs')
+        self.n_shared_indication_pairs = attributes[:'n_shared_indication_pairs']
       end
 
-      if attributes.key?(:'n_shared_mechanisms')
-        self.n_shared_mechanisms = attributes[:'n_shared_mechanisms']
+      if attributes.key?(:'n_head_to_head_trials')
+        self.n_head_to_head_trials = attributes[:'n_head_to_head_trials']
       end
 
-      if attributes.key?(:'n_shared_indications')
-        self.n_shared_indications = attributes[:'n_shared_indications']
-      end
-
-      if attributes.key?(:'n_phase_overlap_targets')
-        self.n_phase_overlap_targets = attributes[:'n_phase_overlap_targets']
-      end
-
-      if attributes.key?(:'n_company_targets')
-        self.n_company_targets = attributes[:'n_company_targets']
-      end
-
-      if attributes.key?(:'n_competitor_targets')
-        self.n_competitor_targets = attributes[:'n_competitor_targets']
-      end
-
-      if attributes.key?(:'n_company_indications')
-        self.n_company_indications = attributes[:'n_company_indications']
-      end
-
-      if attributes.key?(:'n_competitor_indications')
-        self.n_competitor_indications = attributes[:'n_competitor_indications']
-      end
-
-      if attributes.key?(:'top_shared_targets')
-        if (value = attributes[:'top_shared_targets']).is_a?(Array)
-          self.top_shared_targets = value
-        end
-      end
-
-      if attributes.key?(:'top_shared_indications')
-        if (value = attributes[:'top_shared_indications']).is_a?(Array)
-          self.top_shared_indications = value
-        end
-      end
-
-      if attributes.key?(:'top_shared_mechanisms')
-        if (value = attributes[:'top_shared_mechanisms']).is_a?(Array)
-          self.top_shared_mechanisms = value
+      if attributes.key?(:'top_collisions')
+        if (value = attributes[:'top_collisions']).is_a?(Array)
+          self.top_collisions = value
         end
       end
 
@@ -379,21 +295,13 @@ module PharmaObservatory
           n_class_candidates == o.n_class_candidates &&
           competitor_rank == o.competitor_rank &&
           competitor_score == o.competitor_score &&
-          target_sim == o.target_sim &&
-          mechanism_sim == o.mechanism_sim &&
-          indication_sim == o.indication_sim &&
-          phase_sim == o.phase_sim &&
-          n_shared_targets == o.n_shared_targets &&
-          n_shared_mechanisms == o.n_shared_mechanisms &&
-          n_shared_indications == o.n_shared_indications &&
-          n_phase_overlap_targets == o.n_phase_overlap_targets &&
-          n_company_targets == o.n_company_targets &&
-          n_competitor_targets == o.n_competitor_targets &&
-          n_company_indications == o.n_company_indications &&
-          n_competitor_indications == o.n_competitor_indications &&
-          top_shared_targets == o.top_shared_targets &&
-          top_shared_indications == o.top_shared_indications &&
-          top_shared_mechanisms == o.top_shared_mechanisms &&
+          n_collisions == o.n_collisions &&
+          n_colliding_families == o.n_colliding_families &&
+          n_subject_families == o.n_subject_families &&
+          n_same_action == o.n_same_action &&
+          n_shared_indication_pairs == o.n_shared_indication_pairs &&
+          n_head_to_head_trials == o.n_head_to_head_trials &&
+          top_collisions == o.top_collisions &&
           n_cosponsored_trials == o.n_cosponsored_trials
     end
 
@@ -406,7 +314,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [company_id, company_name, group_id, group_name, competitor_company_id, competitor_company_name, competitor_group_id, competitor_group_name, competitor_class, n_class_candidates, competitor_rank, competitor_score, target_sim, mechanism_sim, indication_sim, phase_sim, n_shared_targets, n_shared_mechanisms, n_shared_indications, n_phase_overlap_targets, n_company_targets, n_competitor_targets, n_company_indications, n_competitor_indications, top_shared_targets, top_shared_indications, top_shared_mechanisms, n_cosponsored_trials].hash
+      [company_id, company_name, group_id, group_name, competitor_company_id, competitor_company_name, competitor_group_id, competitor_group_name, competitor_class, n_class_candidates, competitor_rank, competitor_score, n_collisions, n_colliding_families, n_subject_families, n_same_action, n_shared_indication_pairs, n_head_to_head_trials, top_collisions, n_cosponsored_trials].hash
     end
 
     # Builds the object from hash

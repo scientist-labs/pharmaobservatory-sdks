@@ -13,24 +13,16 @@ Name | Type | Description | Notes
 **CompetitorGroupId** | Pointer to **NullableString** | Group level: the competitor&#39;s current ultimate parent; a root&#39;s group is itself. | [optional] 
 **CompetitorGroupName** | Pointer to **NullableString** | Display name of the competitor&#39;s group. | [optional] 
 **CompetitorClass** | Pointer to **NullableString** | The competitor&#39;s class: industry, or non_industry (not classed as industry by the sponsor-class rule: academic, hospital, government, nonprofit, and any record the rule does not reach). competitor_rank restarts at 1 within each class, so filter or sort on this column first. | [optional] 
-**NClassCandidates** | Pointer to **NullableInt32** | How many companies of this competitor_class were candidates (a shared target, or an indication overlap above the similarity floor) before the top 25 were kept. The same value on every row of one company and class. | [optional] 
+**NClassCandidates** | Pointer to **NullableInt32** | How many companies of this competitor_class had at least one asset collision with the company before the top 25 were kept. The same value on every row of one company and class. | [optional] 
 **CompetitorRank** | Pointer to **NullableInt32** | The competitor&#39;s rank within its competitor_class for the company by competitor_score (1 is the highest). | [optional] 
-**CompetitorScore** | Pointer to **NullableFloat32** | 100 times the weighted mean of the four similarities below, rounded to four places. | [optional] 
-**TargetSim** | Pointer to **NullableFloat32** | Jaccard similarity, 0 to 1, of the two companies&#39; molecular target sets. | [optional] 
-**MechanismSim** | Pointer to **NullableFloat32** | Jaccard similarity, 0 to 1, of their mechanism sets (a target and its action). | [optional] 
-**IndicationSim** | Pointer to **NullableFloat32** | Jaccard similarity, 0 to 1, of their top-25 disease area sets. | [optional] 
-**PhaseSim** | Pointer to **NullableFloat32** | The fraction, 0 to 1, of the shared targets that both companies have taken to phase 2 or later. | [optional] 
-**NSharedTargets** | Pointer to **NullableInt32** | Molecular targets both companies pursue. | [optional] 
-**NSharedMechanisms** | Pointer to **NullableInt32** | Mechanisms (target and action) both companies pursue. | [optional] 
-**NSharedIndications** | Pointer to **NullableInt32** | Disease areas both companies are in, within each one&#39;s top 25. | [optional] 
-**NPhaseOverlapTargets** | Pointer to **NullableInt32** | Shared targets that both companies have taken to phase 2 or later. | [optional] 
-**NCompanyTargets** | Pointer to **NullableInt32** | Targets the company pursues (the Jaccard denominator). | [optional] 
-**NCompetitorTargets** | Pointer to **NullableInt32** | Targets the competitor pursues. | [optional] 
-**NCompanyIndications** | Pointer to **NullableInt32** | Disease areas in the company&#39;s top 25. | [optional] 
-**NCompetitorIndications** | Pointer to **NullableInt32** | Disease areas in the competitor&#39;s top 25. | [optional] 
-**TopSharedTargets** | Pointer to **[]string** | Up to 5 shared target gene symbols, by combined phase then combined trials. An empty list when none. | [optional] 
-**TopSharedIndications** | Pointer to **[]string** | Up to 5 shared disease area names, by combined trial count. An empty list when none. | [optional] 
-**TopSharedMechanisms** | Pointer to **[]string** | Up to 3 shared mechanisms written as a gene symbol and an action, by combined phase then combined trials. An empty list when none. | [optional] 
+**CompetitorScore** | Pointer to **NullableFloat32** | The weighted share of the company&#39;s live target families that the competitor&#39;s live assets collide with, 0 to 100, rounded to four places. Each colliding family counts its best collision weight (rarity of the family across companies, times factors for same action, a shared indication, the least advanced stage, recency and a head-to-head trial), capped at the family&#39;s rarity weight; the sum is divided by the rarity weights of ALL the company&#39;s families. | [optional] 
+**NCollisions** | Pointer to **NullableInt32** | Asset pairs (a drug of the company, a drug of the competitor) that act on a common target. | [optional] 
+**NCollidingFamilies** | Pointer to **NullableInt32** | Target families of the company&#39;s live assets that the competitor collides with. | [optional] 
+**NSubjectFamilies** | Pointer to **NullableInt32** | Target families of the company&#39;s own live, owned assets; the denominator of competitor_score is their rarity weights. | [optional] 
+**NSameAction** | Pointer to **NullableInt32** | Asset pairs whose drugs act on the shared target with the same action type. | [optional] 
+**NSharedIndicationPairs** | Pointer to **NullableInt32** | Asset pairs whose programs share at least one disease area. | [optional] 
+**NHeadToHeadTrials** | Pointer to **NullableInt32** | Distinct trials led by either company in which one drug of a pair is experimental and the other an active comparator. | [optional] 
+**TopCollisions** | Pointer to **[]string** | Up to 3 strongest asset pairs as text: \&quot;drug A / drug B: target family, stage, N shared indications\&quot;. The stage is the less advanced of the two programs. An ownership_basis of inferred_lead on the underlying pair (see company_asset_collisions) is an inference. | [optional] 
 **NCosponsoredTrials** | Pointer to **NullableInt32** | Distinct trials on which the company and the competitor are both named as sponsors, counted over their subtrees; 0 when none. A consortium trial (more than 25 sponsor companies) is left out. | [optional] 
 
 ## Methods
@@ -472,531 +464,251 @@ HasCompetitorScore returns a boolean if a field has been set.
 `func (o *CompanyCompetitorsRow) UnsetCompetitorScore()`
 
 UnsetCompetitorScore ensures that no value is present for CompetitorScore, not even an explicit nil
-### GetTargetSim
+### GetNCollisions
 
-`func (o *CompanyCompetitorsRow) GetTargetSim() float32`
+`func (o *CompanyCompetitorsRow) GetNCollisions() int32`
 
-GetTargetSim returns the TargetSim field if non-nil, zero value otherwise.
+GetNCollisions returns the NCollisions field if non-nil, zero value otherwise.
 
-### GetTargetSimOk
+### GetNCollisionsOk
 
-`func (o *CompanyCompetitorsRow) GetTargetSimOk() (*float32, bool)`
+`func (o *CompanyCompetitorsRow) GetNCollisionsOk() (*int32, bool)`
 
-GetTargetSimOk returns a tuple with the TargetSim field if it's non-nil, zero value otherwise
+GetNCollisionsOk returns a tuple with the NCollisions field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetTargetSim
+### SetNCollisions
 
-`func (o *CompanyCompetitorsRow) SetTargetSim(v float32)`
+`func (o *CompanyCompetitorsRow) SetNCollisions(v int32)`
 
-SetTargetSim sets TargetSim field to given value.
+SetNCollisions sets NCollisions field to given value.
 
-### HasTargetSim
+### HasNCollisions
 
-`func (o *CompanyCompetitorsRow) HasTargetSim() bool`
+`func (o *CompanyCompetitorsRow) HasNCollisions() bool`
 
-HasTargetSim returns a boolean if a field has been set.
+HasNCollisions returns a boolean if a field has been set.
 
-### SetTargetSimNil
+### SetNCollisionsNil
 
-`func (o *CompanyCompetitorsRow) SetTargetSimNil(b bool)`
+`func (o *CompanyCompetitorsRow) SetNCollisionsNil(b bool)`
 
- SetTargetSimNil sets the value for TargetSim to be an explicit nil
+ SetNCollisionsNil sets the value for NCollisions to be an explicit nil
 
-### UnsetTargetSim
-`func (o *CompanyCompetitorsRow) UnsetTargetSim()`
+### UnsetNCollisions
+`func (o *CompanyCompetitorsRow) UnsetNCollisions()`
 
-UnsetTargetSim ensures that no value is present for TargetSim, not even an explicit nil
-### GetMechanismSim
+UnsetNCollisions ensures that no value is present for NCollisions, not even an explicit nil
+### GetNCollidingFamilies
 
-`func (o *CompanyCompetitorsRow) GetMechanismSim() float32`
+`func (o *CompanyCompetitorsRow) GetNCollidingFamilies() int32`
 
-GetMechanismSim returns the MechanismSim field if non-nil, zero value otherwise.
+GetNCollidingFamilies returns the NCollidingFamilies field if non-nil, zero value otherwise.
 
-### GetMechanismSimOk
+### GetNCollidingFamiliesOk
 
-`func (o *CompanyCompetitorsRow) GetMechanismSimOk() (*float32, bool)`
+`func (o *CompanyCompetitorsRow) GetNCollidingFamiliesOk() (*int32, bool)`
 
-GetMechanismSimOk returns a tuple with the MechanismSim field if it's non-nil, zero value otherwise
+GetNCollidingFamiliesOk returns a tuple with the NCollidingFamilies field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetMechanismSim
+### SetNCollidingFamilies
 
-`func (o *CompanyCompetitorsRow) SetMechanismSim(v float32)`
+`func (o *CompanyCompetitorsRow) SetNCollidingFamilies(v int32)`
 
-SetMechanismSim sets MechanismSim field to given value.
+SetNCollidingFamilies sets NCollidingFamilies field to given value.
 
-### HasMechanismSim
+### HasNCollidingFamilies
 
-`func (o *CompanyCompetitorsRow) HasMechanismSim() bool`
+`func (o *CompanyCompetitorsRow) HasNCollidingFamilies() bool`
 
-HasMechanismSim returns a boolean if a field has been set.
+HasNCollidingFamilies returns a boolean if a field has been set.
 
-### SetMechanismSimNil
+### SetNCollidingFamiliesNil
 
-`func (o *CompanyCompetitorsRow) SetMechanismSimNil(b bool)`
+`func (o *CompanyCompetitorsRow) SetNCollidingFamiliesNil(b bool)`
 
- SetMechanismSimNil sets the value for MechanismSim to be an explicit nil
+ SetNCollidingFamiliesNil sets the value for NCollidingFamilies to be an explicit nil
 
-### UnsetMechanismSim
-`func (o *CompanyCompetitorsRow) UnsetMechanismSim()`
+### UnsetNCollidingFamilies
+`func (o *CompanyCompetitorsRow) UnsetNCollidingFamilies()`
 
-UnsetMechanismSim ensures that no value is present for MechanismSim, not even an explicit nil
-### GetIndicationSim
+UnsetNCollidingFamilies ensures that no value is present for NCollidingFamilies, not even an explicit nil
+### GetNSubjectFamilies
 
-`func (o *CompanyCompetitorsRow) GetIndicationSim() float32`
+`func (o *CompanyCompetitorsRow) GetNSubjectFamilies() int32`
 
-GetIndicationSim returns the IndicationSim field if non-nil, zero value otherwise.
+GetNSubjectFamilies returns the NSubjectFamilies field if non-nil, zero value otherwise.
 
-### GetIndicationSimOk
+### GetNSubjectFamiliesOk
 
-`func (o *CompanyCompetitorsRow) GetIndicationSimOk() (*float32, bool)`
+`func (o *CompanyCompetitorsRow) GetNSubjectFamiliesOk() (*int32, bool)`
 
-GetIndicationSimOk returns a tuple with the IndicationSim field if it's non-nil, zero value otherwise
+GetNSubjectFamiliesOk returns a tuple with the NSubjectFamilies field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetIndicationSim
+### SetNSubjectFamilies
 
-`func (o *CompanyCompetitorsRow) SetIndicationSim(v float32)`
+`func (o *CompanyCompetitorsRow) SetNSubjectFamilies(v int32)`
 
-SetIndicationSim sets IndicationSim field to given value.
+SetNSubjectFamilies sets NSubjectFamilies field to given value.
 
-### HasIndicationSim
+### HasNSubjectFamilies
 
-`func (o *CompanyCompetitorsRow) HasIndicationSim() bool`
+`func (o *CompanyCompetitorsRow) HasNSubjectFamilies() bool`
 
-HasIndicationSim returns a boolean if a field has been set.
+HasNSubjectFamilies returns a boolean if a field has been set.
 
-### SetIndicationSimNil
+### SetNSubjectFamiliesNil
 
-`func (o *CompanyCompetitorsRow) SetIndicationSimNil(b bool)`
+`func (o *CompanyCompetitorsRow) SetNSubjectFamiliesNil(b bool)`
 
- SetIndicationSimNil sets the value for IndicationSim to be an explicit nil
+ SetNSubjectFamiliesNil sets the value for NSubjectFamilies to be an explicit nil
 
-### UnsetIndicationSim
-`func (o *CompanyCompetitorsRow) UnsetIndicationSim()`
+### UnsetNSubjectFamilies
+`func (o *CompanyCompetitorsRow) UnsetNSubjectFamilies()`
 
-UnsetIndicationSim ensures that no value is present for IndicationSim, not even an explicit nil
-### GetPhaseSim
+UnsetNSubjectFamilies ensures that no value is present for NSubjectFamilies, not even an explicit nil
+### GetNSameAction
 
-`func (o *CompanyCompetitorsRow) GetPhaseSim() float32`
+`func (o *CompanyCompetitorsRow) GetNSameAction() int32`
 
-GetPhaseSim returns the PhaseSim field if non-nil, zero value otherwise.
+GetNSameAction returns the NSameAction field if non-nil, zero value otherwise.
 
-### GetPhaseSimOk
+### GetNSameActionOk
 
-`func (o *CompanyCompetitorsRow) GetPhaseSimOk() (*float32, bool)`
+`func (o *CompanyCompetitorsRow) GetNSameActionOk() (*int32, bool)`
 
-GetPhaseSimOk returns a tuple with the PhaseSim field if it's non-nil, zero value otherwise
+GetNSameActionOk returns a tuple with the NSameAction field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetPhaseSim
+### SetNSameAction
 
-`func (o *CompanyCompetitorsRow) SetPhaseSim(v float32)`
+`func (o *CompanyCompetitorsRow) SetNSameAction(v int32)`
 
-SetPhaseSim sets PhaseSim field to given value.
+SetNSameAction sets NSameAction field to given value.
 
-### HasPhaseSim
+### HasNSameAction
 
-`func (o *CompanyCompetitorsRow) HasPhaseSim() bool`
+`func (o *CompanyCompetitorsRow) HasNSameAction() bool`
 
-HasPhaseSim returns a boolean if a field has been set.
+HasNSameAction returns a boolean if a field has been set.
 
-### SetPhaseSimNil
+### SetNSameActionNil
 
-`func (o *CompanyCompetitorsRow) SetPhaseSimNil(b bool)`
+`func (o *CompanyCompetitorsRow) SetNSameActionNil(b bool)`
 
- SetPhaseSimNil sets the value for PhaseSim to be an explicit nil
+ SetNSameActionNil sets the value for NSameAction to be an explicit nil
 
-### UnsetPhaseSim
-`func (o *CompanyCompetitorsRow) UnsetPhaseSim()`
+### UnsetNSameAction
+`func (o *CompanyCompetitorsRow) UnsetNSameAction()`
 
-UnsetPhaseSim ensures that no value is present for PhaseSim, not even an explicit nil
-### GetNSharedTargets
+UnsetNSameAction ensures that no value is present for NSameAction, not even an explicit nil
+### GetNSharedIndicationPairs
 
-`func (o *CompanyCompetitorsRow) GetNSharedTargets() int32`
+`func (o *CompanyCompetitorsRow) GetNSharedIndicationPairs() int32`
 
-GetNSharedTargets returns the NSharedTargets field if non-nil, zero value otherwise.
+GetNSharedIndicationPairs returns the NSharedIndicationPairs field if non-nil, zero value otherwise.
 
-### GetNSharedTargetsOk
+### GetNSharedIndicationPairsOk
 
-`func (o *CompanyCompetitorsRow) GetNSharedTargetsOk() (*int32, bool)`
+`func (o *CompanyCompetitorsRow) GetNSharedIndicationPairsOk() (*int32, bool)`
 
-GetNSharedTargetsOk returns a tuple with the NSharedTargets field if it's non-nil, zero value otherwise
+GetNSharedIndicationPairsOk returns a tuple with the NSharedIndicationPairs field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetNSharedTargets
+### SetNSharedIndicationPairs
 
-`func (o *CompanyCompetitorsRow) SetNSharedTargets(v int32)`
+`func (o *CompanyCompetitorsRow) SetNSharedIndicationPairs(v int32)`
 
-SetNSharedTargets sets NSharedTargets field to given value.
+SetNSharedIndicationPairs sets NSharedIndicationPairs field to given value.
 
-### HasNSharedTargets
+### HasNSharedIndicationPairs
 
-`func (o *CompanyCompetitorsRow) HasNSharedTargets() bool`
+`func (o *CompanyCompetitorsRow) HasNSharedIndicationPairs() bool`
 
-HasNSharedTargets returns a boolean if a field has been set.
+HasNSharedIndicationPairs returns a boolean if a field has been set.
 
-### SetNSharedTargetsNil
+### SetNSharedIndicationPairsNil
 
-`func (o *CompanyCompetitorsRow) SetNSharedTargetsNil(b bool)`
+`func (o *CompanyCompetitorsRow) SetNSharedIndicationPairsNil(b bool)`
 
- SetNSharedTargetsNil sets the value for NSharedTargets to be an explicit nil
+ SetNSharedIndicationPairsNil sets the value for NSharedIndicationPairs to be an explicit nil
 
-### UnsetNSharedTargets
-`func (o *CompanyCompetitorsRow) UnsetNSharedTargets()`
+### UnsetNSharedIndicationPairs
+`func (o *CompanyCompetitorsRow) UnsetNSharedIndicationPairs()`
 
-UnsetNSharedTargets ensures that no value is present for NSharedTargets, not even an explicit nil
-### GetNSharedMechanisms
+UnsetNSharedIndicationPairs ensures that no value is present for NSharedIndicationPairs, not even an explicit nil
+### GetNHeadToHeadTrials
 
-`func (o *CompanyCompetitorsRow) GetNSharedMechanisms() int32`
+`func (o *CompanyCompetitorsRow) GetNHeadToHeadTrials() int32`
 
-GetNSharedMechanisms returns the NSharedMechanisms field if non-nil, zero value otherwise.
+GetNHeadToHeadTrials returns the NHeadToHeadTrials field if non-nil, zero value otherwise.
 
-### GetNSharedMechanismsOk
+### GetNHeadToHeadTrialsOk
 
-`func (o *CompanyCompetitorsRow) GetNSharedMechanismsOk() (*int32, bool)`
+`func (o *CompanyCompetitorsRow) GetNHeadToHeadTrialsOk() (*int32, bool)`
 
-GetNSharedMechanismsOk returns a tuple with the NSharedMechanisms field if it's non-nil, zero value otherwise
+GetNHeadToHeadTrialsOk returns a tuple with the NHeadToHeadTrials field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetNSharedMechanisms
+### SetNHeadToHeadTrials
 
-`func (o *CompanyCompetitorsRow) SetNSharedMechanisms(v int32)`
+`func (o *CompanyCompetitorsRow) SetNHeadToHeadTrials(v int32)`
 
-SetNSharedMechanisms sets NSharedMechanisms field to given value.
+SetNHeadToHeadTrials sets NHeadToHeadTrials field to given value.
 
-### HasNSharedMechanisms
+### HasNHeadToHeadTrials
 
-`func (o *CompanyCompetitorsRow) HasNSharedMechanisms() bool`
+`func (o *CompanyCompetitorsRow) HasNHeadToHeadTrials() bool`
 
-HasNSharedMechanisms returns a boolean if a field has been set.
+HasNHeadToHeadTrials returns a boolean if a field has been set.
 
-### SetNSharedMechanismsNil
+### SetNHeadToHeadTrialsNil
 
-`func (o *CompanyCompetitorsRow) SetNSharedMechanismsNil(b bool)`
+`func (o *CompanyCompetitorsRow) SetNHeadToHeadTrialsNil(b bool)`
 
- SetNSharedMechanismsNil sets the value for NSharedMechanisms to be an explicit nil
+ SetNHeadToHeadTrialsNil sets the value for NHeadToHeadTrials to be an explicit nil
 
-### UnsetNSharedMechanisms
-`func (o *CompanyCompetitorsRow) UnsetNSharedMechanisms()`
+### UnsetNHeadToHeadTrials
+`func (o *CompanyCompetitorsRow) UnsetNHeadToHeadTrials()`
 
-UnsetNSharedMechanisms ensures that no value is present for NSharedMechanisms, not even an explicit nil
-### GetNSharedIndications
+UnsetNHeadToHeadTrials ensures that no value is present for NHeadToHeadTrials, not even an explicit nil
+### GetTopCollisions
 
-`func (o *CompanyCompetitorsRow) GetNSharedIndications() int32`
+`func (o *CompanyCompetitorsRow) GetTopCollisions() []string`
 
-GetNSharedIndications returns the NSharedIndications field if non-nil, zero value otherwise.
+GetTopCollisions returns the TopCollisions field if non-nil, zero value otherwise.
 
-### GetNSharedIndicationsOk
+### GetTopCollisionsOk
 
-`func (o *CompanyCompetitorsRow) GetNSharedIndicationsOk() (*int32, bool)`
+`func (o *CompanyCompetitorsRow) GetTopCollisionsOk() (*[]string, bool)`
 
-GetNSharedIndicationsOk returns a tuple with the NSharedIndications field if it's non-nil, zero value otherwise
+GetTopCollisionsOk returns a tuple with the TopCollisions field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetNSharedIndications
+### SetTopCollisions
 
-`func (o *CompanyCompetitorsRow) SetNSharedIndications(v int32)`
+`func (o *CompanyCompetitorsRow) SetTopCollisions(v []string)`
 
-SetNSharedIndications sets NSharedIndications field to given value.
+SetTopCollisions sets TopCollisions field to given value.
 
-### HasNSharedIndications
+### HasTopCollisions
 
-`func (o *CompanyCompetitorsRow) HasNSharedIndications() bool`
+`func (o *CompanyCompetitorsRow) HasTopCollisions() bool`
 
-HasNSharedIndications returns a boolean if a field has been set.
+HasTopCollisions returns a boolean if a field has been set.
 
-### SetNSharedIndicationsNil
+### SetTopCollisionsNil
 
-`func (o *CompanyCompetitorsRow) SetNSharedIndicationsNil(b bool)`
+`func (o *CompanyCompetitorsRow) SetTopCollisionsNil(b bool)`
 
- SetNSharedIndicationsNil sets the value for NSharedIndications to be an explicit nil
+ SetTopCollisionsNil sets the value for TopCollisions to be an explicit nil
 
-### UnsetNSharedIndications
-`func (o *CompanyCompetitorsRow) UnsetNSharedIndications()`
+### UnsetTopCollisions
+`func (o *CompanyCompetitorsRow) UnsetTopCollisions()`
 
-UnsetNSharedIndications ensures that no value is present for NSharedIndications, not even an explicit nil
-### GetNPhaseOverlapTargets
-
-`func (o *CompanyCompetitorsRow) GetNPhaseOverlapTargets() int32`
-
-GetNPhaseOverlapTargets returns the NPhaseOverlapTargets field if non-nil, zero value otherwise.
-
-### GetNPhaseOverlapTargetsOk
-
-`func (o *CompanyCompetitorsRow) GetNPhaseOverlapTargetsOk() (*int32, bool)`
-
-GetNPhaseOverlapTargetsOk returns a tuple with the NPhaseOverlapTargets field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNPhaseOverlapTargets
-
-`func (o *CompanyCompetitorsRow) SetNPhaseOverlapTargets(v int32)`
-
-SetNPhaseOverlapTargets sets NPhaseOverlapTargets field to given value.
-
-### HasNPhaseOverlapTargets
-
-`func (o *CompanyCompetitorsRow) HasNPhaseOverlapTargets() bool`
-
-HasNPhaseOverlapTargets returns a boolean if a field has been set.
-
-### SetNPhaseOverlapTargetsNil
-
-`func (o *CompanyCompetitorsRow) SetNPhaseOverlapTargetsNil(b bool)`
-
- SetNPhaseOverlapTargetsNil sets the value for NPhaseOverlapTargets to be an explicit nil
-
-### UnsetNPhaseOverlapTargets
-`func (o *CompanyCompetitorsRow) UnsetNPhaseOverlapTargets()`
-
-UnsetNPhaseOverlapTargets ensures that no value is present for NPhaseOverlapTargets, not even an explicit nil
-### GetNCompanyTargets
-
-`func (o *CompanyCompetitorsRow) GetNCompanyTargets() int32`
-
-GetNCompanyTargets returns the NCompanyTargets field if non-nil, zero value otherwise.
-
-### GetNCompanyTargetsOk
-
-`func (o *CompanyCompetitorsRow) GetNCompanyTargetsOk() (*int32, bool)`
-
-GetNCompanyTargetsOk returns a tuple with the NCompanyTargets field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNCompanyTargets
-
-`func (o *CompanyCompetitorsRow) SetNCompanyTargets(v int32)`
-
-SetNCompanyTargets sets NCompanyTargets field to given value.
-
-### HasNCompanyTargets
-
-`func (o *CompanyCompetitorsRow) HasNCompanyTargets() bool`
-
-HasNCompanyTargets returns a boolean if a field has been set.
-
-### SetNCompanyTargetsNil
-
-`func (o *CompanyCompetitorsRow) SetNCompanyTargetsNil(b bool)`
-
- SetNCompanyTargetsNil sets the value for NCompanyTargets to be an explicit nil
-
-### UnsetNCompanyTargets
-`func (o *CompanyCompetitorsRow) UnsetNCompanyTargets()`
-
-UnsetNCompanyTargets ensures that no value is present for NCompanyTargets, not even an explicit nil
-### GetNCompetitorTargets
-
-`func (o *CompanyCompetitorsRow) GetNCompetitorTargets() int32`
-
-GetNCompetitorTargets returns the NCompetitorTargets field if non-nil, zero value otherwise.
-
-### GetNCompetitorTargetsOk
-
-`func (o *CompanyCompetitorsRow) GetNCompetitorTargetsOk() (*int32, bool)`
-
-GetNCompetitorTargetsOk returns a tuple with the NCompetitorTargets field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNCompetitorTargets
-
-`func (o *CompanyCompetitorsRow) SetNCompetitorTargets(v int32)`
-
-SetNCompetitorTargets sets NCompetitorTargets field to given value.
-
-### HasNCompetitorTargets
-
-`func (o *CompanyCompetitorsRow) HasNCompetitorTargets() bool`
-
-HasNCompetitorTargets returns a boolean if a field has been set.
-
-### SetNCompetitorTargetsNil
-
-`func (o *CompanyCompetitorsRow) SetNCompetitorTargetsNil(b bool)`
-
- SetNCompetitorTargetsNil sets the value for NCompetitorTargets to be an explicit nil
-
-### UnsetNCompetitorTargets
-`func (o *CompanyCompetitorsRow) UnsetNCompetitorTargets()`
-
-UnsetNCompetitorTargets ensures that no value is present for NCompetitorTargets, not even an explicit nil
-### GetNCompanyIndications
-
-`func (o *CompanyCompetitorsRow) GetNCompanyIndications() int32`
-
-GetNCompanyIndications returns the NCompanyIndications field if non-nil, zero value otherwise.
-
-### GetNCompanyIndicationsOk
-
-`func (o *CompanyCompetitorsRow) GetNCompanyIndicationsOk() (*int32, bool)`
-
-GetNCompanyIndicationsOk returns a tuple with the NCompanyIndications field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNCompanyIndications
-
-`func (o *CompanyCompetitorsRow) SetNCompanyIndications(v int32)`
-
-SetNCompanyIndications sets NCompanyIndications field to given value.
-
-### HasNCompanyIndications
-
-`func (o *CompanyCompetitorsRow) HasNCompanyIndications() bool`
-
-HasNCompanyIndications returns a boolean if a field has been set.
-
-### SetNCompanyIndicationsNil
-
-`func (o *CompanyCompetitorsRow) SetNCompanyIndicationsNil(b bool)`
-
- SetNCompanyIndicationsNil sets the value for NCompanyIndications to be an explicit nil
-
-### UnsetNCompanyIndications
-`func (o *CompanyCompetitorsRow) UnsetNCompanyIndications()`
-
-UnsetNCompanyIndications ensures that no value is present for NCompanyIndications, not even an explicit nil
-### GetNCompetitorIndications
-
-`func (o *CompanyCompetitorsRow) GetNCompetitorIndications() int32`
-
-GetNCompetitorIndications returns the NCompetitorIndications field if non-nil, zero value otherwise.
-
-### GetNCompetitorIndicationsOk
-
-`func (o *CompanyCompetitorsRow) GetNCompetitorIndicationsOk() (*int32, bool)`
-
-GetNCompetitorIndicationsOk returns a tuple with the NCompetitorIndications field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNCompetitorIndications
-
-`func (o *CompanyCompetitorsRow) SetNCompetitorIndications(v int32)`
-
-SetNCompetitorIndications sets NCompetitorIndications field to given value.
-
-### HasNCompetitorIndications
-
-`func (o *CompanyCompetitorsRow) HasNCompetitorIndications() bool`
-
-HasNCompetitorIndications returns a boolean if a field has been set.
-
-### SetNCompetitorIndicationsNil
-
-`func (o *CompanyCompetitorsRow) SetNCompetitorIndicationsNil(b bool)`
-
- SetNCompetitorIndicationsNil sets the value for NCompetitorIndications to be an explicit nil
-
-### UnsetNCompetitorIndications
-`func (o *CompanyCompetitorsRow) UnsetNCompetitorIndications()`
-
-UnsetNCompetitorIndications ensures that no value is present for NCompetitorIndications, not even an explicit nil
-### GetTopSharedTargets
-
-`func (o *CompanyCompetitorsRow) GetTopSharedTargets() []string`
-
-GetTopSharedTargets returns the TopSharedTargets field if non-nil, zero value otherwise.
-
-### GetTopSharedTargetsOk
-
-`func (o *CompanyCompetitorsRow) GetTopSharedTargetsOk() (*[]string, bool)`
-
-GetTopSharedTargetsOk returns a tuple with the TopSharedTargets field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTopSharedTargets
-
-`func (o *CompanyCompetitorsRow) SetTopSharedTargets(v []string)`
-
-SetTopSharedTargets sets TopSharedTargets field to given value.
-
-### HasTopSharedTargets
-
-`func (o *CompanyCompetitorsRow) HasTopSharedTargets() bool`
-
-HasTopSharedTargets returns a boolean if a field has been set.
-
-### SetTopSharedTargetsNil
-
-`func (o *CompanyCompetitorsRow) SetTopSharedTargetsNil(b bool)`
-
- SetTopSharedTargetsNil sets the value for TopSharedTargets to be an explicit nil
-
-### UnsetTopSharedTargets
-`func (o *CompanyCompetitorsRow) UnsetTopSharedTargets()`
-
-UnsetTopSharedTargets ensures that no value is present for TopSharedTargets, not even an explicit nil
-### GetTopSharedIndications
-
-`func (o *CompanyCompetitorsRow) GetTopSharedIndications() []string`
-
-GetTopSharedIndications returns the TopSharedIndications field if non-nil, zero value otherwise.
-
-### GetTopSharedIndicationsOk
-
-`func (o *CompanyCompetitorsRow) GetTopSharedIndicationsOk() (*[]string, bool)`
-
-GetTopSharedIndicationsOk returns a tuple with the TopSharedIndications field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTopSharedIndications
-
-`func (o *CompanyCompetitorsRow) SetTopSharedIndications(v []string)`
-
-SetTopSharedIndications sets TopSharedIndications field to given value.
-
-### HasTopSharedIndications
-
-`func (o *CompanyCompetitorsRow) HasTopSharedIndications() bool`
-
-HasTopSharedIndications returns a boolean if a field has been set.
-
-### SetTopSharedIndicationsNil
-
-`func (o *CompanyCompetitorsRow) SetTopSharedIndicationsNil(b bool)`
-
- SetTopSharedIndicationsNil sets the value for TopSharedIndications to be an explicit nil
-
-### UnsetTopSharedIndications
-`func (o *CompanyCompetitorsRow) UnsetTopSharedIndications()`
-
-UnsetTopSharedIndications ensures that no value is present for TopSharedIndications, not even an explicit nil
-### GetTopSharedMechanisms
-
-`func (o *CompanyCompetitorsRow) GetTopSharedMechanisms() []string`
-
-GetTopSharedMechanisms returns the TopSharedMechanisms field if non-nil, zero value otherwise.
-
-### GetTopSharedMechanismsOk
-
-`func (o *CompanyCompetitorsRow) GetTopSharedMechanismsOk() (*[]string, bool)`
-
-GetTopSharedMechanismsOk returns a tuple with the TopSharedMechanisms field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTopSharedMechanisms
-
-`func (o *CompanyCompetitorsRow) SetTopSharedMechanisms(v []string)`
-
-SetTopSharedMechanisms sets TopSharedMechanisms field to given value.
-
-### HasTopSharedMechanisms
-
-`func (o *CompanyCompetitorsRow) HasTopSharedMechanisms() bool`
-
-HasTopSharedMechanisms returns a boolean if a field has been set.
-
-### SetTopSharedMechanismsNil
-
-`func (o *CompanyCompetitorsRow) SetTopSharedMechanismsNil(b bool)`
-
- SetTopSharedMechanismsNil sets the value for TopSharedMechanisms to be an explicit nil
-
-### UnsetTopSharedMechanisms
-`func (o *CompanyCompetitorsRow) UnsetTopSharedMechanisms()`
-
-UnsetTopSharedMechanisms ensures that no value is present for TopSharedMechanisms, not even an explicit nil
+UnsetTopCollisions ensures that no value is present for TopCollisions, not even an explicit nil
 ### GetNCosponsoredTrials
 
 `func (o *CompanyCompetitorsRow) GetNCosponsoredTrials() int32`

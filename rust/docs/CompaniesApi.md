@@ -11,11 +11,12 @@ Method | HTTP request | Description
 [**companies_period_biomarker_validation**](CompaniesApi.md#companies_period_biomarker_validation) | **GET** /api/v1/companies/{id}/biomarker_validation | Biomarker validation ladder
 [**companies_period_catalysts**](CompaniesApi.md#companies_period_catalysts) | **GET** /api/v1/companies/{id}/catalysts | Catalysts: trial readouts, patent cliffs, FDA decision dates and press-release events
 [**companies_period_clia_certificates**](CompaniesApi.md#companies_period_clia_certificates) | **GET** /api/v1/companies/{id}/clia_certificates | CLIA laboratory certificates
+[**companies_period_company_asset_collisions**](CompaniesApi.md#companies_period_company_asset_collisions) | **GET** /api/v1/companies/{id}/company_asset_collisions | Company asset collisions
 [**companies_period_company_assets**](CompaniesApi.md#companies_period_company_assets) | **GET** /api/v1/companies/{id}/company_assets | Company assets (approved and marketed drugs)
 [**companies_period_company_biomarker_capability**](CompaniesApi.md#companies_period_company_biomarker_capability) | **GET** /api/v1/companies/{id}/company_biomarker_capability | Company biomarker capability
 [**companies_period_company_collaborators**](CompaniesApi.md#companies_period_company_collaborators) | **GET** /api/v1/companies/{id}/company_collaborators | Company study collaborators by disease area
 [**companies_period_company_competitor_activity**](CompaniesApi.md#companies_period_company_competitor_activity) | **GET** /api/v1/companies/{id}/company_competitor_activity | Company competitor activity by disease area
-[**companies_period_company_competitors**](CompaniesApi.md#companies_period_company_competitors) | **GET** /api/v1/companies/{id}/company_competitors | Company program overlap
+[**companies_period_company_competitors**](CompaniesApi.md#companies_period_company_competitors) | **GET** /api/v1/companies/{id}/company_competitors | Company competitors by asset collision
 [**companies_period_company_cosponsors**](CompaniesApi.md#companies_period_company_cosponsors) | **GET** /api/v1/companies/{id}/company_cosponsors | Company co-sponsors
 [**companies_period_company_financials**](CompaniesApi.md#companies_period_company_financials) | **GET** /api/v1/companies/{id}/company_financials | Company SEC financials
 [**companies_period_company_firmographics**](CompaniesApi.md#companies_period_company_firmographics) | **GET** /api/v1/companies/{id}/company_firmographics | Company firmographics
@@ -313,6 +314,40 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## companies_period_company_asset_collisions
+
+> models::CompanyAssetCollisionsResponse companies_period_company_asset_collisions(id, cursor, limit, sort, group_by, measure, scope)
+Company asset collisions
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
+
+### Return type
+
+[**models::CompanyAssetCollisionsResponse**](CompanyAssetCollisionsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## companies_period_company_assets
 
 > models::CompanyAssetsResponse companies_period_company_assets(id, cursor, limit, sort, group_by, measure, scope)
@@ -452,7 +487,7 @@ Name | Type | Description  | Required | Notes
 ## companies_period_company_competitors
 
 > models::CompanyCompetitorsResponse companies_period_company_competitors(id, cursor, limit, sort, group_by, measure, scope)
-Company program overlap
+Company competitors by asset collision
 
 ### Parameters
 

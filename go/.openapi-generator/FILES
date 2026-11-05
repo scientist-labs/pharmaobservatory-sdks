@@ -97,6 +97,8 @@ docs/CompaniesRecord.md
 docs/CompaniesRecordAttributes.md
 docs/CompaniesResponse.md
 docs/CompaniesRow.md
+docs/CompanyAssetCollisionsResponse.md
+docs/CompanyAssetCollisionsRow.md
 docs/CompanyAssetsResponse.md
 docs/CompanyAssetsRow.md
 docs/CompanyBiomarkerCapabilityResponse.md
@@ -591,6 +593,8 @@ model_companies_record.go
 model_companies_record_attributes.go
 model_companies_response.go
 model_companies_row.go
+model_company_asset_collisions_response.go
+model_company_asset_collisions_row.go
 model_company_assets_response.go
 model_company_assets_row.go
 model_company_biomarker_capability_response.go
