@@ -17,7 +17,7 @@ import (
 // checks if the CompanyCompetitorsRow type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CompanyCompetitorsRow{}
 
-// CompanyCompetitorsRow One row of the company_competitors dataset: one row per ordered company pair: a company and one of the top 25 companies of each competitor_class by asset collision. A grouped request returns the group columns and the measures instead, as additional properties.
+// CompanyCompetitorsRow One row of the company_competitors dataset: one row per ordered company pair: an industry company and one of its top 25 industry competitors by asset collision. A grouped request returns the group columns and the measures instead, as additional properties.
 type CompanyCompetitorsRow struct {
 	// Company level: the company the row is about; the entry key for the companies object type.
 	CompanyId NullableString `json:"company_id,omitempty"`
@@ -35,7 +35,7 @@ type CompanyCompetitorsRow struct {
 	CompetitorGroupId NullableString `json:"competitor_group_id,omitempty"`
 	// Display name of the competitor's group.
 	CompetitorGroupName NullableString `json:"competitor_group_name,omitempty"`
-	// The competitor's class: industry, or non_industry (not classed as industry by the sponsor-class rule: academic, hospital, government, nonprofit, and any record the rule does not reach). competitor_rank restarts at 1 within each class, so filter or sort on this column first.
+	// The competitor's class: always industry since the not-classed-as-industry group left Competitors; the column is kept so a query written against it keeps working. competitor_rank is 1-based within the class.
 	CompetitorClass NullableString `json:"competitor_class,omitempty"`
 	// How many companies of this competitor_class had at least one asset collision with the company before the top 25 were kept. The same value on every row of one company and class.
 	NClassCandidates NullableInt32 `json:"n_class_candidates,omitempty"`
@@ -51,10 +51,14 @@ type CompanyCompetitorsRow struct {
 	NSubjectFamilies NullableInt32 `json:"n_subject_families,omitempty"`
 	// Asset pairs whose drugs act on the shared target with the same action type.
 	NSameAction NullableInt32 `json:"n_same_action,omitempty"`
-	// Asset pairs whose programs share at least one disease area.
+	// Asset pairs whose programs share at least one disease area. Every listed pair does, so it equals n_collisions.
 	NSharedIndicationPairs NullableInt32 `json:"n_shared_indication_pairs,omitempty"`
 	// Distinct trials led by either company in which one drug of a pair is experimental and the other an active comparator.
 	NHeadToHeadTrials NullableInt32 `json:"n_head_to_head_trials,omitempty"`
+	// The most advanced pair's stage, where a pair's stage is the less advanced of its two programs' furthest phase: 6 Phase 4, 5 Phase 3, 4 Phase 2/3, 3 Phase 2, 2 Phase 1/2, 1 Phase 1, 0 Early Phase 1, -1 phase not applicable. A tie-break key after the score.
+	BestStage NullableInt32 `json:"best_stage,omitempty"`
+	// The latest trial start year over the company pair's programs (the maximum over its asset pairs of the later of the two programs' last start year). A tie-break key after the score; null when no program has a start year.
+	LastYear NullableInt32 `json:"last_year,omitempty"`
 	// Up to 3 strongest asset pairs as text: \"drug A / drug B: target family, stage, N shared indications\". The stage is the less advanced of the two programs. An ownership_basis of inferred_lead on the underlying pair (see company_asset_collisions) is an inference.
 	TopCollisions []string `json:"top_collisions,omitempty"`
 	// Distinct trials on which the company and the competitor are both named as sponsors, counted over their subtrees; 0 when none. A consortium trial (more than 25 sponsor companies) is left out.
@@ -837,6 +841,90 @@ func (o *CompanyCompetitorsRow) UnsetNHeadToHeadTrials() {
 	o.NHeadToHeadTrials.Unset()
 }
 
+// GetBestStage returns the BestStage field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetBestStage() int32 {
+	if o == nil || IsNil(o.BestStage.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.BestStage.Get()
+}
+
+// GetBestStageOk returns a tuple with the BestStage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyCompetitorsRow) GetBestStageOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BestStage.Get(), o.BestStage.IsSet()
+}
+
+// HasBestStage returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasBestStage() bool {
+	if o != nil && o.BestStage.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBestStage gets a reference to the given NullableInt32 and assigns it to the BestStage field.
+func (o *CompanyCompetitorsRow) SetBestStage(v int32) {
+	o.BestStage.Set(&v)
+}
+// SetBestStageNil sets the value for BestStage to be an explicit nil
+func (o *CompanyCompetitorsRow) SetBestStageNil() {
+	o.BestStage.Set(nil)
+}
+
+// UnsetBestStage ensures that no value is present for BestStage, not even an explicit nil
+func (o *CompanyCompetitorsRow) UnsetBestStage() {
+	o.BestStage.Unset()
+}
+
+// GetLastYear returns the LastYear field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetLastYear() int32 {
+	if o == nil || IsNil(o.LastYear.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.LastYear.Get()
+}
+
+// GetLastYearOk returns a tuple with the LastYear field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyCompetitorsRow) GetLastYearOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.LastYear.Get(), o.LastYear.IsSet()
+}
+
+// HasLastYear returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasLastYear() bool {
+	if o != nil && o.LastYear.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetLastYear gets a reference to the given NullableInt32 and assigns it to the LastYear field.
+func (o *CompanyCompetitorsRow) SetLastYear(v int32) {
+	o.LastYear.Set(&v)
+}
+// SetLastYearNil sets the value for LastYear to be an explicit nil
+func (o *CompanyCompetitorsRow) SetLastYearNil() {
+	o.LastYear.Set(nil)
+}
+
+// UnsetLastYear ensures that no value is present for LastYear, not even an explicit nil
+func (o *CompanyCompetitorsRow) UnsetLastYear() {
+	o.LastYear.Unset()
+}
+
 // GetTopCollisions returns the TopCollisions field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *CompanyCompetitorsRow) GetTopCollisions() []string {
 	if o == nil {
@@ -976,6 +1064,12 @@ func (o CompanyCompetitorsRow) ToMap() (map[string]interface{}, error) {
 	if o.NHeadToHeadTrials.IsSet() {
 		toSerialize["n_head_to_head_trials"] = o.NHeadToHeadTrials.Get()
 	}
+	if o.BestStage.IsSet() {
+		toSerialize["best_stage"] = o.BestStage.Get()
+	}
+	if o.LastYear.IsSet() {
+		toSerialize["last_year"] = o.LastYear.Get()
+	}
 	if o.TopCollisions != nil {
 		toSerialize["top_collisions"] = o.TopCollisions
 	}
@@ -1022,6 +1116,8 @@ func (o *CompanyCompetitorsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "n_same_action")
 		delete(additionalProperties, "n_shared_indication_pairs")
 		delete(additionalProperties, "n_head_to_head_trials")
+		delete(additionalProperties, "best_stage")
+		delete(additionalProperties, "last_year")
 		delete(additionalProperties, "top_collisions")
 		delete(additionalProperties, "n_cosponsored_trials")
 		o.AdditionalProperties = additionalProperties

@@ -14,7 +14,7 @@ require 'date'
 require 'time'
 
 module PharmaObservatory
-  # One row of the company_competitors dataset: one row per ordered company pair: a company and one of the top 25 companies of each competitor_class by asset collision. A grouped request returns the group columns and the measures instead, as additional properties.
+  # One row of the company_competitors dataset: one row per ordered company pair: an industry company and one of its top 25 industry competitors by asset collision. A grouped request returns the group columns and the measures instead, as additional properties.
   class CompanyCompetitorsRow
     # Company level: the company the row is about; the entry key for the companies object type.
     attr_accessor :company_id
@@ -40,7 +40,7 @@ module PharmaObservatory
     # Display name of the competitor's group.
     attr_accessor :competitor_group_name
 
-    # The competitor's class: industry, or non_industry (not classed as industry by the sponsor-class rule: academic, hospital, government, nonprofit, and any record the rule does not reach). competitor_rank restarts at 1 within each class, so filter or sort on this column first.
+    # The competitor's class: always industry since the not-classed-as-industry group left Competitors; the column is kept so a query written against it keeps working. competitor_rank is 1-based within the class.
     attr_accessor :competitor_class
 
     # How many companies of this competitor_class had at least one asset collision with the company before the top 25 were kept. The same value on every row of one company and class.
@@ -64,11 +64,17 @@ module PharmaObservatory
     # Asset pairs whose drugs act on the shared target with the same action type.
     attr_accessor :n_same_action
 
-    # Asset pairs whose programs share at least one disease area.
+    # Asset pairs whose programs share at least one disease area. Every listed pair does, so it equals n_collisions.
     attr_accessor :n_shared_indication_pairs
 
     # Distinct trials led by either company in which one drug of a pair is experimental and the other an active comparator.
     attr_accessor :n_head_to_head_trials
+
+    # The most advanced pair's stage, where a pair's stage is the less advanced of its two programs' furthest phase: 6 Phase 4, 5 Phase 3, 4 Phase 2/3, 3 Phase 2, 2 Phase 1/2, 1 Phase 1, 0 Early Phase 1, -1 phase not applicable. A tie-break key after the score.
+    attr_accessor :best_stage
+
+    # The latest trial start year over the company pair's programs (the maximum over its asset pairs of the later of the two programs' last start year). A tie-break key after the score; null when no program has a start year.
+    attr_accessor :last_year
 
     # Up to 3 strongest asset pairs as text: \"drug A / drug B: target family, stage, N shared indications\". The stage is the less advanced of the two programs. An ownership_basis of inferred_lead on the underlying pair (see company_asset_collisions) is an inference.
     attr_accessor :top_collisions
@@ -97,6 +103,8 @@ module PharmaObservatory
         :'n_same_action' => :'n_same_action',
         :'n_shared_indication_pairs' => :'n_shared_indication_pairs',
         :'n_head_to_head_trials' => :'n_head_to_head_trials',
+        :'best_stage' => :'best_stage',
+        :'last_year' => :'last_year',
         :'top_collisions' => :'top_collisions',
         :'n_cosponsored_trials' => :'n_cosponsored_trials'
       }
@@ -133,6 +141,8 @@ module PharmaObservatory
         :'n_same_action' => :'Integer',
         :'n_shared_indication_pairs' => :'Integer',
         :'n_head_to_head_trials' => :'Integer',
+        :'best_stage' => :'Integer',
+        :'last_year' => :'Integer',
         :'top_collisions' => :'Array<String>',
         :'n_cosponsored_trials' => :'Integer'
       }
@@ -159,6 +169,8 @@ module PharmaObservatory
         :'n_same_action',
         :'n_shared_indication_pairs',
         :'n_head_to_head_trials',
+        :'best_stage',
+        :'last_year',
         :'top_collisions',
         :'n_cosponsored_trials'
       ])
@@ -252,6 +264,14 @@ module PharmaObservatory
         self.n_head_to_head_trials = attributes[:'n_head_to_head_trials']
       end
 
+      if attributes.key?(:'best_stage')
+        self.best_stage = attributes[:'best_stage']
+      end
+
+      if attributes.key?(:'last_year')
+        self.last_year = attributes[:'last_year']
+      end
+
       if attributes.key?(:'top_collisions')
         if (value = attributes[:'top_collisions']).is_a?(Array)
           self.top_collisions = value
@@ -301,6 +321,8 @@ module PharmaObservatory
           n_same_action == o.n_same_action &&
           n_shared_indication_pairs == o.n_shared_indication_pairs &&
           n_head_to_head_trials == o.n_head_to_head_trials &&
+          best_stage == o.best_stage &&
+          last_year == o.last_year &&
           top_collisions == o.top_collisions &&
           n_cosponsored_trials == o.n_cosponsored_trials
     end
@@ -314,7 +336,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [company_id, company_name, group_id, group_name, competitor_company_id, competitor_company_name, competitor_group_id, competitor_group_name, competitor_class, n_class_candidates, competitor_rank, competitor_score, n_collisions, n_colliding_families, n_subject_families, n_same_action, n_shared_indication_pairs, n_head_to_head_trials, top_collisions, n_cosponsored_trials].hash
+      [company_id, company_name, group_id, group_name, competitor_company_id, competitor_company_name, competitor_group_id, competitor_group_name, competitor_class, n_class_candidates, competitor_rank, competitor_score, n_collisions, n_colliding_families, n_subject_families, n_same_action, n_shared_indication_pairs, n_head_to_head_trials, best_stage, last_year, top_collisions, n_cosponsored_trials].hash
     end
 
     # Builds the object from hash

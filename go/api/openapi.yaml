@@ -2093,7 +2093,7 @@ paths:
     get:
       operationId: changes.list
       parameters:
-      - example: eyJ2IjoxLCJvIjoiMjAyNi0xMS0wMlQwNjowMjowMC4wMDAwMDBaIiwiaSI6OTAwMn0
+      - example: eyJ2IjoxLCJvIjoiMjAyNi0wNS0wNFQwMDowMDowMC4wMDAwMDBaIiwiaSI6MX0
         explode: true
         in: query
         name: cursor
@@ -2101,7 +2101,7 @@ paths:
         schema:
           type: string
         style: form
-      - example: 2
+      - example: 1
         explode: true
         in: query
         name: limit
@@ -2118,7 +2118,10 @@ paths:
           description: "Feed items for the caller's subscriptions after `cursor`,\
             \ oldest first, with the next_cursor to keep. Keep next_cursor and send\
             \ it next time; has_more says another page follows now. limit is 1 to\
-            \ 200, default 50."
+            \ 200, default 50. oldest_available is null unless the cursor is older\
+            \ than the retention window; then it is the observed_at of the first item\
+            \ returned, and changes between the cursor and that time may have aged\
+            \ out."
         "400":
           content:
             application/json:
@@ -42931,7 +42934,7 @@ components:
     CompanyCompetitorsRow:
       additionalProperties: true
       description: "One row of the company_competitors dataset: one row per ordered\
-        \ company pair: a company and one of the top 25 companies of each competitor_class\
+        \ company pair: an industry company and one of its top 25 industry competitors\
         \ by asset collision. A grouped request returns the group columns and the\
         \ measures instead, as additional properties."
       example:
@@ -42939,12 +42942,13 @@ components:
         - top_collisions
         - top_collisions
         company_id: company_id
+        last_year: 4
         group_name: group_name
         competitor_group_id: competitor_group_id
         n_collisions: 5
         n_head_to_head_trials: 3
         n_class_candidates: 0
-        n_cosponsored_trials: 2
+        n_cosponsored_trials: 7
         n_colliding_families: 5
         competitor_company_name: competitor_company_name
         competitor_rank: 6
@@ -42956,6 +42960,7 @@ components:
         n_subject_families: 2
         competitor_group_name: competitor_group_name
         n_same_action: 7
+        best_stage: 2
         competitor_company_id: competitor_company_id
       properties:
         company_id:
@@ -42994,10 +42999,9 @@ components:
           nullable: true
           type: string
         competitor_class:
-          description: "The competitor's class: industry, or non_industry (not classed\
-            \ as industry by the sponsor-class rule: academic, hospital, government,\
-            \ nonprofit, and any record the rule does not reach). competitor_rank\
-            \ restarts at 1 within each class, so filter or sort on this column first."
+          description: "The competitor's class: always industry since the not-classed-as-industry\
+            \ group left Competitors; the column is kept so a query written against\
+            \ it keeps working. competitor_rank is 1-based within the class."
           nullable: true
           type: string
         n_class_candidates:
@@ -43048,13 +43052,30 @@ components:
           nullable: true
           type: integer
         n_shared_indication_pairs:
-          description: Asset pairs whose programs share at least one disease area.
+          description: "Asset pairs whose programs share at least one disease area.\
+            \ Every listed pair does, so it equals n_collisions."
           format: int32
           nullable: true
           type: integer
         n_head_to_head_trials:
           description: Distinct trials led by either company in which one drug of
             a pair is experimental and the other an active comparator.
+          format: int32
+          nullable: true
+          type: integer
+        best_stage:
+          description: "The most advanced pair's stage, where a pair's stage is the\
+            \ less advanced of its two programs' furthest phase: 6 Phase 4, 5 Phase\
+            \ 3, 4 Phase 2/3, 3 Phase 2, 2 Phase 1/2, 1 Phase 1, 0 Early Phase 1,\
+            \ -1 phase not applicable. A tie-break key after the score."
+          format: int32
+          nullable: true
+          type: integer
+        last_year:
+          description: The latest trial start year over the company pair's programs
+            (the maximum over its asset pairs of the later of the two programs' last
+            start year). A tie-break key after the score; null when no program has
+            a start year.
           format: int32
           nullable: true
           type: integer
@@ -43110,12 +43131,13 @@ components:
           - top_collisions
           - top_collisions
           company_id: company_id
+          last_year: 4
           group_name: group_name
           competitor_group_id: competitor_group_id
           n_collisions: 5
           n_head_to_head_trials: 3
           n_class_candidates: 0
-          n_cosponsored_trials: 2
+          n_cosponsored_trials: 7
           n_colliding_families: 5
           competitor_company_name: competitor_company_name
           competitor_rank: 6
@@ -43127,17 +43149,19 @@ components:
           n_subject_families: 2
           competitor_group_name: competitor_group_name
           n_same_action: 7
+          best_stage: 2
           competitor_company_id: competitor_company_id
         - top_collisions:
           - top_collisions
           - top_collisions
           company_id: company_id
+          last_year: 4
           group_name: group_name
           competitor_group_id: competitor_group_id
           n_collisions: 5
           n_head_to_head_trials: 3
           n_class_candidates: 0
-          n_cosponsored_trials: 2
+          n_cosponsored_trials: 7
           n_colliding_families: 5
           competitor_company_name: competitor_company_name
           competitor_rank: 6
@@ -43149,11 +43173,12 @@ components:
           n_subject_families: 2
           competitor_group_name: competitor_group_name
           n_same_action: 7
+          best_stage: 2
           competitor_company_id: competitor_company_id
         freshness:
           last_loaded: last_loaded
           source: source
-        total: 4
+        total: 1
         measures:
         - measures
         - measures
@@ -101044,6 +101069,7 @@ components:
           built: true
         count: 1
         has_more: true
+        oldest_available: oldest_available
         items:
         - source_credit: source_credit
           match_kind: match_kind
@@ -101092,6 +101118,9 @@ components:
           type: boolean
         build_state:
           $ref: '#/components/schemas/changes_list_200_response_build_state'
+        oldest_available:
+          nullable: true
+          type: string
       required:
       - build_state
       - count

@@ -29,8 +29,8 @@ end
 
 api_instance = PharmaObservatory::SubscriptionsApi.new
 opts = {
-  cursor: 'eyJ2IjoxLCJvIjoiMjAyNi0xMS0wMlQwNjowMjowMC4wMDAwMDBaIiwiaSI6OTAwMn0', # String | 
-  limit: 2 # Integer | 
+  cursor: 'eyJ2IjoxLCJvIjoiMjAyNi0wNS0wNFQwMDowMDowMC4wMDAwMDBaIiwiaSI6MX0', # String | 
+  limit: 1 # Integer | 
 }
 
 begin

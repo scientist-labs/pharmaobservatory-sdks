@@ -30,8 +30,8 @@ import (
 )
 
 func main() {
-	cursor := "eyJ2IjoxLCJvIjoiMjAyNi0xMS0wMlQwNjowMjowMC4wMDAwMDBaIiwiaSI6OTAwMn0" // string |  (optional)
-	limit := int32(2) // int32 |  (optional)
+	cursor := "eyJ2IjoxLCJvIjoiMjAyNi0wNS0wNFQwMDowMDowMC4wMDAwMDBaIiwiaSI6MX0" // string |  (optional)
+	limit := int32(1) // int32 |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
