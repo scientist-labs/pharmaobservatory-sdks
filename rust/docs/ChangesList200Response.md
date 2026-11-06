@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **next_cursor** | **String** |  | 
 **has_more** | **bool** |  | 
 **build_state** | [**models::ChangesList200ResponseBuildState**](changes_list_200_response_build_state.md) |  | 
+**oldest_available** | Option<**String**> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

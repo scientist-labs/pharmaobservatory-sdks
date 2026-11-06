@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **CompetitorCompanyName** | Pointer to **NullableString** | Display name of the competitor&#39;s company. | [optional] 
 **CompetitorGroupId** | Pointer to **NullableString** | Group level: the competitor&#39;s current ultimate parent; a root&#39;s group is itself. | [optional] 
 **CompetitorGroupName** | Pointer to **NullableString** | Display name of the competitor&#39;s group. | [optional] 
-**CompetitorClass** | Pointer to **NullableString** | The competitor&#39;s class: industry, or non_industry (not classed as industry by the sponsor-class rule: academic, hospital, government, nonprofit, and any record the rule does not reach). competitor_rank restarts at 1 within each class, so filter or sort on this column first. | [optional] 
+**CompetitorClass** | Pointer to **NullableString** | The competitor&#39;s class: always industry since the not-classed-as-industry group left Competitors; the column is kept so a query written against it keeps working. competitor_rank is 1-based within the class. | [optional] 
 **NClassCandidates** | Pointer to **NullableInt32** | How many companies of this competitor_class had at least one asset collision with the company before the top 25 were kept. The same value on every row of one company and class. | [optional] 
 **CompetitorRank** | Pointer to **NullableInt32** | The competitor&#39;s rank within its competitor_class for the company by competitor_score (1 is the highest). | [optional] 
 **CompetitorScore** | Pointer to **NullableFloat32** | The weighted share of the company&#39;s live target families that the competitor&#39;s live assets collide with, 0 to 100, rounded to four places. Each colliding family counts its best collision weight (rarity of the family across companies, times factors for same action, a shared indication, the least advanced stage, recency and a head-to-head trial), capped at the family&#39;s rarity weight; the sum is divided by the rarity weights of ALL the company&#39;s families. | [optional] 
@@ -20,8 +20,10 @@ Name | Type | Description | Notes
 **NCollidingFamilies** | Pointer to **NullableInt32** | Target families of the company&#39;s live assets that the competitor collides with. | [optional] 
 **NSubjectFamilies** | Pointer to **NullableInt32** | Target families of the company&#39;s own live, owned assets; the denominator of competitor_score is their rarity weights. | [optional] 
 **NSameAction** | Pointer to **NullableInt32** | Asset pairs whose drugs act on the shared target with the same action type. | [optional] 
-**NSharedIndicationPairs** | Pointer to **NullableInt32** | Asset pairs whose programs share at least one disease area. | [optional] 
+**NSharedIndicationPairs** | Pointer to **NullableInt32** | Asset pairs whose programs share at least one disease area. Every listed pair does, so it equals n_collisions. | [optional] 
 **NHeadToHeadTrials** | Pointer to **NullableInt32** | Distinct trials led by either company in which one drug of a pair is experimental and the other an active comparator. | [optional] 
+**BestStage** | Pointer to **NullableInt32** | The most advanced pair&#39;s stage, where a pair&#39;s stage is the less advanced of its two programs&#39; furthest phase: 6 Phase 4, 5 Phase 3, 4 Phase 2/3, 3 Phase 2, 2 Phase 1/2, 1 Phase 1, 0 Early Phase 1, -1 phase not applicable. A tie-break key after the score. | [optional] 
+**LastYear** | Pointer to **NullableInt32** | The latest trial start year over the company pair&#39;s programs (the maximum over its asset pairs of the later of the two programs&#39; last start year). A tie-break key after the score; null when no program has a start year. | [optional] 
 **TopCollisions** | Pointer to **[]string** | Up to 3 strongest asset pairs as text: \&quot;drug A / drug B: target family, stage, N shared indications\&quot;. The stage is the less advanced of the two programs. An ownership_basis of inferred_lead on the underlying pair (see company_asset_collisions) is an inference. | [optional] 
 **NCosponsoredTrials** | Pointer to **NullableInt32** | Distinct trials on which the company and the competitor are both named as sponsors, counted over their subtrees; 0 when none. A consortium trial (more than 25 sponsor companies) is left out. | [optional] 
 
@@ -674,6 +676,76 @@ HasNHeadToHeadTrials returns a boolean if a field has been set.
 `func (o *CompanyCompetitorsRow) UnsetNHeadToHeadTrials()`
 
 UnsetNHeadToHeadTrials ensures that no value is present for NHeadToHeadTrials, not even an explicit nil
+### GetBestStage
+
+`func (o *CompanyCompetitorsRow) GetBestStage() int32`
+
+GetBestStage returns the BestStage field if non-nil, zero value otherwise.
+
+### GetBestStageOk
+
+`func (o *CompanyCompetitorsRow) GetBestStageOk() (*int32, bool)`
+
+GetBestStageOk returns a tuple with the BestStage field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBestStage
+
+`func (o *CompanyCompetitorsRow) SetBestStage(v int32)`
+
+SetBestStage sets BestStage field to given value.
+
+### HasBestStage
+
+`func (o *CompanyCompetitorsRow) HasBestStage() bool`
+
+HasBestStage returns a boolean if a field has been set.
+
+### SetBestStageNil
+
+`func (o *CompanyCompetitorsRow) SetBestStageNil(b bool)`
+
+ SetBestStageNil sets the value for BestStage to be an explicit nil
+
+### UnsetBestStage
+`func (o *CompanyCompetitorsRow) UnsetBestStage()`
+
+UnsetBestStage ensures that no value is present for BestStage, not even an explicit nil
+### GetLastYear
+
+`func (o *CompanyCompetitorsRow) GetLastYear() int32`
+
+GetLastYear returns the LastYear field if non-nil, zero value otherwise.
+
+### GetLastYearOk
+
+`func (o *CompanyCompetitorsRow) GetLastYearOk() (*int32, bool)`
+
+GetLastYearOk returns a tuple with the LastYear field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLastYear
+
+`func (o *CompanyCompetitorsRow) SetLastYear(v int32)`
+
+SetLastYear sets LastYear field to given value.
+
+### HasLastYear
+
+`func (o *CompanyCompetitorsRow) HasLastYear() bool`
+
+HasLastYear returns a boolean if a field has been set.
+
+### SetLastYearNil
+
+`func (o *CompanyCompetitorsRow) SetLastYearNil(b bool)`
+
+ SetLastYearNil sets the value for LastYear to be an explicit nil
+
+### UnsetLastYear
+`func (o *CompanyCompetitorsRow) UnsetLastYear()`
+
+UnsetLastYear ensures that no value is present for LastYear, not even an explicit nil
 ### GetTopCollisions
 
 `func (o *CompanyCompetitorsRow) GetTopCollisions() []string`

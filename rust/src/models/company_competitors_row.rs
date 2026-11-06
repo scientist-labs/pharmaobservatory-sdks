@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// CompanyCompetitorsRow : One row of the company_competitors dataset: one row per ordered company pair: a company and one of the top 25 companies of each competitor_class by asset collision. A grouped request returns the group columns and the measures instead, as additional properties.
+/// CompanyCompetitorsRow : One row of the company_competitors dataset: one row per ordered company pair: an industry company and one of its top 25 industry competitors by asset collision. A grouped request returns the group columns and the measures instead, as additional properties.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CompanyCompetitorsRow {
     /// Company level: the company the row is about; the entry key for the companies object type.
@@ -38,7 +38,7 @@ pub struct CompanyCompetitorsRow {
     /// Display name of the competitor's group.
     #[serde(rename = "competitor_group_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub competitor_group_name: Option<Option<String>>,
-    /// The competitor's class: industry, or non_industry (not classed as industry by the sponsor-class rule: academic, hospital, government, nonprofit, and any record the rule does not reach). competitor_rank restarts at 1 within each class, so filter or sort on this column first.
+    /// The competitor's class: always industry since the not-classed-as-industry group left Competitors; the column is kept so a query written against it keeps working. competitor_rank is 1-based within the class.
     #[serde(rename = "competitor_class", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub competitor_class: Option<Option<String>>,
     /// How many companies of this competitor_class had at least one asset collision with the company before the top 25 were kept. The same value on every row of one company and class.
@@ -62,12 +62,18 @@ pub struct CompanyCompetitorsRow {
     /// Asset pairs whose drugs act on the shared target with the same action type.
     #[serde(rename = "n_same_action", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_same_action: Option<Option<i32>>,
-    /// Asset pairs whose programs share at least one disease area.
+    /// Asset pairs whose programs share at least one disease area. Every listed pair does, so it equals n_collisions.
     #[serde(rename = "n_shared_indication_pairs", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_shared_indication_pairs: Option<Option<i32>>,
     /// Distinct trials led by either company in which one drug of a pair is experimental and the other an active comparator.
     #[serde(rename = "n_head_to_head_trials", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_head_to_head_trials: Option<Option<i32>>,
+    /// The most advanced pair's stage, where a pair's stage is the less advanced of its two programs' furthest phase: 6 Phase 4, 5 Phase 3, 4 Phase 2/3, 3 Phase 2, 2 Phase 1/2, 1 Phase 1, 0 Early Phase 1, -1 phase not applicable. A tie-break key after the score.
+    #[serde(rename = "best_stage", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub best_stage: Option<Option<i32>>,
+    /// The latest trial start year over the company pair's programs (the maximum over its asset pairs of the later of the two programs' last start year). A tie-break key after the score; null when no program has a start year.
+    #[serde(rename = "last_year", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub last_year: Option<Option<i32>>,
     /// Up to 3 strongest asset pairs as text: \"drug A / drug B: target family, stage, N shared indications\". The stage is the less advanced of the two programs. An ownership_basis of inferred_lead on the underlying pair (see company_asset_collisions) is an inference.
     #[serde(rename = "top_collisions", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub top_collisions: Option<Option<Vec<String>>>,
@@ -77,7 +83,7 @@ pub struct CompanyCompetitorsRow {
 }
 
 impl CompanyCompetitorsRow {
-    /// One row of the company_competitors dataset: one row per ordered company pair: a company and one of the top 25 companies of each competitor_class by asset collision. A grouped request returns the group columns and the measures instead, as additional properties.
+    /// One row of the company_competitors dataset: one row per ordered company pair: an industry company and one of its top 25 industry competitors by asset collision. A grouped request returns the group columns and the measures instead, as additional properties.
     pub fn new() -> CompanyCompetitorsRow {
         CompanyCompetitorsRow {
             company_id: None,
@@ -98,6 +104,8 @@ impl CompanyCompetitorsRow {
             n_same_action: None,
             n_shared_indication_pairs: None,
             n_head_to_head_trials: None,
+            best_stage: None,
+            last_year: None,
             top_collisions: None,
             n_cosponsored_trials: None,
         }

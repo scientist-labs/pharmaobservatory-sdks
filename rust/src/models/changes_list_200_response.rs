@@ -23,6 +23,8 @@ pub struct ChangesList200Response {
     pub has_more: bool,
     #[serde(rename = "build_state")]
     pub build_state: Box<models::ChangesList200ResponseBuildState>,
+    #[serde(rename = "oldest_available", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub oldest_available: Option<Option<String>>,
 }
 
 impl ChangesList200Response {
@@ -33,6 +35,7 @@ impl ChangesList200Response {
             next_cursor,
             has_more,
             build_state: Box::new(build_state),
+            oldest_available: None,
         }
     }
 }

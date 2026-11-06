@@ -25,6 +25,8 @@ module PharmaObservatory
 
     attr_accessor :build_state
 
+    attr_accessor :oldest_available
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -32,7 +34,8 @@ module PharmaObservatory
         :'count' => :'count',
         :'next_cursor' => :'next_cursor',
         :'has_more' => :'has_more',
-        :'build_state' => :'build_state'
+        :'build_state' => :'build_state',
+        :'oldest_available' => :'oldest_available'
       }
     end
 
@@ -53,13 +56,15 @@ module PharmaObservatory
         :'count' => :'Integer',
         :'next_cursor' => :'String',
         :'has_more' => :'Boolean',
-        :'build_state' => :'ChangesList200ResponseBuildState'
+        :'build_state' => :'ChangesList200ResponseBuildState',
+        :'oldest_available' => :'String'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'oldest_available'
       ])
     end
 
@@ -109,6 +114,10 @@ module PharmaObservatory
         self.build_state = attributes[:'build_state']
       else
         self.build_state = nil
+      end
+
+      if attributes.key?(:'oldest_available')
+        self.oldest_available = attributes[:'oldest_available']
       end
     end
 
@@ -211,7 +220,8 @@ module PharmaObservatory
           count == o.count &&
           next_cursor == o.next_cursor &&
           has_more == o.has_more &&
-          build_state == o.build_state
+          build_state == o.build_state &&
+          oldest_available == o.oldest_available
     end
 
     # @see the `==` method
@@ -223,7 +233,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [items, count, next_cursor, has_more, build_state].hash
+      [items, count, next_cursor, has_more, build_state, oldest_available].hash
     end
 
     # Builds the object from hash

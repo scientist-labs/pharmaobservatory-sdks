@@ -9,6 +9,7 @@
 | **next_cursor** | **String** |  |  |
 | **has_more** | **Boolean** |  |  |
 | **build_state** | [**ChangesList200ResponseBuildState**](ChangesList200ResponseBuildState.md) |  |  |
+| **oldest_available** | **String** |  | [optional] |
 
 ## Example
 
@@ -20,7 +21,8 @@ instance = PharmaObservatory::ChangesList200Response.new(
   count: null,
   next_cursor: null,
   has_more: null,
-  build_state: null
+  build_state: null,
+  oldest_available: null
 )
 ```
 

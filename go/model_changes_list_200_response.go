@@ -25,6 +25,7 @@ type ChangesList200Response struct {
 	NextCursor string `json:"next_cursor"`
 	HasMore bool `json:"has_more"`
 	BuildState ChangesList200ResponseBuildState `json:"build_state"`
+	OldestAvailable NullableString `json:"oldest_available,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -172,6 +173,48 @@ func (o *ChangesList200Response) SetBuildState(v ChangesList200ResponseBuildStat
 	o.BuildState = v
 }
 
+// GetOldestAvailable returns the OldestAvailable field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ChangesList200Response) GetOldestAvailable() string {
+	if o == nil || IsNil(o.OldestAvailable.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.OldestAvailable.Get()
+}
+
+// GetOldestAvailableOk returns a tuple with the OldestAvailable field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ChangesList200Response) GetOldestAvailableOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.OldestAvailable.Get(), o.OldestAvailable.IsSet()
+}
+
+// HasOldestAvailable returns a boolean if a field has been set.
+func (o *ChangesList200Response) HasOldestAvailable() bool {
+	if o != nil && o.OldestAvailable.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOldestAvailable gets a reference to the given NullableString and assigns it to the OldestAvailable field.
+func (o *ChangesList200Response) SetOldestAvailable(v string) {
+	o.OldestAvailable.Set(&v)
+}
+// SetOldestAvailableNil sets the value for OldestAvailable to be an explicit nil
+func (o *ChangesList200Response) SetOldestAvailableNil() {
+	o.OldestAvailable.Set(nil)
+}
+
+// UnsetOldestAvailable ensures that no value is present for OldestAvailable, not even an explicit nil
+func (o *ChangesList200Response) UnsetOldestAvailable() {
+	o.OldestAvailable.Unset()
+}
+
 func (o ChangesList200Response) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -187,6 +230,9 @@ func (o ChangesList200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize["next_cursor"] = o.NextCursor
 	toSerialize["has_more"] = o.HasMore
 	toSerialize["build_state"] = o.BuildState
+	if o.OldestAvailable.IsSet() {
+		toSerialize["oldest_available"] = o.OldestAvailable.Get()
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -239,6 +285,7 @@ func (o *ChangesList200Response) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "next_cursor")
 		delete(additionalProperties, "has_more")
 		delete(additionalProperties, "build_state")
+		delete(additionalProperties, "oldest_available")
 		o.AdditionalProperties = additionalProperties
 	}
 

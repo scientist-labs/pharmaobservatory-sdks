@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **NextCursor** | **string** |  | 
 **HasMore** | **bool** |  | 
 **BuildState** | [**ChangesList200ResponseBuildState**](ChangesList200ResponseBuildState.md) |  | 
+**OldestAvailable** | Pointer to **NullableString** |  | [optional] 
 
 ## Methods
 
@@ -129,6 +130,41 @@ and a boolean to check if the value has been set.
 SetBuildState sets BuildState field to given value.
 
 
+### GetOldestAvailable
+
+`func (o *ChangesList200Response) GetOldestAvailable() string`
+
+GetOldestAvailable returns the OldestAvailable field if non-nil, zero value otherwise.
+
+### GetOldestAvailableOk
+
+`func (o *ChangesList200Response) GetOldestAvailableOk() (*string, bool)`
+
+GetOldestAvailableOk returns a tuple with the OldestAvailable field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOldestAvailable
+
+`func (o *ChangesList200Response) SetOldestAvailable(v string)`
+
+SetOldestAvailable sets OldestAvailable field to given value.
+
+### HasOldestAvailable
+
+`func (o *ChangesList200Response) HasOldestAvailable() bool`
+
+HasOldestAvailable returns a boolean if a field has been set.
+
+### SetOldestAvailableNil
+
+`func (o *ChangesList200Response) SetOldestAvailableNil(b bool)`
+
+ SetOldestAvailableNil sets the value for OldestAvailable to be an explicit nil
+
+### UnsetOldestAvailable
+`func (o *ChangesList200Response) UnsetOldestAvailable()`
+
+UnsetOldestAvailable ensures that no value is present for OldestAvailable, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
