@@ -11,7 +11,7 @@
 use crate::models;
 use serde::{Deserialize, Serialize};
 
-/// CompanyCompetitorsRow : One row of the company_competitors dataset: one row per ordered company pair: an industry company and one of its top 25 industry competitors by asset collision. A grouped request returns the group columns and the measures instead, as additional properties.
+/// CompanyCompetitorsRow : One row of the company_competitors dataset: one row per industry company and competitor, at the root level (the competitor's ultimate parent, top 25 by asset collision) and at the member level (a company under a kept root that itself collides, top 25 per root). A grouped request returns the group columns and the measures instead, as additional properties.
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct CompanyCompetitorsRow {
     /// Company level: the company the row is about; the entry key for the companies object type.
@@ -26,7 +26,10 @@ pub struct CompanyCompetitorsRow {
     /// Display name of the group.
     #[serde(rename = "group_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub group_name: Option<Option<String>>,
-    /// Company level: the competing company.
+    /// root: the competitor's ultimate parent company, with its score, counts and evidence recomputed over the union of its members' colliding assets (the best weight per target family and per indication across members, distinct asset pairs and distinct trials, never a sum of member scores). member: a company under that root that itself collides, scored on its own assets. Filter on one level; the two do not add.
+    #[serde(rename = "row_level", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub row_level: Option<Option<String>>,
+    /// Company level: the competing company. At row_level root this is the root company; at member it is the member company itself.
     #[serde(rename = "competitor_company_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub competitor_company_id: Option<Option<String>>,
     /// Display name of the competitor's company.
@@ -38,19 +41,28 @@ pub struct CompanyCompetitorsRow {
     /// Display name of the competitor's group.
     #[serde(rename = "competitor_group_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub competitor_group_name: Option<Option<String>>,
+    /// The ultimate parent company of the competitor, the ladder company's `coalesce(ultimate_parent_company_id, company_id)` (one root per company, never the multi-root group fan-out). Equal to competitor_company_id at row_level root, and the root a member row sits under.
+    #[serde(rename = "competitor_root_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub competitor_root_id: Option<Option<String>>,
     /// The competitor's class: always industry since the not-classed-as-industry group left Competitors; the column is kept so a query written against it keeps working. competitor_rank is 1-based within the class.
     #[serde(rename = "competitor_class", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub competitor_class: Option<Option<String>>,
     /// How many companies of this competitor_class had at least one asset collision with the company before the top 25 were kept. The same value on every row of one company and class.
     #[serde(rename = "n_class_candidates", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_class_candidates: Option<Option<i32>>,
-    /// The competitor's rank within its competitor_class for the company by competitor_score (1 is the highest).
+    /// The rank of the competitor ROOT within its competitor_class for the company by competitor_score (1 is the highest). The same on a root row and on each of its member rows.
     #[serde(rename = "competitor_rank", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub competitor_rank: Option<Option<i32>>,
+    /// 0 on a root row; 1 and up on the member rows of that root, by the member's own competitor_score. Order by competitor_rank then member_rank to list each root followed by its members.
+    #[serde(rename = "member_rank", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub member_rank: Option<Option<i32>>,
+    /// Member companies of this root that collide with the company, before the member cut. The same on a root row and its member rows.
+    #[serde(rename = "n_members", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_members: Option<Option<i32>>,
     /// The weighted share of the company's live target families that the competitor's live assets collide with, 0 to 100, rounded to four places. Each colliding family counts its best collision weight (rarity of the family across companies, times factors for same action, a shared indication, the least advanced stage, recency and a head-to-head trial), capped at the family's rarity weight; the sum is divided by the rarity weights of ALL the company's families.
     #[serde(rename = "competitor_score", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub competitor_score: Option<Option<f64>>,
-    /// Asset pairs (a drug of the company, a drug of the competitor) that act on a common target.
+    /// Asset pairs (a drug of the company, a drug of the competitor) that act on a common target; 0 when the competitor is listed only for a same-market pair (see n_market_collisions).
     #[serde(rename = "n_collisions", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_collisions: Option<Option<i32>>,
     /// Target families of the company's live assets that the competitor collides with.
@@ -77,26 +89,42 @@ pub struct CompanyCompetitorsRow {
     /// Up to 3 strongest asset pairs as text: \"drug A / drug B: target family, stage, N shared indications\". The stage is the less advanced of the two programs. An ownership_basis of inferred_lead on the underlying pair (see company_asset_collisions) is an inference.
     #[serde(rename = "top_collisions", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub top_collisions: Option<Option<Vec<String>>>,
+    /// Asset pairs (a Phase 3+ drug of the company, a Phase 3+ drug of the competitor) that share a MeSH indication on drugs with no common target; the pairs are the company_market_collisions dataset.
+    #[serde(rename = "n_market_collisions", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_market_collisions: Option<Option<i32>>,
+    /// Distinct shared Phase 3+ indications of the pair, counted after a shared indication is replaced by a more specific one that the same asset pair also shares.
+    #[serde(rename = "n_market_indications", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_market_indications: Option<Option<i32>>,
+    /// The company's own Phase 3+ indications; with its target families, the denominator of competitor_score. 0 when it holds no Phase 3+ program.
+    #[serde(rename = "n_subject_markets", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_subject_markets: Option<Option<i32>>,
+    /// Up to 3 strongest same-market asset pairs as text: \"drug A / drug B: indication, same market, different target (SYMBOLS vs SYMBOLS), stage\". An empty list when none. Kept apart from top_collisions, which is target evidence only.
+    #[serde(rename = "top_market_collisions", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub top_market_collisions: Option<Option<Vec<String>>>,
     /// Distinct trials on which the company and the competitor are both named as sponsors, counted over their subtrees; 0 when none. A consortium trial (more than 25 sponsor companies) is left out.
     #[serde(rename = "n_cosponsored_trials", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_cosponsored_trials: Option<Option<i32>>,
 }
 
 impl CompanyCompetitorsRow {
-    /// One row of the company_competitors dataset: one row per ordered company pair: an industry company and one of its top 25 industry competitors by asset collision. A grouped request returns the group columns and the measures instead, as additional properties.
+    /// One row of the company_competitors dataset: one row per industry company and competitor, at the root level (the competitor's ultimate parent, top 25 by asset collision) and at the member level (a company under a kept root that itself collides, top 25 per root). A grouped request returns the group columns and the measures instead, as additional properties.
     pub fn new() -> CompanyCompetitorsRow {
         CompanyCompetitorsRow {
             company_id: None,
             company_name: None,
             group_id: None,
             group_name: None,
+            row_level: None,
             competitor_company_id: None,
             competitor_company_name: None,
             competitor_group_id: None,
             competitor_group_name: None,
+            competitor_root_id: None,
             competitor_class: None,
             n_class_candidates: None,
             competitor_rank: None,
+            member_rank: None,
+            n_members: None,
             competitor_score: None,
             n_collisions: None,
             n_colliding_families: None,
@@ -107,6 +135,10 @@ impl CompanyCompetitorsRow {
             best_stage: None,
             last_year: None,
             top_collisions: None,
+            n_market_collisions: None,
+            n_market_indications: None,
+            n_subject_markets: None,
+            top_market_collisions: None,
             n_cosponsored_trials: None,
         }
     }

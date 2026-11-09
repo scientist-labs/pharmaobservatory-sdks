@@ -92,6 +92,8 @@ docs/CompanyFundingEventsResponse.md
 docs/CompanyFundingEventsRow.md
 docs/CompanyFundingSummaryResponse.md
 docs/CompanyFundingSummaryRow.md
+docs/CompanyMarketCollisionsResponse.md
+docs/CompanyMarketCollisionsRow.md
 docs/CompanyMembersResponse.md
 docs/CompanyMembersRow.md
 docs/CompanyPeerProfileResponse.md
@@ -614,6 +616,8 @@ src/models/company_funding_events_response.rs
 src/models/company_funding_events_row.rs
 src/models/company_funding_summary_response.rs
 src/models/company_funding_summary_row.rs
+src/models/company_market_collisions_response.rs
+src/models/company_market_collisions_row.rs
 src/models/company_members_response.rs
 src/models/company_members_row.rs
 src/models/company_peer_profile_response.rs

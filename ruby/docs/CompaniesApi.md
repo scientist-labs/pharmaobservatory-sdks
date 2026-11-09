@@ -22,6 +22,7 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**companies_company_firmographics**](CompaniesApi.md#companies_company_firmographics) | **GET** /api/v1/companies/{id}/company_firmographics | Company firmographics |
 | [**companies_company_funding_events**](CompaniesApi.md#companies_company_funding_events) | **GET** /api/v1/companies/{id}/company_funding_events | Company funding events |
 | [**companies_company_funding_summary**](CompaniesApi.md#companies_company_funding_summary) | **GET** /api/v1/companies/{id}/company_funding_summary | Company funding summary |
+| [**companies_company_market_collisions**](CompaniesApi.md#companies_company_market_collisions) | **GET** /api/v1/companies/{id}/company_market_collisions | Company market collisions |
 | [**companies_company_members**](CompaniesApi.md#companies_company_members) | **GET** /api/v1/companies/{id}/company_members | Company members |
 | [**companies_company_peer_profile**](CompaniesApi.md#companies_company_peer_profile) | **GET** /api/v1/companies/{id}/company_peer_profile | Company peer profile |
 | [**companies_company_peers**](CompaniesApi.md#companies_company_peers) | **GET** /api/v1/companies/{id}/company_peers | Company peers |
@@ -1522,6 +1523,87 @@ end
 ### Return type
 
 [**CompanyFundingSummaryResponse**](CompanyFundingSummaryResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## companies_company_market_collisions
+
+> <CompanyMarketCollisionsResponse> companies_company_market_collisions(id, opts)
+
+Company market collisions
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::CompaniesApi.new
+id = 'company:c0185cf6c39a2536ad436cf6255494c0' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example', # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  scope: 'company' # String | company (this company only) or group (its corporate group).
+}
+
+begin
+  # Company market collisions
+  result = api_instance.companies_company_market_collisions(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_company_market_collisions: #{e}"
+end
+```
+
+#### Using the companies_company_market_collisions_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<CompanyMarketCollisionsResponse>, Integer, Hash)> companies_company_market_collisions_with_http_info(id, opts)
+
+```ruby
+begin
+  # Company market collisions
+  data, status_code, headers = api_instance.companies_company_market_collisions_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <CompanyMarketCollisionsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling CompaniesApi->companies_company_market_collisions_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+| **scope** | **String** | company (this company only) or group (its corporate group). | [optional] |
+
+### Return type
+
+[**CompanyMarketCollisionsResponse**](CompanyMarketCollisionsResponse.md)
 
 ### Authorization
 
