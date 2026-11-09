@@ -14,7 +14,7 @@ require 'date'
 require 'time'
 
 module PharmaObservatory
-  # One row of the company_competitors dataset: one row per ordered company pair: an industry company and one of its top 25 industry competitors by asset collision. A grouped request returns the group columns and the measures instead, as additional properties.
+  # One row of the company_competitors dataset: one row per industry company and competitor, at the root level (the competitor's ultimate parent, top 25 by asset collision) and at the member level (a company under a kept root that itself collides, top 25 per root). A grouped request returns the group columns and the measures instead, as additional properties.
   class CompanyCompetitorsRow
     # Company level: the company the row is about; the entry key for the companies object type.
     attr_accessor :company_id
@@ -28,7 +28,10 @@ module PharmaObservatory
     # Display name of the group.
     attr_accessor :group_name
 
-    # Company level: the competing company.
+    # root: the competitor's ultimate parent company, with its score, counts and evidence recomputed over the union of its members' colliding assets (the best weight per target family and per indication across members, distinct asset pairs and distinct trials, never a sum of member scores). member: a company under that root that itself collides, scored on its own assets. Filter on one level; the two do not add.
+    attr_accessor :row_level
+
+    # Company level: the competing company. At row_level root this is the root company; at member it is the member company itself.
     attr_accessor :competitor_company_id
 
     # Display name of the competitor's company.
@@ -40,19 +43,28 @@ module PharmaObservatory
     # Display name of the competitor's group.
     attr_accessor :competitor_group_name
 
+    # The ultimate parent company of the competitor, the ladder company's `coalesce(ultimate_parent_company_id, company_id)` (one root per company, never the multi-root group fan-out). Equal to competitor_company_id at row_level root, and the root a member row sits under.
+    attr_accessor :competitor_root_id
+
     # The competitor's class: always industry since the not-classed-as-industry group left Competitors; the column is kept so a query written against it keeps working. competitor_rank is 1-based within the class.
     attr_accessor :competitor_class
 
     # How many companies of this competitor_class had at least one asset collision with the company before the top 25 were kept. The same value on every row of one company and class.
     attr_accessor :n_class_candidates
 
-    # The competitor's rank within its competitor_class for the company by competitor_score (1 is the highest).
+    # The rank of the competitor ROOT within its competitor_class for the company by competitor_score (1 is the highest). The same on a root row and on each of its member rows.
     attr_accessor :competitor_rank
+
+    # 0 on a root row; 1 and up on the member rows of that root, by the member's own competitor_score. Order by competitor_rank then member_rank to list each root followed by its members.
+    attr_accessor :member_rank
+
+    # Member companies of this root that collide with the company, before the member cut. The same on a root row and its member rows.
+    attr_accessor :n_members
 
     # The weighted share of the company's live target families that the competitor's live assets collide with, 0 to 100, rounded to four places. Each colliding family counts its best collision weight (rarity of the family across companies, times factors for same action, a shared indication, the least advanced stage, recency and a head-to-head trial), capped at the family's rarity weight; the sum is divided by the rarity weights of ALL the company's families.
     attr_accessor :competitor_score
 
-    # Asset pairs (a drug of the company, a drug of the competitor) that act on a common target.
+    # Asset pairs (a drug of the company, a drug of the competitor) that act on a common target; 0 when the competitor is listed only for a same-market pair (see n_market_collisions).
     attr_accessor :n_collisions
 
     # Target families of the company's live assets that the competitor collides with.
@@ -79,6 +91,18 @@ module PharmaObservatory
     # Up to 3 strongest asset pairs as text: \"drug A / drug B: target family, stage, N shared indications\". The stage is the less advanced of the two programs. An ownership_basis of inferred_lead on the underlying pair (see company_asset_collisions) is an inference.
     attr_accessor :top_collisions
 
+    # Asset pairs (a Phase 3+ drug of the company, a Phase 3+ drug of the competitor) that share a MeSH indication on drugs with no common target; the pairs are the company_market_collisions dataset.
+    attr_accessor :n_market_collisions
+
+    # Distinct shared Phase 3+ indications of the pair, counted after a shared indication is replaced by a more specific one that the same asset pair also shares.
+    attr_accessor :n_market_indications
+
+    # The company's own Phase 3+ indications; with its target families, the denominator of competitor_score. 0 when it holds no Phase 3+ program.
+    attr_accessor :n_subject_markets
+
+    # Up to 3 strongest same-market asset pairs as text: \"drug A / drug B: indication, same market, different target (SYMBOLS vs SYMBOLS), stage\". An empty list when none. Kept apart from top_collisions, which is target evidence only.
+    attr_accessor :top_market_collisions
+
     # Distinct trials on which the company and the competitor are both named as sponsors, counted over their subtrees; 0 when none. A consortium trial (more than 25 sponsor companies) is left out.
     attr_accessor :n_cosponsored_trials
 
@@ -89,13 +113,17 @@ module PharmaObservatory
         :'company_name' => :'company_name',
         :'group_id' => :'group_id',
         :'group_name' => :'group_name',
+        :'row_level' => :'row_level',
         :'competitor_company_id' => :'competitor_company_id',
         :'competitor_company_name' => :'competitor_company_name',
         :'competitor_group_id' => :'competitor_group_id',
         :'competitor_group_name' => :'competitor_group_name',
+        :'competitor_root_id' => :'competitor_root_id',
         :'competitor_class' => :'competitor_class',
         :'n_class_candidates' => :'n_class_candidates',
         :'competitor_rank' => :'competitor_rank',
+        :'member_rank' => :'member_rank',
+        :'n_members' => :'n_members',
         :'competitor_score' => :'competitor_score',
         :'n_collisions' => :'n_collisions',
         :'n_colliding_families' => :'n_colliding_families',
@@ -106,6 +134,10 @@ module PharmaObservatory
         :'best_stage' => :'best_stage',
         :'last_year' => :'last_year',
         :'top_collisions' => :'top_collisions',
+        :'n_market_collisions' => :'n_market_collisions',
+        :'n_market_indications' => :'n_market_indications',
+        :'n_subject_markets' => :'n_subject_markets',
+        :'top_market_collisions' => :'top_market_collisions',
         :'n_cosponsored_trials' => :'n_cosponsored_trials'
       }
     end
@@ -127,13 +159,17 @@ module PharmaObservatory
         :'company_name' => :'String',
         :'group_id' => :'String',
         :'group_name' => :'String',
+        :'row_level' => :'String',
         :'competitor_company_id' => :'String',
         :'competitor_company_name' => :'String',
         :'competitor_group_id' => :'String',
         :'competitor_group_name' => :'String',
+        :'competitor_root_id' => :'String',
         :'competitor_class' => :'String',
         :'n_class_candidates' => :'Integer',
         :'competitor_rank' => :'Integer',
+        :'member_rank' => :'Integer',
+        :'n_members' => :'Integer',
         :'competitor_score' => :'Float',
         :'n_collisions' => :'Integer',
         :'n_colliding_families' => :'Integer',
@@ -144,6 +180,10 @@ module PharmaObservatory
         :'best_stage' => :'Integer',
         :'last_year' => :'Integer',
         :'top_collisions' => :'Array<String>',
+        :'n_market_collisions' => :'Integer',
+        :'n_market_indications' => :'Integer',
+        :'n_subject_markets' => :'Integer',
+        :'top_market_collisions' => :'Array<String>',
         :'n_cosponsored_trials' => :'Integer'
       }
     end
@@ -155,13 +195,17 @@ module PharmaObservatory
         :'company_name',
         :'group_id',
         :'group_name',
+        :'row_level',
         :'competitor_company_id',
         :'competitor_company_name',
         :'competitor_group_id',
         :'competitor_group_name',
+        :'competitor_root_id',
         :'competitor_class',
         :'n_class_candidates',
         :'competitor_rank',
+        :'member_rank',
+        :'n_members',
         :'competitor_score',
         :'n_collisions',
         :'n_colliding_families',
@@ -172,6 +216,10 @@ module PharmaObservatory
         :'best_stage',
         :'last_year',
         :'top_collisions',
+        :'n_market_collisions',
+        :'n_market_indications',
+        :'n_subject_markets',
+        :'top_market_collisions',
         :'n_cosponsored_trials'
       ])
     end
@@ -208,6 +256,10 @@ module PharmaObservatory
         self.group_name = attributes[:'group_name']
       end
 
+      if attributes.key?(:'row_level')
+        self.row_level = attributes[:'row_level']
+      end
+
       if attributes.key?(:'competitor_company_id')
         self.competitor_company_id = attributes[:'competitor_company_id']
       end
@@ -224,6 +276,10 @@ module PharmaObservatory
         self.competitor_group_name = attributes[:'competitor_group_name']
       end
 
+      if attributes.key?(:'competitor_root_id')
+        self.competitor_root_id = attributes[:'competitor_root_id']
+      end
+
       if attributes.key?(:'competitor_class')
         self.competitor_class = attributes[:'competitor_class']
       end
@@ -234,6 +290,14 @@ module PharmaObservatory
 
       if attributes.key?(:'competitor_rank')
         self.competitor_rank = attributes[:'competitor_rank']
+      end
+
+      if attributes.key?(:'member_rank')
+        self.member_rank = attributes[:'member_rank']
+      end
+
+      if attributes.key?(:'n_members')
+        self.n_members = attributes[:'n_members']
       end
 
       if attributes.key?(:'competitor_score')
@@ -278,6 +342,24 @@ module PharmaObservatory
         end
       end
 
+      if attributes.key?(:'n_market_collisions')
+        self.n_market_collisions = attributes[:'n_market_collisions']
+      end
+
+      if attributes.key?(:'n_market_indications')
+        self.n_market_indications = attributes[:'n_market_indications']
+      end
+
+      if attributes.key?(:'n_subject_markets')
+        self.n_subject_markets = attributes[:'n_subject_markets']
+      end
+
+      if attributes.key?(:'top_market_collisions')
+        if (value = attributes[:'top_market_collisions']).is_a?(Array)
+          self.top_market_collisions = value
+        end
+      end
+
       if attributes.key?(:'n_cosponsored_trials')
         self.n_cosponsored_trials = attributes[:'n_cosponsored_trials']
       end
@@ -307,13 +389,17 @@ module PharmaObservatory
           company_name == o.company_name &&
           group_id == o.group_id &&
           group_name == o.group_name &&
+          row_level == o.row_level &&
           competitor_company_id == o.competitor_company_id &&
           competitor_company_name == o.competitor_company_name &&
           competitor_group_id == o.competitor_group_id &&
           competitor_group_name == o.competitor_group_name &&
+          competitor_root_id == o.competitor_root_id &&
           competitor_class == o.competitor_class &&
           n_class_candidates == o.n_class_candidates &&
           competitor_rank == o.competitor_rank &&
+          member_rank == o.member_rank &&
+          n_members == o.n_members &&
           competitor_score == o.competitor_score &&
           n_collisions == o.n_collisions &&
           n_colliding_families == o.n_colliding_families &&
@@ -324,6 +410,10 @@ module PharmaObservatory
           best_stage == o.best_stage &&
           last_year == o.last_year &&
           top_collisions == o.top_collisions &&
+          n_market_collisions == o.n_market_collisions &&
+          n_market_indications == o.n_market_indications &&
+          n_subject_markets == o.n_subject_markets &&
+          top_market_collisions == o.top_market_collisions &&
           n_cosponsored_trials == o.n_cosponsored_trials
     end
 
@@ -336,7 +426,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [company_id, company_name, group_id, group_name, competitor_company_id, competitor_company_name, competitor_group_id, competitor_group_name, competitor_class, n_class_candidates, competitor_rank, competitor_score, n_collisions, n_colliding_families, n_subject_families, n_same_action, n_shared_indication_pairs, n_head_to_head_trials, best_stage, last_year, top_collisions, n_cosponsored_trials].hash
+      [company_id, company_name, group_id, group_name, row_level, competitor_company_id, competitor_company_name, competitor_group_id, competitor_group_name, competitor_root_id, competitor_class, n_class_candidates, competitor_rank, member_rank, n_members, competitor_score, n_collisions, n_colliding_families, n_subject_families, n_same_action, n_shared_indication_pairs, n_head_to_head_trials, best_stage, last_year, top_collisions, n_market_collisions, n_market_indications, n_subject_markets, top_market_collisions, n_cosponsored_trials].hash
     end
 
     # Builds the object from hash

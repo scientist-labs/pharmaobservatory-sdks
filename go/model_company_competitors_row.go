@@ -17,7 +17,7 @@ import (
 // checks if the CompanyCompetitorsRow type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &CompanyCompetitorsRow{}
 
-// CompanyCompetitorsRow One row of the company_competitors dataset: one row per ordered company pair: an industry company and one of its top 25 industry competitors by asset collision. A grouped request returns the group columns and the measures instead, as additional properties.
+// CompanyCompetitorsRow One row of the company_competitors dataset: one row per industry company and competitor, at the root level (the competitor's ultimate parent, top 25 by asset collision) and at the member level (a company under a kept root that itself collides, top 25 per root). A grouped request returns the group columns and the measures instead, as additional properties.
 type CompanyCompetitorsRow struct {
 	// Company level: the company the row is about; the entry key for the companies object type.
 	CompanyId NullableString `json:"company_id,omitempty"`
@@ -27,7 +27,9 @@ type CompanyCompetitorsRow struct {
 	GroupId NullableString `json:"group_id,omitempty"`
 	// Display name of the group.
 	GroupName NullableString `json:"group_name,omitempty"`
-	// Company level: the competing company.
+	// root: the competitor's ultimate parent company, with its score, counts and evidence recomputed over the union of its members' colliding assets (the best weight per target family and per indication across members, distinct asset pairs and distinct trials, never a sum of member scores). member: a company under that root that itself collides, scored on its own assets. Filter on one level; the two do not add.
+	RowLevel NullableString `json:"row_level,omitempty"`
+	// Company level: the competing company. At row_level root this is the root company; at member it is the member company itself.
 	CompetitorCompanyId NullableString `json:"competitor_company_id,omitempty"`
 	// Display name of the competitor's company.
 	CompetitorCompanyName NullableString `json:"competitor_company_name,omitempty"`
@@ -35,15 +37,21 @@ type CompanyCompetitorsRow struct {
 	CompetitorGroupId NullableString `json:"competitor_group_id,omitempty"`
 	// Display name of the competitor's group.
 	CompetitorGroupName NullableString `json:"competitor_group_name,omitempty"`
+	// The ultimate parent company of the competitor, the ladder company's `coalesce(ultimate_parent_company_id, company_id)` (one root per company, never the multi-root group fan-out). Equal to competitor_company_id at row_level root, and the root a member row sits under.
+	CompetitorRootId NullableString `json:"competitor_root_id,omitempty"`
 	// The competitor's class: always industry since the not-classed-as-industry group left Competitors; the column is kept so a query written against it keeps working. competitor_rank is 1-based within the class.
 	CompetitorClass NullableString `json:"competitor_class,omitempty"`
 	// How many companies of this competitor_class had at least one asset collision with the company before the top 25 were kept. The same value on every row of one company and class.
 	NClassCandidates NullableInt32 `json:"n_class_candidates,omitempty"`
-	// The competitor's rank within its competitor_class for the company by competitor_score (1 is the highest).
+	// The rank of the competitor ROOT within its competitor_class for the company by competitor_score (1 is the highest). The same on a root row and on each of its member rows.
 	CompetitorRank NullableInt32 `json:"competitor_rank,omitempty"`
+	// 0 on a root row; 1 and up on the member rows of that root, by the member's own competitor_score. Order by competitor_rank then member_rank to list each root followed by its members.
+	MemberRank NullableInt32 `json:"member_rank,omitempty"`
+	// Member companies of this root that collide with the company, before the member cut. The same on a root row and its member rows.
+	NMembers NullableInt32 `json:"n_members,omitempty"`
 	// The weighted share of the company's live target families that the competitor's live assets collide with, 0 to 100, rounded to four places. Each colliding family counts its best collision weight (rarity of the family across companies, times factors for same action, a shared indication, the least advanced stage, recency and a head-to-head trial), capped at the family's rarity weight; the sum is divided by the rarity weights of ALL the company's families.
 	CompetitorScore NullableFloat32 `json:"competitor_score,omitempty"`
-	// Asset pairs (a drug of the company, a drug of the competitor) that act on a common target.
+	// Asset pairs (a drug of the company, a drug of the competitor) that act on a common target; 0 when the competitor is listed only for a same-market pair (see n_market_collisions).
 	NCollisions NullableInt32 `json:"n_collisions,omitempty"`
 	// Target families of the company's live assets that the competitor collides with.
 	NCollidingFamilies NullableInt32 `json:"n_colliding_families,omitempty"`
@@ -61,6 +69,14 @@ type CompanyCompetitorsRow struct {
 	LastYear NullableInt32 `json:"last_year,omitempty"`
 	// Up to 3 strongest asset pairs as text: \"drug A / drug B: target family, stage, N shared indications\". The stage is the less advanced of the two programs. An ownership_basis of inferred_lead on the underlying pair (see company_asset_collisions) is an inference.
 	TopCollisions []string `json:"top_collisions,omitempty"`
+	// Asset pairs (a Phase 3+ drug of the company, a Phase 3+ drug of the competitor) that share a MeSH indication on drugs with no common target; the pairs are the company_market_collisions dataset.
+	NMarketCollisions NullableInt32 `json:"n_market_collisions,omitempty"`
+	// Distinct shared Phase 3+ indications of the pair, counted after a shared indication is replaced by a more specific one that the same asset pair also shares.
+	NMarketIndications NullableInt32 `json:"n_market_indications,omitempty"`
+	// The company's own Phase 3+ indications; with its target families, the denominator of competitor_score. 0 when it holds no Phase 3+ program.
+	NSubjectMarkets NullableInt32 `json:"n_subject_markets,omitempty"`
+	// Up to 3 strongest same-market asset pairs as text: \"drug A / drug B: indication, same market, different target (SYMBOLS vs SYMBOLS), stage\". An empty list when none. Kept apart from top_collisions, which is target evidence only.
+	TopMarketCollisions []string `json:"top_market_collisions,omitempty"`
 	// Distinct trials on which the company and the competitor are both named as sponsors, counted over their subtrees; 0 when none. A consortium trial (more than 25 sponsor companies) is left out.
 	NCosponsoredTrials NullableInt32 `json:"n_cosponsored_trials,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -253,6 +269,48 @@ func (o *CompanyCompetitorsRow) UnsetGroupName() {
 	o.GroupName.Unset()
 }
 
+// GetRowLevel returns the RowLevel field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetRowLevel() string {
+	if o == nil || IsNil(o.RowLevel.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.RowLevel.Get()
+}
+
+// GetRowLevelOk returns a tuple with the RowLevel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyCompetitorsRow) GetRowLevelOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.RowLevel.Get(), o.RowLevel.IsSet()
+}
+
+// HasRowLevel returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasRowLevel() bool {
+	if o != nil && o.RowLevel.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetRowLevel gets a reference to the given NullableString and assigns it to the RowLevel field.
+func (o *CompanyCompetitorsRow) SetRowLevel(v string) {
+	o.RowLevel.Set(&v)
+}
+// SetRowLevelNil sets the value for RowLevel to be an explicit nil
+func (o *CompanyCompetitorsRow) SetRowLevelNil() {
+	o.RowLevel.Set(nil)
+}
+
+// UnsetRowLevel ensures that no value is present for RowLevel, not even an explicit nil
+func (o *CompanyCompetitorsRow) UnsetRowLevel() {
+	o.RowLevel.Unset()
+}
+
 // GetCompetitorCompanyId returns the CompetitorCompanyId field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *CompanyCompetitorsRow) GetCompetitorCompanyId() string {
 	if o == nil || IsNil(o.CompetitorCompanyId.Get()) {
@@ -421,6 +479,48 @@ func (o *CompanyCompetitorsRow) UnsetCompetitorGroupName() {
 	o.CompetitorGroupName.Unset()
 }
 
+// GetCompetitorRootId returns the CompetitorRootId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetCompetitorRootId() string {
+	if o == nil || IsNil(o.CompetitorRootId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CompetitorRootId.Get()
+}
+
+// GetCompetitorRootIdOk returns a tuple with the CompetitorRootId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyCompetitorsRow) GetCompetitorRootIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CompetitorRootId.Get(), o.CompetitorRootId.IsSet()
+}
+
+// HasCompetitorRootId returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasCompetitorRootId() bool {
+	if o != nil && o.CompetitorRootId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCompetitorRootId gets a reference to the given NullableString and assigns it to the CompetitorRootId field.
+func (o *CompanyCompetitorsRow) SetCompetitorRootId(v string) {
+	o.CompetitorRootId.Set(&v)
+}
+// SetCompetitorRootIdNil sets the value for CompetitorRootId to be an explicit nil
+func (o *CompanyCompetitorsRow) SetCompetitorRootIdNil() {
+	o.CompetitorRootId.Set(nil)
+}
+
+// UnsetCompetitorRootId ensures that no value is present for CompetitorRootId, not even an explicit nil
+func (o *CompanyCompetitorsRow) UnsetCompetitorRootId() {
+	o.CompetitorRootId.Unset()
+}
+
 // GetCompetitorClass returns the CompetitorClass field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *CompanyCompetitorsRow) GetCompetitorClass() string {
 	if o == nil || IsNil(o.CompetitorClass.Get()) {
@@ -545,6 +645,90 @@ func (o *CompanyCompetitorsRow) SetCompetitorRankNil() {
 // UnsetCompetitorRank ensures that no value is present for CompetitorRank, not even an explicit nil
 func (o *CompanyCompetitorsRow) UnsetCompetitorRank() {
 	o.CompetitorRank.Unset()
+}
+
+// GetMemberRank returns the MemberRank field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetMemberRank() int32 {
+	if o == nil || IsNil(o.MemberRank.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.MemberRank.Get()
+}
+
+// GetMemberRankOk returns a tuple with the MemberRank field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyCompetitorsRow) GetMemberRankOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.MemberRank.Get(), o.MemberRank.IsSet()
+}
+
+// HasMemberRank returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasMemberRank() bool {
+	if o != nil && o.MemberRank.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMemberRank gets a reference to the given NullableInt32 and assigns it to the MemberRank field.
+func (o *CompanyCompetitorsRow) SetMemberRank(v int32) {
+	o.MemberRank.Set(&v)
+}
+// SetMemberRankNil sets the value for MemberRank to be an explicit nil
+func (o *CompanyCompetitorsRow) SetMemberRankNil() {
+	o.MemberRank.Set(nil)
+}
+
+// UnsetMemberRank ensures that no value is present for MemberRank, not even an explicit nil
+func (o *CompanyCompetitorsRow) UnsetMemberRank() {
+	o.MemberRank.Unset()
+}
+
+// GetNMembers returns the NMembers field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetNMembers() int32 {
+	if o == nil || IsNil(o.NMembers.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.NMembers.Get()
+}
+
+// GetNMembersOk returns a tuple with the NMembers field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyCompetitorsRow) GetNMembersOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NMembers.Get(), o.NMembers.IsSet()
+}
+
+// HasNMembers returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasNMembers() bool {
+	if o != nil && o.NMembers.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNMembers gets a reference to the given NullableInt32 and assigns it to the NMembers field.
+func (o *CompanyCompetitorsRow) SetNMembers(v int32) {
+	o.NMembers.Set(&v)
+}
+// SetNMembersNil sets the value for NMembers to be an explicit nil
+func (o *CompanyCompetitorsRow) SetNMembersNil() {
+	o.NMembers.Set(nil)
+}
+
+// UnsetNMembers ensures that no value is present for NMembers, not even an explicit nil
+func (o *CompanyCompetitorsRow) UnsetNMembers() {
+	o.NMembers.Unset()
 }
 
 // GetCompetitorScore returns the CompetitorScore field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -958,6 +1142,165 @@ func (o *CompanyCompetitorsRow) SetTopCollisions(v []string) {
 	o.TopCollisions = v
 }
 
+// GetNMarketCollisions returns the NMarketCollisions field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetNMarketCollisions() int32 {
+	if o == nil || IsNil(o.NMarketCollisions.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.NMarketCollisions.Get()
+}
+
+// GetNMarketCollisionsOk returns a tuple with the NMarketCollisions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyCompetitorsRow) GetNMarketCollisionsOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NMarketCollisions.Get(), o.NMarketCollisions.IsSet()
+}
+
+// HasNMarketCollisions returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasNMarketCollisions() bool {
+	if o != nil && o.NMarketCollisions.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNMarketCollisions gets a reference to the given NullableInt32 and assigns it to the NMarketCollisions field.
+func (o *CompanyCompetitorsRow) SetNMarketCollisions(v int32) {
+	o.NMarketCollisions.Set(&v)
+}
+// SetNMarketCollisionsNil sets the value for NMarketCollisions to be an explicit nil
+func (o *CompanyCompetitorsRow) SetNMarketCollisionsNil() {
+	o.NMarketCollisions.Set(nil)
+}
+
+// UnsetNMarketCollisions ensures that no value is present for NMarketCollisions, not even an explicit nil
+func (o *CompanyCompetitorsRow) UnsetNMarketCollisions() {
+	o.NMarketCollisions.Unset()
+}
+
+// GetNMarketIndications returns the NMarketIndications field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetNMarketIndications() int32 {
+	if o == nil || IsNil(o.NMarketIndications.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.NMarketIndications.Get()
+}
+
+// GetNMarketIndicationsOk returns a tuple with the NMarketIndications field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyCompetitorsRow) GetNMarketIndicationsOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NMarketIndications.Get(), o.NMarketIndications.IsSet()
+}
+
+// HasNMarketIndications returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasNMarketIndications() bool {
+	if o != nil && o.NMarketIndications.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNMarketIndications gets a reference to the given NullableInt32 and assigns it to the NMarketIndications field.
+func (o *CompanyCompetitorsRow) SetNMarketIndications(v int32) {
+	o.NMarketIndications.Set(&v)
+}
+// SetNMarketIndicationsNil sets the value for NMarketIndications to be an explicit nil
+func (o *CompanyCompetitorsRow) SetNMarketIndicationsNil() {
+	o.NMarketIndications.Set(nil)
+}
+
+// UnsetNMarketIndications ensures that no value is present for NMarketIndications, not even an explicit nil
+func (o *CompanyCompetitorsRow) UnsetNMarketIndications() {
+	o.NMarketIndications.Unset()
+}
+
+// GetNSubjectMarkets returns the NSubjectMarkets field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetNSubjectMarkets() int32 {
+	if o == nil || IsNil(o.NSubjectMarkets.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.NSubjectMarkets.Get()
+}
+
+// GetNSubjectMarketsOk returns a tuple with the NSubjectMarkets field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyCompetitorsRow) GetNSubjectMarketsOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NSubjectMarkets.Get(), o.NSubjectMarkets.IsSet()
+}
+
+// HasNSubjectMarkets returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasNSubjectMarkets() bool {
+	if o != nil && o.NSubjectMarkets.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNSubjectMarkets gets a reference to the given NullableInt32 and assigns it to the NSubjectMarkets field.
+func (o *CompanyCompetitorsRow) SetNSubjectMarkets(v int32) {
+	o.NSubjectMarkets.Set(&v)
+}
+// SetNSubjectMarketsNil sets the value for NSubjectMarkets to be an explicit nil
+func (o *CompanyCompetitorsRow) SetNSubjectMarketsNil() {
+	o.NSubjectMarkets.Set(nil)
+}
+
+// UnsetNSubjectMarkets ensures that no value is present for NSubjectMarkets, not even an explicit nil
+func (o *CompanyCompetitorsRow) UnsetNSubjectMarkets() {
+	o.NSubjectMarkets.Unset()
+}
+
+// GetTopMarketCollisions returns the TopMarketCollisions field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *CompanyCompetitorsRow) GetTopMarketCollisions() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.TopMarketCollisions
+}
+
+// GetTopMarketCollisionsOk returns a tuple with the TopMarketCollisions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *CompanyCompetitorsRow) GetTopMarketCollisionsOk() ([]string, bool) {
+	if o == nil || IsNil(o.TopMarketCollisions) {
+		return nil, false
+	}
+	return o.TopMarketCollisions, true
+}
+
+// HasTopMarketCollisions returns a boolean if a field has been set.
+func (o *CompanyCompetitorsRow) HasTopMarketCollisions() bool {
+	if o != nil && !IsNil(o.TopMarketCollisions) {
+		return true
+	}
+
+	return false
+}
+
+// SetTopMarketCollisions gets a reference to the given []string and assigns it to the TopMarketCollisions field.
+func (o *CompanyCompetitorsRow) SetTopMarketCollisions(v []string) {
+	o.TopMarketCollisions = v
+}
+
 // GetNCosponsoredTrials returns the NCosponsoredTrials field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *CompanyCompetitorsRow) GetNCosponsoredTrials() int32 {
 	if o == nil || IsNil(o.NCosponsoredTrials.Get()) {
@@ -1022,6 +1365,9 @@ func (o CompanyCompetitorsRow) ToMap() (map[string]interface{}, error) {
 	if o.GroupName.IsSet() {
 		toSerialize["group_name"] = o.GroupName.Get()
 	}
+	if o.RowLevel.IsSet() {
+		toSerialize["row_level"] = o.RowLevel.Get()
+	}
 	if o.CompetitorCompanyId.IsSet() {
 		toSerialize["competitor_company_id"] = o.CompetitorCompanyId.Get()
 	}
@@ -1034,6 +1380,9 @@ func (o CompanyCompetitorsRow) ToMap() (map[string]interface{}, error) {
 	if o.CompetitorGroupName.IsSet() {
 		toSerialize["competitor_group_name"] = o.CompetitorGroupName.Get()
 	}
+	if o.CompetitorRootId.IsSet() {
+		toSerialize["competitor_root_id"] = o.CompetitorRootId.Get()
+	}
 	if o.CompetitorClass.IsSet() {
 		toSerialize["competitor_class"] = o.CompetitorClass.Get()
 	}
@@ -1042,6 +1391,12 @@ func (o CompanyCompetitorsRow) ToMap() (map[string]interface{}, error) {
 	}
 	if o.CompetitorRank.IsSet() {
 		toSerialize["competitor_rank"] = o.CompetitorRank.Get()
+	}
+	if o.MemberRank.IsSet() {
+		toSerialize["member_rank"] = o.MemberRank.Get()
+	}
+	if o.NMembers.IsSet() {
+		toSerialize["n_members"] = o.NMembers.Get()
 	}
 	if o.CompetitorScore.IsSet() {
 		toSerialize["competitor_score"] = o.CompetitorScore.Get()
@@ -1073,6 +1428,18 @@ func (o CompanyCompetitorsRow) ToMap() (map[string]interface{}, error) {
 	if o.TopCollisions != nil {
 		toSerialize["top_collisions"] = o.TopCollisions
 	}
+	if o.NMarketCollisions.IsSet() {
+		toSerialize["n_market_collisions"] = o.NMarketCollisions.Get()
+	}
+	if o.NMarketIndications.IsSet() {
+		toSerialize["n_market_indications"] = o.NMarketIndications.Get()
+	}
+	if o.NSubjectMarkets.IsSet() {
+		toSerialize["n_subject_markets"] = o.NSubjectMarkets.Get()
+	}
+	if o.TopMarketCollisions != nil {
+		toSerialize["top_market_collisions"] = o.TopMarketCollisions
+	}
 	if o.NCosponsoredTrials.IsSet() {
 		toSerialize["n_cosponsored_trials"] = o.NCosponsoredTrials.Get()
 	}
@@ -1102,13 +1469,17 @@ func (o *CompanyCompetitorsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "company_name")
 		delete(additionalProperties, "group_id")
 		delete(additionalProperties, "group_name")
+		delete(additionalProperties, "row_level")
 		delete(additionalProperties, "competitor_company_id")
 		delete(additionalProperties, "competitor_company_name")
 		delete(additionalProperties, "competitor_group_id")
 		delete(additionalProperties, "competitor_group_name")
+		delete(additionalProperties, "competitor_root_id")
 		delete(additionalProperties, "competitor_class")
 		delete(additionalProperties, "n_class_candidates")
 		delete(additionalProperties, "competitor_rank")
+		delete(additionalProperties, "member_rank")
+		delete(additionalProperties, "n_members")
 		delete(additionalProperties, "competitor_score")
 		delete(additionalProperties, "n_collisions")
 		delete(additionalProperties, "n_colliding_families")
@@ -1119,6 +1490,10 @@ func (o *CompanyCompetitorsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "best_stage")
 		delete(additionalProperties, "last_year")
 		delete(additionalProperties, "top_collisions")
+		delete(additionalProperties, "n_market_collisions")
+		delete(additionalProperties, "n_market_indications")
+		delete(additionalProperties, "n_subject_markets")
+		delete(additionalProperties, "top_market_collisions")
 		delete(additionalProperties, "n_cosponsored_trials")
 		o.AdditionalProperties = additionalProperties
 	}

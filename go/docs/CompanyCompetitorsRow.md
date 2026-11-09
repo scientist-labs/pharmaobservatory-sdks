@@ -8,15 +8,19 @@ Name | Type | Description | Notes
 **CompanyName** | Pointer to **NullableString** | Display name of the company. | [optional] 
 **GroupId** | Pointer to **NullableString** | Group level: the company&#39;s current ultimate parent; a root&#39;s group is itself. | [optional] 
 **GroupName** | Pointer to **NullableString** | Display name of the group. | [optional] 
-**CompetitorCompanyId** | Pointer to **NullableString** | Company level: the competing company. | [optional] 
+**RowLevel** | Pointer to **NullableString** | root: the competitor&#39;s ultimate parent company, with its score, counts and evidence recomputed over the union of its members&#39; colliding assets (the best weight per target family and per indication across members, distinct asset pairs and distinct trials, never a sum of member scores). member: a company under that root that itself collides, scored on its own assets. Filter on one level; the two do not add. | [optional] 
+**CompetitorCompanyId** | Pointer to **NullableString** | Company level: the competing company. At row_level root this is the root company; at member it is the member company itself. | [optional] 
 **CompetitorCompanyName** | Pointer to **NullableString** | Display name of the competitor&#39;s company. | [optional] 
 **CompetitorGroupId** | Pointer to **NullableString** | Group level: the competitor&#39;s current ultimate parent; a root&#39;s group is itself. | [optional] 
 **CompetitorGroupName** | Pointer to **NullableString** | Display name of the competitor&#39;s group. | [optional] 
+**CompetitorRootId** | Pointer to **NullableString** | The ultimate parent company of the competitor, the ladder company&#39;s &#x60;coalesce(ultimate_parent_company_id, company_id)&#x60; (one root per company, never the multi-root group fan-out). Equal to competitor_company_id at row_level root, and the root a member row sits under. | [optional] 
 **CompetitorClass** | Pointer to **NullableString** | The competitor&#39;s class: always industry since the not-classed-as-industry group left Competitors; the column is kept so a query written against it keeps working. competitor_rank is 1-based within the class. | [optional] 
 **NClassCandidates** | Pointer to **NullableInt32** | How many companies of this competitor_class had at least one asset collision with the company before the top 25 were kept. The same value on every row of one company and class. | [optional] 
-**CompetitorRank** | Pointer to **NullableInt32** | The competitor&#39;s rank within its competitor_class for the company by competitor_score (1 is the highest). | [optional] 
+**CompetitorRank** | Pointer to **NullableInt32** | The rank of the competitor ROOT within its competitor_class for the company by competitor_score (1 is the highest). The same on a root row and on each of its member rows. | [optional] 
+**MemberRank** | Pointer to **NullableInt32** | 0 on a root row; 1 and up on the member rows of that root, by the member&#39;s own competitor_score. Order by competitor_rank then member_rank to list each root followed by its members. | [optional] 
+**NMembers** | Pointer to **NullableInt32** | Member companies of this root that collide with the company, before the member cut. The same on a root row and its member rows. | [optional] 
 **CompetitorScore** | Pointer to **NullableFloat32** | The weighted share of the company&#39;s live target families that the competitor&#39;s live assets collide with, 0 to 100, rounded to four places. Each colliding family counts its best collision weight (rarity of the family across companies, times factors for same action, a shared indication, the least advanced stage, recency and a head-to-head trial), capped at the family&#39;s rarity weight; the sum is divided by the rarity weights of ALL the company&#39;s families. | [optional] 
-**NCollisions** | Pointer to **NullableInt32** | Asset pairs (a drug of the company, a drug of the competitor) that act on a common target. | [optional] 
+**NCollisions** | Pointer to **NullableInt32** | Asset pairs (a drug of the company, a drug of the competitor) that act on a common target; 0 when the competitor is listed only for a same-market pair (see n_market_collisions). | [optional] 
 **NCollidingFamilies** | Pointer to **NullableInt32** | Target families of the company&#39;s live assets that the competitor collides with. | [optional] 
 **NSubjectFamilies** | Pointer to **NullableInt32** | Target families of the company&#39;s own live, owned assets; the denominator of competitor_score is their rarity weights. | [optional] 
 **NSameAction** | Pointer to **NullableInt32** | Asset pairs whose drugs act on the shared target with the same action type. | [optional] 
@@ -25,6 +29,10 @@ Name | Type | Description | Notes
 **BestStage** | Pointer to **NullableInt32** | The most advanced pair&#39;s stage, where a pair&#39;s stage is the less advanced of its two programs&#39; furthest phase: 6 Phase 4, 5 Phase 3, 4 Phase 2/3, 3 Phase 2, 2 Phase 1/2, 1 Phase 1, 0 Early Phase 1, -1 phase not applicable. A tie-break key after the score. | [optional] 
 **LastYear** | Pointer to **NullableInt32** | The latest trial start year over the company pair&#39;s programs (the maximum over its asset pairs of the later of the two programs&#39; last start year). A tie-break key after the score; null when no program has a start year. | [optional] 
 **TopCollisions** | Pointer to **[]string** | Up to 3 strongest asset pairs as text: \&quot;drug A / drug B: target family, stage, N shared indications\&quot;. The stage is the less advanced of the two programs. An ownership_basis of inferred_lead on the underlying pair (see company_asset_collisions) is an inference. | [optional] 
+**NMarketCollisions** | Pointer to **NullableInt32** | Asset pairs (a Phase 3+ drug of the company, a Phase 3+ drug of the competitor) that share a MeSH indication on drugs with no common target; the pairs are the company_market_collisions dataset. | [optional] 
+**NMarketIndications** | Pointer to **NullableInt32** | Distinct shared Phase 3+ indications of the pair, counted after a shared indication is replaced by a more specific one that the same asset pair also shares. | [optional] 
+**NSubjectMarkets** | Pointer to **NullableInt32** | The company&#39;s own Phase 3+ indications; with its target families, the denominator of competitor_score. 0 when it holds no Phase 3+ program. | [optional] 
+**TopMarketCollisions** | Pointer to **[]string** | Up to 3 strongest same-market asset pairs as text: \&quot;drug A / drug B: indication, same market, different target (SYMBOLS vs SYMBOLS), stage\&quot;. An empty list when none. Kept apart from top_collisions, which is target evidence only. | [optional] 
 **NCosponsoredTrials** | Pointer to **NullableInt32** | Distinct trials on which the company and the competitor are both named as sponsors, counted over their subtrees; 0 when none. A consortium trial (more than 25 sponsor companies) is left out. | [optional] 
 
 ## Methods
@@ -186,6 +194,41 @@ HasGroupName returns a boolean if a field has been set.
 `func (o *CompanyCompetitorsRow) UnsetGroupName()`
 
 UnsetGroupName ensures that no value is present for GroupName, not even an explicit nil
+### GetRowLevel
+
+`func (o *CompanyCompetitorsRow) GetRowLevel() string`
+
+GetRowLevel returns the RowLevel field if non-nil, zero value otherwise.
+
+### GetRowLevelOk
+
+`func (o *CompanyCompetitorsRow) GetRowLevelOk() (*string, bool)`
+
+GetRowLevelOk returns a tuple with the RowLevel field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRowLevel
+
+`func (o *CompanyCompetitorsRow) SetRowLevel(v string)`
+
+SetRowLevel sets RowLevel field to given value.
+
+### HasRowLevel
+
+`func (o *CompanyCompetitorsRow) HasRowLevel() bool`
+
+HasRowLevel returns a boolean if a field has been set.
+
+### SetRowLevelNil
+
+`func (o *CompanyCompetitorsRow) SetRowLevelNil(b bool)`
+
+ SetRowLevelNil sets the value for RowLevel to be an explicit nil
+
+### UnsetRowLevel
+`func (o *CompanyCompetitorsRow) UnsetRowLevel()`
+
+UnsetRowLevel ensures that no value is present for RowLevel, not even an explicit nil
 ### GetCompetitorCompanyId
 
 `func (o *CompanyCompetitorsRow) GetCompetitorCompanyId() string`
@@ -326,6 +369,41 @@ HasCompetitorGroupName returns a boolean if a field has been set.
 `func (o *CompanyCompetitorsRow) UnsetCompetitorGroupName()`
 
 UnsetCompetitorGroupName ensures that no value is present for CompetitorGroupName, not even an explicit nil
+### GetCompetitorRootId
+
+`func (o *CompanyCompetitorsRow) GetCompetitorRootId() string`
+
+GetCompetitorRootId returns the CompetitorRootId field if non-nil, zero value otherwise.
+
+### GetCompetitorRootIdOk
+
+`func (o *CompanyCompetitorsRow) GetCompetitorRootIdOk() (*string, bool)`
+
+GetCompetitorRootIdOk returns a tuple with the CompetitorRootId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCompetitorRootId
+
+`func (o *CompanyCompetitorsRow) SetCompetitorRootId(v string)`
+
+SetCompetitorRootId sets CompetitorRootId field to given value.
+
+### HasCompetitorRootId
+
+`func (o *CompanyCompetitorsRow) HasCompetitorRootId() bool`
+
+HasCompetitorRootId returns a boolean if a field has been set.
+
+### SetCompetitorRootIdNil
+
+`func (o *CompanyCompetitorsRow) SetCompetitorRootIdNil(b bool)`
+
+ SetCompetitorRootIdNil sets the value for CompetitorRootId to be an explicit nil
+
+### UnsetCompetitorRootId
+`func (o *CompanyCompetitorsRow) UnsetCompetitorRootId()`
+
+UnsetCompetitorRootId ensures that no value is present for CompetitorRootId, not even an explicit nil
 ### GetCompetitorClass
 
 `func (o *CompanyCompetitorsRow) GetCompetitorClass() string`
@@ -431,6 +509,76 @@ HasCompetitorRank returns a boolean if a field has been set.
 `func (o *CompanyCompetitorsRow) UnsetCompetitorRank()`
 
 UnsetCompetitorRank ensures that no value is present for CompetitorRank, not even an explicit nil
+### GetMemberRank
+
+`func (o *CompanyCompetitorsRow) GetMemberRank() int32`
+
+GetMemberRank returns the MemberRank field if non-nil, zero value otherwise.
+
+### GetMemberRankOk
+
+`func (o *CompanyCompetitorsRow) GetMemberRankOk() (*int32, bool)`
+
+GetMemberRankOk returns a tuple with the MemberRank field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMemberRank
+
+`func (o *CompanyCompetitorsRow) SetMemberRank(v int32)`
+
+SetMemberRank sets MemberRank field to given value.
+
+### HasMemberRank
+
+`func (o *CompanyCompetitorsRow) HasMemberRank() bool`
+
+HasMemberRank returns a boolean if a field has been set.
+
+### SetMemberRankNil
+
+`func (o *CompanyCompetitorsRow) SetMemberRankNil(b bool)`
+
+ SetMemberRankNil sets the value for MemberRank to be an explicit nil
+
+### UnsetMemberRank
+`func (o *CompanyCompetitorsRow) UnsetMemberRank()`
+
+UnsetMemberRank ensures that no value is present for MemberRank, not even an explicit nil
+### GetNMembers
+
+`func (o *CompanyCompetitorsRow) GetNMembers() int32`
+
+GetNMembers returns the NMembers field if non-nil, zero value otherwise.
+
+### GetNMembersOk
+
+`func (o *CompanyCompetitorsRow) GetNMembersOk() (*int32, bool)`
+
+GetNMembersOk returns a tuple with the NMembers field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNMembers
+
+`func (o *CompanyCompetitorsRow) SetNMembers(v int32)`
+
+SetNMembers sets NMembers field to given value.
+
+### HasNMembers
+
+`func (o *CompanyCompetitorsRow) HasNMembers() bool`
+
+HasNMembers returns a boolean if a field has been set.
+
+### SetNMembersNil
+
+`func (o *CompanyCompetitorsRow) SetNMembersNil(b bool)`
+
+ SetNMembersNil sets the value for NMembers to be an explicit nil
+
+### UnsetNMembers
+`func (o *CompanyCompetitorsRow) UnsetNMembers()`
+
+UnsetNMembers ensures that no value is present for NMembers, not even an explicit nil
 ### GetCompetitorScore
 
 `func (o *CompanyCompetitorsRow) GetCompetitorScore() float32`
@@ -781,6 +929,146 @@ HasTopCollisions returns a boolean if a field has been set.
 `func (o *CompanyCompetitorsRow) UnsetTopCollisions()`
 
 UnsetTopCollisions ensures that no value is present for TopCollisions, not even an explicit nil
+### GetNMarketCollisions
+
+`func (o *CompanyCompetitorsRow) GetNMarketCollisions() int32`
+
+GetNMarketCollisions returns the NMarketCollisions field if non-nil, zero value otherwise.
+
+### GetNMarketCollisionsOk
+
+`func (o *CompanyCompetitorsRow) GetNMarketCollisionsOk() (*int32, bool)`
+
+GetNMarketCollisionsOk returns a tuple with the NMarketCollisions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNMarketCollisions
+
+`func (o *CompanyCompetitorsRow) SetNMarketCollisions(v int32)`
+
+SetNMarketCollisions sets NMarketCollisions field to given value.
+
+### HasNMarketCollisions
+
+`func (o *CompanyCompetitorsRow) HasNMarketCollisions() bool`
+
+HasNMarketCollisions returns a boolean if a field has been set.
+
+### SetNMarketCollisionsNil
+
+`func (o *CompanyCompetitorsRow) SetNMarketCollisionsNil(b bool)`
+
+ SetNMarketCollisionsNil sets the value for NMarketCollisions to be an explicit nil
+
+### UnsetNMarketCollisions
+`func (o *CompanyCompetitorsRow) UnsetNMarketCollisions()`
+
+UnsetNMarketCollisions ensures that no value is present for NMarketCollisions, not even an explicit nil
+### GetNMarketIndications
+
+`func (o *CompanyCompetitorsRow) GetNMarketIndications() int32`
+
+GetNMarketIndications returns the NMarketIndications field if non-nil, zero value otherwise.
+
+### GetNMarketIndicationsOk
+
+`func (o *CompanyCompetitorsRow) GetNMarketIndicationsOk() (*int32, bool)`
+
+GetNMarketIndicationsOk returns a tuple with the NMarketIndications field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNMarketIndications
+
+`func (o *CompanyCompetitorsRow) SetNMarketIndications(v int32)`
+
+SetNMarketIndications sets NMarketIndications field to given value.
+
+### HasNMarketIndications
+
+`func (o *CompanyCompetitorsRow) HasNMarketIndications() bool`
+
+HasNMarketIndications returns a boolean if a field has been set.
+
+### SetNMarketIndicationsNil
+
+`func (o *CompanyCompetitorsRow) SetNMarketIndicationsNil(b bool)`
+
+ SetNMarketIndicationsNil sets the value for NMarketIndications to be an explicit nil
+
+### UnsetNMarketIndications
+`func (o *CompanyCompetitorsRow) UnsetNMarketIndications()`
+
+UnsetNMarketIndications ensures that no value is present for NMarketIndications, not even an explicit nil
+### GetNSubjectMarkets
+
+`func (o *CompanyCompetitorsRow) GetNSubjectMarkets() int32`
+
+GetNSubjectMarkets returns the NSubjectMarkets field if non-nil, zero value otherwise.
+
+### GetNSubjectMarketsOk
+
+`func (o *CompanyCompetitorsRow) GetNSubjectMarketsOk() (*int32, bool)`
+
+GetNSubjectMarketsOk returns a tuple with the NSubjectMarkets field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNSubjectMarkets
+
+`func (o *CompanyCompetitorsRow) SetNSubjectMarkets(v int32)`
+
+SetNSubjectMarkets sets NSubjectMarkets field to given value.
+
+### HasNSubjectMarkets
+
+`func (o *CompanyCompetitorsRow) HasNSubjectMarkets() bool`
+
+HasNSubjectMarkets returns a boolean if a field has been set.
+
+### SetNSubjectMarketsNil
+
+`func (o *CompanyCompetitorsRow) SetNSubjectMarketsNil(b bool)`
+
+ SetNSubjectMarketsNil sets the value for NSubjectMarkets to be an explicit nil
+
+### UnsetNSubjectMarkets
+`func (o *CompanyCompetitorsRow) UnsetNSubjectMarkets()`
+
+UnsetNSubjectMarkets ensures that no value is present for NSubjectMarkets, not even an explicit nil
+### GetTopMarketCollisions
+
+`func (o *CompanyCompetitorsRow) GetTopMarketCollisions() []string`
+
+GetTopMarketCollisions returns the TopMarketCollisions field if non-nil, zero value otherwise.
+
+### GetTopMarketCollisionsOk
+
+`func (o *CompanyCompetitorsRow) GetTopMarketCollisionsOk() (*[]string, bool)`
+
+GetTopMarketCollisionsOk returns a tuple with the TopMarketCollisions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTopMarketCollisions
+
+`func (o *CompanyCompetitorsRow) SetTopMarketCollisions(v []string)`
+
+SetTopMarketCollisions sets TopMarketCollisions field to given value.
+
+### HasTopMarketCollisions
+
+`func (o *CompanyCompetitorsRow) HasTopMarketCollisions() bool`
+
+HasTopMarketCollisions returns a boolean if a field has been set.
+
+### SetTopMarketCollisionsNil
+
+`func (o *CompanyCompetitorsRow) SetTopMarketCollisionsNil(b bool)`
+
+ SetTopMarketCollisionsNil sets the value for TopMarketCollisions to be an explicit nil
+
+### UnsetTopMarketCollisions
+`func (o *CompanyCompetitorsRow) UnsetTopMarketCollisions()`
+
+UnsetTopMarketCollisions ensures that no value is present for TopMarketCollisions, not even an explicit nil
 ### GetNCosponsoredTrials
 
 `func (o *CompanyCompetitorsRow) GetNCosponsoredTrials() int32`

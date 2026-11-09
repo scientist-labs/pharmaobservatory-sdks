@@ -22,6 +22,7 @@ Method | HTTP request | Description
 [**companies_period_company_firmographics**](CompaniesApi.md#companies_period_company_firmographics) | **GET** /api/v1/companies/{id}/company_firmographics | Company firmographics
 [**companies_period_company_funding_events**](CompaniesApi.md#companies_period_company_funding_events) | **GET** /api/v1/companies/{id}/company_funding_events | Company funding events
 [**companies_period_company_funding_summary**](CompaniesApi.md#companies_period_company_funding_summary) | **GET** /api/v1/companies/{id}/company_funding_summary | Company funding summary
+[**companies_period_company_market_collisions**](CompaniesApi.md#companies_period_company_market_collisions) | **GET** /api/v1/companies/{id}/company_market_collisions | Company market collisions
 [**companies_period_company_members**](CompaniesApi.md#companies_period_company_members) | **GET** /api/v1/companies/{id}/company_members | Company members
 [**companies_period_company_peer_profile**](CompaniesApi.md#companies_period_company_peer_profile) | **GET** /api/v1/companies/{id}/company_peer_profile | Company peer profile
 [**companies_period_company_peers**](CompaniesApi.md#companies_period_company_peers) | **GET** /api/v1/companies/{id}/company_peers | Company peers
@@ -675,6 +676,40 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::CompanyFundingSummaryResponse**](CompanyFundingSummaryResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## companies_period_company_market_collisions
+
+> models::CompanyMarketCollisionsResponse companies_period_company_market_collisions(id, cursor, limit, sort, group_by, measure, scope)
+Company market collisions
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
+
+### Return type
+
+[**models::CompanyMarketCollisionsResponse**](CompanyMarketCollisionsResponse.md)
 
 ### Authorization
 

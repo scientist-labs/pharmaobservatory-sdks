@@ -94,6 +94,8 @@ docs/CompanyFundingEventsResponse.md
 docs/CompanyFundingEventsRow.md
 docs/CompanyFundingSummaryResponse.md
 docs/CompanyFundingSummaryRow.md
+docs/CompanyMarketCollisionsResponse.md
+docs/CompanyMarketCollisionsRow.md
 docs/CompanyMembersResponse.md
 docs/CompanyMembersRow.md
 docs/CompanyPeerProfileResponse.md
@@ -617,6 +619,8 @@ lib/pharmaobservatory/models/company_funding_events_response.rb
 lib/pharmaobservatory/models/company_funding_events_row.rb
 lib/pharmaobservatory/models/company_funding_summary_response.rb
 lib/pharmaobservatory/models/company_funding_summary_row.rb
+lib/pharmaobservatory/models/company_market_collisions_response.rb
+lib/pharmaobservatory/models/company_market_collisions_row.rb
 lib/pharmaobservatory/models/company_members_response.rb
 lib/pharmaobservatory/models/company_members_row.rb
 lib/pharmaobservatory/models/company_peer_profile_response.rb
@@ -1117,6 +1121,8 @@ spec/models/company_funding_events_response_spec.rb
 spec/models/company_funding_events_row_spec.rb
 spec/models/company_funding_summary_response_spec.rb
 spec/models/company_funding_summary_row_spec.rb
+spec/models/company_market_collisions_response_spec.rb
+spec/models/company_market_collisions_row_spec.rb
 spec/models/company_members_response_spec.rb
 spec/models/company_members_row_spec.rb
 spec/models/company_peer_profile_response_spec.rb
