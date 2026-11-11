@@ -31,9 +31,9 @@ type TargetDrugsRow struct {
 	DrugName NullableString `json:"drug_name,omitempty"`
 	// The action type of the best-evidence mechanism (INHIBITOR, AGONIST and so on); null where the source gives none.
 	PrimaryActionType NullableString `json:"primary_action_type,omitempty"`
-	// The best evidence tier that links the drug to the target: curated_moa (an Open Targets curated mechanism edge), chembl_moa (a ChEMBL mechanism) or intervention_seed (a curated investigational asset).
+	// The best evidence tier that links the drug to the target: curated_app (a human decision recorded in the app ledger), curated_moa (an Open Targets curated mechanism edge), chembl_moa (a ChEMBL mechanism), intervention_seed (a curated investigational asset) or curated_agent (an agent decision recorded in the app ledger).
 	EvidenceSource NullableString `json:"evidence_source,omitempty"`
-	// The rank of evidence_source, 1 for curated_moa, 2 for chembl_moa, 3 for intervention_seed.
+	// The rank of evidence_source, 0 for curated_app, 1 for curated_moa, 2 for chembl_moa, 3 for intervention_seed, 4 for curated_agent.
 	EvidenceRank NullableInt32 `json:"evidence_rank,omitempty"`
 	// Every evidence tier that links the drug to the target; more than one is a corroboration signal.
 	EvidenceSources []string `json:"evidence_sources,omitempty"`

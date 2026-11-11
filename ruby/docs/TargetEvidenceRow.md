@@ -11,7 +11,7 @@
 | **drug_name** | **String** | The drug&#39;s name. | [optional] |
 | **approved_anywhere** | **Boolean** | Whether the drug is approved by any authority we hold. | [optional] |
 | **primary_action_type** | **String** | The action type of the drug&#39;s best-evidence mechanism on the target; null where the source gives none. | [optional] |
-| **evidence_source** | **String** | The best evidence tier that links the drug to the target: curated_moa (an Open Targets curated mechanism edge), chembl_moa (a ChEMBL mechanism) or intervention_seed (a curated investigational asset). | [optional] |
+| **evidence_source** | **String** | The best evidence tier that links the drug to the target: curated_app (a human decision recorded in the app ledger), curated_moa (an Open Targets curated mechanism edge), chembl_moa (a ChEMBL mechanism), intervention_seed (a curated investigational asset) or curated_agent (an agent decision recorded in the app ledger). | [optional] |
 | **condition_id** | **String** | The condition as a MeSH descriptor id (D followed by digits), the id the conditions datasets use. | [optional] |
 | **condition_name** | **String** | The condition&#39;s name. | [optional] |
 | **trial_id** | **String** | The ClinicalTrials.gov NCT id, the id the trials datasets use. | [optional] |

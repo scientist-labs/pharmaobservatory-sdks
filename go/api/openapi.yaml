@@ -2093,7 +2093,7 @@ paths:
     get:
       operationId: changes.list
       parameters:
-      - example: eyJ2IjoxLCJvIjoiMjAyNi0wNS0wNFQwMDowMDowMC4wMDAwMDBaIiwiaSI6MX0
+      - example: eyJ2IjoyLCJvIjoiMjAyNi0wNS0wNFQwMDowMDowMC4wMDAwMDBaIiwiaSI6MX0
         explode: true
         in: query
         name: cursor
@@ -43691,9 +43691,10 @@ components:
           description: "Why runway_months_quarterly is null, in precedence order:\
             \ no_quarterly_facts (no 10-Q cash-flow facts: a private company or a\
             \ 20-F/40-F filer), stale (the latest quarter ended over a year before\
-            \ the newest SEC filing loaded), no_fx_rate, no_cash_at_quarter_end, or\
-            \ positive_cash_flow (no burn to run out of). Null when the runway is\
-            \ published."
+            \ the newest SEC filing loaded), no_fx_rate, no_cash_at_quarter_end, positive_cash_flow\
+            \ (no burn to run out of), or mixed_sign_window (the latest quarter burned\
+            \ but the previous quarter was cash-positive, so no runway is published).\
+            \ Null when the runway is published."
           nullable: true
           type: string
         revenue:
@@ -89165,13 +89166,15 @@ components:
           type: string
         evidence_source:
           description: "The best evidence tier that links the drug to the target:\
-            \ curated_moa (an Open Targets curated mechanism edge), chembl_moa (a\
-            \ ChEMBL mechanism) or intervention_seed (a curated investigational asset)."
+            \ curated_app (a human decision recorded in the app ledger), curated_moa\
+            \ (an Open Targets curated mechanism edge), chembl_moa (a ChEMBL mechanism),\
+            \ intervention_seed (a curated investigational asset) or curated_agent\
+            \ (an agent decision recorded in the app ledger)."
           nullable: true
           type: string
         evidence_rank:
-          description: "The rank of evidence_source, 1 for curated_moa, 2 for chembl_moa,\
-            \ 3 for intervention_seed."
+          description: "The rank of evidence_source, 0 for curated_app, 1 for curated_moa,\
+            \ 2 for chembl_moa, 3 for intervention_seed, 4 for curated_agent."
           format: int32
           nullable: true
           type: integer
@@ -89423,8 +89426,10 @@ components:
           type: string
         evidence_source:
           description: "The best evidence tier that links the drug to the target:\
-            \ curated_moa (an Open Targets curated mechanism edge), chembl_moa (a\
-            \ ChEMBL mechanism) or intervention_seed (a curated investigational asset)."
+            \ curated_app (a human decision recorded in the app ledger), curated_moa\
+            \ (an Open Targets curated mechanism edge), chembl_moa (a ChEMBL mechanism),\
+            \ intervention_seed (a curated investigational asset) or curated_agent\
+            \ (an agent decision recorded in the app ledger)."
           nullable: true
           type: string
         condition_id:
