@@ -65,7 +65,7 @@ type CompanyFinancialsRow struct {
 	RunwayMonthsQuarterly NullableFloat32 `json:"runway_months_quarterly,omitempty"`
 	// The version of the derivation behind runway_months_quarterly; trailing_quarter_mean_v1 is the mean of the latest two contiguous discrete quarters.
 	RunwayQuarterlyMethod NullableString `json:"runway_quarterly_method,omitempty"`
-	// Why runway_months_quarterly is null, in precedence order: no_quarterly_facts (no 10-Q cash-flow facts: a private company or a 20-F/40-F filer), stale (the latest quarter ended over a year before the newest SEC filing loaded), no_fx_rate, no_cash_at_quarter_end, or positive_cash_flow (no burn to run out of). Null when the runway is published.
+	// Why runway_months_quarterly is null, in precedence order: no_quarterly_facts (no 10-Q cash-flow facts: a private company or a 20-F/40-F filer), stale (the latest quarter ended over a year before the newest SEC filing loaded), no_fx_rate, no_cash_at_quarter_end, positive_cash_flow (no burn to run out of), or mixed_sign_window (the latest quarter burned but the previous quarter was cash-positive, so no runway is published). Null when the runway is published.
 	RunwayQuarterlyNullReason NullableString `json:"runway_quarterly_null_reason,omitempty"`
 	// Total revenue for the fiscal year, in USD (a non-USD filer is converted at the calendar-year average rate; null when no rate exists).
 	Revenue NullableFloat32 `json:"revenue,omitempty"`

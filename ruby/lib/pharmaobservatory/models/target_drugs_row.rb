@@ -34,10 +34,10 @@ module PharmaObservatory
     # The action type of the best-evidence mechanism (INHIBITOR, AGONIST and so on); null where the source gives none.
     attr_accessor :primary_action_type
 
-    # The best evidence tier that links the drug to the target: curated_moa (an Open Targets curated mechanism edge), chembl_moa (a ChEMBL mechanism) or intervention_seed (a curated investigational asset).
+    # The best evidence tier that links the drug to the target: curated_app (a human decision recorded in the app ledger), curated_moa (an Open Targets curated mechanism edge), chembl_moa (a ChEMBL mechanism), intervention_seed (a curated investigational asset) or curated_agent (an agent decision recorded in the app ledger).
     attr_accessor :evidence_source
 
-    # The rank of evidence_source, 1 for curated_moa, 2 for chembl_moa, 3 for intervention_seed.
+    # The rank of evidence_source, 0 for curated_app, 1 for curated_moa, 2 for chembl_moa, 3 for intervention_seed, 4 for curated_agent.
     attr_accessor :evidence_rank
 
     # Every evidence tier that links the drug to the target; more than one is a corroboration signal.

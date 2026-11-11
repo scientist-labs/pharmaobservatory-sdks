@@ -33,7 +33,7 @@ type TargetEvidenceRow struct {
 	ApprovedAnywhere NullableBool `json:"approved_anywhere,omitempty"`
 	// The action type of the drug's best-evidence mechanism on the target; null where the source gives none.
 	PrimaryActionType NullableString `json:"primary_action_type,omitempty"`
-	// The best evidence tier that links the drug to the target: curated_moa (an Open Targets curated mechanism edge), chembl_moa (a ChEMBL mechanism) or intervention_seed (a curated investigational asset).
+	// The best evidence tier that links the drug to the target: curated_app (a human decision recorded in the app ledger), curated_moa (an Open Targets curated mechanism edge), chembl_moa (a ChEMBL mechanism), intervention_seed (a curated investigational asset) or curated_agent (an agent decision recorded in the app ledger).
 	EvidenceSource NullableString `json:"evidence_source,omitempty"`
 	// The condition as a MeSH descriptor id (D followed by digits), the id the conditions datasets use.
 	ConditionId NullableString `json:"condition_id,omitempty"`
