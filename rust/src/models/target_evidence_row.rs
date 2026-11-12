@@ -35,7 +35,7 @@ pub struct TargetEvidenceRow {
     /// The action type of the drug's best-evidence mechanism on the target; null where the source gives none.
     #[serde(rename = "primary_action_type", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub primary_action_type: Option<Option<String>>,
-    /// The best evidence tier that links the drug to the target: curated_moa (an Open Targets curated mechanism edge), chembl_moa (a ChEMBL mechanism) or intervention_seed (a curated investigational asset).
+    /// The best evidence tier that links the drug to the target: curated_app (a human decision recorded in the app ledger), curated_moa (an Open Targets curated mechanism edge), chembl_moa (a ChEMBL mechanism), intervention_seed (a curated investigational asset) or curated_agent (an agent decision recorded in the app ledger).
     #[serde(rename = "evidence_source", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub evidence_source: Option<Option<String>>,
     /// The condition as a MeSH descriptor id (D followed by digits), the id the conditions datasets use.

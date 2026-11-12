@@ -83,7 +83,7 @@ pub struct CompanyFinancialsRow {
     /// The version of the derivation behind runway_months_quarterly; trailing_quarter_mean_v1 is the mean of the latest two contiguous discrete quarters.
     #[serde(rename = "runway_quarterly_method", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub runway_quarterly_method: Option<Option<String>>,
-    /// Why runway_months_quarterly is null, in precedence order: no_quarterly_facts (no 10-Q cash-flow facts: a private company or a 20-F/40-F filer), stale (the latest quarter ended over a year before the newest SEC filing loaded), no_fx_rate, no_cash_at_quarter_end, or positive_cash_flow (no burn to run out of). Null when the runway is published.
+    /// Why runway_months_quarterly is null, in precedence order: no_quarterly_facts (no 10-Q cash-flow facts: a private company or a 20-F/40-F filer), stale (the latest quarter ended over a year before the newest SEC filing loaded), no_fx_rate, no_cash_at_quarter_end, positive_cash_flow (no burn to run out of), or mixed_sign_window (the latest quarter burned but the previous quarter was cash-positive, so no runway is published). Null when the runway is published.
     #[serde(rename = "runway_quarterly_null_reason", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub runway_quarterly_null_reason: Option<Option<String>>,
     /// Total revenue for the fiscal year, in USD (a non-USD filer is converted at the calendar-year average rate; null when no rate exists).
