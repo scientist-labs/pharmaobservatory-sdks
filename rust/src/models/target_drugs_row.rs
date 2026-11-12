@@ -32,10 +32,10 @@ pub struct TargetDrugsRow {
     /// The action type of the best-evidence mechanism (INHIBITOR, AGONIST and so on); null where the source gives none.
     #[serde(rename = "primary_action_type", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub primary_action_type: Option<Option<String>>,
-    /// The best evidence tier that links the drug to the target: curated_moa (an Open Targets curated mechanism edge), chembl_moa (a ChEMBL mechanism) or intervention_seed (a curated investigational asset).
+    /// The best evidence tier that links the drug to the target: curated_app (a human decision recorded in the app ledger), curated_moa (an Open Targets curated mechanism edge), chembl_moa (a ChEMBL mechanism), intervention_seed (a curated investigational asset) or curated_agent (an agent decision recorded in the app ledger).
     #[serde(rename = "evidence_source", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub evidence_source: Option<Option<String>>,
-    /// The rank of evidence_source, 1 for curated_moa, 2 for chembl_moa, 3 for intervention_seed.
+    /// The rank of evidence_source, 0 for curated_app, 1 for curated_moa, 2 for chembl_moa, 3 for intervention_seed, 4 for curated_agent.
     #[serde(rename = "evidence_rank", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub evidence_rank: Option<Option<i32>>,
     /// Every evidence tier that links the drug to the target; more than one is a corroboration signal.

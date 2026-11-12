@@ -2093,7 +2093,7 @@ paths:
     get:
       operationId: changes.list
       parameters:
-      - example: eyJ2IjoyLCJvIjoiMjAyNi0wNS0wNFQwMDowMDowMC4wMDAwMDBaIiwiaSI6MX0
+      - example: eyJ2IjoyLCJvIjoiMjAyNi0wNS0wNFQwMDowMDowMC4wMDAwMDBaIiwiaSI6MH0
         explode: true
         in: query
         name: cursor
