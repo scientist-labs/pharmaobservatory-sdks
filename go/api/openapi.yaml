@@ -62690,9 +62690,9 @@ components:
           type: string
         relationship_types:
           description: "How the investor is tied to the company: holder_5pct (a 5\
-            \ percent holder) or selling_stockholder from filings, and portfolio_listed_current,\
-            \ portfolio_listed_realized, portfolio_listed_exited or portfolio_listed\
-            \ (no status printed) from the investor's own page."
+            \ percent holder) or selling_stockholder from filings, and portfolio_listed\
+            \ (status-free) from the investor's own page. While website status is\
+            \ gated the website lane is always portfolio_listed."
           items:
             type: string
           nullable: true
@@ -62723,37 +62723,42 @@ components:
           nullable: true
           type: string
         listed_to:
-          description: "The retrieval date of the first later crawl that did not list\
-            \ the company, or the date the page went away. Null while the company\
-            \ is still listed, and for a row only SEC filings name."
+          description: "Always null while website-lane removal is gated: a crawl-derived\
+            \ absence is not served as a removal. Null for a row only SEC filings\
+            \ name."
           format: date
           nullable: true
           type: string
         removal_reason:
-          description: "Why listed_to is set: absent_from_later_version (a later crawl\
-            \ of the page omitted the company) or page_gone (the page went away).\
-            \ Null exactly when listed_to is null."
+          description: "Always null while website-lane removal is gated. When a gated\
+            \ version is re-enabled: absent_from_later_version (a later crawl of the\
+            \ page omitted the company) or page_gone (the page went away), null exactly\
+            \ when listed_to is null."
           nullable: true
           type: string
         is_removed:
-          description: True when the investor's own page no longer lists the company
-            (listed_to is set). SEC filings do not reopen it.
+          description: "Always false while website-lane removal is gated; no row is\
+            \ served as removed. When re-enabled: true when the investor's own page\
+            \ no longer lists the company (listed_to is set)."
           nullable: true
           type: boolean
         status_on_page:
-          description: "The status the investor's page states for the company, verbatim:\
-            \ current, realized, exited or unknown (the page listed it with no status).\
+          description: "Always unknown for a website-listed company while website\
+            \ status is gated (the v1 status is not reliable enough to show). When\
+            \ re-enabled: the status the page states, current, realized or exited.\
             \ Null for a row only SEC filings name."
           nullable: true
           type: string
         status_date:
-          description: "The date the page itself prints for the status, as printed\
-            \ (for example 2024 or March 2024). Null unless the page printed one."
+          description: "Always null while website status is gated. When re-enabled:\
+            \ the date the page itself prints for the status, as printed (for example\
+            \ 2024 or March 2024)."
           nullable: true
           type: string
         status_first_observed_at:
-          description: "The date we first saw this status for the company on the investor's\
-            \ page: an observation date, never the date the event happened."
+          description: "Always null while website status is gated. When re-enabled:\
+            \ the date we first saw this status on the investor's page, an observation\
+            \ date, never the date the event happened."
           format: date
           nullable: true
           type: string
@@ -99785,7 +99790,8 @@ components:
         portfolio_co_removed_count:
           description: Distinct portfolio companies the investor's own portfolio page
             listed in an earlier crawl and no longer lists. portfolio_co_count and
-            this count sum to the investor's rows in investor_portfolio.
+            this count sum to the investor's rows in investor_portfolio. Always 0
+            while website-lane removal is gated.
           format: int64
           nullable: true
           type: integer

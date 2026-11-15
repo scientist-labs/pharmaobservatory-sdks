@@ -17,17 +17,17 @@
 | **issuer_company_name** | **String** | Display name of the company. | [optional] |
 | **issuer_group_id** | **String** | Group level: the company&#39;s current ultimate parent; a root&#39;s group is itself. | [optional] |
 | **issuer_group_name** | **String** | Display name of the company&#39;s group. | [optional] |
-| **relationship_types** | **Array&lt;String&gt;** | How the investor is tied to the company: holder_5pct (a 5 percent holder) or selling_stockholder from filings, and portfolio_listed_current, portfolio_listed_realized, portfolio_listed_exited or portfolio_listed (no status printed) from the investor&#39;s own page. | [optional] |
+| **relationship_types** | **Array&lt;String&gt;** | How the investor is tied to the company: holder_5pct (a 5 percent holder) or selling_stockholder from filings, and portfolio_listed (status-free) from the investor&#39;s own page. While website status is gated the website lane is always portfolio_listed. | [optional] |
 | **edge_count** | **Integer** | Filing mentions behind the row, across every filing and relationship type. 0 for a row only the investor&#39;s website names. | [optional] |
 | **first_observed_date** | **Date** | The earliest filing date the investor was named against the issuer. Null for a row only the investor&#39;s website names. | [optional] |
 | **last_observed_date** | **Date** | The latest filing date the investor was named against the issuer. Null for a row only the investor&#39;s website names. | [optional] |
 | **listed_from** | **Date** | The retrieval date of the first crawl of the investor&#39;s own portfolio page that listed the company (a crawl date, not an investment date). Null for a row only SEC filings name. | [optional] |
-| **listed_to** | **Date** | The retrieval date of the first later crawl that did not list the company, or the date the page went away. Null while the company is still listed, and for a row only SEC filings name. | [optional] |
-| **removal_reason** | **String** | Why listed_to is set: absent_from_later_version (a later crawl of the page omitted the company) or page_gone (the page went away). Null exactly when listed_to is null. | [optional] |
-| **is_removed** | **Boolean** | True when the investor&#39;s own page no longer lists the company (listed_to is set). SEC filings do not reopen it. | [optional] |
-| **status_on_page** | **String** | The status the investor&#39;s page states for the company, verbatim: current, realized, exited or unknown (the page listed it with no status). Null for a row only SEC filings name. | [optional] |
-| **status_date** | **String** | The date the page itself prints for the status, as printed (for example 2024 or March 2024). Null unless the page printed one. | [optional] |
-| **status_first_observed_at** | **Date** | The date we first saw this status for the company on the investor&#39;s page: an observation date, never the date the event happened. | [optional] |
+| **listed_to** | **Date** | Always null while website-lane removal is gated: a crawl-derived absence is not served as a removal. Null for a row only SEC filings name. | [optional] |
+| **removal_reason** | **String** | Always null while website-lane removal is gated. When a gated version is re-enabled: absent_from_later_version (a later crawl of the page omitted the company) or page_gone (the page went away), null exactly when listed_to is null. | [optional] |
+| **is_removed** | **Boolean** | Always false while website-lane removal is gated; no row is served as removed. When re-enabled: true when the investor&#39;s own page no longer lists the company (listed_to is set). | [optional] |
+| **status_on_page** | **String** | Always unknown for a website-listed company while website status is gated (the v1 status is not reliable enough to show). When re-enabled: the status the page states, current, realized or exited. Null for a row only SEC filings name. | [optional] |
+| **status_date** | **String** | Always null while website status is gated. When re-enabled: the date the page itself prints for the status, as printed (for example 2024 or March 2024). | [optional] |
+| **status_first_observed_at** | **Date** | Always null while website status is gated. When re-enabled: the date we first saw this status on the investor&#39;s page, an observation date, never the date the event happened. | [optional] |
 | **site_evidence_verified** | **Boolean** | True when the quote behind a website listing was found on the investor&#39;s page, false when it was not, null when no verification flag was recorded and for a row only SEC filings name. | [optional] |
 | **source_url** | **String** | The address of the investor&#39;s portfolio page the listing was read from. Null for a row only SEC filings name. | [optional] |
 | **site_last_retrieved_at** | **Time** | When the investor&#39;s portfolio page was last retrieved with the company listed on it, in UTC. | [optional] |

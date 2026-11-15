@@ -53,7 +53,7 @@ pub struct InvestorsRow {
     /// Distinct portfolio companies named against the investor in S-1 and 424B offering holder tables or listed on the investor's own portfolio page, not marked removed there. 0 usually means no named-holder link or website listing was observed.
     #[serde(rename = "portfolio_co_count", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub portfolio_co_count: Option<Option<i64>>,
-    /// Distinct portfolio companies the investor's own portfolio page listed in an earlier crawl and no longer lists. portfolio_co_count and this count sum to the investor's rows in investor_portfolio.
+    /// Distinct portfolio companies the investor's own portfolio page listed in an earlier crawl and no longer lists. portfolio_co_count and this count sum to the investor's rows in investor_portfolio. Always 0 while website-lane removal is gated.
     #[serde(rename = "portfolio_co_removed_count", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub portfolio_co_removed_count: Option<Option<i64>>,
     /// Current Form 13F positions reported by the managers that resolve to this investor, summed over its manager keys. 0 when none resolves.
