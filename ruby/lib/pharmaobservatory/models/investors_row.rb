@@ -55,7 +55,7 @@ module PharmaObservatory
     # Distinct portfolio companies named against the investor in S-1 and 424B offering holder tables or listed on the investor's own portfolio page, not marked removed there. 0 usually means no named-holder link or website listing was observed.
     attr_accessor :portfolio_co_count
 
-    # Distinct portfolio companies the investor's own portfolio page listed in an earlier crawl and no longer lists. portfolio_co_count and this count sum to the investor's rows in investor_portfolio.
+    # Distinct portfolio companies the investor's own portfolio page listed in an earlier crawl and no longer lists. portfolio_co_count and this count sum to the investor's rows in investor_portfolio. Always 0 while website-lane removal is gated.
     attr_accessor :portfolio_co_removed_count
 
     # Current Form 13F positions reported by the managers that resolve to this investor, summed over its manager keys. 0 when none resolves.

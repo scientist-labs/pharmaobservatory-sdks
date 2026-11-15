@@ -53,7 +53,7 @@ pub struct InvestorPortfolioRow {
     /// Display name of the company's group.
     #[serde(rename = "issuer_group_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub issuer_group_name: Option<Option<String>>,
-    /// How the investor is tied to the company: holder_5pct (a 5 percent holder) or selling_stockholder from filings, and portfolio_listed_current, portfolio_listed_realized, portfolio_listed_exited or portfolio_listed (no status printed) from the investor's own page.
+    /// How the investor is tied to the company: holder_5pct (a 5 percent holder) or selling_stockholder from filings, and portfolio_listed (status-free) from the investor's own page. While website status is gated the website lane is always portfolio_listed.
     #[serde(rename = "relationship_types", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub relationship_types: Option<Option<Vec<String>>>,
     /// Filing mentions behind the row, across every filing and relationship type. 0 for a row only the investor's website names.
@@ -68,22 +68,22 @@ pub struct InvestorPortfolioRow {
     /// The retrieval date of the first crawl of the investor's own portfolio page that listed the company (a crawl date, not an investment date). Null for a row only SEC filings name.
     #[serde(rename = "listed_from", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub listed_from: Option<Option<String>>,
-    /// The retrieval date of the first later crawl that did not list the company, or the date the page went away. Null while the company is still listed, and for a row only SEC filings name.
+    /// Always null while website-lane removal is gated: a crawl-derived absence is not served as a removal. Null for a row only SEC filings name.
     #[serde(rename = "listed_to", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub listed_to: Option<Option<String>>,
-    /// Why listed_to is set: absent_from_later_version (a later crawl of the page omitted the company) or page_gone (the page went away). Null exactly when listed_to is null.
+    /// Always null while website-lane removal is gated. When a gated version is re-enabled: absent_from_later_version (a later crawl of the page omitted the company) or page_gone (the page went away), null exactly when listed_to is null.
     #[serde(rename = "removal_reason", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub removal_reason: Option<Option<String>>,
-    /// True when the investor's own page no longer lists the company (listed_to is set). SEC filings do not reopen it.
+    /// Always false while website-lane removal is gated; no row is served as removed. When re-enabled: true when the investor's own page no longer lists the company (listed_to is set).
     #[serde(rename = "is_removed", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub is_removed: Option<Option<bool>>,
-    /// The status the investor's page states for the company, verbatim: current, realized, exited or unknown (the page listed it with no status). Null for a row only SEC filings name.
+    /// Always unknown for a website-listed company while website status is gated (the v1 status is not reliable enough to show). When re-enabled: the status the page states, current, realized or exited. Null for a row only SEC filings name.
     #[serde(rename = "status_on_page", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub status_on_page: Option<Option<String>>,
-    /// The date the page itself prints for the status, as printed (for example 2024 or March 2024). Null unless the page printed one.
+    /// Always null while website status is gated. When re-enabled: the date the page itself prints for the status, as printed (for example 2024 or March 2024).
     #[serde(rename = "status_date", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub status_date: Option<Option<String>>,
-    /// The date we first saw this status for the company on the investor's page: an observation date, never the date the event happened.
+    /// Always null while website status is gated. When re-enabled: the date we first saw this status on the investor's page, an observation date, never the date the event happened.
     #[serde(rename = "status_first_observed_at", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub status_first_observed_at: Option<Option<String>>,
     /// True when the quote behind a website listing was found on the investor's page, false when it was not, null when no verification flag was recorded and for a row only SEC filings name.
