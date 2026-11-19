@@ -22,6 +22,8 @@ Method | HTTP request | Description
 [**biomarkers_period_biomarker_variant_mentions**](BiomarkersApi.md#biomarkers_period_biomarker_variant_mentions) | **GET** /api/v1/biomarkers/{id}/biomarker_variant_mentions | Protein variant mentions
 [**biomarkers_period_get**](BiomarkersApi.md#biomarkers_period_get) | **GET** /api/v1/biomarkers/{id} | One biomarker
 [**biomarkers_period_list**](BiomarkersApi.md#biomarkers_period_list) | **GET** /api/v1/biomarkers | List biomarkers
+[**biomarkers_period_provider_biomarker_capability**](BiomarkersApi.md#biomarkers_period_provider_biomarker_capability) | **GET** /api/v1/biomarkers/{id}/provider_biomarker_capability | Supplier biomarker capability
+[**biomarkers_period_provider_biomarker_capability_summary**](BiomarkersApi.md#biomarkers_period_provider_biomarker_capability_summary) | **GET** /api/v1/biomarkers/{id}/provider_biomarker_capability_summary | Supplier biomarker capability, summarised
 
 
 
@@ -600,6 +602,72 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::BiomarkersResponse**](BiomarkersResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## biomarkers_period_provider_biomarker_capability
+
+> models::ProviderBiomarkerCapabilityResponse biomarkers_period_provider_biomarker_capability(id, cursor, limit, sort, group_by, measure)
+Supplier biomarker capability
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::ProviderBiomarkerCapabilityResponse**](ProviderBiomarkerCapabilityResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## biomarkers_period_provider_biomarker_capability_summary
+
+> models::ProviderBiomarkerCapabilitySummaryResponse biomarkers_period_provider_biomarker_capability_summary(id, cursor, limit, sort, group_by, measure)
+Supplier biomarker capability, summarised
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::ProviderBiomarkerCapabilitySummaryResponse**](ProviderBiomarkerCapabilitySummaryResponse.md)
 
 ### Authorization
 

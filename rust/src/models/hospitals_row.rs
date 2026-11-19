@@ -50,6 +50,21 @@ pub struct HospitalsRow {
     /// How the coordinate was placed: als (Amazon Location Service address match), zip_centroid (coarse ZIP-code centroid) or unmatched (no coordinate).
     #[serde(rename = "geocode_method", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub geocode_method: Option<Option<String>>,
+    /// Dartmouth Atlas Hospital Referral Region number. Null when hrr_match is not zip.
+    #[serde(rename = "hrr_num", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub hrr_num: Option<Option<i32>>,
+    /// The Hospital Referral Region, named for its hub city and state. The hub state can differ from the hospital's own state.
+    #[serde(rename = "hrr_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub hrr_name: Option<Option<String>>,
+    /// Dartmouth Atlas Hospital Service Area number. Null when hrr_match is not zip.
+    #[serde(rename = "hsa_num", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub hsa_num: Option<Option<i32>>,
+    /// The Hospital Service Area, named for its hub city and state.
+    #[serde(rename = "hsa_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub hsa_name: Option<Option<String>>,
+    /// zip (region found by ZIP), territory_uncovered (the Atlas does not cover US territories) or zip_unmatched (a mainland ZIP absent from the 2019 crosswalk).
+    #[serde(rename = "hrr_match", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub hrr_match: Option<Option<String>>,
 }
 
 impl HospitalsRow {
@@ -68,6 +83,11 @@ impl HospitalsRow {
             latitude: None,
             longitude: None,
             geocode_method: None,
+            hrr_num: None,
+            hrr_name: None,
+            hsa_num: None,
+            hsa_name: None,
+            hrr_match: None,
         }
     }
 }

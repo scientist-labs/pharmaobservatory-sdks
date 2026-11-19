@@ -6,6 +6,9 @@ All URIs are relative to *https://pharmaobservatory.com*
 | ------ | ------------ | ----------- |
 | [**investors_get**](InvestorsApi.md#investors_get) | **GET** /api/v1/investors/{id} | One investor |
 | [**investors_institutional_holdings**](InvestorsApi.md#investors_institutional_holdings) | **GET** /api/v1/investors/{id}/institutional_holdings | Institutional holdings (SEC Form 13F) |
+| [**investors_investment_graph_edges**](InvestorsApi.md#investors_investment_graph_edges) | **GET** /api/v1/investors/{id}/investment_graph_edges | Investment graph edges |
+| [**investors_investment_graph_node_edges**](InvestorsApi.md#investors_investment_graph_node_edges) | **GET** /api/v1/investors/{id}/investment_graph_node_edges | Investment graph edges by node (one row per endpoint) |
+| [**investors_investment_graph_nodes**](InvestorsApi.md#investors_investment_graph_nodes) | **GET** /api/v1/investors/{id}/investment_graph_nodes | Investment graph nodes |
 | [**investors_investor_funds**](InvestorsApi.md#investors_investor_funds) | **GET** /api/v1/investors/{id}/investor_funds | Investor private funds by type |
 | [**investors_investor_portfolio**](InvestorsApi.md#investors_investor_portfolio) | **GET** /api/v1/investors/{id}/investor_portfolio | Investor portfolio (offering filings and investor websites) |
 | [**investors_investor_private_funds**](InvestorsApi.md#investors_investor_private_funds) | **GET** /api/v1/investors/{id}/investor_private_funds | Investor private funds |
@@ -149,6 +152,243 @@ end
 ### Return type
 
 [**InstitutionalHoldingsResponse**](InstitutionalHoldingsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## investors_investment_graph_edges
+
+> <InvestmentGraphEdgesResponse> investors_investment_graph_edges(id, opts)
+
+Investment graph edges
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::InvestorsApi.new
+id = 'adv:283882' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Investment graph edges
+  result = api_instance.investors_investment_graph_edges(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling InvestorsApi->investors_investment_graph_edges: #{e}"
+end
+```
+
+#### Using the investors_investment_graph_edges_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<InvestmentGraphEdgesResponse>, Integer, Hash)> investors_investment_graph_edges_with_http_info(id, opts)
+
+```ruby
+begin
+  # Investment graph edges
+  data, status_code, headers = api_instance.investors_investment_graph_edges_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <InvestmentGraphEdgesResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling InvestorsApi->investors_investment_graph_edges_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**InvestmentGraphEdgesResponse**](InvestmentGraphEdgesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## investors_investment_graph_node_edges
+
+> <InvestmentGraphNodeEdgesResponse> investors_investment_graph_node_edges(id, opts)
+
+Investment graph edges by node (one row per endpoint)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::InvestorsApi.new
+id = 'adv:283882' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Investment graph edges by node (one row per endpoint)
+  result = api_instance.investors_investment_graph_node_edges(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling InvestorsApi->investors_investment_graph_node_edges: #{e}"
+end
+```
+
+#### Using the investors_investment_graph_node_edges_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<InvestmentGraphNodeEdgesResponse>, Integer, Hash)> investors_investment_graph_node_edges_with_http_info(id, opts)
+
+```ruby
+begin
+  # Investment graph edges by node (one row per endpoint)
+  data, status_code, headers = api_instance.investors_investment_graph_node_edges_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <InvestmentGraphNodeEdgesResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling InvestorsApi->investors_investment_graph_node_edges_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**InvestmentGraphNodeEdgesResponse**](InvestmentGraphNodeEdgesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## investors_investment_graph_nodes
+
+> <InvestmentGraphNodesResponse> investors_investment_graph_nodes(id, opts)
+
+Investment graph nodes
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::InvestorsApi.new
+id = 'adv:283882' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Investment graph nodes
+  result = api_instance.investors_investment_graph_nodes(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling InvestorsApi->investors_investment_graph_nodes: #{e}"
+end
+```
+
+#### Using the investors_investment_graph_nodes_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<InvestmentGraphNodesResponse>, Integer, Hash)> investors_investment_graph_nodes_with_http_info(id, opts)
+
+```ruby
+begin
+  # Investment graph nodes
+  data, status_code, headers = api_instance.investors_investment_graph_nodes_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <InvestmentGraphNodesResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling InvestorsApi->investors_investment_graph_nodes_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**InvestmentGraphNodesResponse**](InvestmentGraphNodesResponse.md)
 
 ### Authorization
 

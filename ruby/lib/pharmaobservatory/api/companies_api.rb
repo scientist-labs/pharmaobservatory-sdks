@@ -3720,6 +3720,279 @@ module PharmaObservatory
       return data, status_code, headers
     end
 
+    # Investment graph edges
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [InvestmentGraphEdgesResponse]
+    def companies_investment_graph_edges(id, opts = {})
+      data, _status_code, _headers = companies_investment_graph_edges_with_http_info(id, opts)
+      data
+    end
+
+    # Investment graph edges
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [Array<(InvestmentGraphEdgesResponse, Integer, Hash)>] InvestmentGraphEdgesResponse data, response status code and response headers
+    def companies_investment_graph_edges_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: CompaniesApi.companies_investment_graph_edges ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_investment_graph_edges"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_investment_graph_edges, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_investment_graph_edges, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
+      # resource path
+      local_var_path = '/api/v1/companies/{id}/investment_graph_edges'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'InvestmentGraphEdgesResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"CompaniesApi.companies_investment_graph_edges",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: CompaniesApi#companies_investment_graph_edges\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Investment graph edges by node (one row per endpoint)
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [InvestmentGraphNodeEdgesResponse]
+    def companies_investment_graph_node_edges(id, opts = {})
+      data, _status_code, _headers = companies_investment_graph_node_edges_with_http_info(id, opts)
+      data
+    end
+
+    # Investment graph edges by node (one row per endpoint)
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [Array<(InvestmentGraphNodeEdgesResponse, Integer, Hash)>] InvestmentGraphNodeEdgesResponse data, response status code and response headers
+    def companies_investment_graph_node_edges_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: CompaniesApi.companies_investment_graph_node_edges ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_investment_graph_node_edges"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_investment_graph_node_edges, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_investment_graph_node_edges, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
+      # resource path
+      local_var_path = '/api/v1/companies/{id}/investment_graph_node_edges'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'InvestmentGraphNodeEdgesResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"CompaniesApi.companies_investment_graph_node_edges",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: CompaniesApi#companies_investment_graph_node_edges\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Investment graph nodes
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [InvestmentGraphNodesResponse]
+    def companies_investment_graph_nodes(id, opts = {})
+      data, _status_code, _headers = companies_investment_graph_nodes_with_http_info(id, opts)
+      data
+    end
+
+    # Investment graph nodes
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+    # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+    # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+    # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+    # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+    # @option opts [String] :scope company (this company only) or group (its corporate group).
+    # @return [Array<(InvestmentGraphNodesResponse, Integer, Hash)>] InvestmentGraphNodesResponse data, response status code and response headers
+    def companies_investment_graph_nodes_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: CompaniesApi.companies_investment_graph_nodes ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling CompaniesApi.companies_investment_graph_nodes"
+      end
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 500
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_investment_graph_nodes, must be smaller than or equal to 500.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling CompaniesApi.companies_investment_graph_nodes, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["company", "group"]
+      if @api_client.config.client_side_validation && opts[:'scope'] && !allowable_values.include?(opts[:'scope'])
+        fail ArgumentError, "invalid value for \"scope\", must be one of #{allowable_values}"
+      end
+      # resource path
+      local_var_path = '/api/v1/companies/{id}/investment_graph_nodes'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'cursor'] = opts[:'cursor'] if !opts[:'cursor'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'sort'] = opts[:'sort'] if !opts[:'sort'].nil?
+      query_params[:'group_by'] = opts[:'group_by'] if !opts[:'group_by'].nil?
+      query_params[:'measure'] = opts[:'measure'] if !opts[:'measure'].nil?
+      query_params[:'scope'] = opts[:'scope'] if !opts[:'scope'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'InvestmentGraphNodesResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiBearerJwt']
+
+      new_options = opts.merge(
+        :operation => :"CompaniesApi.companies_investment_graph_nodes",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: CompaniesApi#companies_investment_graph_nodes\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Investor portfolio (offering filings and investor websites)
     # @param id [String] 
     # @param [Hash] opts the optional parameters

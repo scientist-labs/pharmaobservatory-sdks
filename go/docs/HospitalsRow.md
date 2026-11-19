@@ -16,6 +16,11 @@ Name | Type | Description | Notes
 **Latitude** | Pointer to **NullableFloat32** | Latitude of the hospital&#39;s own coordinate. Null exactly when geocode_method is unmatched. | [optional] 
 **Longitude** | Pointer to **NullableFloat32** | Longitude of the hospital&#39;s own coordinate. Null exactly when geocode_method is unmatched. | [optional] 
 **GeocodeMethod** | Pointer to **NullableString** | How the coordinate was placed: als (Amazon Location Service address match), zip_centroid (coarse ZIP-code centroid) or unmatched (no coordinate). | [optional] 
+**HrrNum** | Pointer to **NullableInt32** | Dartmouth Atlas Hospital Referral Region number. Null when hrr_match is not zip. | [optional] 
+**HrrName** | Pointer to **NullableString** | The Hospital Referral Region, named for its hub city and state. The hub state can differ from the hospital&#39;s own state. | [optional] 
+**HsaNum** | Pointer to **NullableInt32** | Dartmouth Atlas Hospital Service Area number. Null when hrr_match is not zip. | [optional] 
+**HsaName** | Pointer to **NullableString** | The Hospital Service Area, named for its hub city and state. | [optional] 
+**HrrMatch** | Pointer to **NullableString** | zip (region found by ZIP), territory_uncovered (the Atlas does not cover US territories) or zip_unmatched (a mainland ZIP absent from the 2019 crosswalk). | [optional] 
 
 ## Methods
 
@@ -456,6 +461,181 @@ HasGeocodeMethod returns a boolean if a field has been set.
 `func (o *HospitalsRow) UnsetGeocodeMethod()`
 
 UnsetGeocodeMethod ensures that no value is present for GeocodeMethod, not even an explicit nil
+### GetHrrNum
+
+`func (o *HospitalsRow) GetHrrNum() int32`
+
+GetHrrNum returns the HrrNum field if non-nil, zero value otherwise.
+
+### GetHrrNumOk
+
+`func (o *HospitalsRow) GetHrrNumOk() (*int32, bool)`
+
+GetHrrNumOk returns a tuple with the HrrNum field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHrrNum
+
+`func (o *HospitalsRow) SetHrrNum(v int32)`
+
+SetHrrNum sets HrrNum field to given value.
+
+### HasHrrNum
+
+`func (o *HospitalsRow) HasHrrNum() bool`
+
+HasHrrNum returns a boolean if a field has been set.
+
+### SetHrrNumNil
+
+`func (o *HospitalsRow) SetHrrNumNil(b bool)`
+
+ SetHrrNumNil sets the value for HrrNum to be an explicit nil
+
+### UnsetHrrNum
+`func (o *HospitalsRow) UnsetHrrNum()`
+
+UnsetHrrNum ensures that no value is present for HrrNum, not even an explicit nil
+### GetHrrName
+
+`func (o *HospitalsRow) GetHrrName() string`
+
+GetHrrName returns the HrrName field if non-nil, zero value otherwise.
+
+### GetHrrNameOk
+
+`func (o *HospitalsRow) GetHrrNameOk() (*string, bool)`
+
+GetHrrNameOk returns a tuple with the HrrName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHrrName
+
+`func (o *HospitalsRow) SetHrrName(v string)`
+
+SetHrrName sets HrrName field to given value.
+
+### HasHrrName
+
+`func (o *HospitalsRow) HasHrrName() bool`
+
+HasHrrName returns a boolean if a field has been set.
+
+### SetHrrNameNil
+
+`func (o *HospitalsRow) SetHrrNameNil(b bool)`
+
+ SetHrrNameNil sets the value for HrrName to be an explicit nil
+
+### UnsetHrrName
+`func (o *HospitalsRow) UnsetHrrName()`
+
+UnsetHrrName ensures that no value is present for HrrName, not even an explicit nil
+### GetHsaNum
+
+`func (o *HospitalsRow) GetHsaNum() int32`
+
+GetHsaNum returns the HsaNum field if non-nil, zero value otherwise.
+
+### GetHsaNumOk
+
+`func (o *HospitalsRow) GetHsaNumOk() (*int32, bool)`
+
+GetHsaNumOk returns a tuple with the HsaNum field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHsaNum
+
+`func (o *HospitalsRow) SetHsaNum(v int32)`
+
+SetHsaNum sets HsaNum field to given value.
+
+### HasHsaNum
+
+`func (o *HospitalsRow) HasHsaNum() bool`
+
+HasHsaNum returns a boolean if a field has been set.
+
+### SetHsaNumNil
+
+`func (o *HospitalsRow) SetHsaNumNil(b bool)`
+
+ SetHsaNumNil sets the value for HsaNum to be an explicit nil
+
+### UnsetHsaNum
+`func (o *HospitalsRow) UnsetHsaNum()`
+
+UnsetHsaNum ensures that no value is present for HsaNum, not even an explicit nil
+### GetHsaName
+
+`func (o *HospitalsRow) GetHsaName() string`
+
+GetHsaName returns the HsaName field if non-nil, zero value otherwise.
+
+### GetHsaNameOk
+
+`func (o *HospitalsRow) GetHsaNameOk() (*string, bool)`
+
+GetHsaNameOk returns a tuple with the HsaName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHsaName
+
+`func (o *HospitalsRow) SetHsaName(v string)`
+
+SetHsaName sets HsaName field to given value.
+
+### HasHsaName
+
+`func (o *HospitalsRow) HasHsaName() bool`
+
+HasHsaName returns a boolean if a field has been set.
+
+### SetHsaNameNil
+
+`func (o *HospitalsRow) SetHsaNameNil(b bool)`
+
+ SetHsaNameNil sets the value for HsaName to be an explicit nil
+
+### UnsetHsaName
+`func (o *HospitalsRow) UnsetHsaName()`
+
+UnsetHsaName ensures that no value is present for HsaName, not even an explicit nil
+### GetHrrMatch
+
+`func (o *HospitalsRow) GetHrrMatch() string`
+
+GetHrrMatch returns the HrrMatch field if non-nil, zero value otherwise.
+
+### GetHrrMatchOk
+
+`func (o *HospitalsRow) GetHrrMatchOk() (*string, bool)`
+
+GetHrrMatchOk returns a tuple with the HrrMatch field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHrrMatch
+
+`func (o *HospitalsRow) SetHrrMatch(v string)`
+
+SetHrrMatch sets HrrMatch field to given value.
+
+### HasHrrMatch
+
+`func (o *HospitalsRow) HasHrrMatch() bool`
+
+HasHrrMatch returns a boolean if a field has been set.
+
+### SetHrrMatchNil
+
+`func (o *HospitalsRow) SetHrrMatchNil(b bool)`
+
+ SetHrrMatchNil sets the value for HrrMatch to be an explicit nil
+
+### UnsetHrrMatch
+`func (o *HospitalsRow) UnsetHrrMatch()`
+
+UnsetHrrMatch ensures that no value is present for HrrMatch, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

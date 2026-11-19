@@ -43,6 +43,16 @@ type HospitalsRow struct {
 	Longitude NullableFloat32 `json:"longitude,omitempty"`
 	// How the coordinate was placed: als (Amazon Location Service address match), zip_centroid (coarse ZIP-code centroid) or unmatched (no coordinate).
 	GeocodeMethod NullableString `json:"geocode_method,omitempty"`
+	// Dartmouth Atlas Hospital Referral Region number. Null when hrr_match is not zip.
+	HrrNum NullableInt32 `json:"hrr_num,omitempty"`
+	// The Hospital Referral Region, named for its hub city and state. The hub state can differ from the hospital's own state.
+	HrrName NullableString `json:"hrr_name,omitempty"`
+	// Dartmouth Atlas Hospital Service Area number. Null when hrr_match is not zip.
+	HsaNum NullableInt32 `json:"hsa_num,omitempty"`
+	// The Hospital Service Area, named for its hub city and state.
+	HsaName NullableString `json:"hsa_name,omitempty"`
+	// zip (region found by ZIP), territory_uncovered (the Atlas does not cover US territories) or zip_unmatched (a mainland ZIP absent from the 2019 crosswalk).
+	HrrMatch NullableString `json:"hrr_match,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -569,6 +579,216 @@ func (o *HospitalsRow) UnsetGeocodeMethod() {
 	o.GeocodeMethod.Unset()
 }
 
+// GetHrrNum returns the HrrNum field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *HospitalsRow) GetHrrNum() int32 {
+	if o == nil || IsNil(o.HrrNum.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.HrrNum.Get()
+}
+
+// GetHrrNumOk returns a tuple with the HrrNum field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *HospitalsRow) GetHrrNumOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HrrNum.Get(), o.HrrNum.IsSet()
+}
+
+// HasHrrNum returns a boolean if a field has been set.
+func (o *HospitalsRow) HasHrrNum() bool {
+	if o != nil && o.HrrNum.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHrrNum gets a reference to the given NullableInt32 and assigns it to the HrrNum field.
+func (o *HospitalsRow) SetHrrNum(v int32) {
+	o.HrrNum.Set(&v)
+}
+// SetHrrNumNil sets the value for HrrNum to be an explicit nil
+func (o *HospitalsRow) SetHrrNumNil() {
+	o.HrrNum.Set(nil)
+}
+
+// UnsetHrrNum ensures that no value is present for HrrNum, not even an explicit nil
+func (o *HospitalsRow) UnsetHrrNum() {
+	o.HrrNum.Unset()
+}
+
+// GetHrrName returns the HrrName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *HospitalsRow) GetHrrName() string {
+	if o == nil || IsNil(o.HrrName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.HrrName.Get()
+}
+
+// GetHrrNameOk returns a tuple with the HrrName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *HospitalsRow) GetHrrNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HrrName.Get(), o.HrrName.IsSet()
+}
+
+// HasHrrName returns a boolean if a field has been set.
+func (o *HospitalsRow) HasHrrName() bool {
+	if o != nil && o.HrrName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHrrName gets a reference to the given NullableString and assigns it to the HrrName field.
+func (o *HospitalsRow) SetHrrName(v string) {
+	o.HrrName.Set(&v)
+}
+// SetHrrNameNil sets the value for HrrName to be an explicit nil
+func (o *HospitalsRow) SetHrrNameNil() {
+	o.HrrName.Set(nil)
+}
+
+// UnsetHrrName ensures that no value is present for HrrName, not even an explicit nil
+func (o *HospitalsRow) UnsetHrrName() {
+	o.HrrName.Unset()
+}
+
+// GetHsaNum returns the HsaNum field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *HospitalsRow) GetHsaNum() int32 {
+	if o == nil || IsNil(o.HsaNum.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.HsaNum.Get()
+}
+
+// GetHsaNumOk returns a tuple with the HsaNum field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *HospitalsRow) GetHsaNumOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HsaNum.Get(), o.HsaNum.IsSet()
+}
+
+// HasHsaNum returns a boolean if a field has been set.
+func (o *HospitalsRow) HasHsaNum() bool {
+	if o != nil && o.HsaNum.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHsaNum gets a reference to the given NullableInt32 and assigns it to the HsaNum field.
+func (o *HospitalsRow) SetHsaNum(v int32) {
+	o.HsaNum.Set(&v)
+}
+// SetHsaNumNil sets the value for HsaNum to be an explicit nil
+func (o *HospitalsRow) SetHsaNumNil() {
+	o.HsaNum.Set(nil)
+}
+
+// UnsetHsaNum ensures that no value is present for HsaNum, not even an explicit nil
+func (o *HospitalsRow) UnsetHsaNum() {
+	o.HsaNum.Unset()
+}
+
+// GetHsaName returns the HsaName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *HospitalsRow) GetHsaName() string {
+	if o == nil || IsNil(o.HsaName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.HsaName.Get()
+}
+
+// GetHsaNameOk returns a tuple with the HsaName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *HospitalsRow) GetHsaNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HsaName.Get(), o.HsaName.IsSet()
+}
+
+// HasHsaName returns a boolean if a field has been set.
+func (o *HospitalsRow) HasHsaName() bool {
+	if o != nil && o.HsaName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHsaName gets a reference to the given NullableString and assigns it to the HsaName field.
+func (o *HospitalsRow) SetHsaName(v string) {
+	o.HsaName.Set(&v)
+}
+// SetHsaNameNil sets the value for HsaName to be an explicit nil
+func (o *HospitalsRow) SetHsaNameNil() {
+	o.HsaName.Set(nil)
+}
+
+// UnsetHsaName ensures that no value is present for HsaName, not even an explicit nil
+func (o *HospitalsRow) UnsetHsaName() {
+	o.HsaName.Unset()
+}
+
+// GetHrrMatch returns the HrrMatch field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *HospitalsRow) GetHrrMatch() string {
+	if o == nil || IsNil(o.HrrMatch.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.HrrMatch.Get()
+}
+
+// GetHrrMatchOk returns a tuple with the HrrMatch field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *HospitalsRow) GetHrrMatchOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.HrrMatch.Get(), o.HrrMatch.IsSet()
+}
+
+// HasHrrMatch returns a boolean if a field has been set.
+func (o *HospitalsRow) HasHrrMatch() bool {
+	if o != nil && o.HrrMatch.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetHrrMatch gets a reference to the given NullableString and assigns it to the HrrMatch field.
+func (o *HospitalsRow) SetHrrMatch(v string) {
+	o.HrrMatch.Set(&v)
+}
+// SetHrrMatchNil sets the value for HrrMatch to be an explicit nil
+func (o *HospitalsRow) SetHrrMatchNil() {
+	o.HrrMatch.Set(nil)
+}
+
+// UnsetHrrMatch ensures that no value is present for HrrMatch, not even an explicit nil
+func (o *HospitalsRow) UnsetHrrMatch() {
+	o.HrrMatch.Unset()
+}
+
 func (o HospitalsRow) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -615,6 +835,21 @@ func (o HospitalsRow) ToMap() (map[string]interface{}, error) {
 	if o.GeocodeMethod.IsSet() {
 		toSerialize["geocode_method"] = o.GeocodeMethod.Get()
 	}
+	if o.HrrNum.IsSet() {
+		toSerialize["hrr_num"] = o.HrrNum.Get()
+	}
+	if o.HrrName.IsSet() {
+		toSerialize["hrr_name"] = o.HrrName.Get()
+	}
+	if o.HsaNum.IsSet() {
+		toSerialize["hsa_num"] = o.HsaNum.Get()
+	}
+	if o.HsaName.IsSet() {
+		toSerialize["hsa_name"] = o.HsaName.Get()
+	}
+	if o.HrrMatch.IsSet() {
+		toSerialize["hrr_match"] = o.HrrMatch.Get()
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -649,6 +884,11 @@ func (o *HospitalsRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "latitude")
 		delete(additionalProperties, "longitude")
 		delete(additionalProperties, "geocode_method")
+		delete(additionalProperties, "hrr_num")
+		delete(additionalProperties, "hrr_name")
+		delete(additionalProperties, "hsa_num")
+		delete(additionalProperties, "hsa_name")
+		delete(additionalProperties, "hrr_match")
 		o.AdditionalProperties = additionalProperties
 	}
 

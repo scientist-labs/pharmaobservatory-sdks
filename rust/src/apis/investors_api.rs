@@ -38,6 +38,42 @@ pub enum InvestorsPeriodInstitutionalHoldingsError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`investors_period_investment_graph_edges`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum InvestorsPeriodInvestmentGraphEdgesError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`investors_period_investment_graph_node_edges`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum InvestorsPeriodInvestmentGraphNodeEdgesError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`investors_period_investment_graph_nodes`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum InvestorsPeriodInvestmentGraphNodesError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`investors_period_investor_funds`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -205,6 +241,183 @@ pub async fn investors_period_institutional_holdings(configuration: &configurati
     } else {
         let content = resp.text().await?;
         let entity: Option<InvestorsPeriodInstitutionalHoldingsError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn investors_period_investment_graph_edges(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::InvestmentGraphEdgesResponse, Error<InvestorsPeriodInvestmentGraphEdgesError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/investors/{id}/investment_graph_edges", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::InvestmentGraphEdgesResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::InvestmentGraphEdgesResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<InvestorsPeriodInvestmentGraphEdgesError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn investors_period_investment_graph_node_edges(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::InvestmentGraphNodeEdgesResponse, Error<InvestorsPeriodInvestmentGraphNodeEdgesError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/investors/{id}/investment_graph_node_edges", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::InvestmentGraphNodeEdgesResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::InvestmentGraphNodeEdgesResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<InvestorsPeriodInvestmentGraphNodeEdgesError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn investors_period_investment_graph_nodes(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::InvestmentGraphNodesResponse, Error<InvestorsPeriodInvestmentGraphNodesError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/investors/{id}/investment_graph_nodes", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::InvestmentGraphNodesResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::InvestmentGraphNodesResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<InvestorsPeriodInvestmentGraphNodesError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }

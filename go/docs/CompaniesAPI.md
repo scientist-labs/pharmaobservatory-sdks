@@ -45,6 +45,9 @@ Method | HTTP request | Description
 [**CompaniesInspections**](CompaniesAPI.md#CompaniesInspections) | **Get** /api/v1/companies/{id}/inspections | FDA inspections
 [**CompaniesInstitutionalHoldings**](CompaniesAPI.md#CompaniesInstitutionalHoldings) | **Get** /api/v1/companies/{id}/institutional_holdings | Institutional holdings (SEC Form 13F)
 [**CompaniesInstitutionalQuarterTotals**](CompaniesAPI.md#CompaniesInstitutionalQuarterTotals) | **Get** /api/v1/companies/{id}/institutional_quarter_totals | Institutional quarter totals (SEC Form 13F)
+[**CompaniesInvestmentGraphEdges**](CompaniesAPI.md#CompaniesInvestmentGraphEdges) | **Get** /api/v1/companies/{id}/investment_graph_edges | Investment graph edges
+[**CompaniesInvestmentGraphNodeEdges**](CompaniesAPI.md#CompaniesInvestmentGraphNodeEdges) | **Get** /api/v1/companies/{id}/investment_graph_node_edges | Investment graph edges by node (one row per endpoint)
+[**CompaniesInvestmentGraphNodes**](CompaniesAPI.md#CompaniesInvestmentGraphNodes) | **Get** /api/v1/companies/{id}/investment_graph_nodes | Investment graph nodes
 [**CompaniesInvestorPortfolio**](CompaniesAPI.md#CompaniesInvestorPortfolio) | **Get** /api/v1/companies/{id}/investor_portfolio | Investor portfolio (offering filings and investor websites)
 [**CompaniesLegalEntities**](CompaniesAPI.md#CompaniesLegalEntities) | **Get** /api/v1/companies/{id}/legal_entities | Legal entities
 [**CompaniesLegalEntitySecFilings**](CompaniesAPI.md#CompaniesLegalEntitySecFilings) | **Get** /api/v1/companies/{id}/legal_entity_sec_filings | SEC filer records
@@ -3330,6 +3333,246 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**InstitutionalQuarterTotalsResponse**](InstitutionalQuarterTotalsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CompaniesInvestmentGraphEdges
+
+> InvestmentGraphEdgesResponse CompaniesInvestmentGraphEdges(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
+
+Investment graph edges
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.CompaniesAPI.CompaniesInvestmentGraphEdges(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesInvestmentGraphEdges``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CompaniesInvestmentGraphEdges`: InvestmentGraphEdgesResponse
+	fmt.Fprintf(os.Stdout, "Response from `CompaniesAPI.CompaniesInvestmentGraphEdges`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCompaniesInvestmentGraphEdgesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
+
+### Return type
+
+[**InvestmentGraphEdgesResponse**](InvestmentGraphEdgesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CompaniesInvestmentGraphNodeEdges
+
+> InvestmentGraphNodeEdgesResponse CompaniesInvestmentGraphNodeEdges(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
+
+Investment graph edges by node (one row per endpoint)
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.CompaniesAPI.CompaniesInvestmentGraphNodeEdges(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesInvestmentGraphNodeEdges``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CompaniesInvestmentGraphNodeEdges`: InvestmentGraphNodeEdgesResponse
+	fmt.Fprintf(os.Stdout, "Response from `CompaniesAPI.CompaniesInvestmentGraphNodeEdges`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCompaniesInvestmentGraphNodeEdgesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
+
+### Return type
+
+[**InvestmentGraphNodeEdgesResponse**](InvestmentGraphNodeEdgesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CompaniesInvestmentGraphNodes
+
+> InvestmentGraphNodesResponse CompaniesInvestmentGraphNodes(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
+
+Investment graph nodes
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "company:c0185cf6c39a2536ad436cf6255494c0" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+	scope := "scope_example" // string | company (this company only) or group (its corporate group). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.CompaniesAPI.CompaniesInvestmentGraphNodes(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Scope(scope).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `CompaniesAPI.CompaniesInvestmentGraphNodes``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CompaniesInvestmentGraphNodes`: InvestmentGraphNodesResponse
+	fmt.Fprintf(os.Stdout, "Response from `CompaniesAPI.CompaniesInvestmentGraphNodes`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCompaniesInvestmentGraphNodesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+ **scope** | **string** | company (this company only) or group (its corporate group). | 
+
+### Return type
+
+[**InvestmentGraphNodesResponse**](InvestmentGraphNodesResponse.md)
 
 ### Authorization
 
