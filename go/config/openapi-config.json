@@ -1,6 +1,6 @@
 {
   "packageName": "pharmaobservatory",
-  "packageVersion": "0.1.19",
+  "packageVersion": "0.1.20",
   "gitHost": "github.com",
   "gitUserId": "scientist-labs",
   "gitRepoId": "pharmaobservatory-sdks/go",

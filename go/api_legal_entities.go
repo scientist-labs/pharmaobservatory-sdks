@@ -3641,6 +3641,621 @@ func (a *LegalEntitiesAPIService) LegalEntitiesInstitutionalQuarterTotalsExecute
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiLegalEntitiesInvestmentGraphEdgesRequest struct {
+	ctx context.Context
+	ApiService *LegalEntitiesAPIService
+	id string
+	cursor *string
+	limit *int32
+	sort *string
+	groupBy *string
+	measure *string
+}
+
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiLegalEntitiesInvestmentGraphEdgesRequest) Cursor(cursor string) ApiLegalEntitiesInvestmentGraphEdgesRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
+func (r ApiLegalEntitiesInvestmentGraphEdgesRequest) Limit(limit int32) ApiLegalEntitiesInvestmentGraphEdgesRequest {
+	r.limit = &limit
+	return r
+}
+
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiLegalEntitiesInvestmentGraphEdgesRequest) Sort(sort string) ApiLegalEntitiesInvestmentGraphEdgesRequest {
+	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiLegalEntitiesInvestmentGraphEdgesRequest) GroupBy(groupBy string) ApiLegalEntitiesInvestmentGraphEdgesRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiLegalEntitiesInvestmentGraphEdgesRequest) Measure(measure string) ApiLegalEntitiesInvestmentGraphEdgesRequest {
+	r.measure = &measure
+	return r
+}
+
+func (r ApiLegalEntitiesInvestmentGraphEdgesRequest) Execute() (*InvestmentGraphEdgesResponse, *http.Response, error) {
+	return r.ApiService.LegalEntitiesInvestmentGraphEdgesExecute(r)
+}
+
+/*
+LegalEntitiesInvestmentGraphEdges Investment graph edges
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiLegalEntitiesInvestmentGraphEdgesRequest
+*/
+func (a *LegalEntitiesAPIService) LegalEntitiesInvestmentGraphEdges(ctx context.Context, id string) ApiLegalEntitiesInvestmentGraphEdgesRequest {
+	return ApiLegalEntitiesInvestmentGraphEdgesRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return InvestmentGraphEdgesResponse
+func (a *LegalEntitiesAPIService) LegalEntitiesInvestmentGraphEdgesExecute(r ApiLegalEntitiesInvestmentGraphEdgesRequest) (*InvestmentGraphEdgesResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *InvestmentGraphEdgesResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LegalEntitiesAPIService.LegalEntitiesInvestmentGraphEdges")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/legal_entities/{id}/investment_graph_edges"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiLegalEntitiesInvestmentGraphNodeEdgesRequest struct {
+	ctx context.Context
+	ApiService *LegalEntitiesAPIService
+	id string
+	cursor *string
+	limit *int32
+	sort *string
+	groupBy *string
+	measure *string
+}
+
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiLegalEntitiesInvestmentGraphNodeEdgesRequest) Cursor(cursor string) ApiLegalEntitiesInvestmentGraphNodeEdgesRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
+func (r ApiLegalEntitiesInvestmentGraphNodeEdgesRequest) Limit(limit int32) ApiLegalEntitiesInvestmentGraphNodeEdgesRequest {
+	r.limit = &limit
+	return r
+}
+
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiLegalEntitiesInvestmentGraphNodeEdgesRequest) Sort(sort string) ApiLegalEntitiesInvestmentGraphNodeEdgesRequest {
+	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiLegalEntitiesInvestmentGraphNodeEdgesRequest) GroupBy(groupBy string) ApiLegalEntitiesInvestmentGraphNodeEdgesRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiLegalEntitiesInvestmentGraphNodeEdgesRequest) Measure(measure string) ApiLegalEntitiesInvestmentGraphNodeEdgesRequest {
+	r.measure = &measure
+	return r
+}
+
+func (r ApiLegalEntitiesInvestmentGraphNodeEdgesRequest) Execute() (*InvestmentGraphNodeEdgesResponse, *http.Response, error) {
+	return r.ApiService.LegalEntitiesInvestmentGraphNodeEdgesExecute(r)
+}
+
+/*
+LegalEntitiesInvestmentGraphNodeEdges Investment graph edges by node (one row per endpoint)
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiLegalEntitiesInvestmentGraphNodeEdgesRequest
+*/
+func (a *LegalEntitiesAPIService) LegalEntitiesInvestmentGraphNodeEdges(ctx context.Context, id string) ApiLegalEntitiesInvestmentGraphNodeEdgesRequest {
+	return ApiLegalEntitiesInvestmentGraphNodeEdgesRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return InvestmentGraphNodeEdgesResponse
+func (a *LegalEntitiesAPIService) LegalEntitiesInvestmentGraphNodeEdgesExecute(r ApiLegalEntitiesInvestmentGraphNodeEdgesRequest) (*InvestmentGraphNodeEdgesResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *InvestmentGraphNodeEdgesResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LegalEntitiesAPIService.LegalEntitiesInvestmentGraphNodeEdges")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/legal_entities/{id}/investment_graph_node_edges"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiLegalEntitiesInvestmentGraphNodesRequest struct {
+	ctx context.Context
+	ApiService *LegalEntitiesAPIService
+	id string
+	cursor *string
+	limit *int32
+	sort *string
+	groupBy *string
+	measure *string
+}
+
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiLegalEntitiesInvestmentGraphNodesRequest) Cursor(cursor string) ApiLegalEntitiesInvestmentGraphNodesRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
+func (r ApiLegalEntitiesInvestmentGraphNodesRequest) Limit(limit int32) ApiLegalEntitiesInvestmentGraphNodesRequest {
+	r.limit = &limit
+	return r
+}
+
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiLegalEntitiesInvestmentGraphNodesRequest) Sort(sort string) ApiLegalEntitiesInvestmentGraphNodesRequest {
+	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiLegalEntitiesInvestmentGraphNodesRequest) GroupBy(groupBy string) ApiLegalEntitiesInvestmentGraphNodesRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiLegalEntitiesInvestmentGraphNodesRequest) Measure(measure string) ApiLegalEntitiesInvestmentGraphNodesRequest {
+	r.measure = &measure
+	return r
+}
+
+func (r ApiLegalEntitiesInvestmentGraphNodesRequest) Execute() (*InvestmentGraphNodesResponse, *http.Response, error) {
+	return r.ApiService.LegalEntitiesInvestmentGraphNodesExecute(r)
+}
+
+/*
+LegalEntitiesInvestmentGraphNodes Investment graph nodes
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiLegalEntitiesInvestmentGraphNodesRequest
+*/
+func (a *LegalEntitiesAPIService) LegalEntitiesInvestmentGraphNodes(ctx context.Context, id string) ApiLegalEntitiesInvestmentGraphNodesRequest {
+	return ApiLegalEntitiesInvestmentGraphNodesRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return InvestmentGraphNodesResponse
+func (a *LegalEntitiesAPIService) LegalEntitiesInvestmentGraphNodesExecute(r ApiLegalEntitiesInvestmentGraphNodesRequest) (*InvestmentGraphNodesResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *InvestmentGraphNodesResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LegalEntitiesAPIService.LegalEntitiesInvestmentGraphNodes")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/legal_entities/{id}/investment_graph_nodes"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiLegalEntitiesInvestorPortfolioRequest struct {
 	ctx context.Context
 	ApiService *LegalEntitiesAPIService

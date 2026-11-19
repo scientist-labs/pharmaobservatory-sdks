@@ -52,6 +52,21 @@ module PharmaObservatory
     # How the coordinate was placed: als (Amazon Location Service address match), zip_centroid (coarse ZIP-code centroid) or unmatched (no coordinate).
     attr_accessor :geocode_method
 
+    # Dartmouth Atlas Hospital Referral Region number. Null when hrr_match is not zip.
+    attr_accessor :hrr_num
+
+    # The Hospital Referral Region, named for its hub city and state. The hub state can differ from the hospital's own state.
+    attr_accessor :hrr_name
+
+    # Dartmouth Atlas Hospital Service Area number. Null when hrr_match is not zip.
+    attr_accessor :hsa_num
+
+    # The Hospital Service Area, named for its hub city and state.
+    attr_accessor :hsa_name
+
+    # zip (region found by ZIP), territory_uncovered (the Atlas does not cover US territories) or zip_unmatched (a mainland ZIP absent from the 2019 crosswalk).
+    attr_accessor :hrr_match
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -66,7 +81,12 @@ module PharmaObservatory
         :'emergency_services' => :'emergency_services',
         :'latitude' => :'latitude',
         :'longitude' => :'longitude',
-        :'geocode_method' => :'geocode_method'
+        :'geocode_method' => :'geocode_method',
+        :'hrr_num' => :'hrr_num',
+        :'hrr_name' => :'hrr_name',
+        :'hsa_num' => :'hsa_num',
+        :'hsa_name' => :'hsa_name',
+        :'hrr_match' => :'hrr_match'
       }
     end
 
@@ -94,7 +114,12 @@ module PharmaObservatory
         :'emergency_services' => :'String',
         :'latitude' => :'Float',
         :'longitude' => :'Float',
-        :'geocode_method' => :'String'
+        :'geocode_method' => :'String',
+        :'hrr_num' => :'Integer',
+        :'hrr_name' => :'String',
+        :'hsa_num' => :'Integer',
+        :'hsa_name' => :'String',
+        :'hrr_match' => :'String'
       }
     end
 
@@ -112,7 +137,12 @@ module PharmaObservatory
         :'emergency_services',
         :'latitude',
         :'longitude',
-        :'geocode_method'
+        :'geocode_method',
+        :'hrr_num',
+        :'hrr_name',
+        :'hsa_num',
+        :'hsa_name',
+        :'hrr_match'
       ])
     end
 
@@ -179,6 +209,26 @@ module PharmaObservatory
       if attributes.key?(:'geocode_method')
         self.geocode_method = attributes[:'geocode_method']
       end
+
+      if attributes.key?(:'hrr_num')
+        self.hrr_num = attributes[:'hrr_num']
+      end
+
+      if attributes.key?(:'hrr_name')
+        self.hrr_name = attributes[:'hrr_name']
+      end
+
+      if attributes.key?(:'hsa_num')
+        self.hsa_num = attributes[:'hsa_num']
+      end
+
+      if attributes.key?(:'hsa_name')
+        self.hsa_name = attributes[:'hsa_name']
+      end
+
+      if attributes.key?(:'hrr_match')
+        self.hrr_match = attributes[:'hrr_match']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -212,7 +262,12 @@ module PharmaObservatory
           emergency_services == o.emergency_services &&
           latitude == o.latitude &&
           longitude == o.longitude &&
-          geocode_method == o.geocode_method
+          geocode_method == o.geocode_method &&
+          hrr_num == o.hrr_num &&
+          hrr_name == o.hrr_name &&
+          hsa_num == o.hsa_num &&
+          hsa_name == o.hsa_name &&
+          hrr_match == o.hrr_match
     end
 
     # @see the `==` method
@@ -224,7 +279,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [ccn, hospital_name, city, state, bed_count, hospital_type, ownership, is_teaching, emergency_services, latitude, longitude, geocode_method].hash
+      [ccn, hospital_name, city, state, bed_count, hospital_type, ownership, is_teaching, emergency_services, latitude, longitude, geocode_method, hrr_num, hrr_name, hsa_num, hsa_name, hrr_match].hash
     end
 
     # Builds the object from hash

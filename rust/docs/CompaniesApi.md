@@ -45,6 +45,9 @@ Method | HTTP request | Description
 [**companies_period_inspections**](CompaniesApi.md#companies_period_inspections) | **GET** /api/v1/companies/{id}/inspections | FDA inspections
 [**companies_period_institutional_holdings**](CompaniesApi.md#companies_period_institutional_holdings) | **GET** /api/v1/companies/{id}/institutional_holdings | Institutional holdings (SEC Form 13F)
 [**companies_period_institutional_quarter_totals**](CompaniesApi.md#companies_period_institutional_quarter_totals) | **GET** /api/v1/companies/{id}/institutional_quarter_totals | Institutional quarter totals (SEC Form 13F)
+[**companies_period_investment_graph_edges**](CompaniesApi.md#companies_period_investment_graph_edges) | **GET** /api/v1/companies/{id}/investment_graph_edges | Investment graph edges
+[**companies_period_investment_graph_node_edges**](CompaniesApi.md#companies_period_investment_graph_node_edges) | **GET** /api/v1/companies/{id}/investment_graph_node_edges | Investment graph edges by node (one row per endpoint)
+[**companies_period_investment_graph_nodes**](CompaniesApi.md#companies_period_investment_graph_nodes) | **GET** /api/v1/companies/{id}/investment_graph_nodes | Investment graph nodes
 [**companies_period_investor_portfolio**](CompaniesApi.md#companies_period_investor_portfolio) | **GET** /api/v1/companies/{id}/investor_portfolio | Investor portfolio (offering filings and investor websites)
 [**companies_period_legal_entities**](CompaniesApi.md#companies_period_legal_entities) | **GET** /api/v1/companies/{id}/legal_entities | Legal entities
 [**companies_period_legal_entity_sec_filings**](CompaniesApi.md#companies_period_legal_entity_sec_filings) | **GET** /api/v1/companies/{id}/legal_entity_sec_filings | SEC filer records
@@ -1452,6 +1455,108 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::InstitutionalQuarterTotalsResponse**](InstitutionalQuarterTotalsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## companies_period_investment_graph_edges
+
+> models::InvestmentGraphEdgesResponse companies_period_investment_graph_edges(id, cursor, limit, sort, group_by, measure, scope)
+Investment graph edges
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
+
+### Return type
+
+[**models::InvestmentGraphEdgesResponse**](InvestmentGraphEdgesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## companies_period_investment_graph_node_edges
+
+> models::InvestmentGraphNodeEdgesResponse companies_period_investment_graph_node_edges(id, cursor, limit, sort, group_by, measure, scope)
+Investment graph edges by node (one row per endpoint)
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
+
+### Return type
+
+[**models::InvestmentGraphNodeEdgesResponse**](InvestmentGraphNodeEdgesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## companies_period_investment_graph_nodes
+
+> models::InvestmentGraphNodesResponse companies_period_investment_graph_nodes(id, cursor, limit, sort, group_by, measure, scope)
+Investment graph nodes
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+**scope** | Option<**String**> | company (this company only) or group (its corporate group). |  |
+
+### Return type
+
+[**models::InvestmentGraphNodesResponse**](InvestmentGraphNodesResponse.md)
 
 ### Authorization
 

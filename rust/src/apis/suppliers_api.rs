@@ -37,6 +37,78 @@ pub enum SuppliersPeriodListError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`suppliers_period_provider_biomarker_capability`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum SuppliersPeriodProviderBiomarkerCapabilityError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`suppliers_period_provider_biomarker_capability_summary`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum SuppliersPeriodProviderBiomarkerCapabilitySummaryError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`suppliers_period_provider_clia_licensure`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum SuppliersPeriodProviderCliaLicensureError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`suppliers_period_provider_rwd_delivery`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum SuppliersPeriodProviderRwdDeliveryError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`suppliers_period_provider_rwd_delivery_study`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum SuppliersPeriodProviderRwdDeliveryStudyError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`suppliers_period_provider_rwd_footprint`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum SuppliersPeriodProviderRwdFootprintError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`suppliers_period_supplier_services`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -155,6 +227,360 @@ pub async fn suppliers_period_list(configuration: &configuration::Configuration,
     } else {
         let content = resp.text().await?;
         let entity: Option<SuppliersPeriodListError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn suppliers_period_provider_biomarker_capability(configuration: &configuration::Configuration, id: i32, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::ProviderBiomarkerCapabilityResponse, Error<SuppliersPeriodProviderBiomarkerCapabilityError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/suppliers/{id}/provider_biomarker_capability", configuration.base_path, id=p_id);
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ProviderBiomarkerCapabilityResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ProviderBiomarkerCapabilityResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<SuppliersPeriodProviderBiomarkerCapabilityError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn suppliers_period_provider_biomarker_capability_summary(configuration: &configuration::Configuration, id: i32, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::ProviderBiomarkerCapabilitySummaryResponse, Error<SuppliersPeriodProviderBiomarkerCapabilitySummaryError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/suppliers/{id}/provider_biomarker_capability_summary", configuration.base_path, id=p_id);
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ProviderBiomarkerCapabilitySummaryResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ProviderBiomarkerCapabilitySummaryResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<SuppliersPeriodProviderBiomarkerCapabilitySummaryError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn suppliers_period_provider_clia_licensure(configuration: &configuration::Configuration, id: i32, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::ProviderCliaLicensureResponse, Error<SuppliersPeriodProviderCliaLicensureError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/suppliers/{id}/provider_clia_licensure", configuration.base_path, id=p_id);
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ProviderCliaLicensureResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ProviderCliaLicensureResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<SuppliersPeriodProviderCliaLicensureError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn suppliers_period_provider_rwd_delivery(configuration: &configuration::Configuration, id: i32, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::ProviderRwdDeliveryResponse, Error<SuppliersPeriodProviderRwdDeliveryError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/suppliers/{id}/provider_rwd_delivery", configuration.base_path, id=p_id);
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ProviderRwdDeliveryResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ProviderRwdDeliveryResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<SuppliersPeriodProviderRwdDeliveryError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn suppliers_period_provider_rwd_delivery_study(configuration: &configuration::Configuration, id: i32, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::ProviderRwdDeliveryStudyResponse, Error<SuppliersPeriodProviderRwdDeliveryStudyError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/suppliers/{id}/provider_rwd_delivery_study", configuration.base_path, id=p_id);
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ProviderRwdDeliveryStudyResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ProviderRwdDeliveryStudyResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<SuppliersPeriodProviderRwdDeliveryStudyError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn suppliers_period_provider_rwd_footprint(configuration: &configuration::Configuration, id: i32, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::ProviderRwdFootprintResponse, Error<SuppliersPeriodProviderRwdFootprintError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/suppliers/{id}/provider_rwd_footprint", configuration.base_path, id=p_id);
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ProviderRwdFootprintResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ProviderRwdFootprintResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<SuppliersPeriodProviderRwdFootprintError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }

@@ -16,6 +16,11 @@ Name | Type | Description | Notes
 **latitude** | Option<**f64**> | Latitude of the hospital's own coordinate. Null exactly when geocode_method is unmatched. | [optional]
 **longitude** | Option<**f64**> | Longitude of the hospital's own coordinate. Null exactly when geocode_method is unmatched. | [optional]
 **geocode_method** | Option<**String**> | How the coordinate was placed: als (Amazon Location Service address match), zip_centroid (coarse ZIP-code centroid) or unmatched (no coordinate). | [optional]
+**hrr_num** | Option<**i32**> | Dartmouth Atlas Hospital Referral Region number. Null when hrr_match is not zip. | [optional]
+**hrr_name** | Option<**String**> | The Hospital Referral Region, named for its hub city and state. The hub state can differ from the hospital's own state. | [optional]
+**hsa_num** | Option<**i32**> | Dartmouth Atlas Hospital Service Area number. Null when hrr_match is not zip. | [optional]
+**hsa_name** | Option<**String**> | The Hospital Service Area, named for its hub city and state. | [optional]
+**hrr_match** | Option<**String**> | zip (region found by ZIP), territory_uncovered (the Atlas does not cover US territories) or zip_unmatched (a mainland ZIP absent from the 2019 crosswalk). | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
