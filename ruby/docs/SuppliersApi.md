@@ -7,7 +7,11 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**suppliers_get**](SuppliersApi.md#suppliers_get) | **GET** /api/v1/suppliers/{id} | One supplier |
 | [**suppliers_list**](SuppliersApi.md#suppliers_list) | **GET** /api/v1/suppliers | List suppliers |
 | [**suppliers_provider_biomarker_capability**](SuppliersApi.md#suppliers_provider_biomarker_capability) | **GET** /api/v1/suppliers/{id}/provider_biomarker_capability | Supplier biomarker capability |
+| [**suppliers_provider_biomarker_capability_summary**](SuppliersApi.md#suppliers_provider_biomarker_capability_summary) | **GET** /api/v1/suppliers/{id}/provider_biomarker_capability_summary | Supplier biomarker capability, summarised |
 | [**suppliers_provider_clia_licensure**](SuppliersApi.md#suppliers_provider_clia_licensure) | **GET** /api/v1/suppliers/{id}/provider_clia_licensure | Supplier CLIA laboratory licensure |
+| [**suppliers_provider_rwd_delivery**](SuppliersApi.md#suppliers_provider_rwd_delivery) | **GET** /api/v1/suppliers/{id}/provider_rwd_delivery | RX provider real-world data study delivery track record (HMA-EMA catalogue) |
+| [**suppliers_provider_rwd_delivery_study**](SuppliersApi.md#suppliers_provider_rwd_delivery_study) | **GET** /api/v1/suppliers/{id}/provider_rwd_delivery_study | RX provider real-world data study final-report dates below the floor (HMA-EMA catalogue) |
+| [**suppliers_provider_rwd_footprint**](SuppliersApi.md#suppliers_provider_rwd_footprint) | **GET** /api/v1/suppliers/{id}/provider_rwd_footprint | Supplier real-world data footprint (HMA-EMA catalogue) |
 | [**suppliers_supplier_services**](SuppliersApi.md#suppliers_supplier_services) | **GET** /api/v1/suppliers/{id}/supplier_services | Supplier services |
 | [**suppliers_supplier_sites**](SuppliersApi.md#suppliers_supplier_sites) | **GET** /api/v1/suppliers/{id}/supplier_sites | Supplier sites |
 
@@ -235,6 +239,85 @@ end
 - **Accept**: application/json
 
 
+## suppliers_provider_biomarker_capability_summary
+
+> <ProviderBiomarkerCapabilitySummaryResponse> suppliers_provider_biomarker_capability_summary(id, opts)
+
+Supplier biomarker capability, summarised
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::SuppliersApi.new
+id = 990502 # Integer | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Supplier biomarker capability, summarised
+  result = api_instance.suppliers_provider_biomarker_capability_summary(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling SuppliersApi->suppliers_provider_biomarker_capability_summary: #{e}"
+end
+```
+
+#### Using the suppliers_provider_biomarker_capability_summary_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ProviderBiomarkerCapabilitySummaryResponse>, Integer, Hash)> suppliers_provider_biomarker_capability_summary_with_http_info(id, opts)
+
+```ruby
+begin
+  # Supplier biomarker capability, summarised
+  data, status_code, headers = api_instance.suppliers_provider_biomarker_capability_summary_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ProviderBiomarkerCapabilitySummaryResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling SuppliersApi->suppliers_provider_biomarker_capability_summary_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **Integer** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**ProviderBiomarkerCapabilitySummaryResponse**](ProviderBiomarkerCapabilitySummaryResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
 ## suppliers_provider_clia_licensure
 
 > <ProviderCliaLicensureResponse> suppliers_provider_clia_licensure(id, opts)
@@ -303,6 +386,243 @@ end
 ### Return type
 
 [**ProviderCliaLicensureResponse**](ProviderCliaLicensureResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## suppliers_provider_rwd_delivery
+
+> <ProviderRwdDeliveryResponse> suppliers_provider_rwd_delivery(id, opts)
+
+RX provider real-world data study delivery track record (HMA-EMA catalogue)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::SuppliersApi.new
+id = 990502 # Integer | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # RX provider real-world data study delivery track record (HMA-EMA catalogue)
+  result = api_instance.suppliers_provider_rwd_delivery(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling SuppliersApi->suppliers_provider_rwd_delivery: #{e}"
+end
+```
+
+#### Using the suppliers_provider_rwd_delivery_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ProviderRwdDeliveryResponse>, Integer, Hash)> suppliers_provider_rwd_delivery_with_http_info(id, opts)
+
+```ruby
+begin
+  # RX provider real-world data study delivery track record (HMA-EMA catalogue)
+  data, status_code, headers = api_instance.suppliers_provider_rwd_delivery_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ProviderRwdDeliveryResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling SuppliersApi->suppliers_provider_rwd_delivery_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **Integer** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**ProviderRwdDeliveryResponse**](ProviderRwdDeliveryResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## suppliers_provider_rwd_delivery_study
+
+> <ProviderRwdDeliveryStudyResponse> suppliers_provider_rwd_delivery_study(id, opts)
+
+RX provider real-world data study final-report dates below the floor (HMA-EMA catalogue)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::SuppliersApi.new
+id = 990502 # Integer | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # RX provider real-world data study final-report dates below the floor (HMA-EMA catalogue)
+  result = api_instance.suppliers_provider_rwd_delivery_study(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling SuppliersApi->suppliers_provider_rwd_delivery_study: #{e}"
+end
+```
+
+#### Using the suppliers_provider_rwd_delivery_study_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ProviderRwdDeliveryStudyResponse>, Integer, Hash)> suppliers_provider_rwd_delivery_study_with_http_info(id, opts)
+
+```ruby
+begin
+  # RX provider real-world data study final-report dates below the floor (HMA-EMA catalogue)
+  data, status_code, headers = api_instance.suppliers_provider_rwd_delivery_study_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ProviderRwdDeliveryStudyResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling SuppliersApi->suppliers_provider_rwd_delivery_study_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **Integer** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**ProviderRwdDeliveryStudyResponse**](ProviderRwdDeliveryStudyResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## suppliers_provider_rwd_footprint
+
+> <ProviderRwdFootprintResponse> suppliers_provider_rwd_footprint(id, opts)
+
+Supplier real-world data footprint (HMA-EMA catalogue)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::SuppliersApi.new
+id = 990502 # Integer | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Supplier real-world data footprint (HMA-EMA catalogue)
+  result = api_instance.suppliers_provider_rwd_footprint(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling SuppliersApi->suppliers_provider_rwd_footprint: #{e}"
+end
+```
+
+#### Using the suppliers_provider_rwd_footprint_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ProviderRwdFootprintResponse>, Integer, Hash)> suppliers_provider_rwd_footprint_with_http_info(id, opts)
+
+```ruby
+begin
+  # Supplier real-world data footprint (HMA-EMA catalogue)
+  data, status_code, headers = api_instance.suppliers_provider_rwd_footprint_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ProviderRwdFootprintResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling SuppliersApi->suppliers_provider_rwd_footprint_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **Integer** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**ProviderRwdFootprintResponse**](ProviderRwdFootprintResponse.md)
 
 ### Authorization
 

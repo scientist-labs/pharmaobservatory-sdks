@@ -23,6 +23,7 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**biomarkers_get**](BiomarkersApi.md#biomarkers_get) | **GET** /api/v1/biomarkers/{id} | One biomarker |
 | [**biomarkers_list**](BiomarkersApi.md#biomarkers_list) | **GET** /api/v1/biomarkers | List biomarkers |
 | [**biomarkers_provider_biomarker_capability**](BiomarkersApi.md#biomarkers_provider_biomarker_capability) | **GET** /api/v1/biomarkers/{id}/provider_biomarker_capability | Supplier biomarker capability |
+| [**biomarkers_provider_biomarker_capability_summary**](BiomarkersApi.md#biomarkers_provider_biomarker_capability_summary) | **GET** /api/v1/biomarkers/{id}/provider_biomarker_capability_summary | Supplier biomarker capability, summarised |
 
 
 ## biomarkers_biomarker_allele_frequencies
@@ -1501,6 +1502,85 @@ end
 ### Return type
 
 [**ProviderBiomarkerCapabilityResponse**](ProviderBiomarkerCapabilityResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## biomarkers_provider_biomarker_capability_summary
+
+> <ProviderBiomarkerCapabilitySummaryResponse> biomarkers_provider_biomarker_capability_summary(id, opts)
+
+Supplier biomarker capability, summarised
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::BiomarkersApi.new
+id = 'ESR1' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Supplier biomarker capability, summarised
+  result = api_instance.biomarkers_provider_biomarker_capability_summary(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling BiomarkersApi->biomarkers_provider_biomarker_capability_summary: #{e}"
+end
+```
+
+#### Using the biomarkers_provider_biomarker_capability_summary_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ProviderBiomarkerCapabilitySummaryResponse>, Integer, Hash)> biomarkers_provider_biomarker_capability_summary_with_http_info(id, opts)
+
+```ruby
+begin
+  # Supplier biomarker capability, summarised
+  data, status_code, headers = api_instance.biomarkers_provider_biomarker_capability_summary_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ProviderBiomarkerCapabilitySummaryResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling BiomarkersApi->biomarkers_provider_biomarker_capability_summary_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**ProviderBiomarkerCapabilitySummaryResponse**](ProviderBiomarkerCapabilitySummaryResponse.md)
 
 ### Authorization
 

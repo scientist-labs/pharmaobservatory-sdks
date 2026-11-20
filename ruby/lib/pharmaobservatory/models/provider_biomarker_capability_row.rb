@@ -43,19 +43,19 @@ module PharmaObservatory
     # The biomarker's display name.
     attr_accessor :biomarker_display_name
 
-    # The source path of the row: ladder_trial and ladder_clinvar (the evidence ladder), fda_cdx (FDA companion diagnostic list), fda_bqp (FDA Biomarker Qualification Program), literature_assay (assay providers named in PubMed full text) and supplier_survey (the supplier's own declaration). Nothing is merged across lanes.
+    # The source path of the row: ladder_trial and ladder_clinvar (the evidence ladder), fda_cdx (FDA companion diagnostic list), fda_bqp (FDA Biomarker Qualification Program), literature_assay (assay providers named in PubMed full text), supplier_survey (the supplier's own declaration) clinvar_submission (ClinVar clinical-testing submissions by a laboratory the supplier carries by name, one row per ClinVar record, tier null) and supplier_service_listing (a Scientist.com marketplace catalogue service the supplier listed, whose name names the gene; tier null, no evidence sense). Nothing is merged across lanes.
     attr_accessor :evidence_lane
 
-    # The source's own evidence vocabulary: the ladder evidence_type on a ladder lane, literature_assay_provider on the literature lane, supplier_survey_declaration on the survey lane.
+    # The source's own evidence vocabulary: the ladder evidence_type on a ladder lane, literature_assay_provider on the literature lane, supplier_survey_declaration on the survey lane, rx_service_listing on the service listing lane.
     attr_accessor :evidence_type
 
-    # The supplier's role on the evidence: the ladder role on a ladder lane, the ledger provider role on the literature lane, or respondent on the survey lane.
+    # The supplier's role on the evidence: the ladder role on a ladder lane, the ledger provider role on the literature lane, respondent on the survey lane, or marketplace_listing on the service listing lane.
     attr_accessor :org_role
 
     # Sense 1, literature_assay lane only: the source's own label for how the assay is evidenced, never a number. literature_reported is a paper naming the assay, never validation.
     attr_accessor :analytical_validation_evidence
 
-    # Sense 2: the ladder rung's name on a ladder lane, literature_reported on the literature lane (a literature mention, never validation).
+    # Sense 2: the ladder rung's name on a ladder lane, literature_reported on the literature lane (a literature mention, never validation), and ClinVar's own review status verbatim on the clinvar_submission lane.
     attr_accessor :clinical_use_evidence
 
     # Sense 3, fda_bqp lane only: fda_qualified, the FDA Biomarker Qualification Program qualified the biomarker.
@@ -64,10 +64,10 @@ module PharmaObservatory
     # Sense 4, fda_cdx lane only: fda_authorized_companion_diagnostic, the FDA companion diagnostic list names the supplier's device for the biomarker.
     attr_accessor :companion_diagnostic
 
-    # supplier_survey lane only: the supplier's own declared assay status, verbatim. A declaration by the supplier, never mapped into the four evidence kinds.
+    # The supplier's own declaration, never mapped into the four evidence kinds: the survey's assay status verbatim on the supplier_survey lane, supplier_declared_service_listed on the supplier_service_listing lane (the supplier listed a catalogue service naming the gene).
     attr_accessor :supplier_declared_status
 
-    # The ladder rung of this row, 1 to 4, a kind of evidence and never a score; set on the ladder_trial, ladder_clinvar, fda_cdx and fda_bqp lanes, null on literature_assay and supplier_survey. Not rolled up: see the example query for the maximum within the ladder lanes.
+    # The ladder rung of this row, 1 to 4, a kind of evidence and never a score; set on the ladder_trial, ladder_clinvar, fda_cdx and fda_bqp lanes, null on literature_assay, supplier_survey, clinvar_submission and supplier_service_listing. Not rolled up: see the example query for the maximum within the ladder lanes.
     attr_accessor :tier
 
     # The ladder rule that set the tier of this row; null where tier is null.
@@ -94,16 +94,16 @@ module PharmaObservatory
     # The source URL the evidence row carries, where it has one.
     attr_accessor :source_url
 
-    # A resolvable citation: the trial page, the ClinVar variation page, the FDA device page or list, or the PubMed page. Null where the source offers none.
+    # A resolvable citation: the trial page, the ClinVar variation page, the FDA device page or list, the PubMed page, or the supplier's marketplace page on a service listing. Null where the source offers none.
     attr_accessor :citation_url
 
-    # A short evidence text (at most 500 characters) or the paper title, where the source has one.
+    # A short evidence text (at most 500 characters), the paper title, or the catalogue service name on a service listing row, where the source has one.
     attr_accessor :evidence_snippet
 
     # literature_assay lane only: the publication date of the most recent cited paper.
     attr_accessor :most_recent_evidence_date
 
-    # How the evidence reached the supplier: org_member_exact (the organization record of a member of the supplier) or rx_name_key_exact (an exact name-key match of a source name to the supplier). A name match is not a verified identity.
+    # How the evidence reached the supplier: org_member_exact (the organization record of a member of the supplier), rx_name_key_exact (an exact name-key match of a source name to the supplier) or rx_provider_direct (the supplier's own marketplace listing, no name matched). A name match is not a verified identity.
     attr_accessor :match_method
 
     # The confidence of the upstream match rung where that rung defines one; null otherwise, never invented.
