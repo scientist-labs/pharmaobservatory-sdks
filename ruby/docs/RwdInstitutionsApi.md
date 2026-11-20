@@ -6,6 +6,7 @@ All URIs are relative to *https://pharmaobservatory.com*
 | ------ | ------------ | ----------- |
 | [**rwd_institutions_get**](RwdInstitutionsApi.md#rwd_institutions_get) | **GET** /api/v1/rwd_institutions/{id} | One real-world data register institution |
 | [**rwd_institutions_list**](RwdInstitutionsApi.md#rwd_institutions_list) | **GET** /api/v1/rwd_institutions | List real-world data register institutions |
+| [**rwd_institutions_provider_rwd_footprint**](RwdInstitutionsApi.md#rwd_institutions_provider_rwd_footprint) | **GET** /api/v1/rwd_institutions/{id}/provider_rwd_footprint | Supplier real-world data footprint (HMA-EMA catalogue) |
 
 
 ## rwd_institutions_get
@@ -141,6 +142,85 @@ end
 ### Return type
 
 [**RwdInstitutionsResponse**](RwdInstitutionsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## rwd_institutions_provider_rwd_footprint
+
+> <ProviderRwdFootprintResponse> rwd_institutions_provider_rwd_footprint(id, opts)
+
+Supplier real-world data footprint (HMA-EMA catalogue)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::RwdInstitutionsApi.new
+id = 900000005 # Integer | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Supplier real-world data footprint (HMA-EMA catalogue)
+  result = api_instance.rwd_institutions_provider_rwd_footprint(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling RwdInstitutionsApi->rwd_institutions_provider_rwd_footprint: #{e}"
+end
+```
+
+#### Using the rwd_institutions_provider_rwd_footprint_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ProviderRwdFootprintResponse>, Integer, Hash)> rwd_institutions_provider_rwd_footprint_with_http_info(id, opts)
+
+```ruby
+begin
+  # Supplier real-world data footprint (HMA-EMA catalogue)
+  data, status_code, headers = api_instance.rwd_institutions_provider_rwd_footprint_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ProviderRwdFootprintResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling RwdInstitutionsApi->rwd_institutions_provider_rwd_footprint_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **Integer** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**ProviderRwdFootprintResponse**](ProviderRwdFootprintResponse.md)
 
 ### Authorization
 

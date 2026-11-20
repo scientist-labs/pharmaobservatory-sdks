@@ -74,6 +74,22 @@ describe 'SuppliersApi' do
     end
   end
 
+  # unit tests for suppliers_provider_biomarker_capability_summary
+  # Supplier biomarker capability, summarised
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @return [ProviderBiomarkerCapabilitySummaryResponse]
+  describe 'suppliers_provider_biomarker_capability_summary test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   # unit tests for suppliers_provider_clia_licensure
   # Supplier CLIA laboratory licensure
   # @param id 
@@ -85,6 +101,54 @@ describe 'SuppliersApi' do
   # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
   # @return [ProviderCliaLicensureResponse]
   describe 'suppliers_provider_clia_licensure test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for suppliers_provider_rwd_delivery
+  # RX provider real-world data study delivery track record (HMA-EMA catalogue)
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @return [ProviderRwdDeliveryResponse]
+  describe 'suppliers_provider_rwd_delivery test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for suppliers_provider_rwd_delivery_study
+  # RX provider real-world data study final-report dates below the floor (HMA-EMA catalogue)
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @return [ProviderRwdDeliveryStudyResponse]
+  describe 'suppliers_provider_rwd_delivery_study test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for suppliers_provider_rwd_footprint
+  # Supplier real-world data footprint (HMA-EMA catalogue)
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @return [ProviderRwdFootprintResponse]
+  describe 'suppliers_provider_rwd_footprint test' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end

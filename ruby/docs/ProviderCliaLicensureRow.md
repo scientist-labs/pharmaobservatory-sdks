@@ -5,7 +5,7 @@
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **provider_id** | **String** | The supplier id: the Scientist.com provider id as text, the id in the supplier page address (/suppliers/&lt;id&gt;). The entry key for the suppliers object type. | [optional] |
-| **provider_uuid** | **String** | The supplier&#39;s public Scientist.com uuid. | [optional] |
+| **provider_uuid** | **String** | The supplier&#39;s public Scientist.com uuid, the join key to the RX marketplace. Present on every row, including providers the marketplace does not publish. | [optional] |
 | **provider_slug** | **String** | The supplier&#39;s marketplace slug. | [optional] |
 | **provider_name** | **String** | The supplier&#39;s name as listed on the marketplace. | [optional] |
 | **clia_number** | **String** | The ten-character CLIA certificate number. | [optional] |

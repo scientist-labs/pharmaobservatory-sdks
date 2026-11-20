@@ -19,7 +19,7 @@ module PharmaObservatory
     # The supplier id: the Scientist.com provider id as text, the id in the supplier page address (/suppliers/<id>). The entry key for the suppliers object type.
     attr_accessor :provider_id
 
-    # The supplier's public Scientist.com uuid.
+    # The supplier's public Scientist.com uuid, the join key to the RX marketplace. Present on every row, including providers the marketplace does not publish.
     attr_accessor :provider_uuid
 
     # The supplier's marketplace slug.
