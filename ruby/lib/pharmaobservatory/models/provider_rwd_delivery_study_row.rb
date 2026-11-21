@@ -43,6 +43,9 @@ module PharmaObservatory
     # The normalised institution name key the conductor rollup is keyed on; every register institution whose name folds to it is one conductor. Not a vendor family.
     attr_accessor :conductor_name_key
 
+    # The conductor slug: the conductor name key with spaces as hyphens, the entry key of the rwd_conductors object type (the id in /app/rwd-conductors/<id>).
+    attr_accessor :conductor_id
+
     # The register's own Study ID. The entry key of the rwd_studies object type; the EU PAS number is an attribute.
     attr_accessor :study_id
 
@@ -91,6 +94,7 @@ module PharmaObservatory
         :'match_method' => :'match_method',
         :'match_confidence' => :'match_confidence',
         :'conductor_name_key' => :'conductor_name_key',
+        :'conductor_id' => :'conductor_id',
         :'study_id' => :'study_id',
         :'eu_pas_number' => :'eu_pas_number',
         :'study_mandate_stratum' => :'study_mandate_stratum',
@@ -128,6 +132,7 @@ module PharmaObservatory
         :'match_method' => :'String',
         :'match_confidence' => :'Float',
         :'conductor_name_key' => :'String',
+        :'conductor_id' => :'String',
         :'study_id' => :'String',
         :'eu_pas_number' => :'String',
         :'study_mandate_stratum' => :'String',
@@ -155,6 +160,7 @@ module PharmaObservatory
         :'match_method',
         :'match_confidence',
         :'conductor_name_key',
+        :'conductor_id',
         :'study_id',
         :'eu_pas_number',
         :'study_mandate_stratum',
@@ -220,6 +226,10 @@ module PharmaObservatory
 
       if attributes.key?(:'conductor_name_key')
         self.conductor_name_key = attributes[:'conductor_name_key']
+      end
+
+      if attributes.key?(:'conductor_id')
+        self.conductor_id = attributes[:'conductor_id']
       end
 
       if attributes.key?(:'study_id')
@@ -300,6 +310,7 @@ module PharmaObservatory
           match_method == o.match_method &&
           match_confidence == o.match_confidence &&
           conductor_name_key == o.conductor_name_key &&
+          conductor_id == o.conductor_id &&
           study_id == o.study_id &&
           eu_pas_number == o.eu_pas_number &&
           study_mandate_stratum == o.study_mandate_stratum &&
@@ -323,7 +334,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [provider_rwd_delivery_study_id, provider_id, provider_uuid, provider_slug, provider_name, institution_id, match_method, match_confidence, conductor_name_key, study_id, eu_pas_number, study_mandate_stratum, final_report_planned_on, final_report_actual_on, final_report_slip_days, all_meets_n_floor, stratum_meets_n_floor, snapshot_label, accessed_month, restriction_tier, attribution].hash
+      [provider_rwd_delivery_study_id, provider_id, provider_uuid, provider_slug, provider_name, institution_id, match_method, match_confidence, conductor_name_key, conductor_id, study_id, eu_pas_number, study_mandate_stratum, final_report_planned_on, final_report_actual_on, final_report_slip_days, all_meets_n_floor, stratum_meets_n_floor, snapshot_label, accessed_month, restriction_tier, attribution].hash
     end
 
     # Builds the object from hash

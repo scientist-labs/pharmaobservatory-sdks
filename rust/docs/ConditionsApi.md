@@ -14,6 +14,8 @@ Method | HTTP request | Description
 [**conditions_period_condition_publications**](ConditionsApi.md#conditions_period_condition_publications) | **GET** /api/v1/conditions/{id}/condition_publications | Condition publications
 [**conditions_period_condition_recruitment_by_phase**](ConditionsApi.md#conditions_period_condition_recruitment_by_phase) | **GET** /api/v1/conditions/{id}/condition_recruitment_by_phase | Trial recruitment duration by condition and phase
 [**conditions_period_condition_recruitment_duration**](ConditionsApi.md#conditions_period_condition_recruitment_duration) | **GET** /api/v1/conditions/{id}/condition_recruitment_duration | Trial recruitment duration by condition
+[**conditions_period_condition_site_coverage**](ConditionsApi.md#conditions_period_condition_site_coverage) | **GET** /api/v1/conditions/{id}/condition_site_coverage | Condition site coverage
+[**conditions_period_condition_site_years**](ConditionsApi.md#conditions_period_condition_site_years) | **GET** /api/v1/conditions/{id}/condition_site_years | Condition site years
 [**conditions_period_condition_sites**](ConditionsApi.md#conditions_period_condition_sites) | **GET** /api/v1/conditions/{id}/condition_sites | Condition sites
 [**conditions_period_condition_trial_start_forecast**](ConditionsApi.md#conditions_period_condition_trial_start_forecast) | **GET** /api/v1/conditions/{id}/condition_trial_start_forecast | Trial-start forecast by condition
 [**conditions_period_condition_trials**](ConditionsApi.md#conditions_period_condition_trials) | **GET** /api/v1/conditions/{id}/condition_trials | Condition trials
@@ -345,6 +347,72 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::ConditionRecruitmentDurationResponse**](ConditionRecruitmentDurationResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## conditions_period_condition_site_coverage
+
+> models::ConditionSiteCoverageResponse conditions_period_condition_site_coverage(id, cursor, limit, sort, group_by, measure)
+Condition site coverage
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::ConditionSiteCoverageResponse**](ConditionSiteCoverageResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## conditions_period_condition_site_years
+
+> models::ConditionSiteYearsResponse conditions_period_condition_site_years(id, cursor, limit, sort, group_by, measure)
+Condition site years
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::ConditionSiteYearsResponse**](ConditionSiteYearsResponse.md)
 
 ### Authorization
 

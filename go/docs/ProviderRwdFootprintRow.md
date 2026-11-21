@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **Role** | Pointer to **NullableString** | What the register entity is to the institution: conductor or additional_institution (a study), custodian (a data source&#39;s holder) or network_member (a network&#39;s member institution). | [optional] 
 **EvidenceRefKind** | Pointer to **NullableString** | Which register entity evidence_ref names: rwd_study_id, rwd_data_source_id or rwd_network_id. | [optional] 
 **EvidenceRef** | Pointer to **NullableString** | The register id of the study, data source or network, per evidence_ref_kind. Ids of different kinds can coincide; read it with evidence_ref_kind. | [optional] 
+**StudyId** | Pointer to **NullableString** | The register Study ID when evidence_ref_kind is rwd_study_id, otherwise null. The entry key of the rwd_studies object type: a study route returns the providers asserted against that study. | [optional] 
 **EvidenceLabel** | Pointer to **NullableString** | The register&#39;s own entity name (study title, data source name or network name), never prose. | [optional] 
 **CatalogueUrl** | Pointer to **NullableString** | The address of the register entity on the HMA-EMA catalogue site. | [optional] 
 **StudyStartActualOn** | Pointer to **NullableString** | Study rows only: the registered actual start date; null otherwise and where the study has none. | [optional] 
@@ -402,6 +403,41 @@ HasEvidenceRef returns a boolean if a field has been set.
 `func (o *ProviderRwdFootprintRow) UnsetEvidenceRef()`
 
 UnsetEvidenceRef ensures that no value is present for EvidenceRef, not even an explicit nil
+### GetStudyId
+
+`func (o *ProviderRwdFootprintRow) GetStudyId() string`
+
+GetStudyId returns the StudyId field if non-nil, zero value otherwise.
+
+### GetStudyIdOk
+
+`func (o *ProviderRwdFootprintRow) GetStudyIdOk() (*string, bool)`
+
+GetStudyIdOk returns a tuple with the StudyId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStudyId
+
+`func (o *ProviderRwdFootprintRow) SetStudyId(v string)`
+
+SetStudyId sets StudyId field to given value.
+
+### HasStudyId
+
+`func (o *ProviderRwdFootprintRow) HasStudyId() bool`
+
+HasStudyId returns a boolean if a field has been set.
+
+### SetStudyIdNil
+
+`func (o *ProviderRwdFootprintRow) SetStudyIdNil(b bool)`
+
+ SetStudyIdNil sets the value for StudyId to be an explicit nil
+
+### UnsetStudyId
+`func (o *ProviderRwdFootprintRow) UnsetStudyId()`
+
+UnsetStudyId ensures that no value is present for StudyId, not even an explicit nil
 ### GetEvidenceLabel
 
 `func (o *ProviderRwdFootprintRow) GetEvidenceLabel() string`

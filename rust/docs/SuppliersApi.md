@@ -12,6 +12,8 @@ Method | HTTP request | Description
 [**suppliers_period_provider_rwd_delivery**](SuppliersApi.md#suppliers_period_provider_rwd_delivery) | **GET** /api/v1/suppliers/{id}/provider_rwd_delivery | RX provider real-world data study delivery track record (HMA-EMA catalogue)
 [**suppliers_period_provider_rwd_delivery_study**](SuppliersApi.md#suppliers_period_provider_rwd_delivery_study) | **GET** /api/v1/suppliers/{id}/provider_rwd_delivery_study | RX provider real-world data study final-report dates below the floor (HMA-EMA catalogue)
 [**suppliers_period_provider_rwd_footprint**](SuppliersApi.md#suppliers_period_provider_rwd_footprint) | **GET** /api/v1/suppliers/{id}/provider_rwd_footprint | Supplier real-world data footprint (HMA-EMA catalogue)
+[**suppliers_period_rwd_us_network_memberships**](SuppliersApi.md#suppliers_period_rwd_us_network_memberships) | **GET** /api/v1/suppliers/{id}/rwd_us_network_memberships | US real-world data network membership (N3C)
+[**suppliers_period_supplier_rwd_declarations**](SuppliersApi.md#suppliers_period_supplier_rwd_declarations) | **GET** /api/v1/suppliers/{id}/supplier_rwd_declarations | Supplier declared real-world data facts
 [**suppliers_period_supplier_services**](SuppliersApi.md#suppliers_period_supplier_services) | **GET** /api/v1/suppliers/{id}/supplier_services | Supplier services
 [**suppliers_period_supplier_sites**](SuppliersApi.md#suppliers_period_supplier_sites) | **GET** /api/v1/suppliers/{id}/supplier_sites | Supplier sites
 
@@ -262,6 +264,72 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::ProviderRwdFootprintResponse**](ProviderRwdFootprintResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## suppliers_period_rwd_us_network_memberships
+
+> models::RwdUsNetworkMembershipsResponse suppliers_period_rwd_us_network_memberships(id, cursor, limit, sort, group_by, measure)
+US real-world data network membership (N3C)
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **i32** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::RwdUsNetworkMembershipsResponse**](RwdUsNetworkMembershipsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## suppliers_period_supplier_rwd_declarations
+
+> models::SupplierRwdDeclarationsResponse suppliers_period_supplier_rwd_declarations(id, cursor, limit, sort, group_by, measure)
+Supplier declared real-world data facts
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **i32** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::SupplierRwdDeclarationsResponse**](SupplierRwdDeclarationsResponse.md)
 
 ### Authorization
 

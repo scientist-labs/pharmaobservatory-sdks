@@ -46,6 +46,9 @@ module PharmaObservatory
     # The register id of the study, data source or network, per evidence_ref_kind. Ids of different kinds can coincide; read it with evidence_ref_kind.
     attr_accessor :evidence_ref
 
+    # The register Study ID when evidence_ref_kind is rwd_study_id, otherwise null. The entry key of the rwd_studies object type: a study route returns the providers asserted against that study.
+    attr_accessor :study_id
+
     # The register's own entity name (study title, data source name or network name), never prose.
     attr_accessor :evidence_label
 
@@ -113,6 +116,7 @@ module PharmaObservatory
         :'role' => :'role',
         :'evidence_ref_kind' => :'evidence_ref_kind',
         :'evidence_ref' => :'evidence_ref',
+        :'study_id' => :'study_id',
         :'evidence_label' => :'evidence_label',
         :'catalogue_url' => :'catalogue_url',
         :'study_start_actual_on' => :'study_start_actual_on',
@@ -157,6 +161,7 @@ module PharmaObservatory
         :'role' => :'String',
         :'evidence_ref_kind' => :'String',
         :'evidence_ref' => :'String',
+        :'study_id' => :'String',
         :'evidence_label' => :'String',
         :'catalogue_url' => :'String',
         :'study_start_actual_on' => :'Date',
@@ -191,6 +196,7 @@ module PharmaObservatory
         :'role',
         :'evidence_ref_kind',
         :'evidence_ref',
+        :'study_id',
         :'evidence_label',
         :'catalogue_url',
         :'study_start_actual_on',
@@ -266,6 +272,10 @@ module PharmaObservatory
 
       if attributes.key?(:'evidence_ref')
         self.evidence_ref = attributes[:'evidence_ref']
+      end
+
+      if attributes.key?(:'study_id')
+        self.study_id = attributes[:'study_id']
       end
 
       if attributes.key?(:'evidence_label')
@@ -379,6 +389,7 @@ module PharmaObservatory
           role == o.role &&
           evidence_ref_kind == o.evidence_ref_kind &&
           evidence_ref == o.evidence_ref &&
+          study_id == o.study_id &&
           evidence_label == o.evidence_label &&
           catalogue_url == o.catalogue_url &&
           study_start_actual_on == o.study_start_actual_on &&
@@ -408,7 +419,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [provider_rwd_footprint_id, provider_id, provider_uuid, provider_slug, provider_name, institution_id, institution_name, role, evidence_ref_kind, evidence_ref, evidence_label, catalogue_url, study_start_actual_on, study_status, mandate_stratum, is_darwin_eu_study, data_source_ids, data_source_names_unmatched, study_country_names, data_source_type, country_names, match_method, also_matched_by_name, match_confidence, snapshot_label, accessed_month, restriction_tier, attribution].hash
+      [provider_rwd_footprint_id, provider_id, provider_uuid, provider_slug, provider_name, institution_id, institution_name, role, evidence_ref_kind, evidence_ref, study_id, evidence_label, catalogue_url, study_start_actual_on, study_status, mandate_stratum, is_darwin_eu_study, data_source_ids, data_source_names_unmatched, study_country_names, data_source_type, country_names, match_method, also_matched_by_name, match_confidence, snapshot_label, accessed_month, restriction_tier, attribution].hash
     end
 
     # Builds the object from hash

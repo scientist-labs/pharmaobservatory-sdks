@@ -37,6 +37,8 @@ type ProviderRwdDeliveryStudyRow struct {
 	MatchConfidence NullableFloat32 `json:"match_confidence,omitempty"`
 	// The normalised institution name key the conductor rollup is keyed on; every register institution whose name folds to it is one conductor. Not a vendor family.
 	ConductorNameKey NullableString `json:"conductor_name_key,omitempty"`
+	// The conductor slug: the conductor name key with spaces as hyphens, the entry key of the rwd_conductors object type (the id in /app/rwd-conductors/<id>).
+	ConductorId NullableString `json:"conductor_id,omitempty"`
 	// The register's own Study ID. The entry key of the rwd_studies object type; the EU PAS number is an attribute.
 	StudyId NullableString `json:"study_id,omitempty"`
 	// The EU PAS (post-authorisation study) register number of the study.
@@ -459,6 +461,48 @@ func (o *ProviderRwdDeliveryStudyRow) SetConductorNameKeyNil() {
 // UnsetConductorNameKey ensures that no value is present for ConductorNameKey, not even an explicit nil
 func (o *ProviderRwdDeliveryStudyRow) UnsetConductorNameKey() {
 	o.ConductorNameKey.Unset()
+}
+
+// GetConductorId returns the ConductorId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ProviderRwdDeliveryStudyRow) GetConductorId() string {
+	if o == nil || IsNil(o.ConductorId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ConductorId.Get()
+}
+
+// GetConductorIdOk returns a tuple with the ConductorId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ProviderRwdDeliveryStudyRow) GetConductorIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ConductorId.Get(), o.ConductorId.IsSet()
+}
+
+// HasConductorId returns a boolean if a field has been set.
+func (o *ProviderRwdDeliveryStudyRow) HasConductorId() bool {
+	if o != nil && o.ConductorId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetConductorId gets a reference to the given NullableString and assigns it to the ConductorId field.
+func (o *ProviderRwdDeliveryStudyRow) SetConductorId(v string) {
+	o.ConductorId.Set(&v)
+}
+// SetConductorIdNil sets the value for ConductorId to be an explicit nil
+func (o *ProviderRwdDeliveryStudyRow) SetConductorIdNil() {
+	o.ConductorId.Set(nil)
+}
+
+// UnsetConductorId ensures that no value is present for ConductorId, not even an explicit nil
+func (o *ProviderRwdDeliveryStudyRow) UnsetConductorId() {
+	o.ConductorId.Unset()
 }
 
 // GetStudyId returns the StudyId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1002,6 +1046,9 @@ func (o ProviderRwdDeliveryStudyRow) ToMap() (map[string]interface{}, error) {
 	if o.ConductorNameKey.IsSet() {
 		toSerialize["conductor_name_key"] = o.ConductorNameKey.Get()
 	}
+	if o.ConductorId.IsSet() {
+		toSerialize["conductor_id"] = o.ConductorId.Get()
+	}
 	if o.StudyId.IsSet() {
 		toSerialize["study_id"] = o.StudyId.Get()
 	}
@@ -1069,6 +1116,7 @@ func (o *ProviderRwdDeliveryStudyRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "match_method")
 		delete(additionalProperties, "match_confidence")
 		delete(additionalProperties, "conductor_name_key")
+		delete(additionalProperties, "conductor_id")
 		delete(additionalProperties, "study_id")
 		delete(additionalProperties, "eu_pas_number")
 		delete(additionalProperties, "study_mandate_stratum")

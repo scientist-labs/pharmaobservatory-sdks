@@ -95,13 +95,13 @@ pub struct RwdInstitutionsRow {
     /// The address of this entry on the HMA-EMA catalogue site (the register's URL LINK).
     #[serde(rename = "catalogue_url", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub catalogue_url: Option<Option<String>>,
-    /// Whether the institution declares it is open to industry-funded research; null on a catalogue name entry, where the export writes a default No that is not an answer.
+    /// The register export's Yes or No to whether the institution is open to industry-funded research. The export cannot tell an unanswered question from No, so a false is register export: No, not a decline. Null on a catalogue name entry, where the export writes a default No that is not an answer.
     #[serde(rename = "open_to_industry_funded_research", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub open_to_industry_funded_research: Option<Option<bool>>,
-    /// Whether the institution declares it collects data directly from patients; null on a catalogue name entry.
+    /// The register export's Yes or No to whether the institution collects data directly from patients. The export cannot tell an unanswered question from No, so a false is register export: No. Null on a catalogue name entry.
     #[serde(rename = "collects_data_directly_from_patients", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub collects_data_directly_from_patients: Option<Option<bool>>,
-    /// Whether the entry declares an ENCePP partnership; null on a catalogue name entry, where the export writes a default No that is not an answer.
+    /// The register export's Yes or No to whether the entry is an ENCePP partner. The export cannot tell an unanswered question from No, so a false is register export: No. Null on a catalogue name entry, where the export writes a default No that is not an answer.
     #[serde(rename = "is_encepp_partner", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub is_encepp_partner: Option<Option<bool>>,
     /// When the registrant last edited this catalogue entry. A different clock from last_refreshed_on: it dates the web form, not the database.

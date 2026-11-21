@@ -13,6 +13,7 @@
 | **match_method** | **String** | match_method says how the provider was tied to the register institution: org_member_exact (through the supplier&#39;s resolved organization, match_confidence carried from that match), rx_name_key_exact (an exact match of the register institution&#39;s name key to the supplier&#39;s, match_confidence null, a name match and not a verified identity) or org_unit_of_entry (an organization unit of the supplier&#39;s organization, one-directional, match_confidence the bridge&#39;s own figure). Where a provider reaches one conductor by several routes the strongest wins, in that order, and match_methods lists every route. | [optional] |
 | **match_confidence** | **Float** | The bridge&#39;s own confidence for the winning route, 0 to 1; null on an rx_name_key_exact row, whose exact name match defines none. Passed through, never computed here. | [optional] |
 | **conductor_name_key** | **String** | The normalised institution name key the conductor rollup is keyed on; every register institution whose name folds to it is one conductor. Not a vendor family. | [optional] |
+| **conductor_id** | **String** | The conductor slug: the conductor name key with spaces as hyphens, the entry key of the rwd_conductors object type (the id in /app/rwd-conductors/&lt;id&gt;). | [optional] |
 | **matched_institution_ids** | **Array&lt;String&gt;** | Every register Institution ID that routes the provider to the conductor name key (more than one when the register lists the name twice or two methods reach it). | [optional] |
 | **match_methods** | **Array&lt;String&gt;** | Every match method that routes the provider to this conductor name key; match_method is the strongest of them. | [optional] |
 | **conductor_name** | **String** | The conductor&#39;s display name: one register spelling of the key. | [optional] |
@@ -49,6 +50,7 @@ instance = PharmaObservatory::ProviderRwdDeliveryRow.new(
   match_method: null,
   match_confidence: null,
   conductor_name_key: null,
+  conductor_id: null,
   matched_institution_ids: null,
   match_methods: null,
   conductor_name: null,

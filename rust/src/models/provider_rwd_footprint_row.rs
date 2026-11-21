@@ -44,6 +44,9 @@ pub struct ProviderRwdFootprintRow {
     /// The register id of the study, data source or network, per evidence_ref_kind. Ids of different kinds can coincide; read it with evidence_ref_kind.
     #[serde(rename = "evidence_ref", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub evidence_ref: Option<Option<String>>,
+    /// The register Study ID when evidence_ref_kind is rwd_study_id, otherwise null. The entry key of the rwd_studies object type: a study route returns the providers asserted against that study.
+    #[serde(rename = "study_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub study_id: Option<Option<String>>,
     /// The register's own entity name (study title, data source name or network name), never prose.
     #[serde(rename = "evidence_label", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub evidence_label: Option<Option<String>>,
@@ -114,6 +117,7 @@ impl ProviderRwdFootprintRow {
             role: None,
             evidence_ref_kind: None,
             evidence_ref: None,
+            study_id: None,
             evidence_label: None,
             catalogue_url: None,
             study_start_actual_on: None,

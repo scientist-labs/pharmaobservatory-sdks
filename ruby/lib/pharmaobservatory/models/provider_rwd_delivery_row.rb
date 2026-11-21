@@ -43,6 +43,9 @@ module PharmaObservatory
     # The normalised institution name key the conductor rollup is keyed on; every register institution whose name folds to it is one conductor. Not a vendor family.
     attr_accessor :conductor_name_key
 
+    # The conductor slug: the conductor name key with spaces as hyphens, the entry key of the rwd_conductors object type (the id in /app/rwd-conductors/<id>).
+    attr_accessor :conductor_id
+
     # Every register Institution ID that routes the provider to the conductor name key (more than one when the register lists the name twice or two methods reach it).
     attr_accessor :matched_institution_ids
 
@@ -115,6 +118,7 @@ module PharmaObservatory
         :'match_method' => :'match_method',
         :'match_confidence' => :'match_confidence',
         :'conductor_name_key' => :'conductor_name_key',
+        :'conductor_id' => :'conductor_id',
         :'matched_institution_ids' => :'matched_institution_ids',
         :'match_methods' => :'match_methods',
         :'conductor_name' => :'conductor_name',
@@ -160,6 +164,7 @@ module PharmaObservatory
         :'match_method' => :'String',
         :'match_confidence' => :'Float',
         :'conductor_name_key' => :'String',
+        :'conductor_id' => :'String',
         :'matched_institution_ids' => :'Array<String>',
         :'match_methods' => :'Array<String>',
         :'conductor_name' => :'String',
@@ -195,6 +200,7 @@ module PharmaObservatory
         :'match_method',
         :'match_confidence',
         :'conductor_name_key',
+        :'conductor_id',
         :'matched_institution_ids',
         :'match_methods',
         :'conductor_name',
@@ -268,6 +274,10 @@ module PharmaObservatory
 
       if attributes.key?(:'conductor_name_key')
         self.conductor_name_key = attributes[:'conductor_name_key']
+      end
+
+      if attributes.key?(:'conductor_id')
+        self.conductor_id = attributes[:'conductor_id']
       end
 
       if attributes.key?(:'matched_institution_ids')
@@ -384,6 +394,7 @@ module PharmaObservatory
           match_method == o.match_method &&
           match_confidence == o.match_confidence &&
           conductor_name_key == o.conductor_name_key &&
+          conductor_id == o.conductor_id &&
           matched_institution_ids == o.matched_institution_ids &&
           match_methods == o.match_methods &&
           conductor_name == o.conductor_name &&
@@ -415,7 +426,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [provider_rwd_delivery_id, provider_id, provider_uuid, provider_slug, provider_name, institution_id, match_method, match_confidence, conductor_name_key, matched_institution_ids, match_methods, conductor_name, mandate_stratum, lifetime_studies, final_report_pairs, comparable_pairs, backfilled_pairs, backfilled_share, mandated_share, n_floor, meets_n_floor, median_slip_days, p25_slip_days, p75_slip_days, late_over_30d, snapshot_label, accessed_month, restriction_tier, attribution].hash
+      [provider_rwd_delivery_id, provider_id, provider_uuid, provider_slug, provider_name, institution_id, match_method, match_confidence, conductor_name_key, conductor_id, matched_institution_ids, match_methods, conductor_name, mandate_stratum, lifetime_studies, final_report_pairs, comparable_pairs, backfilled_pairs, backfilled_share, mandated_share, n_floor, meets_n_floor, median_slip_days, p25_slip_days, p75_slip_days, late_over_30d, snapshot_label, accessed_month, restriction_tier, attribution].hash
     end
 
     # Builds the object from hash

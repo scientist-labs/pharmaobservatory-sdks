@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **SourcesOfFunding** | Pointer to **NullableString** | The sources of funding the network declares, as typed. | [optional] 
 **NetworkWebsite** | Pointer to **NullableString** | The network&#39;s website as the register holds it. | [optional] 
 **CatalogueUrl** | Pointer to **NullableString** | The address of this entry on the HMA-EMA catalogue site (the register&#39;s URL LINK). | [optional] 
-**IsEnceppPartner** | Pointer to **NullableBool** | Whether the entry declares an ENCePP partnership; null on a catalogue name entry, where the export writes a default No that is not an answer. | [optional] 
+**IsEnceppPartner** | Pointer to **NullableBool** | The register export&#39;s Yes or No to whether the entry is an ENCePP partner. The export cannot tell an unanswered question from No, so a false is register export: No. Null on a catalogue name entry, where the export writes a default No that is not an answer. | [optional] 
 **DeclaredMemberCount** | Pointer to **NullableInt32** | How many member institutions the network&#39;s own list names; zero says the network named nobody, not that it has no members. | [optional] 
 **DeclaredMemberNameKeys** | Pointer to **[]string** | The normalised name keys of the declared members. | [optional] 
 **DeclaredMemberNames** | Pointer to **[]string** | The names of the declared members as the register spells them. | [optional] 

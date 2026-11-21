@@ -13,6 +13,7 @@
 | **match_method** | **String** | match_method says how the provider was tied to the register institution: org_member_exact (through the supplier&#39;s resolved organization, match_confidence carried from that match), rx_name_key_exact (an exact match of the register institution&#39;s name key to the supplier&#39;s, match_confidence null, a name match and not a verified identity) or org_unit_of_entry (an organization unit of the supplier&#39;s organization, one-directional, match_confidence the bridge&#39;s own figure). Where a provider reaches one conductor by several routes the strongest wins, in that order, and match_methods lists every route. | [optional] |
 | **match_confidence** | **Float** | The bridge&#39;s own confidence for the winning route, 0 to 1; null on an rx_name_key_exact row, whose exact name match defines none. Passed through, never computed here. | [optional] |
 | **conductor_name_key** | **String** | The normalised institution name key the conductor rollup is keyed on; every register institution whose name folds to it is one conductor. Not a vendor family. | [optional] |
+| **conductor_id** | **String** | The conductor slug: the conductor name key with spaces as hyphens, the entry key of the rwd_conductors object type (the id in /app/rwd-conductors/&lt;id&gt;). | [optional] |
 | **study_id** | **String** | The register&#39;s own Study ID. The entry key of the rwd_studies object type; the EU PAS number is an attribute. | [optional] |
 | **eu_pas_number** | **String** | The EU PAS (post-authorisation study) register number of the study. | [optional] |
 | **study_mandate_stratum** | **String** | The study&#39;s own mandate: mandated (a regulator required it), voluntary, or unknown (the register does not say). | [optional] |
@@ -41,6 +42,7 @@ instance = PharmaObservatory::ProviderRwdDeliveryStudyRow.new(
   match_method: null,
   match_confidence: null,
   conductor_name_key: null,
+  conductor_id: null,
   study_id: null,
   eu_pas_number: null,
   study_mandate_stratum: null,

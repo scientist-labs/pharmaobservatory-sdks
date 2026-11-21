@@ -46,7 +46,7 @@ type RwdNetworksRow struct {
 	NetworkWebsite NullableString `json:"network_website,omitempty"`
 	// The address of this entry on the HMA-EMA catalogue site (the register's URL LINK).
 	CatalogueUrl NullableString `json:"catalogue_url,omitempty"`
-	// Whether the entry declares an ENCePP partnership; null on a catalogue name entry, where the export writes a default No that is not an answer.
+	// The register export's Yes or No to whether the entry is an ENCePP partner. The export cannot tell an unanswered question from No, so a false is register export: No. Null on a catalogue name entry, where the export writes a default No that is not an answer.
 	IsEnceppPartner NullableBool `json:"is_encepp_partner,omitempty"`
 	// How many member institutions the network's own list names; zero says the network named nobody, not that it has no members.
 	DeclaredMemberCount NullableInt32 `json:"declared_member_count,omitempty"`

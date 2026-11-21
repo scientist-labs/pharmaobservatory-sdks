@@ -81,6 +81,12 @@ describe PharmaObservatory::ProviderRwdDeliveryRow do
     end
   end
 
+  describe 'test attribute "conductor_id"' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   describe 'test attribute "matched_institution_ids"' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
