@@ -41,6 +41,9 @@ pub struct ProviderRwdDeliveryStudyRow {
     /// The normalised institution name key the conductor rollup is keyed on; every register institution whose name folds to it is one conductor. Not a vendor family.
     #[serde(rename = "conductor_name_key", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub conductor_name_key: Option<Option<String>>,
+    /// The conductor slug: the conductor name key with spaces as hyphens, the entry key of the rwd_conductors object type (the id in /app/rwd-conductors/<id>).
+    #[serde(rename = "conductor_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub conductor_id: Option<Option<String>>,
     /// The register's own Study ID. The entry key of the rwd_studies object type; the EU PAS number is an attribute.
     #[serde(rename = "study_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub study_id: Option<Option<String>>,
@@ -92,6 +95,7 @@ impl ProviderRwdDeliveryStudyRow {
             match_method: None,
             match_confidence: None,
             conductor_name_key: None,
+            conductor_id: None,
             study_id: None,
             eu_pas_number: None,
             study_mandate_stratum: None,

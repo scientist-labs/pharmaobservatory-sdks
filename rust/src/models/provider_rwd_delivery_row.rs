@@ -41,6 +41,9 @@ pub struct ProviderRwdDeliveryRow {
     /// The normalised institution name key the conductor rollup is keyed on; every register institution whose name folds to it is one conductor. Not a vendor family.
     #[serde(rename = "conductor_name_key", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub conductor_name_key: Option<Option<String>>,
+    /// The conductor slug: the conductor name key with spaces as hyphens, the entry key of the rwd_conductors object type (the id in /app/rwd-conductors/<id>).
+    #[serde(rename = "conductor_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub conductor_id: Option<Option<String>>,
     /// Every register Institution ID that routes the provider to the conductor name key (more than one when the register lists the name twice or two methods reach it).
     #[serde(rename = "matched_institution_ids", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub matched_institution_ids: Option<Option<Vec<String>>>,
@@ -116,6 +119,7 @@ impl ProviderRwdDeliveryRow {
             match_method: None,
             match_confidence: None,
             conductor_name_key: None,
+            conductor_id: None,
             matched_institution_ids: None,
             match_methods: None,
             conductor_name: None,

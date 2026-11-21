@@ -6,6 +6,7 @@ All URIs are relative to *https://pharmaobservatory.com*
 | ------ | ------------ | ----------- |
 | [**rwd_studies_get**](RwdStudiesApi.md#rwd_studies_get) | **GET** /api/v1/rwd_studies/{id} | One real-world data study |
 | [**rwd_studies_list**](RwdStudiesApi.md#rwd_studies_list) | **GET** /api/v1/rwd_studies | List real-world data studies |
+| [**rwd_studies_provider_rwd_footprint**](RwdStudiesApi.md#rwd_studies_provider_rwd_footprint) | **GET** /api/v1/rwd_studies/{id}/provider_rwd_footprint | Supplier real-world data footprint (HMA-EMA catalogue) |
 | [**rwd_studies_rwd_conductor_studies**](RwdStudiesApi.md#rwd_studies_rwd_conductor_studies) | **GET** /api/v1/rwd_studies/{id}/rwd_conductor_studies | Real-world data study conductor studies (HMA-EMA catalogue) |
 | [**rwd_studies_rwd_study_conditions**](RwdStudiesApi.md#rwd_studies_rwd_study_conditions) | **GET** /api/v1/rwd_studies/{id}/rwd_study_conditions | Registered real-world data study conditions |
 | [**rwd_studies_rwd_study_data_sources**](RwdStudiesApi.md#rwd_studies_rwd_study_data_sources) | **GET** /api/v1/rwd_studies/{id}/rwd_study_data_sources | Registered real-world data study data sources |
@@ -146,6 +147,85 @@ end
 ### Return type
 
 [**RwdStudiesResponse**](RwdStudiesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## rwd_studies_provider_rwd_footprint
+
+> <ProviderRwdFootprintResponse> rwd_studies_provider_rwd_footprint(id, opts)
+
+Supplier real-world data footprint (HMA-EMA catalogue)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::RwdStudiesApi.new
+id = 900000301 # Integer | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Supplier real-world data footprint (HMA-EMA catalogue)
+  result = api_instance.rwd_studies_provider_rwd_footprint(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling RwdStudiesApi->rwd_studies_provider_rwd_footprint: #{e}"
+end
+```
+
+#### Using the rwd_studies_provider_rwd_footprint_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ProviderRwdFootprintResponse>, Integer, Hash)> rwd_studies_provider_rwd_footprint_with_http_info(id, opts)
+
+```ruby
+begin
+  # Supplier real-world data footprint (HMA-EMA catalogue)
+  data, status_code, headers = api_instance.rwd_studies_provider_rwd_footprint_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ProviderRwdFootprintResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling RwdStudiesApi->rwd_studies_provider_rwd_footprint_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **Integer** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**ProviderRwdFootprintResponse**](ProviderRwdFootprintResponse.md)
 
 ### Authorization
 

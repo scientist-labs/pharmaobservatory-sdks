@@ -19,6 +19,7 @@ Method | HTTP request | Description
 [**trials_period_trial_extracted_endpoints**](TrialsApi.md#trials_period_trial_extracted_endpoints) | **GET** /api/v1/trials/{id}/trial_extracted_endpoints | Trial extracted endpoints
 [**trials_period_trial_kols**](TrialsApi.md#trials_period_trial_kols) | **GET** /api/v1/trials/{id}/trial_kols | Trial investigators
 [**trials_period_trial_outcome_measures**](TrialsApi.md#trials_period_trial_outcome_measures) | **GET** /api/v1/trials/{id}/trial_outcome_measures | Trial outcome measures
+[**trials_period_trial_publications**](TrialsApi.md#trials_period_trial_publications) | **GET** /api/v1/trials/{id}/trial_publications | Trial publications
 [**trials_period_trial_research_payments**](TrialsApi.md#trials_period_trial_research_payments) | **GET** /api/v1/trials/{id}/trial_research_payments | Trial research payments
 [**trials_period_trial_site_history**](TrialsApi.md#trials_period_trial_site_history) | **GET** /api/v1/trials/{id}/trial_site_history | Trial site history
 [**trials_period_trial_sites**](TrialsApi.md#trials_period_trial_sites) | **GET** /api/v1/trials/{id}/trial_sites | Trial sites
@@ -501,6 +502,39 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::TrialOutcomeMeasuresResponse**](TrialOutcomeMeasuresResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## trials_period_trial_publications
+
+> models::TrialPublicationsResponse trials_period_trial_publications(id, cursor, limit, sort, group_by, measure)
+Trial publications
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::TrialPublicationsResponse**](TrialPublicationsResponse.md)
 
 ### Authorization
 

@@ -19,6 +19,7 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**trials_trial_extracted_endpoints**](TrialsApi.md#trials_trial_extracted_endpoints) | **GET** /api/v1/trials/{id}/trial_extracted_endpoints | Trial extracted endpoints |
 | [**trials_trial_kols**](TrialsApi.md#trials_trial_kols) | **GET** /api/v1/trials/{id}/trial_kols | Trial investigators |
 | [**trials_trial_outcome_measures**](TrialsApi.md#trials_trial_outcome_measures) | **GET** /api/v1/trials/{id}/trial_outcome_measures | Trial outcome measures |
+| [**trials_trial_publications**](TrialsApi.md#trials_trial_publications) | **GET** /api/v1/trials/{id}/trial_publications | Trial publications |
 | [**trials_trial_research_payments**](TrialsApi.md#trials_trial_research_payments) | **GET** /api/v1/trials/{id}/trial_research_payments | Trial research payments |
 | [**trials_trial_site_history**](TrialsApi.md#trials_trial_site_history) | **GET** /api/v1/trials/{id}/trial_site_history | Trial site history |
 | [**trials_trial_sites**](TrialsApi.md#trials_trial_sites) | **GET** /api/v1/trials/{id}/trial_sites | Trial sites |
@@ -1184,6 +1185,85 @@ end
 ### Return type
 
 [**TrialOutcomeMeasuresResponse**](TrialOutcomeMeasuresResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## trials_trial_publications
+
+> <TrialPublicationsResponse> trials_trial_publications(id, opts)
+
+Trial publications
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::TrialsApi.new
+id = 'NCT00000125' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Trial publications
+  result = api_instance.trials_trial_publications(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling TrialsApi->trials_trial_publications: #{e}"
+end
+```
+
+#### Using the trials_trial_publications_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<TrialPublicationsResponse>, Integer, Hash)> trials_trial_publications_with_http_info(id, opts)
+
+```ruby
+begin
+  # Trial publications
+  data, status_code, headers = api_instance.trials_trial_publications_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <TrialPublicationsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling TrialsApi->trials_trial_publications_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**TrialPublicationsResponse**](TrialPublicationsResponse.md)
 
 ### Authorization
 

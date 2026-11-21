@@ -12,6 +12,8 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**suppliers_provider_rwd_delivery**](SuppliersApi.md#suppliers_provider_rwd_delivery) | **GET** /api/v1/suppliers/{id}/provider_rwd_delivery | RX provider real-world data study delivery track record (HMA-EMA catalogue) |
 | [**suppliers_provider_rwd_delivery_study**](SuppliersApi.md#suppliers_provider_rwd_delivery_study) | **GET** /api/v1/suppliers/{id}/provider_rwd_delivery_study | RX provider real-world data study final-report dates below the floor (HMA-EMA catalogue) |
 | [**suppliers_provider_rwd_footprint**](SuppliersApi.md#suppliers_provider_rwd_footprint) | **GET** /api/v1/suppliers/{id}/provider_rwd_footprint | Supplier real-world data footprint (HMA-EMA catalogue) |
+| [**suppliers_rwd_us_network_memberships**](SuppliersApi.md#suppliers_rwd_us_network_memberships) | **GET** /api/v1/suppliers/{id}/rwd_us_network_memberships | US real-world data network membership (N3C) |
+| [**suppliers_supplier_rwd_declarations**](SuppliersApi.md#suppliers_supplier_rwd_declarations) | **GET** /api/v1/suppliers/{id}/supplier_rwd_declarations | Supplier declared real-world data facts |
 | [**suppliers_supplier_services**](SuppliersApi.md#suppliers_supplier_services) | **GET** /api/v1/suppliers/{id}/supplier_services | Supplier services |
 | [**suppliers_supplier_sites**](SuppliersApi.md#suppliers_supplier_sites) | **GET** /api/v1/suppliers/{id}/supplier_sites | Supplier sites |
 
@@ -623,6 +625,164 @@ end
 ### Return type
 
 [**ProviderRwdFootprintResponse**](ProviderRwdFootprintResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## suppliers_rwd_us_network_memberships
+
+> <RwdUsNetworkMembershipsResponse> suppliers_rwd_us_network_memberships(id, opts)
+
+US real-world data network membership (N3C)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::SuppliersApi.new
+id = 990502 # Integer | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # US real-world data network membership (N3C)
+  result = api_instance.suppliers_rwd_us_network_memberships(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling SuppliersApi->suppliers_rwd_us_network_memberships: #{e}"
+end
+```
+
+#### Using the suppliers_rwd_us_network_memberships_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<RwdUsNetworkMembershipsResponse>, Integer, Hash)> suppliers_rwd_us_network_memberships_with_http_info(id, opts)
+
+```ruby
+begin
+  # US real-world data network membership (N3C)
+  data, status_code, headers = api_instance.suppliers_rwd_us_network_memberships_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <RwdUsNetworkMembershipsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling SuppliersApi->suppliers_rwd_us_network_memberships_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **Integer** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**RwdUsNetworkMembershipsResponse**](RwdUsNetworkMembershipsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## suppliers_supplier_rwd_declarations
+
+> <SupplierRwdDeclarationsResponse> suppliers_supplier_rwd_declarations(id, opts)
+
+Supplier declared real-world data facts
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::SuppliersApi.new
+id = 990502 # Integer | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Supplier declared real-world data facts
+  result = api_instance.suppliers_supplier_rwd_declarations(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling SuppliersApi->suppliers_supplier_rwd_declarations: #{e}"
+end
+```
+
+#### Using the suppliers_supplier_rwd_declarations_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<SupplierRwdDeclarationsResponse>, Integer, Hash)> suppliers_supplier_rwd_declarations_with_http_info(id, opts)
+
+```ruby
+begin
+  # Supplier declared real-world data facts
+  data, status_code, headers = api_instance.suppliers_supplier_rwd_declarations_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <SupplierRwdDeclarationsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling SuppliersApi->suppliers_supplier_rwd_declarations_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **Integer** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**SupplierRwdDeclarationsResponse**](SupplierRwdDeclarationsResponse.md)
 
 ### Authorization
 

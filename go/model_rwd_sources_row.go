@@ -264,7 +264,7 @@ type RwdSourcesRow struct {
 	InformedConsentForUseOfDataForResearch NullableString `json:"informed_consent_for_use_of_data_for_research,omitempty"`
 	// A link to the source's governance details, as the holder registered it.
 	GovernanceDetailsLink NullableString `json:"governance_details_link,omitempty"`
-	// How many of the 35 capability and governance questions the holder answered (a count of answered form fields, not a measure of the data held).
+	// How many of the 35 capability and governance questions carry a Yes or No in the register export (a count of non-blank form fields, not a measure of the data held). The export cannot tell a No from an unanswered question, so this sits at or near 35 and does not measure how many questions the holder actually answered.
 	DeclaredCapabilityCount NullableInt32 `json:"declared_capability_count,omitempty"`
 	// How many such questions the form offers (35); the denominator of declared_capability_count.
 	DeclarableCapabilityCount NullableInt32 `json:"declarable_capability_count,omitempty"`

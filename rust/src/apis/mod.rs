@@ -131,6 +131,7 @@ pub mod rwd_networks_api;
 pub mod rwd_registers_api;
 pub mod rwd_sources_api;
 pub mod rwd_studies_api;
+pub mod rwd_us_networks_api;
 pub mod sites_api;
 pub mod subscriptions_api;
 pub mod suppliers_api;

@@ -74,11 +74,11 @@ type RwdInstitutionsRow struct {
 	InstitutionWebsite NullableString `json:"institution_website,omitempty"`
 	// The address of this entry on the HMA-EMA catalogue site (the register's URL LINK).
 	CatalogueUrl NullableString `json:"catalogue_url,omitempty"`
-	// Whether the institution declares it is open to industry-funded research; null on a catalogue name entry, where the export writes a default No that is not an answer.
+	// The register export's Yes or No to whether the institution is open to industry-funded research. The export cannot tell an unanswered question from No, so a false is register export: No, not a decline. Null on a catalogue name entry, where the export writes a default No that is not an answer.
 	OpenToIndustryFundedResearch NullableBool `json:"open_to_industry_funded_research,omitempty"`
-	// Whether the institution declares it collects data directly from patients; null on a catalogue name entry.
+	// The register export's Yes or No to whether the institution collects data directly from patients. The export cannot tell an unanswered question from No, so a false is register export: No. Null on a catalogue name entry.
 	CollectsDataDirectlyFromPatients NullableBool `json:"collects_data_directly_from_patients,omitempty"`
-	// Whether the entry declares an ENCePP partnership; null on a catalogue name entry, where the export writes a default No that is not an answer.
+	// The register export's Yes or No to whether the entry is an ENCePP partner. The export cannot tell an unanswered question from No, so a false is register export: No. Null on a catalogue name entry, where the export writes a default No that is not an answer.
 	IsEnceppPartner NullableBool `json:"is_encepp_partner,omitempty"`
 	// When the registrant last edited this catalogue entry. A different clock from last_refreshed_on: it dates the web form, not the database.
 	RecordUpdatedAt NullableTime `json:"record_updated_at,omitempty"`

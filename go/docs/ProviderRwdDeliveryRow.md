@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **MatchMethod** | Pointer to **NullableString** | match_method says how the provider was tied to the register institution: org_member_exact (through the supplier&#39;s resolved organization, match_confidence carried from that match), rx_name_key_exact (an exact match of the register institution&#39;s name key to the supplier&#39;s, match_confidence null, a name match and not a verified identity) or org_unit_of_entry (an organization unit of the supplier&#39;s organization, one-directional, match_confidence the bridge&#39;s own figure). Where a provider reaches one conductor by several routes the strongest wins, in that order, and match_methods lists every route. | [optional] 
 **MatchConfidence** | Pointer to **NullableFloat32** | The bridge&#39;s own confidence for the winning route, 0 to 1; null on an rx_name_key_exact row, whose exact name match defines none. Passed through, never computed here. | [optional] 
 **ConductorNameKey** | Pointer to **NullableString** | The normalised institution name key the conductor rollup is keyed on; every register institution whose name folds to it is one conductor. Not a vendor family. | [optional] 
+**ConductorId** | Pointer to **NullableString** | The conductor slug: the conductor name key with spaces as hyphens, the entry key of the rwd_conductors object type (the id in /app/rwd-conductors/&lt;id&gt;). | [optional] 
 **MatchedInstitutionIds** | Pointer to **[]string** | Every register Institution ID that routes the provider to the conductor name key (more than one when the register lists the name twice or two methods reach it). | [optional] 
 **MatchMethods** | Pointer to **[]string** | Every match method that routes the provider to this conductor name key; match_method is the strongest of them. | [optional] 
 **ConductorName** | Pointer to **NullableString** | The conductor&#39;s display name: one register spelling of the key. | [optional] 
@@ -368,6 +369,41 @@ HasConductorNameKey returns a boolean if a field has been set.
 `func (o *ProviderRwdDeliveryRow) UnsetConductorNameKey()`
 
 UnsetConductorNameKey ensures that no value is present for ConductorNameKey, not even an explicit nil
+### GetConductorId
+
+`func (o *ProviderRwdDeliveryRow) GetConductorId() string`
+
+GetConductorId returns the ConductorId field if non-nil, zero value otherwise.
+
+### GetConductorIdOk
+
+`func (o *ProviderRwdDeliveryRow) GetConductorIdOk() (*string, bool)`
+
+GetConductorIdOk returns a tuple with the ConductorId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConductorId
+
+`func (o *ProviderRwdDeliveryRow) SetConductorId(v string)`
+
+SetConductorId sets ConductorId field to given value.
+
+### HasConductorId
+
+`func (o *ProviderRwdDeliveryRow) HasConductorId() bool`
+
+HasConductorId returns a boolean if a field has been set.
+
+### SetConductorIdNil
+
+`func (o *ProviderRwdDeliveryRow) SetConductorIdNil(b bool)`
+
+ SetConductorIdNil sets the value for ConductorId to be an explicit nil
+
+### UnsetConductorId
+`func (o *ProviderRwdDeliveryRow) UnsetConductorId()`
+
+UnsetConductorId ensures that no value is present for ConductorId, not even an explicit nil
 ### GetMatchedInstitutionIds
 
 `func (o *ProviderRwdDeliveryRow) GetMatchedInstitutionIds() []string`

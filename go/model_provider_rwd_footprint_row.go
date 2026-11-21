@@ -39,6 +39,8 @@ type ProviderRwdFootprintRow struct {
 	EvidenceRefKind NullableString `json:"evidence_ref_kind,omitempty"`
 	// The register id of the study, data source or network, per evidence_ref_kind. Ids of different kinds can coincide; read it with evidence_ref_kind.
 	EvidenceRef NullableString `json:"evidence_ref,omitempty"`
+	// The register Study ID when evidence_ref_kind is rwd_study_id, otherwise null. The entry key of the rwd_studies object type: a study route returns the providers asserted against that study.
+	StudyId NullableString `json:"study_id,omitempty"`
 	// The register's own entity name (study title, data source name or network name), never prose.
 	EvidenceLabel NullableString `json:"evidence_label,omitempty"`
 	// The address of the register entity on the HMA-EMA catalogue site.
@@ -515,6 +517,48 @@ func (o *ProviderRwdFootprintRow) SetEvidenceRefNil() {
 // UnsetEvidenceRef ensures that no value is present for EvidenceRef, not even an explicit nil
 func (o *ProviderRwdFootprintRow) UnsetEvidenceRef() {
 	o.EvidenceRef.Unset()
+}
+
+// GetStudyId returns the StudyId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *ProviderRwdFootprintRow) GetStudyId() string {
+	if o == nil || IsNil(o.StudyId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.StudyId.Get()
+}
+
+// GetStudyIdOk returns a tuple with the StudyId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ProviderRwdFootprintRow) GetStudyIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.StudyId.Get(), o.StudyId.IsSet()
+}
+
+// HasStudyId returns a boolean if a field has been set.
+func (o *ProviderRwdFootprintRow) HasStudyId() bool {
+	if o != nil && o.StudyId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetStudyId gets a reference to the given NullableString and assigns it to the StudyId field.
+func (o *ProviderRwdFootprintRow) SetStudyId(v string) {
+	o.StudyId.Set(&v)
+}
+// SetStudyIdNil sets the value for StudyId to be an explicit nil
+func (o *ProviderRwdFootprintRow) SetStudyIdNil() {
+	o.StudyId.Set(nil)
+}
+
+// UnsetStudyId ensures that no value is present for StudyId, not even an explicit nil
+func (o *ProviderRwdFootprintRow) UnsetStudyId() {
+	o.StudyId.Unset()
 }
 
 // GetEvidenceLabel returns the EvidenceLabel field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1277,6 +1321,9 @@ func (o ProviderRwdFootprintRow) ToMap() (map[string]interface{}, error) {
 	if o.EvidenceRef.IsSet() {
 		toSerialize["evidence_ref"] = o.EvidenceRef.Get()
 	}
+	if o.StudyId.IsSet() {
+		toSerialize["study_id"] = o.StudyId.Get()
+	}
 	if o.EvidenceLabel.IsSet() {
 		toSerialize["evidence_label"] = o.EvidenceLabel.Get()
 	}
@@ -1363,6 +1410,7 @@ func (o *ProviderRwdFootprintRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "role")
 		delete(additionalProperties, "evidence_ref_kind")
 		delete(additionalProperties, "evidence_ref")
+		delete(additionalProperties, "study_id")
 		delete(additionalProperties, "evidence_label")
 		delete(additionalProperties, "catalogue_url")
 		delete(additionalProperties, "study_start_actual_on")

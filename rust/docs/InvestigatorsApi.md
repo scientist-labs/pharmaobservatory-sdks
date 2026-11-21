@@ -15,6 +15,7 @@ Method | HTTP request | Description
 [**investigators_period_investigator_trials**](InvestigatorsApi.md#investigators_period_investigator_trials) | **GET** /api/v1/investigators/{id}/investigator_trials | Investigator trials
 [**investigators_period_list**](InvestigatorsApi.md#investigators_period_list) | **GET** /api/v1/investigators | List investigators
 [**investigators_period_rare_disease_investigators**](InvestigatorsApi.md#investigators_period_rare_disease_investigators) | **GET** /api/v1/investigators/{id}/rare_disease_investigators | Rare disease investigators
+[**investigators_period_rwd_us_network_projects**](InvestigatorsApi.md#investigators_period_rwd_us_network_projects) | **GET** /api/v1/investigators/{id}/rwd_us_network_projects | US real-world data network projects (N3C)
 [**investigators_period_site_investigators**](InvestigatorsApi.md#investigators_period_site_investigators) | **GET** /api/v1/investigators/{id}/site_investigators | Site investigators
 [**investigators_period_target_investigators**](InvestigatorsApi.md#investigators_period_target_investigators) | **GET** /api/v1/investigators/{id}/target_investigators | Investigators on a target's trials
 [**investigators_period_trial_kols**](InvestigatorsApi.md#investigators_period_trial_kols) | **GET** /api/v1/investigators/{id}/trial_kols | Trial investigators
@@ -365,6 +366,39 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::RareDiseaseInvestigatorsResponse**](RareDiseaseInvestigatorsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## investigators_period_rwd_us_network_projects
+
+> models::RwdUsNetworkProjectsResponse investigators_period_rwd_us_network_projects(id, cursor, limit, sort, group_by, measure)
+US real-world data network projects (N3C)
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::RwdUsNetworkProjectsResponse**](RwdUsNetworkProjectsResponse.md)
 
 ### Authorization
 

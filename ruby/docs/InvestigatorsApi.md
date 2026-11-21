@@ -15,6 +15,7 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**investigators_investigator_trials**](InvestigatorsApi.md#investigators_investigator_trials) | **GET** /api/v1/investigators/{id}/investigator_trials | Investigator trials |
 | [**investigators_list**](InvestigatorsApi.md#investigators_list) | **GET** /api/v1/investigators | List investigators |
 | [**investigators_rare_disease_investigators**](InvestigatorsApi.md#investigators_rare_disease_investigators) | **GET** /api/v1/investigators/{id}/rare_disease_investigators | Rare disease investigators |
+| [**investigators_rwd_us_network_projects**](InvestigatorsApi.md#investigators_rwd_us_network_projects) | **GET** /api/v1/investigators/{id}/rwd_us_network_projects | US real-world data network projects (N3C) |
 | [**investigators_site_investigators**](InvestigatorsApi.md#investigators_site_investigators) | **GET** /api/v1/investigators/{id}/site_investigators | Site investigators |
 | [**investigators_target_investigators**](InvestigatorsApi.md#investigators_target_investigators) | **GET** /api/v1/investigators/{id}/target_investigators | Investigators on a target&#39;s trials |
 | [**investigators_trial_kols**](InvestigatorsApi.md#investigators_trial_kols) | **GET** /api/v1/investigators/{id}/trial_kols | Trial investigators |
@@ -864,6 +865,85 @@ end
 ### Return type
 
 [**RareDiseaseInvestigatorsResponse**](RareDiseaseInvestigatorsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## investigators_rwd_us_network_projects
+
+> <RwdUsNetworkProjectsResponse> investigators_rwd_us_network_projects(id, opts)
+
+US real-world data network projects (N3C)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::InvestigatorsApi.new
+id = 'npi:9900000381' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # US real-world data network projects (N3C)
+  result = api_instance.investigators_rwd_us_network_projects(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling InvestigatorsApi->investigators_rwd_us_network_projects: #{e}"
+end
+```
+
+#### Using the investigators_rwd_us_network_projects_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<RwdUsNetworkProjectsResponse>, Integer, Hash)> investigators_rwd_us_network_projects_with_http_info(id, opts)
+
+```ruby
+begin
+  # US real-world data network projects (N3C)
+  data, status_code, headers = api_instance.investigators_rwd_us_network_projects_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <RwdUsNetworkProjectsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling InvestigatorsApi->investigators_rwd_us_network_projects_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**RwdUsNetworkProjectsResponse**](RwdUsNetworkProjectsResponse.md)
 
 ### Authorization
 

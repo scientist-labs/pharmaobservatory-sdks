@@ -380,7 +380,7 @@ pub struct RwdSourcesRow {
     /// A link to the source's governance details, as the holder registered it.
     #[serde(rename = "governance_details_link", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub governance_details_link: Option<Option<String>>,
-    /// How many of the 35 capability and governance questions the holder answered (a count of answered form fields, not a measure of the data held).
+    /// How many of the 35 capability and governance questions carry a Yes or No in the register export (a count of non-blank form fields, not a measure of the data held). The export cannot tell a No from an unanswered question, so this sits at or near 35 and does not measure how many questions the holder actually answered.
     #[serde(rename = "declared_capability_count", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub declared_capability_count: Option<Option<i32>>,
     /// How many such questions the form offers (35); the denominator of declared_capability_count.

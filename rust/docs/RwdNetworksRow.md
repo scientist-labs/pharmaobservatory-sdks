@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **sources_of_funding** | Option<**String**> | The sources of funding the network declares, as typed. | [optional]
 **network_website** | Option<**String**> | The network's website as the register holds it. | [optional]
 **catalogue_url** | Option<**String**> | The address of this entry on the HMA-EMA catalogue site (the register's URL LINK). | [optional]
-**is_encepp_partner** | Option<**bool**> | Whether the entry declares an ENCePP partnership; null on a catalogue name entry, where the export writes a default No that is not an answer. | [optional]
+**is_encepp_partner** | Option<**bool**> | The register export's Yes or No to whether the entry is an ENCePP partner. The export cannot tell an unanswered question from No, so a false is register export: No. Null on a catalogue name entry, where the export writes a default No that is not an answer. | [optional]
 **declared_member_count** | Option<**i32**> | How many member institutions the network's own list names; zero says the network named nobody, not that it has no members. | [optional]
 **declared_member_name_keys** | Option<**Vec<String>**> | The normalised name keys of the declared members. | [optional]
 **declared_member_names** | Option<**Vec<String>**> | The names of the declared members as the register spells them. | [optional]

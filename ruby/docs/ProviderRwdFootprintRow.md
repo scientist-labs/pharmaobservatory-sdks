@@ -14,6 +14,7 @@
 | **role** | **String** | What the register entity is to the institution: conductor or additional_institution (a study), custodian (a data source&#39;s holder) or network_member (a network&#39;s member institution). | [optional] |
 | **evidence_ref_kind** | **String** | Which register entity evidence_ref names: rwd_study_id, rwd_data_source_id or rwd_network_id. | [optional] |
 | **evidence_ref** | **String** | The register id of the study, data source or network, per evidence_ref_kind. Ids of different kinds can coincide; read it with evidence_ref_kind. | [optional] |
+| **study_id** | **String** | The register Study ID when evidence_ref_kind is rwd_study_id, otherwise null. The entry key of the rwd_studies object type: a study route returns the providers asserted against that study. | [optional] |
 | **evidence_label** | **String** | The register&#39;s own entity name (study title, data source name or network name), never prose. | [optional] |
 | **catalogue_url** | **String** | The address of the register entity on the HMA-EMA catalogue site. | [optional] |
 | **study_start_actual_on** | **Date** | Study rows only: the registered actual start date; null otherwise and where the study has none. | [optional] |
@@ -49,6 +50,7 @@ instance = PharmaObservatory::ProviderRwdFootprintRow.new(
   role: null,
   evidence_ref_kind: null,
   evidence_ref: null,
+  study_id: null,
   evidence_label: null,
   catalogue_url: null,
   study_start_actual_on: null,

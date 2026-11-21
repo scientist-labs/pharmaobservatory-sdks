@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **role** | Option<**String**> | What the register entity is to the institution: conductor or additional_institution (a study), custodian (a data source's holder) or network_member (a network's member institution). | [optional]
 **evidence_ref_kind** | Option<**String**> | Which register entity evidence_ref names: rwd_study_id, rwd_data_source_id or rwd_network_id. | [optional]
 **evidence_ref** | Option<**String**> | The register id of the study, data source or network, per evidence_ref_kind. Ids of different kinds can coincide; read it with evidence_ref_kind. | [optional]
+**study_id** | Option<**String**> | The register Study ID when evidence_ref_kind is rwd_study_id, otherwise null. The entry key of the rwd_studies object type: a study route returns the providers asserted against that study. | [optional]
 **evidence_label** | Option<**String**> | The register's own entity name (study title, data source name or network name), never prose. | [optional]
 **catalogue_url** | Option<**String**> | The address of the register entity on the HMA-EMA catalogue site. | [optional]
 **study_start_actual_on** | Option<[**String**](string.md)> | Study rows only: the registered actual start date; null otherwise and where the study has none. | [optional]

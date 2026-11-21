@@ -21,6 +21,7 @@ api_rwd_networks.go
 api_rwd_registers.go
 api_rwd_sources.go
 api_rwd_studies.go
+api_rwd_us_networks.go
 api_sites.go
 api_subscriptions.go
 api_suppliers.go
@@ -159,6 +160,10 @@ docs/ConditionRecruitmentByPhaseResponse.md
 docs/ConditionRecruitmentByPhaseRow.md
 docs/ConditionRecruitmentDurationResponse.md
 docs/ConditionRecruitmentDurationRow.md
+docs/ConditionSiteCoverageResponse.md
+docs/ConditionSiteCoverageRow.md
+docs/ConditionSiteYearsResponse.md
+docs/ConditionSiteYearsRow.md
 docs/ConditionSitesResponse.md
 docs/ConditionSitesRow.md
 docs/ConditionTrialStartForecastResponse.md
@@ -420,6 +425,14 @@ docs/RwdStudyDrugsResponse.md
 docs/RwdStudyDrugsRow.md
 docs/RwdStudyMilestonesResponse.md
 docs/RwdStudyMilestonesRow.md
+docs/RwdUsNetworkMembershipsResponse.md
+docs/RwdUsNetworkMembershipsRow.md
+docs/RwdUsNetworkProjectsResponse.md
+docs/RwdUsNetworkProjectsRow.md
+docs/RwdUsNetworksAPI.md
+docs/RwdUsNetworksRecord.md
+docs/RwdUsNetworksResponse.md
+docs/RwdUsNetworksRow.md
 docs/RwdWithheldFieldsResponse.md
 docs/RwdWithheldFieldsRow.md
 docs/SbtiCrosscheckResponse.md
@@ -475,6 +488,8 @@ docs/SubscriptionsList200ResponseSubscriptionsInnerTarget.md
 docs/SubscriptionsList200ResponseSubscriptionsInnerTargetFilters.md
 docs/SupplierCapabilityEsgResponse.md
 docs/SupplierCapabilityEsgRow.md
+docs/SupplierRwdDeclarationsResponse.md
+docs/SupplierRwdDeclarationsRow.md
 docs/SupplierServicesResponse.md
 docs/SupplierServicesRow.md
 docs/SupplierSitesResponse.md
@@ -529,6 +544,8 @@ docs/TrialKolsResponse.md
 docs/TrialKolsRow.md
 docs/TrialOutcomeMeasuresResponse.md
 docs/TrialOutcomeMeasuresRow.md
+docs/TrialPublicationsResponse.md
+docs/TrialPublicationsRow.md
 docs/TrialResearchPaymentsResponse.md
 docs/TrialResearchPaymentsRow.md
 docs/TrialSiteHistoryResponse.md
@@ -675,6 +692,10 @@ model_condition_recruitment_by_phase_response.go
 model_condition_recruitment_by_phase_row.go
 model_condition_recruitment_duration_response.go
 model_condition_recruitment_duration_row.go
+model_condition_site_coverage_response.go
+model_condition_site_coverage_row.go
+model_condition_site_years_response.go
+model_condition_site_years_row.go
 model_condition_sites_response.go
 model_condition_sites_row.go
 model_condition_trial_start_forecast_response.go
@@ -920,6 +941,13 @@ model_rwd_study_drugs_response.go
 model_rwd_study_drugs_row.go
 model_rwd_study_milestones_response.go
 model_rwd_study_milestones_row.go
+model_rwd_us_network_memberships_response.go
+model_rwd_us_network_memberships_row.go
+model_rwd_us_network_projects_response.go
+model_rwd_us_network_projects_row.go
+model_rwd_us_networks_record.go
+model_rwd_us_networks_response.go
+model_rwd_us_networks_row.go
 model_rwd_withheld_fields_response.go
 model_rwd_withheld_fields_row.go
 model_sbti_crosscheck_response.go
@@ -973,6 +1001,8 @@ model_subscriptions_list_200_response_subscriptions_inner_target.go
 model_subscriptions_list_200_response_subscriptions_inner_target_filters.go
 model_supplier_capability_esg_response.go
 model_supplier_capability_esg_row.go
+model_supplier_rwd_declarations_response.go
+model_supplier_rwd_declarations_row.go
 model_supplier_services_response.go
 model_supplier_services_row.go
 model_supplier_sites_response.go
@@ -1025,6 +1055,8 @@ model_trial_kols_response.go
 model_trial_kols_row.go
 model_trial_outcome_measures_response.go
 model_trial_outcome_measures_row.go
+model_trial_publications_response.go
+model_trial_publications_row.go
 model_trial_research_payments_response.go
 model_trial_research_payments_row.go
 model_trial_site_history_response.go

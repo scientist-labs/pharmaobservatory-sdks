@@ -395,6 +395,14 @@ docs/RwdStudyDrugsResponse.md
 docs/RwdStudyDrugsRow.md
 docs/RwdStudyMilestonesResponse.md
 docs/RwdStudyMilestonesRow.md
+docs/RwdUsNetworkMembershipsResponse.md
+docs/RwdUsNetworkMembershipsRow.md
+docs/RwdUsNetworkProjectsResponse.md
+docs/RwdUsNetworkProjectsRow.md
+docs/RwdUsNetworksApi.md
+docs/RwdUsNetworksRecord.md
+docs/RwdUsNetworksResponse.md
+docs/RwdUsNetworksRow.md
 docs/RwdWithheldFieldsResponse.md
 docs/RwdWithheldFieldsRow.md
 docs/SbtiCrosscheckResponse.md
@@ -450,6 +458,8 @@ docs/SubscriptionsList200ResponseSubscriptionsInnerTarget.md
 docs/SubscriptionsList200ResponseSubscriptionsInnerTargetFilters.md
 docs/SupplierCapabilityEsgResponse.md
 docs/SupplierCapabilityEsgRow.md
+docs/SupplierRwdDeclarationsResponse.md
+docs/SupplierRwdDeclarationsRow.md
 docs/SupplierServicesResponse.md
 docs/SupplierServicesRow.md
 docs/SupplierSitesResponse.md
@@ -504,6 +514,8 @@ docs/TrialKolsResponse.md
 docs/TrialKolsRow.md
 docs/TrialOutcomeMeasuresResponse.md
 docs/TrialOutcomeMeasuresRow.md
+docs/TrialPublicationsResponse.md
+docs/TrialPublicationsRow.md
 docs/TrialResearchPaymentsResponse.md
 docs/TrialResearchPaymentsRow.md
 docs/TrialSiteHistoryResponse.md
@@ -542,6 +554,7 @@ lib/pharmaobservatory/api/rwd_networks_api.rb
 lib/pharmaobservatory/api/rwd_registers_api.rb
 lib/pharmaobservatory/api/rwd_sources_api.rb
 lib/pharmaobservatory/api/rwd_studies_api.rb
+lib/pharmaobservatory/api/rwd_us_networks_api.rb
 lib/pharmaobservatory/api/sites_api.rb
 lib/pharmaobservatory/api/subscriptions_api.rb
 lib/pharmaobservatory/api/suppliers_api.rb
@@ -922,6 +935,13 @@ lib/pharmaobservatory/models/rwd_study_drugs_response.rb
 lib/pharmaobservatory/models/rwd_study_drugs_row.rb
 lib/pharmaobservatory/models/rwd_study_milestones_response.rb
 lib/pharmaobservatory/models/rwd_study_milestones_row.rb
+lib/pharmaobservatory/models/rwd_us_network_memberships_response.rb
+lib/pharmaobservatory/models/rwd_us_network_memberships_row.rb
+lib/pharmaobservatory/models/rwd_us_network_projects_response.rb
+lib/pharmaobservatory/models/rwd_us_network_projects_row.rb
+lib/pharmaobservatory/models/rwd_us_networks_record.rb
+lib/pharmaobservatory/models/rwd_us_networks_response.rb
+lib/pharmaobservatory/models/rwd_us_networks_row.rb
 lib/pharmaobservatory/models/rwd_withheld_fields_response.rb
 lib/pharmaobservatory/models/rwd_withheld_fields_row.rb
 lib/pharmaobservatory/models/sbti_crosscheck_response.rb
@@ -975,6 +995,8 @@ lib/pharmaobservatory/models/subscriptions_list200_response_subscriptions_inner_
 lib/pharmaobservatory/models/subscriptions_list200_response_subscriptions_inner_target_filters.rb
 lib/pharmaobservatory/models/supplier_capability_esg_response.rb
 lib/pharmaobservatory/models/supplier_capability_esg_row.rb
+lib/pharmaobservatory/models/supplier_rwd_declarations_response.rb
+lib/pharmaobservatory/models/supplier_rwd_declarations_row.rb
 lib/pharmaobservatory/models/supplier_services_response.rb
 lib/pharmaobservatory/models/supplier_services_row.rb
 lib/pharmaobservatory/models/supplier_sites_response.rb
@@ -1027,6 +1049,8 @@ lib/pharmaobservatory/models/trial_kols_response.rb
 lib/pharmaobservatory/models/trial_kols_row.rb
 lib/pharmaobservatory/models/trial_outcome_measures_response.rb
 lib/pharmaobservatory/models/trial_outcome_measures_row.rb
+lib/pharmaobservatory/models/trial_publications_response.rb
+lib/pharmaobservatory/models/trial_publications_row.rb
 lib/pharmaobservatory/models/trial_research_payments_response.rb
 lib/pharmaobservatory/models/trial_research_payments_row.rb
 lib/pharmaobservatory/models/trial_site_history_response.rb
@@ -1065,6 +1089,7 @@ spec/api/rwd_networks_api_spec.rb
 spec/api/rwd_registers_api_spec.rb
 spec/api/rwd_sources_api_spec.rb
 spec/api/rwd_studies_api_spec.rb
+spec/api/rwd_us_networks_api_spec.rb
 spec/api/sites_api_spec.rb
 spec/api/subscriptions_api_spec.rb
 spec/api/suppliers_api_spec.rb
@@ -1442,6 +1467,13 @@ spec/models/rwd_study_drugs_response_spec.rb
 spec/models/rwd_study_drugs_row_spec.rb
 spec/models/rwd_study_milestones_response_spec.rb
 spec/models/rwd_study_milestones_row_spec.rb
+spec/models/rwd_us_network_memberships_response_spec.rb
+spec/models/rwd_us_network_memberships_row_spec.rb
+spec/models/rwd_us_network_projects_response_spec.rb
+spec/models/rwd_us_network_projects_row_spec.rb
+spec/models/rwd_us_networks_record_spec.rb
+spec/models/rwd_us_networks_response_spec.rb
+spec/models/rwd_us_networks_row_spec.rb
 spec/models/rwd_withheld_fields_response_spec.rb
 spec/models/rwd_withheld_fields_row_spec.rb
 spec/models/sbti_crosscheck_response_spec.rb
@@ -1495,6 +1527,8 @@ spec/models/subscriptions_list200_response_subscriptions_inner_target_filters_sp
 spec/models/subscriptions_list200_response_subscriptions_inner_target_spec.rb
 spec/models/supplier_capability_esg_response_spec.rb
 spec/models/supplier_capability_esg_row_spec.rb
+spec/models/supplier_rwd_declarations_response_spec.rb
+spec/models/supplier_rwd_declarations_row_spec.rb
 spec/models/supplier_services_response_spec.rb
 spec/models/supplier_services_row_spec.rb
 spec/models/supplier_sites_response_spec.rb
@@ -1547,6 +1581,8 @@ spec/models/trial_kols_response_spec.rb
 spec/models/trial_kols_row_spec.rb
 spec/models/trial_outcome_measures_response_spec.rb
 spec/models/trial_outcome_measures_row_spec.rb
+spec/models/trial_publications_response_spec.rb
+spec/models/trial_publications_row_spec.rb
 spec/models/trial_research_payments_response_spec.rb
 spec/models/trial_research_payments_row_spec.rb
 spec/models/trial_site_history_response_spec.rb
