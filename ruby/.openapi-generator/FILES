@@ -134,6 +134,10 @@ docs/ConditionRecruitmentByPhaseResponse.md
 docs/ConditionRecruitmentByPhaseRow.md
 docs/ConditionRecruitmentDurationResponse.md
 docs/ConditionRecruitmentDurationRow.md
+docs/ConditionSiteCoverageResponse.md
+docs/ConditionSiteCoverageRow.md
+docs/ConditionSiteYearsResponse.md
+docs/ConditionSiteYearsRow.md
 docs/ConditionSitesResponse.md
 docs/ConditionSitesRow.md
 docs/ConditionTrialStartForecastResponse.md
@@ -690,6 +694,10 @@ lib/pharmaobservatory/models/condition_recruitment_by_phase_response.rb
 lib/pharmaobservatory/models/condition_recruitment_by_phase_row.rb
 lib/pharmaobservatory/models/condition_recruitment_duration_response.rb
 lib/pharmaobservatory/models/condition_recruitment_duration_row.rb
+lib/pharmaobservatory/models/condition_site_coverage_response.rb
+lib/pharmaobservatory/models/condition_site_coverage_row.rb
+lib/pharmaobservatory/models/condition_site_years_response.rb
+lib/pharmaobservatory/models/condition_site_years_row.rb
 lib/pharmaobservatory/models/condition_sites_response.rb
 lib/pharmaobservatory/models/condition_sites_row.rb
 lib/pharmaobservatory/models/condition_trial_start_forecast_response.rb
@@ -1222,6 +1230,10 @@ spec/models/condition_recruitment_by_phase_response_spec.rb
 spec/models/condition_recruitment_by_phase_row_spec.rb
 spec/models/condition_recruitment_duration_response_spec.rb
 spec/models/condition_recruitment_duration_row_spec.rb
+spec/models/condition_site_coverage_response_spec.rb
+spec/models/condition_site_coverage_row_spec.rb
+spec/models/condition_site_years_response_spec.rb
+spec/models/condition_site_years_row_spec.rb
 spec/models/condition_sites_response_spec.rb
 spec/models/condition_sites_row_spec.rb
 spec/models/condition_trial_start_forecast_response_spec.rb

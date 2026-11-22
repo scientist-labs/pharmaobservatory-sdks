@@ -14,6 +14,8 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**conditions_condition_publications**](ConditionsApi.md#conditions_condition_publications) | **GET** /api/v1/conditions/{id}/condition_publications | Condition publications |
 | [**conditions_condition_recruitment_by_phase**](ConditionsApi.md#conditions_condition_recruitment_by_phase) | **GET** /api/v1/conditions/{id}/condition_recruitment_by_phase | Trial recruitment duration by condition and phase |
 | [**conditions_condition_recruitment_duration**](ConditionsApi.md#conditions_condition_recruitment_duration) | **GET** /api/v1/conditions/{id}/condition_recruitment_duration | Trial recruitment duration by condition |
+| [**conditions_condition_site_coverage**](ConditionsApi.md#conditions_condition_site_coverage) | **GET** /api/v1/conditions/{id}/condition_site_coverage | Condition site coverage |
+| [**conditions_condition_site_years**](ConditionsApi.md#conditions_condition_site_years) | **GET** /api/v1/conditions/{id}/condition_site_years | Condition site years |
 | [**conditions_condition_sites**](ConditionsApi.md#conditions_condition_sites) | **GET** /api/v1/conditions/{id}/condition_sites | Condition sites |
 | [**conditions_condition_trial_start_forecast**](ConditionsApi.md#conditions_condition_trial_start_forecast) | **GET** /api/v1/conditions/{id}/condition_trial_start_forecast | Trial-start forecast by condition |
 | [**conditions_condition_trials**](ConditionsApi.md#conditions_condition_trials) | **GET** /api/v1/conditions/{id}/condition_trials | Condition trials |
@@ -806,6 +808,164 @@ end
 ### Return type
 
 [**ConditionRecruitmentDurationResponse**](ConditionRecruitmentDurationResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## conditions_condition_site_coverage
+
+> <ConditionSiteCoverageResponse> conditions_condition_site_coverage(id, opts)
+
+Condition site coverage
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::ConditionsApi.new
+id = 'D001523' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Condition site coverage
+  result = api_instance.conditions_condition_site_coverage(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_condition_site_coverage: #{e}"
+end
+```
+
+#### Using the conditions_condition_site_coverage_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ConditionSiteCoverageResponse>, Integer, Hash)> conditions_condition_site_coverage_with_http_info(id, opts)
+
+```ruby
+begin
+  # Condition site coverage
+  data, status_code, headers = api_instance.conditions_condition_site_coverage_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ConditionSiteCoverageResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_condition_site_coverage_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**ConditionSiteCoverageResponse**](ConditionSiteCoverageResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## conditions_condition_site_years
+
+> <ConditionSiteYearsResponse> conditions_condition_site_years(id, opts)
+
+Condition site years
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::ConditionsApi.new
+id = 'D001523' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Condition site years
+  result = api_instance.conditions_condition_site_years(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_condition_site_years: #{e}"
+end
+```
+
+#### Using the conditions_condition_site_years_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ConditionSiteYearsResponse>, Integer, Hash)> conditions_condition_site_years_with_http_info(id, opts)
+
+```ruby
+begin
+  # Condition site years
+  data, status_code, headers = api_instance.conditions_condition_site_years_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ConditionSiteYearsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_condition_site_years_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**ConditionSiteYearsResponse**](ConditionSiteYearsResponse.md)
 
 ### Authorization
 
