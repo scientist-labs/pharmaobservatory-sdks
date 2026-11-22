@@ -55,7 +55,7 @@ module PharmaObservatory
     # The address of this entry on the HMA-EMA catalogue site (the register's URL LINK).
     attr_accessor :catalogue_url
 
-    # Whether the entry declares an ENCePP partnership; null on a catalogue name entry, where the export writes a default No that is not an answer.
+    # The register export's Yes or No to whether the entry is an ENCePP partner. The export cannot tell an unanswered question from No, so a false is register export: No. Null on a catalogue name entry, where the export writes a default No that is not an answer.
     attr_accessor :is_encepp_partner
 
     # How many member institutions the network's own list names; zero says the network named nobody, not that it has no members.

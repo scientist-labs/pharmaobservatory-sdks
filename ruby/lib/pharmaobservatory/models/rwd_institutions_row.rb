@@ -97,13 +97,13 @@ module PharmaObservatory
     # The address of this entry on the HMA-EMA catalogue site (the register's URL LINK).
     attr_accessor :catalogue_url
 
-    # Whether the institution declares it is open to industry-funded research; null on a catalogue name entry, where the export writes a default No that is not an answer.
+    # The register export's Yes or No to whether the institution is open to industry-funded research. The export cannot tell an unanswered question from No, so a false is register export: No, not a decline. Null on a catalogue name entry, where the export writes a default No that is not an answer.
     attr_accessor :open_to_industry_funded_research
 
-    # Whether the institution declares it collects data directly from patients; null on a catalogue name entry.
+    # The register export's Yes or No to whether the institution collects data directly from patients. The export cannot tell an unanswered question from No, so a false is register export: No. Null on a catalogue name entry.
     attr_accessor :collects_data_directly_from_patients
 
-    # Whether the entry declares an ENCePP partnership; null on a catalogue name entry, where the export writes a default No that is not an answer.
+    # The register export's Yes or No to whether the entry is an ENCePP partner. The export cannot tell an unanswered question from No, so a false is register export: No. Null on a catalogue name entry, where the export writes a default No that is not an answer.
     attr_accessor :is_encepp_partner
 
     # When the registrant last edited this catalogue entry. A different clock from last_refreshed_on: it dates the web form, not the database.
