@@ -1253,6 +1253,416 @@ func (a *ConditionsAPIService) ConditionsConditionInvestigatorOrganizationsExecu
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiConditionsConditionLiteratureRequest struct {
+	ctx context.Context
+	ApiService *ConditionsAPIService
+	id string
+	cursor *string
+	limit *int32
+	sort *string
+	groupBy *string
+	measure *string
+}
+
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiConditionsConditionLiteratureRequest) Cursor(cursor string) ApiConditionsConditionLiteratureRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
+func (r ApiConditionsConditionLiteratureRequest) Limit(limit int32) ApiConditionsConditionLiteratureRequest {
+	r.limit = &limit
+	return r
+}
+
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiConditionsConditionLiteratureRequest) Sort(sort string) ApiConditionsConditionLiteratureRequest {
+	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiConditionsConditionLiteratureRequest) GroupBy(groupBy string) ApiConditionsConditionLiteratureRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiConditionsConditionLiteratureRequest) Measure(measure string) ApiConditionsConditionLiteratureRequest {
+	r.measure = &measure
+	return r
+}
+
+func (r ApiConditionsConditionLiteratureRequest) Execute() (*ConditionLiteratureResponse, *http.Response, error) {
+	return r.ApiService.ConditionsConditionLiteratureExecute(r)
+}
+
+/*
+ConditionsConditionLiterature Condition literature (MeSH-indexed, 2016 onward)
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiConditionsConditionLiteratureRequest
+*/
+func (a *ConditionsAPIService) ConditionsConditionLiterature(ctx context.Context, id string) ApiConditionsConditionLiteratureRequest {
+	return ApiConditionsConditionLiteratureRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return ConditionLiteratureResponse
+func (a *ConditionsAPIService) ConditionsConditionLiteratureExecute(r ApiConditionsConditionLiteratureRequest) (*ConditionLiteratureResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ConditionLiteratureResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsAPIService.ConditionsConditionLiterature")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/conditions/{id}/condition_literature"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiConditionsConditionLiteratureOrgsRequest struct {
+	ctx context.Context
+	ApiService *ConditionsAPIService
+	id string
+	cursor *string
+	limit *int32
+	sort *string
+	groupBy *string
+	measure *string
+}
+
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiConditionsConditionLiteratureOrgsRequest) Cursor(cursor string) ApiConditionsConditionLiteratureOrgsRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
+func (r ApiConditionsConditionLiteratureOrgsRequest) Limit(limit int32) ApiConditionsConditionLiteratureOrgsRequest {
+	r.limit = &limit
+	return r
+}
+
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiConditionsConditionLiteratureOrgsRequest) Sort(sort string) ApiConditionsConditionLiteratureOrgsRequest {
+	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiConditionsConditionLiteratureOrgsRequest) GroupBy(groupBy string) ApiConditionsConditionLiteratureOrgsRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiConditionsConditionLiteratureOrgsRequest) Measure(measure string) ApiConditionsConditionLiteratureOrgsRequest {
+	r.measure = &measure
+	return r
+}
+
+func (r ApiConditionsConditionLiteratureOrgsRequest) Execute() (*ConditionLiteratureOrgsResponse, *http.Response, error) {
+	return r.ApiService.ConditionsConditionLiteratureOrgsExecute(r)
+}
+
+/*
+ConditionsConditionLiteratureOrgs Condition literature, most active institutions
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiConditionsConditionLiteratureOrgsRequest
+*/
+func (a *ConditionsAPIService) ConditionsConditionLiteratureOrgs(ctx context.Context, id string) ApiConditionsConditionLiteratureOrgsRequest {
+	return ApiConditionsConditionLiteratureOrgsRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return ConditionLiteratureOrgsResponse
+func (a *ConditionsAPIService) ConditionsConditionLiteratureOrgsExecute(r ApiConditionsConditionLiteratureOrgsRequest) (*ConditionLiteratureOrgsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ConditionLiteratureOrgsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConditionsAPIService.ConditionsConditionLiteratureOrgs")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/conditions/{id}/condition_literature_orgs"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiConditionsConditionPrevalenceRequest struct {
 	ctx context.Context
 	ApiService *ConditionsAPIService

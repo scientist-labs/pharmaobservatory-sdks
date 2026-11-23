@@ -13,6 +13,8 @@ Method | HTTP request | Description
 [**biomarkers_period_biomarker_evidence**](BiomarkersApi.md#biomarkers_period_biomarker_evidence) | **GET** /api/v1/biomarkers/{id}/biomarker_evidence | Biomarker evidence
 [**biomarkers_period_biomarker_evidence_by_year**](BiomarkersApi.md#biomarkers_period_biomarker_evidence_by_year) | **GET** /api/v1/biomarkers/{id}/biomarker_evidence_by_year | Biomarker evidence by year (trial and publication mentions)
 [**biomarkers_period_biomarker_literature**](BiomarkersApi.md#biomarkers_period_biomarker_literature) | **GET** /api/v1/biomarkers/{id}/biomarker_literature | Trial-cited literature mentions
+[**biomarkers_period_biomarker_literature_all**](BiomarkersApi.md#biomarkers_period_biomarker_literature_all) | **GET** /api/v1/biomarkers/{id}/biomarker_literature_all | Biomarker literature, all MeSH-indexed papers (2016 onward)
+[**biomarkers_period_biomarker_literature_orgs**](BiomarkersApi.md#biomarkers_period_biomarker_literature_orgs) | **GET** /api/v1/biomarkers/{id}/biomarker_literature_orgs | Biomarker literature, most active institutions
 [**biomarkers_period_biomarker_publishing_companies**](BiomarkersApi.md#biomarkers_period_biomarker_publishing_companies) | **GET** /api/v1/biomarkers/{id}/biomarker_publishing_companies | Companies publishing on a biomarker
 [**biomarkers_period_biomarker_relations**](BiomarkersApi.md#biomarkers_period_biomarker_relations) | **GET** /api/v1/biomarkers/{id}/biomarker_relations | Literature-extracted relations
 [**biomarkers_period_biomarker_sample_coverage**](BiomarkersApi.md#biomarkers_period_biomarker_sample_coverage) | **GET** /api/v1/biomarkers/{id}/biomarker_sample_coverage | Human sample screening coverage (GDC)
@@ -311,6 +313,72 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::BiomarkerLiteratureResponse**](BiomarkerLiteratureResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## biomarkers_period_biomarker_literature_all
+
+> models::BiomarkerLiteratureAllResponse biomarkers_period_biomarker_literature_all(id, cursor, limit, sort, group_by, measure)
+Biomarker literature, all MeSH-indexed papers (2016 onward)
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::BiomarkerLiteratureAllResponse**](BiomarkerLiteratureAllResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## biomarkers_period_biomarker_literature_orgs
+
+> models::BiomarkerLiteratureOrgsResponse biomarkers_period_biomarker_literature_orgs(id, cursor, limit, sort, group_by, measure)
+Biomarker literature, most active institutions
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::BiomarkerLiteratureOrgsResponse**](BiomarkerLiteratureOrgsResponse.md)
 
 ### Authorization
 

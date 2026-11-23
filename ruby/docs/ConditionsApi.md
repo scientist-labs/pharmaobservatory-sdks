@@ -10,6 +10,8 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**conditions_condition_delivery**](ConditionsApi.md#conditions_condition_delivery) | **GET** /api/v1/conditions/{id}/condition_delivery | Condition delivery |
 | [**conditions_condition_drugs**](ConditionsApi.md#conditions_condition_drugs) | **GET** /api/v1/conditions/{id}/condition_drugs | Condition drugs |
 | [**conditions_condition_investigator_organizations**](ConditionsApi.md#conditions_condition_investigator_organizations) | **GET** /api/v1/conditions/{id}/condition_investigator_organizations | Organizations of a condition&#39;s investigators |
+| [**conditions_condition_literature**](ConditionsApi.md#conditions_condition_literature) | **GET** /api/v1/conditions/{id}/condition_literature | Condition literature (MeSH-indexed, 2016 onward) |
+| [**conditions_condition_literature_orgs**](ConditionsApi.md#conditions_condition_literature_orgs) | **GET** /api/v1/conditions/{id}/condition_literature_orgs | Condition literature, most active institutions |
 | [**conditions_condition_prevalence**](ConditionsApi.md#conditions_condition_prevalence) | **GET** /api/v1/conditions/{id}/condition_prevalence | Condition prevalence |
 | [**conditions_condition_publications**](ConditionsApi.md#conditions_condition_publications) | **GET** /api/v1/conditions/{id}/condition_publications | Condition publications |
 | [**conditions_condition_recruitment_by_phase**](ConditionsApi.md#conditions_condition_recruitment_by_phase) | **GET** /api/v1/conditions/{id}/condition_recruitment_by_phase | Trial recruitment duration by condition and phase |
@@ -492,6 +494,164 @@ end
 ### Return type
 
 [**ConditionInvestigatorOrganizationsResponse**](ConditionInvestigatorOrganizationsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## conditions_condition_literature
+
+> <ConditionLiteratureResponse> conditions_condition_literature(id, opts)
+
+Condition literature (MeSH-indexed, 2016 onward)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::ConditionsApi.new
+id = 'D001523' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Condition literature (MeSH-indexed, 2016 onward)
+  result = api_instance.conditions_condition_literature(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_condition_literature: #{e}"
+end
+```
+
+#### Using the conditions_condition_literature_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ConditionLiteratureResponse>, Integer, Hash)> conditions_condition_literature_with_http_info(id, opts)
+
+```ruby
+begin
+  # Condition literature (MeSH-indexed, 2016 onward)
+  data, status_code, headers = api_instance.conditions_condition_literature_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ConditionLiteratureResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_condition_literature_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**ConditionLiteratureResponse**](ConditionLiteratureResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## conditions_condition_literature_orgs
+
+> <ConditionLiteratureOrgsResponse> conditions_condition_literature_orgs(id, opts)
+
+Condition literature, most active institutions
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::ConditionsApi.new
+id = 'D001523' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Condition literature, most active institutions
+  result = api_instance.conditions_condition_literature_orgs(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_condition_literature_orgs: #{e}"
+end
+```
+
+#### Using the conditions_condition_literature_orgs_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ConditionLiteratureOrgsResponse>, Integer, Hash)> conditions_condition_literature_orgs_with_http_info(id, opts)
+
+```ruby
+begin
+  # Condition literature, most active institutions
+  data, status_code, headers = api_instance.conditions_condition_literature_orgs_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ConditionLiteratureOrgsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling ConditionsApi->conditions_condition_literature_orgs_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**ConditionLiteratureOrgsResponse**](ConditionLiteratureOrgsResponse.md)
 
 ### Authorization
 

@@ -57,6 +57,10 @@ docs/BiomarkerEvidenceByYearResponse.md
 docs/BiomarkerEvidenceByYearRow.md
 docs/BiomarkerEvidenceResponse.md
 docs/BiomarkerEvidenceRow.md
+docs/BiomarkerLiteratureAllResponse.md
+docs/BiomarkerLiteratureAllRow.md
+docs/BiomarkerLiteratureOrgsResponse.md
+docs/BiomarkerLiteratureOrgsRow.md
 docs/BiomarkerLiteratureResponse.md
 docs/BiomarkerLiteratureRow.md
 docs/BiomarkerPublishingCompaniesResponse.md
@@ -152,6 +156,10 @@ docs/ConditionDrugsResponse.md
 docs/ConditionDrugsRow.md
 docs/ConditionInvestigatorOrganizationsResponse.md
 docs/ConditionInvestigatorOrganizationsRow.md
+docs/ConditionLiteratureOrgsResponse.md
+docs/ConditionLiteratureOrgsRow.md
+docs/ConditionLiteratureResponse.md
+docs/ConditionLiteratureRow.md
 docs/ConditionPrevalenceResponse.md
 docs/ConditionPrevalenceRow.md
 docs/ConditionPublicationsResponse.md
@@ -302,6 +310,8 @@ docs/OrgDisclosureTrendResponse.md
 docs/OrgDisclosureTrendRow.md
 docs/OrgDisclosuresResponse.md
 docs/OrgDisclosuresRow.md
+docs/OrgLiteratureResponse.md
+docs/OrgLiteratureRow.md
 docs/OrgRelationshipsResponse.md
 docs/OrgRelationshipsRow.md
 docs/OwnershipObservationsResponse.md
@@ -508,6 +518,10 @@ docs/TargetEvidenceResponse.md
 docs/TargetEvidenceRow.md
 docs/TargetInvestigatorsResponse.md
 docs/TargetInvestigatorsRow.md
+docs/TargetLiteratureOrgsResponse.md
+docs/TargetLiteratureOrgsRow.md
+docs/TargetLiteratureResponse.md
+docs/TargetLiteratureRow.md
 docs/TargetPatentMentionsResponse.md
 docs/TargetPatentMentionsRow.md
 docs/TargetProgramsResponse.md
@@ -592,6 +606,10 @@ model_biomarker_evidence_by_year_response.go
 model_biomarker_evidence_by_year_row.go
 model_biomarker_evidence_response.go
 model_biomarker_evidence_row.go
+model_biomarker_literature_all_response.go
+model_biomarker_literature_all_row.go
+model_biomarker_literature_orgs_response.go
+model_biomarker_literature_orgs_row.go
 model_biomarker_literature_response.go
 model_biomarker_literature_row.go
 model_biomarker_publishing_companies_response.go
@@ -684,6 +702,10 @@ model_condition_drugs_response.go
 model_condition_drugs_row.go
 model_condition_investigator_organizations_response.go
 model_condition_investigator_organizations_row.go
+model_condition_literature_orgs_response.go
+model_condition_literature_orgs_row.go
+model_condition_literature_response.go
+model_condition_literature_row.go
 model_condition_prevalence_response.go
 model_condition_prevalence_row.go
 model_condition_publications_response.go
@@ -826,6 +848,8 @@ model_org_disclosure_trend_response.go
 model_org_disclosure_trend_row.go
 model_org_disclosures_response.go
 model_org_disclosures_row.go
+model_org_literature_response.go
+model_org_literature_row.go
 model_org_relationships_response.go
 model_org_relationships_row.go
 model_ownership_observations_response.go
@@ -1020,6 +1044,10 @@ model_target_evidence_response.go
 model_target_evidence_row.go
 model_target_investigators_response.go
 model_target_investigators_row.go
+model_target_literature_orgs_response.go
+model_target_literature_orgs_row.go
+model_target_literature_response.go
+model_target_literature_row.go
 model_target_patent_mentions_response.go
 model_target_patent_mentions_row.go
 model_target_programs_response.go

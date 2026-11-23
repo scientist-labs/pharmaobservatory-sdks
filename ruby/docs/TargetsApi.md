@@ -13,6 +13,8 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**targets_target_drugs**](TargetsApi.md#targets_target_drugs) | **GET** /api/v1/targets/{id}/target_drugs | Drugs acting on a target |
 | [**targets_target_evidence**](TargetsApi.md#targets_target_evidence) | **GET** /api/v1/targets/{id}/target_evidence | Target evidence |
 | [**targets_target_investigators**](TargetsApi.md#targets_target_investigators) | **GET** /api/v1/targets/{id}/target_investigators | Investigators on a target&#39;s trials |
+| [**targets_target_literature**](TargetsApi.md#targets_target_literature) | **GET** /api/v1/targets/{id}/target_literature | Target literature (MeSH-indexed, 2016 onward) |
+| [**targets_target_literature_orgs**](TargetsApi.md#targets_target_literature_orgs) | **GET** /api/v1/targets/{id}/target_literature_orgs | Target literature, most active institutions |
 | [**targets_target_patent_mentions**](TargetsApi.md#targets_target_patent_mentions) | **GET** /api/v1/targets/{id}/target_patent_mentions | Target patent mentions |
 | [**targets_target_programs**](TargetsApi.md#targets_target_programs) | **GET** /api/v1/targets/{id}/target_programs | Target development programs |
 | [**targets_target_publications**](TargetsApi.md#targets_target_publications) | **GET** /api/v1/targets/{id}/target_publications | Target publications |
@@ -706,6 +708,164 @@ end
 ### Return type
 
 [**TargetInvestigatorsResponse**](TargetInvestigatorsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## targets_target_literature
+
+> <TargetLiteratureResponse> targets_target_literature(id, opts)
+
+Target literature (MeSH-indexed, 2016 onward)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::TargetsApi.new
+id = 'ENSG00000171759' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Target literature (MeSH-indexed, 2016 onward)
+  result = api_instance.targets_target_literature(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling TargetsApi->targets_target_literature: #{e}"
+end
+```
+
+#### Using the targets_target_literature_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<TargetLiteratureResponse>, Integer, Hash)> targets_target_literature_with_http_info(id, opts)
+
+```ruby
+begin
+  # Target literature (MeSH-indexed, 2016 onward)
+  data, status_code, headers = api_instance.targets_target_literature_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <TargetLiteratureResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling TargetsApi->targets_target_literature_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**TargetLiteratureResponse**](TargetLiteratureResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## targets_target_literature_orgs
+
+> <TargetLiteratureOrgsResponse> targets_target_literature_orgs(id, opts)
+
+Target literature, most active institutions
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::TargetsApi.new
+id = 'ENSG00000171759' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Target literature, most active institutions
+  result = api_instance.targets_target_literature_orgs(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling TargetsApi->targets_target_literature_orgs: #{e}"
+end
+```
+
+#### Using the targets_target_literature_orgs_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<TargetLiteratureOrgsResponse>, Integer, Hash)> targets_target_literature_orgs_with_http_info(id, opts)
+
+```ruby
+begin
+  # Target literature, most active institutions
+  data, status_code, headers = api_instance.targets_target_literature_orgs_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <TargetLiteratureOrgsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling TargetsApi->targets_target_literature_orgs_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**TargetLiteratureOrgsResponse**](TargetLiteratureOrgsResponse.md)
 
 ### Authorization
 

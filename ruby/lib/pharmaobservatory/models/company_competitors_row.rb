@@ -100,7 +100,7 @@ module PharmaObservatory
     # The company's own Phase 3+ indications; with its target families, the denominator of competitor_score. 0 when it holds no Phase 3+ program.
     attr_accessor :n_subject_markets
 
-    # Up to 3 strongest same-market asset pairs as text: \"drug A / drug B: indication, same market, different target (SYMBOLS vs SYMBOLS), stage\". An empty list when none. Kept apart from top_collisions, which is target evidence only.
+    # Up to 3 strongest same-market asset pairs as text: \"drug A / drug B: indication, same market, different target or action (SYMBOLS vs SYMBOLS), stage\". An empty list when none. Kept apart from top_collisions, which is target evidence only.
     attr_accessor :top_market_collisions
 
     # Distinct trials on which the company and the competitor are both named as sponsors, counted over their subtrees; 0 when none. A consortium trial (more than 25 sponsor companies) is left out.

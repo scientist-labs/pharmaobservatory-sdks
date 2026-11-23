@@ -30,6 +30,7 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**legal_entities_list**](LegalEntitiesApi.md#legal_entities_list) | **GET** /api/v1/legal_entities | List legal entities |
 | [**legal_entities_org_disclosure_trend**](LegalEntitiesApi.md#legal_entities_org_disclosure_trend) | **GET** /api/v1/legal_entities/{id}/org_disclosure_trend | Organization disclosure trend |
 | [**legal_entities_org_disclosures**](LegalEntitiesApi.md#legal_entities_org_disclosures) | **GET** /api/v1/legal_entities/{id}/org_disclosures | Organization disclosures (climate and diversity) |
+| [**legal_entities_org_literature**](LegalEntitiesApi.md#legal_entities_org_literature) | **GET** /api/v1/legal_entities/{id}/org_literature | Organization literature by affiliation (MeSH-indexed, 2016 onward) |
 | [**legal_entities_org_relationships**](LegalEntitiesApi.md#legal_entities_org_relationships) | **GET** /api/v1/legal_entities/{id}/org_relationships | Organization relationships |
 | [**legal_entities_ownership_observations**](LegalEntitiesApi.md#legal_entities_ownership_observations) | **GET** /api/v1/legal_entities/{id}/ownership_observations | Ownership and control observations (history) |
 | [**legal_entities_ownership_percentages**](LegalEntitiesApi.md#legal_entities_ownership_percentages) | **GET** /api/v1/legal_entities/{id}/ownership_percentages | Ownership percentages |
@@ -2083,6 +2084,85 @@ end
 ### Return type
 
 [**OrgDisclosuresResponse**](OrgDisclosuresResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## legal_entities_org_literature
+
+> <OrgLiteratureResponse> legal_entities_org_literature(id, opts)
+
+Organization literature by affiliation (MeSH-indexed, 2016 onward)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::LegalEntitiesApi.new
+id = 'edgar:0001114448' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Organization literature by affiliation (MeSH-indexed, 2016 onward)
+  result = api_instance.legal_entities_org_literature(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_org_literature: #{e}"
+end
+```
+
+#### Using the legal_entities_org_literature_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<OrgLiteratureResponse>, Integer, Hash)> legal_entities_org_literature_with_http_info(id, opts)
+
+```ruby
+begin
+  # Organization literature by affiliation (MeSH-indexed, 2016 onward)
+  data, status_code, headers = api_instance.legal_entities_org_literature_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <OrgLiteratureResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling LegalEntitiesApi->legal_entities_org_literature_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**OrgLiteratureResponse**](OrgLiteratureResponse.md)
 
 ### Authorization
 
