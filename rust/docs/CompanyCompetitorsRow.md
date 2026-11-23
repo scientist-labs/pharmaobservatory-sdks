@@ -32,7 +32,7 @@ Name | Type | Description | Notes
 **n_market_collisions** | Option<**i32**> | Asset pairs (a Phase 3+ drug of the company, a Phase 3+ drug of the competitor) that share a MeSH indication on drugs with no common target; the pairs are the company_market_collisions dataset. | [optional]
 **n_market_indications** | Option<**i32**> | Distinct shared Phase 3+ indications of the pair, counted after a shared indication is replaced by a more specific one that the same asset pair also shares. | [optional]
 **n_subject_markets** | Option<**i32**> | The company's own Phase 3+ indications; with its target families, the denominator of competitor_score. 0 when it holds no Phase 3+ program. | [optional]
-**top_market_collisions** | Option<**Vec<String>**> | Up to 3 strongest same-market asset pairs as text: \"drug A / drug B: indication, same market, different target (SYMBOLS vs SYMBOLS), stage\". An empty list when none. Kept apart from top_collisions, which is target evidence only. | [optional]
+**top_market_collisions** | Option<**Vec<String>**> | Up to 3 strongest same-market asset pairs as text: \"drug A / drug B: indication, same market, different target or action (SYMBOLS vs SYMBOLS), stage\". An empty list when none. Kept apart from top_collisions, which is target evidence only. | [optional]
 **n_cosponsored_trials** | Option<**i32**> | Distinct trials on which the company and the competitor are both named as sponsors, counted over their subtrees; 0 when none. A consortium trial (more than 25 sponsor companies) is left out. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

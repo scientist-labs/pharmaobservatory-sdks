@@ -98,7 +98,7 @@ pub struct CompanyCompetitorsRow {
     /// The company's own Phase 3+ indications; with its target families, the denominator of competitor_score. 0 when it holds no Phase 3+ program.
     #[serde(rename = "n_subject_markets", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_subject_markets: Option<Option<i32>>,
-    /// Up to 3 strongest same-market asset pairs as text: \"drug A / drug B: indication, same market, different target (SYMBOLS vs SYMBOLS), stage\". An empty list when none. Kept apart from top_collisions, which is target evidence only.
+    /// Up to 3 strongest same-market asset pairs as text: \"drug A / drug B: indication, same market, different target or action (SYMBOLS vs SYMBOLS), stage\". An empty list when none. Kept apart from top_collisions, which is target evidence only.
     #[serde(rename = "top_market_collisions", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub top_market_collisions: Option<Option<Vec<String>>>,
     /// Distinct trials on which the company and the competitor are both named as sponsors, counted over their subtrees; 0 when none. A consortium trial (more than 25 sponsor companies) is left out.

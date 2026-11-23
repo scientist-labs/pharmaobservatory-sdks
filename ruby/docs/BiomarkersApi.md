@@ -13,6 +13,8 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**biomarkers_biomarker_evidence**](BiomarkersApi.md#biomarkers_biomarker_evidence) | **GET** /api/v1/biomarkers/{id}/biomarker_evidence | Biomarker evidence |
 | [**biomarkers_biomarker_evidence_by_year**](BiomarkersApi.md#biomarkers_biomarker_evidence_by_year) | **GET** /api/v1/biomarkers/{id}/biomarker_evidence_by_year | Biomarker evidence by year (trial and publication mentions) |
 | [**biomarkers_biomarker_literature**](BiomarkersApi.md#biomarkers_biomarker_literature) | **GET** /api/v1/biomarkers/{id}/biomarker_literature | Trial-cited literature mentions |
+| [**biomarkers_biomarker_literature_all**](BiomarkersApi.md#biomarkers_biomarker_literature_all) | **GET** /api/v1/biomarkers/{id}/biomarker_literature_all | Biomarker literature, all MeSH-indexed papers (2016 onward) |
+| [**biomarkers_biomarker_literature_orgs**](BiomarkersApi.md#biomarkers_biomarker_literature_orgs) | **GET** /api/v1/biomarkers/{id}/biomarker_literature_orgs | Biomarker literature, most active institutions |
 | [**biomarkers_biomarker_publishing_companies**](BiomarkersApi.md#biomarkers_biomarker_publishing_companies) | **GET** /api/v1/biomarkers/{id}/biomarker_publishing_companies | Companies publishing on a biomarker |
 | [**biomarkers_biomarker_relations**](BiomarkersApi.md#biomarkers_biomarker_relations) | **GET** /api/v1/biomarkers/{id}/biomarker_relations | Literature-extracted relations |
 | [**biomarkers_biomarker_sample_coverage**](BiomarkersApi.md#biomarkers_biomarker_sample_coverage) | **GET** /api/v1/biomarkers/{id}/biomarker_sample_coverage | Human sample screening coverage (GDC) |
@@ -726,6 +728,164 @@ end
 ### Return type
 
 [**BiomarkerLiteratureResponse**](BiomarkerLiteratureResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## biomarkers_biomarker_literature_all
+
+> <BiomarkerLiteratureAllResponse> biomarkers_biomarker_literature_all(id, opts)
+
+Biomarker literature, all MeSH-indexed papers (2016 onward)
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::BiomarkersApi.new
+id = 'ESR1' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Biomarker literature, all MeSH-indexed papers (2016 onward)
+  result = api_instance.biomarkers_biomarker_literature_all(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling BiomarkersApi->biomarkers_biomarker_literature_all: #{e}"
+end
+```
+
+#### Using the biomarkers_biomarker_literature_all_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<BiomarkerLiteratureAllResponse>, Integer, Hash)> biomarkers_biomarker_literature_all_with_http_info(id, opts)
+
+```ruby
+begin
+  # Biomarker literature, all MeSH-indexed papers (2016 onward)
+  data, status_code, headers = api_instance.biomarkers_biomarker_literature_all_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <BiomarkerLiteratureAllResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling BiomarkersApi->biomarkers_biomarker_literature_all_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**BiomarkerLiteratureAllResponse**](BiomarkerLiteratureAllResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## biomarkers_biomarker_literature_orgs
+
+> <BiomarkerLiteratureOrgsResponse> biomarkers_biomarker_literature_orgs(id, opts)
+
+Biomarker literature, most active institutions
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::BiomarkersApi.new
+id = 'ESR1' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Biomarker literature, most active institutions
+  result = api_instance.biomarkers_biomarker_literature_orgs(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling BiomarkersApi->biomarkers_biomarker_literature_orgs: #{e}"
+end
+```
+
+#### Using the biomarkers_biomarker_literature_orgs_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<BiomarkerLiteratureOrgsResponse>, Integer, Hash)> biomarkers_biomarker_literature_orgs_with_http_info(id, opts)
+
+```ruby
+begin
+  # Biomarker literature, most active institutions
+  data, status_code, headers = api_instance.biomarkers_biomarker_literature_orgs_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <BiomarkerLiteratureOrgsResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling BiomarkersApi->biomarkers_biomarker_literature_orgs_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**BiomarkerLiteratureOrgsResponse**](BiomarkerLiteratureOrgsResponse.md)
 
 ### Authorization
 

@@ -31,6 +31,10 @@ docs/BiomarkerEvidenceByYearResponse.md
 docs/BiomarkerEvidenceByYearRow.md
 docs/BiomarkerEvidenceResponse.md
 docs/BiomarkerEvidenceRow.md
+docs/BiomarkerLiteratureAllResponse.md
+docs/BiomarkerLiteratureAllRow.md
+docs/BiomarkerLiteratureOrgsResponse.md
+docs/BiomarkerLiteratureOrgsRow.md
 docs/BiomarkerLiteratureResponse.md
 docs/BiomarkerLiteratureRow.md
 docs/BiomarkerPublishingCompaniesResponse.md
@@ -126,6 +130,10 @@ docs/ConditionDrugsResponse.md
 docs/ConditionDrugsRow.md
 docs/ConditionInvestigatorOrganizationsResponse.md
 docs/ConditionInvestigatorOrganizationsRow.md
+docs/ConditionLiteratureOrgsResponse.md
+docs/ConditionLiteratureOrgsRow.md
+docs/ConditionLiteratureResponse.md
+docs/ConditionLiteratureRow.md
 docs/ConditionPrevalenceResponse.md
 docs/ConditionPrevalenceRow.md
 docs/ConditionPublicationsResponse.md
@@ -276,6 +284,8 @@ docs/OrgDisclosureTrendResponse.md
 docs/OrgDisclosureTrendRow.md
 docs/OrgDisclosuresResponse.md
 docs/OrgDisclosuresRow.md
+docs/OrgLiteratureResponse.md
+docs/OrgLiteratureRow.md
 docs/OrgRelationshipsResponse.md
 docs/OrgRelationshipsRow.md
 docs/OwnershipObservationsResponse.md
@@ -482,6 +492,10 @@ docs/TargetEvidenceResponse.md
 docs/TargetEvidenceRow.md
 docs/TargetInvestigatorsResponse.md
 docs/TargetInvestigatorsRow.md
+docs/TargetLiteratureOrgsResponse.md
+docs/TargetLiteratureOrgsRow.md
+docs/TargetLiteratureResponse.md
+docs/TargetLiteratureRow.md
 docs/TargetPatentMentionsResponse.md
 docs/TargetPatentMentionsRow.md
 docs/TargetProgramsResponse.md
@@ -594,6 +608,10 @@ lib/pharmaobservatory/models/biomarker_evidence_by_year_response.rb
 lib/pharmaobservatory/models/biomarker_evidence_by_year_row.rb
 lib/pharmaobservatory/models/biomarker_evidence_response.rb
 lib/pharmaobservatory/models/biomarker_evidence_row.rb
+lib/pharmaobservatory/models/biomarker_literature_all_response.rb
+lib/pharmaobservatory/models/biomarker_literature_all_row.rb
+lib/pharmaobservatory/models/biomarker_literature_orgs_response.rb
+lib/pharmaobservatory/models/biomarker_literature_orgs_row.rb
 lib/pharmaobservatory/models/biomarker_literature_response.rb
 lib/pharmaobservatory/models/biomarker_literature_row.rb
 lib/pharmaobservatory/models/biomarker_publishing_companies_response.rb
@@ -686,6 +704,10 @@ lib/pharmaobservatory/models/condition_drugs_response.rb
 lib/pharmaobservatory/models/condition_drugs_row.rb
 lib/pharmaobservatory/models/condition_investigator_organizations_response.rb
 lib/pharmaobservatory/models/condition_investigator_organizations_row.rb
+lib/pharmaobservatory/models/condition_literature_orgs_response.rb
+lib/pharmaobservatory/models/condition_literature_orgs_row.rb
+lib/pharmaobservatory/models/condition_literature_response.rb
+lib/pharmaobservatory/models/condition_literature_row.rb
 lib/pharmaobservatory/models/condition_prevalence_response.rb
 lib/pharmaobservatory/models/condition_prevalence_row.rb
 lib/pharmaobservatory/models/condition_publications_response.rb
@@ -828,6 +850,8 @@ lib/pharmaobservatory/models/org_disclosure_trend_response.rb
 lib/pharmaobservatory/models/org_disclosure_trend_row.rb
 lib/pharmaobservatory/models/org_disclosures_response.rb
 lib/pharmaobservatory/models/org_disclosures_row.rb
+lib/pharmaobservatory/models/org_literature_response.rb
+lib/pharmaobservatory/models/org_literature_row.rb
 lib/pharmaobservatory/models/org_relationships_response.rb
 lib/pharmaobservatory/models/org_relationships_row.rb
 lib/pharmaobservatory/models/ownership_observations_response.rb
@@ -1022,6 +1046,10 @@ lib/pharmaobservatory/models/target_evidence_response.rb
 lib/pharmaobservatory/models/target_evidence_row.rb
 lib/pharmaobservatory/models/target_investigators_response.rb
 lib/pharmaobservatory/models/target_investigators_row.rb
+lib/pharmaobservatory/models/target_literature_orgs_response.rb
+lib/pharmaobservatory/models/target_literature_orgs_row.rb
+lib/pharmaobservatory/models/target_literature_response.rb
+lib/pharmaobservatory/models/target_literature_row.rb
 lib/pharmaobservatory/models/target_patent_mentions_response.rb
 lib/pharmaobservatory/models/target_patent_mentions_row.rb
 lib/pharmaobservatory/models/target_programs_response.rb
@@ -1130,6 +1158,10 @@ spec/models/biomarker_evidence_by_year_response_spec.rb
 spec/models/biomarker_evidence_by_year_row_spec.rb
 spec/models/biomarker_evidence_response_spec.rb
 spec/models/biomarker_evidence_row_spec.rb
+spec/models/biomarker_literature_all_response_spec.rb
+spec/models/biomarker_literature_all_row_spec.rb
+spec/models/biomarker_literature_orgs_response_spec.rb
+spec/models/biomarker_literature_orgs_row_spec.rb
 spec/models/biomarker_literature_response_spec.rb
 spec/models/biomarker_literature_row_spec.rb
 spec/models/biomarker_publishing_companies_response_spec.rb
@@ -1222,6 +1254,10 @@ spec/models/condition_drugs_response_spec.rb
 spec/models/condition_drugs_row_spec.rb
 spec/models/condition_investigator_organizations_response_spec.rb
 spec/models/condition_investigator_organizations_row_spec.rb
+spec/models/condition_literature_orgs_response_spec.rb
+spec/models/condition_literature_orgs_row_spec.rb
+spec/models/condition_literature_response_spec.rb
+spec/models/condition_literature_row_spec.rb
 spec/models/condition_prevalence_response_spec.rb
 spec/models/condition_prevalence_row_spec.rb
 spec/models/condition_publications_response_spec.rb
@@ -1364,6 +1400,8 @@ spec/models/org_disclosure_trend_response_spec.rb
 spec/models/org_disclosure_trend_row_spec.rb
 spec/models/org_disclosures_response_spec.rb
 spec/models/org_disclosures_row_spec.rb
+spec/models/org_literature_response_spec.rb
+spec/models/org_literature_row_spec.rb
 spec/models/org_relationships_response_spec.rb
 spec/models/org_relationships_row_spec.rb
 spec/models/ownership_observations_response_spec.rb
@@ -1558,6 +1596,10 @@ spec/models/target_evidence_response_spec.rb
 spec/models/target_evidence_row_spec.rb
 spec/models/target_investigators_response_spec.rb
 spec/models/target_investigators_row_spec.rb
+spec/models/target_literature_orgs_response_spec.rb
+spec/models/target_literature_orgs_row_spec.rb
+spec/models/target_literature_response_spec.rb
+spec/models/target_literature_row_spec.rb
 spec/models/target_patent_mentions_response_spec.rb
 spec/models/target_patent_mentions_row_spec.rb
 spec/models/target_programs_response_spec.rb

@@ -30,6 +30,7 @@ Method | HTTP request | Description
 [**legal_entities_period_list**](LegalEntitiesApi.md#legal_entities_period_list) | **GET** /api/v1/legal_entities | List legal entities
 [**legal_entities_period_org_disclosure_trend**](LegalEntitiesApi.md#legal_entities_period_org_disclosure_trend) | **GET** /api/v1/legal_entities/{id}/org_disclosure_trend | Organization disclosure trend
 [**legal_entities_period_org_disclosures**](LegalEntitiesApi.md#legal_entities_period_org_disclosures) | **GET** /api/v1/legal_entities/{id}/org_disclosures | Organization disclosures (climate and diversity)
+[**legal_entities_period_org_literature**](LegalEntitiesApi.md#legal_entities_period_org_literature) | **GET** /api/v1/legal_entities/{id}/org_literature | Organization literature by affiliation (MeSH-indexed, 2016 onward)
 [**legal_entities_period_org_relationships**](LegalEntitiesApi.md#legal_entities_period_org_relationships) | **GET** /api/v1/legal_entities/{id}/org_relationships | Organization relationships
 [**legal_entities_period_ownership_observations**](LegalEntitiesApi.md#legal_entities_period_ownership_observations) | **GET** /api/v1/legal_entities/{id}/ownership_observations | Ownership and control observations (history)
 [**legal_entities_period_ownership_percentages**](LegalEntitiesApi.md#legal_entities_period_ownership_percentages) | **GET** /api/v1/legal_entities/{id}/ownership_percentages | Ownership percentages
@@ -894,6 +895,39 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::OrgDisclosuresResponse**](OrgDisclosuresResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## legal_entities_period_org_literature
+
+> models::OrgLiteratureResponse legal_entities_period_org_literature(id, cursor, limit, sort, group_by, measure)
+Organization literature by affiliation (MeSH-indexed, 2016 onward)
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::OrgLiteratureResponse**](OrgLiteratureResponse.md)
 
 ### Authorization
 
