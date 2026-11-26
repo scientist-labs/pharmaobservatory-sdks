@@ -35,11 +35,11 @@ type RareDiseaseTrialSitesRow struct {
 	State NullableString `json:"state,omitempty"`
 	// The facility's country as filed.
 	Country NullableString `json:"country,omitempty"`
-	// The site's latitude in degrees; null when no coordinate is known.
+	// The site's distance-ready latitude in degrees: one real filed location, the one most of the site's registry filings agree on, the same point the site has on the disease page map and in the nearest-site list. Null when the site is not mappable (its filings disagree, or are coarser than a city). Not the mean of the site's locations.
 	Latitude NullableFloat32 `json:"latitude,omitempty"`
-	// The site's longitude in degrees; null when no coordinate is known.
+	// The site's distance-ready longitude in degrees, paired with latitude; null exactly when latitude is.
 	Longitude NullableFloat32 `json:"longitude,omitempty"`
-	// The source of the coordinate: aact (the registry's own), geonames (GeoNames) or als (Amazon Location Service).
+	// The source of the latitude and longitude: aact (the registry's own), geonames (GeoNames) or als (Amazon Location Service); null when latitude is.
 	CoordSource NullableString `json:"coord_source,omitempty"`
 	// The MeSH condition ids through which the disease reaches the site's trials.
 	ConditionIds []string `json:"condition_ids,omitempty"`
@@ -49,6 +49,8 @@ type RareDiseaseTrialSitesRow struct {
 	NTrialsDirect NullableInt32 `json:"n_trials_direct,omitempty"`
 	// Those trials that are recruiting, not yet recruiting, active or enrolling by invitation.
 	NActiveTrials NullableInt32 `json:"n_active_trials,omitempty"`
+	// Those directly tagged trials that are recruiting or not yet recruiting, the statuses a person can volunteer for. A subset of n_trials_direct; active but closed and invitation-only trials are not counted.
+	NOpenTrialsDirect NullableInt32 `json:"n_open_trials_direct,omitempty"`
 	// The earliest start year among those trials.
 	FirstTrialYear NullableInt32 `json:"first_trial_year,omitempty"`
 	// The latest start year among those trials.
@@ -698,6 +700,48 @@ func (o *RareDiseaseTrialSitesRow) UnsetNActiveTrials() {
 	o.NActiveTrials.Unset()
 }
 
+// GetNOpenTrialsDirect returns the NOpenTrialsDirect field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *RareDiseaseTrialSitesRow) GetNOpenTrialsDirect() int32 {
+	if o == nil || IsNil(o.NOpenTrialsDirect.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.NOpenTrialsDirect.Get()
+}
+
+// GetNOpenTrialsDirectOk returns a tuple with the NOpenTrialsDirect field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *RareDiseaseTrialSitesRow) GetNOpenTrialsDirectOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.NOpenTrialsDirect.Get(), o.NOpenTrialsDirect.IsSet()
+}
+
+// HasNOpenTrialsDirect returns a boolean if a field has been set.
+func (o *RareDiseaseTrialSitesRow) HasNOpenTrialsDirect() bool {
+	if o != nil && o.NOpenTrialsDirect.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetNOpenTrialsDirect gets a reference to the given NullableInt32 and assigns it to the NOpenTrialsDirect field.
+func (o *RareDiseaseTrialSitesRow) SetNOpenTrialsDirect(v int32) {
+	o.NOpenTrialsDirect.Set(&v)
+}
+// SetNOpenTrialsDirectNil sets the value for NOpenTrialsDirect to be an explicit nil
+func (o *RareDiseaseTrialSitesRow) SetNOpenTrialsDirectNil() {
+	o.NOpenTrialsDirect.Set(nil)
+}
+
+// UnsetNOpenTrialsDirect ensures that no value is present for NOpenTrialsDirect, not even an explicit nil
+func (o *RareDiseaseTrialSitesRow) UnsetNOpenTrialsDirect() {
+	o.NOpenTrialsDirect.Unset()
+}
+
 // GetFirstTrialYear returns the FirstTrialYear field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *RareDiseaseTrialSitesRow) GetFirstTrialYear() int32 {
 	if o == nil || IsNil(o.FirstTrialYear.Get()) {
@@ -879,6 +923,9 @@ func (o RareDiseaseTrialSitesRow) ToMap() (map[string]interface{}, error) {
 	if o.NActiveTrials.IsSet() {
 		toSerialize["n_active_trials"] = o.NActiveTrials.Get()
 	}
+	if o.NOpenTrialsDirect.IsSet() {
+		toSerialize["n_open_trials_direct"] = o.NOpenTrialsDirect.Get()
+	}
 	if o.FirstTrialYear.IsSet() {
 		toSerialize["first_trial_year"] = o.FirstTrialYear.Get()
 	}
@@ -925,6 +972,7 @@ func (o *RareDiseaseTrialSitesRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "n_trials")
 		delete(additionalProperties, "n_trials_direct")
 		delete(additionalProperties, "n_active_trials")
+		delete(additionalProperties, "n_open_trials_direct")
 		delete(additionalProperties, "first_trial_year")
 		delete(additionalProperties, "last_trial_year")
 		delete(additionalProperties, "last_update_posted_date")

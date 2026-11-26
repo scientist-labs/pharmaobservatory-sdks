@@ -15,6 +15,7 @@ Method | HTTP request | Description
 [**BiomarkersBiomarkerLiterature**](BiomarkersAPI.md#BiomarkersBiomarkerLiterature) | **Get** /api/v1/biomarkers/{id}/biomarker_literature | Trial-cited literature mentions
 [**BiomarkersBiomarkerLiteratureAll**](BiomarkersAPI.md#BiomarkersBiomarkerLiteratureAll) | **Get** /api/v1/biomarkers/{id}/biomarker_literature_all | Biomarker literature, all MeSH-indexed papers (2016 onward)
 [**BiomarkersBiomarkerLiteratureOrgs**](BiomarkersAPI.md#BiomarkersBiomarkerLiteratureOrgs) | **Get** /api/v1/biomarkers/{id}/biomarker_literature_orgs | Biomarker literature, most active institutions
+[**BiomarkersBiomarkerLiteraturePeople**](BiomarkersAPI.md#BiomarkersBiomarkerLiteraturePeople) | **Get** /api/v1/biomarkers/{id}/biomarker_literature_people | Biomarker literature, most active authors
 [**BiomarkersBiomarkerPublishingCompanies**](BiomarkersAPI.md#BiomarkersBiomarkerPublishingCompanies) | **Get** /api/v1/biomarkers/{id}/biomarker_publishing_companies | Companies publishing on a biomarker
 [**BiomarkersBiomarkerRelations**](BiomarkersAPI.md#BiomarkersBiomarkerRelations) | **Get** /api/v1/biomarkers/{id}/biomarker_relations | Literature-extracted relations
 [**BiomarkersBiomarkerSampleCoverage**](BiomarkersAPI.md#BiomarkersBiomarkerSampleCoverage) | **Get** /api/v1/biomarkers/{id}/biomarker_sample_coverage | Human sample screening coverage (GDC)
@@ -872,6 +873,84 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**BiomarkerLiteratureOrgsResponse**](BiomarkerLiteratureOrgsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## BiomarkersBiomarkerLiteraturePeople
+
+> BiomarkerLiteraturePeopleResponse BiomarkersBiomarkerLiteraturePeople(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+
+Biomarker literature, most active authors
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "ESR1" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.BiomarkersAPI.BiomarkersBiomarkerLiteraturePeople(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `BiomarkersAPI.BiomarkersBiomarkerLiteraturePeople``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `BiomarkersBiomarkerLiteraturePeople`: BiomarkerLiteraturePeopleResponse
+	fmt.Fprintf(os.Stdout, "Response from `BiomarkersAPI.BiomarkersBiomarkerLiteraturePeople`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiBiomarkersBiomarkerLiteraturePeopleRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+
+### Return type
+
+[**BiomarkerLiteraturePeopleResponse**](BiomarkerLiteraturePeopleResponse.md)
 
 ### Authorization
 

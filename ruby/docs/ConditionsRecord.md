@@ -4,6 +4,7 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
+| **sections** | **Hash&lt;String, Object&gt;** | Sections of the object&#39;s web page, by key: patient_organisations, the list the page shows of the organisations that name the disease or condition on their own websites (state, empty_state, coverage, groups of entries carrying the patient_organisation dataset&#39;s columns, the per-entry credit and the lane attribution). | [optional] |
 | **object_type** | **String** |  |  |
 | **id** | **String** |  |  |
 | **record** | [**ConditionsRow**](ConditionsRow.md) |  |  |
@@ -22,6 +23,7 @@
 require 'pharmaobservatory'
 
 instance = PharmaObservatory::ConditionsRecord.new(
+  sections: null,
   object_type: null,
   id: null,
   record: null,

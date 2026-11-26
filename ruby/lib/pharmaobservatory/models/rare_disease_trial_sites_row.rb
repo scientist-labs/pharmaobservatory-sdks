@@ -40,13 +40,13 @@ module PharmaObservatory
     # The facility's country as filed.
     attr_accessor :country
 
-    # The site's latitude in degrees; null when no coordinate is known.
+    # The site's distance-ready latitude in degrees: one real filed location, the one most of the site's registry filings agree on, the same point the site has on the disease page map and in the nearest-site list. Null when the site is not mappable (its filings disagree, or are coarser than a city). Not the mean of the site's locations.
     attr_accessor :latitude
 
-    # The site's longitude in degrees; null when no coordinate is known.
+    # The site's distance-ready longitude in degrees, paired with latitude; null exactly when latitude is.
     attr_accessor :longitude
 
-    # The source of the coordinate: aact (the registry's own), geonames (GeoNames) or als (Amazon Location Service).
+    # The source of the latitude and longitude: aact (the registry's own), geonames (GeoNames) or als (Amazon Location Service); null when latitude is.
     attr_accessor :coord_source
 
     # The MeSH condition ids through which the disease reaches the site's trials.
@@ -60,6 +60,9 @@ module PharmaObservatory
 
     # Those trials that are recruiting, not yet recruiting, active or enrolling by invitation.
     attr_accessor :n_active_trials
+
+    # Those directly tagged trials that are recruiting or not yet recruiting, the statuses a person can volunteer for. A subset of n_trials_direct; active but closed and invitation-only trials are not counted.
+    attr_accessor :n_open_trials_direct
 
     # The earliest start year among those trials.
     attr_accessor :first_trial_year
@@ -88,6 +91,7 @@ module PharmaObservatory
         :'n_trials' => :'n_trials',
         :'n_trials_direct' => :'n_trials_direct',
         :'n_active_trials' => :'n_active_trials',
+        :'n_open_trials_direct' => :'n_open_trials_direct',
         :'first_trial_year' => :'first_trial_year',
         :'last_trial_year' => :'last_trial_year',
         :'last_update_posted_date' => :'last_update_posted_date'
@@ -122,6 +126,7 @@ module PharmaObservatory
         :'n_trials' => :'Integer',
         :'n_trials_direct' => :'Integer',
         :'n_active_trials' => :'Integer',
+        :'n_open_trials_direct' => :'Integer',
         :'first_trial_year' => :'Integer',
         :'last_trial_year' => :'Integer',
         :'last_update_posted_date' => :'Date'
@@ -146,6 +151,7 @@ module PharmaObservatory
         :'n_trials',
         :'n_trials_direct',
         :'n_active_trials',
+        :'n_open_trials_direct',
         :'first_trial_year',
         :'last_trial_year',
         :'last_update_posted_date'
@@ -230,6 +236,10 @@ module PharmaObservatory
         self.n_active_trials = attributes[:'n_active_trials']
       end
 
+      if attributes.key?(:'n_open_trials_direct')
+        self.n_open_trials_direct = attributes[:'n_open_trials_direct']
+      end
+
       if attributes.key?(:'first_trial_year')
         self.first_trial_year = attributes[:'first_trial_year']
       end
@@ -278,6 +288,7 @@ module PharmaObservatory
           n_trials == o.n_trials &&
           n_trials_direct == o.n_trials_direct &&
           n_active_trials == o.n_active_trials &&
+          n_open_trials_direct == o.n_open_trials_direct &&
           first_trial_year == o.first_trial_year &&
           last_trial_year == o.last_trial_year &&
           last_update_posted_date == o.last_update_posted_date
@@ -292,7 +303,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [orpha_code, mapping_arm, site_id, site_rank, site_name, city, state, country, latitude, longitude, coord_source, condition_ids, n_trials, n_trials_direct, n_active_trials, first_trial_year, last_trial_year, last_update_posted_date].hash
+      [orpha_code, mapping_arm, site_id, site_rank, site_name, city, state, country, latitude, longitude, coord_source, condition_ids, n_trials, n_trials_direct, n_active_trials, n_open_trials_direct, first_trial_year, last_trial_year, last_update_posted_date].hash
     end
 
     # Builds the object from hash

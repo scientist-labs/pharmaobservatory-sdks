@@ -38,13 +38,13 @@ pub struct RareDiseaseTrialSitesRow {
     /// The facility's country as filed.
     #[serde(rename = "country", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub country: Option<Option<String>>,
-    /// The site's latitude in degrees; null when no coordinate is known.
+    /// The site's distance-ready latitude in degrees: one real filed location, the one most of the site's registry filings agree on, the same point the site has on the disease page map and in the nearest-site list. Null when the site is not mappable (its filings disagree, or are coarser than a city). Not the mean of the site's locations.
     #[serde(rename = "latitude", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub latitude: Option<Option<f64>>,
-    /// The site's longitude in degrees; null when no coordinate is known.
+    /// The site's distance-ready longitude in degrees, paired with latitude; null exactly when latitude is.
     #[serde(rename = "longitude", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub longitude: Option<Option<f64>>,
-    /// The source of the coordinate: aact (the registry's own), geonames (GeoNames) or als (Amazon Location Service).
+    /// The source of the latitude and longitude: aact (the registry's own), geonames (GeoNames) or als (Amazon Location Service); null when latitude is.
     #[serde(rename = "coord_source", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub coord_source: Option<Option<String>>,
     /// The MeSH condition ids through which the disease reaches the site's trials.
@@ -59,6 +59,9 @@ pub struct RareDiseaseTrialSitesRow {
     /// Those trials that are recruiting, not yet recruiting, active or enrolling by invitation.
     #[serde(rename = "n_active_trials", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub n_active_trials: Option<Option<i32>>,
+    /// Those directly tagged trials that are recruiting or not yet recruiting, the statuses a person can volunteer for. A subset of n_trials_direct; active but closed and invitation-only trials are not counted.
+    #[serde(rename = "n_open_trials_direct", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub n_open_trials_direct: Option<Option<i32>>,
     /// The earliest start year among those trials.
     #[serde(rename = "first_trial_year", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub first_trial_year: Option<Option<i32>>,
@@ -89,6 +92,7 @@ impl RareDiseaseTrialSitesRow {
             n_trials: None,
             n_trials_direct: None,
             n_active_trials: None,
+            n_open_trials_direct: None,
             first_trial_year: None,
             last_trial_year: None,
             last_update_posted_date: None,

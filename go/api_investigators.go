@@ -23,6 +23,416 @@ import (
 // InvestigatorsAPIService InvestigatorsAPI service
 type InvestigatorsAPIService service
 
+type ApiInvestigatorsBiomarkerLiteraturePeopleRequest struct {
+	ctx context.Context
+	ApiService *InvestigatorsAPIService
+	id string
+	cursor *string
+	limit *int32
+	sort *string
+	groupBy *string
+	measure *string
+}
+
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiInvestigatorsBiomarkerLiteraturePeopleRequest) Cursor(cursor string) ApiInvestigatorsBiomarkerLiteraturePeopleRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
+func (r ApiInvestigatorsBiomarkerLiteraturePeopleRequest) Limit(limit int32) ApiInvestigatorsBiomarkerLiteraturePeopleRequest {
+	r.limit = &limit
+	return r
+}
+
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiInvestigatorsBiomarkerLiteraturePeopleRequest) Sort(sort string) ApiInvestigatorsBiomarkerLiteraturePeopleRequest {
+	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiInvestigatorsBiomarkerLiteraturePeopleRequest) GroupBy(groupBy string) ApiInvestigatorsBiomarkerLiteraturePeopleRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiInvestigatorsBiomarkerLiteraturePeopleRequest) Measure(measure string) ApiInvestigatorsBiomarkerLiteraturePeopleRequest {
+	r.measure = &measure
+	return r
+}
+
+func (r ApiInvestigatorsBiomarkerLiteraturePeopleRequest) Execute() (*BiomarkerLiteraturePeopleResponse, *http.Response, error) {
+	return r.ApiService.InvestigatorsBiomarkerLiteraturePeopleExecute(r)
+}
+
+/*
+InvestigatorsBiomarkerLiteraturePeople Biomarker literature, most active authors
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiInvestigatorsBiomarkerLiteraturePeopleRequest
+*/
+func (a *InvestigatorsAPIService) InvestigatorsBiomarkerLiteraturePeople(ctx context.Context, id string) ApiInvestigatorsBiomarkerLiteraturePeopleRequest {
+	return ApiInvestigatorsBiomarkerLiteraturePeopleRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return BiomarkerLiteraturePeopleResponse
+func (a *InvestigatorsAPIService) InvestigatorsBiomarkerLiteraturePeopleExecute(r ApiInvestigatorsBiomarkerLiteraturePeopleRequest) (*BiomarkerLiteraturePeopleResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *BiomarkerLiteraturePeopleResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "InvestigatorsAPIService.InvestigatorsBiomarkerLiteraturePeople")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/investigators/{id}/biomarker_literature_people"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiInvestigatorsConditionLiteraturePeopleRequest struct {
+	ctx context.Context
+	ApiService *InvestigatorsAPIService
+	id string
+	cursor *string
+	limit *int32
+	sort *string
+	groupBy *string
+	measure *string
+}
+
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiInvestigatorsConditionLiteraturePeopleRequest) Cursor(cursor string) ApiInvestigatorsConditionLiteraturePeopleRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
+func (r ApiInvestigatorsConditionLiteraturePeopleRequest) Limit(limit int32) ApiInvestigatorsConditionLiteraturePeopleRequest {
+	r.limit = &limit
+	return r
+}
+
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiInvestigatorsConditionLiteraturePeopleRequest) Sort(sort string) ApiInvestigatorsConditionLiteraturePeopleRequest {
+	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiInvestigatorsConditionLiteraturePeopleRequest) GroupBy(groupBy string) ApiInvestigatorsConditionLiteraturePeopleRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiInvestigatorsConditionLiteraturePeopleRequest) Measure(measure string) ApiInvestigatorsConditionLiteraturePeopleRequest {
+	r.measure = &measure
+	return r
+}
+
+func (r ApiInvestigatorsConditionLiteraturePeopleRequest) Execute() (*ConditionLiteraturePeopleResponse, *http.Response, error) {
+	return r.ApiService.InvestigatorsConditionLiteraturePeopleExecute(r)
+}
+
+/*
+InvestigatorsConditionLiteraturePeople Condition literature, most active authors
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiInvestigatorsConditionLiteraturePeopleRequest
+*/
+func (a *InvestigatorsAPIService) InvestigatorsConditionLiteraturePeople(ctx context.Context, id string) ApiInvestigatorsConditionLiteraturePeopleRequest {
+	return ApiInvestigatorsConditionLiteraturePeopleRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return ConditionLiteraturePeopleResponse
+func (a *InvestigatorsAPIService) InvestigatorsConditionLiteraturePeopleExecute(r ApiInvestigatorsConditionLiteraturePeopleRequest) (*ConditionLiteraturePeopleResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ConditionLiteraturePeopleResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "InvestigatorsAPIService.InvestigatorsConditionLiteraturePeople")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/investigators/{id}/condition_literature_people"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiInvestigatorsDrugInvestigatorsRequest struct {
 	ctx context.Context
 	ApiService *InvestigatorsAPIService
@@ -1997,6 +2407,211 @@ func (a *InvestigatorsAPIService) InvestigatorsListExecute(r ApiInvestigatorsLis
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiInvestigatorsOrgLiteraturePeopleRequest struct {
+	ctx context.Context
+	ApiService *InvestigatorsAPIService
+	id string
+	cursor *string
+	limit *int32
+	sort *string
+	groupBy *string
+	measure *string
+}
+
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiInvestigatorsOrgLiteraturePeopleRequest) Cursor(cursor string) ApiInvestigatorsOrgLiteraturePeopleRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
+func (r ApiInvestigatorsOrgLiteraturePeopleRequest) Limit(limit int32) ApiInvestigatorsOrgLiteraturePeopleRequest {
+	r.limit = &limit
+	return r
+}
+
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiInvestigatorsOrgLiteraturePeopleRequest) Sort(sort string) ApiInvestigatorsOrgLiteraturePeopleRequest {
+	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiInvestigatorsOrgLiteraturePeopleRequest) GroupBy(groupBy string) ApiInvestigatorsOrgLiteraturePeopleRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiInvestigatorsOrgLiteraturePeopleRequest) Measure(measure string) ApiInvestigatorsOrgLiteraturePeopleRequest {
+	r.measure = &measure
+	return r
+}
+
+func (r ApiInvestigatorsOrgLiteraturePeopleRequest) Execute() (*OrgLiteraturePeopleResponse, *http.Response, error) {
+	return r.ApiService.InvestigatorsOrgLiteraturePeopleExecute(r)
+}
+
+/*
+InvestigatorsOrgLiteraturePeople Organization literature, authors on affiliated papers
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiInvestigatorsOrgLiteraturePeopleRequest
+*/
+func (a *InvestigatorsAPIService) InvestigatorsOrgLiteraturePeople(ctx context.Context, id string) ApiInvestigatorsOrgLiteraturePeopleRequest {
+	return ApiInvestigatorsOrgLiteraturePeopleRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return OrgLiteraturePeopleResponse
+func (a *InvestigatorsAPIService) InvestigatorsOrgLiteraturePeopleExecute(r ApiInvestigatorsOrgLiteraturePeopleRequest) (*OrgLiteraturePeopleResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *OrgLiteraturePeopleResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "InvestigatorsAPIService.InvestigatorsOrgLiteraturePeople")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/investigators/{id}/org_literature_people"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiInvestigatorsRareDiseaseInvestigatorsRequest struct {
 	ctx context.Context
 	ApiService *InvestigatorsAPIService
@@ -2688,6 +3303,211 @@ func (a *InvestigatorsAPIService) InvestigatorsTargetInvestigatorsExecute(r ApiI
 	}
 
 	localVarPath := localBasePath + "/api/v1/investigators/{id}/target_investigators"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	}
+	if r.measure != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "measure", r.measure, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AuthError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v QueryError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiInvestigatorsTargetLiteraturePeopleRequest struct {
+	ctx context.Context
+	ApiService *InvestigatorsAPIService
+	id string
+	cursor *string
+	limit *int32
+	sort *string
+	groupBy *string
+	measure *string
+}
+
+// The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+func (r ApiInvestigatorsTargetLiteraturePeopleRequest) Cursor(cursor string) ApiInvestigatorsTargetLiteraturePeopleRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Rows per page, up to 500 (default 50).
+func (r ApiInvestigatorsTargetLiteraturePeopleRequest) Limit(limit int32) ApiInvestigatorsTargetLiteraturePeopleRequest {
+	r.limit = &limit
+	return r
+}
+
+// Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+func (r ApiInvestigatorsTargetLiteraturePeopleRequest) Sort(sort string) ApiInvestigatorsTargetLiteraturePeopleRequest {
+	r.sort = &sort
+	return r
+}
+
+// A dimension to group by; a date takes :year, :quarter or :month.
+func (r ApiInvestigatorsTargetLiteraturePeopleRequest) GroupBy(groupBy string) ApiInvestigatorsTargetLiteraturePeopleRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+// count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+func (r ApiInvestigatorsTargetLiteraturePeopleRequest) Measure(measure string) ApiInvestigatorsTargetLiteraturePeopleRequest {
+	r.measure = &measure
+	return r
+}
+
+func (r ApiInvestigatorsTargetLiteraturePeopleRequest) Execute() (*TargetLiteraturePeopleResponse, *http.Response, error) {
+	return r.ApiService.InvestigatorsTargetLiteraturePeopleExecute(r)
+}
+
+/*
+InvestigatorsTargetLiteraturePeople Target literature, most active authors
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiInvestigatorsTargetLiteraturePeopleRequest
+*/
+func (a *InvestigatorsAPIService) InvestigatorsTargetLiteraturePeople(ctx context.Context, id string) ApiInvestigatorsTargetLiteraturePeopleRequest {
+	return ApiInvestigatorsTargetLiteraturePeopleRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return TargetLiteraturePeopleResponse
+func (a *InvestigatorsAPIService) InvestigatorsTargetLiteraturePeopleExecute(r ApiInvestigatorsTargetLiteraturePeopleRequest) (*TargetLiteraturePeopleResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *TargetLiteraturePeopleResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "InvestigatorsAPIService.InvestigatorsTargetLiteraturePeople")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/investigators/{id}/target_literature_people"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)

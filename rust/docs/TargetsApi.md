@@ -15,6 +15,7 @@ Method | HTTP request | Description
 [**targets_period_target_investigators**](TargetsApi.md#targets_period_target_investigators) | **GET** /api/v1/targets/{id}/target_investigators | Investigators on a target's trials
 [**targets_period_target_literature**](TargetsApi.md#targets_period_target_literature) | **GET** /api/v1/targets/{id}/target_literature | Target literature (MeSH-indexed, 2016 onward)
 [**targets_period_target_literature_orgs**](TargetsApi.md#targets_period_target_literature_orgs) | **GET** /api/v1/targets/{id}/target_literature_orgs | Target literature, most active institutions
+[**targets_period_target_literature_people**](TargetsApi.md#targets_period_target_literature_people) | **GET** /api/v1/targets/{id}/target_literature_people | Target literature, most active authors
 [**targets_period_target_patent_mentions**](TargetsApi.md#targets_period_target_patent_mentions) | **GET** /api/v1/targets/{id}/target_patent_mentions | Target patent mentions
 [**targets_period_target_programs**](TargetsApi.md#targets_period_target_programs) | **GET** /api/v1/targets/{id}/target_programs | Target development programs
 [**targets_period_target_publications**](TargetsApi.md#targets_period_target_publications) | **GET** /api/v1/targets/{id}/target_publications | Target publications
@@ -367,6 +368,39 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::TargetLiteratureOrgsResponse**](TargetLiteratureOrgsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## targets_period_target_literature_people
+
+> models::TargetLiteraturePeopleResponse targets_period_target_literature_people(id, cursor, limit, sort, group_by, measure)
+Target literature, most active authors
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::TargetLiteraturePeopleResponse**](TargetLiteraturePeopleResponse.md)
 
 ### Authorization
 

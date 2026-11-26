@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**rare_diseases_period_get**](RareDiseasesApi.md#rare_diseases_period_get) | **GET** /api/v1/rare_diseases/{id} | One rare disease
 [**rare_diseases_period_list**](RareDiseasesApi.md#rare_diseases_period_list) | **GET** /api/v1/rare_diseases | List rare diseases
+[**rare_diseases_period_patient_organisation**](RareDiseasesApi.md#rare_diseases_period_patient_organisation) | **GET** /api/v1/rare_diseases/{id}/patient_organisation | Patient organisations
 [**rare_diseases_period_rare_disease_genes**](RareDiseasesApi.md#rare_diseases_period_rare_disease_genes) | **GET** /api/v1/rare_diseases/{id}/rare_disease_genes | Rare disease genes
 [**rare_diseases_period_rare_disease_hierarchy**](RareDiseasesApi.md#rare_diseases_period_rare_disease_hierarchy) | **GET** /api/v1/rare_diseases/{id}/rare_disease_hierarchy | Rare disease hierarchy
 [**rare_diseases_period_rare_disease_investigator_coverage**](RareDiseasesApi.md#rare_diseases_period_rare_disease_investigator_coverage) | **GET** /api/v1/rare_diseases/{id}/rare_disease_investigator_coverage | Rare disease investigator coverage
@@ -71,6 +72,39 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::RareDiseasesResponse**](RareDiseasesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## rare_diseases_period_patient_organisation
+
+> models::PatientOrganisationResponse rare_diseases_period_patient_organisation(id, cursor, limit, sort, group_by, measure)
+Patient organisations
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **i32** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::PatientOrganisationResponse**](PatientOrganisationResponse.md)
 
 ### Authorization
 

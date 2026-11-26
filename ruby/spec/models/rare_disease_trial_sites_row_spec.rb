@@ -117,6 +117,12 @@ describe PharmaObservatory::RareDiseaseTrialSitesRow do
     end
   end
 
+  describe 'test attribute "n_open_trials_direct"' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   describe 'test attribute "first_trial_year"' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/

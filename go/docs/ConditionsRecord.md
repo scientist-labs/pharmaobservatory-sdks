@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Sections** | Pointer to **map[string]interface{}** | Sections of the object&#39;s web page, by key: patient_organisations, the list the page shows of the organisations that name the disease or condition on their own websites (state, empty_state, coverage, groups of entries carrying the patient_organisation dataset&#39;s columns, the per-entry credit and the lane attribution). | [optional] 
 **ObjectType** | **string** |  | 
 **Id** | **string** |  | 
 **Record** | [**ConditionsRow**](ConditionsRow.md) |  | 
@@ -34,6 +35,31 @@ will change when the set of required properties is changed
 NewConditionsRecordWithDefaults instantiates a new ConditionsRecord object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetSections
+
+`func (o *ConditionsRecord) GetSections() map[string]interface{}`
+
+GetSections returns the Sections field if non-nil, zero value otherwise.
+
+### GetSectionsOk
+
+`func (o *ConditionsRecord) GetSectionsOk() (*map[string]interface{}, bool)`
+
+GetSectionsOk returns a tuple with the Sections field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSections
+
+`func (o *ConditionsRecord) SetSections(v map[string]interface{})`
+
+SetSections sets Sections field to given value.
+
+### HasSections
+
+`func (o *ConditionsRecord) HasSections() bool`
+
+HasSections returns a boolean if a field has been set.
 
 ### GetObjectType
 

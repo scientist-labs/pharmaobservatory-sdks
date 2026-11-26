@@ -6,6 +6,7 @@ All URIs are relative to *https://pharmaobservatory.com*
 | ------ | ------------ | ----------- |
 | [**rare_diseases_get**](RareDiseasesApi.md#rare_diseases_get) | **GET** /api/v1/rare_diseases/{id} | One rare disease |
 | [**rare_diseases_list**](RareDiseasesApi.md#rare_diseases_list) | **GET** /api/v1/rare_diseases | List rare diseases |
+| [**rare_diseases_patient_organisation**](RareDiseasesApi.md#rare_diseases_patient_organisation) | **GET** /api/v1/rare_diseases/{id}/patient_organisation | Patient organisations |
 | [**rare_diseases_rare_disease_genes**](RareDiseasesApi.md#rare_diseases_rare_disease_genes) | **GET** /api/v1/rare_diseases/{id}/rare_disease_genes | Rare disease genes |
 | [**rare_diseases_rare_disease_hierarchy**](RareDiseasesApi.md#rare_diseases_rare_disease_hierarchy) | **GET** /api/v1/rare_diseases/{id}/rare_disease_hierarchy | Rare disease hierarchy |
 | [**rare_diseases_rare_disease_investigator_coverage**](RareDiseasesApi.md#rare_diseases_rare_disease_investigator_coverage) | **GET** /api/v1/rare_diseases/{id}/rare_disease_investigator_coverage | Rare disease investigator coverage |
@@ -156,6 +157,85 @@ end
 ### Return type
 
 [**RareDiseasesResponse**](RareDiseasesResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## rare_diseases_patient_organisation
+
+> <PatientOrganisationResponse> rare_diseases_patient_organisation(id, opts)
+
+Patient organisations
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::RareDiseasesApi.new
+id = 95708 # Integer | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Patient organisations
+  result = api_instance.rare_diseases_patient_organisation(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling RareDiseasesApi->rare_diseases_patient_organisation: #{e}"
+end
+```
+
+#### Using the rare_diseases_patient_organisation_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<PatientOrganisationResponse>, Integer, Hash)> rare_diseases_patient_organisation_with_http_info(id, opts)
+
+```ruby
+begin
+  # Patient organisations
+  data, status_code, headers = api_instance.rare_diseases_patient_organisation_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <PatientOrganisationResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling RareDiseasesApi->rare_diseases_patient_organisation_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **Integer** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**PatientOrganisationResponse**](PatientOrganisationResponse.md)
 
 ### Authorization
 

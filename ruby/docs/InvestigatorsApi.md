@@ -4,6 +4,8 @@ All URIs are relative to *https://pharmaobservatory.com*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
+| [**investigators_biomarker_literature_people**](InvestigatorsApi.md#investigators_biomarker_literature_people) | **GET** /api/v1/investigators/{id}/biomarker_literature_people | Biomarker literature, most active authors |
+| [**investigators_condition_literature_people**](InvestigatorsApi.md#investigators_condition_literature_people) | **GET** /api/v1/investigators/{id}/condition_literature_people | Condition literature, most active authors |
 | [**investigators_drug_investigators**](InvestigatorsApi.md#investigators_drug_investigators) | **GET** /api/v1/investigators/{id}/drug_investigators | Investigators on a drug&#39;s trials |
 | [**investigators_get**](InvestigatorsApi.md#investigators_get) | **GET** /api/v1/investigators/{id} | One investigator |
 | [**investigators_investigator_conditions**](InvestigatorsApi.md#investigators_investigator_conditions) | **GET** /api/v1/investigators/{id}/investigator_conditions | Investigator conditions |
@@ -14,11 +16,171 @@ All URIs are relative to *https://pharmaobservatory.com*
 | [**investigators_investigator_topics**](InvestigatorsApi.md#investigators_investigator_topics) | **GET** /api/v1/investigators/{id}/investigator_topics | Investigator expertise topics |
 | [**investigators_investigator_trials**](InvestigatorsApi.md#investigators_investigator_trials) | **GET** /api/v1/investigators/{id}/investigator_trials | Investigator trials |
 | [**investigators_list**](InvestigatorsApi.md#investigators_list) | **GET** /api/v1/investigators | List investigators |
+| [**investigators_org_literature_people**](InvestigatorsApi.md#investigators_org_literature_people) | **GET** /api/v1/investigators/{id}/org_literature_people | Organization literature, authors on affiliated papers |
 | [**investigators_rare_disease_investigators**](InvestigatorsApi.md#investigators_rare_disease_investigators) | **GET** /api/v1/investigators/{id}/rare_disease_investigators | Rare disease investigators |
 | [**investigators_rwd_us_network_projects**](InvestigatorsApi.md#investigators_rwd_us_network_projects) | **GET** /api/v1/investigators/{id}/rwd_us_network_projects | US real-world data network projects (N3C) |
 | [**investigators_site_investigators**](InvestigatorsApi.md#investigators_site_investigators) | **GET** /api/v1/investigators/{id}/site_investigators | Site investigators |
 | [**investigators_target_investigators**](InvestigatorsApi.md#investigators_target_investigators) | **GET** /api/v1/investigators/{id}/target_investigators | Investigators on a target&#39;s trials |
+| [**investigators_target_literature_people**](InvestigatorsApi.md#investigators_target_literature_people) | **GET** /api/v1/investigators/{id}/target_literature_people | Target literature, most active authors |
 | [**investigators_trial_kols**](InvestigatorsApi.md#investigators_trial_kols) | **GET** /api/v1/investigators/{id}/trial_kols | Trial investigators |
+
+
+## investigators_biomarker_literature_people
+
+> <BiomarkerLiteraturePeopleResponse> investigators_biomarker_literature_people(id, opts)
+
+Biomarker literature, most active authors
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::InvestigatorsApi.new
+id = 'npi:9900000381' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Biomarker literature, most active authors
+  result = api_instance.investigators_biomarker_literature_people(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling InvestigatorsApi->investigators_biomarker_literature_people: #{e}"
+end
+```
+
+#### Using the investigators_biomarker_literature_people_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<BiomarkerLiteraturePeopleResponse>, Integer, Hash)> investigators_biomarker_literature_people_with_http_info(id, opts)
+
+```ruby
+begin
+  # Biomarker literature, most active authors
+  data, status_code, headers = api_instance.investigators_biomarker_literature_people_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <BiomarkerLiteraturePeopleResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling InvestigatorsApi->investigators_biomarker_literature_people_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**BiomarkerLiteraturePeopleResponse**](BiomarkerLiteraturePeopleResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## investigators_condition_literature_people
+
+> <ConditionLiteraturePeopleResponse> investigators_condition_literature_people(id, opts)
+
+Condition literature, most active authors
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::InvestigatorsApi.new
+id = 'npi:9900000381' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Condition literature, most active authors
+  result = api_instance.investigators_condition_literature_people(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling InvestigatorsApi->investigators_condition_literature_people: #{e}"
+end
+```
+
+#### Using the investigators_condition_literature_people_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ConditionLiteraturePeopleResponse>, Integer, Hash)> investigators_condition_literature_people_with_http_info(id, opts)
+
+```ruby
+begin
+  # Condition literature, most active authors
+  data, status_code, headers = api_instance.investigators_condition_literature_people_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ConditionLiteraturePeopleResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling InvestigatorsApi->investigators_condition_literature_people_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**ConditionLiteraturePeopleResponse**](ConditionLiteraturePeopleResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 
 ## investigators_drug_investigators
@@ -797,6 +959,85 @@ end
 - **Accept**: application/json
 
 
+## investigators_org_literature_people
+
+> <OrgLiteraturePeopleResponse> investigators_org_literature_people(id, opts)
+
+Organization literature, authors on affiliated papers
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::InvestigatorsApi.new
+id = 'npi:9900000381' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Organization literature, authors on affiliated papers
+  result = api_instance.investigators_org_literature_people(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling InvestigatorsApi->investigators_org_literature_people: #{e}"
+end
+```
+
+#### Using the investigators_org_literature_people_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<OrgLiteraturePeopleResponse>, Integer, Hash)> investigators_org_literature_people_with_http_info(id, opts)
+
+```ruby
+begin
+  # Organization literature, authors on affiliated papers
+  data, status_code, headers = api_instance.investigators_org_literature_people_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <OrgLiteraturePeopleResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling InvestigatorsApi->investigators_org_literature_people_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**OrgLiteraturePeopleResponse**](OrgLiteraturePeopleResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
 ## investigators_rare_disease_investigators
 
 > <RareDiseaseInvestigatorsResponse> investigators_rare_disease_investigators(id, opts)
@@ -1102,6 +1343,85 @@ end
 ### Return type
 
 [**TargetInvestigatorsResponse**](TargetInvestigatorsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## investigators_target_literature_people
+
+> <TargetLiteraturePeopleResponse> investigators_target_literature_people(id, opts)
+
+Target literature, most active authors
+
+### Examples
+
+```ruby
+require 'time'
+require 'pharmaobservatory'
+# setup authorization
+PharmaObservatory.configure do |config|
+  # Configure Bearer authorization (JWT): ApiBearerJwt
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = PharmaObservatory::InvestigatorsApi.new
+id = 'npi:9900000381' # String | 
+opts = {
+  cursor: 'cursor_example', # String | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  limit: 56, # Integer | Rows per page, up to 500 (default 50).
+  sort: 'sort_example', # String | Comma separated columns, a leading minus for descending: sort=a,-b.
+  group_by: 'group_by_example', # String | A dimension to group by; a date takes :year, :quarter or :month.
+  measure: 'measure_example' # String | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+}
+
+begin
+  # Target literature, most active authors
+  result = api_instance.investigators_target_literature_people(id, opts)
+  p result
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling InvestigatorsApi->investigators_target_literature_people: #{e}"
+end
+```
+
+#### Using the investigators_target_literature_people_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<TargetLiteraturePeopleResponse>, Integer, Hash)> investigators_target_literature_people_with_http_info(id, opts)
+
+```ruby
+begin
+  # Target literature, most active authors
+  data, status_code, headers = api_instance.investigators_target_literature_people_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <TargetLiteraturePeopleResponse>
+rescue PharmaObservatory::ApiError => e
+  puts "Error when calling InvestigatorsApi->investigators_target_literature_people_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cursor** | **String** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | [optional] |
+| **limit** | **Integer** | Rows per page, up to 500 (default 50). | [optional] |
+| **sort** | **String** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | [optional] |
+| **group_by** | **String** | A dimension to group by; a date takes :year, :quarter or :month. | [optional] |
+| **measure** | **String** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | [optional] |
+
+### Return type
+
+[**TargetLiteraturePeopleResponse**](TargetLiteraturePeopleResponse.md)
 
 ### Authorization
 

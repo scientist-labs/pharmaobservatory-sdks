@@ -21,7 +21,8 @@ Name | Type | Description | Notes
 **InEdgeCount** | Pointer to **NullableInt32** | Stored edge rows that end at the node. | [optional] 
 **NodeSourceCount** | Pointer to **NullableInt32** | Distinct sources among the node&#39;s edges. | [optional] 
 **Sources** | Pointer to **[]string** | The sources that state the node&#39;s edges. | [optional] 
-**UnlinkedCompanyCount** | Pointer to **NullableInt32** | For an investor node, its portfolio rows that cannot become a node (a company known only by an SEC filer number, or an organization with no resolved parent); shown as a count and never guessed at. 0 for a company node. | [optional] 
+**UnlinkedCompanyCount** | Pointer to **NullableInt32** | For an investor node, its portfolio rows that cannot become a node (a company known only by an SEC filer number, an organization with no resolved parent, or a listing that is page chrome, a section heading, the investor&#39;s own name or a name a curator marked as not a company); shown as a count and never guessed at. 0 for a company node. | [optional] 
+**ListedNames** | Pointer to **[]string** | For a company node, the distinct names investors printed for it on their portfolio pages, sorted; empty for an investor node. A name that differs from display_name is how the investors spell a company the registry names otherwise (Scientist.com, listed for Assay Depot Inc). A label, not a statement of identity. | [optional] 
 
 ## Methods
 
@@ -672,6 +673,41 @@ HasUnlinkedCompanyCount returns a boolean if a field has been set.
 `func (o *InvestmentGraphNodesRow) UnsetUnlinkedCompanyCount()`
 
 UnsetUnlinkedCompanyCount ensures that no value is present for UnlinkedCompanyCount, not even an explicit nil
+### GetListedNames
+
+`func (o *InvestmentGraphNodesRow) GetListedNames() []string`
+
+GetListedNames returns the ListedNames field if non-nil, zero value otherwise.
+
+### GetListedNamesOk
+
+`func (o *InvestmentGraphNodesRow) GetListedNamesOk() (*[]string, bool)`
+
+GetListedNamesOk returns a tuple with the ListedNames field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetListedNames
+
+`func (o *InvestmentGraphNodesRow) SetListedNames(v []string)`
+
+SetListedNames sets ListedNames field to given value.
+
+### HasListedNames
+
+`func (o *InvestmentGraphNodesRow) HasListedNames() bool`
+
+HasListedNames returns a boolean if a field has been set.
+
+### SetListedNamesNil
+
+`func (o *InvestmentGraphNodesRow) SetListedNamesNil(b bool)`
+
+ SetListedNamesNil sets the value for ListedNames to be an explicit nil
+
+### UnsetListedNames
+`func (o *InvestmentGraphNodesRow) UnsetListedNames()`
+
+UnsetListedNames ensures that no value is present for ListedNames, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

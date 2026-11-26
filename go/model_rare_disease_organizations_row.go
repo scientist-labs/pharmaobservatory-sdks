@@ -48,7 +48,7 @@ type RareDiseaseOrganizationsRow struct {
 	AuthorityClass NullableString `json:"authority_class,omitempty"`
 	// The source the assertion was read from.
 	SourceKey NullableString `json:"source_key,omitempty"`
-	// The record in the source the assertion comes from.
+	// The record in the source the assertion comes from. NULL for the patient_organisation_site source, whose id is an internal page-version key.
 	SourceRecordId NullableString `json:"source_record_id,omitempty"`
 	// A link to the source record, where it has one.
 	SourceUrl NullableString `json:"source_url,omitempty"`

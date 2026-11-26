@@ -61,6 +61,8 @@ docs/BiomarkerLiteratureAllResponse.md
 docs/BiomarkerLiteratureAllRow.md
 docs/BiomarkerLiteratureOrgsResponse.md
 docs/BiomarkerLiteratureOrgsRow.md
+docs/BiomarkerLiteraturePeopleResponse.md
+docs/BiomarkerLiteraturePeopleRow.md
 docs/BiomarkerLiteratureResponse.md
 docs/BiomarkerLiteratureRow.md
 docs/BiomarkerPublishingCompaniesResponse.md
@@ -158,6 +160,8 @@ docs/ConditionInvestigatorOrganizationsResponse.md
 docs/ConditionInvestigatorOrganizationsRow.md
 docs/ConditionLiteratureOrgsResponse.md
 docs/ConditionLiteratureOrgsRow.md
+docs/ConditionLiteraturePeopleResponse.md
+docs/ConditionLiteraturePeopleRow.md
 docs/ConditionLiteratureResponse.md
 docs/ConditionLiteratureRow.md
 docs/ConditionPrevalenceResponse.md
@@ -310,6 +314,8 @@ docs/OrgDisclosureTrendResponse.md
 docs/OrgDisclosureTrendRow.md
 docs/OrgDisclosuresResponse.md
 docs/OrgDisclosuresRow.md
+docs/OrgLiteraturePeopleResponse.md
+docs/OrgLiteraturePeopleRow.md
 docs/OrgLiteratureResponse.md
 docs/OrgLiteratureRow.md
 docs/OrgRelationshipsResponse.md
@@ -322,6 +328,8 @@ docs/OwnershipPositionsResponse.md
 docs/OwnershipPositionsRow.md
 docs/OwnershipSourceCoverageResponse.md
 docs/OwnershipSourceCoverageRow.md
+docs/PatientOrganisationResponse.md
+docs/PatientOrganisationRow.md
 docs/PdufaDatesResponse.md
 docs/PdufaDatesRow.md
 docs/ProgramLicensingCandidatesResponse.md
@@ -520,6 +528,8 @@ docs/TargetInvestigatorsResponse.md
 docs/TargetInvestigatorsRow.md
 docs/TargetLiteratureOrgsResponse.md
 docs/TargetLiteratureOrgsRow.md
+docs/TargetLiteraturePeopleResponse.md
+docs/TargetLiteraturePeopleRow.md
 docs/TargetLiteratureResponse.md
 docs/TargetLiteratureRow.md
 docs/TargetPatentMentionsResponse.md
@@ -610,6 +620,8 @@ model_biomarker_literature_all_response.go
 model_biomarker_literature_all_row.go
 model_biomarker_literature_orgs_response.go
 model_biomarker_literature_orgs_row.go
+model_biomarker_literature_people_response.go
+model_biomarker_literature_people_row.go
 model_biomarker_literature_response.go
 model_biomarker_literature_row.go
 model_biomarker_publishing_companies_response.go
@@ -704,6 +716,8 @@ model_condition_investigator_organizations_response.go
 model_condition_investigator_organizations_row.go
 model_condition_literature_orgs_response.go
 model_condition_literature_orgs_row.go
+model_condition_literature_people_response.go
+model_condition_literature_people_row.go
 model_condition_literature_response.go
 model_condition_literature_row.go
 model_condition_prevalence_response.go
@@ -848,6 +862,8 @@ model_org_disclosure_trend_response.go
 model_org_disclosure_trend_row.go
 model_org_disclosures_response.go
 model_org_disclosures_row.go
+model_org_literature_people_response.go
+model_org_literature_people_row.go
 model_org_literature_response.go
 model_org_literature_row.go
 model_org_relationships_response.go
@@ -860,6 +876,8 @@ model_ownership_positions_response.go
 model_ownership_positions_row.go
 model_ownership_source_coverage_response.go
 model_ownership_source_coverage_row.go
+model_patient_organisation_response.go
+model_patient_organisation_row.go
 model_pdufa_dates_response.go
 model_pdufa_dates_row.go
 model_program_licensing_candidates_response.go
@@ -1046,6 +1064,8 @@ model_target_investigators_response.go
 model_target_investigators_row.go
 model_target_literature_orgs_response.go
 model_target_literature_orgs_row.go
+model_target_literature_people_response.go
+model_target_literature_people_row.go
 model_target_literature_response.go
 model_target_literature_row.go
 model_target_patent_mentions_response.go
