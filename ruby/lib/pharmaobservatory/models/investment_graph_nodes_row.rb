@@ -67,8 +67,11 @@ module PharmaObservatory
     # The sources that state the node's edges.
     attr_accessor :sources
 
-    # For an investor node, its portfolio rows that cannot become a node (a company known only by an SEC filer number, or an organization with no resolved parent); shown as a count and never guessed at. 0 for a company node.
+    # For an investor node, its portfolio rows that cannot become a node (a company known only by an SEC filer number, an organization with no resolved parent, or a listing that is page chrome, a section heading, the investor's own name or a name a curator marked as not a company); shown as a count and never guessed at. 0 for a company node.
     attr_accessor :unlinked_company_count
+
+    # For a company node, the distinct names investors printed for it on their portfolio pages, sorted; empty for an investor node. A name that differs from display_name is how the investors spell a company the registry names otherwise (Scientist.com, listed for Assay Depot Inc). A label, not a statement of identity.
+    attr_accessor :listed_names
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -90,7 +93,8 @@ module PharmaObservatory
         :'in_edge_count' => :'in_edge_count',
         :'node_source_count' => :'node_source_count',
         :'sources' => :'sources',
-        :'unlinked_company_count' => :'unlinked_company_count'
+        :'unlinked_company_count' => :'unlinked_company_count',
+        :'listed_names' => :'listed_names'
       }
     end
 
@@ -124,7 +128,8 @@ module PharmaObservatory
         :'in_edge_count' => :'Integer',
         :'node_source_count' => :'Integer',
         :'sources' => :'Array<String>',
-        :'unlinked_company_count' => :'Integer'
+        :'unlinked_company_count' => :'Integer',
+        :'listed_names' => :'Array<String>'
       }
     end
 
@@ -148,7 +153,8 @@ module PharmaObservatory
         :'in_edge_count',
         :'node_source_count',
         :'sources',
-        :'unlinked_company_count'
+        :'unlinked_company_count',
+        :'listed_names'
       ])
     end
 
@@ -241,6 +247,12 @@ module PharmaObservatory
       if attributes.key?(:'unlinked_company_count')
         self.unlinked_company_count = attributes[:'unlinked_company_count']
       end
+
+      if attributes.key?(:'listed_names')
+        if (value = attributes[:'listed_names']).is_a?(Array)
+          self.listed_names = value
+        end
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -280,7 +292,8 @@ module PharmaObservatory
           in_edge_count == o.in_edge_count &&
           node_source_count == o.node_source_count &&
           sources == o.sources &&
-          unlinked_company_count == o.unlinked_company_count
+          unlinked_company_count == o.unlinked_company_count &&
+          listed_names == o.listed_names
     end
 
     # @see the `==` method
@@ -292,7 +305,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [node_id, node_kind, display_name, investor_type, investor_id, org_id, company_id, company_name, group_id, group_name, same_entity_node_id, node_resolution, edge_count, out_edge_count, in_edge_count, node_source_count, sources, unlinked_company_count].hash
+      [node_id, node_kind, display_name, investor_type, investor_id, org_id, company_id, company_name, group_id, group_name, same_entity_node_id, node_resolution, edge_count, out_edge_count, in_edge_count, node_source_count, sources, unlinked_company_count, listed_names].hash
     end
 
     # Builds the object from hash

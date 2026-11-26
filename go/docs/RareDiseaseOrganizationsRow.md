@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **EvidenceType** | Pointer to **NullableString** | The kind of evidence the assertion rests on. | [optional] 
 **AuthorityClass** | Pointer to **NullableString** | How authoritative the source is for the claim. | [optional] 
 **SourceKey** | Pointer to **NullableString** | The source the assertion was read from. | [optional] 
-**SourceRecordId** | Pointer to **NullableString** | The record in the source the assertion comes from. | [optional] 
+**SourceRecordId** | Pointer to **NullableString** | The record in the source the assertion comes from. NULL for the patient_organisation_site source, whose id is an internal page-version key. | [optional] 
 **SourceUrl** | Pointer to **NullableString** | A link to the source record, where it has one. | [optional] 
 **EvidenceTrialId** | Pointer to **NullableString** | The registry trial id the assertion names, where it names one. | [optional] 
 **ObservedAt** | Pointer to **NullableTime** | When the assertion was observed in the source (UTC). | [optional] 

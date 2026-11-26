@@ -20,6 +20,8 @@ var _ MappedNullable = &ConditionsRecord{}
 
 // ConditionsRecord struct for ConditionsRecord
 type ConditionsRecord struct {
+	// Sections of the object's web page, by key: patient_organisations, the list the page shows of the organisations that name the disease or condition on their own websites (state, empty_state, coverage, groups of entries carrying the patient_organisation dataset's columns, the per-entry credit and the lane attribution).
+	Sections map[string]interface{} `json:"sections,omitempty"`
 	ObjectType string `json:"object_type"`
 	Id string `json:"id"`
 	Record ConditionsRow `json:"record"`
@@ -55,6 +57,38 @@ func NewConditionsRecord(objectType string, id string, record ConditionsRow, dat
 func NewConditionsRecordWithDefaults() *ConditionsRecord {
 	this := ConditionsRecord{}
 	return &this
+}
+
+// GetSections returns the Sections field value if set, zero value otherwise.
+func (o *ConditionsRecord) GetSections() map[string]interface{} {
+	if o == nil || IsNil(o.Sections) {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.Sections
+}
+
+// GetSectionsOk returns a tuple with the Sections field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ConditionsRecord) GetSectionsOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Sections) {
+		return map[string]interface{}{}, false
+	}
+	return o.Sections, true
+}
+
+// HasSections returns a boolean if a field has been set.
+func (o *ConditionsRecord) HasSections() bool {
+	if o != nil && !IsNil(o.Sections) {
+		return true
+	}
+
+	return false
+}
+
+// SetSections gets a reference to the given map[string]interface{} and assigns it to the Sections field.
+func (o *ConditionsRecord) SetSections(v map[string]interface{}) {
+	o.Sections = v
 }
 
 // GetObjectType returns the ObjectType field value
@@ -388,6 +422,9 @@ func (o ConditionsRecord) MarshalJSON() ([]byte, error) {
 
 func (o ConditionsRecord) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Sections) {
+		toSerialize["sections"] = o.Sections
+	}
 	toSerialize["object_type"] = o.ObjectType
 	toSerialize["id"] = o.Id
 	toSerialize["record"] = o.Record
@@ -459,6 +496,7 @@ func (o *ConditionsRecord) UnmarshalJSON(data []byte) (err error) {
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "sections")
 		delete(additionalProperties, "object_type")
 		delete(additionalProperties, "id")
 		delete(additionalProperties, "record")

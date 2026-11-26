@@ -21,7 +21,8 @@
 | **in_edge_count** | **Integer** | Stored edge rows that end at the node. | [optional] |
 | **node_source_count** | **Integer** | Distinct sources among the node&#39;s edges. | [optional] |
 | **sources** | **Array&lt;String&gt;** | The sources that state the node&#39;s edges. | [optional] |
-| **unlinked_company_count** | **Integer** | For an investor node, its portfolio rows that cannot become a node (a company known only by an SEC filer number, or an organization with no resolved parent); shown as a count and never guessed at. 0 for a company node. | [optional] |
+| **unlinked_company_count** | **Integer** | For an investor node, its portfolio rows that cannot become a node (a company known only by an SEC filer number, an organization with no resolved parent, or a listing that is page chrome, a section heading, the investor&#39;s own name or a name a curator marked as not a company); shown as a count and never guessed at. 0 for a company node. | [optional] |
+| **listed_names** | **Array&lt;String&gt;** | For a company node, the distinct names investors printed for it on their portfolio pages, sorted; empty for an investor node. A name that differs from display_name is how the investors spell a company the registry names otherwise (Scientist.com, listed for Assay Depot Inc). A label, not a statement of identity. | [optional] |
 
 ## Example
 
@@ -46,7 +47,8 @@ instance = PharmaObservatory::InvestmentGraphNodesRow.new(
   in_edge_count: null,
   node_source_count: null,
   sources: null,
-  unlinked_company_count: null
+  unlinked_company_count: null,
+  listed_names: null
 )
 ```
 

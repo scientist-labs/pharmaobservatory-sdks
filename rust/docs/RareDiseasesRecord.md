@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**sections** | Option<[**std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)> | Sections of the object's web page, by key: patient_organisations, the list the page shows of the organisations that name the disease or condition on their own websites (state, empty_state, coverage, groups of entries carrying the patient_organisation dataset's columns, the per-entry credit and the lane attribution). | [optional]
 **object_type** | **String** |  | 
 **id** | **String** |  | 
 **record** | [**models::RareDiseasesRow**](RareDiseasesRow.md) |  | 

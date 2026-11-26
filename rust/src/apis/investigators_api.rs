@@ -15,6 +15,30 @@ use crate::{apis::ResponseContent, models};
 use super::{Error, configuration, ContentType};
 
 
+/// struct for typed errors of method [`investigators_period_biomarker_literature_people`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum InvestigatorsPeriodBiomarkerLiteraturePeopleError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`investigators_period_condition_literature_people`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum InvestigatorsPeriodConditionLiteraturePeopleError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`investigators_period_drug_investigators`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -133,6 +157,18 @@ pub enum InvestigatorsPeriodListError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`investigators_period_org_literature_people`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum InvestigatorsPeriodOrgLiteraturePeopleError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`investigators_period_rare_disease_investigators`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -181,6 +217,18 @@ pub enum InvestigatorsPeriodTargetInvestigatorsError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`investigators_period_target_literature_people`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum InvestigatorsPeriodTargetLiteraturePeopleError {
+    Status400(models::QueryError),
+    Status401(models::AuthError),
+    Status403(models::AuthError),
+    Status404(models::QueryError),
+    Status409(models::QueryError),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`investigators_period_trial_kols`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -193,6 +241,124 @@ pub enum InvestigatorsPeriodTrialKolsError {
     UnknownValue(serde_json::Value),
 }
 
+
+pub async fn investigators_period_biomarker_literature_people(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::BiomarkerLiteraturePeopleResponse, Error<InvestigatorsPeriodBiomarkerLiteraturePeopleError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/investigators/{id}/biomarker_literature_people", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BiomarkerLiteraturePeopleResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BiomarkerLiteraturePeopleResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<InvestigatorsPeriodBiomarkerLiteraturePeopleError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn investigators_period_condition_literature_people(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::ConditionLiteraturePeopleResponse, Error<InvestigatorsPeriodConditionLiteraturePeopleError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/investigators/{id}/condition_literature_people", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ConditionLiteraturePeopleResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ConditionLiteraturePeopleResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<InvestigatorsPeriodConditionLiteraturePeopleError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
 
 pub async fn investigators_period_drug_investigators(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::DrugInvestigatorsResponse, Error<InvestigatorsPeriodDrugInvestigatorsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
@@ -763,6 +929,65 @@ pub async fn investigators_period_list(configuration: &configuration::Configurat
     }
 }
 
+pub async fn investigators_period_org_literature_people(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::OrgLiteraturePeopleResponse, Error<InvestigatorsPeriodOrgLiteraturePeopleError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/investigators/{id}/org_literature_people", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::OrgLiteraturePeopleResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::OrgLiteraturePeopleResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<InvestigatorsPeriodOrgLiteraturePeopleError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
 pub async fn investigators_period_rare_disease_investigators(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::RareDiseaseInvestigatorsResponse, Error<InvestigatorsPeriodRareDiseaseInvestigatorsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_id = id;
@@ -995,6 +1220,65 @@ pub async fn investigators_period_target_investigators(configuration: &configura
     } else {
         let content = resp.text().await?;
         let entity: Option<InvestigatorsPeriodTargetInvestigatorsError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn investigators_period_target_literature_people(configuration: &configuration::Configuration, id: &str, cursor: Option<&str>, limit: Option<i32>, sort: Option<&str>, group_by: Option<&str>, measure: Option<&str>) -> Result<models::TargetLiteraturePeopleResponse, Error<InvestigatorsPeriodTargetLiteraturePeopleError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_id = id;
+    let p_cursor = cursor;
+    let p_limit = limit;
+    let p_sort = sort;
+    let p_group_by = group_by;
+    let p_measure = measure;
+
+    let uri_str = format!("{}/api/v1/investigators/{id}/target_literature_people", configuration.base_path, id=crate::apis::urlencode(p_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_cursor {
+        req_builder = req_builder.query(&[("cursor", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_limit {
+        req_builder = req_builder.query(&[("limit", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_sort {
+        req_builder = req_builder.query(&[("sort", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_group_by {
+        req_builder = req_builder.query(&[("group_by", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = p_measure {
+        req_builder = req_builder.query(&[("measure", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::TargetLiteraturePeopleResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::TargetLiteraturePeopleResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<InvestigatorsPeriodTargetLiteraturePeopleError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }

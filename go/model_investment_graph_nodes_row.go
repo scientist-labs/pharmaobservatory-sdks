@@ -53,8 +53,10 @@ type InvestmentGraphNodesRow struct {
 	NodeSourceCount NullableInt32 `json:"node_source_count,omitempty"`
 	// The sources that state the node's edges.
 	Sources []string `json:"sources,omitempty"`
-	// For an investor node, its portfolio rows that cannot become a node (a company known only by an SEC filer number, or an organization with no resolved parent); shown as a count and never guessed at. 0 for a company node.
+	// For an investor node, its portfolio rows that cannot become a node (a company known only by an SEC filer number, an organization with no resolved parent, or a listing that is page chrome, a section heading, the investor's own name or a name a curator marked as not a company); shown as a count and never guessed at. 0 for a company node.
 	UnlinkedCompanyCount NullableInt32 `json:"unlinked_company_count,omitempty"`
+	// For a company node, the distinct names investors printed for it on their portfolio pages, sorted; empty for an investor node. A name that differs from display_name is how the investors spell a company the registry names otherwise (Scientist.com, listed for Assay Depot Inc). A label, not a statement of identity.
+	ListedNames []string `json:"listed_names,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -824,6 +826,39 @@ func (o *InvestmentGraphNodesRow) UnsetUnlinkedCompanyCount() {
 	o.UnlinkedCompanyCount.Unset()
 }
 
+// GetListedNames returns the ListedNames field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *InvestmentGraphNodesRow) GetListedNames() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+	return o.ListedNames
+}
+
+// GetListedNamesOk returns a tuple with the ListedNames field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *InvestmentGraphNodesRow) GetListedNamesOk() ([]string, bool) {
+	if o == nil || IsNil(o.ListedNames) {
+		return nil, false
+	}
+	return o.ListedNames, true
+}
+
+// HasListedNames returns a boolean if a field has been set.
+func (o *InvestmentGraphNodesRow) HasListedNames() bool {
+	if o != nil && !IsNil(o.ListedNames) {
+		return true
+	}
+
+	return false
+}
+
+// SetListedNames gets a reference to the given []string and assigns it to the ListedNames field.
+func (o *InvestmentGraphNodesRow) SetListedNames(v []string) {
+	o.ListedNames = v
+}
+
 func (o InvestmentGraphNodesRow) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -888,6 +923,9 @@ func (o InvestmentGraphNodesRow) ToMap() (map[string]interface{}, error) {
 	if o.UnlinkedCompanyCount.IsSet() {
 		toSerialize["unlinked_company_count"] = o.UnlinkedCompanyCount.Get()
 	}
+	if o.ListedNames != nil {
+		toSerialize["listed_names"] = o.ListedNames
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -928,6 +966,7 @@ func (o *InvestmentGraphNodesRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "node_source_count")
 		delete(additionalProperties, "sources")
 		delete(additionalProperties, "unlinked_company_count")
+		delete(additionalProperties, "listed_names")
 		o.AdditionalProperties = additionalProperties
 	}
 

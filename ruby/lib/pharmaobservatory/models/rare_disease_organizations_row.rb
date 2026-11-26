@@ -58,7 +58,7 @@ module PharmaObservatory
     # The source the assertion was read from.
     attr_accessor :source_key
 
-    # The record in the source the assertion comes from.
+    # The record in the source the assertion comes from. NULL for the patient_organisation_site source, whose id is an internal page-version key.
     attr_accessor :source_record_id
 
     # A link to the source record, where it has one.

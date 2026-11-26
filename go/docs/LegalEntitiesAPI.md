@@ -31,6 +31,7 @@ Method | HTTP request | Description
 [**LegalEntitiesOrgDisclosureTrend**](LegalEntitiesAPI.md#LegalEntitiesOrgDisclosureTrend) | **Get** /api/v1/legal_entities/{id}/org_disclosure_trend | Organization disclosure trend
 [**LegalEntitiesOrgDisclosures**](LegalEntitiesAPI.md#LegalEntitiesOrgDisclosures) | **Get** /api/v1/legal_entities/{id}/org_disclosures | Organization disclosures (climate and diversity)
 [**LegalEntitiesOrgLiterature**](LegalEntitiesAPI.md#LegalEntitiesOrgLiterature) | **Get** /api/v1/legal_entities/{id}/org_literature | Organization literature by affiliation (MeSH-indexed, 2016 onward)
+[**LegalEntitiesOrgLiteraturePeople**](LegalEntitiesAPI.md#LegalEntitiesOrgLiteraturePeople) | **Get** /api/v1/legal_entities/{id}/org_literature_people | Organization literature, authors on affiliated papers
 [**LegalEntitiesOrgRelationships**](LegalEntitiesAPI.md#LegalEntitiesOrgRelationships) | **Get** /api/v1/legal_entities/{id}/org_relationships | Organization relationships
 [**LegalEntitiesOwnershipObservations**](LegalEntitiesAPI.md#LegalEntitiesOwnershipObservations) | **Get** /api/v1/legal_entities/{id}/ownership_observations | Ownership and control observations (history)
 [**LegalEntitiesOwnershipPercentages**](LegalEntitiesAPI.md#LegalEntitiesOwnershipPercentages) | **Get** /api/v1/legal_entities/{id}/ownership_percentages | Ownership percentages
@@ -2131,6 +2132,84 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**OrgLiteratureResponse**](OrgLiteratureResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## LegalEntitiesOrgLiteraturePeople
+
+> OrgLiteraturePeopleResponse LegalEntitiesOrgLiteraturePeople(ctx, id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+
+Organization literature, authors on affiliated papers
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scientist-labs/pharmaobservatory-sdks/go"
+)
+
+func main() {
+	id := "edgar:0001114448" // string | 
+	cursor := "cursor_example" // string | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. (optional)
+	limit := int32(56) // int32 | Rows per page, up to 500 (default 50). (optional)
+	sort := "sort_example" // string | Comma separated columns, a leading minus for descending: sort=a,-b. (optional)
+	groupBy := "groupBy_example" // string | A dimension to group by; a date takes :year, :quarter or :month. (optional)
+	measure := "measure_example" // string | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.LegalEntitiesAPI.LegalEntitiesOrgLiteraturePeople(context.Background(), id).Cursor(cursor).Limit(limit).Sort(sort).GroupBy(groupBy).Measure(measure).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `LegalEntitiesAPI.LegalEntitiesOrgLiteraturePeople``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `LegalEntitiesOrgLiteraturePeople`: OrgLiteraturePeopleResponse
+	fmt.Fprintf(os.Stdout, "Response from `LegalEntitiesAPI.LegalEntitiesOrgLiteraturePeople`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiLegalEntitiesOrgLiteraturePeopleRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **cursor** | **string** | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. | 
+ **limit** | **int32** | Rows per page, up to 500 (default 50). | 
+ **sort** | **string** | Comma separated columns, a leading minus for descending: sort&#x3D;a,-b. | 
+ **groupBy** | **string** | A dimension to group by; a date takes :year, :quarter or :month. | 
+ **measure** | **string** | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). | 
+
+### Return type
+
+[**OrgLiteraturePeopleResponse**](OrgLiteraturePeopleResponse.md)
 
 ### Authorization
 

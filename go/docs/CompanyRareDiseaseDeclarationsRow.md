@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **EvidenceType** | Pointer to **NullableString** | The kind of evidence the source gives. | [optional] 
 **AuthorityClass** | Pointer to **NullableString** | How authoritative the source is for the claim. | [optional] 
 **SourceKey** | Pointer to **NullableString** | The source the assertion comes from. | [optional] 
-**SourceRecordId** | Pointer to **NullableString** | The source&#39;s own record id. | [optional] 
+**SourceRecordId** | Pointer to **NullableString** | The source&#39;s own record id. NULL for the patient_organisation_site source, whose id is an internal page-version key. | [optional] 
 **SourceUrl** | Pointer to **NullableString** | A link to the source record. | [optional] 
 **ObservedAt** | Pointer to **NullableTime** | When the assertion was observed (UTC). | [optional] 
 **LastVerifiedAt** | Pointer to **NullableTime** | When the assertion was last verified (UTC). | [optional] 

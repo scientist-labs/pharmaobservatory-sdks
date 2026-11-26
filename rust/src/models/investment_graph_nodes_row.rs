@@ -65,9 +65,12 @@ pub struct InvestmentGraphNodesRow {
     /// The sources that state the node's edges.
     #[serde(rename = "sources", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub sources: Option<Option<Vec<String>>>,
-    /// For an investor node, its portfolio rows that cannot become a node (a company known only by an SEC filer number, or an organization with no resolved parent); shown as a count and never guessed at. 0 for a company node.
+    /// For an investor node, its portfolio rows that cannot become a node (a company known only by an SEC filer number, an organization with no resolved parent, or a listing that is page chrome, a section heading, the investor's own name or a name a curator marked as not a company); shown as a count and never guessed at. 0 for a company node.
     #[serde(rename = "unlinked_company_count", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub unlinked_company_count: Option<Option<i32>>,
+    /// For a company node, the distinct names investors printed for it on their portfolio pages, sorted; empty for an investor node. A name that differs from display_name is how the investors spell a company the registry names otherwise (Scientist.com, listed for Assay Depot Inc). A label, not a statement of identity.
+    #[serde(rename = "listed_names", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub listed_names: Option<Option<Vec<String>>>,
 }
 
 impl InvestmentGraphNodesRow {
@@ -92,6 +95,7 @@ impl InvestmentGraphNodesRow {
             node_source_count: None,
             sources: None,
             unlinked_company_count: None,
+            listed_names: None,
         }
     }
 }

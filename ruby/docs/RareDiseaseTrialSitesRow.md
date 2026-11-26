@@ -12,13 +12,14 @@
 | **city** | **String** | The facility&#39;s city as filed. | [optional] |
 | **state** | **String** | The facility&#39;s state or region as filed. | [optional] |
 | **country** | **String** | The facility&#39;s country as filed. | [optional] |
-| **latitude** | **Float** | The site&#39;s latitude in degrees; null when no coordinate is known. | [optional] |
-| **longitude** | **Float** | The site&#39;s longitude in degrees; null when no coordinate is known. | [optional] |
-| **coord_source** | **String** | The source of the coordinate: aact (the registry&#39;s own), geonames (GeoNames) or als (Amazon Location Service). | [optional] |
+| **latitude** | **Float** | The site&#39;s distance-ready latitude in degrees: one real filed location, the one most of the site&#39;s registry filings agree on, the same point the site has on the disease page map and in the nearest-site list. Null when the site is not mappable (its filings disagree, or are coarser than a city). Not the mean of the site&#39;s locations. | [optional] |
+| **longitude** | **Float** | The site&#39;s distance-ready longitude in degrees, paired with latitude; null exactly when latitude is. | [optional] |
+| **coord_source** | **String** | The source of the latitude and longitude: aact (the registry&#39;s own), geonames (GeoNames) or als (Amazon Location Service); null when latitude is. | [optional] |
 | **condition_ids** | **Array&lt;String&gt;** | The MeSH condition ids through which the disease reaches the site&#39;s trials. | [optional] |
 | **n_trials** | **Integer** | Registered trials of this disease and arm that list the site. | [optional] |
 | **n_trials_direct** | **Integer** | Those trials whose own condition list names the mapped condition. | [optional] |
 | **n_active_trials** | **Integer** | Those trials that are recruiting, not yet recruiting, active or enrolling by invitation. | [optional] |
+| **n_open_trials_direct** | **Integer** | Those directly tagged trials that are recruiting or not yet recruiting, the statuses a person can volunteer for. A subset of n_trials_direct; active but closed and invitation-only trials are not counted. | [optional] |
 | **first_trial_year** | **Integer** | The earliest start year among those trials. | [optional] |
 | **last_trial_year** | **Integer** | The latest start year among those trials. | [optional] |
 | **last_update_posted_date** | **Date** | The latest registry update among those trials. | [optional] |
@@ -44,6 +45,7 @@ instance = PharmaObservatory::RareDiseaseTrialSitesRow.new(
   n_trials: null,
   n_trials_direct: null,
   n_active_trials: null,
+  n_open_trials_direct: null,
   first_trial_year: null,
   last_trial_year: null,
   last_update_posted_date: null

@@ -32,6 +32,38 @@ describe 'InvestigatorsApi' do
     end
   end
 
+  # unit tests for investigators_biomarker_literature_people
+  # Biomarker literature, most active authors
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @return [BiomarkerLiteraturePeopleResponse]
+  describe 'investigators_biomarker_literature_people test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for investigators_condition_literature_people
+  # Condition literature, most active authors
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @return [ConditionLiteraturePeopleResponse]
+  describe 'investigators_condition_literature_people test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   # unit tests for investigators_drug_investigators
   # Investigators on a drug&#39;s trials
   # @param id 
@@ -186,6 +218,22 @@ describe 'InvestigatorsApi' do
     end
   end
 
+  # unit tests for investigators_org_literature_people
+  # Organization literature, authors on affiliated papers
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @return [OrgLiteraturePeopleResponse]
+  describe 'investigators_org_literature_people test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   # unit tests for investigators_rare_disease_investigators
   # Rare disease investigators
   # @param id 
@@ -245,6 +293,22 @@ describe 'InvestigatorsApi' do
   # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
   # @return [TargetInvestigatorsResponse]
   describe 'investigators_target_investigators test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for investigators_target_literature_people
+  # Target literature, most active authors
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [String] :cursor The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it.
+  # @option opts [Integer] :limit Rows per page, up to 500 (default 50).
+  # @option opts [String] :sort Comma separated columns, a leading minus for descending: sort&#x3D;a,-b.
+  # @option opts [String] :group_by A dimension to group by; a date takes :year, :quarter or :month.
+  # @option opts [String] :measure count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col).
+  # @return [TargetLiteraturePeopleResponse]
+  describe 'investigators_target_literature_people test' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end

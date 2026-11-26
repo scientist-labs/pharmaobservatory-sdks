@@ -15,7 +15,7 @@
 | **evidence_type** | **String** | The kind of evidence the source gives. | [optional] |
 | **authority_class** | **String** | How authoritative the source is for the claim. | [optional] |
 | **source_key** | **String** | The source the assertion comes from. | [optional] |
-| **source_record_id** | **String** | The source&#39;s own record id. | [optional] |
+| **source_record_id** | **String** | The source&#39;s own record id. NULL for the patient_organisation_site source, whose id is an internal page-version key. | [optional] |
 | **source_url** | **String** | A link to the source record. | [optional] |
 | **observed_at** | **Time** | When the assertion was observed (UTC). | [optional] |
 | **last_verified_at** | **Time** | When the assertion was last verified (UTC). | [optional] |

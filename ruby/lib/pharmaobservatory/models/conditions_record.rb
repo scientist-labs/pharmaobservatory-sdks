@@ -15,6 +15,9 @@ require 'time'
 
 module PharmaObservatory
   class ConditionsRecord
+    # Sections of the object's web page, by key: patient_organisations, the list the page shows of the organisations that name the disease or condition on their own websites (state, empty_state, coverage, groups of entries carrying the patient_organisation dataset's columns, the per-entry credit and the lane attribution).
+    attr_accessor :sections
+
     attr_accessor :object_type
 
     attr_accessor :id
@@ -40,6 +43,7 @@ module PharmaObservatory
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'sections' => :'sections',
         :'object_type' => :'object_type',
         :'id' => :'id',
         :'record' => :'record',
@@ -67,6 +71,7 @@ module PharmaObservatory
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'sections' => :'Hash<String, Object>',
         :'object_type' => :'String',
         :'id' => :'String',
         :'record' => :'ConditionsRow',
@@ -103,6 +108,12 @@ module PharmaObservatory
         end
         h[k.to_sym] = v
       }
+
+      if attributes.key?(:'sections')
+        if (value = attributes[:'sections']).is_a?(Hash)
+          self.sections = value
+        end
+      end
 
       if attributes.key?(:'object_type')
         self.object_type = attributes[:'object_type']
@@ -243,6 +254,7 @@ module PharmaObservatory
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          sections == o.sections &&
           object_type == o.object_type &&
           id == o.id &&
           record == o.record &&
@@ -265,7 +277,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [object_type, id, record, attributes, datasets, attribution, source_credit, freshness, build, build_state, restriction].hash
+      [sections, object_type, id, record, attributes, datasets, attribution, source_credit, freshness, build, build_state, restriction].hash
     end
 
     # Builds the object from hash

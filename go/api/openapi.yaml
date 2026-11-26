@@ -1383,6 +1383,117 @@ paths:
       summary: "Biomarker literature, most active institutions"
       tags:
       - biomarkers
+  /api/v1/biomarkers/{id}/biomarker_literature_people:
+    get:
+      operationId: biomarkers.biomarker_literature_people
+      parameters:
+      - example: ESR1
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BiomarkerLiteraturePeopleResponse'
+          description: "Biomarker literature, most active authors: one row per biomarker\
+            \ and author. Filters: {column}=v (repeat a key for IN), {column}.gt,\
+            \ .gte, .lt, .lte, .ne, .contains (text), .null=true|false. sort=a,-b.\
+            \ group_by=dimension (a date takes :year, :quarter or :month). measure=count,\
+            \ sum(col), avg(col), min(col), max(col), median(col), count_distinct(col).\
+            \ cursor=next_cursor of the previous page. limit up to 500, default 50.\
+            \ On company routes scope=company|group. The columns, dimensions and measures\
+            \ of a dataset are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: "Biomarker literature, most active authors"
+      tags:
+      - biomarkers
   /api/v1/biomarkers/{id}/biomarker_publishing_companies:
     get:
       operationId: biomarkers.biomarker_publishing_companies
@@ -12462,6 +12573,117 @@ paths:
       summary: "Condition literature, most active institutions"
       tags:
       - conditions
+  /api/v1/conditions/{id}/condition_literature_people:
+    get:
+      operationId: conditions.condition_literature_people
+      parameters:
+      - example: D001523
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConditionLiteraturePeopleResponse'
+          description: "Condition literature, most active authors: one row per condition\
+            \ and author. Filters: {column}=v (repeat a key for IN), {column}.gt,\
+            \ .gte, .lt, .lte, .ne, .contains (text), .null=true|false. sort=a,-b.\
+            \ group_by=dimension (a date takes :year, :quarter or :month). measure=count,\
+            \ sum(col), avg(col), min(col), max(col), median(col), count_distinct(col).\
+            \ cursor=next_cursor of the previous page. limit up to 500, default 50.\
+            \ On company routes scope=company|group. The columns, dimensions and measures\
+            \ of a dataset are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: "Condition literature, most active authors"
+      tags:
+      - conditions
   /api/v1/conditions/{id}/condition_prevalence:
     get:
       operationId: conditions.condition_prevalence
@@ -13570,6 +13792,117 @@ paths:
       security:
       - ApiBearerJwt: []
       summary: Investigator conditions
+      tags:
+      - conditions
+  /api/v1/conditions/{id}/patient_organisation:
+    get:
+      operationId: conditions.patient_organisation
+      parameters:
+      - example: D001523
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatientOrganisationResponse'
+          description: "Patient organisations: one row per active patient organisation,\
+            \ disease or condition page it is listed on, and link kind. Filters: {column}=v\
+            \ (repeat a key for IN), {column}.gt, .gte, .lt, .lte, .ne, .contains\
+            \ (text), .null=true|false. sort=a,-b. group_by=dimension (a date takes\
+            \ :year, :quarter or :month). measure=count, sum(col), avg(col), min(col),\
+            \ max(col), median(col), count_distinct(col). cursor=next_cursor of the\
+            \ previous page. limit up to 500, default 50. On company routes scope=company|group.\
+            \ The columns, dimensions and measures of a dataset are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: Patient organisations
       tags:
       - conditions
   /api/v1/conditions/{id}/pdufa_dates:
@@ -17988,6 +18321,228 @@ paths:
       summary: One investigator
       tags:
       - investigators
+  /api/v1/investigators/{id}/biomarker_literature_people:
+    get:
+      operationId: investigators.biomarker_literature_people
+      parameters:
+      - example: npi:9900000381
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BiomarkerLiteraturePeopleResponse'
+          description: "Biomarker literature, most active authors: one row per biomarker\
+            \ and author. Filters: {column}=v (repeat a key for IN), {column}.gt,\
+            \ .gte, .lt, .lte, .ne, .contains (text), .null=true|false. sort=a,-b.\
+            \ group_by=dimension (a date takes :year, :quarter or :month). measure=count,\
+            \ sum(col), avg(col), min(col), max(col), median(col), count_distinct(col).\
+            \ cursor=next_cursor of the previous page. limit up to 500, default 50.\
+            \ On company routes scope=company|group. The columns, dimensions and measures\
+            \ of a dataset are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: "Biomarker literature, most active authors"
+      tags:
+      - investigators
+  /api/v1/investigators/{id}/condition_literature_people:
+    get:
+      operationId: investigators.condition_literature_people
+      parameters:
+      - example: npi:9900000381
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConditionLiteraturePeopleResponse'
+          description: "Condition literature, most active authors: one row per condition\
+            \ and author. Filters: {column}=v (repeat a key for IN), {column}.gt,\
+            \ .gte, .lt, .lte, .ne, .contains (text), .null=true|false. sort=a,-b.\
+            \ group_by=dimension (a date takes :year, :quarter or :month). measure=count,\
+            \ sum(col), avg(col), min(col), max(col), median(col), count_distinct(col).\
+            \ cursor=next_cursor of the previous page. limit up to 500, default 50.\
+            \ On company routes scope=company|group. The columns, dimensions and measures\
+            \ of a dataset are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: "Condition literature, most active authors"
+      tags:
+      - investigators
   /api/v1/investigators/{id}/drug_investigators:
     get:
       operationId: investigators.drug_investigators
@@ -18877,6 +19432,117 @@ paths:
       summary: Investigator trials
       tags:
       - investigators
+  /api/v1/investigators/{id}/org_literature_people:
+    get:
+      operationId: investigators.org_literature_people
+      parameters:
+      - example: npi:9900000381
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgLiteraturePeopleResponse'
+          description: "Organization literature, authors on affiliated papers: one\
+            \ row per organization and author. Filters: {column}=v (repeat a key for\
+            \ IN), {column}.gt, .gte, .lt, .lte, .ne, .contains (text), .null=true|false.\
+            \ sort=a,-b. group_by=dimension (a date takes :year, :quarter or :month).\
+            \ measure=count, sum(col), avg(col), min(col), max(col), median(col),\
+            \ count_distinct(col). cursor=next_cursor of the previous page. limit\
+            \ up to 500, default 50. On company routes scope=company|group. The columns,\
+            \ dimensions and measures of a dataset are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: "Organization literature, authors on affiliated papers"
+      tags:
+      - investigators
   /api/v1/investigators/{id}/rare_disease_investigators:
     get:
       operationId: investigators.rare_disease_investigators
@@ -19319,6 +19985,117 @@ paths:
       security:
       - ApiBearerJwt: []
       summary: Investigators on a target's trials
+      tags:
+      - investigators
+  /api/v1/investigators/{id}/target_literature_people:
+    get:
+      operationId: investigators.target_literature_people
+      parameters:
+      - example: npi:9900000381
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TargetLiteraturePeopleResponse'
+          description: "Target literature, most active authors: one row per target\
+            \ and author. Filters: {column}=v (repeat a key for IN), {column}.gt,\
+            \ .gte, .lt, .lte, .ne, .contains (text), .null=true|false. sort=a,-b.\
+            \ group_by=dimension (a date takes :year, :quarter or :month). measure=count,\
+            \ sum(col), avg(col), min(col), max(col), median(col), count_distinct(col).\
+            \ cursor=next_cursor of the previous page. limit up to 500, default 50.\
+            \ On company routes scope=company|group. The columns, dimensions and measures\
+            \ of a dataset are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: "Target literature, most active authors"
       tags:
       - investigators
   /api/v1/investigators/{id}/trial_kols:
@@ -23517,6 +24294,117 @@ paths:
       summary: "Organization literature by affiliation (MeSH-indexed, 2016 onward)"
       tags:
       - legal_entities
+  /api/v1/legal_entities/{id}/org_literature_people:
+    get:
+      operationId: legal_entities.org_literature_people
+      parameters:
+      - example: edgar:0001114448
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgLiteraturePeopleResponse'
+          description: "Organization literature, authors on affiliated papers: one\
+            \ row per organization and author. Filters: {column}=v (repeat a key for\
+            \ IN), {column}.gt, .gte, .lt, .lte, .ne, .contains (text), .null=true|false.\
+            \ sort=a,-b. group_by=dimension (a date takes :year, :quarter or :month).\
+            \ measure=count, sum(col), avg(col), min(col), max(col), median(col),\
+            \ count_distinct(col). cursor=next_cursor of the previous page. limit\
+            \ up to 500, default 50. On company routes scope=company|group. The columns,\
+            \ dimensions and measures of a dataset are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: "Organization literature, authors on affiliated papers"
+      tags:
+      - legal_entities
   /api/v1/legal_entities/{id}/org_relationships:
     get:
       operationId: legal_entities.org_relationships
@@ -26417,6 +27305,117 @@ paths:
       security:
       - ApiBearerJwt: []
       summary: One rare disease
+      tags:
+      - rare_diseases
+  /api/v1/rare_diseases/{id}/patient_organisation:
+    get:
+      operationId: rare_diseases.patient_organisation
+      parameters:
+      - example: 95708
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatientOrganisationResponse'
+          description: "Patient organisations: one row per active patient organisation,\
+            \ disease or condition page it is listed on, and link kind. Filters: {column}=v\
+            \ (repeat a key for IN), {column}.gt, .gte, .lt, .lte, .ne, .contains\
+            \ (text), .null=true|false. sort=a,-b. group_by=dimension (a date takes\
+            \ :year, :quarter or :month). measure=count, sum(col), avg(col), min(col),\
+            \ max(col), median(col), count_distinct(col). cursor=next_cursor of the\
+            \ previous page. limit up to 500, default 50. On company routes scope=company|group.\
+            \ The columns, dimensions and measures of a dataset are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: Patient organisations
       tags:
       - rare_diseases
   /api/v1/rare_diseases/{id}/rare_disease_genes:
@@ -35226,6 +36225,117 @@ paths:
       security:
       - ApiBearerJwt: []
       summary: "Target literature, most active institutions"
+      tags:
+      - targets
+  /api/v1/targets/{id}/target_literature_people:
+    get:
+      operationId: targets.target_literature_people
+      parameters:
+      - example: ENSG00000171759
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The next_cursor of the previous page. Opaque; it is bound to
+          the filters and the warehouse build that issued it.
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Rows per page, up to 500 (default 50)."
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 500
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Comma separated columns, a leading minus for descending: sort=a,-b."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "A dimension to group by; a date takes :year, :quarter or :month."
+        explode: true
+        in: query
+        name: group_by
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "count, sum(col), avg(col), min(col), max(col), median(col) or\
+          \ count_distinct(col)."
+        explode: true
+        in: query
+        name: measure
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TargetLiteraturePeopleResponse'
+          description: "Target literature, most active authors: one row per target\
+            \ and author. Filters: {column}=v (repeat a key for IN), {column}.gt,\
+            \ .gte, .lt, .lte, .ne, .contains (text), .null=true|false. sort=a,-b.\
+            \ group_by=dimension (a date takes :year, :quarter or :month). measure=count,\
+            \ sum(col), avg(col), min(col), max(col), median(col), count_distinct(col).\
+            \ cursor=next_cursor of the previous page. limit up to 500, default 50.\
+            \ On company routes scope=company|group. The columns, dimensions and measures\
+            \ of a dataset are at GET /api/v1/datasets/{name}."
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 400 when the request names something the catalog does
+            not declare (the body teaches the valid set)
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 401 when the bearer token is missing, invalid, expired,\
+            \ or scoped to the wrong audience (BearerJwtAuthentication#authenticate_bearer,\
+            \ shared by every /api/v1 endpoint)"
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+          description: "answers 403 when the caller's token is valid but the account\
+            \ has no product access yet (BearerJwtAuthentication#authorize_product_access,\
+            \ shared by every /api/v1 endpoint)"
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 404 when the record or dataset does not exist
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryError'
+          description: answers 409 when the warehouse was rebuilt since the cursor
+            was issued (GENERATION_CHANGED)
+      security:
+      - ApiBearerJwt: []
+      summary: "Target literature, most active authors"
       tags:
       - targets
   /api/v1/targets/{id}/target_patent_mentions:
@@ -51619,7 +52729,8 @@ components:
           nullable: true
           type: string
         source_record_id:
-          description: The source's own record id.
+          description: "The source's own record id. NULL for the patient_organisation_site\
+            \ source, whose id is an internal page-version key."
           nullable: true
           type: string
         source_url:
@@ -69694,6 +70805,9 @@ components:
         company_name: company_name
         unlinked_company_count: 5
         same_entity_node_id: same_entity_node_id
+        listed_names:
+        - listed_names
+        - listed_names
         node_id: node_id
         node_resolution: node_resolution
         in_edge_count: 1
@@ -69792,12 +70906,23 @@ components:
           type: array
         unlinked_company_count:
           description: "For an investor node, its portfolio rows that cannot become\
-            \ a node (a company known only by an SEC filer number, or an organization\
-            \ with no resolved parent); shown as a count and never guessed at. 0 for\
-            \ a company node."
+            \ a node (a company known only by an SEC filer number, an organization\
+            \ with no resolved parent, or a listing that is page chrome, a section\
+            \ heading, the investor's own name or a name a curator marked as not a\
+            \ company); shown as a count and never guessed at. 0 for a company node."
           format: int32
           nullable: true
           type: integer
+        listed_names:
+          description: "For a company node, the distinct names investors printed for\
+            \ it on their portfolio pages, sorted; empty for an investor node. A name\
+            \ that differs from display_name is how the investors spell a company\
+            \ the registry names otherwise (Scientist.com, listed for Assay Depot\
+            \ Inc). A label, not a statement of identity."
+          items:
+            type: string
+          nullable: true
+          type: array
       type: object
     InvestmentGraphNodesResponse:
       example:
@@ -69847,6 +70972,9 @@ components:
           company_name: company_name
           unlinked_company_count: 5
           same_entity_node_id: same_entity_node_id
+          listed_names:
+          - listed_names
+          - listed_names
           node_id: node_id
           node_resolution: node_resolution
           in_edge_count: 1
@@ -69867,6 +70995,9 @@ components:
           company_name: company_name
           unlinked_company_count: 5
           same_entity_node_id: same_entity_node_id
+          listed_names:
+          - listed_names
+          - listed_names
           node_id: node_id
           node_resolution: node_resolution
           in_edge_count: 1
@@ -79881,7 +81012,9 @@ components:
           nullable: true
           type: string
         source_record_id:
-          description: The record in the source the assertion comes from.
+          description: "The record in the source the assertion comes from. NULL for\
+            \ the patient_organisation_site source, whose id is an internal page-version\
+            \ key."
           nullable: true
           type: string
         source_url:
@@ -82271,15 +83404,16 @@ components:
         - condition_ids
         - condition_ids
         country: country
-        first_trial_year: 7
+        first_trial_year: 9
         city: city
-        last_trial_year: 9
+        last_trial_year: 3
         coord_source: coord_source
         latitude: 6.027456183070403
         last_update_posted_date: 2000-01-23
         mapping_arm: mapping_arm
         orpha_code: orpha_code
         n_active_trials: 2
+        n_open_trials_direct: 7
         site_name: site_name
         site_rank: 0
         n_trials_direct: 5
@@ -82327,18 +83461,22 @@ components:
           nullable: true
           type: string
         latitude:
-          description: The site's latitude in degrees; null when no coordinate is
-            known.
+          description: "The site's distance-ready latitude in degrees: one real filed\
+            \ location, the one most of the site's registry filings agree on, the\
+            \ same point the site has on the disease page map and in the nearest-site\
+            \ list. Null when the site is not mappable (its filings disagree, or are\
+            \ coarser than a city). Not the mean of the site's locations."
           nullable: true
           type: number
         longitude:
-          description: The site's longitude in degrees; null when no coordinate is
-            known.
+          description: "The site's distance-ready longitude in degrees, paired with\
+            \ latitude; null exactly when latitude is."
           nullable: true
           type: number
         coord_source:
-          description: "The source of the coordinate: aact (the registry's own), geonames\
-            \ (GeoNames) or als (Amazon Location Service)."
+          description: "The source of the latitude and longitude: aact (the registry's\
+            \ own), geonames (GeoNames) or als (Amazon Location Service); null when\
+            \ latitude is."
           nullable: true
           type: string
         condition_ids:
@@ -82361,6 +83499,13 @@ components:
         n_active_trials:
           description: "Those trials that are recruiting, not yet recruiting, active\
             \ or enrolling by invitation."
+          format: int32
+          nullable: true
+          type: integer
+        n_open_trials_direct:
+          description: "Those directly tagged trials that are recruiting or not yet\
+            \ recruiting, the statuses a person can volunteer for. A subset of n_trials_direct;\
+            \ active but closed and invitation-only trials are not counted."
           format: int32
           nullable: true
           type: integer
@@ -82415,15 +83560,16 @@ components:
           - condition_ids
           - condition_ids
           country: country
-          first_trial_year: 7
+          first_trial_year: 9
           city: city
-          last_trial_year: 9
+          last_trial_year: 3
           coord_source: coord_source
           latitude: 6.027456183070403
           last_update_posted_date: 2000-01-23
           mapping_arm: mapping_arm
           orpha_code: orpha_code
           n_active_trials: 2
+          n_open_trials_direct: 7
           site_name: site_name
           site_rank: 0
           n_trials_direct: 5
@@ -82435,15 +83581,16 @@ components:
           - condition_ids
           - condition_ids
           country: country
-          first_trial_year: 7
+          first_trial_year: 9
           city: city
-          last_trial_year: 9
+          last_trial_year: 3
           coord_source: coord_source
           latitude: 6.027456183070403
           last_update_posted_date: 2000-01-23
           mapping_arm: mapping_arm
           orpha_code: orpha_code
           n_active_trials: 2
+          n_open_trials_direct: 7
           site_name: site_name
           site_rank: 0
           n_trials_direct: 5
@@ -82454,7 +83601,7 @@ components:
         freshness:
           last_loaded: last_loaded
           source: source
-        total: 3
+        total: 2
         measures:
         - measures
         - measures
@@ -109704,7 +110851,17 @@ components:
         freshness:
           last_loaded: last_loaded
           source: source
+        sections:
+          key: ""
       properties:
+        sections:
+          additionalProperties: true
+          description: "Sections of the object's web page, by key: patient_organisations,\
+            \ the list the page shows of the organisations that name the disease or\
+            \ condition on their own websites (state, empty_state, coverage, groups\
+            \ of entries carrying the patient_organisation dataset's columns, the\
+            \ per-entry credit and the lane attribution)."
+          type: object
         object_type:
           type: string
         id:
@@ -110560,7 +111717,17 @@ components:
         freshness:
           last_loaded: last_loaded
           source: source
+        sections:
+          key: ""
       properties:
+        sections:
+          additionalProperties: true
+          description: "Sections of the object's web page, by key: patient_organisations,\
+            \ the list the page shows of the organisations that name the disease or\
+            \ condition on their own websites (state, empty_state, coverage, groups\
+            \ of entries carrying the patient_organisation dataset's columns, the\
+            \ per-entry credit and the lane attribution)."
+          type: object
         object_type:
           type: string
         id:
@@ -113405,6 +114572,1403 @@ components:
         rows:
           items:
             $ref: '#/components/schemas/TargetLiteratureOrgsRow'
+          type: array
+        total:
+          description: "The exact count of the filtered rows on an ungrouped read,\
+            \ carried by the cursor; null when grouped."
+          nullable: true
+          type: integer
+        next_cursor:
+          nullable: true
+          type: string
+        sort:
+          items:
+            type: string
+          type: array
+        filters:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        group_by:
+          items:
+            type: string
+          type: array
+        measures:
+          items:
+            type: string
+          type: array
+        attribution:
+          items:
+            $ref: '#/components/schemas/DatasetAttribution'
+          type: array
+        source_credit:
+          type: string
+        withheld_tiers:
+          items:
+            type: string
+          type: array
+        withheld_columns:
+          items:
+            type: string
+          type: array
+        freshness:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_freshness'
+        build:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_build'
+        build_state:
+          $ref: '#/components/schemas/DatasetBuildState'
+        restriction:
+          additionalProperties: true
+          nullable: true
+          type: object
+      required:
+      - columns
+      - dataset
+      - rows
+      type: object
+    BiomarkerLiteraturePeopleRow:
+      additionalProperties: true
+      description: "One row of the biomarker_literature_people dataset: one row per\
+        \ biomarker and author. A grouped request returns the group columns and the\
+        \ measures instead, as additional properties."
+      example:
+        person_affiliation: person_affiliation
+        n_papers: 0
+        n_first_author: 5
+        latest_pub_year: 1
+        n_last_author: 5
+        route_key: route_key
+        person_name: person_name
+        orcid: orcid
+        investigator_person_id: investigator_person_id
+        n_trial_linked_papers: 6
+      properties:
+        route_key:
+          description: "The route key of the gene, the entry key for the biomarkers\
+            \ object type."
+          nullable: true
+          type: string
+        investigator_person_id:
+          description: "The author's resolved person key, the id in the web page address\
+            \ (/people/<id>). The entry key of the investigators object type."
+          nullable: true
+          type: string
+        person_name:
+          description: "The person's name, resolved across the person's merged name\
+            \ fragments."
+          nullable: true
+          type: string
+        person_affiliation:
+          description: The person's affiliation as the person record holds it (null
+            when not recorded).
+          nullable: true
+          type: string
+        orcid:
+          description: The person's ORCID iD (Open Researcher and Contributor ID)
+            when the person record carries one (null when none).
+          nullable: true
+          type: string
+        n_papers:
+          description: Distinct papers on which a ledger decision links a byline to
+            the person.
+          format: int32
+          nullable: true
+          type: integer
+        n_trial_linked_papers:
+          description: The part of n_papers a registered clinical trial cites.
+          format: int32
+          nullable: true
+          type: integer
+        latest_pub_year:
+          description: The newest publication year among those papers.
+          format: int32
+          nullable: true
+          type: integer
+        n_first_author:
+          description: The part of n_papers on which the person's linked byline is
+            the first author position.
+          format: int32
+          nullable: true
+          type: integer
+        n_last_author:
+          description: The part of n_papers on which the person's linked byline is
+            the last author position.
+          format: int32
+          nullable: true
+          type: integer
+      type: object
+    BiomarkerLiteraturePeopleResponse:
+      example:
+        next_cursor: next_cursor
+        source_credit: source_credit
+        build_state:
+          generation: generation
+          last_loaded: last_loaded
+          built: true
+        object_type: object_type
+        columns:
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        sort:
+        - sort
+        - sort
+        filters:
+        - key: ""
+        - key: ""
+        rows:
+        - person_affiliation: person_affiliation
+          n_papers: 0
+          n_first_author: 5
+          latest_pub_year: 1
+          n_last_author: 5
+          route_key: route_key
+          person_name: person_name
+          orcid: orcid
+          investigator_person_id: investigator_person_id
+          n_trial_linked_papers: 6
+        - person_affiliation: person_affiliation
+          n_papers: 0
+          n_first_author: 5
+          latest_pub_year: 1
+          n_last_author: 5
+          route_key: route_key
+          person_name: person_name
+          orcid: orcid
+          investigator_person_id: investigator_person_id
+          n_trial_linked_papers: 6
+        freshness:
+          last_loaded: last_loaded
+          source: source
+        total: 2
+        measures:
+        - measures
+        - measures
+        build:
+          generation: generation
+          fingerprint: fingerprint
+        scope:
+          group_id: group_id
+          group_name: group_name
+          kind: company
+        withheld_columns:
+        - withheld_columns
+        - withheld_columns
+        attribution:
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        restriction:
+          key: ""
+        group_by:
+        - group_by
+        - group_by
+        grain: grain
+        id: id
+        dataset: dataset
+        withheld_tiers:
+        - withheld_tiers
+        - withheld_tiers
+      properties:
+        dataset:
+          type: string
+        grain:
+          type: string
+        object_type:
+          nullable: true
+          type: string
+        id:
+          nullable: true
+          type: string
+        scope:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_scope'
+        columns:
+          items:
+            $ref: '#/components/schemas/DatasetColumn'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/BiomarkerLiteraturePeopleRow'
+          type: array
+        total:
+          description: "The exact count of the filtered rows on an ungrouped read,\
+            \ carried by the cursor; null when grouped."
+          nullable: true
+          type: integer
+        next_cursor:
+          nullable: true
+          type: string
+        sort:
+          items:
+            type: string
+          type: array
+        filters:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        group_by:
+          items:
+            type: string
+          type: array
+        measures:
+          items:
+            type: string
+          type: array
+        attribution:
+          items:
+            $ref: '#/components/schemas/DatasetAttribution'
+          type: array
+        source_credit:
+          type: string
+        withheld_tiers:
+          items:
+            type: string
+          type: array
+        withheld_columns:
+          items:
+            type: string
+          type: array
+        freshness:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_freshness'
+        build:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_build'
+        build_state:
+          $ref: '#/components/schemas/DatasetBuildState'
+        restriction:
+          additionalProperties: true
+          nullable: true
+          type: object
+      required:
+      - columns
+      - dataset
+      - rows
+      type: object
+    ConditionLiteraturePeopleRow:
+      additionalProperties: true
+      description: "One row of the condition_literature_people dataset: one row per\
+        \ condition and author. A grouped request returns the group columns and the\
+        \ measures instead, as additional properties."
+      example:
+        person_affiliation: person_affiliation
+        n_papers: 0
+        n_first_author: 5
+        latest_pub_year: 1
+        n_last_author: 5
+        person_name: person_name
+        orcid: orcid
+        investigator_person_id: investigator_person_id
+        condition_id: condition_id
+        n_trial_linked_papers: 6
+      properties:
+        condition_id:
+          description: "The condition key, a MeSH (Medical Subject Headings) descriptor\
+            \ id (D followed by six to nine digits)."
+          nullable: true
+          type: string
+        investigator_person_id:
+          description: "The author's resolved person key, the id in the web page address\
+            \ (/people/<id>). The entry key of the investigators object type."
+          nullable: true
+          type: string
+        person_name:
+          description: "The person's name, resolved across the person's merged name\
+            \ fragments."
+          nullable: true
+          type: string
+        person_affiliation:
+          description: The person's affiliation as the person record holds it (null
+            when not recorded).
+          nullable: true
+          type: string
+        orcid:
+          description: The person's ORCID iD (Open Researcher and Contributor ID)
+            when the person record carries one (null when none).
+          nullable: true
+          type: string
+        n_papers:
+          description: Distinct papers on which a ledger decision links a byline to
+            the person.
+          format: int32
+          nullable: true
+          type: integer
+        n_trial_linked_papers:
+          description: The part of n_papers a registered clinical trial cites.
+          format: int32
+          nullable: true
+          type: integer
+        latest_pub_year:
+          description: The newest publication year among those papers.
+          format: int32
+          nullable: true
+          type: integer
+        n_first_author:
+          description: The part of n_papers on which the person's linked byline is
+            the first author position.
+          format: int32
+          nullable: true
+          type: integer
+        n_last_author:
+          description: The part of n_papers on which the person's linked byline is
+            the last author position.
+          format: int32
+          nullable: true
+          type: integer
+      type: object
+    ConditionLiteraturePeopleResponse:
+      example:
+        next_cursor: next_cursor
+        source_credit: source_credit
+        build_state:
+          generation: generation
+          last_loaded: last_loaded
+          built: true
+        object_type: object_type
+        columns:
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        sort:
+        - sort
+        - sort
+        filters:
+        - key: ""
+        - key: ""
+        rows:
+        - person_affiliation: person_affiliation
+          n_papers: 0
+          n_first_author: 5
+          latest_pub_year: 1
+          n_last_author: 5
+          person_name: person_name
+          orcid: orcid
+          investigator_person_id: investigator_person_id
+          condition_id: condition_id
+          n_trial_linked_papers: 6
+        - person_affiliation: person_affiliation
+          n_papers: 0
+          n_first_author: 5
+          latest_pub_year: 1
+          n_last_author: 5
+          person_name: person_name
+          orcid: orcid
+          investigator_person_id: investigator_person_id
+          condition_id: condition_id
+          n_trial_linked_papers: 6
+        freshness:
+          last_loaded: last_loaded
+          source: source
+        total: 2
+        measures:
+        - measures
+        - measures
+        build:
+          generation: generation
+          fingerprint: fingerprint
+        scope:
+          group_id: group_id
+          group_name: group_name
+          kind: company
+        withheld_columns:
+        - withheld_columns
+        - withheld_columns
+        attribution:
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        restriction:
+          key: ""
+        group_by:
+        - group_by
+        - group_by
+        grain: grain
+        id: id
+        dataset: dataset
+        withheld_tiers:
+        - withheld_tiers
+        - withheld_tiers
+      properties:
+        dataset:
+          type: string
+        grain:
+          type: string
+        object_type:
+          nullable: true
+          type: string
+        id:
+          nullable: true
+          type: string
+        scope:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_scope'
+        columns:
+          items:
+            $ref: '#/components/schemas/DatasetColumn'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/ConditionLiteraturePeopleRow'
+          type: array
+        total:
+          description: "The exact count of the filtered rows on an ungrouped read,\
+            \ carried by the cursor; null when grouped."
+          nullable: true
+          type: integer
+        next_cursor:
+          nullable: true
+          type: string
+        sort:
+          items:
+            type: string
+          type: array
+        filters:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        group_by:
+          items:
+            type: string
+          type: array
+        measures:
+          items:
+            type: string
+          type: array
+        attribution:
+          items:
+            $ref: '#/components/schemas/DatasetAttribution'
+          type: array
+        source_credit:
+          type: string
+        withheld_tiers:
+          items:
+            type: string
+          type: array
+        withheld_columns:
+          items:
+            type: string
+          type: array
+        freshness:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_freshness'
+        build:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_build'
+        build_state:
+          $ref: '#/components/schemas/DatasetBuildState'
+        restriction:
+          additionalProperties: true
+          nullable: true
+          type: object
+      required:
+      - columns
+      - dataset
+      - rows
+      type: object
+    OrgLiteraturePeopleRow:
+      additionalProperties: true
+      description: "One row of the org_literature_people dataset: one row per organization\
+        \ and author. A grouped request returns the group columns and the measures\
+        \ instead, as additional properties."
+      example:
+        person_affiliation: person_affiliation
+        n_papers: 0
+        n_first_author: 5
+        latest_pub_year: 1
+        org_id: org_id
+        n_last_author: 5
+        person_name: person_name
+        orcid: orcid
+        investigator_person_id: investigator_person_id
+        n_trial_linked_papers: 6
+      properties:
+        org_id:
+          description: "Legal-entity level: the resolved parent organization record\
+            \ the byline names (edgar:..., ror:... or sponsor:...), the entry key\
+            \ for the legal_entities object type."
+          nullable: true
+          type: string
+        investigator_person_id:
+          description: "The author's resolved person key, the id in the web page address\
+            \ (/people/<id>). The entry key of the investigators object type."
+          nullable: true
+          type: string
+        person_name:
+          description: "The person's name, resolved across the person's merged name\
+            \ fragments."
+          nullable: true
+          type: string
+        person_affiliation:
+          description: The person's affiliation as the person record holds it (null
+            when not recorded).
+          nullable: true
+          type: string
+        orcid:
+          description: The person's ORCID iD (Open Researcher and Contributor ID)
+            when the person record carries one (null when none).
+          nullable: true
+          type: string
+        n_papers:
+          description: Distinct papers on which a ledger decision links a byline to
+            the person.
+          format: int32
+          nullable: true
+          type: integer
+        n_trial_linked_papers:
+          description: The part of n_papers a registered clinical trial cites.
+          format: int32
+          nullable: true
+          type: integer
+        latest_pub_year:
+          description: The newest publication year among those papers.
+          format: int32
+          nullable: true
+          type: integer
+        n_first_author:
+          description: The part of n_papers on which the person's linked byline is
+            the first author position.
+          format: int32
+          nullable: true
+          type: integer
+        n_last_author:
+          description: The part of n_papers on which the person's linked byline is
+            the last author position.
+          format: int32
+          nullable: true
+          type: integer
+      type: object
+    OrgLiteraturePeopleResponse:
+      example:
+        next_cursor: next_cursor
+        source_credit: source_credit
+        build_state:
+          generation: generation
+          last_loaded: last_loaded
+          built: true
+        object_type: object_type
+        columns:
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        sort:
+        - sort
+        - sort
+        filters:
+        - key: ""
+        - key: ""
+        rows:
+        - person_affiliation: person_affiliation
+          n_papers: 0
+          n_first_author: 5
+          latest_pub_year: 1
+          org_id: org_id
+          n_last_author: 5
+          person_name: person_name
+          orcid: orcid
+          investigator_person_id: investigator_person_id
+          n_trial_linked_papers: 6
+        - person_affiliation: person_affiliation
+          n_papers: 0
+          n_first_author: 5
+          latest_pub_year: 1
+          org_id: org_id
+          n_last_author: 5
+          person_name: person_name
+          orcid: orcid
+          investigator_person_id: investigator_person_id
+          n_trial_linked_papers: 6
+        freshness:
+          last_loaded: last_loaded
+          source: source
+        total: 2
+        measures:
+        - measures
+        - measures
+        build:
+          generation: generation
+          fingerprint: fingerprint
+        scope:
+          group_id: group_id
+          group_name: group_name
+          kind: company
+        withheld_columns:
+        - withheld_columns
+        - withheld_columns
+        attribution:
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        restriction:
+          key: ""
+        group_by:
+        - group_by
+        - group_by
+        grain: grain
+        id: id
+        dataset: dataset
+        withheld_tiers:
+        - withheld_tiers
+        - withheld_tiers
+      properties:
+        dataset:
+          type: string
+        grain:
+          type: string
+        object_type:
+          nullable: true
+          type: string
+        id:
+          nullable: true
+          type: string
+        scope:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_scope'
+        columns:
+          items:
+            $ref: '#/components/schemas/DatasetColumn'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/OrgLiteraturePeopleRow'
+          type: array
+        total:
+          description: "The exact count of the filtered rows on an ungrouped read,\
+            \ carried by the cursor; null when grouped."
+          nullable: true
+          type: integer
+        next_cursor:
+          nullable: true
+          type: string
+        sort:
+          items:
+            type: string
+          type: array
+        filters:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        group_by:
+          items:
+            type: string
+          type: array
+        measures:
+          items:
+            type: string
+          type: array
+        attribution:
+          items:
+            $ref: '#/components/schemas/DatasetAttribution'
+          type: array
+        source_credit:
+          type: string
+        withheld_tiers:
+          items:
+            type: string
+          type: array
+        withheld_columns:
+          items:
+            type: string
+          type: array
+        freshness:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_freshness'
+        build:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_build'
+        build_state:
+          $ref: '#/components/schemas/DatasetBuildState'
+        restriction:
+          additionalProperties: true
+          nullable: true
+          type: object
+      required:
+      - columns
+      - dataset
+      - rows
+      type: object
+    TargetLiteraturePeopleRow:
+      additionalProperties: true
+      description: "One row of the target_literature_people dataset: one row per target\
+        \ and author. A grouped request returns the group columns and the measures\
+        \ instead, as additional properties."
+      example:
+        person_affiliation: person_affiliation
+        n_papers: 0
+        n_first_author: 5
+        latest_pub_year: 1
+        n_last_author: 5
+        target_id: target_id
+        person_name: person_name
+        orcid: orcid
+        investigator_person_id: investigator_person_id
+        n_trial_linked_papers: 6
+      properties:
+        target_id:
+          description: "The target's Ensembl gene id (ENSG followed by eleven digits):\
+            \ the entry key for the targets object type."
+          nullable: true
+          type: string
+        investigator_person_id:
+          description: "The author's resolved person key, the id in the web page address\
+            \ (/people/<id>). The entry key of the investigators object type."
+          nullable: true
+          type: string
+        person_name:
+          description: "The person's name, resolved across the person's merged name\
+            \ fragments."
+          nullable: true
+          type: string
+        person_affiliation:
+          description: The person's affiliation as the person record holds it (null
+            when not recorded).
+          nullable: true
+          type: string
+        orcid:
+          description: The person's ORCID iD (Open Researcher and Contributor ID)
+            when the person record carries one (null when none).
+          nullable: true
+          type: string
+        n_papers:
+          description: Distinct papers on which a ledger decision links a byline to
+            the person.
+          format: int32
+          nullable: true
+          type: integer
+        n_trial_linked_papers:
+          description: The part of n_papers a registered clinical trial cites.
+          format: int32
+          nullable: true
+          type: integer
+        latest_pub_year:
+          description: The newest publication year among those papers.
+          format: int32
+          nullable: true
+          type: integer
+        n_first_author:
+          description: The part of n_papers on which the person's linked byline is
+            the first author position.
+          format: int32
+          nullable: true
+          type: integer
+        n_last_author:
+          description: The part of n_papers on which the person's linked byline is
+            the last author position.
+          format: int32
+          nullable: true
+          type: integer
+      type: object
+    TargetLiteraturePeopleResponse:
+      example:
+        next_cursor: next_cursor
+        source_credit: source_credit
+        build_state:
+          generation: generation
+          last_loaded: last_loaded
+          built: true
+        object_type: object_type
+        columns:
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        sort:
+        - sort
+        - sort
+        filters:
+        - key: ""
+        - key: ""
+        rows:
+        - person_affiliation: person_affiliation
+          n_papers: 0
+          n_first_author: 5
+          latest_pub_year: 1
+          n_last_author: 5
+          target_id: target_id
+          person_name: person_name
+          orcid: orcid
+          investigator_person_id: investigator_person_id
+          n_trial_linked_papers: 6
+        - person_affiliation: person_affiliation
+          n_papers: 0
+          n_first_author: 5
+          latest_pub_year: 1
+          n_last_author: 5
+          target_id: target_id
+          person_name: person_name
+          orcid: orcid
+          investigator_person_id: investigator_person_id
+          n_trial_linked_papers: 6
+        freshness:
+          last_loaded: last_loaded
+          source: source
+        total: 2
+        measures:
+        - measures
+        - measures
+        build:
+          generation: generation
+          fingerprint: fingerprint
+        scope:
+          group_id: group_id
+          group_name: group_name
+          kind: company
+        withheld_columns:
+        - withheld_columns
+        - withheld_columns
+        attribution:
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        restriction:
+          key: ""
+        group_by:
+        - group_by
+        - group_by
+        grain: grain
+        id: id
+        dataset: dataset
+        withheld_tiers:
+        - withheld_tiers
+        - withheld_tiers
+      properties:
+        dataset:
+          type: string
+        grain:
+          type: string
+        object_type:
+          nullable: true
+          type: string
+        id:
+          nullable: true
+          type: string
+        scope:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_scope'
+        columns:
+          items:
+            $ref: '#/components/schemas/DatasetColumn'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/TargetLiteraturePeopleRow'
+          type: array
+        total:
+          description: "The exact count of the filtered rows on an ungrouped read,\
+            \ carried by the cursor; null when grouped."
+          nullable: true
+          type: integer
+        next_cursor:
+          nullable: true
+          type: string
+        sort:
+          items:
+            type: string
+          type: array
+        filters:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        group_by:
+          items:
+            type: string
+          type: array
+        measures:
+          items:
+            type: string
+          type: array
+        attribution:
+          items:
+            $ref: '#/components/schemas/DatasetAttribution'
+          type: array
+        source_credit:
+          type: string
+        withheld_tiers:
+          items:
+            type: string
+          type: array
+        withheld_columns:
+          items:
+            type: string
+          type: array
+        freshness:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_freshness'
+        build:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_build'
+        build_state:
+          $ref: '#/components/schemas/DatasetBuildState'
+        restriction:
+          additionalProperties: true
+          nullable: true
+          type: object
+      required:
+      - columns
+      - dataset
+      - rows
+      type: object
+    PatientOrganisationRow:
+      additionalProperties: true
+      description: "One row of the patient_organisation dataset: one row per active\
+        \ patient organisation, disease or condition page it is listed on, and link\
+        \ kind. A grouped request returns the group columns and the measures instead,\
+        \ as additional properties."
+      example:
+        country: country
+        city: city
+        mapped_disease_name: mapped_disease_name
+        other_service_labels:
+        - other_service_labels
+        - other_service_labels
+        phones:
+        - phones
+        - phones
+        source_url: source_url
+        contact_urls:
+        - contact_urls
+        - contact_urls
+        emails:
+        - emails
+        - emails
+        link_kind: link_kind
+        mapped_orpha_code: mapped_orpha_code
+        social_urls:
+        - social_urls
+        - social_urls
+        credit: credit
+        location_count: 0
+        patient_organisation_id: patient_organisation_id
+        languages:
+        - languages
+        - languages
+        orpha_code: orpha_code
+        mapping_relation: mapping_relation
+        condition_id: condition_id
+        website_url: website_url
+        org_id: org_id
+        target_key: target_key
+        retrieved_on: 2000-01-23
+        name: name
+        target_kind: target_kind
+        declared_scope: declared_scope
+        region: region
+        declared_name: declared_name
+        service_codes:
+        - service_codes
+        - service_codes
+        link_rank: 6
+      properties:
+        target_kind:
+          description: "Which kind of page the row is listed on: rare_disease (a rare\
+            \ disease page, entered on orpha_code) or condition (a condition page,\
+            \ entered on condition_id)."
+          nullable: true
+          type: string
+        target_key:
+          description: "The orpha_code of a rare_disease row or the condition_id of\
+            \ a condition row: the key the row is entered on. Always present, so it\
+            \ can stand in a sort or a cursor."
+          nullable: true
+          type: string
+        orpha_code:
+          description: "The ORPHA code of the disease the row is listed under, the\
+            \ digits in the web page address (/rare-diseases/558); null on a condition\
+            \ row. The entry key of the rare_diseases object type."
+          nullable: true
+          type: string
+        condition_id:
+          description: The MeSH descriptor id of the condition the row is listed under
+            (D followed by six to nine digits); null on a rare disease row. The entry
+            key of the conditions object type.
+          nullable: true
+          type: string
+        patient_organisation_id:
+          description: "The organisation's id: a spine organisation id (edgar:, ror:,\
+            \ sponsor: and the like) when the organisation folded onto an organisation\
+            \ we already hold, else pag:<registrable domain of its website>."
+          nullable: true
+          type: string
+        org_id:
+          description: "The legal-entity id of the organisation when it folded onto\
+            \ one we already hold, the join to legal_entities; null for a pag: organisation,\
+            \ which has no spine record."
+          nullable: true
+          type: string
+        name:
+          description: The organisation's name as its own website states it.
+          nullable: true
+          type: string
+        website_url:
+          description: The organisation's website as it states it.
+          nullable: true
+          type: string
+        country:
+          description: "The country the organisation declares (ISO 3166-1 alpha-2),\
+            \ else its primary location's country."
+          nullable: true
+          type: string
+        region:
+          description: The region of its primary location.
+          nullable: true
+          type: string
+        city:
+          description: The city of its primary location.
+          nullable: true
+          type: string
+        location_count:
+          description: How many locations the organisation lists.
+          format: int32
+          nullable: true
+          type: integer
+        languages:
+          description: "The languages the organisation says it works in, as it states\
+            \ them."
+          items:
+            type: string
+          nullable: true
+          type: array
+        phones:
+          description: "The organisation's own phone numbers, as stated. Organisation-level\
+            \ channels only: no person's line."
+          items:
+            type: string
+          nullable: true
+          type: array
+        emails:
+          description: "The organisation's own email addresses, as stated, minus any\
+            \ address whose local part looks like a person's name. Organisation-level\
+            \ channels only."
+          items:
+            type: string
+          nullable: true
+          type: array
+        contact_urls:
+          description: The organisation's own contact page addresses.
+          items:
+            type: string
+          nullable: true
+          type: array
+        social_urls:
+          description: The organisation's own social media addresses.
+          items:
+            type: string
+          nullable: true
+          type: array
+        service_codes:
+          description: "The services the organisation's own pages say it offers, from\
+            \ a closed list: support_groups, helpline, information_and_education,\
+            \ patient_registry, research_funding, advocacy_and_policy, financial_assistance,\
+            \ care_navigation, clinical_trial_matching, other."
+          items:
+            type: string
+          nullable: true
+          type: array
+        other_service_labels:
+          description: "For a service coded other, the organisation's own words for\
+            \ it. Empty when it states none."
+          items:
+            type: string
+          nullable: true
+          type: array
+        link_kind:
+          description: "How the organisation reaches the disease or condition the\
+            \ row is listed under: declared (its own page names it), mapped (a condition\
+            \ row: it declares a rare disease this condition is mapped to; the mapped_*\
+            \ columns say which), broader (a rare disease row: it declared a broader\
+            \ parent disease) or narrower (a rare disease row: it declared a narrower\
+            \ child disease). A broader or narrower row never says the organisation\
+            \ declares THIS disease."
+          nullable: true
+          type: string
+        link_rank:
+          description: "The page's group order: 1 declared, 2 mapped, 3 broader, 4\
+            \ narrower."
+          format: int32
+          nullable: true
+          type: integer
+        declared_scope:
+          description: "How much of its work the organisation says the disease is:\
+            \ sole_focus, one_of_several or umbrella; null when it states none."
+          nullable: true
+          type: string
+        declared_name:
+          description: "The disease name the organisation actually declared. On a\
+            \ broader, narrower or mapped row it is NOT this page's disease."
+          nullable: true
+          type: string
+        mapped_orpha_code:
+          description: "On a mapped row, the ORPHA code of the declared rare disease\
+            \ the condition is mapped to; null otherwise."
+          nullable: true
+          type: string
+        mapped_disease_name:
+          description: "On a mapped row, the preferred name of that rare disease;\
+            \ null otherwise."
+          nullable: true
+          type: string
+        mapping_relation:
+          description: "On a mapped row, how the rare disease relates to the condition\
+            \ (exact, broader or narrower); null otherwise."
+          nullable: true
+          type: string
+        source_url:
+          description: The page of the organisation's own website the declaration
+            came from.
+          nullable: true
+          type: string
+        retrieved_on:
+          description: The date that page was retrieved.
+          format: date
+          nullable: true
+          type: string
+        credit:
+          description: "The source credit line for the row: Source: <organisation\
+            \ name>, <page address>, retrieved <date>. Mandatory wherever the row\
+            \ is shown."
+          nullable: true
+          type: string
+      type: object
+    PatientOrganisationResponse:
+      example:
+        next_cursor: next_cursor
+        source_credit: source_credit
+        build_state:
+          generation: generation
+          last_loaded: last_loaded
+          built: true
+        object_type: object_type
+        columns:
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        - unit: unit
+          tier: tier
+          level: level
+          name: name
+          description: description
+          type: type
+          entity: entity
+        sort:
+        - sort
+        - sort
+        filters:
+        - key: ""
+        - key: ""
+        rows:
+        - country: country
+          city: city
+          mapped_disease_name: mapped_disease_name
+          other_service_labels:
+          - other_service_labels
+          - other_service_labels
+          phones:
+          - phones
+          - phones
+          source_url: source_url
+          contact_urls:
+          - contact_urls
+          - contact_urls
+          emails:
+          - emails
+          - emails
+          link_kind: link_kind
+          mapped_orpha_code: mapped_orpha_code
+          social_urls:
+          - social_urls
+          - social_urls
+          credit: credit
+          location_count: 0
+          patient_organisation_id: patient_organisation_id
+          languages:
+          - languages
+          - languages
+          orpha_code: orpha_code
+          mapping_relation: mapping_relation
+          condition_id: condition_id
+          website_url: website_url
+          org_id: org_id
+          target_key: target_key
+          retrieved_on: 2000-01-23
+          name: name
+          target_kind: target_kind
+          declared_scope: declared_scope
+          region: region
+          declared_name: declared_name
+          service_codes:
+          - service_codes
+          - service_codes
+          link_rank: 6
+        - country: country
+          city: city
+          mapped_disease_name: mapped_disease_name
+          other_service_labels:
+          - other_service_labels
+          - other_service_labels
+          phones:
+          - phones
+          - phones
+          source_url: source_url
+          contact_urls:
+          - contact_urls
+          - contact_urls
+          emails:
+          - emails
+          - emails
+          link_kind: link_kind
+          mapped_orpha_code: mapped_orpha_code
+          social_urls:
+          - social_urls
+          - social_urls
+          credit: credit
+          location_count: 0
+          patient_organisation_id: patient_organisation_id
+          languages:
+          - languages
+          - languages
+          orpha_code: orpha_code
+          mapping_relation: mapping_relation
+          condition_id: condition_id
+          website_url: website_url
+          org_id: org_id
+          target_key: target_key
+          retrieved_on: 2000-01-23
+          name: name
+          target_kind: target_kind
+          declared_scope: declared_scope
+          region: region
+          declared_name: declared_name
+          service_codes:
+          - service_codes
+          - service_codes
+          link_rank: 6
+        freshness:
+          last_loaded: last_loaded
+          source: source
+        total: 1
+        measures:
+        - measures
+        - measures
+        build:
+          generation: generation
+          fingerprint: fingerprint
+        scope:
+          group_id: group_id
+          group_name: group_name
+          kind: company
+        withheld_columns:
+        - withheld_columns
+        - withheld_columns
+        attribution:
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        - license: license
+          license_href: license_href
+          note: note
+          name: name
+          href: href
+        restriction:
+          key: ""
+        group_by:
+        - group_by
+        - group_by
+        grain: grain
+        id: id
+        dataset: dataset
+        withheld_tiers:
+        - withheld_tiers
+        - withheld_tiers
+      properties:
+        dataset:
+          type: string
+        grain:
+          type: string
+        object_type:
+          nullable: true
+          type: string
+        id:
+          nullable: true
+          type: string
+        scope:
+          $ref: '#/components/schemas/AnimalWelfareAssurancesResponse_scope'
+        columns:
+          items:
+            $ref: '#/components/schemas/DatasetColumn'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/PatientOrganisationRow'
           type: array
         total:
           description: "The exact count of the filtered rows on an ungrouped read,\

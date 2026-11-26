@@ -12,13 +12,14 @@ Name | Type | Description | Notes
 **City** | Pointer to **NullableString** | The facility&#39;s city as filed. | [optional] 
 **State** | Pointer to **NullableString** | The facility&#39;s state or region as filed. | [optional] 
 **Country** | Pointer to **NullableString** | The facility&#39;s country as filed. | [optional] 
-**Latitude** | Pointer to **NullableFloat32** | The site&#39;s latitude in degrees; null when no coordinate is known. | [optional] 
-**Longitude** | Pointer to **NullableFloat32** | The site&#39;s longitude in degrees; null when no coordinate is known. | [optional] 
-**CoordSource** | Pointer to **NullableString** | The source of the coordinate: aact (the registry&#39;s own), geonames (GeoNames) or als (Amazon Location Service). | [optional] 
+**Latitude** | Pointer to **NullableFloat32** | The site&#39;s distance-ready latitude in degrees: one real filed location, the one most of the site&#39;s registry filings agree on, the same point the site has on the disease page map and in the nearest-site list. Null when the site is not mappable (its filings disagree, or are coarser than a city). Not the mean of the site&#39;s locations. | [optional] 
+**Longitude** | Pointer to **NullableFloat32** | The site&#39;s distance-ready longitude in degrees, paired with latitude; null exactly when latitude is. | [optional] 
+**CoordSource** | Pointer to **NullableString** | The source of the latitude and longitude: aact (the registry&#39;s own), geonames (GeoNames) or als (Amazon Location Service); null when latitude is. | [optional] 
 **ConditionIds** | Pointer to **[]string** | The MeSH condition ids through which the disease reaches the site&#39;s trials. | [optional] 
 **NTrials** | Pointer to **NullableInt32** | Registered trials of this disease and arm that list the site. | [optional] 
 **NTrialsDirect** | Pointer to **NullableInt32** | Those trials whose own condition list names the mapped condition. | [optional] 
 **NActiveTrials** | Pointer to **NullableInt32** | Those trials that are recruiting, not yet recruiting, active or enrolling by invitation. | [optional] 
+**NOpenTrialsDirect** | Pointer to **NullableInt32** | Those directly tagged trials that are recruiting or not yet recruiting, the statuses a person can volunteer for. A subset of n_trials_direct; active but closed and invitation-only trials are not counted. | [optional] 
 **FirstTrialYear** | Pointer to **NullableInt32** | The earliest start year among those trials. | [optional] 
 **LastTrialYear** | Pointer to **NullableInt32** | The latest start year among those trials. | [optional] 
 **LastUpdatePostedDate** | Pointer to **NullableString** | The latest registry update among those trials. | [optional] 
@@ -567,6 +568,41 @@ HasNActiveTrials returns a boolean if a field has been set.
 `func (o *RareDiseaseTrialSitesRow) UnsetNActiveTrials()`
 
 UnsetNActiveTrials ensures that no value is present for NActiveTrials, not even an explicit nil
+### GetNOpenTrialsDirect
+
+`func (o *RareDiseaseTrialSitesRow) GetNOpenTrialsDirect() int32`
+
+GetNOpenTrialsDirect returns the NOpenTrialsDirect field if non-nil, zero value otherwise.
+
+### GetNOpenTrialsDirectOk
+
+`func (o *RareDiseaseTrialSitesRow) GetNOpenTrialsDirectOk() (*int32, bool)`
+
+GetNOpenTrialsDirectOk returns a tuple with the NOpenTrialsDirect field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNOpenTrialsDirect
+
+`func (o *RareDiseaseTrialSitesRow) SetNOpenTrialsDirect(v int32)`
+
+SetNOpenTrialsDirect sets NOpenTrialsDirect field to given value.
+
+### HasNOpenTrialsDirect
+
+`func (o *RareDiseaseTrialSitesRow) HasNOpenTrialsDirect() bool`
+
+HasNOpenTrialsDirect returns a boolean if a field has been set.
+
+### SetNOpenTrialsDirectNil
+
+`func (o *RareDiseaseTrialSitesRow) SetNOpenTrialsDirectNil(b bool)`
+
+ SetNOpenTrialsDirectNil sets the value for NOpenTrialsDirect to be an explicit nil
+
+### UnsetNOpenTrialsDirect
+`func (o *RareDiseaseTrialSitesRow) UnsetNOpenTrialsDirect()`
+
+UnsetNOpenTrialsDirect ensures that no value is present for NOpenTrialsDirect, not even an explicit nil
 ### GetFirstTrialYear
 
 `func (o *RareDiseaseTrialSitesRow) GetFirstTrialYear() int32`

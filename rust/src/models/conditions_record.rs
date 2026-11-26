@@ -13,6 +13,9 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct ConditionsRecord {
+    /// Sections of the object's web page, by key: patient_organisations, the list the page shows of the organisations that name the disease or condition on their own websites (state, empty_state, coverage, groups of entries carrying the patient_organisation dataset's columns, the per-entry credit and the lane attribution).
+    #[serde(rename = "sections", skip_serializing_if = "Option::is_none")]
+    pub sections: Option<std::collections::HashMap<String, serde_json::Value>>,
     #[serde(rename = "object_type")]
     pub object_type: String,
     #[serde(rename = "id")]
@@ -40,6 +43,7 @@ pub struct ConditionsRecord {
 impl ConditionsRecord {
     pub fn new(object_type: String, id: String, record: models::ConditionsRow, datasets: Vec<models::DatasetListing>) -> ConditionsRecord {
         ConditionsRecord {
+            sections: None,
             object_type,
             id,
             record,

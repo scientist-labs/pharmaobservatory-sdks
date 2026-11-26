@@ -4,6 +4,8 @@ All URIs are relative to *https://pharmaobservatory.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**investigators_period_biomarker_literature_people**](InvestigatorsApi.md#investigators_period_biomarker_literature_people) | **GET** /api/v1/investigators/{id}/biomarker_literature_people | Biomarker literature, most active authors
+[**investigators_period_condition_literature_people**](InvestigatorsApi.md#investigators_period_condition_literature_people) | **GET** /api/v1/investigators/{id}/condition_literature_people | Condition literature, most active authors
 [**investigators_period_drug_investigators**](InvestigatorsApi.md#investigators_period_drug_investigators) | **GET** /api/v1/investigators/{id}/drug_investigators | Investigators on a drug's trials
 [**investigators_period_get**](InvestigatorsApi.md#investigators_period_get) | **GET** /api/v1/investigators/{id} | One investigator
 [**investigators_period_investigator_conditions**](InvestigatorsApi.md#investigators_period_investigator_conditions) | **GET** /api/v1/investigators/{id}/investigator_conditions | Investigator conditions
@@ -14,12 +16,80 @@ Method | HTTP request | Description
 [**investigators_period_investigator_topics**](InvestigatorsApi.md#investigators_period_investigator_topics) | **GET** /api/v1/investigators/{id}/investigator_topics | Investigator expertise topics
 [**investigators_period_investigator_trials**](InvestigatorsApi.md#investigators_period_investigator_trials) | **GET** /api/v1/investigators/{id}/investigator_trials | Investigator trials
 [**investigators_period_list**](InvestigatorsApi.md#investigators_period_list) | **GET** /api/v1/investigators | List investigators
+[**investigators_period_org_literature_people**](InvestigatorsApi.md#investigators_period_org_literature_people) | **GET** /api/v1/investigators/{id}/org_literature_people | Organization literature, authors on affiliated papers
 [**investigators_period_rare_disease_investigators**](InvestigatorsApi.md#investigators_period_rare_disease_investigators) | **GET** /api/v1/investigators/{id}/rare_disease_investigators | Rare disease investigators
 [**investigators_period_rwd_us_network_projects**](InvestigatorsApi.md#investigators_period_rwd_us_network_projects) | **GET** /api/v1/investigators/{id}/rwd_us_network_projects | US real-world data network projects (N3C)
 [**investigators_period_site_investigators**](InvestigatorsApi.md#investigators_period_site_investigators) | **GET** /api/v1/investigators/{id}/site_investigators | Site investigators
 [**investigators_period_target_investigators**](InvestigatorsApi.md#investigators_period_target_investigators) | **GET** /api/v1/investigators/{id}/target_investigators | Investigators on a target's trials
+[**investigators_period_target_literature_people**](InvestigatorsApi.md#investigators_period_target_literature_people) | **GET** /api/v1/investigators/{id}/target_literature_people | Target literature, most active authors
 [**investigators_period_trial_kols**](InvestigatorsApi.md#investigators_period_trial_kols) | **GET** /api/v1/investigators/{id}/trial_kols | Trial investigators
 
+
+
+## investigators_period_biomarker_literature_people
+
+> models::BiomarkerLiteraturePeopleResponse investigators_period_biomarker_literature_people(id, cursor, limit, sort, group_by, measure)
+Biomarker literature, most active authors
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::BiomarkerLiteraturePeopleResponse**](BiomarkerLiteraturePeopleResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## investigators_period_condition_literature_people
+
+> models::ConditionLiteraturePeopleResponse investigators_period_condition_literature_people(id, cursor, limit, sort, group_by, measure)
+Condition literature, most active authors
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::ConditionLiteraturePeopleResponse**](ConditionLiteraturePeopleResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## investigators_period_drug_investigators
@@ -346,6 +416,39 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## investigators_period_org_literature_people
+
+> models::OrgLiteraturePeopleResponse investigators_period_org_literature_people(id, cursor, limit, sort, group_by, measure)
+Organization literature, authors on affiliated papers
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::OrgLiteraturePeopleResponse**](OrgLiteraturePeopleResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## investigators_period_rare_disease_investigators
 
 > models::RareDiseaseInvestigatorsResponse investigators_period_rare_disease_investigators(id, cursor, limit, sort, group_by, measure)
@@ -465,6 +568,39 @@ Name | Type | Description  | Required | Notes
 ### Return type
 
 [**models::TargetInvestigatorsResponse**](TargetInvestigatorsResponse.md)
+
+### Authorization
+
+[ApiBearerJwt](../README.md#ApiBearerJwt)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## investigators_period_target_literature_people
+
+> models::TargetLiteraturePeopleResponse investigators_period_target_literature_people(id, cursor, limit, sort, group_by, measure)
+Target literature, most active authors
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **String** |  | [required] |
+**cursor** | Option<**String**> | The next_cursor of the previous page. Opaque; it is bound to the filters and the warehouse build that issued it. |  |
+**limit** | Option<**i32**> | Rows per page, up to 500 (default 50). |  |
+**sort** | Option<**String**> | Comma separated columns, a leading minus for descending: sort=a,-b. |  |
+**group_by** | Option<**String**> | A dimension to group by; a date takes :year, :quarter or :month. |  |
+**measure** | Option<**String**> | count, sum(col), avg(col), min(col), max(col), median(col) or count_distinct(col). |  |
+
+### Return type
+
+[**models::TargetLiteraturePeopleResponse**](TargetLiteraturePeopleResponse.md)
 
 ### Authorization
 

@@ -56,7 +56,7 @@ pub struct RareDiseaseOrganizationsRow {
     /// The source the assertion was read from.
     #[serde(rename = "source_key", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub source_key: Option<Option<String>>,
-    /// The record in the source the assertion comes from.
+    /// The record in the source the assertion comes from. NULL for the patient_organisation_site source, whose id is an internal page-version key.
     #[serde(rename = "source_record_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub source_record_id: Option<Option<String>>,
     /// A link to the source record, where it has one.
