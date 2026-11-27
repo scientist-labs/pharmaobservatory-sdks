@@ -50,7 +50,7 @@ pub struct InvestorsRow {
     /// The adviser's total private-fund gross asset value (GAV) in whole US dollars, a firm-level figure.
     #[serde(rename = "total_private_fund_gav", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub total_private_fund_gav: Option<Option<f64>>,
-    /// Distinct portfolio companies named against the investor in S-1 and 424B offering holder tables or listed on the investor's own portfolio page, not marked removed there. 0 usually means no named-holder link or website listing was observed.
+    /// Distinct portfolio companies named against the investor in S-1 and 424B offering holder tables or listed on the investor's own portfolio page, not marked removed there and not a junk listing. 0 usually means no named-holder link or website listing was observed.
     #[serde(rename = "portfolio_co_count", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub portfolio_co_count: Option<Option<i64>>,
     /// Distinct portfolio companies the investor's own portfolio page listed in an earlier crawl and no longer lists. portfolio_co_count and this count sum to the investor's rows in investor_portfolio. Always 0 while website-lane removal is gated.

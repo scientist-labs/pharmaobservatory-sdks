@@ -72064,8 +72064,8 @@ components:
         portfolio_co_count:
           description: "Distinct portfolio companies named against the investor in\
             \ S-1 and 424B offering holder tables or listed on the investor's own\
-            \ portfolio page, not marked removed there. 0 usually means no named-holder\
-            \ link or website listing was observed."
+            \ portfolio page, not marked removed there and not a junk listing. 0 usually\
+            \ means no named-holder link or website listing was observed."
           format: int64
           nullable: true
           type: integer
@@ -115601,6 +115601,7 @@ components:
         - social_urls
         - social_urls
         credit: credit
+        edge_verdict: edge_verdict
         location_count: 0
         patient_organisation_id: patient_organisation_id
         languages:
@@ -115756,6 +115757,16 @@ components:
             \ sole_focus, one_of_several or umbrella; null when it states none."
           nullable: true
           type: string
+        edge_verdict:
+          description: "Whether the organisation's pages were judged to SERVE people\
+            \ with the disease it declared: serves, unclear (asked and not callable)\
+            \ or unjudged (not yet asked). Only unclear and unjudged rows carry a\
+            \ 'not yet confirmed' label on the page; an edge judged to be a mention\
+            \ only is not a row. A judgement of ours about the organisation's pages,\
+            \ not the organisation's own statement. On a broader, narrower or mapped\
+            \ row it describes the declared disease."
+          nullable: true
+          type: string
         declared_name:
           description: "The disease name the organisation actually declared. On a\
             \ broader, narrower or mapped row it is NOT this page's disease."
@@ -115846,6 +115857,7 @@ components:
           - social_urls
           - social_urls
           credit: credit
+          edge_verdict: edge_verdict
           location_count: 0
           patient_organisation_id: patient_organisation_id
           languages:
@@ -115889,6 +115901,7 @@ components:
           - social_urls
           - social_urls
           credit: credit
+          edge_verdict: edge_verdict
           location_count: 0
           patient_organisation_id: patient_organisation_id
           languages:

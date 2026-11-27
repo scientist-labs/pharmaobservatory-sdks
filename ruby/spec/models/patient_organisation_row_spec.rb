@@ -159,6 +159,12 @@ describe PharmaObservatory::PatientOrganisationRow do
     end
   end
 
+  describe 'test attribute "edge_verdict"' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   describe 'test attribute "declared_name"' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
