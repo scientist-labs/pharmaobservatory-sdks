@@ -63,6 +63,8 @@ type PatientOrganisationRow struct {
 	LinkRank NullableInt32 `json:"link_rank,omitempty"`
 	// How much of its work the organisation says the disease is: sole_focus, one_of_several or umbrella; null when it states none.
 	DeclaredScope NullableString `json:"declared_scope,omitempty"`
+	// Whether the organisation's pages were judged to SERVE people with the disease it declared: serves, unclear (asked and not callable) or unjudged (not yet asked). Only unclear and unjudged rows carry a 'not yet confirmed' label on the page; an edge judged to be a mention only is not a row. A judgement of ours about the organisation's pages, not the organisation's own statement. On a broader, narrower or mapped row it describes the declared disease.
+	EdgeVerdict NullableString `json:"edge_verdict,omitempty"`
 	// The disease name the organisation actually declared. On a broader, narrower or mapped row it is NOT this page's disease.
 	DeclaredName NullableString `json:"declared_name,omitempty"`
 	// On a mapped row, the ORPHA code of the declared rare disease the condition is mapped to; null otherwise.
@@ -960,6 +962,48 @@ func (o *PatientOrganisationRow) UnsetDeclaredScope() {
 	o.DeclaredScope.Unset()
 }
 
+// GetEdgeVerdict returns the EdgeVerdict field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *PatientOrganisationRow) GetEdgeVerdict() string {
+	if o == nil || IsNil(o.EdgeVerdict.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.EdgeVerdict.Get()
+}
+
+// GetEdgeVerdictOk returns a tuple with the EdgeVerdict field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *PatientOrganisationRow) GetEdgeVerdictOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.EdgeVerdict.Get(), o.EdgeVerdict.IsSet()
+}
+
+// HasEdgeVerdict returns a boolean if a field has been set.
+func (o *PatientOrganisationRow) HasEdgeVerdict() bool {
+	if o != nil && o.EdgeVerdict.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetEdgeVerdict gets a reference to the given NullableString and assigns it to the EdgeVerdict field.
+func (o *PatientOrganisationRow) SetEdgeVerdict(v string) {
+	o.EdgeVerdict.Set(&v)
+}
+// SetEdgeVerdictNil sets the value for EdgeVerdict to be an explicit nil
+func (o *PatientOrganisationRow) SetEdgeVerdictNil() {
+	o.EdgeVerdict.Set(nil)
+}
+
+// UnsetEdgeVerdict ensures that no value is present for EdgeVerdict, not even an explicit nil
+func (o *PatientOrganisationRow) UnsetEdgeVerdict() {
+	o.EdgeVerdict.Unset()
+}
+
 // GetDeclaredName returns the DeclaredName field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *PatientOrganisationRow) GetDeclaredName() string {
 	if o == nil || IsNil(o.DeclaredName.Get()) {
@@ -1330,6 +1374,9 @@ func (o PatientOrganisationRow) ToMap() (map[string]interface{}, error) {
 	if o.DeclaredScope.IsSet() {
 		toSerialize["declared_scope"] = o.DeclaredScope.Get()
 	}
+	if o.EdgeVerdict.IsSet() {
+		toSerialize["edge_verdict"] = o.EdgeVerdict.Get()
+	}
 	if o.DeclaredName.IsSet() {
 		toSerialize["declared_name"] = o.DeclaredName.Get()
 	}
@@ -1395,6 +1442,7 @@ func (o *PatientOrganisationRow) UnmarshalJSON(data []byte) (err error) {
 		delete(additionalProperties, "link_kind")
 		delete(additionalProperties, "link_rank")
 		delete(additionalProperties, "declared_scope")
+		delete(additionalProperties, "edge_verdict")
 		delete(additionalProperties, "declared_name")
 		delete(additionalProperties, "mapped_orpha_code")
 		delete(additionalProperties, "mapped_disease_name")

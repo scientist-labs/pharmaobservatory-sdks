@@ -80,6 +80,9 @@ pub struct PatientOrganisationRow {
     /// How much of its work the organisation says the disease is: sole_focus, one_of_several or umbrella; null when it states none.
     #[serde(rename = "declared_scope", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub declared_scope: Option<Option<String>>,
+    /// Whether the organisation's pages were judged to SERVE people with the disease it declared: serves, unclear (asked and not callable) or unjudged (not yet asked). Only unclear and unjudged rows carry a 'not yet confirmed' label on the page; an edge judged to be a mention only is not a row. A judgement of ours about the organisation's pages, not the organisation's own statement. On a broader, narrower or mapped row it describes the declared disease.
+    #[serde(rename = "edge_verdict", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub edge_verdict: Option<Option<String>>,
     /// The disease name the organisation actually declared. On a broader, narrower or mapped row it is NOT this page's disease.
     #[serde(rename = "declared_name", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub declared_name: Option<Option<String>>,
@@ -129,6 +132,7 @@ impl PatientOrganisationRow {
             link_kind: None,
             link_rank: None,
             declared_scope: None,
+            edge_verdict: None,
             declared_name: None,
             mapped_orpha_code: None,
             mapped_disease_name: None,

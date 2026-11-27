@@ -26,6 +26,7 @@
 | **link_kind** | **String** | How the organisation reaches the disease or condition the row is listed under: declared (its own page names it), mapped (a condition row: it declares a rare disease this condition is mapped to; the mapped_* columns say which), broader (a rare disease row: it declared a broader parent disease) or narrower (a rare disease row: it declared a narrower child disease). A broader or narrower row never says the organisation declares THIS disease. | [optional] |
 | **link_rank** | **Integer** | The page&#39;s group order: 1 declared, 2 mapped, 3 broader, 4 narrower. | [optional] |
 | **declared_scope** | **String** | How much of its work the organisation says the disease is: sole_focus, one_of_several or umbrella; null when it states none. | [optional] |
+| **edge_verdict** | **String** | Whether the organisation&#39;s pages were judged to SERVE people with the disease it declared: serves, unclear (asked and not callable) or unjudged (not yet asked). Only unclear and unjudged rows carry a &#39;not yet confirmed&#39; label on the page; an edge judged to be a mention only is not a row. A judgement of ours about the organisation&#39;s pages, not the organisation&#39;s own statement. On a broader, narrower or mapped row it describes the declared disease. | [optional] |
 | **declared_name** | **String** | The disease name the organisation actually declared. On a broader, narrower or mapped row it is NOT this page&#39;s disease. | [optional] |
 | **mapped_orpha_code** | **String** | On a mapped row, the ORPHA code of the declared rare disease the condition is mapped to; null otherwise. | [optional] |
 | **mapped_disease_name** | **String** | On a mapped row, the preferred name of that rare disease; null otherwise. | [optional] |
@@ -62,6 +63,7 @@ instance = PharmaObservatory::PatientOrganisationRow.new(
   link_kind: null,
   link_rank: null,
   declared_scope: null,
+  edge_verdict: null,
   declared_name: null,
   mapped_orpha_code: null,
   mapped_disease_name: null,

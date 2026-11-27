@@ -82,6 +82,9 @@ module PharmaObservatory
     # How much of its work the organisation says the disease is: sole_focus, one_of_several or umbrella; null when it states none.
     attr_accessor :declared_scope
 
+    # Whether the organisation's pages were judged to SERVE people with the disease it declared: serves, unclear (asked and not callable) or unjudged (not yet asked). Only unclear and unjudged rows carry a 'not yet confirmed' label on the page; an edge judged to be a mention only is not a row. A judgement of ours about the organisation's pages, not the organisation's own statement. On a broader, narrower or mapped row it describes the declared disease.
+    attr_accessor :edge_verdict
+
     # The disease name the organisation actually declared. On a broader, narrower or mapped row it is NOT this page's disease.
     attr_accessor :declared_name
 
@@ -128,6 +131,7 @@ module PharmaObservatory
         :'link_kind' => :'link_kind',
         :'link_rank' => :'link_rank',
         :'declared_scope' => :'declared_scope',
+        :'edge_verdict' => :'edge_verdict',
         :'declared_name' => :'declared_name',
         :'mapped_orpha_code' => :'mapped_orpha_code',
         :'mapped_disease_name' => :'mapped_disease_name',
@@ -173,6 +177,7 @@ module PharmaObservatory
         :'link_kind' => :'String',
         :'link_rank' => :'Integer',
         :'declared_scope' => :'String',
+        :'edge_verdict' => :'String',
         :'declared_name' => :'String',
         :'mapped_orpha_code' => :'String',
         :'mapped_disease_name' => :'String',
@@ -208,6 +213,7 @@ module PharmaObservatory
         :'link_kind',
         :'link_rank',
         :'declared_scope',
+        :'edge_verdict',
         :'declared_name',
         :'mapped_orpha_code',
         :'mapped_disease_name',
@@ -336,6 +342,10 @@ module PharmaObservatory
         self.declared_scope = attributes[:'declared_scope']
       end
 
+      if attributes.key?(:'edge_verdict')
+        self.edge_verdict = attributes[:'edge_verdict']
+      end
+
       if attributes.key?(:'declared_name')
         self.declared_name = attributes[:'declared_name']
       end
@@ -407,6 +417,7 @@ module PharmaObservatory
           link_kind == o.link_kind &&
           link_rank == o.link_rank &&
           declared_scope == o.declared_scope &&
+          edge_verdict == o.edge_verdict &&
           declared_name == o.declared_name &&
           mapped_orpha_code == o.mapped_orpha_code &&
           mapped_disease_name == o.mapped_disease_name &&
@@ -425,7 +436,7 @@ module PharmaObservatory
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [target_kind, target_key, orpha_code, condition_id, patient_organisation_id, org_id, name, website_url, country, region, city, location_count, languages, phones, emails, contact_urls, social_urls, service_codes, other_service_labels, link_kind, link_rank, declared_scope, declared_name, mapped_orpha_code, mapped_disease_name, mapping_relation, source_url, retrieved_on, credit].hash
+      [target_kind, target_key, orpha_code, condition_id, patient_organisation_id, org_id, name, website_url, country, region, city, location_count, languages, phones, emails, contact_urls, social_urls, service_codes, other_service_labels, link_kind, link_rank, declared_scope, edge_verdict, declared_name, mapped_orpha_code, mapped_disease_name, mapping_relation, source_url, retrieved_on, credit].hash
     end
 
     # Builds the object from hash
